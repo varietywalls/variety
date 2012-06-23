@@ -20,7 +20,7 @@ class Indicator:
         self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
 
-        icon_uri = get_media_file("variety.svg")
+        icon_uri = get_media_file("variety-indicator.svg")
         icon_path = icon_uri.replace("file:///", '')
         self.indicator.set_icon(icon_path)
 
@@ -38,9 +38,13 @@ class Indicator:
         self.change.show()
         self.menu.append(self.change)
 
+        self.separator = Gtk.SeparatorMenuItem()
+        self.separator.show()
+        self.menu.append(self.separator)
+
         #Adding preferences button
         #window represents the main Window object of your app
-        self.preferences = Gtk.MenuItem("Preferences")
+        self.preferences = Gtk.MenuItem("Preferences...")
         self.preferences.connect("activate",window.on_mnu_preferences_activate)
         self.preferences.show()
         self.menu.append(self.preferences)
