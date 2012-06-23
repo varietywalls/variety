@@ -44,19 +44,20 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
 
-        self.folder = "/usr/share/backgrounds/"
+#        self.folder = "/usr/share/backgrounds/"
+        self.folder = "/d/Pics/Wallpapers/"
         self.interval = 60
-        self.avg_color = None
+        self.avg_color = Color.RED
 
         self.used = []
-        self.used.append(self.gsettings.get_string(self.KEY))
+        self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
         self.position = 0
         print(self.used)
 
     def set_wp(self, filename):
         self.gsettings.set_string(self.KEY, "file://" + filename)
-        self.gsettings.sync()
-        #self.gsettings.apply()
+        #self.gsettings.sync()
+        self.gsettings.apply()
 
     def select_random_image(self, dirs):
         cnt = 0
@@ -123,7 +124,7 @@ class VarietyWindow(Window):
         print(self.used)
 
     def image_ok(self, img):
-        return self.avg_color_ok(img)
+        return img != self.used[0] and self.avg_color_ok(img)
 
     def avg_color_ok(self, img):
         if not self.avg_color:
@@ -132,5 +133,5 @@ class VarietyWindow(Window):
         print avg.getAvg()
         r, g, b = avg.getAvg()
         tc = self.avg_color
-        return tc == Color.RED and r > g + 30 and r > b + 30
+        return tc == Color.RED and r > g + 50 and r > b + 50
 
