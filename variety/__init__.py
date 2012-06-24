@@ -9,7 +9,7 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('variety')
 
-from gi.repository import Gtk # pylint: disable=E0611
+from gi.repository import Gtk, GObject # pylint: disable=E0611
 
 from variety import VarietyWindow
 
@@ -32,4 +32,5 @@ def main():
     # Run the application.    
     window = VarietyWindow.VarietyWindow()
     # window.show()
+    GObject.threads_init()
     Gtk.main()

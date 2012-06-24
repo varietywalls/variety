@@ -49,6 +49,11 @@ class Indicator:
         self.preferences.show()
         self.menu.append(self.preferences)
 
+        self.about = Gtk.MenuItem("About")
+        self.about.connect("activate",window.on_mnu_about_activate)
+        self.about.show()
+        self.menu.append(self.about)
+
         self.quit = Gtk.MenuItem("Quit")
         self.quit.connect("activate",window.on_mnu_close_activate)
         self.quit.show()

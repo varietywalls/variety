@@ -10,14 +10,15 @@ class AvgColor(object):
 
     def __init__(self, imageName):
         self.pic = Image.open(imageName)
+        self.pic = self.pic.resize((20, 20))
         # load image data
         self.imgData = self.pic.load()
 
     def getAvg(self):
         r, g, b = 0, 0, 0
         count = 0
-        for x in xrange(0, self.pic.size[0], 20):
-            for y in xrange(0, self.pic.size[1], 20):
+        for x in xrange(0, self.pic.size[0], 1):
+            for y in xrange(0, self.pic.size[1], 1):
                 clrs = self.imgData[x, y]
                 try:
                     r += clrs[0]

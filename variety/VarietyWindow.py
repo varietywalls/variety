@@ -5,10 +5,12 @@
 
 import gettext
 from gettext import gettext as _
+
 gettext.textdomain('variety')
 
 from gi.repository import Gtk # pylint: disable=E0611
 import logging
+
 logger = logging.getLogger('variety')
 
 from variety_lib import Window
@@ -19,17 +21,15 @@ from gi.repository import Gio
 
 import os
 import random
-random.seed()
 
 from AvgColor import AvgColor
+from WallpapersNetScraper import WallpapersNetScraper
 
-class Color:
-    RED = 1
-    GREEN = 2
-    BLUE = 3
+import threading
+import time
 
 # See variety_lib.Window.py for more details about how this class works
-class VarietyWindow(Window):
+class VarietyWindow(Window) :
     __gtype_name__ = "VarietyWindow"
 
     SCHEMA = 'org.gnome.desktop.background'
@@ -44,15 +44,80 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
 
-#        self.folder = "/usr/share/backgrounds/"
-        self.folder = "/d/Pics/Wallpapers/"
-        self.interval = 60
-        self.avg_color = Color.RED
+        #self.folder = "/d/Pics/Wallpapers/"
+        #self.folder = "/usr/share/backgrounds/"
+        self.folder = "/d/_linux/"
+        self.change_interval = 5
+        self.dl_interval = 10
+        self.avg_color = None
+
+        self.config_dir = os.path.join(os.getenv("HOME"), ".variety")
+        self.dl_dir = os.path.join(self.config_dir, "downloaded")
+        try:
+            os.makedirs(self.dl_dir)
+        except OSError:
+            pass
+
+        #self.wn_url = "http://wallpapers.net/nature-desktop-wallpapers.html"
+        self.wn_url = "http://wallpapers.net/colors/990000/"
 
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
         self.position = 0
-        print(self.used)
+
+        self.image_count = 0
+
+        random.seed()
+
+        self.image_cache = {}
+
+        self.prepared = []
+        self.change_event = threading.Event()
+
+        self.change_thread = threading.Thread(target=self.regular_change)
+        self.change_thread.daemon = True
+        self.change_thread.start()
+
+        self.prepare_thread = threading.Thread(target=self.prepare)
+        self.prepare_thread.daemon = True
+        self.prepare_thread.start()
+
+        self.dl_thread = threading.Thread(target=self.download)
+        self.dl_thread.daemon = True
+        self.dl_thread.start()
+
+    def regular_change(self):
+        logger.info("regular_change thread running")
+        while True:
+            time.sleep(self.change_interval)
+            logger.info("regular_change changes wallpaper")
+            self.change_wallpaper()
+
+    def prepare(self):
+        logger.info("prepare thread running")
+        while True:
+            logger.info("preparing some images")
+            cnt = 0
+            while len(self.prepared) < 10:
+                img = self.prepare_image()
+                if img:
+                    self.prepared.append(img)
+                cnt += 1
+                if cnt >= self.image_count // 10:
+                    logger.info("could not prepare 10 images")
+                    break
+
+            self.change_event.clear()
+            self.change_event.wait(5)
+
+    def download(self):
+        while True:
+            try:
+                wns = WallpapersNetScraper(self.wn_url, self.dl_dir)
+                time.sleep(self.dl_interval)
+                wns.download_one()
+            except Exception, err:
+                logger.exception("Could not download wallpaper:")
 
     def set_wp(self, filename):
         self.gsettings.set_string(self.KEY, "file://" + filename)
@@ -61,11 +126,18 @@ class VarietyWindow(Window):
 
     def select_random_image(self, dirs):
         cnt = 0
-        for dir in dirs:
-            for root, subFolders, files in os.walk(dir):
-                for filename in files:
-                    if filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png')):
-                        cnt += 1
+        if self.image_count < 20 or random.randint(0, 20) == 0:
+            for dir in dirs:
+                for root, subFolders, files in os.walk(dir):
+                    for filename in files:
+                        if filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png')):
+                            cnt += 1
+            if not cnt:
+                return None
+
+            self.image_count = cnt
+        else:
+            cnt = self.image_count
 
         r = random.randint(0, cnt - 1)
 
@@ -76,12 +148,14 @@ class VarietyWindow(Window):
                         if r == 0:
                             return os.path.join(root, filename)
                         r -= 1
-        # fallback - select some image if r never reaches 0 (can happen due to intermediate deletions)
+            # fallback - select some image if r never reaches 0 (can happen due to intermediate deletions)
         for dir in dirs:
             for root, subFolders, files in os.walk(dir):
                 for filename in files:
                     if filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png')):
                         return os.path.join(root, filename)
+
+        return None
 
     def on_indicator_scroll(self, indicator, steps, direction, data=None):
         # direction is 0 or 1
@@ -104,34 +178,56 @@ class VarietyWindow(Window):
         else:
             self.change_wallpaper()
 
+    def prepare_image(self):
+        img = self.select_random_image([self.folder, self.dl_dir])
+        if not img:
+            return
+
+        print("testing " + img)
+        if self.image_ok(img):
+            print("ok")
+            return img
+
     def change_wallpaper(self, widget=None, data=None):
         img = None
-        for i in xrange(100):
-            img = self.select_random_image([self.folder,])
-            print("testing image ", img)
-            if self.image_ok(img):
-                print("ok")
-                break
+
+        if len(self.prepared):
+            img = self.prepared.pop()
+            self.change_event.set()
+        else:
+            for i in xrange(10):
+                img = self.prepare_image()
+                if img:
+                    break
+
         if not img:
-            img = self.select_random_image([self.folder, ])
+            img = self.select_random_image([self.folder, self.dl_dir])
+        if not img:
+            return
 
         self.set_wp(img)
         self.used = self.used[self.position:]
         self.used.insert(0, img)
         self.position = 0
-        if len(self.used) > 10:
-            self.used = self.used[:10]
-        print(self.used)
+        if len(self.used) > 1000:
+            self.used = self.used[:1000]
 
     def image_ok(self, img):
-        return img != self.used[0] and self.avg_color_ok(img)
+        return img != self.used[0] and self.color_ok(img)
 
-    def avg_color_ok(self, img):
+    def color_ok(self, img):
         if not self.avg_color:
             return True
-        avg = AvgColor(img)
-        print avg.getAvg()
-        r, g, b = avg.getAvg()
-        tc = self.avg_color
-        return tc == Color.RED and r > g + 50 and r > b + 50
+        try:
+            if not img in self.image_cache:
+                avg = AvgColor(img)
+                self.image_cache[img] = avg.getAvg()
+            avg = self.image_cache[img]
+            r, g, b = avg
+            print(avg)
+            tr, tg, tb = self.avg_color
+            return abs(r - tr) < 40 and abs(g - tg) < 40 and abs(b - tb) < 40
+        except Exception, err:
+            logger.exception("Error with AvgColor:")
+            return False
 
