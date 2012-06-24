@@ -59,7 +59,7 @@ class VarietyWindow(Window) :
             pass
 
         #self.wn_url = "http://wallpapers.net/nature-desktop-wallpapers.html"
-        self.wn_url = "http://wallpapers.net/colors/990000/"
+        self.wn_url = "http://wallpapers.net/top_wallpapers/"
 
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
@@ -85,6 +85,26 @@ class VarietyWindow(Window) :
         self.dl_thread = threading.Thread(target=self.download)
         self.dl_thread.daemon = True
         self.dl_thread.start()
+
+        self.update_current_file_info()
+
+    def update_current_file_info(self):
+        try:
+            self.file_label.set_label(os.path.basename(self.used[0]))
+
+            if os.path.exists(self.used[0] + ".txt"):
+                with open(self.used[0] + ".txt") as f:
+                    lines = list(f)
+                    if lines[0].strip() == "INFO:":
+                        self.show_origin.set_label(lines[1].strip())
+                        self.show_origin.set_sensitive(True)
+                        self.url = lines[2].strip()
+                        return
+            self.show_origin.set_label("Unknown origin")
+            self.show_origin.set_sensitive(False)
+            self.url = None
+        except Exception:
+            logger.exception("Error updating file info")
 
     def regular_change(self):
         logger.info("regular_change thread running")
@@ -121,8 +141,8 @@ class VarietyWindow(Window) :
 
     def set_wp(self, filename):
         self.gsettings.set_string(self.KEY, "file://" + filename)
-        #self.gsettings.sync()
         self.gsettings.apply()
+        self.update_current_file_info()
 
     def select_random_image(self, dirs):
         cnt = 0
@@ -183,9 +203,9 @@ class VarietyWindow(Window) :
         if not img:
             return
 
-        print("testing " + img)
+        #print("testing " + img)
         if self.image_ok(img):
-            print("ok")
+            #print("ok")
             return img
 
     def change_wallpaper(self, widget=None, data=None):
@@ -224,10 +244,21 @@ class VarietyWindow(Window) :
                 self.image_cache[img] = avg.getAvg()
             avg = self.image_cache[img]
             r, g, b = avg
-            print(avg)
+            #print(avg)
             tr, tg, tb = self.avg_color
             return abs(r - tr) < 40 and abs(g - tg) < 40 and abs(b - tb) < 40
         except Exception, err:
             logger.exception("Error with AvgColor:")
             return False
+
+    def open_folder(self, widget=None, data=None):
+        os.system("xdg-open " + os.path.dirname(self.used[0]))
+
+    def open_file(self, widget=None, data=None):
+        os.system("xdg-open " + self.used[0])
+
+    def on_show_origin(self, widget=None, data=None):
+        if self.url:
+            os.system("xdg-open " + self.url)
+
 

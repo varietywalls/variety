@@ -26,14 +26,30 @@ class Indicator:
 
         self.indicator.connect("scroll-event", window.on_indicator_scroll)
 
-        #Uncomment and choose an icon for attention state. 
+        #Uncomment and choose an icon for attention state.
         #self.indicator.set_attention_icon("ICON-NAME")
-        
+
         self.menu = Gtk.Menu()
 
         # Add items to Menu and connect signals.
 
-        self.change = Gtk.MenuItem("Change wallpaper")
+
+        self.file_label = Gtk.MenuItem("XXX ")
+        self.file_label.show()
+        self.file_label.set_sensitive(False)
+        self.menu.append(self.file_label)
+
+        self.show_origin = Gtk.MenuItem("Show origin")
+        self.show_origin.connect("activate", window.on_show_origin)
+        self.show_origin.show()
+        self.show_origin.set_sensitive(False)
+        self.menu.append(self.show_origin)
+
+        self.separator0 = Gtk.SeparatorMenuItem()
+        self.separator0.show()
+        self.menu.append(self.separator0)
+
+        self.change = Gtk.MenuItem("Change Wallpaper")
         self.change.connect("activate", window.change_wallpaper)
         self.change.show()
         self.menu.append(self.change)
@@ -42,8 +58,21 @@ class Indicator:
         self.separator.show()
         self.menu.append(self.separator)
 
+        self.open_file = Gtk.MenuItem("Open in Image Viewer")
+        self.open_file.connect("activate", window.open_file)
+        self.open_file.show()
+        self.menu.append(self.open_file)
+
+        self.open_folder = Gtk.MenuItem("Show Containing Folder")
+        self.open_folder.connect("activate", window.open_folder)
+        self.open_folder.show()
+        self.menu.append(self.open_folder)
+
+        self.separator2 = Gtk.SeparatorMenuItem()
+        self.separator2.show()
+        self.menu.append(self.separator2)
+
         #Adding preferences button
-        #window represents the main Window object of your app
         self.preferences = Gtk.MenuItem("Preferences...")
         self.preferences.connect("activate",window.on_mnu_preferences_activate)
         self.preferences.show()
@@ -59,11 +88,13 @@ class Indicator:
         self.quit.show()
         self.menu.append(self.quit)
 
-        # Add more items here                           
-
+        self.menu.show_all()
         self.menu.show()
         self.indicator.set_menu(self.menu)
-    
+
+        window.file_label = self.file_label
+        window.show_origin = self.show_origin
+
 def new_application_indicator(window):
     ind = Indicator(window)
     return ind.indicator

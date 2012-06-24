@@ -29,6 +29,10 @@ class WallpapersNetScraper():
             page = h[h.index("/page/") + 6:]
             mp = max(mp, int(page))
 
+        # special case the top wallpapers - limit to the best 200 pages
+        if self.category_url.find("top_wallpapers"):
+            mp = min(mp, 200)
+
         page = random.randint(0, mp)
         h = urls[0]
         page_url = self.host + h[:h.index("/page/") + 6] + str(page)
@@ -60,5 +64,5 @@ class WallpapersNetScraper():
         localFile.close()
 
         localFile = open(os.path.join(self.target_dir, name + ".txt"), 'w')
-        localFile.write("URL: " + wallpaper_url)
+        localFile.write("INFO:\nDownloaded from Wallpapers.net\n" + wallpaper_url)
         localFile.close()
