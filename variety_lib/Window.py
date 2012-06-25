@@ -58,7 +58,7 @@ class Window(Gtk.Window):
         # for more information about Launchpad integration.
         try:
             from gi.repository import LaunchpadIntegration # pylint: disable=E0611
-            LaunchpadIntegration.add_items(self.ui.helpMenu, 1, True, True)
+            # LaunchpadIntegration.add_items(self.ui.helpMenu, 1, True, True)
             LaunchpadIntegration.set_sourcepackagename('variety')
         except ImportError:
             pass

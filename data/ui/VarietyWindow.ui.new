@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <!-- interface-requires variety_window 1.0 -->
   <!-- interface-local-resource-path ../media -->
   <object class="VarietyWindow" id="variety_window">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Welcome to Variety!</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
     <property name="window_position">center-always</property>
+    <property name="default_height">260</property>
     <property name="icon">../media/variety.svg</property>
-    <child>
-      <object class="GtkVBox" id="dialog-vbox1">
-        <property name="visible">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="gravity">center</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkLabel" id="title">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
-            <property name="valign">start</property>
             <property name="xpad">30</property>
             <property name="ypad">20</property>
             <property name="label" translatable="yes">Welcome to Variety!</property>
@@ -40,8 +39,6 @@
           <object class="GtkLabel" id="message">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
             <property name="margin_bottom">100</property>
             <property name="xpad">30</property>
             <property name="label" translatable="yes">Variety is an automatic wallpaper changer. You specify some images or picture folders 
@@ -63,12 +60,9 @@ licensed under GPL 3.</property>
             <property name="position">1</property>
           </packing>
         </child>
-        <child>
+        <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">15</property>
-            <property name="margin_bottom">15</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="continue">
@@ -78,7 +72,7 @@ licensed under GPL 3.</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_continue_clicked" swapped="no"/>
+                <signal name="activate" handler="on_continue_activate" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -96,5 +90,8 @@ licensed under GPL 3.</property>
         </child>
       </object>
     </child>
+    <action-widgets>
+      <action-widget response="0">continue</action-widget>
+    </action-widgets>
   </object>
 </interface>

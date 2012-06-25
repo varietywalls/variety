@@ -310,3 +310,14 @@ class VarietyWindow(Window):
 
     def is_image(self, filename):
         return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png'))
+
+    def first_run(self):
+        fr_file = os.path.join(self.config_folder, ".firstrun")
+        if not os.path.exists(fr_file):
+            f = open(fr_file, "w")
+            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            f.close()
+            self.show()
+
+    def on_continue_clicked(self, button=None):
+        self.destroy()
