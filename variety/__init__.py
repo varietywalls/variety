@@ -31,6 +31,6 @@ def main():
 
     # Run the application.    
     window = VarietyWindow.VarietyWindow()
-    # window.show()
+    #window.show()
     GObject.threads_init()
     Gtk.main()

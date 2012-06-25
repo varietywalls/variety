@@ -73,6 +73,11 @@ class Indicator:
         self.trash.show()
         self.menu.append(self.trash)
 
+        self.favorite = Gtk.MenuItem("Move to Favorites")
+        self.favorite.connect("activate", window.move_to_favorites)
+        self.favorite.show()
+        self.menu.append(self.favorite)
+
         self.separator2 = Gtk.SeparatorMenuItem()
         self.separator2.show()
         self.menu.append(self.separator2)
@@ -89,7 +94,7 @@ class Indicator:
         self.menu.append(self.about)
 
         self.quit = Gtk.MenuItem("Quit")
-        self.quit.connect("activate",window.on_mnu_close_activate)
+        self.quit.connect("activate",window.on_quit)
         self.quit.show()
         self.menu.append(self.quit)
 
@@ -97,8 +102,7 @@ class Indicator:
         self.menu.show()
         self.indicator.set_menu(self.menu)
 
-        window.file_label = self.file_label
-        window.show_origin = self.show_origin
+        window.ind = self
 
 def new_application_indicator(window):
     ind = Indicator(window)

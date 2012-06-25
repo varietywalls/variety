@@ -111,7 +111,7 @@ class Window(Gtk.Window):
     def on_destroy(self, widget, data=None):
         """Called when the VarietyWindow is closed."""
         # Clean up code for saving application state should be added here.
-        Gtk.main_quit()
+        # Gtk.main_quit()
 
     def on_preferences_changed(self, settings, key, data=None):
         logger.debug('preference changed: %s = %s' % (key, str(settings.get_value(key))))
