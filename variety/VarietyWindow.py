@@ -51,24 +51,8 @@ class VarietyWindow(Window):
         except OSError:
             pass
 
-        # start config
-        self.change_interval = 30
-        self.download_interval = 20
-        self.desired_color = None
-
-        self.individual_images = []
-        self.folders = ["/d/Pics/Wallpapers/Variety"]
-        self.favorites_folder = "/d/Pics/Wallpapers/Variety"
-
-        self.wallpaper_net_urls = [
-            "http://wallpapers.net/nature-desktop-wallpapers.html",
-            "http://wallpapers.net/top_wallpapers/",
-            "http://wallpapers.net/tag/paris.html"]
-
-        self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
-
-        if self.wallpaper_net_urls:
-            self.folders.append(self.download_folder)
+        # load config
+        self.reload_config()
 
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
@@ -82,6 +66,23 @@ class VarietyWindow(Window):
 
         self.update_current_file_info()
         self.start_threads()
+
+    def reload_config(self):
+        self.change_interval = 30
+        self.download_interval = 20
+        self.desired_color = None
+
+        self.individual_images = []
+        self.folders = ["/d/Pics/Wallpapers/Variety"]
+        self.favorites_folder = "/d/Pics/Wallpapers/Variety"
+
+        self.wallpaper_net_urls = ["http://wallpapers.net/nature-desktop-wallpapers.html",
+                                   "http://wallpapers.net/top_wallpapers/"]
+
+        self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+
+        if self.wallpaper_net_urls:
+            self.folders.append(self.download_folder)
 
     def start_threads(self):
         self.running = True
@@ -305,6 +306,7 @@ class VarietyWindow(Window):
     def on_quit(self, widget=None):
         self.running = False
         Gtk.main_quit()
+        os.unlink(os.path.expanduser("~/.variety/.lock"))
 
     def is_image(self, filename):
         return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png'))

@@ -15,6 +15,9 @@ from variety import VarietyWindow
 
 from variety_lib import set_up_logging, get_version
 
+import os
+import sys
+
 def parse_options():
     """Support for command line options"""
     parser = optparse.OptionParser(version="%%prog %s" % get_version())
@@ -29,8 +32,34 @@ def main():
     'constructor for your class instances'
     parse_options()
 
+    # ensure singleton
+    check_pid()
+
     # Run the application.    
     window = VarietyWindow.VarietyWindow()
     #window.show()
     GObject.threads_init()
     Gtk.main()
+
+def check_pid():
+    lock = os.path.expanduser("~/.variety/.lock")
+
+    if os.access(lock, os.F_OK):
+        #if the lockfile is already there then check the PID number in the lock file
+        pidfile = open(lock, "r")
+        pidfile.seek(0)
+        old_pd = pidfile.readline().strip()
+
+        # Now we check the PID from lock file matches to the current process PID
+        if os.path.exists("/proc/%s" % old_pd):
+            print "You already have an instance of the program running, process ID %s. Exiting." % old_pd
+            sys.exit(1)
+        else:
+            print "Lock file is there but the program is not running."
+            print "Removing lock file as it can be there because the program crashed last time it was run as process ID %s." % old_pd
+            os.remove(lock)
+
+    # Put a PID in the lock file
+    pidfile = open(lock, "w")
+    pidfile.write("%s" % os.getpid())
+    pidfile.close()
