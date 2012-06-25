@@ -68,6 +68,11 @@ class Indicator:
         self.open_folder.show()
         self.menu.append(self.open_folder)
 
+        self.trash = Gtk.MenuItem("Move to Trash")
+        self.trash.connect("activate", window.move_to_trash)
+        self.trash.show()
+        self.menu.append(self.trash)
+
         self.separator2 = Gtk.SeparatorMenuItem()
         self.separator2.show()
         self.menu.append(self.separator2)

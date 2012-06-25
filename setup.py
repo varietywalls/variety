@@ -82,7 +82,7 @@ DistUtilsExtra.auto.setup(
     author_email='peterlevi@peterlevi.com',
     description='A wallpaper changer',
     long_description='Changes desktop wallpaper on a regular basis, using user-specified or automatically downloaded images',
-    #url='https://launchpad.net/variety',
+    url='https://launchpad.net/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )
 

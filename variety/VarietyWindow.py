@@ -20,6 +20,7 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from gi.repository import Gio
 
 import os
+import shutil
 import random
 
 from AvgColor import AvgColor
@@ -47,8 +48,8 @@ class VarietyWindow(Window) :
         #self.folder = "/d/Pics/Wallpapers/"
         #self.folder = "/usr/share/backgrounds/"
         self.folder = "/d/_linux/"
-        self.change_interval = 5
-        self.dl_interval = 10
+        self.change_interval = 30
+        self.dl_interval = 20
         self.avg_color = None
 
         self.config_dir = os.path.join(os.getenv("HOME"), ".variety")
@@ -89,11 +90,14 @@ class VarietyWindow(Window) :
         self.update_current_file_info()
 
     def update_current_file_info(self):
-        try:
-            self.file_label.set_label(os.path.basename(self.used[0]))
+        file = self.used[self.position]
+        logger.info("Setting file info to: " + file)
 
-            if os.path.exists(self.used[0] + ".txt"):
-                with open(self.used[0] + ".txt") as f:
+        try:
+            self.file_label.set_label(os.path.basename(file))
+
+            if os.path.exists(file + ".txt"):
+                with open(file + ".txt") as f:
                     lines = list(f)
                     if lines[0].strip() == "INFO:":
                         self.show_origin.set_label(lines[1].strip())
@@ -140,9 +144,12 @@ class VarietyWindow(Window) :
                 logger.exception("Could not download wallpaper:")
 
     def set_wp(self, filename):
-        self.gsettings.set_string(self.KEY, "file://" + filename)
-        self.gsettings.apply()
-        self.update_current_file_info()
+        try:
+            self.update_current_file_info()
+            self.gsettings.set_string(self.KEY, "file://" + filename)
+            self.gsettings.apply()
+        except Exception:
+            logger.exception("Error while setting wallpaper")
 
     def select_random_image(self, dirs):
         cnt = 0
@@ -225,15 +232,15 @@ class VarietyWindow(Window) :
         if not img:
             return
 
-        self.set_wp(img)
         self.used = self.used[self.position:]
         self.used.insert(0, img)
         self.position = 0
         if len(self.used) > 1000:
             self.used = self.used[:1000]
+        self.set_wp(img)
 
     def image_ok(self, img):
-        return img != self.used[0] and self.color_ok(img)
+        return img != self.used[self.position] and self.color_ok(img)
 
     def color_ok(self, img):
         if not self.avg_color:
@@ -252,13 +259,34 @@ class VarietyWindow(Window) :
             return False
 
     def open_folder(self, widget=None, data=None):
-        os.system("xdg-open " + os.path.dirname(self.used[0]))
+        os.system("xdg-open " + os.path.dirname(self.used[self.position]))
 
     def open_file(self, widget=None, data=None):
-        os.system("xdg-open " + self.used[0])
+        os.system("xdg-open " + self.used[self.position])
 
     def on_show_origin(self, widget=None, data=None):
         if self.url:
             os.system("xdg-open " + self.url)
+
+    def move_to_trash(self, widget=None, data=None):
+        file = self.used[self.position]
+
+        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+            Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
+            "You are going to move the file " + file + " to Trash. Are you sure?")
+        dialog.set_title("Confirm Move to Trash")
+
+        response = dialog.run()
+        dialog.destroy()
+        if response == Gtk.ResponseType.YES:
+            print "deleting"
+            try:
+                self.next_wallpaper()
+                self.used.remove(file)
+                trash = os.path.join(os.getenv("HOME"), ".local/share/Trash/")
+                shutil.move(file, trash)
+                shutil.move(file + ".txt", trash)
+            except Exception:
+                logger.exception("Could not move to Trash")
 
 

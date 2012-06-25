@@ -59,8 +59,9 @@ class WallpapersNetScraper():
         logger.info("Name " + name)
 
         u = urllib2.urlopen(src_url)
+        data = u.read()
         localFile = open(os.path.join(self.target_dir, name), 'wb')
-        localFile.write(u.read())
+        localFile.write(data)
         localFile.close()
 
         localFile = open(os.path.join(self.target_dir, name + ".txt"), 'w')
