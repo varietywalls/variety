@@ -290,7 +290,7 @@ class VarietyWindow(Window):
     def move_to_trash(self, widget=None, data=None):
         file = self.used[self.position]
         if self.confirm_move(file, "Trash") == Gtk.ResponseType.YES:
-            while self.used[0] == file:
+            while self.used[self.position] == file:
                 self.next_wallpaper()
             self.used = [f for f in self.used if f != file]
             trash = os.path.join(os.getenv("HOME"), ".local/share/Trash/")
@@ -302,6 +302,7 @@ class VarietyWindow(Window):
             new_file = os.path.join(self.favorites_folder, os.path.basename(file))
             self.used = [(new_file if f == file else f) for f in self.used]
             self.move_file(file, self.favorites_folder)
+            self.update_current_file_info()
 
     def on_quit(self, widget=None):
         self.running = False
