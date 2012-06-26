@@ -173,13 +173,17 @@ class VarietyWindow(Window):
 
     def list_images(self):
         for filepath in self.individual_images:
-            if self.is_image(filepath):
+            if self.is_image(filepath) and os.access(filepath, os.F_OK):
                 yield filepath
         for folder in self.folders:
-            for root, subFolders, files in os.walk(folder):
-                for filename in files:
-                    if self.is_image(filename):
-                        yield os.path.join(root, filename)
+            if os.path.isdir(folder):
+                try:
+                    for root, subFolders, files in os.walk(folder):
+                        for filename in files:
+                            if self.is_image(filename):
+                                yield os.path.join(root, filename)
+                except Exception:
+                    logger.exception("Cold not walk folder " + folder)
 
     def select_random_images(self, count):
         if self.image_count < 20 or random.randint(0, 20) == 0:
