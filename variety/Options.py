@@ -93,6 +93,7 @@ class Options:
         self.favorites_folder = os.path.expanduser("~/.variety/Favorites")
 
         self.sources = [
+            (True, Options.SourceType.FOLDER, "~/.variety/Favorites")
             (True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"),
             (True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"),
             (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")

@@ -57,7 +57,6 @@ class VarietyWindow(Window):
         # load config
         self.reload_config()
 
-
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
         self.position = 0
@@ -80,25 +79,27 @@ class VarietyWindow(Window):
         self.download_interval = options.change_interval
         self.desired_color = options.desired_color
 
-        self.favorites_folder = options.favorites_folder
+        self.favorites_folder = os.path.expanduser(options.favorites_folder)
         try:
             os.makedirs(self.favorites_folder)
         except OSError:
             pass
 
-        self.individual_images = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.IMAGE]
-        self.folders = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
-        if not self.favorites_folder in self.folders:
-            self.folders.append(self.favorites_folder)
+        self.individual_images = [os.path.expanduser(s[2]) for s in options.sources if s[0] and s[1] == Options.SourceType.IMAGE]
+
+        self.folders = [os.path.expanduser(s[2]) for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
+
         self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
 
         if self.wallpaper_net_urls:
             self.folders.append(self.download_folder)
+
         self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
 
         self.filters = [f[2] for f in options.filters if f[0]]
 
         logger.info("Loaded options:")
+        logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
         logger.info("Filters: " + str(self.filters))
@@ -150,6 +151,7 @@ class VarietyWindow(Window):
         logger.info("regular_change thread running")
 
         if self.change_on_start:
+            self.quit_event.wait(10) # wait for prepare thread to prepare some images first
             self.change_wallpaper()
 
         while self.running:
@@ -238,8 +240,9 @@ class VarietyWindow(Window):
                 result.append(f)
                 indexes.remove(index)
                 if not indexes:
-                    return result
+                    break
 
+        random.shuffle(result)
         return result
 
     def on_indicator_scroll(self, indicator, steps, direction, data=None):
