@@ -28,8 +28,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         super(PreferencesVarietyDialog, self).finish_initializing(builder)
 
         # Bind each preference widget to gsettings
-        settings = Gio.Settings("net.launchpad.variety")
-        widget = self.builder.get_object('example_entry')
-        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+#        widget = self.builder.get_object('example_entry')
+#        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         # Code for other initialization actions should be added here.

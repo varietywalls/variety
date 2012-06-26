@@ -27,6 +27,7 @@ random.seed()
 
 from AvgColor import AvgColor
 from WallpapersNetScraper import WallpapersNetScraper
+from Options import Options
 
 # See variety_lib.Window.py for more details about how this class works
 class VarietyWindow(Window):
@@ -44,8 +45,10 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
 
-        self.config_folder = os.path.join(os.getenv("HOME"), ".variety")
+        self.config_folder = os.path.expanduser("~/.variety")
         self.download_folder = os.path.join(self.config_folder, "Downloaded")
+        self.favorites_folder = os.path.join(self.config_folder, "Favorites")
+
         try:
             os.makedirs(self.download_folder)
         except OSError:
@@ -53,6 +56,7 @@ class VarietyWindow(Window):
 
         # load config
         self.reload_config()
+
 
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
@@ -68,24 +72,40 @@ class VarietyWindow(Window):
         self.start_threads()
 
     def reload_config(self):
-        self.change_interval = 30
-        self.download_interval = 20
-        self.desired_color = None
+        options = Options()
+        options.read()
 
-        self.individual_images = []
-        self.folders = ["/d/Pics/Wallpapers/Variety"]
-        self.favorites_folder = "/d/Pics/Wallpapers/Variety"
+        self.change_on_start = options.change_on_start
+        self.change_interval = options.change_interval
+        self.download_interval = options.change_interval
+        self.desired_color = options.desired_color
 
-        self.wallpaper_net_urls = ["http://wallpapers.net/nature-desktop-wallpapers.html",
-                                   "http://wallpapers.net/top_wallpapers/"]
+        self.favorites_folder = options.favorites_folder
+        try:
+            os.makedirs(self.favorites_folder)
+        except OSError:
+            pass
 
-        self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+        self.individual_images = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.IMAGE]
+        self.folders = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
+        if not self.favorites_folder in self.folders:
+            self.folders.append(self.favorites_folder)
+        self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
 
         if self.wallpaper_net_urls:
             self.folders.append(self.download_folder)
+        self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+
+        self.filters = [f[2] for f in options.filters if f[0]]
+
+        logger.info("Loaded options:")
+        logger.info("Folders: " + str(self.folders))
+        logger.info("WN URLs: " + str(self.wallpaper_net_urls))
+        logger.info("Filters: " + str(self.filters))
 
     def start_threads(self):
         self.running = True
+        self.quit_event = threading.Event()
 
         self.prepared = []
         self.change_event = threading.Event()
@@ -128,8 +148,14 @@ class VarietyWindow(Window):
 
     def regular_change_thread(self):
         logger.info("regular_change thread running")
+
+        if self.change_on_start:
+            self.change_wallpaper()
+
         while self.running:
-            time.sleep(self.change_interval)
+            self.quit_event.wait(self.change_interval)
+            if not self.running:
+                return
             while (time.time() - self.last_change_time) < self.change_interval:
                 now = time.time()
                 wait_more = self.change_interval - (now - self.last_change_time)
@@ -151,20 +177,27 @@ class VarietyWindow(Window):
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
             self.change_event.clear()
-            self.change_event.wait(5)
+            self.change_event.wait(30)
 
     def download_thread(self):
         while self.running:
             try:
-                time.sleep(self.download_interval)
-                downloader = self.wn_downloaders[random.randint(0, len(self.wn_downloaders) - 1)]
-                downloader.download_one()
+                self.quit_event.wait(self.download_interval)
+                if not self.running:
+                    return
+                if self.wn_downloaders:
+                    downloader = self.wn_downloaders[random.randint(0, len(self.wn_downloaders) - 1)]
+                    downloader.download_one()
             except Exception:
                 logger.exception("Could not download wallpaper:")
 
     def set_wp(self, filename):
         try:
             self.update_current_file_info()
+            if self.filters:
+                filter = self.filters[random.randint(0, len(self.filters) - 1)]
+                os.system("convert " + filename + " " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
+                filename = os.path.join(self.config_folder, "wallpaper.jpg")
             self.gsettings.set_string(self.KEY, "file://" + filename)
             self.gsettings.apply()
             self.last_change_time = time.time()
@@ -189,7 +222,7 @@ class VarietyWindow(Window):
         if self.image_count < 20 or random.randint(0, 20) == 0:
             cnt = sum(1 for f in self.list_images())
             if not cnt:
-                return None
+                return []
 
             self.image_count = cnt
         else:
@@ -230,21 +263,25 @@ class VarietyWindow(Window):
             self.change_wallpaper()
 
     def change_wallpaper(self, widget=None, data=None):
-        if len(self.prepared):
-            img = self.prepared.pop()
-            self.change_event.set()
-        else:
-            img = self.select_random_images(1)[0]
+        try:
+            if len(self.prepared):
+                img = self.prepared.pop()
+                self.change_event.set()
+            else:
+                rnd_images = self.select_random_images(1)
+                img = rnd_images[0] if rnd_images else None
 
-        if not img:
-            return
+            if not img:
+                return
 
-        self.used = self.used[self.position:]
-        self.used.insert(0, img)
-        self.position = 0
-        if len(self.used) > 1000:
-            self.used = self.used[:1000]
-        self.set_wp(img)
+            self.used = self.used[self.position:]
+            self.used.insert(0, img)
+            self.position = 0
+            if len(self.used) > 1000:
+                self.used = self.used[:1000]
+            self.set_wp(img)
+        except Exception:
+            logger.exception("Could not change wallpaper")
 
     def image_ok(self, img):
         return img != self.used[self.position] and self.color_ok(img)
@@ -297,7 +334,7 @@ class VarietyWindow(Window):
             while self.used[self.position] == file:
                 self.next_wallpaper()
             self.used = [f for f in self.used if f != file]
-            trash = os.path.join(os.getenv("HOME"), ".local/share/Trash/")
+            trash = os.path.expanduser("~/.local/share/Trash/")
             self.move_file(file, trash)
 
     def move_to_favorites(self, widget=None, data=None):
@@ -309,9 +346,12 @@ class VarietyWindow(Window):
             self.update_current_file_info()
 
     def on_quit(self, widget=None):
-        self.running = False
-        Gtk.main_quit()
-        os.unlink(os.path.expanduser("~/.variety/.lock"))
+        logger.info("Quitting")
+        if self.running:
+            self.running = False
+            self.quit_event.set()
+            Gtk.main_quit()
+            os.unlink(os.path.expanduser("~/.variety/.lock"))
 
     def is_image(self, filename):
         return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png'))

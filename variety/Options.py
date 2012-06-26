@@ -29,6 +29,11 @@ class Options:
                 pass
 
             try:
+                self.change_on_start = config["change_on_start"].lower() in ["enabled", "1", "true", "on", "yes"]
+            except Exception:
+                pass
+
+            try:
                 self.download_interval = int(config["download_interval"])
                 if self.download_interval < 30:
                     self.download_interval = 30
@@ -40,17 +45,32 @@ class Options:
             except Exception:
                 self.desired_color = None
 
+            try:
+                self.favorites_folder = config["favorites_folder"]
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
                 for v in sources.values():
                     try:
                         s = v.strip().split('|')
-                        enabled = s[0].lower() in ["enabled", "1", "true", "on"]
-                        stype = self.str_to_type(s[1])
-                        self.sources.append((enabled, stype, s[2]))
+                        enabled = s[0].lower() in ["enabled", "1", "true", "on", "yes"]
+                        self.sources.append((enabled, (self.str_to_type(s[1])), s[2]))
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
+
+            if "filters" in config:
+                self.filters = []
+                filters = config["filters"]
+                for v in filters.values():
+                    try:
+                        s = v.strip().split('|')
+                        enabled = s[0].lower() in ["enabled", "1", "true", "on", "yes"]
+                        self.filters.append((enabled, s[1], s[2]))
+                    except Exception:
+                        logger.exception("Cannot parse filter: " + v)
 
         except Exception:
             logger.exception("Could not read configuration:")
@@ -66,14 +86,23 @@ class Options:
         return Options.SourceType.type_to_str[stype]
 
     def use_defaults(self):
+        self.change_on_start = False
         self.change_interval = 60
         self.download_interval = 60
         self.desired_color = None
+        self.favorites_folder = os.path.expanduser("~/.variety/Favorites")
 
         self.sources = [
             (True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"),
             (True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"),
-            (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")]
+            (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")
+        ]
+
+        self.filters = [
+            (False, "Grayscale", "-type Grayscale"),
+            (False, "Oil Painting", "-paint 6"),
+            (False, "Charcoal Painting", "-charcoal 3")
+        ]
 
     def write(self):
         try:
@@ -108,6 +137,5 @@ if __name__ == "__main__":
     o = Options()
     o.read()
     print o.sources
+    print o.filters
     o.write()
-    o.download_interval = 100
-    #o.write()

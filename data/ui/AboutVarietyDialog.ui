@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires about_variety_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires about_variety_dialog 1.0 -->
   <object class="AboutVarietyDialog" id="about_variety_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -9,9 +9,8 @@
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <property name="program_name">Variety</property>
-    <property name="copyright" translatable="yes">Created by Peter Levi &lt;peterlevi@peterlevi.com&gt;, June 2012</property>
-    <property name="comments" translatable="yes">An automatic wallpaper changer and manager.
-Created for the Ubuntu App Showdown, June 2012.</property>
+    <property name="copyright" translatable="yes">Created by Peter Levi for the Ubuntu App Showdown, June 2012</property>
+    <property name="comments" translatable="yes">An automatic wallpaper changer and manager.</property>
     <property name="website">https://launchpad.net/variety/</property>
     <property name="website_label" translatable="yes">https://launchpad.net/variety/</property>
     <property name="license" translatable="yes">This program is licensed under GPL-3</property>
