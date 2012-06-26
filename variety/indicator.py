@@ -34,7 +34,7 @@ class Indicator:
         # Add items to Menu and connect signals.
 
 
-        self.file_label = Gtk.MenuItem("XXX ")
+        self.file_label = Gtk.MenuItem("Current desktop wallpaper")
         self.file_label.show()
         self.file_label.set_sensitive(False)
         self.menu.append(self.file_label)

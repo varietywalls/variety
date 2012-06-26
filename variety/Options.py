@@ -16,7 +16,7 @@ class Options:
         self.configfile = os.path.expanduser("~/.variety/variety.conf")
 
     def read(self):
-        self.use_defaults()
+        self.set_defaults()
 
         try:
             config = ConfigObj(self.configfile)
@@ -85,7 +85,7 @@ class Options:
     def type_to_str(self, stype):
         return Options.SourceType.type_to_str[stype]
 
-    def use_defaults(self):
+    def set_defaults(self):
         self.change_on_start = False
         self.change_interval = 60
         self.download_interval = 60
@@ -93,7 +93,7 @@ class Options:
         self.favorites_folder = os.path.expanduser("~/.variety/Favorites")
 
         self.sources = [
-            (True, Options.SourceType.FOLDER, "~/.variety/Favorites")
+            (True, Options.SourceType.FOLDER, "~/.variety/Favorites"),
             (True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"),
             (True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"),
             (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")

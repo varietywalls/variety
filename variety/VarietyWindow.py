@@ -99,6 +99,10 @@ class VarietyWindow(Window):
         self.filters = [f[2] for f in options.filters if f[0]]
 
         logger.info("Loaded options:")
+        logger.info("Change on start: " + str(self.change_on_start))
+        logger.info("Change interval: " + str(self.change_interval))
+        logger.info("Download interval: " + str(self.download_interval))
+        logger.info("Favorites folder: " + self.favorites_folder)
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
@@ -141,7 +145,7 @@ class VarietyWindow(Window):
                         self.ind.show_origin.set_sensitive(True)
                         self.url = lines[2].strip()
                         return
-            self.ind.show_origin.set_label("Unknown origin")
+            self.ind.show_origin.set_label("in " + os.path.dirname(file))
             self.ind.show_origin.set_sensitive(False)
             self.url = None
         except Exception:
