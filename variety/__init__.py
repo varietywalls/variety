@@ -17,6 +17,7 @@ from variety_lib import set_up_logging, get_version
 
 import os
 import sys
+import signal
 
 def parse_options():
     """Support for command line options"""
@@ -30,19 +31,28 @@ def parse_options():
 
 def main():
     'constructor for your class instances'
+
+    # ignore Ctrl-C
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+
     parse_options()
 
     # ensure singleton
     check_pid()
 
-    # Run the application.    
+    # Run the application.
     window = VarietyWindow.VarietyWindow()
     window.first_run()
     GObject.threads_init()
     Gtk.main()
 
 def check_pid():
-    lock = os.path.expanduser("~/.variety/.lock")
+    try:
+        os.makedirs(os.path.expanduser("~/.config/variety"))
+    except Exception:
+        pass
+
+    lock = os.path.expanduser("~/.config/variety/.lock")
 
     if os.access(lock, os.F_OK):
         #if the lockfile is already there then check the PID number in the lock file

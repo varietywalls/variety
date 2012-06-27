@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="20cb3c05-6090-4e70-8b14-3bc237f0ab31" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/PreferencesVarietyDialog.py" afterPath="$PROJECT_DIR$/variety/PreferencesVarietyDialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/ui/PreferencesVarietyDialog.ui" afterPath="$PROJECT_DIR$/data/ui/PreferencesVarietyDialog.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/ui/AboutVarietyDialog.ui" afterPath="$PROJECT_DIR$/data/ui/AboutVarietyDialog.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/VarietyWindow.py" afterPath="$PROJECT_DIR$/variety/VarietyWindow.py" />
+    <list default="true" id="20cb3c05-6090-4e70-8b14-3bc237f0ab31" name="Default" comment="Bugxi">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/media/variety.svg" afterPath="$PROJECT_DIR$/data/media/variety.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configs/variety-example.conf" afterPath="$PROJECT_DIR$/configs/variety-example.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configs/variety.conf" afterPath="$PROJECT_DIR$/configs/variety.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snippets/setwp.py" afterPath="$PROJECT_DIR$/snippets/setwp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety.desktop.in" afterPath="$PROJECT_DIR$/variety.desktop.in" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/Options.py" afterPath="$PROJECT_DIR$/variety/Options.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/VarietyWindow.py" afterPath="$PROJECT_DIR$/variety/VarietyWindow.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/__init__.py" afterPath="$PROJECT_DIR$/variety/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/Window.py" afterPath="$PROJECT_DIR$/variety_lib/Window.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/varietyconfig.py" afterPath="$PROJECT_DIR$/variety_lib/varietyconfig.py" />
     </list>
     <ignored path="variety.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,10 +70,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="VarietyWindow.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="VarietyWindow.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety/VarietyWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="147" column="73" selection-start="5058" selection-end="5058" vertical-scroll-proportion="0.6345292">
+            <state line="348" column="39" selection-start="12563" selection-end="12563" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,45 +82,16 @@
       <file leaf-file-name="PreferencesVarietyDialog.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety/PreferencesVarietyDialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0">
+            <state line="29" column="0" selection-start="882" selection-end="882" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Options.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety/Options.py">
+      <file leaf-file-name="PreferencesDialog.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/variety_lib/PreferencesDialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="47" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety_lib/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="indicator.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety/indicator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="57" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+            <state line="7" column="0" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,25 +100,25 @@
       <file leaf-file-name="Window.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety_lib/Window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="35" selection-start="3564" selection-end="3564" vertical-scroll-proportion="0.0">
+            <state line="56" column="45" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety_lib/helpers.py">
+      <file leaf-file-name="__init__.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/variety/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="0" selection-start="1493" selection-end="1737" vertical-scroll-proportion="0.0">
+            <state line="34" column="19" selection-start="864" selection-end="864" vertical-scroll-proportion="0.5441176">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Builder.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/variety_lib/Builder.py">
+      <file leaf-file-name="Options.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/variety/Options.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="8" selection-start="1052" selection-end="1052" vertical-scroll-proportion="0.0">
+            <state line="85" column="52" selection-start="2896" selection-end="2896" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -153,7 +127,16 @@
       <file leaf-file-name="setup.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="4" selection-start="2830" selection-end="2830" vertical-scroll-proportion="0.0">
+            <state line="12" column="4" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".quickly" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.quickly">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="13" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -174,20 +157,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/snippets/listfiles.py" />
-        <option value="$PROJECT_DIR$/snippets/avgcolor.py" />
-        <option value="$PROJECT_DIR$/AUTHORS" />
         <option value="$PROJECT_DIR$/variety/AvgColor.py" />
         <option value="$PROJECT_DIR$/snippets/grabwallpaper.py" />
         <option value="$PROJECT_DIR$/snippets/dlwallpaper.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/variety/WallpapersNetScraper.py" />
-        <option value="$PROJECT_DIR$/variety_lib/Window.py" />
-        <option value="$PROJECT_DIR$/variety/__init__.py" />
         <option value="$PROJECT_DIR$/variety/PreferencesVarietyDialog.py" />
-        <option value="$PROJECT_DIR$/variety/Options.py" />
         <option value="$PROJECT_DIR$/variety/indicator.py" />
+        <option value="$PROJECT_DIR$/variety.desktop.in" />
+        <option value="$PROJECT_DIR$/variety_lib/varietyconfig.py" />
+        <option value="$PROJECT_DIR$/.quickly" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/configs/variety-example.conf" />
+        <option value="$PROJECT_DIR$/configs/variety.conf" />
+        <option value="$PROJECT_DIR$/variety_lib/Window.py" />
         <option value="$PROJECT_DIR$/variety/VarietyWindow.py" />
+        <option value="$PROJECT_DIR$/variety/Options.py" />
+        <option value="$PROJECT_DIR$/variety/__init__.py" />
       </list>
     </option>
   </component>
@@ -285,20 +270,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="variety" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="variety" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="variety" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="snippets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -629,22 +600,22 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33909574" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21018697" sideWeight="0.21808511" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21018697" sideWeight="0.6609042" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21018697" sideWeight="0.67021275" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845744" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33909574" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -739,56 +710,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.quickly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.IntelliJIdea11/system/python_stubs/-2066100796/gtk/_gtk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7239" column="8" selection-start="228054" selection-end="228054" vertical-scroll-proportion="0.33256352" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety/WallpapersNetScraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="85" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/ui/variety_window.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="38" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snippets/avgcolor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.IntelliJIdea11/system/python_stubs/-2066100796/posix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="660" selection-end="660" vertical-scroll-proportion="-1.081761" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety/PreferencesVarietyDialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="759" selection-end="759" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety_lib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety_lib/Window.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="35" selection-start="3564" selection-end="3564" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/variety_lib/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="0" selection-start="1493" selection-end="1737" vertical-scroll-proportion="0.0" />
@@ -799,30 +720,78 @@
         <state line="34" column="8" selection-start="1052" selection-end="1052" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/variety_lib/varietyconfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="18" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variety.desktop.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AUTHORS">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/variety-example.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="29" selection-start="604" selection-end="604" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/variety.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="82" selection-start="388" selection-end="388" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snippets/setwp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="17" selection-start="480" selection-end="480" vertical-scroll-proportion="0.40358743" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variety/PreferencesVarietyDialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="0" selection-start="882" selection-end="882" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variety_lib/PreferencesDialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variety_lib/Window.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="45" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="4" selection-start="2830" selection-end="2830" vertical-scroll-proportion="0.0" />
+        <state line="12" column="4" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.quickly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="13" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/variety/Options.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="47" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variety/indicator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="57" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+        <state line="85" column="52" selection-start="2896" selection-end="2896" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/variety/VarietyWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="73" selection-start="5058" selection-end="5058" vertical-scroll-proportion="0.6345292">
+        <state line="348" column="39" selection-start="12563" selection-end="12563" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variety/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="19" selection-start="864" selection-end="864" vertical-scroll-proportion="0.5441176">
           <folding />
         </state>
       </provider>

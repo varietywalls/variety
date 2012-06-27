@@ -13,7 +13,7 @@ class Options:
         str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN}
 
     def __init__(self):
-        self.configfile = os.path.expanduser("~/.variety/variety.conf")
+        self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
 
     def read(self):
         self.set_defaults()
@@ -90,10 +90,10 @@ class Options:
         self.change_interval = 60
         self.download_interval = 60
         self.desired_color = None
-        self.favorites_folder = os.path.expanduser("~/.variety/Favorites")
+        self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
 
         self.sources = [
-            (True, Options.SourceType.FOLDER, "~/.variety/Favorites"),
+            (True, Options.SourceType.FOLDER, "~/.config/variety/Favorites"),
             (True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"),
             (True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"),
             (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")
@@ -101,8 +101,10 @@ class Options:
 
         self.filters = [
             (False, "Grayscale", "-type Grayscale"),
-            (False, "Oil Painting", "-paint 6"),
-            (False, "Charcoal Painting", "-charcoal 3")
+            (False, "Heavy blur", "-blur 70x70"),
+            (False, "Oil painting", "-paint 6"),
+            (False, "Charcoal painting", "-charcoal 3"),
+            (False, "Pointilism", "-spread 10 -noise 3")
         ]
 
     def write(self):
@@ -120,6 +122,10 @@ class Options:
             config["sources"] = {}
             for i, s in enumerate(self.sources):
                 config["sources"]["src" + str(i+1)] = str(s[0]) + "|" + str(self.type_to_str(s[1])) + "|" + s[2]
+
+            config["filters"] = {}
+            for i, f in enumerate(self.filters):
+                config["filters"]["filter" + str(i+1)] = str(f[0]) + "|" + f[1] + "|" + f[2]
 
             config.write()
 

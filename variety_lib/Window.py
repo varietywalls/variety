@@ -49,8 +49,8 @@ class Window(Gtk.Window):
         self.preferences_dialog = None # instance
         self.AboutDialog = None # class
 
-        self.settings = Gio.Settings("net.launchpad.variety")
-        self.settings.connect('changed', self.on_preferences_changed)
+#        self.settings = Gio.Settings("net.launchpad.variety")
+#        self.settings.connect('changed', self.on_preferences_changed)
 
         # Optional Launchpad integration
         # This shouldn't crash if not found as it is simply used for bug reporting.
