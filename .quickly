@@ -1,3 +1,4 @@
 project = variety
 version = 12.04
 template = ubuntu-application
+dependencies = imagemagick, bs4, python-configobj
