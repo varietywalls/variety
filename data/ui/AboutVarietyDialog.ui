@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires about_variety_dialog 1.0 -->
@@ -9,12 +8,24 @@
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <property name="program_name">Variety</property>
-    <property name="copyright" translatable="yes">Created by Peter Levi for the Ubuntu App Showdown, June 2012</property>
+    <property name="copyright" translatable="yes">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
     <property name="comments" translatable="yes">An automatic wallpaper changer and manager.</property>
     <property name="website">https://launchpad.net/variety/</property>
     <property name="website_label" translatable="yes">https://launchpad.net/variety/</property>
-    <property name="license" translatable="yes">This program is licensed under GPL-3</property>
-    <property name="authors">Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
+    <property name="license" translatable="yes"># Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;
+# This program is free software: you can redistribute it and/or modify it 
+# under the terms of the GNU General Public License version 3, as published 
+# by the Free Software Foundation.
+# 
+# This program is distributed in the hope that it will be useful, but 
+# WITHOUT ANY WARRANTY; without even the implied warranties of 
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+# PURPOSE.  See the GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along 
+# with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</property>
+    <property name="authors">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
     <property name="logo">../media/variety.svg</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">

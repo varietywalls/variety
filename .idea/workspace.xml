@@ -2,16 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20cb3c05-6090-4e70-8b14-3bc237f0ab31" name="Default" comment="Bugxi">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/variety" afterPath="$PROJECT_DIR$/bin/variety" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/ui/AboutVarietyDialog.ui" afterPath="$PROJECT_DIR$/data/ui/AboutVarietyDialog.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configs/variety-example.conf" afterPath="$PROJECT_DIR$/configs/variety-example.conf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configs/variety.conf" afterPath="$PROJECT_DIR$/configs/variety.conf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snippets/setwp.py" afterPath="$PROJECT_DIR$/snippets/setwp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_example.py" afterPath="$PROJECT_DIR$/tests/test_example.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_lint.py" afterPath="$PROJECT_DIR$/tests/test_lint.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety.desktop.in" afterPath="$PROJECT_DIR$/variety.desktop.in" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/Options.py" afterPath="$PROJECT_DIR$/variety/Options.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/AboutVarietyDialog.py" afterPath="$PROJECT_DIR$/variety/AboutVarietyDialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/PreferencesVarietyDialog.py" afterPath="$PROJECT_DIR$/variety/PreferencesVarietyDialog.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/VarietyWindow.py" afterPath="$PROJECT_DIR$/variety/VarietyWindow.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/__init__.py" afterPath="$PROJECT_DIR$/variety/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety/indicator.py" afterPath="$PROJECT_DIR$/variety/indicator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/AboutDialog.py" afterPath="$PROJECT_DIR$/variety_lib/AboutDialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/Builder.py" afterPath="$PROJECT_DIR$/variety_lib/Builder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/PreferencesDialog.py" afterPath="$PROJECT_DIR$/variety_lib/PreferencesDialog.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/Window.py" afterPath="$PROJECT_DIR$/variety_lib/Window.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/__init__.py" afterPath="$PROJECT_DIR$/variety_lib/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/helpers.py" afterPath="$PROJECT_DIR$/variety_lib/helpers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/variety_lib/varietyconfig.py" afterPath="$PROJECT_DIR$/variety_lib/varietyconfig.py" />
     </list>
     <ignored path="variety.iws" />
@@ -70,10 +80,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="VarietyWindow.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="VarietyWindow.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/variety/VarietyWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="348" column="39" selection-start="12563" selection-end="12563" vertical-scroll-proportion="0.0">
+            <state line="10" column="64" selection-start="610" selection-end="610" vertical-scroll-proportion="0.31512606">
               <folding />
             </state>
           </provider>
@@ -82,7 +92,7 @@
       <file leaf-file-name="PreferencesVarietyDialog.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety/PreferencesVarietyDialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="0" selection-start="882" selection-end="882" vertical-scroll-proportion="0.0">
+            <state line="40" column="0" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -91,7 +101,7 @@
       <file leaf-file-name="PreferencesDialog.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety_lib/PreferencesDialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
+            <state line="18" column="0" selection-start="819" selection-end="819" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -100,16 +110,16 @@
       <file leaf-file-name="Window.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety_lib/Window.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="45" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0">
+            <state line="67" column="45" selection-start="2799" selection-end="2799" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/variety/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="19" selection-start="864" selection-end="864" vertical-scroll-proportion="0.5441176">
+            <state line="35" column="22" selection-start="1214" selection-end="1214" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -127,7 +137,7 @@
       <file leaf-file-name="setup.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="4" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
+            <state line="23" column="4" selection-start="923" selection-end="923" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -752,22 +762,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/variety/PreferencesVarietyDialog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="882" selection-end="882" vertical-scroll-proportion="0.0" />
+        <state line="40" column="0" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/variety_lib/PreferencesDialog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0" />
+        <state line="18" column="0" selection-start="819" selection-end="819" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/variety_lib/Window.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="45" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" />
+        <state line="67" column="45" selection-start="2799" selection-end="2799" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="4" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0" />
+        <state line="23" column="4" selection-start="923" selection-end="923" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.quickly">
@@ -782,16 +800,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/variety/VarietyWindow.py">
+    <entry file="file://$PROJECT_DIR$/variety/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="348" column="39" selection-start="12563" selection-end="12563" vertical-scroll-proportion="0.0">
+        <state line="35" column="22" selection-start="1214" selection-end="1214" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/variety/__init__.py">
+    <entry file="file://$PROJECT_DIR$/variety/VarietyWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="19" selection-start="864" selection-end="864" vertical-scroll-proportion="0.5441176">
+        <state line="10" column="64" selection-start="610" selection-end="610" vertical-scroll-proportion="0.31512606">
           <folding />
         </state>
       </provider>
