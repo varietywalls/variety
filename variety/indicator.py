@@ -60,10 +60,15 @@ class Indicator:
         self.separator0.show()
         self.menu.append(self.separator0)
 
-        self.change = Gtk.MenuItem("Change Wallpaper")
-        self.change.connect("activate", window.change_wallpaper)
-        self.change.show()
-        self.menu.append(self.change)
+        self.prev = Gtk.MenuItem("Previous")
+        self.prev.connect("activate", window.prev_wallpaper)
+        self.prev.show()
+        self.menu.append(self.prev)
+
+        self.next = Gtk.MenuItem("Next")
+        self.next.connect("activate", window.next_wallpaper)
+        self.next.show()
+        self.menu.append(self.next)
 
         self.separator = Gtk.SeparatorMenuItem()
         self.separator.show()

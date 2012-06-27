@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-28 00:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/ui/VarietyWindow.ui.h:1
+msgid "Welcome to Variety!"
+msgstr ""
+
+#: ../data/ui/VarietyWindow.ui.h:2
+msgid ""
+"Variety is an automatic wallpaper changer. You specify some images or "
+"picture folders \n"
+"and it will change your desktop wallpaper on a regular interval to some "
+"random beautiful \n"
+"image.  It can also automatically download beautiful wallpapers for you from "
+"the internet.\n"
+"\n"
+"Variety runs quietly in the background and can be contolled via the small "
+"mountain-like \n"
+"indicator icon near the top-right corner of the screen. Tip: you can scroll "
+"the mouse wheel\n"
+"above the indicator to change wallpapers back and forth.\n"
+"\n"
+"Please take the time to set your preferences on the next screen.\n"
+"\n"
+"Variety was developed by Peter Levi for the Ubuntu App Showdown, June 2012 "
+"and is \n"
+"licensed under GPL 3."
+msgstr ""
+
+#: ../data/ui/VarietyWindow.ui.h:14
+msgid "Continue"
+msgstr ""
+
+#: ../variety/__init__.py:38
+msgid "Show debug messages (-vv debugs variety_lib also)"
+msgstr ""
+
+#: ../variety.desktop.in.h:1
+msgid "Variety"
+msgstr ""
+
+#: ../variety.desktop.in.h:2
+msgid "Variety Wallpaper Changer"
+msgstr ""
+
+#. Code for other initialization actions should be added here.
+#: ../data/ui/AboutVarietyDialog.ui.h:1
+msgid "About Variety"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:2
+msgid "Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:3
+msgid "An automatic wallpaper changer and manager."
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:4
+msgid "https://launchpad.net/variety/"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:5
+msgid ""
+"# Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>\n"
+"# This program is free software: you can redistribute it and/or modify it \n"
+"# under the terms of the GNU General Public License version 3, as "
+"published \n"
+"# by the Free Software Foundation.\n"
+"# \n"
+"# This program is distributed in the hope that it will be useful, but \n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"# \n"
+"# You should have received a copy of the GNU General Public License along \n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:1
+msgid "seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:2
+msgid "minutes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:3
+msgid "hours"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:4
+msgid "days"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:5
+msgid "Variety Preferences"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:6
+msgid "General"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:7
+msgid "Change wallpaper every "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:8
+msgid "Also change on start"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:9
+msgid "Images"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:10
+msgid "Add images"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:11
+msgid "Add folders"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:12
+msgid "Add Wallpapers.net category"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:13
+msgid "Download a wallpaper every"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:14
+msgid "Favorites folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:15
+msgid "Move favorite wallpapers to"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
+msgid "Select a Folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+msgid ""
+"Randomly apply these filters to the displayed wallpapers (thanks to the "
+"wonderful ImageMagick):"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+msgid "Oil painting"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+msgid "Charcoal painting"
+msgstr ""

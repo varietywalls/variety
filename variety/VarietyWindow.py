@@ -176,6 +176,7 @@ class VarietyWindow(Window):
                 Gdk.threads_enter()
 
             for i in range(10):
+                self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file))
                 self.ind.favorite.set_sensitive(
                     not os.path.normpath(file).startswith(os.path.normpath(self.favorites_folder)))
@@ -317,14 +318,14 @@ class VarietyWindow(Window):
         else:
             self.prev_wallpaper()
 
-    def prev_wallpaper(self):
+    def prev_wallpaper(self, widget=None, data=None):
         if self.position >= len(self.used) - 1:
             return
         else:
             self.position += 1
             self.set_wp(self.used[self.position])
 
-    def next_wallpaper(self):
+    def next_wallpaper(self, widget=None, data=None):
         if self.position > 0:
             self.position -= 1
             self.set_wp(self.used[self.position])
