@@ -22,6 +22,7 @@ gettext.textdomain('variety')
 from gi.repository import Gtk, Gio # pylint: disable=E0611
 
 from variety_lib import Window
+from variety_lib import varietyconfig
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 
@@ -56,14 +57,7 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
 
-        self.config_folder = os.path.expanduser("~/.config/variety")
-        self.download_folder = os.path.join(self.config_folder, "Downloaded")
-        self.favorites_folder = os.path.join(self.config_folder, "Favorites")
-
-        try:
-            os.makedirs(self.download_folder)
-        except OSError:
-            pass
+        self.prepare_config_folder()
 
         # load config
         self.reload_config()
@@ -81,11 +75,29 @@ class VarietyWindow(Window):
         self.update_current_file_info()
         self.start_threads()
 
+    def prepare_config_folder(self):
+        self.config_folder = os.path.expanduser("~/.config/variety")
+        self.download_folder = os.path.join(self.config_folder, "Downloaded")
+        self.favorites_folder = os.path.join(self.config_folder, "Favorites")
+
+        try:
+            os.makedirs(self.download_folder)
+        except OSError:
+            pass
+
+        try:
+            os.makedirs(self.favorites_folder)
+        except OSError:
+            pass
+
+        if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
+            logger.info("Missing config file, copying it from " +
+                        varietyconfig.get_data_file("config", "variety.conf"))
+            shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
+
     def reload_config(self):
         options = Options()
         options.read()
-        if not os.path.exists(os.path.join(self.config_folder, "variety.config")):
-            options.write()
 
         self.change_on_start = options.change_on_start
         self.change_interval = options.change_interval
