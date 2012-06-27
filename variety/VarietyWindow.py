@@ -19,7 +19,7 @@ from gettext import gettext as _
 
 gettext.textdomain('variety')
 
-from gi.repository import Gtk, Gio # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, Gio # pylint: disable=E0611
 
 from variety_lib import Window
 from variety_lib import varietyconfig
@@ -72,7 +72,7 @@ class VarietyWindow(Window):
         self.image_cache = {}
         #TODO load image cache
 
-        self.update_current_file_info()
+        self.update_current_file_info(self.used[self.position], False)
         self.start_threads()
 
     def prepare_config_folder(self):
@@ -141,39 +141,50 @@ class VarietyWindow(Window):
         self.prepared = []
         self.change_event = threading.Event()
 
-        self.change_thread = threading.Thread(target=self.regular_change_thread)
-        self.change_thread.daemon = True
-        self.change_thread.start()
+        change_thread = threading.Thread(target=self.regular_change_thread)
+        change_thread.daemon = True
+        change_thread.start()
 
-        self.prepare_thread = threading.Thread(target=self.prepare_thread)
-        self.prepare_thread.daemon = True
-        self.prepare_thread.start()
+        prep_thread = threading.Thread(target=self.prepare_thread)
+        prep_thread.daemon = True
+        prep_thread.start()
 
-        self.dl_thread = threading.Thread(target=self.download_thread)
-        self.dl_thread.daemon = True
-        self.dl_thread.start()
+        dl_thread = threading.Thread(target=self.download_thread)
+        dl_thread.daemon = True
+        dl_thread.start()
 
-    def update_current_file_info(self):
-        file = self.used[self.position]
+        self.set_wp_event = threading.Event()
+        self.set_wp_filename = None
+        self.set_wp_moment = 0
+        wp_thread = threading.Thread(target=self.set_wp_thread)
+        wp_thread.daemon = True
+        wp_thread.start()
+
+    def update_current_file_info(self, file, is_gtk_thread):
         logger.info("Setting file info to: " + file)
-
         try:
-            self.ind.file_label.set_label(os.path.basename(file))
-
-            self.ind.favorite.set_sensitive(
-                not os.path.normpath(file).startswith(os.path.normpath(self.favorites_folder)))
-
+            self.url = None
+            label = "in " + os.path.dirname(file)
             if os.path.exists(file + ".txt"):
                 with open(file + ".txt") as f:
                     lines = list(f)
                     if lines[0].strip() == "INFO:":
-                        self.ind.show_origin.set_label(lines[1].strip())
-                        self.ind.show_origin.set_sensitive(True)
+                        label = lines[1].strip()
                         self.url = lines[2].strip()
-                        return
-            self.ind.show_origin.set_label("in " + os.path.dirname(file))
-            self.ind.show_origin.set_sensitive(False)
-            self.url = None
+
+            if not is_gtk_thread:
+                Gdk.threads_enter()
+
+            for i in range(10):
+                self.ind.file_label.set_label(os.path.basename(file))
+                self.ind.favorite.set_sensitive(
+                    not os.path.normpath(file).startswith(os.path.normpath(self.favorites_folder)))
+
+                self.ind.show_origin.set_label(label)
+                self.ind.show_origin.set_sensitive(bool(self.url))
+
+            if not is_gtk_thread:
+                Gdk.threads_leave()
         except Exception:
             logger.exception("Error updating file info")
 
@@ -224,14 +235,38 @@ class VarietyWindow(Window):
                 logger.exception("Could not download wallpaper:")
 
     def set_wp(self, filename):
+        self.set_wp_filename = filename
+        self.set_wp_moment = time.time()
+        self.set_wp_event.set()
+
+    def set_wp_thread(self):
+        while self.running:
+            self.set_wp_event.wait()
+            if not self.running:
+                return
+            if not self.set_wp_filename:
+                continue
+
+            self.set_wp_event.clear()
+            to_set = self.set_wp_filename
+
+            # if the user scrolls the wheel very fast, wait for all events to pass before actually performing the action
+            while time.time() - self.set_wp_moment < 0.5:
+                time.sleep(0.1)
+
+            self.set_wp_filename = None
+            self.do_set_wp(to_set)
+
+    def do_set_wp(self, filename):
         try:
-            self.update_current_file_info()
+            self.update_current_file_info(filename, False)
+            to_set = filename
             if self.filters:
                 filter = self.filters[random.randint(0, len(self.filters) - 1)]
                 os.system(
                     "convert " + filename + " " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
-                filename = os.path.join(self.config_folder, "wallpaper.jpg")
-            self.gsettings.set_string(self.KEY, "file://" + filename)
+                to_set = os.path.join(self.config_folder, "wallpaper.jpg")
+            self.gsettings.set_string(self.KEY, "file://" + to_set)
             self.gsettings.apply()
             self.last_change_time = time.time()
         except Exception:
@@ -277,10 +312,10 @@ class VarietyWindow(Window):
         return result
 
     def on_indicator_scroll(self, indicator, steps, direction, data=None):
-        if direction == 0:
-            self.prev_wallpaper()
-        else:
+        if direction:
             self.next_wallpaper()
+        else:
+            self.prev_wallpaper()
 
     def prev_wallpaper(self):
         if self.position >= len(self.used) - 1:
@@ -357,7 +392,10 @@ class VarietyWindow(Window):
     def move_file(self, file, to):
         try:
             shutil.move(file, to)
-            shutil.move(file + ".txt", to)
+            try:
+                shutil.move(file + ".txt", to)
+            except Exception:
+                pass
             logger.info("Moved " + file + " to " + to)
         except Exception:
             logger.exception("Could not move to " + to)
@@ -377,7 +415,7 @@ class VarietyWindow(Window):
             new_file = os.path.join(self.favorites_folder, os.path.basename(file))
             self.used = [(new_file if f == file else f) for f in self.used]
             self.move_file(file, self.favorites_folder)
-            self.update_current_file_info()
+            self.update_current_file_info(self.used[self.position], True)
 
     def on_quit(self, widget=None):
         logger.info("Quitting")

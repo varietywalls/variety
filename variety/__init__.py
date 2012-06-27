@@ -20,7 +20,7 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('variety')
 
-from gi.repository import Gtk, GObject # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 
 from variety import VarietyWindow
 
@@ -54,8 +54,12 @@ def main():
     # Run the application.
     window = VarietyWindow.VarietyWindow()
     window.first_run()
+
     GObject.threads_init()
+    Gdk.threads_init()
+    Gdk.threads_enter()
     Gtk.main()
+    Gdk.threads_leave()
 
 def check_pid():
     try:
