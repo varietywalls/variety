@@ -439,3 +439,13 @@ class VarietyWindow(Window):
 
     def on_continue_clicked(self, button=None):
         self.destroy()
+
+    def edit_prefs_file(self, widget=None):
+        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+            Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
+            "Preferences GUI not yet ready. I will open an editor with the config file instead and apply the changes after you save and close the editor.")
+        dialog.set_title("Edit config file")
+        response = dialog.run()
+        dialog.destroy()
+        os.system("gedit ~/.config/variety/variety.conf")
+        self.reload_config()

@@ -100,7 +100,7 @@ class Indicator:
 
         #Adding preferences button
         self.preferences = Gtk.MenuItem("Preferences...")
-        self.preferences.connect("activate",window.on_mnu_preferences_activate)
+        self.preferences.connect("activate", window.edit_prefs_file)
         self.preferences.show()
         self.menu.append(self.preferences)
 
