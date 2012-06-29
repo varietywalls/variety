@@ -2,7 +2,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires about_variety_dialog 1.0 -->
   <object class="AboutVarietyDialog" id="about_variety_dialog">
-    <property name="version">0.1-public2</property><property name="can_focus">False</property>
+    <property name="version">0.1-public3</property><property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">About Variety</property>
     <property name="icon">../media/variety.svg</property>

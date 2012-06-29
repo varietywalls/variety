@@ -66,6 +66,7 @@
                 <property name="margin_bottom">5</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
+                <signal name="clicked" handler="on_save_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -150,7 +151,7 @@
                     <property name="margin_right">10</property>
                     <property name="hexpand">True</property>
                     <child>
-                      <object class="GtkCheckButton" id="regular_change_enabled">
+                      <object class="GtkCheckButton" id="change_enabled">
                         <property name="label" translatable="yes">Change wallpaper every</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
@@ -263,6 +264,7 @@
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
                     <property name="width_request">200</property>
+                    <property name="height_request">200</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
@@ -270,13 +272,46 @@
                     <property name="hexpand">True</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTreeView" id="sources_treeview">
+                      <object class="GtkTreeView" id="sources">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="model">liststore2</property>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection" id="treeview-selection1">
                             <property name="mode">multiple</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="enabled">
+                            <property name="title" translatable="yes">Enabled</property>
+                            <child>
+                              <object class="GtkCellRendererToggle" id="sources_enabled_checkbox_renderer"/>
+                              <attributes>
+                                <attribute name="active">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn1">
+                            <property name="title" translatable="yes">Type</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext3"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                            <property name="title" translatable="yes">Location</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellrenderertext4"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -508,7 +543,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFileChooserButton" id="favorites_chooser">
+                  <object class="GtkFileChooserButton" id="favorites_folder_chooser">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_right">10</property>
@@ -609,51 +644,6 @@
                     <child>
                       <placeholder/>
                     </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -694,7 +684,7 @@
   </object>
   <object class="GtkSizeGroup" id="sizegroup2">
     <widgets>
-      <widget name="regular_change_enabled"/>
+      <widget name="change_enabled"/>
       <widget name="download_enabled"/>
     </widgets>
   </object>

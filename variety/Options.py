@@ -41,11 +41,6 @@ class Options:
                 pass
 
             try:
-                self.desired_color = map(int, config["desired_color"].split())
-            except Exception:
-                self.desired_color = None
-
-            try:
                 self.download_enabled = config["download_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -58,14 +53,19 @@ class Options:
                 pass
 
             try:
-                self.download_folder = config["download_folder"]
+                self.download_folder = os.path.expanduser(config["download_folder"])
             except Exception:
                 pass
 
             try:
-                self.favorites_folder = config["favorites_folder"]
+                self.favorites_folder = os.path.expanduser(config["favorites_folder"])
             except Exception:
                 pass
+
+            try:
+                self.desired_color = map(int, config["desired_color"].split())
+            except Exception:
+                self.desired_color = None
 
             if "sources" in config:
                 self.sources = []
@@ -105,7 +105,7 @@ class Options:
     def set_defaults(self):
         self.change_enabled = True
         self.change_on_start = False
-        self.change_interval = 60
+        self.change_interval = 300
         self.desired_color = None
         self.download_enabled = True
         self.download_interval = 600

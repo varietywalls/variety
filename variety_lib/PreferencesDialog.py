@@ -26,7 +26,7 @@ from . helpers import get_builder, show_uri, get_help_uri
 class PreferencesDialog(Gtk.Dialog):
     __gtype_name__ = "PreferencesDialog"
 
-    def __new__(cls):
+    def __new__(cls, parent):
         """Special static method that's automatically called by Python when 
         constructing a new instance of this class.
         
@@ -34,10 +34,10 @@ class PreferencesDialog(Gtk.Dialog):
         """
         builder = get_builder('PreferencesVarietyDialog')
         new_object = builder.get_object("preferences_variety_dialog")
-        new_object.finish_initializing(builder)
+        new_object.finish_initializing(builder, parent)
         return new_object
 
-    def finish_initializing(self, builder):
+    def finish_initializing(self, builder, parent):
         """Called while initializing this instance in __new__
 
         finish_initalizing should be called after parsing the ui definition
@@ -49,6 +49,7 @@ class PreferencesDialog(Gtk.Dialog):
         """
 
         # Get a reference to the builder and set up the signals.
+        self.parent = parent
         self.builder = builder
         self.ui = builder.get_ui(self, True)
 
