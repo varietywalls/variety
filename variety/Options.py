@@ -4,6 +4,8 @@ from configobj import ConfigObj
 import logging
 logger = logging.getLogger('variety')
 
+TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
+
 class Options:
     class SourceType:
         IMAGE = 1
@@ -22,6 +24,16 @@ class Options:
             config = ConfigObj(self.configfile)
 
             try:
+                self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.change_on_start = config["change_on_start"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.change_interval = int(config["change_interval"])
                 if self.change_interval < 5:
                     self.change_interval = 5
@@ -29,21 +41,26 @@ class Options:
                 pass
 
             try:
-                self.change_on_start = config["change_on_start"].lower() in ["enabled", "1", "true", "on", "yes"]
+                self.desired_color = map(int, config["desired_color"].split())
+            except Exception:
+                self.desired_color = None
+
+            try:
+                self.download_enabled = config["download_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
 
             try:
                 self.download_interval = int(config["download_interval"])
-                if self.download_interval < 30:
-                    self.download_interval = 30
+                if self.download_interval < 60:
+                    self.download_interval = 60
             except Exception:
                 pass
 
             try:
-                self.desired_color = map(int, config["desired_color"].split())
+                self.download_folder = config["download_folder"]
             except Exception:
-                self.desired_color = None
+                pass
 
             try:
                 self.favorites_folder = config["favorites_folder"]
@@ -56,7 +73,7 @@ class Options:
                 for v in sources.values():
                     try:
                         s = v.strip().split('|')
-                        enabled = s[0].lower() in ["enabled", "1", "true", "on", "yes"]
+                        enabled = s[0].lower() in TRUTH_VALUES
                         self.sources.append((enabled, (self.str_to_type(s[1])), s[2]))
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
@@ -67,7 +84,7 @@ class Options:
                 for v in filters.values():
                     try:
                         s = v.strip().split('|')
-                        enabled = s[0].lower() in ["enabled", "1", "true", "on", "yes"]
+                        enabled = s[0].lower() in TRUTH_VALUES
                         self.filters.append((enabled, s[1], s[2]))
                     except Exception:
                         logger.exception("Cannot parse filter: " + v)
@@ -86,10 +103,13 @@ class Options:
         return Options.SourceType.type_to_str[stype]
 
     def set_defaults(self):
+        self.change_enabled = True
         self.change_on_start = False
         self.change_interval = 60
-        self.download_interval = 60
         self.desired_color = None
+        self.download_enabled = True
+        self.download_interval = 600
+        self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
 
         self.sources = [
@@ -115,9 +135,15 @@ class Options:
             config.filename = self.configfile
 
         try:
+            config["change_enabled"] = str(self.change_enabled)
+            config["change_on_start"] = str(self.change_on_start)
             config["change_interval"] = str(self.change_interval)
-            config["download_interval"] = str(self.download_interval)
             config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"
+
+            config["download_enabled"] = str(self.download_enabled)
+            config["download_interval"] = str(self.download_interval)
+            config["download_folder"] = self.download_folder
+            config["favorites_folder"] = self.favorites_folder
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

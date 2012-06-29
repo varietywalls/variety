@@ -99,12 +99,20 @@ class VarietyWindow(Window):
         options = Options()
         options.read()
 
+        self.change_enabled = options.change_enabled
         self.change_on_start = options.change_on_start
         self.change_interval = options.change_interval
-        self.download_interval = options.change_interval
         self.desired_color = options.desired_color
 
+        self.download_enabled = options.download_enabled
+        self.download_interval = options.change_interval
+
+        self.download_folder = os.path.expanduser(options.favorites_folder)
         self.favorites_folder = os.path.expanduser(options.favorites_folder)
+        try:
+            os.makedirs(self.download_folder)
+        except OSError:
+            pass
         try:
             os.makedirs(self.favorites_folder)
         except OSError:
@@ -126,8 +134,11 @@ class VarietyWindow(Window):
 
         logger.info("Loaded options:")
         logger.info("Change on start: " + str(self.change_on_start))
+        logger.info("Change enabled: " + str(self.change_enabled))
         logger.info("Change interval: " + str(self.change_interval))
+        logger.info("Download enabled: " + str(self.download_enabled))
         logger.info("Download interval: " + str(self.download_interval))
+        logger.info("Download folder: " + self.download_folder)
         logger.info("Favorites folder: " + self.favorites_folder)
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
@@ -200,6 +211,8 @@ class VarietyWindow(Window):
             self.quit_event.wait(self.change_interval)
             if not self.running:
                 return
+            if not self.change_enabled:
+                continue
             while (time.time() - self.last_change_time) < self.change_interval:
                 now = time.time()
                 wait_more = self.change_interval - (now - self.last_change_time)
@@ -229,6 +242,8 @@ class VarietyWindow(Window):
                 self.quit_event.wait(self.download_interval)
                 if not self.running:
                     return
+                if not self.download_enabled:
+                    continue
                 if self.wn_downloaders:
                     downloader = self.wn_downloaders[random.randint(0, len(self.wn_downloaders) - 1)]
                     downloader.download_one()
@@ -443,7 +458,7 @@ class VarietyWindow(Window):
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
             Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-            "Preferences GUI not yet ready. I will open an editor with the config file instead and apply the changes after you save and close the editor.")
+            "I will open an editor with the config file and apply the changes after you save and close the editor.")
         dialog.set_title("Edit config file")
         response = dialog.run()
         dialog.destroy()

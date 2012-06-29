@@ -20,10 +20,12 @@
 # data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio # pylint: disable=E0611
+from gi.repository import Gio, Gtk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+from variety.Options import Options
+
 gettext.textdomain('variety')
 
 import logging
@@ -43,3 +45,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
 #        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
         # Code for other initialization actions should be added here.
+        options = Options()
+        options.read()
+
+        print type(self.ui.filters_grid)
+        for f in options.filters:
+            cb = Gtk.CheckButton(f[1])
+            cb.set_visible(True)
+            self.ui.filters_grid.add(cb)
