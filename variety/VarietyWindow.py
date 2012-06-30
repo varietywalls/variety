@@ -16,6 +16,7 @@
 
 import gettext
 from gettext import gettext as _
+from variety.DominantColors import DominantColors
 
 gettext.textdomain('variety')
 
@@ -249,6 +250,10 @@ class VarietyWindow(Window):
                         self.prepared.append(img)
                 if not self.prepared:
                     self.prepared.extend(list(images[:5]))
+
+                # remove duplicates
+                self.prepared = [self.prepared[i] for i, x in enumerate(self.prepared) if x not in self.prepared[i+1:]]
+
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
             self.prepare_event.clear()
@@ -396,14 +401,14 @@ class VarietyWindow(Window):
             return True
         try:
             if not img in self.image_cache:
-                avg = AvgColor(img)
-                self.image_cache[img] = avg.getAvg()
-            avg = self.image_cache[img]
-            r, g, b = avg
-            tr, tg, tb = self.desired_color
-            return abs(r - tr) < 40 and abs(g - tg) < 40 and abs(b - tb) < 40
+                dom = DominantColors(img)
+                self.image_cache[img] = dom.get_dominant()
+            else:
+                print "cache hit for " + img
+            colors = self.image_cache[img]
+            return DominantColors.contains_color(colors, self.desired_color)
         except Exception, err:
-            logger.exception("Error with AvgColor:")
+            logger.exception("Error in color_ok:")
             return False
 
     def open_folder(self, widget=None, data=None):

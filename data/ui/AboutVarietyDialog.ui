@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires about_variety_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
@@ -8,7 +9,7 @@
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <property name="program_name">Variety</property>
-    <property name="version">0.2-public3</property>
+    <property name="version">0.2-public1</property>
     <property name="copyright" translatable="yes">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
     <property name="comments" translatable="yes">An automatic wallpaper changer and manager.</property>
     <property name="website">https://launchpad.net/variety</property>
@@ -27,7 +28,7 @@
 # with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </property>
     <property name="authors">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
-    <property name="logo">../media/variety.svg</property>
+    <property name="logo">../media/variety128.png</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">

@@ -131,7 +131,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
-            seld.add_sources(Options.SourceType.FOLDER, chooser.get_filenames())
+            self.add_sources(Options.SourceType.FOLDER, chooser.get_filenames())
 
         chooser.destroy()
 
