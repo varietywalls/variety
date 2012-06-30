@@ -157,6 +157,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_wn_clicked(self, widget=None):
         dialog = AddWallpapersNetCategoryDialog()
+        dialog.set_transient_for(self)
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             url = dialog.ui.url.get_text().strip()

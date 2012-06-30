@@ -26,7 +26,7 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
     __gtype_name__ = "AddWallpapersNetCategoryDialog"
 
     def __new__(cls):
-        """Special static method that's automatically called by Python when 
+        """Special static method that's automatically called by Python when
         constructing a new instance of this class.
         
         Returns a fully instantiated AddWallpapersNetCategoryDialog object.
