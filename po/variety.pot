@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-28 12:40+0300\n"
+"POT-Creation-Date: 2012-06-30 17:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,6 +93,37 @@ msgid ""
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
+msgid "Variety - add Wallpapers.net category"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
+msgid ""
+"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
+"a category with wallpapers you would like to see on your desktop, then paste "
+"its URL below.\n"
+"\n"
+"A category is  anything on the site that has one or more pages with "
+"wallpapers on them. Here are some examples:\n"
+"\n"
+"Top wallpapers: <a href=\"http://wallpapers.net/top_wallpapers.html\">http://"
+"wallpapers.net/top_wallpapers.html</a>\n"
+"\n"
+"Autumn: <a href=\"http://wallpapers.net/autumn-desktop-wallpapers.html"
+"\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
+"\n"
+"Color Green: <a href=\"http://wallpapers.net/colors/66CC00/\">http://"
+"wallpapers.net/colors/66CC00/</a>\n"
+"\n"
+"Specific resolution: <a href=\"http://wallpapers.net/1920x1200_wide-"
+"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-r.html</"
+"a>\n"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:14
+msgid "Paste URL here: "
+msgstr ""
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
 msgid "seconds"
 msgstr ""
@@ -114,63 +145,83 @@ msgid "Variety Preferences"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:6
-msgid "General"
+msgid "Cancel"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:7
-msgid "Change wallpaper every "
+msgid "General"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:8
-msgid "Also change on start"
+msgid "Start Variety when the computer starts"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:9
-msgid "Images"
+msgid "Change wallpaper every"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:10
-msgid "Add images"
+msgid "Change wallpaper on start"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
-msgid "Add folders"
+msgid "Images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:12
-msgid "Add Wallpapers.net category"
+msgid "Enabled"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:13
-msgid "Download a wallpaper every"
+msgid "Type"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:14
-msgid "Favorites folder"
+msgid "Location"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
-msgid "Move favorite wallpapers to"
+msgid "Add Images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
-msgid "Select a Folder"
+msgid "Add Folders"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
-msgid "Filters"
+msgid "Add Wallpapers.net category"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
-msgid ""
-"Randomly apply these filters to the displayed wallpapers (thanks to the "
-"wonderful ImageMagick):"
+msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "Oil painting"
+msgid "Download a wallpaper every"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
-msgid "Charcoal painting"
+msgid "to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+msgid "Favorites folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+msgid "Move favorite wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+msgid "Select a Folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+msgid ""
+"Randomly apply these filters to the displayed wallpapers (thanks to the "
+"wonderful ImageMagick):"
 msgstr ""

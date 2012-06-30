@@ -206,7 +206,7 @@ class VarietyWindow(Window):
                     not os.path.normpath(file).startswith(os.path.normpath(self.favorites_folder)))
 
                 self.ind.show_origin.set_label(label)
-                self.ind.show_origin.set_sensitive(bool(self.url))
+                self.ind.show_origin.set_sensitive(True)
 
             if not is_gtk_thread:
                 Gdk.threads_leave()
@@ -410,6 +410,8 @@ class VarietyWindow(Window):
     def on_show_origin(self, widget=None, data=None):
         if self.url:
             os.system("xdg-open " + self.url)
+        else:
+            self.open_folder()
 
     def confirm_move(self, file, to):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
