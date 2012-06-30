@@ -69,11 +69,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.sources.get_model())
 
         self.filter_checkboxes = []
-        for f in self.options.filters:
+        for i, f in enumerate(self.options.filters):
             cb = Gtk.CheckButton(f[1])
             cb.set_visible(True)
             cb.set_active(f[0])
-            self.ui.filters_grid.add(cb)
+            self.ui.filters_grid.attach(cb, i // 3, i % 3, 1, 1)
             self.filter_checkboxes.append(cb)
 
     def source_enabled_toggled(self, widget, path, model):
@@ -149,8 +149,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # store the treeiters from paths
         iters = []
         for row in rows:
-            iters.append(model.get_iter(row))
-            # remove the rows (treeiters)
+            if model[row][1] != Options.type_to_str(Options.SourceType.FAVORITES):
+                iters.append(model.get_iter(row))
+        # remove the rows (treeiters)
         for i in iters:
             if i is not None:
                 model.remove(i)

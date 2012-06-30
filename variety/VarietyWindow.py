@@ -66,6 +66,7 @@ class VarietyWindow(Window):
         self.used = []
         self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
         self.position = 0
+        self.current = self.used[self.position]
 
         self.last_change_time = 0
 
@@ -73,7 +74,7 @@ class VarietyWindow(Window):
         self.image_cache = {}
         #TODO load image cache
 
-        self.update_current_file_info(self.used[self.position], False)
+        self.update_current_file_info(self.current, False)
         self.start_threads()
 
     def prepare_config_folder(self):
@@ -123,6 +124,9 @@ class VarietyWindow(Window):
                                   s[0] and s[1] == Options.SourceType.IMAGE]
 
         self.folders = [os.path.expanduser(s[2]) for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
+
+        if Options.SourceType.FAVORITES in [s[1] for s in options.sources if s[0]]:
+            self.folders.append(self.favorites_folder)
 
         self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
         self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
@@ -299,6 +303,7 @@ class VarietyWindow(Window):
                 to_set = os.path.join(self.config_folder, "wallpaper.jpg")
             self.gsettings.set_string(self.KEY, "file://" + to_set)
             self.gsettings.apply()
+            self.current = filename
             self.last_change_time = time.time()
         except Exception:
             logger.exception("Error while setting wallpaper")
@@ -384,7 +389,7 @@ class VarietyWindow(Window):
             logger.exception("Could not change wallpaper")
 
     def image_ok(self, img):
-        return img != self.used[self.position] and self.color_ok(img)
+        return img != self.current and self.color_ok(img)
 
     def color_ok(self, img):
         if not self.desired_color:
@@ -402,10 +407,10 @@ class VarietyWindow(Window):
             return False
 
     def open_folder(self, widget=None, data=None):
-        os.system("xdg-open " + os.path.dirname(self.used[self.position]))
+        os.system("xdg-open " + os.path.dirname(self.current))
 
     def open_file(self, widget=None, data=None):
-        os.system("xdg-open " + self.used[self.position])
+        os.system("xdg-open " + self.current)
 
     def on_show_origin(self, widget=None, data=None):
         if self.url:
@@ -434,7 +439,7 @@ class VarietyWindow(Window):
             logger.exception("Could not move to " + to)
 
     def move_to_trash(self, widget=None, data=None):
-        file = self.used[self.position]
+        file = self.current
         if self.confirm_move(file, "Trash") == Gtk.ResponseType.YES:
             while self.used[self.position] == file:
                 self.next_wallpaper()
@@ -443,12 +448,14 @@ class VarietyWindow(Window):
             self.move_file(file, trash)
 
     def move_to_favorites(self, widget=None, data=None):
-        file = self.used[self.position]
+        file = self.current
         if self.confirm_move(file, "Favorites") == Gtk.ResponseType.YES:
             new_file = os.path.join(self.favorites_folder, os.path.basename(file))
             self.used = [(new_file if f == file else f) for f in self.used]
             self.move_file(file, self.favorites_folder)
-            self.update_current_file_info(self.used[self.position], True)
+            if self.current == file:
+                self.current = new_file
+            self.update_current_file_info(self.current, True)
 
     def on_quit(self, widget=None):
         logger.info("Quitting")
