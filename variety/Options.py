@@ -74,7 +74,7 @@ class Options:
                     try:
                         s = v.strip().split('|')
                         enabled = s[0].lower() in TRUTH_VALUES
-                        self.sources.append((enabled, (self.str_to_type(s[1])), s[2]))
+                        self.sources.append((enabled, (Options.str_to_type(s[1])), s[2]))
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
 
@@ -92,14 +92,16 @@ class Options:
         except Exception:
             logger.exception("Could not read configuration:")
 
-    def str_to_type(self, s):
+    @staticmethod
+    def str_to_type(s):
         s = s.lower()
         if s in Options.SourceType.str_to_type:
             return Options.SourceType.str_to_type[s]
         else:
             raise Exception("Unknown source type")
 
-    def type_to_str(self, stype):
+    @staticmethod
+    def type_to_str(stype):
         return Options.SourceType.type_to_str[stype]
 
     def set_defaults(self):
@@ -147,7 +149,7 @@ class Options:
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
-                config["sources"]["src" + str(i+1)] = str(s[0]) + "|" + str(self.type_to_str(s[1])) + "|" + s[2]
+                config["sources"]["src" + str(i+1)] = str(s[0]) + "|" + str(Options.type_to_str(s[1])) + "|" + s[2]
 
             config["filters"] = {}
             for i, f in enumerate(self.filters):

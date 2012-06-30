@@ -58,7 +58,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(options.favorites_folder))
 
         for s in options.sources:
-            self.ui.sources.get_model().append([s[0], options.type_to_str(s[1]), s[2]])
+            self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
         self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled, self.ui.sources.get_model())
 
         for f in options.filters:
@@ -81,3 +81,54 @@ class PreferencesVarietyDialog(PreferencesDialog):
         time_unit.set_active(x)
         return
 
+    def on_add_images_clicked(self, widget=None):
+        chooser = Gtk.FileChooserDialog("Add Images", parent=self, action=Gtk.FileChooserAction.OPEN,
+            buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+        chooser.set_select_multiple(True)
+        chooser.set_local_only(True)
+        filter = Gtk.FileFilter()
+        filter.set_name("Images")
+        for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff"]:
+            filter.add_pattern("*." + s)
+        chooser.add_filter(filter)
+        response = chooser.run()
+
+        if response == Gtk.ResponseType.OK:
+            existing = set()
+            for r in self.ui.sources.get_model():
+                if r[1] == Options.type_to_str(Options.SourceType.IMAGE):
+                    existing.add(r[2])
+            for f in chooser.get_filenames():
+                if not f in existing:
+                    self.ui.sources.get_model().append([True, Options.type_to_str(Options.SourceType.IMAGE), f])
+        chooser.destroy()
+
+    def on_add_folders_clicked(self, widget=None):
+        chooser = Gtk.FileChooserDialog("Add Folders - Only add the root folders, subfolders are searched recursively",
+            parent=self, action=Gtk.FileChooserAction.SELECT_FOLDER,
+            buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+        chooser.set_select_multiple(True)
+        chooser.set_local_only(True)
+        response = chooser.run()
+
+        if response == Gtk.ResponseType.OK:
+            existing = set()
+            for r in self.ui.sources.get_model():
+                if r[1] == Options.type_to_str(Options.SourceType.FOLDER):
+                    existing.add(r[2])
+            for f in chooser.get_filenames():
+                if not f in existing:
+                    self.ui.sources.get_model().append([True, Options.type_to_str(Options.SourceType.FOLDER), f])
+
+        chooser.destroy()
+
+    def on_remove_sources_clicked(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        # store the treeiters from paths
+        iters = []
+        for row in rows:
+            iters.append(model.get_iter(row))
+        # remove the rows (treeiters)
+        for i in iters:
+            if i is not None:
+                model.remove(i)

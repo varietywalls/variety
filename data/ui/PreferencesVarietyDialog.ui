@@ -263,8 +263,8 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
-                    <property name="width_request">200</property>
-                    <property name="height_request">200</property>
+                    <property name="width_request">250</property>
+                    <property name="height_request">250</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
@@ -339,6 +339,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_add_images_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -347,13 +348,14 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="add_folder">
-                        <property name="label" translatable="yes">Add Folder</property>
+                      <object class="GtkButton" id="add_folders">
+                        <property name="label" translatable="yes">Add Folders</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_add_folders_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -369,6 +371,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_add_wn_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -384,6 +387,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_remove_sources_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -677,7 +681,7 @@
   <object class="GtkSizeGroup" id="sizegroup1">
     <widgets>
       <widget name="add_images"/>
-      <widget name="add_folder"/>
+      <widget name="add_folders"/>
       <widget name="add_wn"/>
       <widget name="remove_sources"/>
     </widgets>
