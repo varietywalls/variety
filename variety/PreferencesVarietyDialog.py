@@ -50,6 +50,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.options = Options()
         self.options.read()
 
+        self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
+
         self.ui.change_enabled.set_active(self.options.change_enabled)
         self.set_time(self.options.change_interval, self.ui.change_interval_text, self.ui.change_interval_time_unit)
         self.ui.change_on_start.set_active(self.options.change_on_start)
@@ -87,6 +89,21 @@ class PreferencesVarietyDialog(PreferencesDialog):
         text.set_text(str(interval // times[x]))
         time_unit.set_active(x)
         return
+
+    def read_time(self, text_entry, time_unit_combo, minimum, default):
+        result = default
+        try:
+            interval = int(text_entry.get_text())
+            tree_iter = time_unit_combo.get_active_iter()
+            if tree_iter:
+                model = time_unit_combo.get_model()
+                time_unit_seconds = model[tree_iter][1]
+                result = interval * time_unit_seconds
+                if result < 5:
+                    result = minimum
+        except Exception:
+            logger.exception("Could not understand interval")
+        return result
 
     def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog("Add Images", parent=self, action=Gtk.FileChooserAction.OPEN,
@@ -152,45 +169,91 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_cancel_clicked(self, widget):
         self.destroy()
 
-    def read_time(self, text_entry, time_unit_combo, minimum, default):
-        result = default
-        try:
-            interval = int(text_entry.get_text())
-            tree_iter = time_unit_combo.get_active_iter()
-            if tree_iter:
-                model = time_unit_combo.get_model()
-                time_unit_seconds = model[tree_iter][1]
-                result = interval * time_unit_seconds
-                if result < 5:
-                    result = minimum
-        except Exception:
-            logger.exception("Could not understand interval")
-        return result
-
-
     def on_save_clicked(self, widget):
-        self.options.change_enabled = self.ui.change_enabled.get_active()
-        self.options.change_on_start = self.ui.change_on_start.get_active()
-        self.options.change_interval = self.read_time(
-            self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
+        try:
+            self.options.change_enabled = self.ui.change_enabled.get_active()
+            self.options.change_on_start = self.ui.change_on_start.get_active()
+            self.options.change_interval = self.read_time(
+                self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
 
-        self.options.download_enabled = self.ui.download_enabled.get_active()
-        self.options.download_interval = self.read_time(
-            self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
+            self.options.download_enabled = self.ui.download_enabled.get_active()
+            self.options.download_interval = self.read_time(
+                self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
 
-        self.options.download_folder = self.ui.download_folder_chooser.get_filename()
-        self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            self.options.download_folder = self.ui.download_folder_chooser.get_filename()
+            self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
 
-        self.options.sources = []
-        for r in self.ui.sources.get_model():
-            self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+            self.options.sources = []
+            for r in self.ui.sources.get_model():
+                self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
 
-        enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
-        for f in self.options.filters:
-            f[0] = f[1].lower() in enabled_filters
+            enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
+            for f in self.options.filters:
+                f[0] = f[1].lower() in enabled_filters
 
-        self.options.write()
-        self.parent.reload_config()
+            self.options.write()
+            self.parent.reload_config()
 
-        self.destroy()
+            self.update_autostart()
 
+            self.destroy()
+        except Exception:
+            logger.exception("Error while saving")
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+                "An error occurred while saving preferences.\n"
+                "Please run from a terminal with the -v flag and try again.")
+            dialog.set_title("Oops")
+            dialog.run()
+            dialog.destroy()
+
+    def update_autostart(self):
+        try:
+            content = (
+                "[Desktop Entry]\n"
+                "Name=Variety\n"
+                "Comment=Variety Wallpaper Changer\n"
+                "Icon=%s\n"
+                "Exec=%s\n"
+                "Terminal=false\n"
+                "Type=Application\n")
+
+            file = os.path.expanduser("~/.config/autostart/variety.desktop")
+
+            if not self.ui.autostart.get_active():
+                try:
+                    if os.path.exists(file):
+                        logger.info("Removing autostart entry")
+                        os.unlink(file)
+                except Exception:
+                    logger.exception("Could not remove autostart entry variety.desktop")
+            else:
+                if not os.path.exists(file):
+                    logger.info("Creating autostart entry")
+                    with open("/proc/%s/cmdline" % os.getpid()) as f:
+                        cmdline = f.read().strip()
+
+                    if cmdline.find("/opt/extras") >= 0:
+                        content = content % (
+                                  "/opt/extras.ubuntu.com/variety/share/variety/media/variety.svg",
+                                  "/opt/extras.ubuntu.com/variety/bin/variety")
+                    elif cmdline.find("/opt/") >= 0:
+                        content = content % (
+                                  "/opt/variety/share/variety/media/variety.svg",
+                                  "/opt/variety/bin/variety")
+                    else:
+                        content = content % (
+                                  "/usr/share/variety/media/variety.svg",
+                                  "/usr/bin/variety")
+
+                    with open(file, "w") as desktop_file:
+                        desktop_file.write(content)
+        except Exception, e:
+            logger.exception("Error while creating autostart desktop entry")
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+                "An error occurred while creating the autostart desktop entry\n"
+                "Please run from a terminal with the -v flag and try again.")
+            dialog.set_title("Oops")
+            dialog.run()
+            dialog.destroy()

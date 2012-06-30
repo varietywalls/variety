@@ -47,7 +47,7 @@ class Indicator:
 
         self.file_label = Gtk.MenuItem("Current desktop wallpaper")
         self.file_label.show()
-        self.file_label.set_sensitive(False)
+        self.file_label.connect("activate", window.open_file)
         self.menu.append(self.file_label)
 
         self.show_origin = Gtk.MenuItem("Show origin")

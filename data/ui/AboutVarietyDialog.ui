@@ -1,17 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires about_variety_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AboutVarietyDialog" id="about_variety_dialog">
-    <property name="version">0.2</property><property name="can_focus">False</property>
+    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">About Variety</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <property name="program_name">Variety</property>
+    <property name="version">0.2</property>
     <property name="copyright" translatable="yes">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
     <property name="comments" translatable="yes">An automatic wallpaper changer and manager.</property>
     <property name="website">https://launchpad.net/variety</property>
-    <property name="website_label" translatable="yes">https://launchpad.net/variety/</property>
+    <property name="website_label" translatable="yes">https://launchpad.net/variety</property>
     <property name="license" translatable="yes"># Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
@@ -25,7 +27,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </property>
-    <property name="authors">Copyright (C) 2012 Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
+    <property name="authors">Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
     <property name="logo">../media/variety.svg</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
