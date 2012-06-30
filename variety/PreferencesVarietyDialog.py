@@ -142,3 +142,4 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if url.startswith("http://wallpapers.net"):
                 self.add_sources(Options.SourceType.WN, [url])
         dialog.destroy()
+
