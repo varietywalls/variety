@@ -25,6 +25,7 @@ from gi.repository import Gio, Gtk # pylint: disable=E0611
 import gettext
 from gettext import gettext as _
 from variety.Options import Options
+from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 
 gettext.textdomain('variety')
 
@@ -94,13 +95,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
-            existing = set()
-            for r in self.ui.sources.get_model():
-                if r[1] == Options.type_to_str(Options.SourceType.IMAGE):
-                    existing.add(r[2])
-            for f in chooser.get_filenames():
-                if not f in existing:
-                    self.ui.sources.get_model().append([True, Options.type_to_str(Options.SourceType.IMAGE), f])
+            self.add_sources(Options.SourceType.IMAGE, chooser.get_filenames())
+
         chooser.destroy()
 
     def on_add_folders_clicked(self, widget=None):
@@ -112,15 +108,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
-            existing = set()
-            for r in self.ui.sources.get_model():
-                if r[1] == Options.type_to_str(Options.SourceType.FOLDER):
-                    existing.add(r[2])
-            for f in chooser.get_filenames():
-                if not f in existing:
-                    self.ui.sources.get_model().append([True, Options.type_to_str(Options.SourceType.FOLDER), f])
+            seld.add_sources(Options.SourceType.FOLDER, chooser.get_filenames())
 
         chooser.destroy()
+
+    def add_sources(self, type, locations):
+        existing = set()
+        for r in self.ui.sources.get_model():
+            if r[1] == Options.type_to_str(type):
+                existing.add(r[2])
+        for f in locations:
+            if not f in existing:
+                self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
 
     def on_remove_sources_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -132,3 +131,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for i in iters:
             if i is not None:
                 model.remove(i)
+
+    def on_add_wn_clicked(self, widget=None):
+        dialog  = AddWallpapersNetCategoryDialog()
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            url = dialog.ui.url.get_text().strip()
+            if not url.startswith("http://"):
+                url = "http://" + url
+            if url.startswith("http://wallpapers.net"):
+                self.add_sources(Options.SourceType.WN, [url])
+        dialog.destroy()
