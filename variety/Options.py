@@ -1,3 +1,20 @@
+#!/usr/bin/python
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
+
 import os
 from configobj import ConfigObj
 
@@ -74,7 +91,7 @@ class Options:
                     try:
                         s = v.strip().split('|')
                         enabled = s[0].lower() in TRUTH_VALUES
-                        self.sources.append((enabled, (Options.str_to_type(s[1])), s[2]))
+                        self.sources.append([enabled, (Options.str_to_type(s[1])), s[2]])
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
 
@@ -85,7 +102,7 @@ class Options:
                     try:
                         s = v.strip().split('|')
                         enabled = s[0].lower() in TRUTH_VALUES
-                        self.filters.append((enabled, s[1], s[2]))
+                        self.filters.append([enabled, s[1], s[2]])
                     except Exception:
                         logger.exception("Cannot parse filter: " + v)
 
@@ -115,18 +132,18 @@ class Options:
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
 
         self.sources = [
-            (True, Options.SourceType.FOLDER, "~/.config/variety/Favorites"),
-            (True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"),
-            (True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"),
-            (True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html")
+            [True, Options.SourceType.FOLDER, "~/.config/variety/Favorites"],
+            [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
+            [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
+            [True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html"]
         ]
 
         self.filters = [
-            (False, "Grayscale", "-type Grayscale"),
-            (False, "Heavy blur", "-blur 70x70"),
-            (False, "Oil painting", "-paint 6"),
-            (False, "Charcoal painting", "-charcoal 3"),
-            (False, "Pointilism", "-spread 10 -noise 3")
+            [False, "Grayscale", "-type Grayscale"],
+            [False, "Heavy blur", "-blur 70x70"],
+            [False, "Oil painting", "-paint 6"],
+            [False, "Charcoal painting", "-charcoal 3"],
+            [False, "Pointilism", "-spread 10 -noise 3"]
         ]
 
     def write(self):
@@ -145,6 +162,7 @@ class Options:
             config["download_enabled"] = str(self.download_enabled)
             config["download_interval"] = str(self.download_interval)
             config["download_folder"] = self.download_folder
+
             config["favorites_folder"] = self.favorites_folder
 
             config["sources"] = {}

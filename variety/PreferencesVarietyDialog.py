@@ -31,6 +31,7 @@ gettext.textdomain('variety')
 
 import os
 import logging
+
 logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
@@ -43,30 +44,35 @@ class PreferencesVarietyDialog(PreferencesDialog):
         super(PreferencesVarietyDialog, self).finish_initializing(builder, parent)
 
         # Bind each preference widget to gsettings
-#        widget = self.builder.get_object('example_entry')
-#        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        #        widget = self.builder.get_object('example_entry')
+        #        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
-        options = Options()
-        options.read()
+        self.options = Options()
+        self.options.read()
 
-        self.ui.change_enabled.set_active(options.change_enabled)
-        self.set_time(options.change_interval, self.ui.change_interval_text, self.ui.change_interval_time_unit)
-        self.ui.change_on_start.set_active(options.change_on_start)
+        self.ui.change_enabled.set_active(self.options.change_enabled)
+        self.set_time(self.options.change_interval, self.ui.change_interval_text, self.ui.change_interval_time_unit)
+        self.ui.change_on_start.set_active(self.options.change_on_start)
 
-        self.ui.download_enabled.set_active(options.download_enabled)
-        self.set_time(options.download_interval, self.ui.download_interval_text, self.ui.download_interval_time_unit)
-        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(options.download_folder))
-        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(options.favorites_folder))
+        self.ui.download_enabled.set_active(self.options.download_enabled)
+        self.set_time(self.options.download_interval, self.ui.download_interval_text,
+            self.ui.download_interval_time_unit)
 
-        for s in options.sources:
+        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
+        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+
+        for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
-        self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled, self.ui.sources.get_model())
+        self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
+            self.ui.sources.get_model())
 
-        for f in options.filters:
+        self.filter_checkboxes = []
+        for f in self.options.filters:
             cb = Gtk.CheckButton(f[1])
             cb.set_visible(True)
             cb.set_active(f[0])
             self.ui.filters_grid.add(cb)
+            self.filter_checkboxes.append(cb)
 
     def source_enabled_toggled(self, widget, path, model):
         model[path][0] = not model[path][0]
@@ -127,13 +133,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
         iters = []
         for row in rows:
             iters.append(model.get_iter(row))
-        # remove the rows (treeiters)
+            # remove the rows (treeiters)
         for i in iters:
             if i is not None:
                 model.remove(i)
 
     def on_add_wn_clicked(self, widget=None):
-        dialog  = AddWallpapersNetCategoryDialog()
+        dialog = AddWallpapersNetCategoryDialog()
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             url = dialog.ui.url.get_text().strip()
@@ -142,4 +148,49 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if url.startswith("http://wallpapers.net"):
                 self.add_sources(Options.SourceType.WN, [url])
         dialog.destroy()
+
+    def on_cancel_clicked(self, widget):
+        self.destroy()
+
+    def read_time(self, text_entry, time_unit_combo, minimum, default):
+        result = default
+        try:
+            interval = int(text_entry.get_text())
+            tree_iter = time_unit_combo.get_active_iter()
+            if tree_iter:
+                model = time_unit_combo.get_model()
+                time_unit_seconds = model[tree_iter][1]
+                result = interval * time_unit_seconds
+                if result < 5:
+                    result = minimum
+        except Exception:
+            logger.exception("Could not understand interval")
+        return result
+
+
+    def on_save_clicked(self, widget):
+        self.options.change_enabled = self.ui.change_enabled.get_active()
+        self.options.change_on_start = self.ui.change_on_start.get_active()
+        self.options.change_interval = self.read_time(
+            self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
+
+        self.options.download_enabled = self.ui.download_enabled.get_active()
+        self.options.download_interval = self.read_time(
+            self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
+
+        self.options.download_folder = self.ui.download_folder_chooser.get_filename()
+        self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+
+        self.options.sources = []
+        for r in self.ui.sources.get_model():
+            self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+
+        enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
+        for f in self.options.filters:
+            f[0] = f[1].lower() in enabled_filters
+
+        self.options.write()
+        self.parent.reload_config()
+
+        self.destroy()
 

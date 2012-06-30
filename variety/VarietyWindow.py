@@ -60,6 +60,7 @@ class VarietyWindow(Window):
         self.prepare_config_folder()
 
         # load config
+        self.events = []
         self.reload_config()
 
         self.used = []
@@ -105,9 +106,9 @@ class VarietyWindow(Window):
         self.desired_color = options.desired_color
 
         self.download_enabled = options.download_enabled
-        self.download_interval = options.change_interval
+        self.download_interval = options.download_interval
 
-        self.download_folder = os.path.expanduser(options.favorites_folder)
+        self.download_folder = os.path.expanduser(options.download_folder)
         self.favorites_folder = os.path.expanduser(options.favorites_folder)
         try:
             os.makedirs(self.download_folder)
@@ -124,11 +125,14 @@ class VarietyWindow(Window):
         self.folders = [os.path.expanduser(s[2]) for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
 
         self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
-
-        if self.wallpaper_net_urls:
-            self.folders.append(self.download_folder)
-
         self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+
+        for wn in self.wn_downloaders:
+            try:
+                os.makedirs(wn.target_folder)
+            except Exception:
+                pass
+            self.folders.append(wn.target_folder)
 
         self.filters = [f[2] for f in options.filters if f[0]]
 
@@ -145,24 +149,33 @@ class VarietyWindow(Window):
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
         logger.info("Filters: " + str(self.filters))
 
+        self.prepared = []
+
+        if self.events:
+            for e in self.events:
+                e.set()
+
     def start_threads(self):
         self.running = True
-        self.quit_event = threading.Event()
 
         self.prepared = []
-        self.change_event = threading.Event()
 
+        self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
         change_thread.daemon = True
         change_thread.start()
 
+        self.prepare_event = threading.Event()
         prep_thread = threading.Thread(target=self.prepare_thread)
         prep_thread.daemon = True
         prep_thread.start()
 
+        self.dl_event = threading.Event()
         dl_thread = threading.Thread(target=self.download_thread)
         dl_thread.daemon = True
         dl_thread.start()
+
+        self.events = [self.change_event, self.prepare_event, self.dl_event]
 
         self.set_wp_event = threading.Event()
         self.set_wp_filename = None
@@ -175,7 +188,7 @@ class VarietyWindow(Window):
         logger.info("Setting file info to: " + file)
         try:
             self.url = None
-            label = "in " + os.path.dirname(file)
+            label = os.path.dirname(file)
             if os.path.exists(file + ".txt"):
                 with open(file + ".txt") as f:
                     lines = list(f)
@@ -204,11 +217,12 @@ class VarietyWindow(Window):
         logger.info("regular_change thread running")
 
         if self.change_on_start:
-            self.quit_event.wait(10) # wait for prepare thread to prepare some images first
+            self.change_event.wait(5) # wait for prepare thread to prepare some images first
             self.change_wallpaper()
 
         while self.running:
-            self.quit_event.wait(self.change_interval)
+            self.change_event.wait(self.change_interval)
+            self.change_event.clear()
             if not self.running:
                 return
             if not self.change_enabled:
@@ -233,13 +247,14 @@ class VarietyWindow(Window):
                     self.prepared.extend(list(images[:5]))
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
-            self.change_event.clear()
-            self.change_event.wait(30)
+            self.prepare_event.clear()
+            self.prepare_event.wait(30)
 
     def download_thread(self):
         while self.running:
             try:
-                self.quit_event.wait(self.download_interval)
+                self.dl_event.wait(self.download_interval)
+                self.dl_event.clear()
                 if not self.running:
                     return
                 if not self.download_enabled:
@@ -351,7 +366,7 @@ class VarietyWindow(Window):
         try:
             if len(self.prepared):
                 img = self.prepared.pop()
-                self.change_event.set()
+                self.prepare_event.set()
             else:
                 rnd_images = self.select_random_images(1)
                 img = rnd_images[0] if rnd_images else None
@@ -437,7 +452,8 @@ class VarietyWindow(Window):
         logger.info("Quitting")
         if self.running:
             self.running = False
-            self.quit_event.set()
+            for e in self.events:
+                e.set()
             Gtk.main_quit()
             os.unlink(os.path.expanduser("~/.config/variety/.lock"))
 
@@ -454,6 +470,7 @@ class VarietyWindow(Window):
 
     def on_continue_clicked(self, button=None):
         self.destroy()
+        self.on_mnu_preferences_activate(button)
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,

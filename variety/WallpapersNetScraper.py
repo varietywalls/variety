@@ -1,6 +1,22 @@
 #!/usr/bin/python
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
 
 import os
+import string
 import urllib2
 from bs4 import BeautifulSoup
 import random
@@ -12,12 +28,21 @@ logger = logging.getLogger('variety')
 
 random.seed()
 
+WN_HOST = "http://wallpapers.net"
+
 class WallpapersNetScraper():
-    def __init__(self, category_url, target_dir):
-        self.host = "http://wallpapers.net"
+    def __init__(self, category_url, download_folder):
         self.category_url = category_url
-        self.target_dir = target_dir
+
+        self.target_folder = os.path.join(download_folder, WallpapersNetScraper.convert_to_filename(category_url))
         self.queue = []
+
+    @staticmethod
+    def convert_to_filename(url):
+        if url.startswith(WN_HOST):
+            url = url[len(WN_HOST) + 1:]
+        valid_chars = "-_%s%s" % (string.ascii_letters, string.digits)
+        return ''.join(c if c in valid_chars else '_' for c in url)
 
     def download_one(self):
         logger.info("Downloading an image from wallpapers.net, " + self.category_url)
@@ -30,7 +55,7 @@ class WallpapersNetScraper():
 
         content = urllib2.urlopen(wallpaper_url).read()
         s = BeautifulSoup(content)
-        img_url = self.host + s.find('a', text=re.compile("Original format"))['href']
+        img_url = WN_HOST + s.find('a', text=re.compile("Original format"))['href']
         logger.info("Image page URL: " + img_url)
 
         content = urllib2.urlopen(img_url).read()
@@ -59,7 +84,7 @@ class WallpapersNetScraper():
 
             page = random.randint(0, mp)
             h = urls[0]
-            page_url = self.host + h[:h.index("/page/") + 6] + str(page)
+            page_url = WN_HOST + h[:h.index("/page/") + 6] + str(page)
 
             logger.info("Page URL: " + page_url)
             content = urllib2.urlopen(page_url).read()
@@ -67,7 +92,7 @@ class WallpapersNetScraper():
         else:
             logger.info("Single page in category")
 
-        walls = [self.host + x.a['href'] for x in s.find_all('div', 'thumb')]
+        walls = [WN_HOST + x.a['href'] for x in s.find_all('div', 'thumb')]
 
         self.queue.extend(walls)
 
@@ -75,7 +100,12 @@ class WallpapersNetScraper():
         name = src_url[src_url.rindex('/') + 1:]
         logger.info("Name: " + name)
 
-        local_filename = os.path.join(self.target_dir, name)
+        try:
+            os.makedirs(self.target_folder)
+        except Exception:
+            pass
+
+        local_filename = os.path.join(self.target_folder, name)
         if os.path.exists(local_filename):
             logger.info("File already exists, skip downloading")
             return
