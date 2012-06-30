@@ -135,9 +135,10 @@
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkCheckButton" id="run_on_startup">
-                    <property name="label" translatable="yes">Start Variety when the computer starts</property>
+                    <property name="label" translatable="yes">Start Variety when the computer starts (TODO)</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="margin_left">30</property>
