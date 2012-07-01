@@ -27,6 +27,8 @@ class DominantColors():
                 for y in xrange(0, self.pic.size[1], 1):
                     total += 4
                     pixel = self.imgData[x, y]
+                    if not tuple == type(pixel):
+                        pixel = (pixel, pixel, pixel)
                     color1 = min((DominantColors.diff(c, pixel), c) for c in colors)[1]
                     color2 = min((DominantColors.diff(c, pixel), c) for c in colors if c != color1)[1]
                     color3 = min((DominantColors.diff(c, pixel), c) for c in colors if c != color1 and c != color2)[1]
@@ -45,7 +47,7 @@ class DominantColors():
                 colors = map(lambda c: (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c]), colors)
 
         s = sorted(colors, key=lambda x: x[0], reverse=True)
-        s = [x for x in s if x[0] >= total / 50]
+        s = [x for x in s if x[0] >= total / 30]
         # print s
         return s
 

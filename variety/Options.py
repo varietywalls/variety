@@ -19,6 +19,7 @@ import os
 from configobj import ConfigObj
 
 import logging
+
 logger = logging.getLogger('variety')
 
 TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
@@ -82,7 +83,14 @@ class Options:
                 pass
 
             try:
+                self.desired_color_enabled = config["desired_color_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.desired_color = map(int, config["desired_color"].split())
+                for i, x in enumerate(self.desired_color):
+                    self.desired_color[i] = max(0, min(255, x))
             except Exception:
                 self.desired_color = None
 
@@ -127,6 +135,7 @@ class Options:
         self.change_enabled = True
         self.change_on_start = False
         self.change_interval = 300
+        self.desired_color_enabled = False
         self.desired_color = None
         self.download_enabled = True
         self.download_interval = 600
@@ -159,7 +168,6 @@ class Options:
             config["change_enabled"] = str(self.change_enabled)
             config["change_on_start"] = str(self.change_on_start)
             config["change_interval"] = str(self.change_interval)
-            config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"
 
             config["download_enabled"] = str(self.download_enabled)
             config["download_interval"] = str(self.download_interval)
@@ -167,13 +175,16 @@ class Options:
 
             config["favorites_folder"] = self.favorites_folder
 
+            config["desired_color_enabled"] = str(self.desired_color_enabled)
+            config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"
+
             config["sources"] = {}
             for i, s in enumerate(self.sources):
-                config["sources"]["src" + str(i+1)] = str(s[0]) + "|" + str(Options.type_to_str(s[1])) + "|" + s[2]
+                config["sources"]["src" + str(i + 1)] = str(s[0]) + "|" + str(Options.type_to_str(s[1])) + "|" + s[2]
 
             config["filters"] = {}
             for i, f in enumerate(self.filters):
-                config["filters"]["filter" + str(i+1)] = str(f[0]) + "|" + f[1] + "|" + f[2]
+                config["filters"]["filter" + str(i + 1)] = str(f[0]) + "|" + f[1] + "|" + f[2]
 
             config.write()
 

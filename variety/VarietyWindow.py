@@ -105,6 +105,8 @@ class VarietyWindow(Window):
         self.change_enabled = options.change_enabled
         self.change_on_start = options.change_on_start
         self.change_interval = options.change_interval
+
+        self.desired_color_enabled = options.desired_color_enabled
         self.desired_color = options.desired_color
 
         self.download_enabled = options.download_enabled
@@ -149,6 +151,8 @@ class VarietyWindow(Window):
         logger.info("Download interval: " + str(self.download_interval))
         logger.info("Download folder: " + self.download_folder)
         logger.info("Favorites folder: " + self.favorites_folder)
+        logger.info("Color enabled: " + str(self.desired_color_enabled))
+        logger.info("Color: " + (str(self.desired_color) if self.desired_color else "None"))
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
@@ -248,7 +252,11 @@ class VarietyWindow(Window):
                 for img in images:
                     if self.image_ok(img):
                         self.prepared.append(img)
+#                        print "ok " + img
+#                        if self.desired_color_enabled and self.desired_color:
+#                            logger.debug("Prepared %s: colors are %s\ndesired is %s" % img, self.image_cache[img], self.desired_color)
                 if not self.prepared:
+                    logger.info("Prepared buffer still empty after search, appending some non-ok images")
                     self.prepared.extend(list(images[:5]))
 
                 # remove duplicates
@@ -397,14 +405,12 @@ class VarietyWindow(Window):
         return img != self.current and self.color_ok(img)
 
     def color_ok(self, img):
-        if not self.desired_color:
+        if not (self.desired_color_enabled and self.desired_color):
             return True
         try:
             if not img in self.image_cache:
                 dom = DominantColors(img)
                 self.image_cache[img] = dom.get_dominant()
-            else:
-                print "cache hit for " + img
             colors = self.image_cache[img]
             return DominantColors.contains_color(colors, self.desired_color)
         except Exception, err:

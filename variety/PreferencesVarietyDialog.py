@@ -20,7 +20,7 @@
 # data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio, Gtk # pylint: disable=E0611
+from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
@@ -62,6 +62,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
         self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+
+        self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
+        c = self.options.desired_color
+        if c:
+            self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
 
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
@@ -184,6 +189,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.download_folder = self.ui.download_folder_chooser.get_filename()
             self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+
+            self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
+            c = self.ui.desired_color.get_color()
+            self.options.desired_color = (c.red // 256, c.green // 256, c.blue // 256)
 
             self.options.sources = []
             for r in self.ui.sources.get_model():
