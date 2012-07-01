@@ -158,7 +158,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # store the treeiters from paths
         iters = []
         for row in rows:
-            if model[row][1] != Options.type_to_str(Options.SourceType.FAVORITES):
+            if Options.str_to_type(model[row][1]) not in [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR]:
                 iters.append(model.get_iter(row))
         # remove the rows (treeiters)
         for i in iters:

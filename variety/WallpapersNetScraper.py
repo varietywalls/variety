@@ -120,3 +120,4 @@ class WallpapersNetScraper():
         localFile.write("INFO:\nDownloaded from Wallpapers.net\n" + wallpaper_url)
         localFile.close()
 
+        logger.info("Download complete")

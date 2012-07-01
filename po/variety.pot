@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-01 01:46+0300\n"
+"POT-Creation-Date: 2012-07-01 15:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,30 +193,38 @@ msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "Download a wallpaper every"
+msgid "When possible, use images containing this color: "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
-msgid "to "
+msgid "(This is an experimental feature)"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "Favorites folder"
+msgid "Download a wallpaper every"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
-msgid "Move favorite wallpapers to "
+msgid "to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
-msgid "Select a Folder"
+msgid "Favorites folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
-msgid "Filters"
+msgid "Move favorite wallpapers to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
+msgid "Select a Folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"

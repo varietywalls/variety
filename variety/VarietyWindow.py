@@ -16,7 +16,6 @@
 
 import gettext
 from gettext import gettext as _
-from variety.DominantColors import DominantColors
 
 gettext.textdomain('variety')
 
@@ -40,9 +39,10 @@ import random
 
 random.seed()
 
-from AvgColor import AvgColor
-from WallpapersNetScraper import WallpapersNetScraper
-from Options import Options
+from variety.DominantColors import DominantColors
+from variety.WallpapersNetScraper import WallpapersNetScraper
+from variety.DesktopprDownloader import DesktopprDownloader
+from variety.Options import Options
 
 # See variety_lib.Window.py for more details about how this class works
 class VarietyWindow(Window):
@@ -138,14 +138,17 @@ class VarietyWindow(Window):
             self.folders.append(self.favorites_folder)
 
         self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
-        self.wn_downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+        self.downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
 
-        for wn in self.wn_downloaders:
+        if Options.SourceType.DESKTOPPR in [s[1] for s in options.sources if s[0]]:
+            self.downloaders.append(DesktopprDownloader(self.download_folder))
+
+        for downloader in self.downloaders:
             try:
-                os.makedirs(wn.target_folder)
+                os.makedirs(downloader.target_folder)
             except Exception:
                 pass
-            self.folders.append(wn.target_folder)
+            self.folders.append(downloader.target_folder)
 
         self.filters = [f[2] for f in options.filters if f[0]]
 
@@ -164,6 +167,7 @@ class VarietyWindow(Window):
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
         logger.info("Filters: " + str(self.filters))
 
+        # clean prepared - they are outdated
         self.prepared = []
 
         if self.events:
@@ -270,7 +274,7 @@ class VarietyWindow(Window):
                     # remove duplicates
                     self.prepared = list(set(self.prepared))
                     random.shuffle(self.prepared)
-                    if self.prepared[0] == self.current:
+                    if len(self.prepared) > 1 and self.prepared[0] == self.current:
                         self.prepared = self.prepared[1:]
 
                     logger.info("after search prepared buffer contains %s images" % len(self.prepared))
@@ -289,8 +293,8 @@ class VarietyWindow(Window):
                     return
                 if not self.download_enabled:
                     continue
-                if self.wn_downloaders:
-                    downloader = self.wn_downloaders[random.randint(0, len(self.wn_downloaders) - 1)]
+                if self.downloaders:
+                    downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     downloader.download_one()
             except Exception:
                 logger.exception("Could not download wallpaper:")
@@ -311,7 +315,7 @@ class VarietyWindow(Window):
             if self.filters:
                 filter = self.filters[random.randint(0, len(self.filters) - 1)]
                 os.system(
-                    "convert " + filename + " " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
+                    "convert \"" + filename + "\" " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
                 to_set = os.path.join(self.config_folder, "wallpaper.jpg")
             self.gsettings.set_string(self.KEY, "file://" + to_set)
             self.gsettings.apply()
@@ -404,6 +408,7 @@ class VarietyWindow(Window):
                 img = rnd_images[0] if rnd_images else None
 
             if not img:
+                logger.info("No images found")
                 return
 
             self.used = self.used[self.position:]
@@ -432,10 +437,10 @@ class VarietyWindow(Window):
             return False
 
     def open_folder(self, widget=None, data=None):
-        os.system("xdg-open " + os.path.dirname(self.current))
+        os.system("xdg-open \"" + os.path.dirname(self.current) + "\"")
 
     def open_file(self, widget=None, data=None):
-        os.system("xdg-open " + self.current)
+        os.system("xdg-open \"" + os.path.realpath(self.current) + "\"")
 
     def on_show_origin(self, widget=None, data=None):
         if self.url:

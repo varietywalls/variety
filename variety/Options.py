@@ -28,11 +28,12 @@ class Options:
     class SourceType:
         IMAGE = 1
         FOLDER = 2
-        WN = 3
-        FAVORITES = 4
+        FAVORITES = 3
+        WN = 4
+        DESKTOPPR = 5
 
-        type_to_str = {IMAGE: "image", FOLDER: "folder", WN: "wn", FAVORITES: "fav"}
-        str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN, "fav": FAVORITES}
+        type_to_str = {IMAGE: "image", FOLDER: "folder", WN: "wn", FAVORITES: "fav", DESKTOPPR: "desktoppr"}
+        str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN, "fav": FAVORITES, "desktoppr": DESKTOPPR}
 
     def __init__(self):
         self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
@@ -145,6 +146,7 @@ class Options:
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
+            [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html"]
         ]
