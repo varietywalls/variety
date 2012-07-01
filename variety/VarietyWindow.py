@@ -33,9 +33,11 @@ import threading
 import time
 
 import logging
+
 logger = logging.getLogger('variety')
 
 import random
+
 random.seed()
 
 from AvgColor import AvgColor
@@ -71,11 +73,15 @@ class VarietyWindow(Window):
 
         self.last_change_time = 0
 
-        self.image_count = 0
+        self.image_count = -1
         self.image_cache = {}
         #TODO load image cache
 
+        self.wheel_timer = None
+        self.set_wp_timer = None
+
         self.update_current_file_info(self.current, False)
+
         self.start_threads()
 
     def prepare_config_folder(self):
@@ -186,13 +192,6 @@ class VarietyWindow(Window):
 
         self.events = [self.change_event, self.prepare_event, self.dl_event]
 
-        self.set_wp_event = threading.Event()
-        self.set_wp_filename = None
-        self.set_wp_moment = 0
-        wp_thread = threading.Thread(target=self.set_wp_thread)
-        wp_thread.daemon = True
-        wp_thread.start()
-
     def update_current_file_info(self, file, is_gtk_thread):
         logger.info("Setting file info to: " + file)
         try:
@@ -246,26 +245,39 @@ class VarietyWindow(Window):
     def prepare_thread(self):
         logger.info("prepare thread running")
         while self.running:
-            if not self.prepared or (len(self.prepared) < min(10, self.image_count // 20)):
-                logger.info("preparing some images")
-                images = self.select_random_images(100)
-                for img in images:
-                    if self.image_ok(img):
-                        self.prepared.append(img)
-#                        print "ok " + img
-#                        if self.desired_color_enabled and self.desired_color:
-#                            logger.debug("Prepared %s: colors are %s\ndesired is %s" % img, self.image_cache[img], self.desired_color)
-                if not self.prepared:
-                    logger.info("Prepared buffer still empty after search, appending some non-ok images")
-                    self.prepared.extend(list(images[:5]))
-
-                # remove duplicates
-                self.prepared = [self.prepared[i] for i, x in enumerate(self.prepared) if x not in self.prepared[i+1:]]
-
+            try:
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
-            self.prepare_event.clear()
+                if self.image_count < 0 or len(self.prepared) < min(10, self.image_count // 20):
+                    logger.info("preparing some images")
+                    images = self.select_random_images(100)
+
+                    found = 0
+                    for fuzziness in xrange(2, 7):
+                        if found > 20:
+                            break
+                        for img in images:
+                            if self.image_ok(img, fuzziness):
+                                self.prepared.append(img)
+                                logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
+                                found += 1
+
+                    if not self.prepared:
+                        logger.info("Prepared buffer still empty after search, appending some non-ok images")
+                        self.prepared.extend(list(images[0]))
+
+                    # remove duplicates
+                    self.prepared = list(set(self.prepared))
+                    random.shuffle(self.prepared)
+                    if self.prepared[0] == self.current:
+                        self.prepared = self.prepared[1:]
+
+                    logger.info("after search prepared buffer contains %s images" % len(self.prepared))
+            except Exception:
+                logger.exception("Error in prepare thread:")
+
             self.prepare_event.wait(30)
+            self.prepare_event.clear()
 
     def download_thread(self):
         while self.running:
@@ -283,29 +295,15 @@ class VarietyWindow(Window):
                 logger.exception("Could not download wallpaper:")
 
     def set_wp(self, filename):
+        if self.set_wp_timer:
+            self.set_wp_timer.cancel()
         self.set_wp_filename = filename
-        self.set_wp_moment = time.time()
-        self.set_wp_event.set()
+        self.set_wp_timer = threading.Timer(0.2, self.do_set_wp)
+        self.set_wp_timer.start()
 
-    def set_wp_thread(self):
-        while self.running:
-            self.set_wp_event.wait()
-            if not self.running:
-                return
-            if not self.set_wp_filename:
-                continue
-
-            self.set_wp_event.clear()
-            to_set = self.set_wp_filename
-
-            # if the user scrolls the wheel very fast, wait for all events to pass before actually performing the action
-            while time.time() - self.set_wp_moment < 0.5:
-                time.sleep(0.1)
-
-            self.set_wp_filename = None
-            self.do_set_wp(to_set)
-
-    def do_set_wp(self, filename):
+    def do_set_wp(self):
+        self.set_wp_timer = None
+        filename = self.set_wp_filename
         try:
             self.update_current_file_info(filename, False)
             to_set = filename
@@ -361,10 +359,18 @@ class VarietyWindow(Window):
         return result
 
     def on_indicator_scroll(self, indicator, steps, direction, data=None):
-        if direction:
+        if self.wheel_timer:
+            self.wheel_timer.cancel()
+        self.wheel_direction = direction
+        self.wheel_timer = threading.Timer(0.1, self.handle_scroll)
+        self.wheel_timer.start()
+
+    def handle_scroll(self):
+        if self.wheel_direction:
             self.next_wallpaper()
         else:
             self.prev_wallpaper()
+        self.timer = None
 
     def prev_wallpaper(self, widget=None, data=None):
         if self.position >= len(self.used) - 1:
@@ -382,10 +388,17 @@ class VarietyWindow(Window):
 
     def change_wallpaper(self, widget=None, data=None):
         try:
+            img  = None
+
             if len(self.prepared):
-                img = self.prepared.pop()
-                self.prepare_event.set()
-            else:
+                try:
+                    img = self.prepared.pop()
+                    self.prepare_event.set()
+                except Exception:
+                    pass
+
+            if not img:
+                logger.info("No images yet in prepared buffer, using some random image")
                 rnd_images = self.select_random_images(1)
                 img = rnd_images[0] if rnd_images else None
 
@@ -401,10 +414,10 @@ class VarietyWindow(Window):
         except Exception:
             logger.exception("Could not change wallpaper")
 
-    def image_ok(self, img):
-        return img != self.current and self.color_ok(img)
+    def image_ok(self, img, fuzziness):
+        return img != self.current and self.color_ok(img, fuzziness)
 
-    def color_ok(self, img):
+    def color_ok(self, img, fuzziness):
         if not (self.desired_color_enabled and self.desired_color):
             return True
         try:
@@ -412,7 +425,7 @@ class VarietyWindow(Window):
                 dom = DominantColors(img)
                 self.image_cache[img] = dom.get_dominant()
             colors = self.image_cache[img]
-            return DominantColors.contains_color(colors, self.desired_color)
+            return DominantColors.contains_color(colors, self.desired_color, fuzziness)
         except Exception, err:
             logger.exception("Error in color_ok:")
             return False
