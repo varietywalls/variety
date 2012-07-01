@@ -259,7 +259,8 @@ class VarietyWindow(Window):
                         for img in images:
                             if self.image_ok(img, fuzziness):
                                 self.prepared.append(img)
-                                logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
+                                if self.desired_color_enabled:
+                                    logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
                                 found += 1
 
                     if not self.prepared and images:

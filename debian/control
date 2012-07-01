@@ -25,7 +25,8 @@ Depends: ${misc:Depends},
  yelp,
  imagemagick,
  python-bs4,
- python-configobj
+ python-configobj,
+ python-imaging
 Description: A wallpaper changer
  Changes the desktop wallpaper on a regular basis, using user-specified
  or automatically downloaded images

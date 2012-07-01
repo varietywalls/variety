@@ -81,6 +81,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.filters_grid.attach(cb, i // 3, i % 3, 1, 1)
             self.filter_checkboxes.append(cb)
 
+        self.on_change_enabled_toggled()
+        self.on_download_enabled_toggled()
+        self.on_desired_color_enabled_toggled()
+
     def source_enabled_toggled(self, widget, path, model):
         model[path][0] = not model[path][0]
 
@@ -268,3 +272,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
             dialog.set_title("Oops")
             dialog.run()
             dialog.destroy()
+
+
+    def on_change_enabled_toggled(self, widget = None):
+        self.ui.change_interval_text.set_sensitive(self.ui.change_enabled.get_active())
+        self.ui.change_interval_time_unit.set_sensitive(self.ui.change_enabled.get_active())
+
+    def on_download_enabled_toggled(self, widget = None):
+        self.ui.download_interval_text.set_sensitive(self.ui.download_enabled.get_active())
+        self.ui.download_interval_time_unit.set_sensitive(self.ui.download_enabled.get_active())
+        self.ui.download_folder_chooser.set_sensitive(self.ui.download_enabled.get_active())
+
+    def on_desired_color_enabled_toggled(self, widget = None):
+        self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
