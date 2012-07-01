@@ -248,13 +248,13 @@ class VarietyWindow(Window):
             try:
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
-                if self.image_count < 0 or len(self.prepared) < min(10, self.image_count // 20):
+                if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 20):
                     logger.info("preparing some images")
                     images = self.select_random_images(100)
 
                     found = 0
                     for fuzziness in xrange(2, 7):
-                        if found > 20:
+                        if found > 10:
                             break
                         for img in images:
                             if self.image_ok(img, fuzziness):
@@ -262,9 +262,9 @@ class VarietyWindow(Window):
                                 logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
                                 found += 1
 
-                    if not self.prepared:
+                    if not self.prepared and images:
                         logger.info("Prepared buffer still empty after search, appending some non-ok images")
-                        self.prepared.extend(list(images[0]))
+                        self.prepared.append(images[0])
 
                     # remove duplicates
                     self.prepared = list(set(self.prepared))

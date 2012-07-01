@@ -21,7 +21,7 @@ class DominantColors():
     def __init__(self, imageName):
         self.imageName = imageName
         self.pic = Image.open(imageName)
-        self.pic = self.pic.resize((100, 100))
+        self.pic = self.pic.resize((50, 50))
         # self.pic = self.pic.filter(ImageFilter.BLUR)
 
         # load image data
@@ -33,7 +33,8 @@ class DominantColors():
             (0, 128, 0), (0, 255, 0), (0, 128, 128), (0, 255, 255), (0, 0, 128), (0, 0, 255), (128, 0, 128), (255, 0, 255)]
         total = 0
 
-        for counter in xrange(3): # perform only 3 iterations of clustering, that should be enough
+        iterations = 1
+        for counter in xrange(iterations): # perform only 3 iterations of clustering, that should be enough
             sums = {}
             counts = {}
 
@@ -60,7 +61,7 @@ class DominantColors():
                     #counts[color3] = counts[color3] + 1
 
             colors = [c for c in colors if counts[c] > 0]
-            if counter == 2:
+            if counter == iterations - 1:
                 colors = map(lambda c: (counts[c], (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c])), colors)
             else:
                 colors = map(lambda c: (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c]), colors)
@@ -71,8 +72,8 @@ class DominantColors():
     @staticmethod
     def contains_color(dominant_colors, color, fuzziness):
         total, colors = dominant_colors
-        colors = [x for x in colors if x[0] > total / (40 + fuzziness * 40)]
-        for position, c in enumerate(colors):
+#        colors = [x for x in colors if x[0] > total / (40 + fuzziness * 40)]
+        for position, c in enumerate(colors[:3]):
             if DominantColors.diff(c[1], color) < 1000 + (fuzziness * 1000) + max(0, 5 - position) * 300:
                 return True
         return False
