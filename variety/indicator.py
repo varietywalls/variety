@@ -70,6 +70,15 @@ class Indicator:
         self.next.show()
         self.menu.append(self.next)
 
+        self.separator0 = Gtk.SeparatorMenuItem()
+        self.separator0.show()
+        self.menu.append(self.separator0)
+
+        self.pause_resume = Gtk.MenuItem("Pause")
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.pause_resume.show()
+        self.menu.append(self.pause_resume)
+
         self.separator = Gtk.SeparatorMenuItem()
         self.separator.show()
         self.menu.append(self.separator)

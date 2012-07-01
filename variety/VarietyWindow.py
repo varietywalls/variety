@@ -80,24 +80,12 @@ class VarietyWindow(Window):
         self.wheel_timer = None
         self.set_wp_timer = None
 
-        self.update_current_file_info(self.current, False)
+        self.update_indicator(self.current, False)
 
         self.start_threads()
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
-        self.download_folder = os.path.join(self.config_folder, "Downloaded")
-        self.favorites_folder = os.path.join(self.config_folder, "Favorites")
-
-        try:
-            os.makedirs(self.download_folder)
-        except OSError:
-            pass
-
-        try:
-            os.makedirs(self.favorites_folder)
-        except OSError:
-            pass
 
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
             logger.info("Missing config file, copying it from " +
@@ -105,43 +93,31 @@ class VarietyWindow(Window):
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
 
     def reload_config(self):
-        options = Options()
-        options.read()
+        self.options = Options()
+        self.options.read()
 
-        self.change_enabled = options.change_enabled
-        self.change_on_start = options.change_on_start
-        self.change_interval = options.change_interval
-
-        self.desired_color_enabled = options.desired_color_enabled
-        self.desired_color = options.desired_color
-
-        self.download_enabled = options.download_enabled
-        self.download_interval = options.download_interval
-
-        self.download_folder = os.path.expanduser(options.download_folder)
-        self.favorites_folder = os.path.expanduser(options.favorites_folder)
         try:
-            os.makedirs(self.download_folder)
+            os.makedirs(self.options.download_folder)
         except OSError:
             pass
         try:
-            os.makedirs(self.favorites_folder)
+            os.makedirs(self.options.favorites_folder)
         except OSError:
             pass
 
-        self.individual_images = [os.path.expanduser(s[2]) for s in options.sources if
+        self.individual_images = [os.path.expanduser(s[2]) for s in self.options.sources if
                                   s[0] and s[1] == Options.SourceType.IMAGE]
 
-        self.folders = [os.path.expanduser(s[2]) for s in options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
+        self.folders = [os.path.expanduser(s[2]) for s in self.options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
 
-        if Options.SourceType.FAVORITES in [s[1] for s in options.sources if s[0]]:
-            self.folders.append(self.favorites_folder)
+        if Options.SourceType.FAVORITES in [s[1] for s in self.options.sources if s[0]]:
+            self.folders.append(self.options.favorites_folder)
 
-        self.wallpaper_net_urls = [s[2] for s in options.sources if s[0] and s[1] == Options.SourceType.WN]
-        self.downloaders = [WallpapersNetScraper(url, self.download_folder) for url in self.wallpaper_net_urls]
+        self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
+        self.downloaders = [WallpapersNetScraper(url, self.options.download_folder) for url in self.wallpaper_net_urls]
 
-        if Options.SourceType.DESKTOPPR in [s[1] for s in options.sources if s[0]]:
-            self.downloaders.append(DesktopprDownloader(self.download_folder))
+        if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
+            self.downloaders.append(DesktopprDownloader(self.options.download_folder))
 
         for downloader in self.downloaders:
             try:
@@ -150,18 +126,18 @@ class VarietyWindow(Window):
                 pass
             self.folders.append(downloader.target_folder)
 
-        self.filters = [f[2] for f in options.filters if f[0]]
+        self.filters = [f[2] for f in self.options.filters if f[0]]
 
         logger.info("Loaded options:")
-        logger.info("Change on start: " + str(self.change_on_start))
-        logger.info("Change enabled: " + str(self.change_enabled))
-        logger.info("Change interval: " + str(self.change_interval))
-        logger.info("Download enabled: " + str(self.download_enabled))
-        logger.info("Download interval: " + str(self.download_interval))
-        logger.info("Download folder: " + self.download_folder)
-        logger.info("Favorites folder: " + self.favorites_folder)
-        logger.info("Color enabled: " + str(self.desired_color_enabled))
-        logger.info("Color: " + (str(self.desired_color) if self.desired_color else "None"))
+        logger.info("Change on start: " + str(self.options.change_on_start))
+        logger.info("Change enabled: " + str(self.options.change_enabled))
+        logger.info("Change interval: " + str(self.options.change_interval))
+        logger.info("Download enabled: " + str(self.options.download_enabled))
+        logger.info("Download interval: " + str(self.options.download_interval))
+        logger.info("Download folder: " + self.options.download_folder)
+        logger.info("Favorites folder: " + self.options.favorites_folder)
+        logger.info("Color enabled: " + str(self.options.desired_color_enabled))
+        logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
@@ -196,7 +172,7 @@ class VarietyWindow(Window):
 
         self.events = [self.change_event, self.prepare_event, self.dl_event]
 
-    def update_current_file_info(self, file, is_gtk_thread):
+    def update_indicator(self, file, is_gtk_thread):
         logger.info("Setting file info to: " + file)
         try:
             self.url = None
@@ -215,34 +191,41 @@ class VarietyWindow(Window):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file))
                 self.ind.favorite.set_sensitive(
-                    not os.path.normpath(file).startswith(os.path.normpath(self.favorites_folder)))
+                    not os.path.normpath(file).startswith(os.path.normpath(self.options.favorites_folder)))
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
+
+                self.update_pause_resume()
 
             if not is_gtk_thread:
                 Gdk.threads_leave()
         except Exception:
             logger.exception("Error updating file info")
 
+    def update_pause_resume(self):
+        self.ind.pause_resume.set_label("Pause" if self.options.change_enabled else "Resume")
+
     def regular_change_thread(self):
         logger.info("regular_change thread running")
 
-        if self.change_on_start:
+        if self.options.change_on_start:
             self.change_event.wait(5) # wait for prepare thread to prepare some images first
             self.change_wallpaper()
 
         while self.running:
-            self.change_event.wait(self.change_interval)
+            self.change_event.wait(self.options.change_interval)
             self.change_event.clear()
             if not self.running:
                 return
-            if not self.change_enabled:
+            if not self.options.change_enabled:
                 continue
-            while (time.time() - self.last_change_time) < self.change_interval:
+            while (time.time() - self.last_change_time) < self.options.change_interval:
                 now = time.time()
-                wait_more = self.change_interval - (now - self.last_change_time)
-                time.sleep(max(0, wait_more))
+                wait_more = self.options.change_interval - (now - self.last_change_time)
+                self.change_event.wait(max(0, wait_more))
+            if not self.options.change_enabled:
+                continue
             logger.info("regular_change changes wallpaper")
             self.change_wallpaper()
 
@@ -263,7 +246,7 @@ class VarietyWindow(Window):
                         for img in images:
                             if self.image_ok(img, fuzziness):
                                 self.prepared.append(img)
-                                if self.desired_color_enabled:
+                                if self.options.desired_color_enabled:
                                     logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
                                 found += 1
 
@@ -287,11 +270,11 @@ class VarietyWindow(Window):
     def download_thread(self):
         while self.running:
             try:
-                self.dl_event.wait(self.download_interval)
+                self.dl_event.wait(self.options.download_interval)
                 self.dl_event.clear()
                 if not self.running:
                     return
-                if not self.download_enabled:
+                if not self.options.download_enabled:
                     continue
                 if self.downloaders:
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
@@ -310,7 +293,7 @@ class VarietyWindow(Window):
         self.set_wp_timer = None
         filename = self.set_wp_filename
         try:
-            self.update_current_file_info(filename, False)
+            self.update_indicator(filename, False)
             to_set = filename
             if self.filters:
                 filter = self.filters[random.randint(0, len(self.filters) - 1)]
@@ -424,14 +407,14 @@ class VarietyWindow(Window):
         return img != self.current and self.color_ok(img, fuzziness)
 
     def color_ok(self, img, fuzziness):
-        if not (self.desired_color_enabled and self.desired_color):
+        if not (self.options.desired_color_enabled and self.options.desired_color):
             return True
         try:
             if not img in self.image_cache:
                 dom = DominantColors(img)
                 self.image_cache[img] = dom.get_dominant()
             colors = self.image_cache[img]
-            return DominantColors.contains_color(colors, self.desired_color, fuzziness)
+            return DominantColors.contains_color(colors, self.options.desired_color, fuzziness)
         except Exception, err:
             logger.exception("Error in color_ok:")
             return False
@@ -480,12 +463,12 @@ class VarietyWindow(Window):
     def move_to_favorites(self, widget=None, data=None):
         file = self.current
         if self.confirm_move(file, "Favorites") == Gtk.ResponseType.YES:
-            new_file = os.path.join(self.favorites_folder, os.path.basename(file))
+            new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
             self.used = [(new_file if f == file else f) for f in self.used]
-            self.move_file(file, self.favorites_folder)
+            self.move_file(file, self.options.favorites_folder)
             if self.current == file:
                 self.current = new_file
-            self.update_current_file_info(self.current, True)
+            self.update_indicator(self.current, True)
 
     def on_quit(self, widget=None):
         logger.info("Quitting")
@@ -520,3 +503,8 @@ class VarietyWindow(Window):
         dialog.destroy()
         os.system("gedit ~/.config/variety/variety.conf")
         self.reload_config()
+
+    def on_pause_resume(self, widget=None):
+        self.options.change_enabled = not self.options.change_enabled
+        self.options.write()
+        self.update_indicator(self.current, True)

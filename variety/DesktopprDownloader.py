@@ -33,7 +33,7 @@ WN_HOST = "http://wallpapers.net"
 
 class DesktopprDownloader():
     def __init__(self, download_folder):
-        self.target_folder = os.path.join(download_folder, "From Desktoppr")
+        self.target_folder = os.path.join(download_folder, "Desktoppr")
 
     def download_one(self):
         logger.info("Downloading a random image from desktoppr.co")
