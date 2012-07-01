@@ -32,8 +32,8 @@ class Options:
         WN = 4
         DESKTOPPR = 5
 
-        type_to_str = {IMAGE: "image", FOLDER: "folder", WN: "wn", FAVORITES: "fav", DESKTOPPR: "desktoppr"}
-        str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN, "fav": FAVORITES, "desktoppr": DESKTOPPR}
+        type_to_str = {IMAGE: "image", FOLDER: "folder", WN: "wn", FAVORITES: "favorites", DESKTOPPR: "desktoppr"}
+        str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN, "favorites": FAVORITES, "desktoppr": DESKTOPPR}
 
     def __init__(self):
         self.configfile = os.path.expanduser("~/.config/variety/variety.conf")

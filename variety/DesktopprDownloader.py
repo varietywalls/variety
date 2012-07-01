@@ -16,11 +16,8 @@
 ### END LICENSE
 
 import os
-import string
 import urllib2
-from bs4 import BeautifulSoup
 import random
-import re
 import json
 
 import logging

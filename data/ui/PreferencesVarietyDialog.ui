@@ -168,6 +168,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_change_enabled_toggled" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -434,6 +435,7 @@
                     <property name="use_action_appearance">False</property>
                     <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_desired_color_enabled_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -498,6 +500,7 @@
                     <property name="xalign">0</property>
                     <property name="yalign">0.49000000953674316</property>
                     <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="on_download_enabled_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
