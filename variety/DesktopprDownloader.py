@@ -17,52 +17,24 @@
 
 import os
 import urllib2
-import random
 import json
 
 import logging
 
 logger = logging.getLogger('variety')
 
-random.seed()
+from variety import Downloader
 
-WN_HOST = "http://wallpapers.net"
-
-class DesktopprDownloader():
+class DesktopprDownloader(Downloader.Downloader):
     def __init__(self, download_folder):
+        super(DesktopprDownloader, self).__init__(
+            "Desktoppr.co", "https://api.desktoppr.co/1/wallpapers/random", download_folder)
         self.target_folder = os.path.join(download_folder, "Desktoppr")
 
     def download_one(self):
         logger.info("Downloading a random image from desktoppr.co")
 
-        random_url = "https://api.desktoppr.co/1/wallpapers/random"
-        content = urllib2.urlopen(random_url).read()
+        content = urllib2.urlopen(self.location).read()
         response = json.loads(content)
-        url = response["response"]["image"]["url"]
-        self.save_locally("http://www.desktoppr.co", url)
-
-    def save_locally(self, wallpaper_url, src_url):
-        name = src_url[src_url.rindex('/') + 1:]
-        logger.info("Name: " + name)
-
-        try:
-            os.makedirs(self.target_folder)
-        except Exception:
-            pass
-
-        local_filename = os.path.join(self.target_folder, name)
-        if os.path.exists(local_filename):
-            logger.info("File already exists, skip downloading")
-            return
-
-        u = urllib2.urlopen(src_url)
-        data = u.read()
-        localFile = open(local_filename, 'wb')
-        localFile.write(data)
-        localFile.close()
-
-        localFile = open(local_filename + ".txt", 'w')
-        localFile.write("INFO:\nDownloaded from Desktoppr.co\n" + wallpaper_url)
-        localFile.close()
-
-        logger.info("Download complete")
+        image_url = response["response"]["image"]["url"]
+        self.save_locally("http://www.desktoppr.co", image_url)
