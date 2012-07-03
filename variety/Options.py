@@ -31,9 +31,18 @@ class Options:
         FAVORITES = 3
         WN = 4
         DESKTOPPR = 5
+        FLICKR = 6
 
-        type_to_str = {IMAGE: "image", FOLDER: "folder", WN: "wn", FAVORITES: "favorites", DESKTOPPR: "desktoppr"}
-        str_to_type = {"image": IMAGE, "folder": FOLDER, "wn": WN, "favorites": FAVORITES, "desktoppr": DESKTOPPR}
+        type_to_str = {
+            FAVORITES: "favorites",
+            IMAGE: "image",
+            FOLDER: "folder",
+            WN: "wn",
+            DESKTOPPR: "desktoppr",
+            FLICKR: "flickr"
+        }
+
+        str_to_type = dict((v,k) for k, v in type_to_str.items())
 
     def __init__(self):
         self.configfile = os.path.expanduser("~/.config/variety/variety.conf")

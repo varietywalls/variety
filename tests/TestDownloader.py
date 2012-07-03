@@ -18,14 +18,14 @@
 import sys
 import os.path
 import unittest
-from variety.WallpapersNetScraper import WallpapersNetScraper
+from variety.Downloader import Downloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-class TestWNScraper(unittest.TestCase):
+class TestDownloader(unittest.TestCase):
     def test_convert_url(self):
-        self.assertEqual("some-category_html",
-            WallpapersNetScraper.convert_to_filename("http://wallpapers.net/some-category.html"))
+        self.assertEqual("wallpapers_net_some_category_html",
+            Downloader("", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
 
 if __name__ == '__main__':
     unittest.main()

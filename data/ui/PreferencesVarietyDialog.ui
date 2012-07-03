@@ -39,7 +39,7 @@
     </columns>
   </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
-    <property name="width_request">640</property>
+    <property name="width_request">700</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Variety Preferences</property>
     <property name="modal">True</property>
@@ -389,6 +389,22 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkButton" id="add_flickr">
+                        <property name="label" translatable="yes">Add Flickr search</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_add_flickr_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkButton" id="remove_sources">
                         <property name="label" translatable="yes">Remove</property>
                         <property name="use_action_appearance">False</property>
@@ -401,7 +417,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </object>

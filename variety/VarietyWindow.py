@@ -40,8 +40,9 @@ import random
 random.seed()
 
 from variety.DominantColors import DominantColors
-from variety.WallpapersNetScraper import WallpapersNetScraper
+from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
+from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
 
 # See variety_lib.Window.py for more details about how this class works
@@ -62,8 +63,12 @@ class VarietyWindow(Window):
 
         self.prepare_config_folder()
 
-        # load config
         self.events = []
+
+        self.wn_downloaders_cache = {}
+        self.flickr_downloaders_cache = {}
+
+        # load config
         self.reload_config()
 
         self.used = []
@@ -113,11 +118,29 @@ class VarietyWindow(Window):
         if Options.SourceType.FAVORITES in [s[1] for s in self.options.sources if s[0]]:
             self.folders.append(self.options.favorites_folder)
 
-        self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
-        self.downloaders = [WallpapersNetScraper(url, self.options.download_folder) for url in self.wallpaper_net_urls]
+
+        self.downloaders = []
 
         if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
             self.downloaders.append(DesktopprDownloader(self.options.download_folder))
+
+        self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
+        for url in self.wallpaper_net_urls:
+            if url in self.wn_downloaders_cache:
+                self.downloaders.append(self.wn_downloaders_cache[url])
+            else:
+                dlr = WallpapersNetDownloader(url, self.options.download_folder)
+                self.wn_downloaders_cache[url] = dlr
+                self.downloaders.append(dlr)
+
+        self.flickr_searches = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.FLICKR]
+        for search in self.flickr_searches:
+            if search in self.flickr_downloaders_cache:
+                self.downloaders.append(self.flickr_downloaders_cache[search])
+            else:
+                dlr = FlickrDownloader(search, self.options.download_folder)
+                self.flickr_downloaders_cache[search] = dlr
+                self.downloaders.append(dlr)
 
         for downloader in self.downloaders:
             try:
@@ -141,6 +164,8 @@ class VarietyWindow(Window):
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("WN URLs: " + str(self.wallpaper_net_urls))
+        logger.info("Flickr searches: " + str(self.flickr_searches))
+        logger.info("Total downloaders: " + str(len(self.downloaders)))
         logger.info("Filters: " + str(self.filters))
 
         # clean prepared - they are outdated

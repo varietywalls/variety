@@ -24,8 +24,10 @@ from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+
 from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
+from variety.AddFlickrDialog import AddFlickrDialog
 
 gettext.textdomain('variety')
 
@@ -176,6 +178,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if url.startswith("http://wallpapers.net"):
                 self.add_sources(Options.SourceType.WN, [url])
         dialog.destroy()
+
+    def on_add_flickr_clicked(self, widget=None):
+        dialog = AddFlickrDialog()
+        dialog.set_transient_for(self)
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            pass
+            #TODO
+        #dialog.destroy()
 
     def on_cancel_clicked(self, widget):
         self.destroy()

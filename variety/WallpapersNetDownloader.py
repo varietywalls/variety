@@ -84,3 +84,4 @@ class WallpapersNetDownloader(Downloader.Downloader):
         walls = [self.host + x.a['href'] for x in s.find_all('div', 'thumb')]
 
         self.queue.extend(walls)
+        logger.info("WN queue populated with %d URLs" % len(self.queue))

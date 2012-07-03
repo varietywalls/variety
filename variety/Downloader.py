@@ -32,7 +32,7 @@ class Downloader(object):
 
     def convert_to_filename(self, url):
         url = re.sub(r"http://", "", url)
-        valid_chars = "-_%s%s" % (string.ascii_letters, string.digits)
+        valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
         return ''.join(c if c in valid_chars else '_' for c in url)
 
     def save_locally(self, origin_url, image_url):

@@ -54,7 +54,6 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
         Called before the dialog returns Gtk.ResponseType.OK from run().
         """
         self.hide()
-        pass
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.
@@ -62,7 +61,6 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
         Called before the dialog returns Gtk.ResponseType.CANCEL for run()
         """
         self.hide()
-        pass
 
 
 if __name__ == "__main__":
