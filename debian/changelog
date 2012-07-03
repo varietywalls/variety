@@ -1,3 +1,14 @@
+variety (0.3.1) precise; urgency=low
+
+  * Mnemonics in menu
+  * Bugfixes to the interaction between prepare_thread/change_wallpaper
+  * Persist filename of displayed wallpaper when using filters, so as to
+    show it correctly after restart
+  * Better trash/favs move/copy; GUI: Remove's state depends on
+    selection; Limit files search to 10000 files
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 03 Jul 2012 23:36:25 +0300
+
 variety (0.3-public1) precise; urgency=low
 
   * New release.
