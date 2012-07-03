@@ -118,7 +118,7 @@ class FlickrDownloader(Downloader.Downloader):
             raise Exception("Flickr returned error message: " + resp["message"])
 
         pages = int(resp["photos"]["pages"])
-        page = random.randint(0, pages)
+        page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
         call = call + "&extras=o_dims,url_o&page=" + str(page)

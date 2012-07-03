@@ -56,7 +56,7 @@ class Downloader(object):
         localFile.close()
 
         localFile = open(local_filename + ".txt", 'w')
-        localFile.write("INFO:\nDownloaded from " + self.name + "\n" + origin_url)
+        localFile.write("INFO:\n" + self.name + "\n" + origin_url)
         localFile.close()
 
         logger.info("Download complete")

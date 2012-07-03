@@ -62,8 +62,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.set_time(self.options.download_interval, self.ui.download_interval_text,
             self.ui.download_interval_time_unit)
 
-        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
-        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+        self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+        self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
         c = self.options.desired_color
@@ -86,6 +86,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_change_enabled_toggled()
         self.on_download_enabled_toggled()
         self.on_desired_color_enabled_toggled()
+        self.on_sources_selection_changed()
+#        self.on_downloaded_changed()
+#        self.on_favorites_changed()
 
         self.dialog = None
 
@@ -152,10 +155,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
         existing = set()
         for r in self.ui.sources.get_model():
             if r[1] == Options.type_to_str(type):
-                existing.add(r[2])
+                if type == Options.SourceType.FOLDER:
+                    existing.add(os.path.normpath(r[2]))
+                else:
+                    existing.add(r[2])
+
         for f in locations:
+            if type == Options.SourceType.FOLDER:
+                f = os.path.normpath(f)
             if not f in existing:
                 self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
+            else:
+                logger.info("Source already exists: " + f)
 
     def on_remove_sources_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -168,6 +179,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for i in iters:
             if i is not None:
                 model.remove(i)
+
+    def on_sources_selection_changed(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        for row in rows:
+            if Options.str_to_type(model[row][1]) in [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR]:
+                self.ui.remove_sources.set_sensitive(False)
+                return
+
+        self.ui.remove_sources.set_sensitive(len(rows) > 0)
 
     def on_add_wn_clicked(self, widget=None):
         self.dialog = AddWallpapersNetCategoryDialog()
@@ -203,8 +223,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.download_interval = self.read_time(
                 self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
 
-            self.options.download_folder = self.ui.download_folder_chooser.get_filename()
-            self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
+                self.options.download_folder = self.ui.download_folder_chooser.get_filename()
+            if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
+                self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
 
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()
@@ -302,3 +324,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_destroy(self, widget = None):
         if self.dialog:
             self.dialog.destroy()
+
+    def on_downloaded_changed(self, widget=None):
+        if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
+            self.ui.error_downloaded.set_label("No write permissions")
+        else:
+            self.ui.error_downloaded.set_label("")
+
+    def on_favorites_changed(self, widget=None):
+        if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
+            self.ui.error_favorites.set_label("No write permissions")
+        else:
+            self.ui.error_downloaded.set_label("")

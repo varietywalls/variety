@@ -45,6 +45,8 @@ from variety.DesktopprDownloader import DesktopprDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
 
+MAX_FILES = 10000
+
 # See variety_lib.Window.py for more details about how this class works
 class VarietyWindow(Window):
     __gtype_name__ = "VarietyWindow"
@@ -91,6 +93,7 @@ class VarietyWindow(Window):
 
         self.about = None
         self.preferences_dialog = None
+        self.dialogs = []
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
@@ -116,11 +119,11 @@ class VarietyWindow(Window):
         self.individual_images = [os.path.expanduser(s[2]) for s in self.options.sources if
                                   s[0] and s[1] == Options.SourceType.IMAGE]
 
-        self.folders = [os.path.expanduser(s[2]) for s in self.options.sources if s[0] and s[1] == Options.SourceType.FOLDER]
+        self.folders = [os.path.expanduser(s[2]) for s in self.options.sources if
+                        s[0] and s[1] == Options.SourceType.FOLDER]
 
         if Options.SourceType.FAVORITES in [s[1] for s in self.options.sources if s[0]]:
             self.folders.append(self.options.favorites_folder)
-
 
         self.downloaders = []
 
@@ -214,9 +217,15 @@ class VarietyWindow(Window):
             if os.path.exists(file + ".txt"):
                 with open(file + ".txt") as f:
                     lines = list(f)
-                    if lines[0].strip() == "INFO:":
-                        label = lines[1].strip()
+                    if lines[0].strip() == "INFO:" and len(lines) == 3:
+                        label = "View at " + lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
                         self.url = lines[2].strip()
+            if len(label) > 50:
+                label = label[:50] + "..."
+
+            trash_enabled = os.access(file, os.W_OK)
+            favorites_enabled = os.access(file, os.W_OK)
+            in_favs = os.path.normpath(file).startswith(os.path.normpath(self.options.favorites_folder))
 
             if not is_gtk_thread:
                 Gdk.threads_enter()
@@ -224,8 +233,12 @@ class VarietyWindow(Window):
             for i in range(10):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file))
-                self.ind.favorite.set_sensitive(
-                    not os.path.normpath(file).startswith(os.path.normpath(self.options.favorites_folder)))
+
+                self.ind.trash.set_sensitive(trash_enabled)
+
+                self.ind.favorite.set_sensitive(not in_favs)
+                self.ind.favorite.set_label("Already in Favorites" if in_favs else (
+                    "Move to Favorites" if favorites_enabled else "Copy to Favorites"))
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
@@ -342,15 +355,23 @@ class VarietyWindow(Window):
             logger.exception("Error while setting wallpaper")
 
     def list_images(self):
+        count = 0
         for filepath in self.individual_images:
             if self.is_image(filepath) and os.access(filepath, os.F_OK):
+                count += 1
                 yield filepath
-        for folder in self.folders:
+        folders = list(self.folders)
+        random.shuffle(folders)
+        for folder in folders:
             if os.path.isdir(folder):
                 try:
                     for root, subFolders, files in os.walk(folder):
                         for filename in files:
                             if self.is_image(filename):
+                                count += 1
+                                if count > MAX_FILES:
+                                    logger.info("More than %d files in the folders, stop listing" % MAX_FILES)
+                                    return
                                 yield os.path.join(root, filename)
                 except Exception:
                     logger.exception("Cold not walk folder " + folder)
@@ -362,6 +383,7 @@ class VarietyWindow(Window):
                 return []
 
             self.image_count = cnt
+            logger.info("Refreshed image count: %d" % self.image_count)
         else:
             cnt = self.image_count
 
@@ -380,7 +402,7 @@ class VarietyWindow(Window):
         random.shuffle(result)
         return result
 
-    def on_indicator_scroll(self, indicator, steps, direction, data=None):
+    def on_indicator_scroll(self, indicator, steps, direction):
         if self.wheel_timer:
             self.wheel_timer.cancel()
         self.wheel_direction = direction
@@ -394,23 +416,23 @@ class VarietyWindow(Window):
             self.prev_wallpaper()
         self.timer = None
 
-    def prev_wallpaper(self, widget=None, data=None):
+    def prev_wallpaper(self, widget=None):
         if self.position >= len(self.used) - 1:
             return
         else:
             self.position += 1
             self.set_wp(self.used[self.position])
 
-    def next_wallpaper(self, widget=None, data=None):
+    def next_wallpaper(self, widget=None):
         if self.position > 0:
             self.position -= 1
             self.set_wp(self.used[self.position])
         else:
             self.change_wallpaper()
 
-    def change_wallpaper(self, widget=None, data=None):
+    def change_wallpaper(self, widget=None):
         try:
-            img  = None
+            img = None
 
             if len(self.prepared):
                 try:
@@ -421,7 +443,8 @@ class VarietyWindow(Window):
 
             if not img:
                 logger.info("No images yet in prepared buffer, using some random image")
-                rnd_images = self.select_random_images(1)
+                rnd_images = self.select_random_images(3)
+                rnd_images = [f for f in rnd_images if f != self.current]
                 img = rnd_images[0] if rnd_images else None
 
             if not img:
@@ -453,60 +476,103 @@ class VarietyWindow(Window):
             logger.exception("Error in color_ok:")
             return False
 
-    def open_folder(self, widget=None, data=None):
+    def open_folder(self, widget=None):
         os.system("xdg-open \"" + os.path.dirname(self.current) + "\"")
 
-    def open_file(self, widget=None, data=None):
+    def open_file(self, widget=None):
         os.system("xdg-open \"" + os.path.realpath(self.current) + "\"")
 
-    def on_show_origin(self, widget=None, data=None):
+    def on_show_origin(self, widget=None):
         if self.url:
             os.system("xdg-open " + self.url)
         else:
             self.open_folder()
 
-    def confirm_move(self, file, to):
+    def confirm_move(self, move_or_copy, file, to):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
             Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
-            "Move " + os.path.basename(file) + " to " + to + ". Are you sure?")
-        dialog.set_title("Confirm Move to " + to)
+            move_or_copy + " " + os.path.basename(file) + " to " + to + ". Are you sure?")
+        dialog.set_title("Confirm " + move_or_copy + " to " + to)
+        self.dialogs.append(dialog)
         response = dialog.run()
         dialog.destroy()
-        return response
+        self.dialogs.remove(dialog)
+        return response == Gtk.ResponseType.YES
 
-    def move_file(self, file, to):
+    def move_or_copy_file(self, file, to, operation):
         try:
-            shutil.move(file, to)
+            operation(file, to)
             try:
-                shutil.move(file + ".txt", to)
+                operation(file + ".txt", to)
             except Exception:
                 pass
-            logger.info("Moved " + file + " to " + to)
+            logger.info(("Moved " if operation == shutil.move else "Copied ") + file + " to " + to)
+            return True
         except Exception:
-            logger.exception("Could not move to " + to)
+            logger.exception("Could not move/copy to " + to)
+            op = ("Move" if operation == shutil.move else "Copy")
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
+                "Could not " + op.lower() +" to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
+            self.dialogs.append(dialog)
+            dialog.set_title(op + " failed")
+            dialog.run()
+            dialog.destroy()
+            self.dialogs.remove(dialog)
+            return False
 
-    def move_to_trash(self, widget=None, data=None):
-        file = self.current
-        if self.confirm_move(file, "Trash") == Gtk.ResponseType.YES:
-            while self.used[self.position] == file:
-                self.next_wallpaper()
-            self.used = [f for f in self.used if f != file]
-            trash = os.path.expanduser("~/.local/share/Trash/")
-            self.move_file(file, trash)
+    def move_to_trash(self, widget=None):
+        try:
+            file = self.current
+            if not os.access(file, os.W_OK):
+                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                    Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
+                    "You don't have permissions to move %s to Trash." % file)
+                self.dialogs.append(dialog)
+                dialog.set_title("Cannot move")
+                dialog.run()
+                dialog.destroy()
+                self.dialogs.remove(dialog)
+            elif self.confirm_move("Move", file, "Trash"):
+                trash = os.path.expanduser("~/.local/share/Trash/")
+                self.move_or_copy_file(file, trash, shutil.move)
+                while self.used[self.position] == file:
+                    self.next_wallpaper()
+                self.used = [f for f in self.used if f != file]
+        except Exception:
+            logger.exception("Exception in move_to_trash")
 
-    def move_to_favorites(self, widget=None, data=None):
-        file = self.current
-        if self.confirm_move(file, "Favorites") == Gtk.ResponseType.YES:
-            new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
-            self.used = [(new_file if f == file else f) for f in self.used]
-            self.move_file(file, self.options.favorites_folder)
-            if self.current == file:
-                self.current = new_file
-            self.update_indicator(self.current, True)
+    def move_to_favorites(self, widget=None):
+        try:
+            file = self.current
+            operation = None
+
+            if not os.access(file, os.W_OK):
+                if self.confirm_move("Copy", file, "Favorites"):
+                    operation = shutil.copy
+            else:
+                if self.confirm_move("Move", file, "Favorites"):
+                    operation = shutil.move
+
+            if operation:
+                self.move_or_copy_file(file, self.options.favorites_folder, operation)
+                new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
+                self.used = [(new_file if f == file else f) for f in self.used]
+                if self.current == file:
+                    self.current = new_file
+                self.update_indicator(self.current, True)
+        except Exception:
+            logger.exception("Exception in move_to_favorites")
 
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
+            for d in self.dialogs:
+                try:
+                    d.destroy()
+                except Exception:
+                    logger.exception("Could not destroy dialog")
+                    pass
             if self.preferences_dialog:
                 self.preferences_dialog.destroy()
             if self.about:
@@ -533,12 +599,14 @@ class VarietyWindow(Window):
         self.on_mnu_preferences_activate(button)
 
     def edit_prefs_file(self, widget=None):
-        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTGROY_WITH_PARENT,
             Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
             "I will open an editor with the config file and apply the changes after you save and close the editor.")
+        self.dialogs.append(dialog)
         dialog.set_title("Edit config file")
-        response = dialog.run()
+        dialog.run()
         dialog.destroy()
+        self.dialogs.remove(dialog)
         os.system("gedit ~/.config/variety/variety.conf")
         self.reload_config()
 
@@ -546,3 +614,4 @@ class VarietyWindow(Window):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
         self.update_indicator(self.current, True)
+

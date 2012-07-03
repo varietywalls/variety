@@ -289,6 +289,7 @@
                         <child internal-child="selection">
                           <object class="GtkTreeSelection" id="treeview-selection1">
                             <property name="mode">multiple</property>
+                            <signal name="changed" handler="on_sources_selection_changed" swapped="no"/>
                           </object>
                         </child>
                         <child>
@@ -580,11 +581,26 @@
                     <property name="hexpand">True</property>
                     <property name="orientation">vertical</property>
                     <property name="action">select-folder</property>
+                    <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="error_downloaded">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <attributes>
+                      <attribute name="foreground" value="#ffff00000000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
@@ -641,6 +657,21 @@
                     <property name="orientation">vertical</property>
                     <property name="action">select-folder</property>
                     <property name="title" translatable="yes">Select a Folder</property>
+                    <signal name="selection-changed" handler="on_favorites_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="error_favorites">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <attributes>
+                      <attribute name="foreground" value="#ffff00000000"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
