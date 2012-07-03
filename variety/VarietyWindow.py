@@ -288,13 +288,13 @@ class VarietyWindow(Window):
             try:
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
-                if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 20):
+                if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 10):
                     logger.info("preparing some images")
                     images = self.select_random_images(100)
 
                     found = 0
                     for fuzziness in xrange(2, 7):
-                        if found > 10:
+                        if found > 10 or found >= len(images):
                             break
                         for img in images:
                             if self.image_ok(img, fuzziness):
@@ -304,14 +304,12 @@ class VarietyWindow(Window):
                                 found += 1
 
                     if not self.prepared and images:
-                        logger.info("Prepared buffer still empty after search, appending some non-ok images")
-                        self.prepared.append(images[0])
+                        logger.info("Prepared buffer still empty after search, appending some non-ok image")
+                        self.prepared.append(images[random.randint(0, len(images) - 1)])
 
                     # remove duplicates
                     self.prepared = list(set(self.prepared))
                     random.shuffle(self.prepared)
-                    if len(self.prepared) > 1 and self.prepared[0] == self.current:
-                        self.prepared = self.prepared[1:]
 
                     logger.info("after search prepared buffer contains %s images" % len(self.prepared))
             except Exception:
@@ -332,6 +330,7 @@ class VarietyWindow(Window):
                 if self.downloaders:
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     downloader.download_one()
+                    self.prepare_event.set()
             except Exception:
                 logger.exception("Could not download wallpaper:")
 
@@ -445,16 +444,16 @@ class VarietyWindow(Window):
         try:
             img = None
 
-            if len(self.prepared):
-                try:
-                    img = self.prepared.pop()
+            for prep in self.prepared:
+                if prep != self.current:
+                    img = prep
+                    self.prepared.remove(img)
                     self.prepare_event.set()
-                except Exception:
-                    pass
+                    break
 
             if not img:
                 logger.info("No images yet in prepared buffer, using some random image")
-                rnd_images = self.select_random_images(3)
+                rnd_images = self.select_random_images(10)
                 rnd_images = [f for f in rnd_images if f != self.current]
                 img = rnd_images[0] if rnd_images else None
 
@@ -472,7 +471,7 @@ class VarietyWindow(Window):
             logger.exception("Could not change wallpaper")
 
     def image_ok(self, img, fuzziness):
-        return img != self.current and self.color_ok(img, fuzziness)
+        return self.color_ok(img, fuzziness)
 
     def color_ok(self, img, fuzziness):
         if not (self.options.desired_color_enabled and self.options.desired_color):
@@ -595,7 +594,7 @@ class VarietyWindow(Window):
             os.unlink(os.path.expanduser("~/.config/variety/.lock"))
 
     def is_image(self, filename):
-        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png'))
+        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff'))
 
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")
