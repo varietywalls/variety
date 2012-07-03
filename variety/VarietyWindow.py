@@ -73,8 +73,14 @@ class VarietyWindow(Window):
         # load config
         self.reload_config()
 
-        self.used = []
-        self.used.append(self.gsettings.get_string(self.KEY).replace("file://", ""))
+        current = self.gsettings.get_string(self.KEY).replace("file://", "")
+        if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
+            try:
+                with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
+                    current = f.read().strip()
+            except Exception:
+                pass
+        self.used = [current, ]
         self.position = 0
         self.current = self.used[self.position]
 
@@ -347,6 +353,11 @@ class VarietyWindow(Window):
                 os.system(
                     "convert \"" + filename + "\" " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
                 to_set = os.path.join(self.config_folder, "wallpaper.jpg")
+                try:
+                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
+                        f.write(filename)
+                except Exception:
+                    pass
             self.gsettings.set_string(self.KEY, "file://" + to_set)
             self.gsettings.apply()
             self.current = filename
