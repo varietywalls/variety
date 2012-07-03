@@ -41,9 +41,10 @@ class FlickrDownloader(Downloader.Downloader):
         s = self.location.split(';')
         self.params = {}
         for x in s:
-            k, v = x.split(':')
-            if k.lower() in ["tags", "user_id", "group_id"]:
-                self.params[k.lower()] = v.replace(' ', '+')
+            if len(x) and x.find(':') > 0:
+                k, v = x.split(':')
+                if k.lower() in ["tags", "user_id", "group_id"]:
+                    self.params[k.lower()] = v.replace(' ', '+')
 
         # slight validation:
         for k in ["tags", "user_id", "group_id"]:

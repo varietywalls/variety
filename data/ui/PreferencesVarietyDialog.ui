@@ -46,6 +46,7 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
+    <signal name="destroy" handler="on_destroy" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>

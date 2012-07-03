@@ -110,7 +110,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 model = time_unit_combo.get_model()
                 time_unit_seconds = model[tree_iter][1]
                 result = interval * time_unit_seconds
-                if result < 5:
+                if result < minimum:
                     result = minimum
         except Exception:
             logger.exception("Could not understand interval")
@@ -168,25 +168,27 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 model.remove(i)
 
     def on_add_wn_clicked(self, widget=None):
-        dialog = AddWallpapersNetCategoryDialog()
-        dialog.set_transient_for(self)
-        response = dialog.run()
+        self.dialog = AddWallpapersNetCategoryDialog()
+        self.dialog.set_transient_for(self)
+        response = self.dialog.run()
         if response == Gtk.ResponseType.OK:
-            url = dialog.ui.url.get_text().strip()
+            url = self.dialog.ui.url.get_text().strip()
             if not url.startswith("http://"):
                 url = "http://" + url
             if url.startswith("http://wallpapers.net"):
                 self.add_sources(Options.SourceType.WN, [url])
-        dialog.destroy()
+        self.dialog.destroy()
+        self.dialog = None
 
     def on_add_flickr_clicked(self, widget=None):
-        dialog = AddFlickrDialog()
-        dialog.set_transient_for(self)
-        response = dialog.run()
-        if response == Gtk.ResponseType.OK:
-            pass
-            #TODO
-        #dialog.destroy()
+        self.dialog = AddFlickrDialog()
+        self.dialog.parent = self
+        self.dialog.set_transient_for(self)
+        self.dialog.run()
+
+    def on_flickr_dialog_okay(self, flickr_search):
+        self.add_sources(Options.SourceType.FLICKR, [flickr_search])
+        self.dialog = None
 
     def on_cancel_clicked(self, widget):
         self.destroy()
@@ -200,7 +202,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.download_enabled = self.ui.download_enabled.get_active()
             self.options.download_interval = self.read_time(
-                self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
+                self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
 
             self.options.download_folder = self.ui.download_folder_chooser.get_filename()
             self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
@@ -297,3 +299,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_desired_color_enabled_toggled(self, widget = None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
+
+    def on_destroy(self, widget = None):
+        if self.dialog:
+            self.dialog.destroy()

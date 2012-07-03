@@ -93,9 +93,9 @@ class Window(Gtk.Window):
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
         if self.AboutDialog is not None:
-            about = self.AboutDialog() # pylint: disable=E1102
-            response = about.run()
-            about.destroy()
+            self.about = self.AboutDialog() # pylint: disable=E1102
+            response = self.about.run()
+            self.about.destroy()
 
     def on_mnu_preferences_activate(self, widget, data=None):
         """Display the preferences window for variety."""

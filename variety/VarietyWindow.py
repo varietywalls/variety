@@ -129,18 +129,24 @@ class VarietyWindow(Window):
             if url in self.wn_downloaders_cache:
                 self.downloaders.append(self.wn_downloaders_cache[url])
             else:
-                dlr = WallpapersNetDownloader(url, self.options.download_folder)
-                self.wn_downloaders_cache[url] = dlr
-                self.downloaders.append(dlr)
+                try:
+                    dlr = WallpapersNetDownloader(url, self.options.download_folder)
+                    self.wn_downloaders_cache[url] = dlr
+                    self.downloaders.append(dlr)
+                except Exception:
+                    logger.exception("Could not create WallpapersNetDownloader for " + url)
 
         self.flickr_searches = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.FLICKR]
         for search in self.flickr_searches:
             if search in self.flickr_downloaders_cache:
                 self.downloaders.append(self.flickr_downloaders_cache[search])
             else:
-                dlr = FlickrDownloader(search, self.options.download_folder)
-                self.flickr_downloaders_cache[search] = dlr
-                self.downloaders.append(dlr)
+                try:
+                    dlr = FlickrDownloader(search, self.options.download_folder)
+                    self.flickr_downloaders_cache[search] = dlr
+                    self.downloaders.append(dlr)
+                except Exception:
+                    logger.exception("Could not create FlickrDownloader for " + search)
 
         for downloader in self.downloaders:
             try:
@@ -498,6 +504,10 @@ class VarietyWindow(Window):
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
+            if self.preferences_dialog:
+                self.preferences_dialog.destroy()
+            if self.about:
+                self.about.destroy()
             self.running = False
             for e in self.events:
                 e.set()

@@ -5,6 +5,7 @@
 
 from gi.repository import Gtk, Gdk # pylint: disable=E0611
 from variety.FlickrDownloader import FlickrDownloader
+from variety.Options import Options
 
 from variety_lib.helpers import get_builder
 
@@ -15,6 +16,7 @@ gettext.textdomain('variety')
 
 import logging
 import threading
+import urllib
 
 logger = logging.getLogger('variety')
 
@@ -49,23 +51,19 @@ class AddFlickrDialog(Gtk.Dialog):
 
         Called before the dialog returns Gtk.ResponseType.OK from run().
         """
-        threading.Timer(0.1, self.on_ok).start()
+        threading.Timer(0.1, self.ok_thread).start()
 
-    def on_ok(self):
+    def ok_thread(self):
         Gdk.threads_enter()
         self.ui.spinner.set_visible(True)
         self.ui.spinner.start()
         self.ui.error.set_label("")
         Gdk.threads_leave()
 
-        self.tags = None
-        self.user_id = None
-        self.user_url = None
-        self.group_id = None
-        self.group_url = None
+        search = ""
 
-        if self.ui.tags_enabled.get_active():
-            self.tags = ','.join([t.strip() for t in self.ui.tags.get_text().split(',')])
+        if self.ui.tags_enabled.get_active() and len(self.ui.tags.get_text()):
+            search +=  "tags:" + ','.join([urllib.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
 
         self.error = ""
 
@@ -73,8 +71,8 @@ class AddFlickrDialog(Gtk.Dialog):
         if self.ui.user_enabled.get_active() and len(user_url) > 0:
             u = FlickrDownloader.obtain_userid(user_url)
             if u[0]:
-                self.user_id = u[2]
-                self.user_url = self.ui.user_url.get_text().replace("http://", "")
+                search += "user:" + self.ui.user_url.get_text().replace("http://", "") + ";"
+                search += "user_id:" + u[2] + ";"
             else:
                 self.error = self.error + "\n" + u[1]
 
@@ -82,27 +80,30 @@ class AddFlickrDialog(Gtk.Dialog):
         if self.ui.group_enabled.get_active() and len(group_url) > 0:
             g = FlickrDownloader.obtain_groupid(group_url)
             if g[0]:
-                self.group_id = g[2]
-                self.group_url = self.ui.group_url.get_text().replace("http://", "")
+                search += "group:" + self.ui.group_url.get_text().replace("http://", "") + ";"
+                search += "group_id:" + g[2]
             else:
                 self.error = self.error + "\n" + g[1]
 
+        Gdk.threads_enter()
+
         if len(self.error) > 0:
-            Gdk.threads_enter()
             self.ui.error.set_label(self.error)
             self.ui.spinner.stop()
             self.ui.spinner.set_visible(False)
-            Gdk.threads_leave()
         else:
-            #TODO call parent callback
-            self.hide()
+            if len(search):
+                self.parent.add_sources(Options.SourceType.FLICKR, [search])
+            self.destroy()
+
+        Gdk.threads_leave()
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.
 
         Called before the dialog returns Gtk.ResponseType.CANCEL for run()
         """
-        self.hide()
+        self.destroy()
 
     def on_checkbox_toggled(self, widget):
         self.ui.tags.set_sensitive(self.ui.tags_enabled.get_active())
