@@ -93,7 +93,7 @@ class AddFlickrDialog(Gtk.Dialog):
             self.ui.spinner.set_visible(False)
         else:
             if len(search):
-                self.parent.add_sources(Options.SourceType.FLICKR, [search])
+                self.parent.on_flickr_dialog_okay(search)
             self.destroy()
 
         Gdk.threads_leave()

@@ -87,6 +87,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_download_enabled_toggled()
         self.on_desired_color_enabled_toggled()
 
+        self.dialog = None
+
     def source_enabled_toggled(self, widget, path, model):
         model[path][0] = not model[path][0]
 
@@ -169,22 +171,19 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_wn_clicked(self, widget=None):
         self.dialog = AddWallpapersNetCategoryDialog()
+        self.dialog.parent = self
         self.dialog.set_transient_for(self)
-        response = self.dialog.run()
-        if response == Gtk.ResponseType.OK:
-            url = self.dialog.ui.url.get_text().strip()
-            if not url.startswith("http://"):
-                url = "http://" + url
-            if url.startswith("http://wallpapers.net"):
-                self.add_sources(Options.SourceType.WN, [url])
-        self.dialog.destroy()
-        self.dialog = None
+        self.dialog.run()
 
     def on_add_flickr_clicked(self, widget=None):
         self.dialog = AddFlickrDialog()
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
         self.dialog.run()
+
+    def on_wn_dialog_okay(self, url):
+        self.add_sources(Options.SourceType.WN, [url])
+        self.dialog = None
 
     def on_flickr_dialog_okay(self, flickr_search):
         self.add_sources(Options.SourceType.FLICKR, [flickr_search])

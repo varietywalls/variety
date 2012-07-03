@@ -33,6 +33,29 @@ class WallpapersNetDownloader(Downloader.Downloader):
         self.host = "http://wallpapers.net"
         self.queue = []
 
+    @staticmethod
+    def fetch(url):
+        content = urllib2.urlopen(url).read()
+        return BeautifulSoup(content)
+
+    @staticmethod
+    def validate(url):
+        try:
+            if not url.startswith("http://"):
+                url = "http://" + url
+            if not url.lower().startswith("http://www.wallpapers.net") and not url.lower().startswith("http://wallpapers.net"):
+                return False
+
+            s = WallpapersNetDownloader.fetch(url)
+            wall = s.find("li", "wall")
+            if not wall:
+                return False
+            thumb = wall.find("div", "thumb")
+            return thumb is not None
+        except Exception:
+            logger.exception("Error while validating URL, proabably bad URL")
+            return False
+
     def download_one(self):
         logger.info("Downloading an image from wallpapers.net, " + self.location)
 
@@ -42,13 +65,11 @@ class WallpapersNetDownloader(Downloader.Downloader):
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
 
-        content = urllib2.urlopen(wallpaper_url).read()
-        s = BeautifulSoup(content)
+        s = self.fetch(wallpaper_url)
         img_url = self.host + s.find('a', text=re.compile("Original format"))['href']
         logger.info("Image page URL: " + img_url)
 
-        content = urllib2.urlopen(img_url).read()
-        s = BeautifulSoup(content)
+        s = self.fetch(img_url)
         src_url = s.img['src']
         logger.info("Image src URL: " + src_url)
 
@@ -56,8 +77,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     def fill_queue(self):
         logger.info("Category URL: " + self.location)
-        content = urllib2.urlopen(self.location).read()
-        s = BeautifulSoup(content)
+        s = self.fetch(self.location)
         mp = 0
         urls = [url['href'] for x in s.find_all('div', 'pagination') for url in x.find_all('a') if
                 url['href'].index('/page/') > 0]
@@ -76,8 +96,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
             page_url = self.host + h[:h.index("/page/") + 6] + str(page)
 
             logger.info("Page URL: " + page_url)
-            content = urllib2.urlopen(page_url).read()
-            s = BeautifulSoup(content)
+            s = self.fetch(page_url)
         else:
             logger.info("Single page in category")
 

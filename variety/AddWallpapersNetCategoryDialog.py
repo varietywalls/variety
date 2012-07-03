@@ -14,10 +14,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import Gtk # pylint: disable=E0611
+from gi.repository import Gtk, Gdk # pylint: disable=E0611
 
 from variety_lib.helpers import get_builder
+from variety.WallpapersNetDownloader import WallpapersNetDownloader
 
+import threading
 import gettext
 from gettext import gettext as _
 gettext.textdomain('variety')
@@ -53,14 +55,41 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
 
         Called before the dialog returns Gtk.ResponseType.OK from run().
         """
-        self.hide()
+        if not len(self.ui.url.get_text().strip()):
+            self.destroy()
+        else:
+            threading.Timer(0.1, self.ok_thread).start()
+
+    def ok_thread(self):
+        Gdk.threads_enter()
+        self.ui.message.set_visible(True)
+        self.ui.url.set_sensitive(False)
+        self.ui.spinner.set_visible(True)
+        self.ui.spinner.start()
+        self.ui.error.set_label("")
+        Gdk.threads_leave()
+
+        url = self.ui.url.get_text().strip()
+        valid = WallpapersNetDownloader.validate(url)
+
+        Gdk.threads_enter()
+        if not valid:
+            self.ui.error.set_label("Could not find wallpapers there. Please check the URL.")
+            self.ui.spinner.stop()
+            self.ui.url.set_sensitive(True)
+            self.ui.message.set_visible(False)
+            self.ui.spinner.set_visible(False)
+        else:
+            self.parent.on_wn_dialog_okay(url)
+            self.destroy()
+        Gdk.threads_leave()
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.
 
         Called before the dialog returns Gtk.ResponseType.CANCEL for run()
         """
-        self.hide()
+        self.destroy()
 
 
 if __name__ == "__main__":

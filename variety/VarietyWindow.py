@@ -89,6 +89,9 @@ class VarietyWindow(Window):
 
         self.start_threads()
 
+        self.about = None
+        self.preferences_dialog = None
+
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
 
