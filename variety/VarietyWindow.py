@@ -244,7 +244,7 @@ class VarietyWindow(Window):
 
                 self.ind.favorite.set_sensitive(not in_favs)
                 self.ind.favorite.set_label("Already in Favorites" if in_favs else (
-                    "Move to Favorites" if favorites_enabled else "Copy to Favorites"))
+                    "Move to _Favorites" if favorites_enabled else "Copy to _Favorites"))
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
@@ -445,7 +445,7 @@ class VarietyWindow(Window):
             img = None
 
             for prep in self.prepared:
-                if prep != self.current:
+                if prep != self.current and os.access(prep, os.F_OK):
                     img = prep
                     self.prepared.remove(img)
                     self.prepare_event.set()

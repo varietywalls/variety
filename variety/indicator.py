@@ -60,12 +60,14 @@ class Indicator:
         self.separator0.show()
         self.menu.append(self.separator0)
 
-        self.prev = Gtk.MenuItem("Previous")
+        self.prev = Gtk.MenuItem("_Previous")
+        self.prev.set_use_underline(True)
         self.prev.connect("activate", window.prev_wallpaper)
         self.prev.show()
         self.menu.append(self.prev)
 
-        self.next = Gtk.MenuItem("Next")
+        self.next = Gtk.MenuItem("_Next")
+        self.next.set_use_underline(True)
         self.next.connect("activate", window.next_wallpaper)
         self.next.show()
         self.menu.append(self.next)
@@ -93,12 +95,14 @@ class Indicator:
         self.open_folder.show()
         self.menu.append(self.open_folder)
 
-        self.trash = Gtk.MenuItem("Move to Trash")
+        self.trash = Gtk.MenuItem("Move to _Trash")
+        self.trash.set_use_underline(True)
         self.trash.connect("activate", window.move_to_trash)
         self.trash.show()
         self.menu.append(self.trash)
 
-        self.favorite = Gtk.MenuItem("Move to Favorites")
+        self.favorite = Gtk.MenuItem("Move to _Favorites")
+        self.favorite.set_use_underline(True)
         self.favorite.connect("activate", window.move_to_favorites)
         self.favorite.show()
         self.menu.append(self.favorite)
