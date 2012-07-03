@@ -1,3 +1,25 @@
+variety (0.3) precise; urgency=low
+
+  * Validation of added WN urls
+  * Add flickr search GUI ready; fix quit - it now closes all dialogs
+  * Flickr downloader; GUI - not yet 100% ready
+  * Refactored the downloaders
+  * Minor fixes
+  * Pause/resume in indicator menu
+  * Added Desktoppr.co as image source
+  * GUI: Enable/disable feature X updates the sensitivity of the related
+    controls
+  * Faster color matching
+  * Better calibration for DominantColors; better threading; wheel
+    scroll throttling
+  * Preference for color
+  * More icons; DominantColors replaces AvgColor
+  * Add special source type for the Favorites folder
+  * Fix modality of AddWNCategory dialog
+  * Option to set as autostart
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 03 Jul 2012 12:13:38 +0300
+
 variety (0.2-public5) precise; urgency=low
 
   * New release.
