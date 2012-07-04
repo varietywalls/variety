@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-01 15:38+0300\n"
+"POT-Creation-Date: 2012-07-04 00:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,58 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
+#: ../data/ui/AddFlickrDialog.ui.h:1
+msgid "Variety - add Flickr as an image source"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:2
+msgid "Flickr"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:3
+msgid ""
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
+"Photos that match all of the chosen criteria will be downloaded."
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:4
+msgid "Tags: "
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:5
+msgid ""
+"A comma-separated list of tags. A photo has to contain all of them "
+"simultaneosly in order to match.\n"
+"Example: yellow,car"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:7
+msgid "User: "
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:8
+msgid ""
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/ajn_photography/\">http://"
+"www.flickr.com/photos/ajn_photography/</a>"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:10
+msgid "Group: "
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:11
+msgid ""
+"Please insert the group's URL.\n"
+"Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www."
+"flickr.com/groups/wallpapers/</a>"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:13
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
+msgid "  "
+msgstr ""
+
 #: ../variety/__init__.py:38
 msgid "Show debug messages (-vv debugs variety_lib also)"
 msgstr ""
@@ -65,20 +117,16 @@ msgid "About Variety"
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:2
-msgid "Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>"
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "An automatic wallpaper changer and manager."
 msgstr ""
 
-#: ../data/ui/AboutVarietyDialog.ui.h:4
+#: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "https://launchpad.net/variety"
 msgstr ""
 
-#: ../data/ui/AboutVarietyDialog.ui.h:5
+#: ../data/ui/AboutVarietyDialog.ui.h:4
 msgid ""
-"# Copyright (C) 2012 Peter Levi <peterlevi@peterlevi.com>\n"
+"# Peter Levi <peterlevi@peterlevi.com>\n"
 "# This program is free software: you can redistribute it and/or modify it \n"
 "# under the terms of the GNU General Public License version 3, as "
 "published \n"
@@ -98,12 +146,15 @@ msgid "Variety - add Wallpapers.net category"
 msgstr ""
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
+msgid "Wallpapers.net"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
 msgid ""
 "Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
 "a category with wallpapers you would like to see on your desktop, then paste "
-"its URL below.\n"
-"A category is  anything on the site that has one or more pages with "
-"wallpapers on them. Here are some examples:\n"
+"its URL below. A category is  anything on the site that has one or more "
+"pages with wallpapers on them. Here are some examples:\n"
 "\n"
 "Top wallpapers: <a href=\"http://wallpapers.net/top_wallpapers.html\">http://"
 "wallpapers.net/top_wallpapers.html</a>\n"
@@ -118,6 +169,10 @@ msgstr ""
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
 msgid "Paste URL here: "
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
+msgid "Just a moment to check what's at that URL"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
@@ -189,42 +244,46 @@ msgid "Add Wallpapers.net category"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
-msgid "Remove"
+msgid "Add Flickr search"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "When possible, use images containing this color: "
+msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
-msgid "(This is an experimental feature)"
+msgid "When possible, use images containing this color: "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "Download a wallpaper every"
+msgid "(This is an experimental feature)"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
-msgid "to "
+msgid "Download a wallpaper every"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
-msgid "Favorites folder"
+msgid "to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
-msgid "Move favorite wallpapers to "
+msgid "Favorites folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
-msgid "Select a Folder"
+msgid "Move favorite wallpapers to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
-msgid "Filters"
+msgid "Select a Folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"

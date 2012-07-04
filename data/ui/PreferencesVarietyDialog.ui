@@ -274,7 +274,7 @@
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
                     <property name="width_request">250</property>
-                    <property name="height_request">250</property>
+                    <property name="height_request">180</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
@@ -349,6 +349,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Select individual images to use as wallpapers</property>
                         <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_add_images_clicked" swapped="no"/>
                       </object>
@@ -365,6 +366,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Select folders with images to be used as wallpapers. 
+Add only the root folders, subfolders will be searched automatically.</property>
                         <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_add_folders_clicked" swapped="no"/>
                       </object>
@@ -381,6 +384,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Wallpapers.net has lots of good high-resolution wallpapers, categorized under categories and colors.</property>
                         <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_add_wn_clicked" swapped="no"/>
                       </object>
@@ -397,6 +401,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Use Flickr images with a specific tag, or uploaded by a specific user, or belonging to some group.</property>
                         <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_add_flickr_clicked" swapped="no"/>
                       </object>
@@ -413,6 +418,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Remove selected image sources</property>
                         <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_remove_sources_clicked" swapped="no"/>
                       </object>
@@ -738,6 +744,24 @@
                     <property name="margin_top">10</property>
                     <property name="orientation">vertical</property>
                     <property name="column_spacing">20</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
                     <child>
                       <placeholder/>
                     </child>

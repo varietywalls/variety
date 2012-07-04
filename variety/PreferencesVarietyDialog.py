@@ -80,6 +80,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             cb = Gtk.CheckButton(f[1])
             cb.set_visible(True)
             cb.set_active(f[0])
+            cb.set_margin_right(30)
             self.ui.filters_grid.attach(cb, i // 3, i % 3, 1, 1)
             self.filter_checkboxes.append(cb)
 
@@ -152,21 +153,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.destroy()
 
     def add_sources(self, type, locations):
-        existing = set()
-        for r in self.ui.sources.get_model():
+        self.ui.sources.get_selection().unselect_all()
+        existing = {}
+        for i, r in enumerate(self.ui.sources.get_model()):
             if r[1] == Options.type_to_str(type):
                 if type == Options.SourceType.FOLDER:
-                    existing.add(os.path.normpath(r[2]))
+                    existing[os.path.normpath(r[2])] = r, i
                 else:
-                    existing.add(r[2])
+                    existing[r[2]] = r, i
 
         for f in locations:
             if type == Options.SourceType.FOLDER:
                 f = os.path.normpath(f)
             if not f in existing:
                 self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
+                self.ui.sources.get_selection().select_path(len(self.ui.sources.get_model()) - 1)
             else:
-                logger.info("Source already exists: " + f)
+                logger.info("Source already exists, activating it: " + f)
+                existing[f][0][0] = True
+                self.ui.sources.get_selection().select_path(existing[f][1])
 
     def on_remove_sources_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()

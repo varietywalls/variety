@@ -16,7 +16,6 @@
 
 from gi.repository import Gtk, Gdk # pylint: disable=E0611
 from variety.FlickrDownloader import FlickrDownloader
-from variety.Options import Options
 
 from variety_lib.helpers import get_builder
 
@@ -73,13 +72,13 @@ class AddFlickrDialog(Gtk.Dialog):
 
         search = ""
 
-        if self.ui.tags_enabled.get_active() and len(self.ui.tags.get_text()):
+        if len(self.ui.tags.get_text()):
             search +=  "tags:" + ','.join([urllib.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
 
         self.error = ""
 
         user_url = self.ui.user_url.get_text().strip()
-        if self.ui.user_enabled.get_active() and len(user_url) > 0:
+        if len(user_url) > 0:
             u = FlickrDownloader.obtain_userid(user_url)
             if u[0]:
                 search += "user:" + self.ui.user_url.get_text().replace("http://", "") + ";"
@@ -88,7 +87,7 @@ class AddFlickrDialog(Gtk.Dialog):
                 self.error = self.error + "\n" + u[1]
 
         group_url = self.ui.group_url.get_text().strip()
-        if self.ui.group_enabled.get_active() and len(group_url) > 0:
+        if len(group_url) > 0:
             g = FlickrDownloader.obtain_groupid(group_url)
             if g[0]:
                 search += "group:" + self.ui.group_url.get_text().replace("http://", "") + ";"
@@ -115,12 +114,6 @@ class AddFlickrDialog(Gtk.Dialog):
         Called before the dialog returns Gtk.ResponseType.CANCEL for run()
         """
         self.destroy()
-
-    def on_checkbox_toggled(self, widget):
-        self.ui.tags.set_sensitive(self.ui.tags_enabled.get_active())
-        self.ui.user_url.set_sensitive(self.ui.user_enabled.get_active())
-        self.ui.group_url.set_sensitive(self.ui.group_enabled.get_active())
-
 
 if __name__ == "__main__":
     dialog = AddFlickrDialog()

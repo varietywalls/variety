@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
   <object class="AddWallpapersNetCategoryDialog" id="add_wallpapers_net_category_dialog">
     <property name="width_request">500</property>
     <property name="can_focus">False</property>
@@ -83,6 +83,7 @@ Specific resolution: &lt;a href="http://wallpapers.net/1920x1200_wide-wallpapers
               <object class="GtkEntry" id="url">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
               </object>
