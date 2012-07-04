@@ -70,6 +70,9 @@ class VarietyWindow(Window):
         self.wn_downloaders_cache = {}
         self.flickr_downloaders_cache = {}
 
+        self.prepared = []
+        self.prepared_lock = threading.Lock()
+
         # load config
         self.reload_config()
 
@@ -187,7 +190,9 @@ class VarietyWindow(Window):
         logger.info("Filters: " + str(self.filters))
 
         # clean prepared - they are outdated
-        self.prepared = []
+        with self.prepared_lock:
+            self.prepared = []
+        self.image_count = -1
 
         if self.events:
             for e in self.events:
@@ -195,8 +200,6 @@ class VarietyWindow(Window):
 
     def start_threads(self):
         self.running = True
-
-        self.prepared = []
 
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
@@ -292,24 +295,25 @@ class VarietyWindow(Window):
                     logger.info("preparing some images")
                     images = self.select_random_images(100)
 
-                    found = 0
+                    found = set()
                     for fuzziness in xrange(2, 7):
-                        if found > 10 or found >= len(images):
+                        if len(found) > 10 or len(found) >= len(images):
                             break
                         for img in images:
                             if self.image_ok(img, fuzziness):
-                                self.prepared.append(img)
+                                found.add(img)
                                 if self.options.desired_color_enabled:
                                     logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
-                                found += 1
 
-                    if not self.prepared and images:
-                        logger.info("Prepared buffer still empty after search, appending some non-ok image")
-                        self.prepared.append(images[random.randint(0, len(images) - 1)])
+                    with self.prepared_lock:
+                        self.prepared.extend(found)
+                        if not self.prepared and images:
+                            logger.info("Prepared buffer still empty after search, appending some non-ok image")
+                            self.prepared.append(images[random.randint(0, len(images) - 1)])
 
-                    # remove duplicates
-                    self.prepared = list(set(self.prepared))
-                    random.shuffle(self.prepared)
+                        # remove duplicates
+                        self.prepared = list(set(self.prepared))
+                        random.shuffle(self.prepared)
 
                     logger.info("after search prepared buffer contains %s images" % len(self.prepared))
             except Exception:
@@ -387,7 +391,8 @@ class VarietyWindow(Window):
                     logger.exception("Cold not walk folder " + folder)
 
     def select_random_images(self, count):
-        if self.image_count < 20 or random.randint(0, 20) == 0:
+        # refresh image count often when few images in the folders and rarely when many:
+        if self.image_count < 20 or random.randint(0, max(0, min(100, self.image_count // 30))) == 0:
             cnt = sum(1 for f in self.list_images())
             if not cnt:
                 return []
@@ -444,12 +449,13 @@ class VarietyWindow(Window):
         try:
             img = None
 
-            for prep in self.prepared:
-                if prep != self.current and os.access(prep, os.F_OK):
-                    img = prep
-                    self.prepared.remove(img)
-                    self.prepare_event.set()
-                    break
+            with self.prepared_lock:
+                for prep in self.prepared:
+                    if prep != self.current and os.access(prep, os.F_OK):
+                        img = prep
+                        self.prepared.remove(img)
+                        self.prepare_event.set()
+                        break
 
             if not img:
                 logger.info("No images yet in prepared buffer, using some random image")
@@ -570,6 +576,7 @@ class VarietyWindow(Window):
                 self.used = [(new_file if f == file else f) for f in self.used]
                 if self.current == file:
                     self.current = new_file
+                    self.set_wp(new_file)
                 self.update_indicator(self.current, True)
         except Exception:
             logger.exception("Exception in move_to_favorites")
@@ -587,10 +594,13 @@ class VarietyWindow(Window):
                 self.preferences_dialog.destroy()
             if self.about:
                 self.about.destroy()
+
             self.running = False
             for e in self.events:
                 e.set()
+
             Gtk.main_quit()
+
             os.unlink(os.path.expanduser("~/.config/variety/.lock"))
 
     def is_image(self, filename):
@@ -624,4 +634,3 @@ class VarietyWindow(Window):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
         self.update_indicator(self.current, True)
-

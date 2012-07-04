@@ -40,11 +40,20 @@ def parse_options():
 
     set_up_logging(options)
 
+VARIETY_WINDOW = None
+
+def sigint_handler(a, b):
+    print "CTRL-C pressed, quitting..."
+    global VARIETY_WINDOW
+    if VARIETY_WINDOW:
+        VARIETY_WINDOW.on_quit()
+    sys.exit()
+
 def main():
     'constructor for your class instances'
 
     # ignore Ctrl-C
-    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, sigint_handler)
 
     parse_options()
 
@@ -53,6 +62,8 @@ def main():
 
     # Run the application.
     window = VarietyWindow.VarietyWindow()
+    global VARIETY_WINDOW
+    VARIETY_WINDOW = window
     window.first_run()
 
     GObject.threads_init()

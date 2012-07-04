@@ -66,6 +66,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
+        self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
         c = self.options.desired_color
         if c:
             self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))

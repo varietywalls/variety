@@ -6,12 +6,13 @@ from DominantColors import DominantColors
 dir = sys.argv[1]
 m = {}
 
-for f in os.listdir(dir):
+for f in sorted(os.listdir(dir)):
     if f.lower().endswith(".jpg") or f.lower().endswith(".jpg"):
         try:
             d = DominantColors(os.path.join(dir, f))
             calc = d.get_dominant()
-            #print f, calc
+            print f, "light:", calc[2]
+            continue
 
             for fuzzy in xrange(20):
                 if DominantColors.contains_color(calc, (255, 217, 100), fuzzy):
@@ -24,7 +25,8 @@ for f in os.listdir(dir):
 
         except Exception:
             print "oops for " + f
-            pass
+            raise
+            #pass
 
 #print "\n----results----"
 #for fuzzy in xrange(10):
