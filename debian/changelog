@@ -1,3 +1,16 @@
+variety (0.3.2) precise; urgency=low
+
+  * Fix: remove from used and prepared queues when purging a file in
+    download folder
+  * NSFW warning when enabling Desktoppr
+  * Added download quota option
+  * More threading improvements; Attempt to handle SIGINT properly (not
+    yet as working expected); Computing lightness in DominantColors
+  * Removed unnecessary checkboxes from Flickr dialog; Select in table
+    newly added sources and enable existing ones if user adds them again
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Fri, 06 Jul 2012 01:35:28 +0300
+
 variety (0.3.1ubuntu1) precise; urgency=low
 
   * 
