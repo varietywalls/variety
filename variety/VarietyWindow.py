@@ -354,7 +354,8 @@ class VarietyWindow(Window):
 
         mb_quota = self.options.quota_size * 1024 * 1024
         if self.download_folder_size > 0.95 * mb_quota:
-            logger.info("Purging oldest files from download folder, current size: %d mb" % int(self.download_folder_size / (1024.0 * 1024.0)))
+            logger.info("Purging oldest files from download folder, current size: %d mb" %
+                        int(self.download_folder_size / (1024.0 * 1024.0)))
             files = []
             for dirpath, dirnames, filenames in os.walk(self.options.download_folder):
                 for f in filenames:

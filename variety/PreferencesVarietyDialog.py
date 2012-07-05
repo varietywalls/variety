@@ -98,6 +98,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def source_enabled_toggled(self, widget, path, model):
         model[path][0] = not model[path][0]
+        if model[path][0] and model[path][1] == Options.type_to_str(Options.SourceType.DESKTOPPR):
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
+                "You just enabled downloading from Desktoppr. Please be warned that as of July 2012 "
+                "Desktoppr contains a portion of nudity and porn images that are returned by their "
+                "random wallpaper API, and thus may appear on your desktop.")
+            dialog.set_title("Desktoppr - NSFW Warning")
+            self.parent.dialogs.append(dialog)
+            dialog.run()
+            dialog.destroy()
+            self.parent.dialogs.remove(dialog)
+
 
     def set_time(self, interval, text, time_unit):
         if interval < 5:
