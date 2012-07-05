@@ -83,6 +83,7 @@ class VarietyWindow(Window):
                     current = f.read().strip()
             except Exception:
                 pass
+
         self.used = [current, ]
         self.position = 0
         self.current = self.used[self.position]
@@ -365,11 +366,15 @@ class VarietyWindow(Window):
             files = sorted(files, key = lambda x: x[2])
             i = 0
             while i < len(files) and self.download_folder_size > 0.80 * mb_quota:
+                file = files[i][0]
+                if file == self.current:
+                    continue
                 try:
-                    logger.debug("Deleting old file in downloaded: " + files[i][0])
-                    os.unlink(files[i][0])
+                    logger.debug("Deleting old file in downloaded: " + file)
+                    self.remove_from_queues(file)
+                    os.unlink(file)
                     self.download_folder_size -= files[i][1]
-                    os.unlink(files[i][0] + ".txt")
+                    os.unlink(file + ".txt")
                 except Exception:
                     logger.exception("Could not delete some file while purging download folder: " + files[i][0])
                 i += 1
@@ -599,9 +604,15 @@ class VarietyWindow(Window):
                 self.move_or_copy_file(file, trash, shutil.move)
                 while self.used[self.position] == file:
                     self.next_wallpaper()
-                self.used = [f for f in self.used if f != file]
+
+                self.remove_from_queues(file)
         except Exception:
             logger.exception("Exception in move_to_trash")
+
+    def remove_from_queues(self, file):
+        self.used = [f for f in self.used if f != file]
+        with self.prepared_lock:
+            self.prepared = [f for f in self.prepared if f != file]
 
     def move_to_favorites(self, widget=None):
         try:
