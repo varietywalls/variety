@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-04 00:15+0300\n"
+"POT-Creation-Date: 2012-07-05 01:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,8 @@ msgstr ""
 #: ../data/ui/AddFlickrDialog.ui.h:3
 msgid ""
 "Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
-"Photos that match all of the chosen criteria will be downloaded."
+"Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:4
@@ -236,54 +237,80 @@ msgid "Add Images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
-msgid "Add Folders"
+msgid "Select individual images to use as wallpapers"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
-msgid "Add Wallpapers.net category"
+msgid "Add Folders"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
-msgid "Add Flickr search"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "Remove"
+msgid ""
+"Select folders with images to be used as wallpapers. \n"
+"Add only the root folders, subfolders will be searched automatically."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
-msgid "When possible, use images containing this color: "
+msgid "Add Wallpapers.net category"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "(This is an experimental feature)"
+msgid ""
+"Wallpapers.net has lots of good high-resolution wallpapers, categorized "
+"under categories and colors."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
-msgid "Download a wallpaper every"
+msgid "Add Flickr search"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
-msgid "to "
+msgid ""
+"Use Flickr images with a specific tag, or uploaded by a specific user, or "
+"belonging to some group."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
-msgid "Favorites folder"
+msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
-msgid "Move favorite wallpapers to "
+msgid "Remove selected image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
-msgid "Select a Folder"
+msgid "When possible, use images containing this color: "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
-msgid "Filters"
+msgid "(This is an experimental feature)"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
+msgid "Download a wallpaper every"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+msgid "to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+msgid "Favorites folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+msgid "Move favorite wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+msgid "Select a Folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"

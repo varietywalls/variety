@@ -135,6 +135,7 @@ class VarietyWindow(Window):
             self.folders.append(self.options.favorites_folder)
 
         self.downloaders = []
+        self.download_folder_size = -1
 
         if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
             self.downloaders.append(DesktopprDownloader(self.options.download_folder))
@@ -179,6 +180,8 @@ class VarietyWindow(Window):
         logger.info("Download enabled: " + str(self.options.download_enabled))
         logger.info("Download interval: " + str(self.options.download_interval))
         logger.info("Download folder: " + self.options.download_folder)
+        logger.info("Quota enabled: " + str(self.options.quota_enabled))
+        logger.info("Quota size: " + str(self.options.quota_size))
         logger.info("Favorites folder: " + self.options.favorites_folder)
         logger.info("Color enabled: " + str(self.options.desired_color_enabled))
         logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
@@ -331,12 +334,53 @@ class VarietyWindow(Window):
                     return
                 if not self.options.download_enabled:
                     continue
+                #TODO do we want to download when not change_enabled?
                 if self.downloaders:
+                    self.purge_downloaded()
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
-                    downloader.download_one()
+                    file = downloader.download_one()
+                    self.download_folder_size += os.path.getsize(file)
                     self.prepare_event.set()
             except Exception:
                 logger.exception("Could not download wallpaper:")
+
+    def purge_downloaded(self):
+        if not self.options.quota_enabled:
+            return
+
+        if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
+            self.download_folder_size = self.get_folder_size(self.options.download_folder)
+            logger.info("Refreshed download folder size: %d mb", self.download_folder_size / (1024.0 * 1024.0))
+
+        mb_quota = self.options.quota_size * 1024 * 1024
+        if self.download_folder_size > 0.95 * mb_quota:
+            logger.info("Purging oldest files from download folder, current size: %d mb" % int(self.download_folder_size / (1024.0 * 1024.0)))
+            files = []
+            for dirpath, dirnames, filenames in os.walk(self.options.download_folder):
+                for f in filenames:
+                    if self.is_image(f):
+                        fp = os.path.join(dirpath, f)
+                        files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
+            files = sorted(files, key = lambda x: x[2])
+            i = 0
+            while i < len(files) and self.download_folder_size > 0.80 * mb_quota:
+                try:
+                    logger.debug("Deleting old file in downloaded: " + files[i][0])
+                    os.unlink(files[i][0])
+                    self.download_folder_size -= files[i][1]
+                    os.unlink(files[i][0] + ".txt")
+                except Exception:
+                    logger.exception("Could not delete some file while purging download folder: " + files[i][0])
+                i += 1
+
+    @staticmethod
+    def get_folder_size(start_path):
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk(start_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                total_size += os.path.getsize(fp)
+        return total_size
 
     def set_wp(self, filename):
         if self.set_wp_timer:

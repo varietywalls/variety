@@ -63,6 +63,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.download_interval_time_unit)
 
         self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+
+        self.ui.quota_enabled.set_active(self.options.quota_enabled)
+        self.ui.quota_size.set_text(str(self.options.quota_size))
+
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
@@ -89,8 +93,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_download_enabled_toggled()
         self.on_desired_color_enabled_toggled()
         self.on_sources_selection_changed()
-#        self.on_downloaded_changed()
-#        self.on_favorites_changed()
 
         self.dialog = None
 
@@ -229,6 +231,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.download_interval = self.read_time(
                 self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
 
+            self.options.quota_enabled = self.ui.quota_enabled.get_active()
+            try:
+                self.options.quota_size = int(self.ui.quota_size.get_text())
+                if self.options.quota_size < 50:
+                    self.options.quota_size = 50
+            except Exception:
+                logger.exception("Could not understand quota size")
+
             if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
                 self.options.download_folder = self.ui.download_folder_chooser.get_filename()
             if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
@@ -320,9 +330,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.change_interval_time_unit.set_sensitive(self.ui.change_enabled.get_active())
 
     def on_download_enabled_toggled(self, widget = None):
-        self.ui.download_interval_text.set_sensitive(self.ui.download_enabled.get_active())
-        self.ui.download_interval_time_unit.set_sensitive(self.ui.download_enabled.get_active())
-        self.ui.download_folder_chooser.set_sensitive(self.ui.download_enabled.get_active())
+        active = self.ui.download_enabled.get_active()
+        self.ui.download_interval_text.set_sensitive(active)
+        self.ui.download_interval_time_unit.set_sensitive(active)
+        self.ui.download_folder_chooser.set_sensitive(active)
+        self.ui.quota_enabled.set_sensitive(active)
+        self.ui.quota_size.set_sensitive(active)
+        self.on_quota_enabled_toggled()
+
+    def on_quota_enabled_toggled(self, widget = None):
+        active = self.ui.download_enabled.get_active() and self.ui.quota_enabled.get_active()
+        self.ui.quota_size.set_sensitive(active)
+        self.ui.quota_label.set_sensitive(active)
 
     def on_desired_color_enabled_toggled(self, widget = None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())

@@ -37,4 +37,4 @@ class DesktopprDownloader(Downloader.Downloader):
         content = urllib2.urlopen(self.location).read()
         response = json.loads(content)
         image_url = response["response"]["image"]["url"]
-        self.save_locally("http://www.desktoppr.co", image_url)
+        return self.save_locally("http://www.desktoppr.co", image_url)

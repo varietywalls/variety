@@ -88,6 +88,18 @@ class Options:
                 pass
 
             try:
+                self.quota_enabled = config["quota_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quota_size = int(config["quota_size"])
+                if self.quota_size < 50:
+                    self.quota_size = 50
+            except Exception:
+                pass
+
+            try:
                 self.favorites_folder = os.path.expanduser(config["favorites_folder"])
             except Exception:
                 pass
@@ -150,6 +162,8 @@ class Options:
         self.download_enabled = True
         self.download_interval = 600
         self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
+        self.quota_enabled = True
+        self.quota_size = 20
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
 
         self.sources = [
@@ -183,6 +197,9 @@ class Options:
             config["download_enabled"] = str(self.download_enabled)
             config["download_interval"] = str(self.download_interval)
             config["download_folder"] = self.download_folder
+
+            config["quota_enabled"] = str(self.quota_enabled)
+            config["quota_size"] = str(self.quota_size)
 
             config["favorites_folder"] = self.favorites_folder
 

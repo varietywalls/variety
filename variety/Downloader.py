@@ -60,3 +60,4 @@ class Downloader(object):
         localFile.close()
 
         logger.info("Download complete")
+        return local_filename

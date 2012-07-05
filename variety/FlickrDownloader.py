@@ -102,7 +102,7 @@ class FlickrDownloader(Downloader.Downloader):
 
         urls = self.queue.pop()
         logger.info("Photo URL: " + urls[1])
-        self.save_locally(urls[1], urls[0])
+        return self.save_locally(urls[1], urls[0])
 
     def fill_queue(self):
         logger.info("Filling Flickr download queue: " + self.location)

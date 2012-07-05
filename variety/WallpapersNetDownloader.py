@@ -73,7 +73,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
         src_url = s.img['src']
         logger.info("Image src URL: " + src_url)
 
-        self.save_locally(wallpaper_url, src_url)
+        return self.save_locally(wallpaper_url, src_url)
 
     def fill_queue(self):
         logger.info("Category URL: " + self.location)
