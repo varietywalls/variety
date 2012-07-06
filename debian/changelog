@@ -116,3 +116,62 @@ variety (0.2-public1) precise; urgency=low
   * Initial release.
 
  -- Peter Levi <peterlevi@peterlevi.com>  Sun, 01 Jul 2012 00:19:41 +0300
+
+variety (0.2ubuntu1) precise; urgency=low
+
+  *
+
+ -- Peter Levi <peter@plpc>  Sat, 30 Jun 2012 19:57:58 +0300
+
+variety (0.2) precise; urgency=low
+
+  * Minor chnage to allow opening of local folder from menu when image
+    is not downloaded
+  * Functional preferences; downloads from WN go into dedicated category
+    folders; better threading to support options reload (needs more work
+    though)
+  * GUI: dilaog for adding WN image sources
+  * GUI: dilaog for adding WN image sources
+  * Adding functionality to the GUI preferences
+  * GUI: Displays the options, but does not write them back
+  * Starting work on the preferences; added some more needed config
+    options
+  * Edit preferences directly in gedit till the prefs GUI gets ready
+  * Previos/Next in menu
+  * Maybe achieved proper updating of file info / calling of
+    Gdk.threads_eneter and Gdk.threads_leave? Also added throttling of
+    gsettings wallpaper calls (used to crash the system)
+  * Copy config file from data folder on first run
+  * Creating ubuntu package
+  * Remove idea's workspace.xml from VCS
+  * Removed some unnecessary files
+  * Updated example config files
+  * Ran quickly license
+  * Bugfixes
+  * Minor fixes
+  * Preferences dialog, initial drop
+  * Loading of options from config file; bugfixes; better icon
+  * Config file parsing/writing class
+  * Minor fixes
+  * First run introductory dialog
+  * PID-based lock file to ensure single program instance
+  * PID-based lock file to ensure single program instance
+  * Many small improvements and bugs fixed; Added Favorites; refactoring
+  * Better About dialog, some bugfixes
+  * More info in menu, option to open URL source for downloaded images
+  * Added downloading from Wallpapers.net
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 30 Jun 2012 17:22:05 +0300
+
+variety (0.1-public3ubuntu1) precise; urgency=low
+
+  *
+
+ -- Peter Levi <peter@plpc>  Sat, 30 Jun 2012 17:20:42 +0300
+
+variety (0.1-public3) precise; urgency=low
+
+  * Initial release.
+
+ -- Peter Levi <peter@plpc>  Sat, 30 Jun 2012 17:01:14 +0300
+
