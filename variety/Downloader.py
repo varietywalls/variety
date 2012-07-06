@@ -47,7 +47,7 @@ class Downloader(object):
         local_filename = os.path.join(self.target_folder, filename)
         if os.path.exists(local_filename):
             logger.info("File already exists, skip downloading")
-            return
+            return None
 
         u = urllib2.urlopen(image_url)
         data = u.read()

@@ -44,6 +44,10 @@ class Options:
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
+    class LightnessMode:
+        DARK = 0
+        LIGHT = 1
+
     def __init__(self):
         self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
 
@@ -116,6 +120,33 @@ class Options:
             except Exception:
                 self.desired_color = None
 
+            try:
+                self.min_size_enabled = config["min_size_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.min_size = int(config["min_size"])
+                self.min_size = max(0, min(100, self.min_size))
+            except Exception:
+                pass
+
+            try:
+                self.use_landscape_enabled = config["use_landscape_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.lightness_enabled = config["lightness_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.lightness_mode = int(config["lightness_mode"])
+                self.lightness_mode = max(0, min(1, self.lightness_mode))
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -157,14 +188,22 @@ class Options:
         self.change_enabled = True
         self.change_on_start = False
         self.change_interval = 300
-        self.desired_color_enabled = False
-        self.desired_color = None
+
         self.download_enabled = True
         self.download_interval = 600
         self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
         self.quota_enabled = True
-        self.quota_size = 20
+        self.quota_size = 500
+
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
+
+        self.desired_color_enabled = False
+        self.desired_color = None
+        self.min_size_enabled = False
+        self.min_size = 80
+        self.use_landscape_enabled = False
+        self.lightness_enabled = False
+        self.lightness_mode = Options.LightnessMode.DARK
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -205,6 +244,11 @@ class Options:
 
             config["desired_color_enabled"] = str(self.desired_color_enabled)
             config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"
+            config["min_size_enabled"] = str(self.min_size_enabled)
+            config["min_size"] = str(self.min_size)
+            config["use_landscape_enabled"] = str(self.use_landscape_enabled)
+            config["lightness_enabled"] = str(self.lightness_enabled)
+            config["lightness_mode"] = str(self.lightness_mode)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

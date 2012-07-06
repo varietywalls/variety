@@ -91,7 +91,7 @@ class VarietyWindow(Window):
         self.last_change_time = 0
 
         self.image_count = -1
-        self.image_cache = {}
+        self.image_colors_cache = {}
         #TODO load image cache
 
         self.wheel_timer = None
@@ -112,6 +112,32 @@ class VarietyWindow(Window):
             logger.info("Missing config file, copying it from " +
                         varietyconfig.get_data_file("config", "variety.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
+
+    def log_options(self):
+        logger.info("Loaded options:")
+        logger.info("Change on start: " + str(self.options.change_on_start))
+        logger.info("Change enabled: " + str(self.options.change_enabled))
+        logger.info("Change interval: " + str(self.options.change_interval))
+        logger.info("Download enabled: " + str(self.options.download_enabled))
+        logger.info("Download interval: " + str(self.options.download_interval))
+        logger.info("Download folder: " + self.options.download_folder)
+        logger.info("Quota enabled: " + str(self.options.quota_enabled))
+        logger.info("Quota size: " + str(self.options.quota_size))
+        logger.info("Favorites folder: " + self.options.favorites_folder)
+        logger.info("Color enabled: " + str(self.options.desired_color_enabled))
+        logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
+        logger.info("Min size enabled: " + str(self.options.min_size_enabled))
+        logger.info("Min size: " + str(self.options.min_size))
+        logger.info("Min width, height: %d %d" % (self.min_width, self.min_height))
+        logger.info("Use landscape enabled: " + str(self.options.use_landscape_enabled))
+        logger.info("Lightness enabled: " + str(self.options.lightness_enabled))
+        logger.info("Lightness mode: " + str(self.options.lightness_mode))
+        logger.info("Images: " + str(self.individual_images))
+        logger.info("Folders: " + str(self.folders))
+        logger.info("WN URLs: " + str(self.wallpaper_net_urls))
+        logger.info("Flickr searches: " + str(self.flickr_searches))
+        logger.info("Total downloaders: " + str(len(self.downloaders)))
+        logger.info("Filters: " + str(self.filters))
 
     def reload_config(self):
         self.options = Options()
@@ -159,7 +185,7 @@ class VarietyWindow(Window):
                 self.downloaders.append(self.flickr_downloaders_cache[search])
             else:
                 try:
-                    dlr = FlickrDownloader(search, self.options.download_folder)
+                    dlr = FlickrDownloader(search, self.options.download_folder, lambda w, h: self.size_ok(w, h, 0))
                     self.flickr_downloaders_cache[search] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
@@ -174,24 +200,14 @@ class VarietyWindow(Window):
 
         self.filters = [f[2] for f in self.options.filters if f[0]]
 
-        logger.info("Loaded options:")
-        logger.info("Change on start: " + str(self.options.change_on_start))
-        logger.info("Change enabled: " + str(self.options.change_enabled))
-        logger.info("Change interval: " + str(self.options.change_interval))
-        logger.info("Download enabled: " + str(self.options.download_enabled))
-        logger.info("Download interval: " + str(self.options.download_interval))
-        logger.info("Download folder: " + self.options.download_folder)
-        logger.info("Quota enabled: " + str(self.options.quota_enabled))
-        logger.info("Quota size: " + str(self.options.quota_size))
-        logger.info("Favorites folder: " + self.options.favorites_folder)
-        logger.info("Color enabled: " + str(self.options.desired_color_enabled))
-        logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
-        logger.info("Images: " + str(self.individual_images))
-        logger.info("Folders: " + str(self.folders))
-        logger.info("WN URLs: " + str(self.wallpaper_net_urls))
-        logger.info("Flickr searches: " + str(self.flickr_searches))
-        logger.info("Total downloaders: " + str(len(self.downloaders)))
-        logger.info("Filters: " + str(self.filters))
+        self.min_width = 0
+        self.min_height = 0
+        if self.options.min_size_enabled:
+            self.min_width = Gdk.Screen.get_default().get_width() * self.options.min_size // 100
+            self.min_height = Gdk.Screen.get_default().get_height() * self.options.min_size // 100
+
+
+        self.log_options()
 
         # clean prepared - they are outdated
         with self.prepared_lock:
@@ -300,14 +316,16 @@ class VarietyWindow(Window):
                     images = self.select_random_images(100)
 
                     found = set()
-                    for fuzziness in xrange(2, 7):
+                    for fuzziness in xrange(0, 5):
                         if len(found) > 10 or len(found) >= len(images):
                             break
                         for img in images:
                             if self.image_ok(img, fuzziness):
-                                found.add(img)
-                                if self.options.desired_color_enabled:
-                                    logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
+                                if not img in found:
+                                    found.add(img)
+                                    if self.options.desired_color_enabled or self.options.use_landscape_enabled or \
+                                       self.options.min_size_enabled or self.options.lightness_enabled:
+                                        logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
 
                     with self.prepared_lock:
                         self.prepared.extend(found)
@@ -340,8 +358,9 @@ class VarietyWindow(Window):
                     self.purge_downloaded()
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     file = downloader.download_one()
-                    self.download_folder_size += os.path.getsize(file)
-                    self.prepare_event.set()
+                    if file:
+                        self.download_folder_size += os.path.getsize(file)
+                        self.prepare_event.set()
             except Exception:
                 logger.exception("Could not download wallpaper:")
 
@@ -527,20 +546,56 @@ class VarietyWindow(Window):
             logger.exception("Could not change wallpaper")
 
     def image_ok(self, img, fuzziness):
-        return self.color_ok(img, fuzziness)
-
-    def color_ok(self, img, fuzziness):
-        if not (self.options.desired_color_enabled and self.options.desired_color):
-            return True
         try:
-            if not img in self.image_cache:
-                dom = DominantColors(img)
-                self.image_cache[img] = dom.get_dominant()
-            colors = self.image_cache[img]
-            return DominantColors.contains_color(colors, self.options.desired_color, fuzziness)
+            if not self.options.desired_color_enabled and not self.options.lightness_enabled:
+                if not self.options.use_landscape_enabled and not self.options.min_size_enabled:
+                    return True
+                else:
+                    if img in self.image_colors_cache:
+                        width = self.image_colors_cache[img][3]
+                        height = self.image_colors_cache[img][4]
+                    else:
+                        dom = DominantColors(img)
+                        width = dom.get_width()
+                        height = dom.get_height()
+
+                    return self.size_ok(width, height, fuzziness)
+            else:
+                if not img in self.image_colors_cache:
+                    dom = DominantColors(img, False)
+                    self.image_colors_cache[img] = dom.get_dominant_colors()
+                colors = self.image_colors_cache[img]
+
+                ok = self.size_ok(colors[3], colors[4], fuzziness)
+
+                if self.options.lightness_enabled:
+                    lightness = colors[2]
+                    if self.options.lightness_mode == Options.LightnessMode.DARK:
+                        ok = ok and lightness < 75 + fuzziness * 6
+                    elif self.options.lightness_mode == Options.LightnessMode.LIGHT:
+                        ok = ok and lightness > 180 - fuzziness * 6
+                    else:
+                        logger.warning("Unknown lightness mode: %d", self.options.lightness_mode)
+
+                if self.options.desired_color_enabled and self.options.desired_color:
+                    ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
+
+                return ok
         except Exception, err:
-            logger.exception("Error in color_ok:")
+            logger.exception("Error in image_ok:")
             return False
+
+    def size_ok(self, width, height, fuzziness):
+        ok = True
+
+        if self.options.min_size_enabled:
+            ok = ok and width >= self.min_width - fuzziness * 100
+            ok = ok and height >= self.min_height - fuzziness * 70
+
+        if self.options.use_landscape_enabled:
+            ok = ok and width > height
+
+        return ok
 
     def open_folder(self, widget=None):
         os.system("xdg-open \"" + os.path.dirname(self.current) + "\"")

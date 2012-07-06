@@ -75,6 +75,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if c:
             self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
 
+        self.ui.min_size_enabled.set_active(self.options.min_size_enabled)
+        min_sizes = [50, 80, 100]
+        index = 0
+        while min_sizes[index] < self.options.min_size and index < len(min_sizes) - 1:
+            index += 1
+        self.ui.min_size.set_active(index)
+        self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
+        self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
+        self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
+
+
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
         self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
@@ -91,8 +102,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.on_change_enabled_toggled()
         self.on_download_enabled_toggled()
-        self.on_desired_color_enabled_toggled()
         self.on_sources_selection_changed()
+        self.on_desired_color_enabled_toggled()
+        self.on_min_size_enabled_toggled()
+        self.on_lightness_enabled_toggled()
 
         self.dialog = None
 
@@ -256,13 +269,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
                 self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
 
+            self.options.sources = []
+            for r in self.ui.sources.get_model():
+                self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()
             self.options.desired_color = (c.red // 256, c.green // 256, c.blue // 256)
 
-            self.options.sources = []
-            for r in self.ui.sources.get_model():
-                self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+            self.options.min_size_enabled = self.ui.min_size_enabled.get_active()
+            try:
+                self.options.min_size = int(self.ui.min_size.get_active_text())
+            except Exception:
+                pass
+
+            self.options.use_landscape_enabled = self.ui.landscape_enabled.get_active()
+
+            self.options.lightness_enabled = self.ui.lightness_enabled.get_active()
+            self.options.lightness_mode = \
+                Options.LightnessMode.DARK if self.ui.lightness.get_active() == 0 else Options.LightnessMode.LIGHT
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:
@@ -357,6 +382,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_desired_color_enabled_toggled(self, widget = None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
+
+    def on_min_size_enabled_toggled(self, widget = None):
+        self.ui.min_size.set_sensitive(self.ui.min_size_enabled.get_active())
+        self.ui.min_size_label.set_sensitive(self.ui.min_size_enabled.get_active())
+
+    def on_lightness_enabled_toggled(self, widget = None):
+        self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
 
     def on_destroy(self, widget = None):
         if self.dialog:

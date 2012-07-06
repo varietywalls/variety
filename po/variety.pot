@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-05 01:51+0300\n"
+"POT-Creation-Date: 2012-07-06 01:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,104 +213,124 @@ msgid "Change wallpaper every"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:10
-msgid "Change wallpaper on start"
+msgid "Minimum interval is 5 seconds"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
-msgid "Images"
+msgid "Change wallpaper on start"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:12
-msgid "Enabled"
+msgid "Images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:13
-msgid "Type"
+msgid "Enabled"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:14
-msgid "Location"
+msgid "Type"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
-msgid "Add Images"
+msgid "Location"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
-msgid "Select individual images to use as wallpapers"
+msgid "Add Images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
-msgid "Add Folders"
+msgid "Select individual images to use as wallpapers"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
+msgid "Add Folders"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid ""
 "Select folders with images to be used as wallpapers. \n"
 "Add only the root folders, subfolders will be searched automatically."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "Add Wallpapers.net category"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid ""
 "Wallpapers.net has lots of good high-resolution wallpapers, categorized "
 "under categories and colors."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "Add Flickr search"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid ""
 "Use Flickr images with a specific tag, or uploaded by a specific user, or "
 "belonging to some group."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "Remove"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Remove selected image sources"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "When possible, use images containing this color: "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "(This is an experimental feature)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Download a wallpaper every"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
-msgid "to "
-msgstr ""
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:30
-msgid "Favorites folder"
+msgid "Minimum interval is 30 seconds"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:31
-msgid "Move favorite wallpapers to "
+msgid "to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
-msgid "Select a Folder"
+msgid "Keep download folder under"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33
-msgid "Filters"
+msgid "Minimum size is 50 MB"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:34
+msgid "MB by deleting oldest files when necessary"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+msgid "Favorites folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+msgid "Move favorite wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+msgid "Select a Folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"

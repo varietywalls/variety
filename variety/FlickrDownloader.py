@@ -31,8 +31,9 @@ random.seed()
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
 class FlickrDownloader(Downloader.Downloader):
-    def __init__(self, location, download_folder):
+    def __init__(self, location, download_folder, size_check_method):
         super(FlickrDownloader, self).__init__("Flickr", location, download_folder)
+        self.size_check_method = size_check_method
         self.target_folder = os.path.join(download_folder, "flickr_" + self.convert_to_filename(self.location))
         self.parse_location()
         self.queue = []
@@ -133,8 +134,9 @@ class FlickrDownloader(Downloader.Downloader):
 
                 width = int(ph["width_o"])
                 height = int(ph["height_o"])
-                if width < 1000 or height < 800:
-                    continue # skip small images
+                if not self.size_check_method(width, height):
+                    print "skipping flickr image with size %d %d" % (width, height)
+                    continue
 
                 original_url = ph["url_o"]
                 photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])

@@ -18,17 +18,38 @@ from PIL import Image, ImageFilter
 import sys
 
 class DominantColors():
-    def __init__(self, imageName):
-        self.imageName = imageName
-        self.pic = Image.open(imageName)
-        self.pic = self.pic.resize((50, 50))
-        # self.pic = self.pic.filter(ImageFilter.BLUR)
+    def __init__(self, image_name, only_size_needed = True):
+        self.imageName = image_name
+        self.original = Image.open(image_name)
 
-        # load image data
-        self.imgData = self.pic.load()
+        if not only_size_needed:
+            self.resized = self.original.resize((50, 50))
+            # self.resized = self.resized.filter(ImageFilter.BLUR)
 
-    def get_dominant(self):
-        # print ("Calc dom colors for " + self.imageName)
+            # load image data
+            self.img_data = self.resized.load()
+
+    def get_width(self):
+        return self.original.size[0]
+
+    def get_height(self):
+        return self.original.size[1]
+
+    def get_lightness(self):
+        count = 0
+        pixel_sum = 0
+        for x in xrange(0, self.resized.size[0]):
+            for y in xrange(0, self.resized.size[1]):
+                count += 1
+                pixel = self.img_data[x, y]
+                if not tuple == type(pixel):
+                    pixel_sum += pixel
+                else:
+                    pixel_sum += sum(pixel) / 3
+        return pixel_sum // count
+
+
+    def get_dominant_colors(self):
         colors = [(0,0,0),(128, 128, 128), (192, 192, 192), (255, 255, 255), (128, 0, 0), (255, 0, 0), (128, 128, 0), (255, 255, 0),
             (0, 128, 0), (0, 255, 0), (0, 128, 128), (0, 255, 255), (0, 0, 128), (0, 0, 255), (128, 0, 128), (255, 0, 255)]
         total = 0
@@ -45,20 +66,23 @@ class DominantColors():
 
             total = 0
             pixel_sum = 0
-            for x in xrange(0, self.pic.size[0], 2):
-                for y in xrange(0, self.pic.size[1], 2):
+            for x in xrange(0, self.resized.size[0], 2):
+                for y in xrange(0, self.resized.size[1], 2):
                     total += 4
-                    pixel = self.imgData[x, y]
+                    pixel = self.img_data[x, y]
                     if not tuple == type(pixel):
                         pixel = (pixel, pixel, pixel)
                     pixel_sum += sum(pixel) / 3
                     color1 = min((DominantColors.diff(c, pixel), c) for c in colors)[1]
-                    color2 = min((DominantColors.diff(c, pixel), c) for c in colors if c != color1)[1]
+                    if len(colors) > 1:
+                        color2 = min((DominantColors.diff(c, pixel), c) for c in colors if c != color1)[1]
+                    else:
+                        color2 = color1
                     for i in [0,1,2]:
                        sums[color1][i] += 3*pixel[i]
                        sums[color2][i] += 1*pixel[i]
-                    counts[color1] = counts[color1] + 3
-                    counts[color2] = counts[color2] + 1
+                    counts[color1] += 3
+                    counts[color2] += 1
 
             colors = [c for c in colors if counts[c] > 0]
             if counter == iterations - 1:
@@ -67,11 +91,11 @@ class DominantColors():
                 colors = map(lambda c: (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c]), colors)
 
         s = sorted(colors, key=lambda x: x[0], reverse=True)
-        return total, s, pixel_sum * 4 // total
+        return total, s, pixel_sum * 4 // total, self.get_width(), self.get_height()
 
     @staticmethod
     def contains_color(dominant_colors, color, fuzziness):
-        total, colors, _ = dominant_colors
+        total, colors, _, _, _ = dominant_colors
 #        colors = [x for x in colors if x[0] > total / (40 + fuzziness * 40)]
         for position, c in enumerate(colors[:3]):
             if DominantColors.diff(c[1], color) < 1000 + (fuzziness * 1000) + max(0, 5 - position) * 300:
@@ -88,5 +112,5 @@ class DominantColors():
     
 if __name__ == '__main__':
     pc = DominantColors(sys.argv[1])
-    print pc.get_dominant()
+    print pc.get_dominant_colors()
 

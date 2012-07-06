@@ -10,7 +10,7 @@ for f in sorted(os.listdir(dir)):
     if f.lower().endswith(".jpg") or f.lower().endswith(".jpg"):
         try:
             d = DominantColors(os.path.join(dir, f))
-            calc = d.get_dominant()
+            calc = d.get_dominant_colors()
             print f, "light:", calc[2]
             continue
 
