@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-06 01:50+0300\n"
+"POT-Creation-Date: 2012-07-07 00:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,7 +255,7 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "Add Wallpapers.net category"
+msgid "Add Wallpapers.net"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
@@ -265,7 +265,7 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
-msgid "Add Flickr search"
+msgid "Add Flickr"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
@@ -283,55 +283,100 @@ msgid "Remove selected image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
-msgid "When possible, use images containing this color: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
-msgid "(This is an experimental feature)"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Download a wallpaper every"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Minimum interval is 30 seconds"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
-msgid "Keep download folder under"
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+msgid "Limit download folder to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Minimum size is 50 MB"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
-msgid "MB by deleting oldest files when necessary"
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+msgid "MB"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Favorites folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Move favorite wallpapers to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Select a Folder"
 msgstr ""
 
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+msgid "When possible, use images that:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+msgid "Have landscape orientation"
+msgstr ""
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:38
-msgid "Filters"
+msgid "Are big at least "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:39
+msgid "50"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+msgid "80"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+msgid "100"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#, no-c-format
+msgid "% of the screen resolution"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+msgid "Are dark or light:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+msgid "Dark"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+msgid "Light"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+msgid "Contain this color: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+msgid "(This is an experimental feature)"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+msgid "Color and size"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+msgid "Filters"
 msgstr ""
