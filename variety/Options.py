@@ -208,12 +208,13 @@ class Options:
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
+            [False, Options.SourceType.DESKTOPPR, "[NSFW Warning] Random wallpapers from Desktoppr.co. May contain nudity and porn."],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
-            [True, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html"]
+            [False, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html"]
         ]
 
         self.filters = [
+            [False, "Keep original", ""],
             [False, "Grayscale", "-type Grayscale"],
             [False, "Heavy blur", "-blur 70x70"],
             [False, "Oil painting", "-paint 6"],
