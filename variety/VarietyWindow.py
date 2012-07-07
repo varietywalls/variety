@@ -323,12 +323,15 @@ class VarietyWindow(Window):
                         if len(found) > 10 or len(found) >= len(images):
                             break
                         for img in images:
-                            if self.image_ok(img, fuzziness):
-                                if not img in found:
-                                    found.add(img)
-                                    if self.options.desired_color_enabled or self.options.use_landscape_enabled or \
-                                       self.options.min_size_enabled or self.options.lightness_enabled:
-                                        logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
+                            try:
+                                if self.image_ok(img, fuzziness):
+                                    if not img in found:
+                                        found.add(img)
+                                        if self.options.desired_color_enabled or self.options.use_landscape_enabled or \
+                                           self.options.min_size_enabled or self.options.lightness_enabled:
+                                            logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
+                            except Exception:
+                                logger.exception("Excepion while testing image_ok on file " + img)
 
                     with self.prepared_lock:
                         self.prepared.extend(found)
@@ -422,6 +425,10 @@ class VarietyWindow(Window):
         self.set_wp_timer = None
         filename = self.set_wp_filename
         try:
+            if not os.access(filename, os.R_OK):
+                logger.info("Missing file or bad permissions, will not use it: " + filename)
+                return
+
             self.update_indicator(filename, False)
             to_set = filename
             if self.filters:
@@ -444,7 +451,7 @@ class VarietyWindow(Window):
     def list_images(self):
         count = 0
         for filepath in self.individual_images:
-            if self.is_image(filepath) and os.access(filepath, os.F_OK):
+            if self.is_image(filepath) and os.access(filepath, os.R_OK):
                 count += 1
                 yield filepath
         folders = list(self.folders)
@@ -524,7 +531,7 @@ class VarietyWindow(Window):
 
             with self.prepared_lock:
                 for prep in self.prepared:
-                    if prep != self.current and os.access(prep, os.F_OK):
+                    if prep != self.current and os.access(prep, os.R_OK):
                         img = prep
                         self.prepared.remove(img)
                         self.prepare_event.set()

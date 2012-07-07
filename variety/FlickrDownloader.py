@@ -44,14 +44,14 @@ class FlickrDownloader(Downloader.Downloader):
         for x in s:
             if len(x) and x.find(':') > 0:
                 k, v = x.split(':')
-                if k.lower() in ["tags", "user_id", "group_id"]:
+                if k.lower() in ["text", "tags", "user_id", "group_id"]:
                     self.params[k.lower()] = v.replace(' ', '+')
 
         # slight validation:
-        for k in ["tags", "user_id", "group_id"]:
+        for k in ["text", "tags", "user_id", "group_id"]:
             if k in self.params and len(self.params[k]) > 0:
                 return
-        raise Exception("Missing at least one of tags, user_id and group_id")
+        raise Exception("Missing at least one of text, tags, user_id and group_id")
 
     @staticmethod
     def fetch(call):
@@ -100,6 +100,9 @@ class FlickrDownloader(Downloader.Downloader):
 
         if not self.queue:
             self.fill_queue()
+        if not self.queue:
+            logger.info("Flickr queue still empty after fill request - probably too restrictive search parameters?")
+            return None
 
         urls = self.queue.pop()
         logger.info("Photo URL: " + urls[1])
@@ -119,6 +122,9 @@ class FlickrDownloader(Downloader.Downloader):
             raise Exception("Flickr returned error message: " + resp["message"])
 
         pages = int(resp["photos"]["pages"])
+        if pages == 0:
+            return
+
         page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
@@ -144,8 +150,9 @@ class FlickrDownloader(Downloader.Downloader):
                 logger.exception("Error parsing single flickr photo info:")
 
         random.shuffle(self.queue)
-        self.queue = self.queue[:len(self.queue)//2]
-        # only use randomly half the images from the page -
-        # if we ever hit that same page again, we'll still have what to download
+        if len(self.queue) >= 20:
+            self.queue = self.queue[:len(self.queue)//2]
+            # only use randomly half the images from the page -
+            # if we ever hit that same page again, we'll still have what to download
 
         logger.info("Flickr queue populated with %d URLs" % len(self.queue))

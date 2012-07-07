@@ -61,6 +61,9 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
         if not self.queue:
             self.fill_queue()
+        if not self.queue:
+            logger.info("WN Queue still empty after fill request - probably wrong URL?")
+            return None
 
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
@@ -103,4 +106,11 @@ class WallpapersNetDownloader(Downloader.Downloader):
         walls = [self.host + x.a['href'] for x in s.find_all('div', 'thumb')]
 
         self.queue.extend(walls)
+
+        random.shuffle(self.queue)
+        if len(self.queue) >= 8:
+            self.queue = self.queue[:len(self.queue)//2]
+            # only use randomly half the images from the page -
+            # if we ever hit that same page again, we'll still have what to download
+
         logger.info("WN queue populated with %d URLs" % len(self.queue))
