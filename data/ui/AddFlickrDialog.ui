@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_flickr_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddFlickrDialog" id="add_flickr_dialog">
     <property name="width_request">650</property>
     <property name="can_focus">False</property>
@@ -94,7 +94,8 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">5</property>
+                <property name="halign">start</property>
+                <property name="margin_left">10</property>
                 <property name="label" translatable="yes">Please specify the &lt;a href="http://flickr.com"&gt;Flickr&lt;/a&gt; search criteria. Photos that match all of the chosen criteria will be downloaded. Leave unneeded criteria empty.</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
@@ -249,18 +250,6 @@ Example: &lt;a href="http://www.flickr.com/groups/wallpapers/"&gt;http://www.fli
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -305,6 +294,18 @@ Example: apple -pie</property>
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>

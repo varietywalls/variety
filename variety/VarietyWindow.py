@@ -393,16 +393,15 @@ class VarietyWindow(Window):
             i = 0
             while i < len(files) and self.download_folder_size > 0.80 * mb_quota:
                 file = files[i][0]
-                if file == self.current:
-                    continue
-                try:
-                    logger.debug("Deleting old file in downloaded: " + file)
-                    self.remove_from_queues(file)
-                    os.unlink(file)
-                    self.download_folder_size -= files[i][1]
-                    os.unlink(file + ".txt")
-                except Exception:
-                    logger.exception("Could not delete some file while purging download folder: " + files[i][0])
+                if file != self.current:
+                    try:
+                        logger.debug("Deleting old file in downloaded: " + file)
+                        self.remove_from_queues(file)
+                        os.unlink(file)
+                        self.download_folder_size -= files[i][1]
+                        os.unlink(file + ".txt")
+                    except Exception:
+                        logger.exception("Could not delete some file while purging download folder: " + file)
                 i += 1
 
     @staticmethod
@@ -681,7 +680,7 @@ class VarietyWindow(Window):
             elif self.confirm_move("Move", file, "Trash"):
                 trash = os.path.expanduser("~/.local/share/Trash/")
                 self.move_or_copy_file(file, trash, shutil.move)
-                while self.used[self.position] == file:
+                if self.used[self.position] == file:
                     self.next_wallpaper()
 
                 self.remove_from_queues(file)
