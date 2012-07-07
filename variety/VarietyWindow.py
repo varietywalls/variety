@@ -640,18 +640,31 @@ class VarietyWindow(Window):
                 pass
             logger.info(("Moved " if operation == shutil.move else "Copied ") + file + " to " + to)
             return True
-        except Exception:
-            logger.exception("Could not move/copy to " + to)
-            op = ("Move" if operation == shutil.move else "Copy")
-            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
-                "Could not " + op.lower() +" to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
-            self.dialogs.append(dialog)
-            dialog.set_title(op + " failed")
-            dialog.run()
-            dialog.destroy()
-            self.dialogs.remove(dialog)
-            return False
+        except Exception as err:
+            success = False
+
+            if str(err).find("already exists") > 0:
+                if operation == shutil.move:
+                    try:
+                        os.unlink(file)
+                        success = True
+                    except Exception:
+                        pass
+                else:
+                    success = True
+
+            if not success:
+                logger.exception("Could not move/copy to " + to)
+                op = ("Move" if operation == shutil.move else "Copy")
+                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                    Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
+                    "Could not " + op.lower() +" to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
+                self.dialogs.append(dialog)
+                dialog.set_title(op + " failed")
+                dialog.run()
+                dialog.destroy()
+                self.dialogs.remove(dialog)
+                return False
 
     def move_to_trash(self, widget=None):
         try:
