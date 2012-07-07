@@ -290,20 +290,23 @@ class VarietyWindow(Window):
             self.change_wallpaper()
 
         while self.running:
-            self.change_event.wait(self.options.change_interval)
-            self.change_event.clear()
-            if not self.running:
-                return
-            if not self.options.change_enabled:
-                continue
-            while (time.time() - self.last_change_time) < self.options.change_interval:
-                now = time.time()
-                wait_more = self.options.change_interval - (now - self.last_change_time)
-                self.change_event.wait(max(0, wait_more))
-            if not self.options.change_enabled:
-                continue
-            logger.info("regular_change changes wallpaper")
-            self.change_wallpaper()
+            try:
+                self.change_event.wait(self.options.change_interval)
+                self.change_event.clear()
+                if not self.running:
+                    return
+                if not self.options.change_enabled:
+                    continue
+                while (time.time() - self.last_change_time) < self.options.change_interval:
+                    now = time.time()
+                    wait_more = self.options.change_interval - (now - self.last_change_time)
+                    self.change_event.wait(max(0, wait_more))
+                if not self.options.change_enabled:
+                    continue
+                logger.info("regular_change changes wallpaper")
+                self.change_wallpaper()
+            except Exception:
+                logger.exception("Exception in regular_change_thread")
 
     def prepare_thread(self):
         logger.info("prepare thread running")
@@ -356,6 +359,7 @@ class VarietyWindow(Window):
                 #TODO do we want to download when not change_enabled?
                 if self.downloaders:
                     self.purge_downloaded()
+                if self.downloaders:
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     file = downloader.download_one()
                     if file:

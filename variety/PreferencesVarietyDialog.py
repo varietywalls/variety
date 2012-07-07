@@ -90,6 +90,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
         self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
             self.ui.sources.get_model())
+        #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
 
         self.filter_checkboxes = []
         for i, f in enumerate(self.options.filters):
