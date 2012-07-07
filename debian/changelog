@@ -1,3 +1,16 @@
+variety (0.3.5) precise; urgency=low
+
+  * Allow sorting and reordering in sources table
+  * Fix Move to Trash when destination already exists - fallback to
+    unlink
+  * Flickr free text search added. Added some more sanity checks here
+    and there to avoid probelms in edge cases.
+  * Indicator icon now suitable for Radiance theme too
+  * Fix Remove button - sources selection internal-child had disappeared
+    from Glade file
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 07 Jul 2012 19:04:18 +0300
+
 variety (0.3.4) precise; urgency=low
 
   * New release.
