@@ -150,7 +150,7 @@
                     <property name="hexpand">True</property>
                     <child>
                       <object class="GtkCheckButton" id="change_enabled">
-                        <property name="label" translatable="yes">Change wallpaper every</property>
+                        <property name="label" translatable="yes">Change wallpaper every </property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -177,7 +177,6 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="padding">5</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -280,6 +279,7 @@
                           <object class="GtkTreeView" id="sources">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="vexpand">True</property>
                             <property name="model">sources_model</property>
                             <property name="headers_clickable">False</property>
                             <property name="reorderable">True</property>
@@ -493,7 +493,7 @@ Add only the root folders, subfolders will be searched automatically.</property>
                         <property name="hexpand">True</property>
                         <child>
                           <object class="GtkCheckButton" id="download_enabled">
-                            <property name="label" translatable="yes">Download a wallpaper every</property>
+                            <property name="label" translatable="yes">Download a wallpaper every </property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -524,7 +524,6 @@ Add only the root folders, subfolders will be searched automatically.</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="padding">5</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
@@ -640,7 +639,6 @@ Add only the root folders, subfolders will be searched automatically.</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="padding">5</property>
                             <property name="position">1</property>
                           </packing>
                         </child>

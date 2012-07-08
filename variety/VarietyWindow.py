@@ -75,6 +75,7 @@ class VarietyWindow(Window):
 
         # load config
         self.reload_config()
+        self.load_banned()
 
         current = self.gsettings.get_string(self.KEY).replace("file://", "")
         if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
@@ -165,7 +166,7 @@ class VarietyWindow(Window):
         self.download_folder_size = -1
 
         if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
-            self.downloaders.append(DesktopprDownloader(self.options.download_folder))
+            self.downloaders.append(DesktopprDownloader(self))
 
         self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
         for url in self.wallpaper_net_urls:
@@ -173,7 +174,7 @@ class VarietyWindow(Window):
                 self.downloaders.append(self.wn_downloaders_cache[url])
             else:
                 try:
-                    dlr = WallpapersNetDownloader(url, self.options.download_folder)
+                    dlr = WallpapersNetDownloader(self, url)
                     self.wn_downloaders_cache[url] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
@@ -185,13 +186,14 @@ class VarietyWindow(Window):
                 self.downloaders.append(self.flickr_downloaders_cache[search])
             else:
                 try:
-                    dlr = FlickrDownloader(search, self.options.download_folder, lambda w, h: self.size_ok(w, h, 0))
+                    dlr = FlickrDownloader(self, search, lambda w, h: self.size_ok(w, h, 0))
                     self.flickr_downloaders_cache[search] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
                     logger.exception("Could not create FlickrDownloader for " + search)
 
         for downloader in self.downloaders:
+            downloader.update_download_folder()
             try:
                 os.makedirs(downloader.target_folder)
             except Exception:
@@ -217,6 +219,15 @@ class VarietyWindow(Window):
         if self.events:
             for e in self.events:
                 e.set()
+
+    def load_banned(self):
+        self.banned = set()
+        try:
+            with open(os.path.join(self.config_folder, "banned.txt")) as f:
+                for line in f:
+                    self.banned.add(line.strip())
+        except Exception:
+            logger.info("Missing or invalid banned URLs list, no URLs will be banned")
 
     def start_threads(self):
         self.running = True
@@ -668,6 +679,7 @@ class VarietyWindow(Window):
     def move_to_trash(self, widget=None):
         try:
             file = self.current
+            url = self.url
             if not os.access(file, os.W_OK):
                 dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
                     Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
@@ -684,8 +696,19 @@ class VarietyWindow(Window):
                     self.next_wallpaper()
 
                 self.remove_from_queues(file)
+                if url:
+                    self.ban_url(url)
+
         except Exception:
             logger.exception("Exception in move_to_trash")
+
+    def ban_url(self, url):
+        try:
+            self.banned.add(url)
+            with open(os.path.join(self.config_folder, "banned.txt"), "a") as f:
+                f.write(self.url + "\n")
+        except Exception:
+            logger.exception("Could not ban URL")
 
     def remove_from_queues(self, file):
         self.used = [f for f in self.used if f != file]

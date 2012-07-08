@@ -25,10 +25,13 @@ import logging
 logger = logging.getLogger('variety')
 
 class Downloader(object):
-    def __init__(self, name, location, download_folder):
+    def __init__(self, parent, name, location):
+        self.parent = parent
         self.name = name
         self.location = location
-        self.target_folder = os.path.join(download_folder, self.convert_to_filename(self.location))
+
+    def update_download_folder(self):
+        self.target_folder = os.path.join(self.parent.options.download_folder, self.convert_to_filename(self.location))
 
     def convert_to_filename(self, url):
         url = re.sub(r"http://", "", url)
@@ -36,6 +39,10 @@ class Downloader(object):
         return ''.join(c if c in valid_chars else '_' for c in url)
 
     def save_locally(self, origin_url, image_url):
+        if origin_url in self.parent.banned:
+            logger.info("URL " + origin_url + " is banned, skip downloading")
+            return None
+
         filename = image_url[image_url.rindex('/') + 1:]
         logger.info("Name: " + filename)
 

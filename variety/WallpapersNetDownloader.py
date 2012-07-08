@@ -28,8 +28,8 @@ logger = logging.getLogger('variety')
 random.seed()
 
 class WallpapersNetDownloader(Downloader.Downloader):
-    def __init__(self, category_url, download_folder):
-        super(WallpapersNetDownloader, self).__init__("Wallpapers.net", category_url, download_folder)
+    def __init__(self, parent, category_url):
+        super(WallpapersNetDownloader, self).__init__(parent, "Wallpapers.net", category_url)
         self.host = "http://wallpapers.net"
         self.queue = []
 
@@ -104,6 +104,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
             logger.info("Single page in category")
 
         walls = [self.host + x.a['href'] for x in s.find_all('div', 'thumb')]
+        walls = [x for x in walls if x not in self.parent.banned]
 
         self.queue.extend(walls)
 

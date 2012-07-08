@@ -76,7 +76,7 @@ class AddFlickrDialog(Gtk.Dialog):
             search +=  "tags:" + ','.join([urllib.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
 
         if len(self.ui.text.get_text().strip()):
-            search +=  "text:" + urllib.quote_plus(self.ui.text.get_text().strip())
+            search +=  "text:" + urllib.quote_plus(self.ui.text.get_text().strip()) +";"
 
         self.error = ""
 

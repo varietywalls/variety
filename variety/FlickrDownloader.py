@@ -18,7 +18,6 @@
 import urllib
 import urllib2
 import random
-import os
 import json
 
 import logging
@@ -31,12 +30,14 @@ random.seed()
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
 class FlickrDownloader(Downloader.Downloader):
-    def __init__(self, location, download_folder, size_check_method):
-        super(FlickrDownloader, self).__init__("Flickr", location, download_folder)
+    def __init__(self, parent, location, size_check_method):
+        super(FlickrDownloader, self).__init__(parent, "Flickr", location)
         self.size_check_method = size_check_method
-        self.target_folder = os.path.join(download_folder, "flickr_" + self.convert_to_filename(self.location))
         self.parse_location()
         self.queue = []
+
+    def convert_to_filename(self, url):
+        return "flickr_" + super(FlickrDownloader, self).convert_to_filename(url)
 
     def parse_location(self):
         s = self.location.split(';')
@@ -105,8 +106,8 @@ class FlickrDownloader(Downloader.Downloader):
             return None
 
         urls = self.queue.pop()
-        logger.info("Photo URL: " + urls[1])
-        return self.save_locally(urls[1], urls[0])
+        logger.info("Photo URL: " + urls[0])
+        return self.save_locally(urls[0], urls[1])
 
     def fill_queue(self):
         logger.info("Filling Flickr download queue: " + self.location)
@@ -122,7 +123,7 @@ class FlickrDownloader(Downloader.Downloader):
             raise Exception("Flickr returned error message: " + resp["message"])
 
         pages = int(resp["photos"]["pages"])
-        if pages == 0:
+        if pages < 1:
             return
 
         page = random.randint(1, pages)
@@ -145,7 +146,11 @@ class FlickrDownloader(Downloader.Downloader):
 
                 original_url = ph["url_o"]
                 photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
-                self.queue.append((original_url, photo_url))
+
+                if photo_url in self.parent.banned:
+                    continue
+
+                self.queue.append((photo_url, original_url))
             except Exception:
                 logger.exception("Error parsing single flickr photo info:")
 
