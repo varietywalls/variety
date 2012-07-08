@@ -1,3 +1,15 @@
+variety (0.3.6) precise; urgency=low
+
+  * Some more minor fixes
+  * Checking if flickr searches actually have photos; Flickr fallbacks
+    to large photos when too few original sizes found
+  * Another decent source added; minor fix for the case of few images in
+    folders
+  * Ban urls of trashed files and don't download them again
+  * Bugfix: fix two potentially hanging cycles
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 08 Jul 2012 23:27:47 +0300
+
 variety (0.3.5ubuntu1) precise; urgency=low
 
   * 
