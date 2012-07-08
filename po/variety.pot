@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-07 00:47+0300\n"
+"POT-Creation-Date: 2012-07-08 23:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,8 +80,8 @@ msgstr ""
 #: ../data/ui/AddFlickrDialog.ui.h:8
 msgid ""
 "Please insert the URL to the user's photostream or to one of their photos.\n"
-"Example: <a href=\"http://www.flickr.com/photos/ajn_photography/\">http://"
-"www.flickr.com/photos/ajn_photography/</a>"
+"Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www."
+"flickr.com/photos/peter-levi/</a>"
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:10
@@ -96,6 +96,21 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:13
+msgid "Text:"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:14
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by "
+"prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:16
+msgid "Just a moment to check this search"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:17
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
 msgid "  "
 msgstr ""
@@ -209,7 +224,7 @@ msgid "Start Variety when the computer starts"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:9
-msgid "Change wallpaper every"
+msgid "Change wallpaper every "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:10
@@ -283,7 +298,7 @@ msgid "Remove selected image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
-msgid "Download a wallpaper every"
+msgid "Download a wallpaper every "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
@@ -303,7 +318,7 @@ msgid "Minimum size is 50 MB"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
-msgid "MB"
+msgid "MB by deleting oldest files when necessary"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33

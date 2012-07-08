@@ -130,7 +130,7 @@ class FlickrDownloader(Downloader.Downloader):
         if not self.queue:
             self.fill_queue()
         if not self.queue:
-            logger.info("Flickr queue still empty after fill request - probably too restrictive search parameters?")
+            logger.info("Flickr queue empty after fill - too restrictive search parameters or image size preference?")
             return None
 
         urls = self.queue.pop()
@@ -164,7 +164,7 @@ class FlickrDownloader(Downloader.Downloader):
 
         self.process_photos_in_response(resp, True)
         if len(self.queue) < 10:
-            logger.info("Not enough original size photos for this Flickr search, using also large:")
+            logger.info("Not enough original size photos for this Flickr search - %d, using also large" % len(self.queue))
             self.process_photos_in_response(resp, False)
 
         random.shuffle(self.queue)

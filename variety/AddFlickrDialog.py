@@ -63,7 +63,7 @@ class AddFlickrDialog(Gtk.Dialog):
         """
         threading.Timer(0.1, self.ok_thread).start()
 
-    def ok_thread(self):
+    def show_spinner(self):
         Gdk.threads_enter()
         self.ui.buttonbox.set_sensitive(False)
         self.ui.message.set_visible(True)
@@ -72,6 +72,7 @@ class AddFlickrDialog(Gtk.Dialog):
         self.ui.error.set_label("")
         Gdk.threads_leave()
 
+    def ok_thread(self):
         search = ""
 
         if len(self.ui.tags.get_text().strip()):
@@ -84,6 +85,7 @@ class AddFlickrDialog(Gtk.Dialog):
 
         user_url = self.ui.user_url.get_text().strip()
         if len(user_url) > 0:
+            self.show_spinner()
             u = FlickrDownloader.obtain_userid(user_url)
             if u[0]:
                 search += "user:" + self.ui.user_url.get_text().replace("http://", "") + ";"
@@ -93,6 +95,7 @@ class AddFlickrDialog(Gtk.Dialog):
 
         group_url = self.ui.group_url.get_text().strip()
         if len(group_url) > 0:
+            self.show_spinner()
             g = FlickrDownloader.obtain_groupid(group_url)
             if g[0]:
                 search += "group:" + self.ui.group_url.get_text().replace("http://", "") + ";"
@@ -101,6 +104,7 @@ class AddFlickrDialog(Gtk.Dialog):
                 self.error = self.error + "\n" + g[1]
 
         if not len(self.error) and len(search) > 0:
+            self.show_spinner()
             if FlickrDownloader.count_search_results(search) <= 0:
                 self.error = "No images found"
 
