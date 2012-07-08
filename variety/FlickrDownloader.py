@@ -30,7 +30,7 @@ random.seed()
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
 class FlickrDownloader(Downloader.Downloader):
-    def __init__(self, parent, location, size_check_method):
+    def __init__(self, parent, location, size_check_method = None):
         super(FlickrDownloader, self).__init__(parent, "Flickr", location)
         self.size_check_method = size_check_method
         self.parse_location()
@@ -63,37 +63,65 @@ class FlickrDownloader(Downloader.Downloader):
 
     @staticmethod
     def obtain_userid(url):
-        logger.info("Fetching flickr user_id from URL: " + url)
+        try:
+            logger.info("Fetching flickr user_id from URL: " + url)
 
-        call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
-            API_KEY,
-            urllib.quote_plus(url))
+            call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
+                API_KEY,
+                urllib.quote_plus(url))
 
-        resp = FlickrDownloader.fetch(call)
+            resp = FlickrDownloader.fetch(call)
 
-        if resp["stat"] == "ok":
-            logger.info("Found " + resp["user"]["id"])
-            return True, "ok", resp["user"]["id"]
-        else:
-            logger.info("Oops " + resp["message"])
-            return False, resp["message"], None
+            if resp["stat"] == "ok":
+                logger.info("Found " + resp["user"]["id"])
+                return True, "ok", resp["user"]["id"]
+            else:
+                logger.info("Oops " + resp["message"])
+                return False, resp["message"], None
+        except Exception:
+            return False, "Exception while checking user. Please run with -v and check log.", None
 
     @staticmethod
     def obtain_groupid(url):
-        logger.info("Fetching flickr group_id from URL: " + url)
+        try:
+            logger.info("Fetching flickr group_id from URL: " + url)
 
-        call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
-            API_KEY,
-            urllib.quote_plus(url))
+            call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
+                API_KEY,
+                urllib.quote_plus(url))
+
+            resp = FlickrDownloader.fetch(call)
+
+            if resp["stat"] == "ok":
+                logger.info("Found " + resp["group"]["id"])
+                return True, "ok", resp["group"]["id"]
+            else:
+                logger.info("Oops " + resp["message"])
+                return False, resp["message"], None
+        except Exception:
+            return False, "Exception while checking group. Please run with -v and check log.", None
+
+    @staticmethod
+    def count_search_results(search):
+        try:
+            dl = FlickrDownloader(None, search)
+            return dl.count_results()
+        except Exception:
+            logger.exception("Exception while counting Flickr results")
+            return 0
+
+    def count_results(self):
+        call = "http://api.flickr.com/services/rest/?method=flickr.photos.search"\
+               "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
+
+        for k, v in self.params.items():
+            call = call + "&" + k + "=" + v
 
         resp = FlickrDownloader.fetch(call)
+        if resp["stat"] != "ok":
+            raise Exception("Flickr returned error message: " + resp["message"])
 
-        if resp["stat"] == "ok":
-            logger.info("Found " + resp["group"]["id"])
-            return True, "ok", resp["group"]["id"]
-        else:
-            logger.info("Oops " + resp["message"])
-            return False, resp["message"], None
+        return int(resp["photos"]["total"])
 
     def download_one(self):
         logger.info("Downloading an image from Flickr, " + self.location)
@@ -129,30 +157,15 @@ class FlickrDownloader(Downloader.Downloader):
         page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
-        call = call + "&extras=o_dims,url_o&page=" + str(page)
+        call = call + "&extras=o_dims,url_o,url_l&page=" + str(page)
         resp = FlickrDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
-        for ph in resp["photos"]["photo"]:
-            try:
-                if not "url_o" in ph:
-                    continue
-
-                width = int(ph["width_o"])
-                height = int(ph["height_o"])
-                if not self.size_check_method(width, height):
-                    continue
-
-                original_url = ph["url_o"]
-                photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
-
-                if photo_url in self.parent.banned:
-                    continue
-
-                self.queue.append((photo_url, original_url))
-            except Exception:
-                logger.exception("Error parsing single flickr photo info:")
+        self.process_photos_in_response(resp, True)
+        if len(self.queue) < 10:
+            logger.info("Not enough original size photos for this Flickr search, using also large:")
+            self.process_photos_in_response(resp, False)
 
         random.shuffle(self.queue)
         if len(self.queue) >= 20:
@@ -161,3 +174,29 @@ class FlickrDownloader(Downloader.Downloader):
             # if we ever hit that same page again, we'll still have what to download
 
         logger.info("Flickr queue populated with %d URLs" % len(self.queue))
+
+    def process_photos_in_response(self, resp, use_original):
+        for ph in resp["photos"]["photo"]:
+            try:
+                photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
+                if self.parent and photo_url in self.parent.banned:
+                    continue
+
+                if use_original and "url_o" in ph:
+                    width = int(ph["width_o"])
+                    height = int(ph["height_o"])
+                    image_file_url = ph["url_o"]
+                elif not use_original and "url_l" in ph:
+                    width = int(ph["width_l"])
+                    height = int(ph["height_l"])
+                    image_file_url = ph["url_l"]
+                else:
+                    continue
+
+                if self.size_check_method and not self.size_check_method(width, height):
+                    continue
+
+                self.queue.append((photo_url, image_file_url))
+            except Exception:
+                logger.exception("Error parsing single flickr photo info:")
+

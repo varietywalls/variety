@@ -18,7 +18,7 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
+          <object class="GtkButtonBox" id="buttonbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_right">5</property>
@@ -194,7 +194,7 @@ Example: yellow,car</property>
                     <property name="halign">start</property>
                     <property name="margin_bottom">20</property>
                     <property name="label" translatable="yes">Please insert the URL to the user's photostream or to one of their photos.
-Example: &lt;a href="http://www.flickr.com/photos/ajn_photography/"&gt;http://www.flickr.com/photos/ajn_photography/&lt;/a&gt;</property>
+Example: &lt;a href="http://www.flickr.com/photos/peter-levi/"&gt;http://www.flickr.com/photos/peter-levi/&lt;/a&gt;</property>
                     <property name="use_markup">True</property>
                   </object>
                   <packing>
@@ -319,15 +319,28 @@ Example: apple -pie</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">end</property>
+                <property name="margin_top">15</property>
                 <child>
-                  <object class="GtkSpinner" id="spinner">
+                  <object class="GtkLabel" id="message">
                     <property name="can_focus">False</property>
-                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">Just a moment to check this search</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinner" id="spinner">
+                    <property name="can_focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="margin_left">10</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -344,7 +357,7 @@ Example: apple -pie</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
