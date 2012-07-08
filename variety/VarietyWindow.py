@@ -325,7 +325,7 @@ class VarietyWindow(Window):
             try:
                 logger.info("prepared buffer contains %s images" % len(self.prepared))
 
-                if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 10):
+                if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 2):
                     logger.info("preparing some images")
                     images = self.select_random_images(100)
 
