@@ -19,6 +19,7 @@ import urllib
 import urllib2
 import random
 import json
+import os
 
 import logging
 from variety import Downloader
@@ -157,15 +158,16 @@ class FlickrDownloader(Downloader.Downloader):
         page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
-        call = call + "&extras=o_dims,url_o,url_l&page=" + str(page)
+        call = call + "&extras=o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
         resp = FlickrDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
-        self.process_photos_in_response(resp, True)
-        if len(self.queue) < 10:
-            logger.info("Not enough original size photos for this Flickr search - %d, using also large" % len(self.queue))
-            self.process_photos_in_response(resp, False)
+        size_suffixes = ["o", "k", "h", "l"]
+        for s in size_suffixes:
+            self.process_photos_in_response(resp, s)
+            if len(self.queue) > 20:
+                break
 
         random.shuffle(self.queue)
         if len(self.queue) >= 20:
@@ -175,22 +177,25 @@ class FlickrDownloader(Downloader.Downloader):
 
         logger.info("Flickr queue populated with %d URLs" % len(self.queue))
 
-    def process_photos_in_response(self, resp, use_original):
+    def process_photos_in_response(self, resp, size_suffix):
+        logger.info("Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
+        used = set(x[0] for x in self.queue)
         for ph in resp["photos"]["photo"]:
             try:
                 photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
                 if self.parent and photo_url in self.parent.banned:
                     continue
+                if photo_url in used:
+                    continue
 
-                if use_original and "url_o" in ph:
-                    width = int(ph["width_o"])
-                    height = int(ph["height_o"])
-                    image_file_url = ph["url_o"]
-                elif not use_original and "url_l" in ph:
-                    width = int(ph["width_l"])
-                    height = int(ph["height_l"])
-                    image_file_url = ph["url_l"]
+                if "url_" + size_suffix in ph:
+                    width = int(ph["width_" + size_suffix])
+                    height = int(ph["height_" + size_suffix])
+                    image_file_url = ph["url_" + size_suffix]
                 else:
+                    continue
+
+                if os.path.exists(self.get_local_filename(image_file_url)):
                     continue
 
                 if self.size_check_method and not self.size_check_method(width, height):

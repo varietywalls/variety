@@ -201,7 +201,7 @@ class Options:
         self.desired_color = None
         self.min_size_enabled = False
         self.min_size = 80
-        self.use_landscape_enabled = False
+        self.use_landscape_enabled = True
         self.lightness_enabled = False
         self.lightness_mode = Options.LightnessMode.DARK
 

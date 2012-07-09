@@ -38,20 +38,23 @@ class Downloader(object):
         valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
         return ''.join(c if c in valid_chars else '_' for c in url)
 
+    def get_local_filename(self, url):
+        filename = url[url.rindex('/') + 1:]
+        return os.path.join(self.target_folder, filename)
+
     def save_locally(self, origin_url, image_url):
         if origin_url in self.parent.banned:
             logger.info("URL " + origin_url + " is banned, skip downloading")
             return None
-
-        filename = image_url[image_url.rindex('/') + 1:]
-        logger.info("Name: " + filename)
 
         try:
             os.makedirs(self.target_folder)
         except Exception:
             pass
 
-        local_filename = os.path.join(self.target_folder, filename)
+        local_filename = self.get_local_filename(image_url)
+        logger.info("Name: " + local_filename)
+
         if os.path.exists(local_filename):
             logger.info("File already exists, skip downloading")
             return None
