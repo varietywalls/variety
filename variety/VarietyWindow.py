@@ -379,8 +379,10 @@ class VarietyWindow(Window):
                     if file:
                         self.download_folder_size += os.path.getsize(file)
                         if self.image_ok(file, 0):
+                            pos = random.randint(0, 1) #TODO how much priority do we want to give it?
+                            logger.info("Adding downloaded file %s near queue front at position %d" % (file, pos))
                             with self.prepared_lock:
-                                self.prepared.insert(random.randint(0, 1), file) # give priority to newly-downloaded images
+                                self.prepared.insert(pos, file) # give priority to newly-downloaded images
                         else:
                             self.prepare_event.set()
             except Exception:
