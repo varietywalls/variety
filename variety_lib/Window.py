@@ -92,10 +92,18 @@ class Window(Gtk.Window):
 
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
-        if self.AboutDialog is not None:
+        if self.about is not None:
+            logger.debug('show existing about_dialog')
+            self.about.set_keep_above(True)
+            self.about.present()
+            self.about.set_keep_above(False)
+            self.about.present()
+        elif self.AboutDialog is not None:
+            logger.debug('create new about dialog')
             self.about = self.AboutDialog() # pylint: disable=E1102
             response = self.about.run()
             self.about.destroy()
+            self.about = None
 
     def on_mnu_preferences_activate(self, widget, data=None):
         """Display the preferences window for variety."""
@@ -107,6 +115,9 @@ class Window(Gtk.Window):
            where the user can see it."""
         if self.preferences_dialog is not None:
             logger.debug('show existing preferences_dialog')
+            self.preferences_dialog.set_keep_above(True)
+            self.preferences_dialog.present()
+            self.preferences_dialog.set_keep_above(False)
             self.preferences_dialog.present()
         elif self.PreferencesDialog is not None:
             logger.debug('create new preferences_dialog')
