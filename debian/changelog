@@ -1,3 +1,11 @@
+variety (0.3.9) precise; urgency=low
+
+  * Minor fix: some more logging after download
+  * Added timeout for all urlopen calls; Put newly downloaded files
+    towards start of prepared queue
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 09 Jul 2012 21:30:07 +0300
+
 variety (0.3.8) precise; urgency=low
 
   * New release.
