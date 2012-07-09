@@ -35,7 +35,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url):
-        content = urllib2.urlopen(url).read()
+        content = urllib2.urlopen(url, timeout=20).read()
         return BeautifulSoup(content)
 
     @staticmethod

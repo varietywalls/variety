@@ -34,7 +34,7 @@ class DesktopprDownloader(Downloader.Downloader):
     def download_one(self):
         logger.info("Downloading a random image from desktoppr.co")
 
-        content = urllib2.urlopen(self.location).read()
+        content = urllib2.urlopen(self.location, timeout=20).read()
         response = json.loads(content)
         image_url = response["response"]["image"]["url"]
 

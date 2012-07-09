@@ -58,7 +58,7 @@ class FlickrDownloader(Downloader.Downloader):
     @staticmethod
     def fetch(call):
         logger.info("Making flickr API call: " + call)
-        content = urllib2.urlopen(call).read()
+        content = urllib2.urlopen(call, timeout=20).read()
         resp = json.loads(content)
         return resp
 

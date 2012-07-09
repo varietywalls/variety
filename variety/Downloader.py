@@ -59,7 +59,7 @@ class Downloader(object):
             logger.info("File already exists, skip downloading")
             return None
 
-        u = urllib2.urlopen(image_url)
+        u = urllib2.urlopen(image_url, timeout=20)
         data = u.read()
         localFile = open(local_filename, 'wb')
         localFile.write(data)

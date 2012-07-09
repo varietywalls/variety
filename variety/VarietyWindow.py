@@ -378,7 +378,11 @@ class VarietyWindow(Window):
                     file = downloader.download_one()
                     if file:
                         self.download_folder_size += os.path.getsize(file)
-                        self.prepare_event.set()
+                        if self.image_ok(file, 0):
+                            with self.prepared_lock:
+                                self.prepared.insert(random.randint(0, 1), file) # give priority to newly-downloaded images
+                        else:
+                            self.prepare_event.set()
             except Exception:
                 logger.exception("Could not download wallpaper:")
 
