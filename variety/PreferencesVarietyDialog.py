@@ -98,7 +98,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             cb.set_visible(True)
             cb.set_active(f[0])
             cb.set_margin_right(30)
-            self.ui.filters_grid.attach(cb, i // 3, i % 3, 1, 1)
+            self.ui.filters_grid.add(cb)
             self.filter_checkboxes.append(cb)
 
         self.on_change_enabled_toggled()
