@@ -42,6 +42,13 @@ class Downloader(object):
         filename = url[url.rindex('/') + 1:]
         return os.path.join(self.target_folder, filename)
 
+    def is_in_downloaded(self, url):
+        return os.path.exists(self.get_local_filename(url))
+
+    def is_in_favorites(self, url):
+        filename = url[url.rindex('/') + 1:]
+        return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, filename))
+
     def save_locally(self, origin_url, image_url):
         if origin_url in self.parent.banned:
             logger.info("URL " + origin_url + " is banned, skip downloading")

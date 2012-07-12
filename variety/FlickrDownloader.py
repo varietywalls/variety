@@ -163,9 +163,10 @@ class FlickrDownloader(Downloader.Downloader):
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
+        used = set(x[0] for x in self.queue)
         size_suffixes = ["o", "k", "h", "l"]
         for s in size_suffixes:
-            self.process_photos_in_response(resp, s)
+            self.process_photos_in_response(resp, s, used)
             if len(self.queue) > 20:
                 break
 
@@ -177,30 +178,45 @@ class FlickrDownloader(Downloader.Downloader):
 
         logger.info("Flickr queue populated with %d URLs" % len(self.queue))
 
-    def process_photos_in_response(self, resp, size_suffix):
+    def process_photos_in_response(self, resp, size_suffix, used):
         logger.info("Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
-        used = set(x[0] for x in self.queue)
         for ph in resp["photos"]["photo"]:
             try:
                 photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
+                logger.debug("Checking photo_url " + photo_url)
+
                 if self.parent and photo_url in self.parent.banned:
+                    logger.debug("In banned, skipping")
                     continue
                 if photo_url in used:
+                    logger.debug("Already added or checked, skipping")
                     continue
 
                 if "url_" + size_suffix in ph:
                     width = int(ph["width_" + size_suffix])
                     height = int(ph["height_" + size_suffix])
                     image_file_url = ph["url_" + size_suffix]
+                    logger.debug("Image url: " + image_file_url)
                 else:
+                    logger.debug("Missing size " + size_suffix)
                     continue
 
-                if os.path.exists(self.get_local_filename(image_file_url)):
+                # add to used now - if one of the checks below fails, we don't want the lower resolutions either
+                used.add(photo_url)
+
+                if self.is_in_downloaded(image_file_url):
+                    logger.debug("Already in downloaded")
+                    continue
+
+                if self.is_in_favorites(image_file_url):
+                    logger.debug("Already in favorites")
                     continue
 
                 if self.size_check_method and not self.size_check_method(width, height):
+                    logger.debug("Small or non-landscape size/resolution")
                     continue
 
+                logger.debug("Appending to queue %s, %s" % (photo_url, image_file_url))
                 self.queue.append((photo_url, image_file_url))
             except Exception:
                 logger.exception("Error parsing single flickr photo info:")
