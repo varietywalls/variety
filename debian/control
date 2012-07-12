@@ -5,7 +5,7 @@ Build-Depends: cdbs (>= 0.4.43),
  debhelper (>= 6), libglib2.0-bin, python (>= 2.6.6-3~),
  python-distutils-extra (>= 2.10)
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
-Standards-Version: 3.8.3
+Standards-Version: 3.9.3
 XS-Python-Version: current
 
 Package: variety
@@ -26,6 +26,14 @@ Depends: ${misc:Depends},
  python-bs4,
  python-configobj,
  python-imaging
-Description: A wallpaper changer
- Changes the desktop wallpaper on a regular basis, using user-specified
- or automatically downloaded images
+Description: Changes the desktop wallpaper on a regular basis, using user-specified or automatically downloaded images
+ Variety changes the desktop wallpaper on a regular basis, using user-
+ specified or automatically downloaded images..Variety sits conveniently
+ as an indicator in the panel and can be easily paused and resumed. The
+ mouse wheel can be used to scroll wallpapers back and forth until you
+ find the perfect one for your current mood..Apart from displaying images
+ from local folders, several different online sources can be used to
+ fetch wallpapers according to user-specified criteria..Variety can also
+ automatically apply various fancy filters to the displayed images -
+ charcoal painting, oil painting, heavy blurring, etc. - so that your
+ desktop is always fresh and unique.

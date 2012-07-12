@@ -92,9 +92,21 @@ DistUtilsExtra.auto.setup(
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
-    description='A wallpaper changer',
-    long_description='Changes the desktop wallpaper on a regular basis, using user-specified or automatically downloaded images',
+    description='Changes the desktop wallpaper on a regular basis, using user-specified or automatically downloaded images',
+    long_description=
+"Variety changes the desktop wallpaper on a regular basis, using user-specified "
+"or automatically downloaded images."
+"."
+"Variety sits conveniently as an indicator in the panel and can be easily paused "
+"and resumed. The mouse wheel can be used to scroll wallpapers back and forth "
+"until you find the perfect one for your current mood."
+"."
+"Apart from displaying images from local folders, several different online "
+"sources can be used to fetch wallpapers according to user-specified criteria."
+"."
+"Variety can also automatically apply various fancy filters to the displayed "
+"images - charcoal painting, oil painting, heavy blurring, etc. - so that your "
+"desktop is always fresh and unique.",
     url='https://launchpad.net/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )
-
