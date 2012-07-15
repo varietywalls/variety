@@ -38,6 +38,8 @@ logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
 
+UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
+
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
 
@@ -207,7 +209,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # store the treeiters from paths
         iters = []
         for row in rows:
-            if Options.str_to_type(model[row][1]) not in [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR]:
+            if Options.str_to_type(model[row][1]) not in UNREMOVEABLE_TYPES:
                 iters.append(model.get_iter(row))
         # remove the rows (treeiters)
         for i in iters:
@@ -217,7 +219,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
         for row in rows:
-            if Options.str_to_type(model[row][1]) in [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR]:
+            if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
                 self.ui.remove_sources.set_sensitive(False)
                 return
 

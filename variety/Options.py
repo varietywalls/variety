@@ -31,6 +31,7 @@ class Options:
         WN = 4
         DESKTOPPR = 5
         FLICKR = 6
+        APOD = 7
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -38,7 +39,8 @@ class Options:
             FOLDER: "folder",
             WN: "wn",
             DESKTOPPR: "desktoppr",
-            FLICKR: "flickr"
+            FLICKR: "flickr",
+            APOD: "apod",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
@@ -156,6 +158,12 @@ class Options:
                         self.sources.append([enabled, (Options.str_to_type(s[1])), s[2]])
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
+
+            if not Options.SourceType.DESKTOPPR in [x[1] for x in self.sources]:
+                self.sources.append([False, Options.SourceType.DESKTOPPR, "[NSFW Warning] Random wallpapers from Desktoppr.co. May contain nudity and porn."])
+
+            if not Options.SourceType.APOD in [x[1] for x in self.sources]:
+                self.sources.append([False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"])
 
             if "filters" in config:
                 self.filters = []

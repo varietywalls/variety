@@ -42,6 +42,7 @@ random.seed()
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
+from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
 
@@ -69,6 +70,7 @@ class VarietyWindow(Window):
 
         self.wn_downloaders_cache = {}
         self.flickr_downloaders_cache = {}
+        self.apod_downloader = None
 
         self.prepared = []
         self.prepared_lock = threading.Lock()
@@ -167,6 +169,11 @@ class VarietyWindow(Window):
 
         if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
             self.downloaders.append(DesktopprDownloader(self))
+
+        if Options.SourceType.APOD in [s[1] for s in self.options.sources if s[0]]:
+            if not self.apod_downloader:
+                self.apod_downloader = APODDownloader(self)
+            self.downloaders.append(self.apod_downloader)
 
         self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
         for url in self.wallpaper_net_urls:
