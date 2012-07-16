@@ -1,3 +1,11 @@
+variety (0.3.12) precise; urgency=low
+
+  * NASA APOD - Use archive instead of RSS, but still always put in
+    queue the newest 3 images
+  * NASA's Astro pic of the day, initial support (RSS-feed-based)
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 16 Jul 2012 23:36:07 +0300
+
 variety (0.3.11) precise; urgency=low
 
   * Merged in some suggested packaging-related changes from
