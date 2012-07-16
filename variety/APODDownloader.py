@@ -28,7 +28,7 @@ random.seed()
 
 class APODDownloader(Downloader.Downloader):
     def __init__(self, parent):
-        super(APODDownloader, self).__init__(parent, "NASA Astro Pic of the Day", "http://apod.nasa.gov/apod.rss")
+        super(APODDownloader, self).__init__(parent, "NASA Astro Pic of the Day", "nasa_apod")
         self.queue = []
         self.root = "http://apod.nasa.gov/apod/"
 
@@ -39,11 +39,12 @@ class APODDownloader(Downloader.Downloader):
 
     def download_one(self):
         logger.info("Downloading an image from NASA's Astro Pic of the Day, " + self.location)
+        logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()
         if not self.queue:
-            logger.info("APOD Queue still empty after fill request - probably wrong URL?")
+            logger.info("APOD Queue still empty after fill request - probably nothing more to download")
             return None
 
         url = self.queue.pop()
@@ -66,6 +67,23 @@ class APODDownloader(Downloader.Downloader):
             return None
 
     def fill_queue(self):
+        logger.info("Filling APOD queue from Archive")
+
+        s = self.fetch("http://apod.nasa.gov/apod/archivepix.html")
+        urls = [self.root + x["href"] for x in s.findAll("a") if x["href"].startswith("ap") and x["href"].endswith(".html")]
+        urls = urls[:730] # leave only last 2 years' pics
+        urls = [x for x in urls if x not in self.parent.banned]
+        print urls[:20]
+
+        self.queue.extend(urls[:3]) # always append the latest 3
+        urls = urls[3:]
+        random.shuffle(urls)
+        self.queue.extend(urls[:10])
+        self.queue = list(reversed(self.queue))
+
+        logger.info("APOD queue populated with %d URLs" % len(self.queue))
+
+    def fill_queue_from_rss(self):
         logger.info("Filling APOD queue from RSS")
 
         s = self.fetch(self.location, xml=True)
@@ -74,5 +92,4 @@ class APODDownloader(Downloader.Downloader):
 
         self.queue.extend(urls)
 
-        random.shuffle(self.queue)
         logger.info("APOD queue populated with %d URLs" % len(self.queue))
