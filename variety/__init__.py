@@ -81,18 +81,29 @@ def check_pid():
     lock = os.path.expanduser("~/.config/variety/.lock")
 
     if os.access(lock, os.F_OK):
-        #if the lockfile is already there then check the PID number in the lock file
-        pidfile = open(lock, "r")
-        pidfile.seek(0)
-        old_pd = pidfile.readline().strip()
+        try:
+            # If the lockfile is already there then check the PID number in the lock file
+            with open(lock, "r") as pidfile:
+                pidfile.seek(0)
+                old_pd = str(int(pidfile.readline().strip()))
 
-        # Now we check the PID from lock file matches to the current process PID
-        if os.path.exists("/proc/%s" % old_pd):
-            print "You already have an instance of the program running, process ID %s. Exiting." % old_pd
-            sys.exit(1)
-        else:
-            print "Lock file is there but the program is not running."
-            print "Removing lock file as it can be there because the program crashed last time it was run as process ID %s." % old_pd
+                try:
+                    # Now we check if the PID from lock file matches to the current process PID
+                    if os.path.exists("/proc/%s" % old_pd):
+                        with open("/proc/%s/cmdline" % old_pd) as f:
+                            if f.read().find("variety") >= 0:
+                                print "You already have an instance of the program running, process ID %s. Exiting." % old_pd
+                                sys.exit(1)
+                except Exception:
+                    pass
+
+                print "Lock file is there but the program is not running."
+                print "Removing lock file as it can be there because the program crashed last time it was run as process ID %s." % old_pd
+                os.remove(lock)
+
+        except Exception:
+            print "Lock file is there but is unreadable or contains garbage."
+            print "Removing bad lock file and running the program."
             os.remove(lock)
 
     # Put a PID in the lock file
