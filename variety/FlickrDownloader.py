@@ -30,9 +30,8 @@ random.seed()
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
 class FlickrDownloader(Downloader.Downloader):
-    def __init__(self, parent, location, size_check_method = None):
+    def __init__(self, parent, location):
         super(FlickrDownloader, self).__init__(parent, "Flickr", location)
-        self.size_check_method = size_check_method
         self.parse_location()
         self.queue = []
 
@@ -211,7 +210,7 @@ class FlickrDownloader(Downloader.Downloader):
                     logger.debug("Already in favorites")
                     continue
 
-                if self.size_check_method and not self.size_check_method(width, height):
+                if self.parent and not self.parent.size_ok(width, height):
                     logger.debug("Small or non-landscape size/resolution")
                     continue
 

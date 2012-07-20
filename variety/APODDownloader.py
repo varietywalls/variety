@@ -73,7 +73,6 @@ class APODDownloader(Downloader.Downloader):
         urls = [self.root + x["href"] for x in s.findAll("a") if x["href"].startswith("ap") and x["href"].endswith(".html")]
         urls = urls[:730] # leave only last 2 years' pics
         urls = [x for x in urls if x not in self.parent.banned]
-        print urls[:20]
 
         self.queue.extend(urls[:3]) # always append the latest 3
         urls = urls[3:]

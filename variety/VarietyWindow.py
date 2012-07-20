@@ -16,6 +16,7 @@
 
 import gettext
 from gettext import gettext as _
+from variety.WallbaseDownloader import WallbaseDownloader
 
 gettext.textdomain('variety')
 
@@ -68,9 +69,9 @@ class VarietyWindow(Window):
 
         self.events = []
 
-        self.wn_downloaders_cache = {}
-        self.flickr_downloaders_cache = {}
-        self.apod_downloader = None
+        self.downloaders_cache = {}
+        for type in Options.SourceType.dl_types:
+            self.downloaders_cache[type] = {}
 
         self.prepared = []
         self.prepared_lock = threading.Lock()
@@ -137,8 +138,7 @@ class VarietyWindow(Window):
         logger.info("Lightness mode: " + str(self.options.lightness_mode))
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
-        logger.info("WN URLs: " + str(self.wallpaper_net_urls))
-        logger.info("Flickr searches: " + str(self.flickr_searches))
+        logger.info("All sources: " + str(self.options.sources))
         logger.info("Total downloaders: " + str(len(self.downloaders)))
         logger.info("Filters: " + str(self.filters))
 
@@ -167,37 +167,23 @@ class VarietyWindow(Window):
         self.downloaders = []
         self.download_folder_size = -1
 
-        if Options.SourceType.DESKTOPPR in [s[1] for s in self.options.sources if s[0]]:
-            self.downloaders.append(DesktopprDownloader(self))
+        for s in self.options.sources:
+            enabled, type, location = s
 
-        if Options.SourceType.APOD in [s[1] for s in self.options.sources if s[0]]:
-            if not self.apod_downloader:
-                self.apod_downloader = APODDownloader(self)
-            self.downloaders.append(self.apod_downloader)
+            if not enabled:
+                continue
+            if type not in Options.SourceType.dl_types:
+                continue
 
-        self.wallpaper_net_urls = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.WN]
-        for url in self.wallpaper_net_urls:
-            if url in self.wn_downloaders_cache:
-                self.downloaders.append(self.wn_downloaders_cache[url])
+            if location in self.downloaders_cache[type]:
+                self.downloaders.append(self.downloaders_cache[type][location])
             else:
                 try:
-                    dlr = WallpapersNetDownloader(self, url)
-                    self.wn_downloaders_cache[url] = dlr
+                    dlr = self.create_downloader(type, location)
+                    self.downloaders_cache[type][location] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
-                    logger.exception("Could not create WallpapersNetDownloader for " + url)
-
-        self.flickr_searches = [s[2] for s in self.options.sources if s[0] and s[1] == Options.SourceType.FLICKR]
-        for search in self.flickr_searches:
-            if search in self.flickr_downloaders_cache:
-                self.downloaders.append(self.flickr_downloaders_cache[search])
-            else:
-                try:
-                    dlr = FlickrDownloader(self, search, lambda w, h: self.size_ok(w, h, 0))
-                    self.flickr_downloaders_cache[search] = dlr
-                    self.downloaders.append(dlr)
-                except Exception:
-                    logger.exception("Could not create FlickrDownloader for " + search)
+                    logger.exception("Could not create Downloader for type %d, location %s" % (type, location))
 
         for downloader in self.downloaders:
             downloader.update_download_folder()
@@ -215,7 +201,6 @@ class VarietyWindow(Window):
             self.min_width = Gdk.Screen.get_default().get_width() * self.options.min_size // 100
             self.min_height = Gdk.Screen.get_default().get_height() * self.options.min_size // 100
 
-
         self.log_options()
 
         # clean prepared - they are outdated
@@ -226,6 +211,21 @@ class VarietyWindow(Window):
         if self.events:
             for e in self.events:
                 e.set()
+
+    def create_downloader(self, type, location = None):
+        logger.info("Creating new downloader for type %d, location %s" % (type, location))
+        if type == Options.SourceType.DESKTOPPR:
+            return DesktopprDownloader(self)
+        elif type == Options.SourceType.APOD:
+            return APODDownloader(self)
+        elif type == Options.SourceType.WN:
+            return WallpapersNetDownloader(self, location)
+        elif type == Options.SourceType.FLICKR:
+            return FlickrDownloader(self, location)
+        elif type == Options.SourceType.WALLBASE:
+            return WallbaseDownloader(self, location)
+        else:
+            raise Exception("Uknown downloader type")
 
     def load_banned(self):
         self.banned = set()
@@ -619,7 +619,7 @@ class VarietyWindow(Window):
             logger.exception("Error in image_ok:")
             return False
 
-    def size_ok(self, width, height, fuzziness):
+    def size_ok(self, width, height, fuzziness = 0):
         ok = True
 
         if self.options.min_size_enabled:
