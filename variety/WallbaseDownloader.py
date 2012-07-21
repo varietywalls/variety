@@ -29,8 +29,9 @@ random.seed()
 class WallbaseDownloader(Downloader.Downloader):
     def __init__(self, parent, location):
         super(WallbaseDownloader, self).__init__(parent, "Wallbase.cc", location)
-        self.host = "http://wallbase.cc"
         self.parse_location()
+        self.type = self.params["type"]
+        self.prefer_favs = "order" in self.params and self.params["order"] == "favs"
         self.queue = []
 
     def convert_to_filename(self, url):
@@ -42,29 +43,53 @@ class WallbaseDownloader(Downloader.Downloader):
         for x in s:
             if len(x) and x.find(':') > 0:
                 k, v = x.split(':')
-                if k.lower() in ["query", "board", "nsfw"]:
-                    self.params[k.lower()] = v
+                self.params[k.lower()] = v
 
     @staticmethod
     def fetch(url):
         content = urllib2.urlopen(url, timeout=20).read()
         return BeautifulSoup(content)
 
-    def search(self):
-        m = {"orderby" : "random", "thpp" : 60}
-        m.update(self.params)
+    def search(self, start_from = None, thpp = 60):
+        m = {"thpp": thpp}
+
+        if self.parent and self.parent.options.min_size_enabled:
+            m["res_opt"] = "gteq"
+            m["res"] = "%dx%d" % (max(100, self.parent.min_width), max(100, self.parent.min_height))
+
+        if "nsfw" in self.params:
+            m["nsfw"] = self.params["nsfw"]
+
+        if "board" in self.params:
+            m["board"] = self.params["board"]
+
+        if self.type == "text":
+            url = "http://wallbase.cc/search"
+            m["query"] = self.params["query"]
+        elif self.type == "color":
+            url = "http://wallbase.cc/search/color/" + self.params["color"]
+        else:
+            url = "http://wallbase.cc/search"
+
+        if start_from:
+            url += "/%d" % start_from
+
+        if self.prefer_favs:
+            m["orderby"] = "favs"
+        else:
+            m["orderby"] = "random"
+
         data = urllib.urlencode(m)
-        content = urllib2.urlopen("http://wallbase.cc/search", data=data, timeout=20).read()
+
+        logger.info("Performing wallbase search: url=%s, data=%s" % (url, data))
+
+        content = urllib2.urlopen(url, data=data, timeout=20).read()
         return BeautifulSoup(content)
 
     @staticmethod
-    def validate(query):
-        query = query.strip()
-        if not len(query):
-            return True
-
+    def validate(location):
         try:
-            s = WallbaseDownloader(None, "query:%s" % query).search()
+            s = WallbaseDownloader(None, location).search()
             wall = s.find("div", "thumb")
             if not wall:
                 return False
@@ -96,6 +121,15 @@ class WallbaseDownloader(Downloader.Downloader):
         logger.info("Filling wallbase queue: " + self.location)
         s = self.search()
 
+        limit = 10^9
+        if self.prefer_favs:
+            total_count = int(s.find("div", "imgshow").contents[0].replace(",", ""))
+            favs_count = int(self.params["favs_count"])
+            logger.info("Preferring the most liked %d images of total %d" % (favs_count, total_count))
+            limit = min(total_count, favs_count)
+            start_from = random.randint(0, max(0, limit - 60))
+            s = self.search(start_from=start_from)
+
         for thumb in s.find_all('div', 'thumb'):
             try:
                 p = map(int, thumb.find('span','res').contents[0].split('x'))
@@ -105,7 +139,6 @@ class WallbaseDownloader(Downloader.Downloader):
                     continue
             except Exception:
                 # missing or unparseable resolution - consider ok
-                logger.debug("Missing or unparseable resolution, considering OK")
                 pass
 
             try:
@@ -116,5 +149,14 @@ class WallbaseDownloader(Downloader.Downloader):
             except Exception:
                 logger.debug("Missing link for thumbnail")
 
+        if self.prefer_favs and len(self.queue) > limit:
+            self.queue = self.queue[:limit]
+
         random.shuffle(self.queue)
+
+        if self.prefer_favs and len(self.queue) >= 20:
+            self.queue = self.queue[:len(self.queue)//2]
+            # only use randomly half the images from the page -
+            # if we ever hit that same page again, we'll still have what to download
+
         logger.info("Wallbase queue populated with %d URLs" % len(self.queue))

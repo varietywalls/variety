@@ -24,6 +24,7 @@ from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+from variety.AddWallbaseDialog import AddWallbaseDialog
 
 from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
@@ -237,12 +238,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.set_transient_for(self)
         self.dialog.run()
 
+    def on_add_wallbase_clicked(self, widget=None):
+        self.dialog = AddWallbaseDialog()
+        self.dialog.parent = self
+        self.dialog.set_transient_for(self)
+        self.dialog.run()
+
     def on_wn_dialog_okay(self, url):
         self.add_sources(Options.SourceType.WN, [url])
         self.dialog = None
 
     def on_flickr_dialog_okay(self, flickr_search):
         self.add_sources(Options.SourceType.FLICKR, [flickr_search])
+        self.dialog = None
+
+    def on_wallbase_dialog_okay(self, wallbase_search):
+        self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
         self.dialog = None
 
     def on_cancel_clicked(self, widget):

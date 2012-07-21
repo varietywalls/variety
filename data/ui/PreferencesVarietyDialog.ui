@@ -440,6 +440,22 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkButton" id="add_wallbase">
+                                <property name="label" translatable="yes">Add Wallbase.cc</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
+                                <signal name="clicked" handler="on_add_wallbase_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="remove_sources">
                                 <property name="label" translatable="yes">Remove</property>
                                 <property name="use_action_appearance">False</property>
@@ -455,7 +471,7 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
@@ -1109,24 +1125,6 @@ Add only the root folders, subfolders will be searched automatically.</property>
                         <property name="margin_top">10</property>
                         <property name="orientation">vertical</property>
                         <property name="column_spacing">20</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
                         <child>
                           <placeholder/>
                         </child>

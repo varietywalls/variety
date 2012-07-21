@@ -441,7 +441,7 @@ class VarietyWindow(Window):
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
         self.set_wp_filename = filename
-        self.set_wp_timer = threading.Timer(0.2, self.do_set_wp)
+        self.set_wp_timer = threading.Timer(0.3, self.do_set_wp)
         self.set_wp_timer.start()
 
     def do_set_wp(self):
@@ -524,7 +524,7 @@ class VarietyWindow(Window):
         if self.wheel_timer:
             self.wheel_timer.cancel()
         self.wheel_direction = direction
-        self.wheel_timer = threading.Timer(0.1, self.handle_scroll)
+        self.wheel_timer = threading.Timer(0.3, self.handle_scroll)
         self.wheel_timer.start()
 
     def handle_scroll(self):
