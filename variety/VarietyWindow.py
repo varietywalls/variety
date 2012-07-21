@@ -17,6 +17,7 @@
 import gettext
 from gettext import gettext as _
 from variety.WallbaseDownloader import WallbaseDownloader
+from variety_lib.helpers import get_media_file
 
 gettext.textdomain('variety')
 
@@ -39,6 +40,9 @@ logger = logging.getLogger('variety')
 import random
 
 random.seed()
+
+from gi.repository import Notify
+Notify.init("Variety")
 
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
@@ -546,9 +550,15 @@ class VarietyWindow(Window):
             self.position -= 1
             self.set_wp(self.used[self.position])
         else:
-            self.change_wallpaper()
+            self.change_wallpaper(notification=True)
 
-    def change_wallpaper(self, widget=None):
+    def show_notification(self, title, message):
+        icon_uri = get_media_file("variety.svg")
+        n = Notify.Notification.new(title, message, icon_uri)
+        n.set_urgency(Notify.Urgency.LOW)
+        n.show()
+
+    def change_wallpaper(self, widget=None, notification=False):
         try:
             img = None
 
@@ -568,6 +578,8 @@ class VarietyWindow(Window):
 
             if not img:
                 logger.info("No images found")
+                if notification:
+                    self.show_notification("No more wallpapers", "Please add some image sources")
                 return
 
             self.used = self.used[self.position:]
