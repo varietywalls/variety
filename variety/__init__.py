@@ -35,7 +35,7 @@ def parse_options():
     parser = optparse.OptionParser(version="%%prog %s" % get_version())
     parser.add_option(
         "-v", "--verbose", action="count", dest="verbose",
-        help=_("Show debug messages (-vv debugs variety_lib also)"))
+        help=_("Show logging messages (-vv shows even finer debugging messages, -vvv debugs variety_lib too)"))
     (options, args) = parser.parse_args()
 
     set_up_logging(options)

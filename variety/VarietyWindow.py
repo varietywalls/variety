@@ -42,6 +42,7 @@ import random
 random.seed()
 
 from gi.repository import Notify
+
 Notify.init("Variety")
 
 from variety.DominantColors import DominantColors
@@ -73,14 +74,13 @@ class VarietyWindow(Window):
 
         self.events = []
 
-        self.downloaders_cache = {}
-        for type in Options.SourceType.dl_types:
-            self.downloaders_cache[type] = {}
+        self.create_downloaders_cache()
 
         self.prepared = []
         self.prepared_lock = threading.Lock()
 
         # load config
+        self.options = None
         self.reload_config()
         self.load_banned()
 
@@ -147,6 +147,8 @@ class VarietyWindow(Window):
         logger.info("Filters: " + str(self.filters))
 
     def reload_config(self):
+        self.previous_options = self.options
+
         self.options = Options()
         self.options.read()
 
@@ -170,6 +172,10 @@ class VarietyWindow(Window):
 
         self.downloaders = []
         self.download_folder_size = -1
+
+        if self.size_options_changed():
+            logger.info("Size/landscape settings changed - purging downloaders cache")
+            self.create_downloaders_cache()
 
         for s in self.options.sources:
             enabled, type, location = s
@@ -216,7 +222,18 @@ class VarietyWindow(Window):
             for e in self.events:
                 e.set()
 
-    def create_downloader(self, type, location = None):
+    def size_options_changed(self):
+        return self.previous_options and (
+            self.previous_options.min_size_enabled != self.options.min_size_enabled or\
+            self.previous_options.min_size != self.options.min_size or\
+            self.options.use_landscape_enabled != self.options.use_landscape_enabled)
+
+    def create_downloaders_cache(self):
+        self.downloaders_cache = {}
+        for type in Options.SourceType.dl_types:
+            self.downloaders_cache[type] = {}
+
+    def create_downloader(self, type, location=None):
         logger.info("Creating new downloader for type %d, location %s" % (type, location))
         if type == Options.SourceType.DESKTOPPR:
             return DesktopprDownloader(self)
@@ -349,7 +366,7 @@ class VarietyWindow(Window):
                                 if self.image_ok(img, fuzziness):
                                     if not img in found:
                                         found.add(img)
-                                        if self.options.desired_color_enabled or self.options.use_landscape_enabled or \
+                                        if self.options.desired_color_enabled or self.options.use_landscape_enabled or\
                                            self.options.min_size_enabled or self.options.lightness_enabled:
                                             logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
                             except Exception:
@@ -381,7 +398,7 @@ class VarietyWindow(Window):
                     return
                 if not self.options.download_enabled:
                     continue
-                #TODO do we want to download when not change_enabled?
+                    #TODO do we want to download when not change_enabled?
                 if self.downloaders:
                     self.purge_downloaded()
                 if self.downloaders:
@@ -417,7 +434,7 @@ class VarietyWindow(Window):
                     if self.is_image(f):
                         fp = os.path.join(dirpath, f)
                         files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
-            files = sorted(files, key = lambda x: x[2])
+            files = sorted(files, key=lambda x: x[2])
             i = 0
             while i < len(files) and self.download_folder_size > 0.80 * mb_quota:
                 file = files[i][0]
@@ -633,7 +650,7 @@ class VarietyWindow(Window):
             logger.exception("Error in image_ok:")
             return False
 
-    def size_ok(self, width, height, fuzziness = 0):
+    def size_ok(self, width, height, fuzziness=0):
         ok = True
 
         if self.options.min_size_enabled:
@@ -695,7 +712,7 @@ class VarietyWindow(Window):
                 op = ("Move" if operation == shutil.move else "Copy")
                 dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
                     Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
-                    "Could not " + op.lower() +" to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
+                    "Could not " + op.lower() + " to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
                 self.dialogs.append(dialog)
                 dialog.set_title(op + " failed")
                 dialog.run()

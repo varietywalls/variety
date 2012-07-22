@@ -100,7 +100,8 @@ class WallbaseDownloader(Downloader.Downloader):
             return False
 
     def download_one(self):
-        logger.info("Downloading an image from wallbase.cc, " + self.location)
+        logger.info("Downloading an image from Wallbase.cc, " + self.location)
+        logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()

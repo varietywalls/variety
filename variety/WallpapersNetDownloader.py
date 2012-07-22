@@ -56,7 +56,8 @@ class WallpapersNetDownloader(Downloader.Downloader):
             return False
 
     def download_one(self):
-        logger.info("Downloading an image from wallpapers.net, " + self.location)
+        logger.info("Downloading an image from Wallpapers.net, " + self.location)
+        logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()

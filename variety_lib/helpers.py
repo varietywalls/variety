@@ -75,9 +75,11 @@ def set_up_logging(opts):
 
     # Set the logging level to show debug messages.
     if opts.verbose:
-        logger.setLevel(logging.DEBUG)
+        logger.setLevel(logging.INFO)
         logger.debug('logging enabled')
     if opts.verbose > 1:
+        logger.setLevel(logging.DEBUG)
+    if opts.verbose > 2:
         lib_logger.setLevel(logging.DEBUG)
 
 def get_help_uri(page=None):
