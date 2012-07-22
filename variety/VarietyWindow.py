@@ -598,7 +598,7 @@ class VarietyWindow(Window):
                 if notification:
                     self.show_notification(
                         "No more wallpapers",
-                        "Please add more image sources or wait for some images to be downloaded")
+                        "Please add more image sources or wait for some downloads")
                 return
 
             self.used = self.used[self.position:]

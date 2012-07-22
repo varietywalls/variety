@@ -88,6 +88,7 @@ class WallbaseDownloader(Downloader.Downloader):
 
     @staticmethod
     def validate(location):
+        logger.info("Validating Wallbase location " + location)
         try:
             s = WallbaseDownloader(None, location).search()
             wall = s.find("div", "thumb")

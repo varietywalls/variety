@@ -39,6 +39,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     @staticmethod
     def validate(url):
+        logger.info("Validating WN url " + url)
         try:
             if not url.startswith("http://"):
                 url = "http://" + url
@@ -46,11 +47,8 @@ class WallpapersNetDownloader(Downloader.Downloader):
                 return False
 
             s = WallpapersNetDownloader.fetch(url)
-            wall = s.find("li", "wall")
-            if not wall:
-                return False
-            thumb = wall.find("div", "thumb")
-            return thumb is not None
+            walls = [wall.find("div", "thumb") for wall in s.findAll("li", "wall")]
+            return len(walls) > 0
         except Exception:
             logger.exception("Error while validating URL, proabably bad URL")
             return False

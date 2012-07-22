@@ -296,6 +296,7 @@
                                 <property name="model">sources_model</property>
                                 <property name="reorderable">True</property>
                                 <property name="search_column">2</property>
+                                <signal name="row-activated" handler="on_source_doubleclicked" swapped="no"/>
                                 <child internal-child="selection">
                                   <object class="GtkTreeSelection" id="sources_selection">
                                     <property name="mode">multiple</property>
@@ -456,6 +457,34 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkSeparator" id="separator1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="edit_source">
+                                <property name="label" translatable="yes">Edit...</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
+                                <signal name="clicked" handler="on_edit_source_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">6</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="remove_sources">
                                 <property name="label" translatable="yes">Remove</property>
                                 <property name="use_action_appearance">False</property>
@@ -471,7 +500,7 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">5</property>
+                                <property name="position">7</property>
                               </packing>
                             </child>
                           </object>
@@ -517,7 +546,7 @@ Add only the root folders, subfolders will be searched automatically.</property>
                             <property name="valign">end</property>
                             <property name="margin_left">30</property>
                             <property name="margin_right">10</property>
-                            <property name="margin_top">5</property>
+                            <property name="margin_top">20</property>
                             <property name="hexpand">True</property>
                             <child>
                               <object class="GtkCheckButton" id="download_enabled">

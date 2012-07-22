@@ -40,6 +40,7 @@ logger = logging.getLogger('variety')
 from variety_lib.PreferencesDialog import PreferencesDialog
 
 UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
+EDITABLE_TYPES = [Options.SourceType.WN, Options.SourceType.WALLBASE, Options.SourceType.FLICKR]
 
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
@@ -217,8 +218,42 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if i is not None:
                 model.remove(i)
 
+    def on_source_doubleclicked(self, tree_view, row_index, arg4=None):
+        self.edit_source(self.ui.sources.get_model()[row_index])
+
+    def on_edit_source_clicked(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        self.edit_source(model[rows[0]])
+
+    def edit_source(self, edited_row):
+        type = Options.str_to_type(edited_row[1])
+
+        if not type in EDITABLE_TYPES:
+            return
+
+        if type == Options.SourceType.WN:
+            self.dialog = AddWallpapersNetCategoryDialog()
+        elif type == Options.SourceType.FLICKR:
+            self.dialog = AddFlickrDialog()
+        elif type == Options.SourceType.WALLBASE:
+            self.dialog = AddWallbaseDialog()
+        else:
+            logger.warning("Uknown type edited: " + edited_row[1])
+            return
+
+        self.dialog.set_edited_row(edited_row)
+
+        self.dialog.parent = self
+        self.dialog.set_transient_for(self)
+        self.dialog.run()
+
+
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
+
+        editable = len(rows) == 1 and Options.str_to_type(model[rows[0]][1]) in EDITABLE_TYPES
+        self.ui.edit_source.set_sensitive(editable)
+
         for row in rows:
             if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
                 self.ui.remove_sources.set_sensitive(False)
@@ -244,16 +279,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.set_transient_for(self)
         self.dialog.run()
 
-    def on_wn_dialog_okay(self, url):
-        self.add_sources(Options.SourceType.WN, [url])
+    def on_wn_dialog_okay(self, url, edited_row):
+        if edited_row:
+            edited_row[2] = url
+        else:
+            self.add_sources(Options.SourceType.WN, [url])
         self.dialog = None
 
-    def on_flickr_dialog_okay(self, flickr_search):
-        self.add_sources(Options.SourceType.FLICKR, [flickr_search])
+    def on_flickr_dialog_okay(self, flickr_search, edited_row):
+        if edited_row:
+            edited_row[2] = flickr_search
+        else:
+            self.add_sources(Options.SourceType.FLICKR, [flickr_search])
         self.dialog = None
 
-    def on_wallbase_dialog_okay(self, wallbase_search):
-        self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
+    def on_wallbase_dialog_okay(self, wallbase_search, edited_row):
+        if edited_row:
+            edited_row[2] = wallbase_search
+        else:
+            self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
         self.dialog = None
 
     def on_cancel_clicked(self, widget):

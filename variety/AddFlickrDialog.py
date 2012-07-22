@@ -55,6 +55,35 @@ class AddFlickrDialog(Gtk.Dialog):
         # Get a reference to the builder and set up the signals.
         self.builder = builder
         self.ui = builder.get_ui(self)
+        self.edited_row = None
+
+    def set_edited_row(self, edited_row):
+        self.edited_row = edited_row
+
+        location = edited_row[2]
+        s = location.split(';')
+        params = {}
+        for x in s:
+            if len(x) and x.find(':') > 0:
+                k, v = x.split(':')
+                params[k.lower()] = urllib.unquote_plus(v)
+
+        if "text" in params:
+            self.ui.text.set_text(params["text"])
+
+        if "tags" in params:
+            self.ui.tags.set_text(params["tags"])
+
+        if "user" in params:
+            if not params["user"].startswith("http://"):
+                params["user"] = "http://" + params["user"]
+            self.ui.user_url.set_text(params["user"])
+
+        if "group" in params:
+            if not params["group"].startswith("http://"):
+                params["group"] = "http://" + params["group"]
+            self.ui.group_url.set_text(params["group"])
+
 
     def on_btn_ok_clicked(self, widget, data=None):
         """The user has elected to save the changes.
@@ -119,7 +148,7 @@ class AddFlickrDialog(Gtk.Dialog):
             self.ui.error.set_label(self.error)
         else:
             if len(search):
-                self.parent.on_flickr_dialog_okay(search)
+                self.parent.on_flickr_dialog_okay(search, self.edited_row)
             self.destroy()
 
         Gdk.threads_leave()

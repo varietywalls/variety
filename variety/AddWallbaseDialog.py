@@ -51,6 +51,8 @@ class AddWallbaseDialog(Gtk.Dialog):
         # Get a reference to the builder and set up the signals.
         self.builder = builder
         self.ui = builder.get_ui(self)
+        self.edited_row = None
+
         self.on_radio_toggled()
         self.ui.sfw.set_active(0)
         self.ui.manga.set_active(2)
@@ -58,6 +60,50 @@ class AddWallbaseDialog(Gtk.Dialog):
 
         self.ui.radio_all.set_active(True)
         self.ui.order_random.set_active(True)
+
+    def set_edited_row(self, edited_row):
+        self.edited_row = edited_row
+
+        location = edited_row[2]
+        s = location.split(';')
+        params = {}
+        for x in s:
+            if len(x) and x.find(':') > 0:
+                k, v = x.split(':')
+                params[k.lower()] = urllib.unquote_plus(v)
+
+        if params["type"] == "text":
+            self.ui.radio_text.set_active(True)
+            self.ui.query.set_text(urllib.unquote_plus(params["query"]))
+        elif params["type"] == "color":
+            self.ui.radio_color.set_active(True)
+            c = map(int, params["color"].split('/'))
+            self.ui.color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+        else:
+            self.ui.radio_all.set_active(True)
+
+        if params["order"] == "random":
+            self.ui.order_random.set_active(True)
+        else:
+            self.ui.order_favs.set_active(True)
+            for i, x in enumerate(self.ui.favs_count.get_model()):
+                if int(x[0]) >= int(params["favs_count"]):
+                    self.ui.favs_count.set_active(i)
+                    break
+
+        if params["nsfw"] == "110":
+            self.ui.sfw.set_active(2)
+        elif params["nsfw"] == "010":
+            self.ui.sfw.set_active(1)
+        else:
+            self.ui.sfw.set_active(0)
+
+        if params["board"] == "2":
+            self.ui.manga.set_active(0)
+        elif params["board"] == "1":
+            self.ui.manga.set_active(1)
+        else:
+            self.ui.manga.set_active(2)
 
     def on_btn_ok_clicked(self, widget, data=None):
         """The user has elected to save the changes.
@@ -147,7 +193,7 @@ class AddWallbaseDialog(Gtk.Dialog):
             self.ui.error.set_label(self.error)
         else:
             if len(search):
-                self.parent.on_wallbase_dialog_okay(search)
+                self.parent.on_wallbase_dialog_okay(search, self.edited_row)
             self.destroy()
 
         Gdk.threads_leave()

@@ -49,6 +49,11 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
         # Get a reference to the builder and set up the signals.
         self.builder = builder
         self.ui = builder.get_ui(self)
+        self.edited_row = None
+
+    def set_edited_row(self, edited_row):
+        self.edited_row = edited_row
+        self.ui.url.set_text(self.edited_row[2])
 
     def on_btn_ok_clicked(self, widget, data=None):
         """The user has elected to save the changes.
@@ -70,6 +75,8 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
         Gdk.threads_leave()
 
         url = self.ui.url.get_text().strip()
+        if not url.startswith("http://"):
+            url = "http://" + url
         valid = WallpapersNetDownloader.validate(url)
 
         Gdk.threads_enter()
@@ -80,7 +87,7 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
             self.ui.message.set_visible(False)
             self.ui.spinner.set_visible(False)
         else:
-            self.parent.on_wn_dialog_okay(url)
+            self.parent.on_wn_dialog_okay(url, self.edited_row)
             self.destroy()
         Gdk.threads_leave()
 
