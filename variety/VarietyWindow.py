@@ -390,7 +390,7 @@ class VarietyWindow(Window):
                     if file:
                         self.download_folder_size += os.path.getsize(file)
                         if self.image_ok(file, 0):
-                            pos = random.randint(0, 1) #TODO how much priority do we want to give it?
+                            pos = random.randint(0, 0) #TODO how much priority do we want to give it?
                             logger.info("Adding downloaded file %s near queue front at position %d" % (file, pos))
                             with self.prepared_lock:
                                 self.prepared.insert(pos, file) # give priority to newly-downloaded images
@@ -579,7 +579,9 @@ class VarietyWindow(Window):
             if not img:
                 logger.info("No images found")
                 if notification:
-                    self.show_notification("No more wallpapers", "Please add some image sources")
+                    self.show_notification(
+                        "No more wallpapers",
+                        "Please add more image sources or wait for some images to be downloaded")
                 return
 
             self.used = self.used[self.position:]

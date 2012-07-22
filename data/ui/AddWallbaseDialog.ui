@@ -505,5 +505,11 @@
       <action-widget response="-5">btn_ok</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1"/>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <widgets>
+      <widget name="radio_all"/>
+      <widget name="radio_text"/>
+      <widget name="radio_color"/>
+    </widgets>
+  </object>
 </interface>
