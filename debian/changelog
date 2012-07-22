@@ -1,3 +1,16 @@
+variety (0.3.13) precise; urgency=low
+
+  * Minor fixes; Add some wallbase to default sources
+  * Notify user when after Next or MoveToTrash we cannot find another
+    image to display
+  * Full Wallbase.cc support
+  * Wallbase downloader added (no GUI yet); Some duplicate code
+    refactored
+  * Fix bug 1025615: Variety may refuse to start because of incorrect
+    lock/PID checking
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 22 Jul 2012 03:08:30 +0300
+
 variety (0.3.12) precise; urgency=low
 
   * NASA APOD - Use archive instead of RSS, but still always put in
