@@ -223,36 +223,46 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_edit_source_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
-        self.edit_source(model[rows[0]])
+        if len(rows) == 1:
+            self.edit_source(model[rows[0]])
 
     def edit_source(self, edited_row):
         type = Options.str_to_type(edited_row[1])
 
-        if not type in EDITABLE_TYPES:
-            return
+        if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
+            os.system("xdg-open \"" + os.path.realpath(edited_row[2]) + "\"")
+        elif type == Options.SourceType.FAVORITES:
+            os.system("xdg-open \"" + self.parent.options.favorites_folder + "\"")
+        elif type in EDITABLE_TYPES:
+            if type == Options.SourceType.WN:
+                self.dialog = AddWallpapersNetCategoryDialog()
+            elif type == Options.SourceType.FLICKR:
+                self.dialog = AddFlickrDialog()
+            elif type == Options.SourceType.WALLBASE:
+                self.dialog = AddWallbaseDialog()
 
-        if type == Options.SourceType.WN:
-            self.dialog = AddWallpapersNetCategoryDialog()
-        elif type == Options.SourceType.FLICKR:
-            self.dialog = AddFlickrDialog()
-        elif type == Options.SourceType.WALLBASE:
-            self.dialog = AddWallbaseDialog()
-        else:
-            logger.warning("Uknown type edited: " + edited_row[1])
-            return
+            self.dialog.set_edited_row(edited_row)
 
-        self.dialog.set_edited_row(edited_row)
-
-        self.dialog.parent = self
-        self.dialog.set_transient_for(self)
-        self.dialog.run()
-
+            self.dialog.parent = self
+            self.dialog.set_transient_for(self)
+            self.dialog.run()
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
 
-        editable = len(rows) == 1 and Options.str_to_type(model[rows[0]][1]) in EDITABLE_TYPES
-        self.ui.edit_source.set_sensitive(editable)
+        self.ui.edit_source.set_sensitive(False)
+        self.ui.edit_source.set_label("Edit...")
+        if len(rows) == 1:
+            type = Options.str_to_type(model[rows[0]][1])
+            if type == Options.SourceType.IMAGE:
+                self.ui.edit_source.set_sensitive(True)
+                self.ui.edit_source.set_label("View Image")
+            elif type == Options.SourceType.FOLDER or type == Options.SourceType.FAVORITES:
+                self.ui.edit_source.set_sensitive(True)
+                self.ui.edit_source.set_label("Open Folder")
+            elif type in EDITABLE_TYPES:
+                self.ui.edit_source.set_sensitive(True)
+                self.ui.edit_source.set_label("Edit...")
 
         for row in rows:
             if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
