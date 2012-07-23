@@ -102,7 +102,9 @@ class VarietyWindow(Window):
         self.wheel_timer = None
         self.set_wp_timer = None
 
+        self.auto_changed = False
         self.update_indicator(self.current, False)
+        self.auto_changed = True
 
         self.start_threads()
 
@@ -257,7 +259,6 @@ class VarietyWindow(Window):
     def start_threads(self):
         self.running = True
 
-        self.auto_changed = True
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
         change_thread.daemon = True
