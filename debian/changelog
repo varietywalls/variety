@@ -1,3 +1,17 @@
+variety (0.3.14) precise; urgency=low
+
+  * Disable Move/Copy immediately after automatic chnages to avoid
+    inadvertent clicking; Better notifications; Better filters error
+    handling
+  * Bug #1027708: Change Move to Favs to Copy to Favs. Remove
+    confirmation dialogs.
+  * Open folder/View image instead of Edit for folders and images
+  * Editing of sources now possible
+  * Purge downloaders cache if size options change; Log level INFO on -
+    v, DEBUG on -vv
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 24 Jul 2012 01:34:03 +0300
+
 variety (0.3.13) precise; urgency=low
 
   * Minor fixes; Add some wallbase to default sources
