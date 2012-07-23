@@ -100,9 +100,9 @@ class Indicator:
         self.trash.show()
         self.menu.append(self.trash)
 
-        self.favorite = Gtk.MenuItem("Move to _Favorites")
+        self.favorite = Gtk.MenuItem("Copy to _Favorites")
         self.favorite.set_use_underline(True)
-        self.favorite.connect("activate", window.move_to_favorites)
+        self.favorite.connect("activate", window.copy_to_favorites)
         self.favorite.show()
         self.menu.append(self.favorite)
 

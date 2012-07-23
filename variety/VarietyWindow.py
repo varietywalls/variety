@@ -277,6 +277,10 @@ class VarietyWindow(Window):
 
         self.events = [self.change_event, self.prepare_event, self.dl_event]
 
+    def is_in_favorites(self, file):
+        filename = os.path.basename(file)
+        return os.path.exists(os.path.join(self.options.favorites_folder, filename))
+
     def update_indicator(self, file, is_gtk_thread):
         logger.info("Setting file info to: " + file)
         try:
@@ -292,8 +296,7 @@ class VarietyWindow(Window):
                 label = label[:50] + "..."
 
             trash_enabled = os.access(file, os.W_OK)
-            favorites_enabled = os.access(file, os.W_OK)
-            in_favs = os.path.normpath(file).startswith(os.path.normpath(self.options.favorites_folder))
+            in_favs = self.is_in_favorites(file)
 
             if not is_gtk_thread:
                 Gdk.threads_enter()
@@ -305,8 +308,7 @@ class VarietyWindow(Window):
                 self.ind.trash.set_sensitive(trash_enabled)
 
                 self.ind.favorite.set_sensitive(not in_favs)
-                self.ind.favorite.set_label("Already in Favorites" if in_favs else (
-                    "Move to _Favorites" if favorites_enabled else "Copy to _Favorites"))
+                self.ind.favorite.set_label("Already in Favorites" if in_favs else "Copy to _Favorites")
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
@@ -572,7 +574,7 @@ class VarietyWindow(Window):
     def show_notification(self, title, message):
         icon_uri = get_media_file("variety.svg")
         n = Notify.Notification.new(title, message, icon_uri)
-        n.set_urgency(Notify.Urgency.LOW)
+        n.set_urgency(Notify.Urgency.NORMAL)
         n.show()
 
     def change_wallpaper(self, widget=None, notification=False):
@@ -685,14 +687,16 @@ class VarietyWindow(Window):
         self.dialogs.remove(dialog)
         return response == Gtk.ResponseType.YES
 
-    def move_or_copy_file(self, file, to, operation):
+    def move_or_copy_file(self, file, to, to_name, operation):
+        op = "Moved" if operation == shutil.move else "Copied"
         try:
             operation(file, to)
             try:
                 operation(file + ".txt", to)
             except Exception:
                 pass
-            logger.info(("Moved " if operation == shutil.move else "Copied ") + file + " to " + to)
+            logger.info(op + " " + file + " to " + to)
+            #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
             return True
         except Exception as err:
             success = False
@@ -702,6 +706,7 @@ class VarietyWindow(Window):
                     try:
                         os.unlink(file)
                         success = True
+                        #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
                     except Exception:
                         pass
                 else:
@@ -725,24 +730,16 @@ class VarietyWindow(Window):
             file = self.current
             url = self.url
             if not os.access(file, os.W_OK):
-                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                    Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
-                    "You don't have permissions to move %s to Trash." % file)
-                self.dialogs.append(dialog)
-                dialog.set_title("Cannot move")
-                dialog.run()
-                dialog.destroy()
-                self.dialogs.remove(dialog)
-            elif self.confirm_move("Move", file, "Trash"):
-                trash = os.path.expanduser("~/.local/share/Trash/")
-                self.move_or_copy_file(file, trash, shutil.move)
-                if self.used[self.position] == file:
+                self.show_notification("Cannot move", "You don't have permissions to move %s to Trash." % file)
+            else:
+                trash = os.path.expanduser("~/.local/share/Trash")
+                self.move_or_copy_file(file, trash, "trash", shutil.move)
+                if self.current == file:
                     self.next_wallpaper()
 
                 self.remove_from_queues(file)
                 if url:
                     self.ban_url(url)
-
         except Exception:
             logger.exception("Exception in move_to_trash")
 
@@ -759,28 +756,14 @@ class VarietyWindow(Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
 
-    def move_to_favorites(self, widget=None):
+    def copy_to_favorites(self, widget=None):
         try:
             file = self.current
-            operation = None
-
-            if not os.access(file, os.W_OK):
-                if self.confirm_move("Copy", file, "Favorites"):
-                    operation = shutil.copy
-            else:
-                if self.confirm_move("Move", file, "Favorites"):
-                    operation = shutil.move
-
-            if operation:
-                self.move_or_copy_file(file, self.options.favorites_folder, operation)
-                new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
-                self.used = [(new_file if f == file else f) for f in self.used]
-                if self.current == file:
-                    self.current = new_file
-                    self.set_wp(new_file)
+            if os.access(file, os.R_OK):
+                self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(self.current, True)
         except Exception:
-            logger.exception("Exception in move_to_favorites")
+            logger.exception("Exception in copy_to_favorites")
 
     def on_quit(self, widget=None):
         logger.info("Quitting")
