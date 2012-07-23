@@ -21,7 +21,8 @@ from variety_lib.helpers import get_media_file
 
 gettext.textdomain('variety')
 
-from gi.repository import Gtk, Gdk, Gio # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, Gio, Notify # pylint: disable=E0611
+Notify.init("Variety")
 
 from variety_lib import Window
 from variety_lib import varietyconfig
@@ -40,10 +41,6 @@ logger = logging.getLogger('variety')
 import random
 
 random.seed()
-
-from gi.repository import Notify
-
-Notify.init("Variety")
 
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
@@ -260,6 +257,7 @@ class VarietyWindow(Window):
     def start_threads(self):
         self.running = True
 
+        self.auto_changed = True
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
         change_thread.daemon = True
@@ -301,13 +299,18 @@ class VarietyWindow(Window):
             if not is_gtk_thread:
                 Gdk.threads_enter()
 
-            for i in range(10):
+            for i in xrange(10):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file))
 
-                self.ind.trash.set_sensitive(trash_enabled)
+                if self.auto_changed:
+                    # delay enabling Move/Copy operations in this case - see comment below
+                    self.ind.trash.set_sensitive(False)
+                    self.ind.favorite.set_sensitive(False)
+                else:
+                    self.ind.trash.set_sensitive(trash_enabled)
+                    self.ind.favorite.set_sensitive(not in_favs)
 
-                self.ind.favorite.set_sensitive(not in_favs)
                 self.ind.favorite.set_label("Already in Favorites" if in_favs else "Copy to _Favorites")
 
                 self.ind.show_origin.set_label(label)
@@ -317,6 +320,18 @@ class VarietyWindow(Window):
 
             if not is_gtk_thread:
                 Gdk.threads_leave()
+
+            # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
+            if self.auto_changed:
+                def update_file_operations():
+                    Gdk.threads_enter()
+                    for i in xrange(10):
+                        self.ind.trash.set_sensitive(trash_enabled)
+                        self.ind.favorite.set_sensitive(not in_favs)
+                    Gdk.threads_leave()
+                enable_timer = threading.Timer(2, update_file_operations)
+                enable_timer.start()
+
         except Exception:
             logger.exception("Error updating file info")
 
@@ -328,6 +343,7 @@ class VarietyWindow(Window):
 
         if self.options.change_on_start:
             self.change_event.wait(5) # wait for prepare thread to prepare some images first
+            self.auto_changed = True
             self.change_wallpaper()
 
         while self.running:
@@ -345,6 +361,7 @@ class VarietyWindow(Window):
                 if not self.options.change_enabled:
                     continue
                 logger.info("regular_change changes wallpaper")
+                self.auto_changed = True
                 self.change_wallpaper()
             except Exception:
                 logger.exception("Exception in regular_change_thread")
@@ -475,18 +492,24 @@ class VarietyWindow(Window):
                 logger.info("Missing file or bad permissions, will not use it: " + filename)
                 return
 
-            self.update_indicator(filename, False)
             to_set = filename
             if self.filters:
                 filter = self.filters[random.randint(0, len(self.filters) - 1)]
-                os.system(
+                logger.info("Applying filter: " + filter)
+                result = os.system(
                     "convert \"" + filename + "\" " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
-                to_set = os.path.join(self.config_folder, "wallpaper.jpg")
-                try:
-                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
-                        f.write(filename)
-                except Exception:
-                    pass
+
+                if result == 0: #success
+                    to_set = os.path.join(self.config_folder, "wallpaper.jpg")
+                    try:
+                        with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
+                            f.write(filename)
+                    except Exception:
+                        pass
+                else:
+                    logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
+
+            self.update_indicator(filename, False)
             self.gsettings.set_string(self.KEY, "file://" + to_set)
             self.gsettings.apply()
             self.current = filename
@@ -552,12 +575,13 @@ class VarietyWindow(Window):
 
     def handle_scroll(self):
         if self.wheel_direction:
-            self.next_wallpaper()
+            self.next_wallpaper(widget=self)
         else:
-            self.prev_wallpaper()
-        self.timer = None
+            self.prev_wallpaper(widget=self)
+        self.wheel_timer = None
 
     def prev_wallpaper(self, widget=None):
+        self.auto_changed = widget is None
         if self.position >= len(self.used) - 1:
             return
         else:
@@ -565,19 +589,23 @@ class VarietyWindow(Window):
             self.set_wp(self.used[self.position])
 
     def next_wallpaper(self, widget=None):
+        self.auto_changed = widget is None
         if self.position > 0:
             self.position -= 1
             self.set_wp(self.used[self.position])
         else:
-            self.change_wallpaper(notification=True)
+            self.change_wallpaper()
 
     def show_notification(self, title, message):
         icon_uri = get_media_file("variety.svg")
-        n = Notify.Notification.new(title, message, icon_uri)
-        n.set_urgency(Notify.Urgency.NORMAL)
-        n.show()
+        try:
+            self.notification.update(title, message, icon_uri)
+        except AttributeError:
+            self.notification = Notify.Notification.new(title, message, icon_uri)
+        self.notification.set_urgency(Notify.Urgency.LOW)
+        self.notification.show()
 
-    def change_wallpaper(self, widget=None, notification=False):
+    def change_wallpaper(self, widget=None):
         try:
             img = None
 
@@ -597,7 +625,7 @@ class VarietyWindow(Window):
 
             if not img:
                 logger.info("No images found")
-                if notification:
+                if not self.auto_changed:
                     self.show_notification(
                         "No more wallpapers",
                         "Please add more image sources or wait for some downloads")
@@ -735,7 +763,7 @@ class VarietyWindow(Window):
                 trash = os.path.expanduser("~/.local/share/Trash")
                 self.move_or_copy_file(file, trash, "trash", shutil.move)
                 if self.current == file:
-                    self.next_wallpaper()
+                    self.next_wallpaper(widget)
 
                 self.remove_from_queues(file)
                 if url:
