@@ -1,3 +1,10 @@
+variety (0.3.15) precise; urgency=low
+
+  * Bug fixed: update_indicator was failing on the first run (at
+    startup)
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 25 Jul 2012 22:41:29 +0300
+
 variety (0.3.14) precise; urgency=low
 
   * Disable Move/Copy immediately after automatic chnages to avoid
