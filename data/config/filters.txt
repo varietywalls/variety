@@ -1,0 +1,11 @@
+# These are automatically appended to the user's filters.
+# New default filters should be added here, not in the default config so that existing users will also see them
+# (they already have a config file, so the default config is not used for them)
+
+False|Keep original|
+False|Grayscale|-type Grayscale
+False|Heavy blur|-blur 70x70
+False|Oil Painting|-paint 8
+False|Charcoal Painting|-charcoal 3
+False|Pointilism|-spread 10 -noise 3
+False|Pixellate|-scale 3% -scale 3333%

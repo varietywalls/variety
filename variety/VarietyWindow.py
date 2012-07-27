@@ -115,6 +115,8 @@ class VarietyWindow(Window):
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
 
+        shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
+                    os.path.join(self.config_folder, "variety_latest_default.conf"))
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
             logger.info("Missing config file, copying it from " +
                         varietyconfig.get_data_file("config", "variety.conf"))

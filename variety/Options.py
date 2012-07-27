@@ -16,6 +16,8 @@
 
 import os
 from configobj import ConfigObj
+from configobj import DuplicateError
+from variety_lib import varietyconfig
 
 import logging
 
@@ -60,7 +62,12 @@ class Options:
         self.set_defaults()
 
         try:
-            config = ConfigObj(self.configfile)
+            config = ConfigObj(raise_errors=False)
+            config.filename = self.configfile
+            try:
+                config.reload()
+            except DuplicateError:
+                logger.warning("Duplicate keys in config file, please fix this")
 
             try:
                 self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
@@ -157,31 +164,68 @@ class Options:
                 sources = config["sources"]
                 for v in sources.values():
                     try:
-                        s = v.strip().split('|')
-                        enabled = s[0].lower() in TRUTH_VALUES
-                        self.sources.append([enabled, (Options.str_to_type(s[1])), s[2]])
+                        self.sources.append(Options.parse_source(v))
                     except Exception:
                         logger.exception("Cannot parse source: " + v)
 
-            if not Options.SourceType.DESKTOPPR in [x[1] for x in self.sources]:
-                self.sources.append([False, Options.SourceType.DESKTOPPR, "[NSFW Warning] Random wallpapers from Desktoppr.co. May contain nudity and porn."])
-
-            if not Options.SourceType.APOD in [x[1] for x in self.sources]:
-                self.sources.append([False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"])
+            self.parse_autosources()
 
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
                 for v in filters.values():
                     try:
-                        s = v.strip().split('|')
-                        enabled = s[0].lower() in TRUTH_VALUES
-                        self.filters.append([enabled, s[1], s[2]])
+                        self.filters.append(Options.parse_filter(v))
                     except Exception:
                         logger.exception("Cannot parse filter: " + v)
 
+            self.parse_autofilters()
         except Exception:
             logger.exception("Could not read configuration:")
+
+    def parse_autosources(self):
+        try:
+            with open(varietyconfig.get_data_file("config", "sources.txt")) as f:
+                for line in f:
+                    if not line.strip() or line.strip().startswith('#'):
+                        continue
+                    try:
+                        s = Options.parse_source(line.strip())
+                        if [False] + s[1:] in self.sources or [True] + s[1:] in self.sources:
+                            continue
+                        self.sources.append(s)
+                    except Exception:
+                        logger.exception("Cannot parse source in sources.txt: " + line)
+        except Exception:
+            logger.exception("Cannot open sources.txt")
+
+    def parse_autofilters(self):
+        try:
+            with open(varietyconfig.get_data_file("config", "filters.txt")) as f:
+                for line in f:
+                    if not line.strip() or line.strip().startswith('#'):
+                        continue
+                    try:
+                        s = Options.parse_filter(line.strip())
+                        if [False] + s[1:] in self.filters or [True] + s[1:] in self.filters:
+                            continue
+                        self.filters.append(s)
+                    except Exception:
+                        logger.exception("Cannot parse filter in filters.txt: " + line)
+        except Exception:
+            logger.exception("Cannot open filters.txt")
+
+    @staticmethod
+    def parse_source(v):
+        s = v.strip().split('|')
+        enabled = s[0].lower() in TRUTH_VALUES
+        return [enabled, (Options.str_to_type(s[1])), s[2]]
+
+    @staticmethod
+    def parse_filter(v):
+        s = v.strip().split('|')
+        enabled = s[0].lower() in TRUTH_VALUES
+        return [enabled, s[1], s[2]]
 
     @staticmethod
     def str_to_type(s):
