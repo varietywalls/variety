@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 17:01+0300\n"
+"POT-Creation-Date: 2012-07-30 00:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,9 @@ msgid ""
 "picture folders \n"
 "and it will change your desktop wallpaper on a regular interval to some "
 "random beautiful \n"
-"image.  It can also automatically download beautiful wallpapers for you from "
-"the internet.\n"
+"image. It can also automatically download great wallpapers for you from a "
+"variety of online\n"
+"sources.\n"
 "\n"
 "Variety runs quietly in the background and can be contolled via the small "
 "mountain-like \n"
@@ -38,12 +39,12 @@ msgid ""
 "\n"
 "Please take the time to set your preferences on the next screen.\n"
 "\n"
-"Variety was developed by Peter Levi for the Ubuntu App Showdown, June 2012 "
-"and is \n"
+"Variety was developed by Peter Levi for the Ubuntu App Showdown, June-July "
+"2012 and is \n"
 "licensed under GPL 3."
 msgstr ""
 
-#: ../data/ui/VarietyWindow.ui.h:14
+#: ../data/ui/VarietyWindow.ui.h:15
 msgid "Continue"
 msgstr ""
 
@@ -106,17 +107,120 @@ msgid ""
 "Example: apple -pie"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:16
+#: ../data/ui/AddFlickrDialog.ui.h:16 ../data/ui/AddWallbaseDialog.ui.h:25
 msgid "Just a moment to check this search"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:17
+#: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddWallbaseDialog.ui.h:26
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
 msgid "  "
 msgstr ""
 
-#: ../variety/__init__.py:38
-msgid "Show debug messages (-vv debugs variety_lib also)"
+#. only use randomly half the images from the page -
+#. if we ever hit that same page again, we'll still have what to download
+#: ../data/ui/AddWallbaseDialog.ui.h:1
+msgid "Variety - add Wallbase.cc image source"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:2
+msgid "Wallbase.cc"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:3
+msgid ""
+"<a href=\"http://wallbase.cc\">Wallbase.cc</a> provides a variety of image "
+"search options. Please specify your criteria below."
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:4
+msgid "Limit by keywords or color"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:5
+msgid "Use all images"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:6
+msgid "Images with these keywords: "
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:7
+msgid "Please specify"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:8
+msgid "Images containing this color: "
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:9
+msgid "Random or only favorites"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:10
+msgid "Use all matching images randomly"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:11
+msgid "Prefer just the most liked "
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:12
+msgid "20"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:13
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+msgid "100"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:14
+msgid "300"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:15
+msgid "1000"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:16
+msgid "10000"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:17
+msgid " images"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:18
+msgid "Ordinary images or manga"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:19
+msgid "Only ordinary images"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:20
+msgid "Only anime and manga"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:21
+msgid "Both"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:22
+msgid "Safe-for-work or erotic"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:23
+msgid "Only safe-for-work"
+msgstr ""
+
+#: ../data/ui/AddWallbaseDialog.ui.h:24
+msgid "Only slightly erotic or otherwise sketchy"
+msgstr ""
+
+#: ../variety/__init__.py:55
+msgid ""
+"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
+"variety_lib too)"
 msgstr ""
 
 #: ../variety.desktop.in.h:1
@@ -290,107 +394,111 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
-msgid "Remove"
+msgid "Add Wallbase.cc"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
-msgid "Remove selected image sources"
+msgid "Edit..."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
-msgid "Download a wallpaper every "
+msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
-msgid "Minimum interval is 30 seconds"
+msgid "Remove selected image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:29
-msgid "to "
+msgid "Download a wallpaper every "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:30
-msgid "Limit download folder to "
+msgid "Minimum interval is 30 seconds"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:31
-msgid "Minimum size is 50 MB"
+msgid "to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
-msgid "MB by deleting oldest files when necessary"
+msgid "Limit download folder to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33
-msgid "Favorites folder"
+msgid "Minimum size is 50 MB"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:34
-msgid "Move favorite wallpapers to "
+msgid "MB by deleting oldest files when necessary"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:35
-msgid "Select a Folder"
+msgid "Favorites folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:36
-msgid "Color and size"
+msgid "Move favorite wallpapers to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:37
-msgid "When possible, use images that:"
+msgid "Select a Folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:38
-msgid "Have landscape orientation"
+msgid "Color and size"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:39
-msgid "Are big at least "
+msgid "When possible, use images that:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:40
-msgid "50"
+msgid "Have landscape orientation"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:41
-msgid "80"
+msgid "Are big at least "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:42
-msgid "100"
+msgid "50"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+msgid "80"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Are dark or light:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Dark"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Light"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid "Contain this color: "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "(This is an experimental feature)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Filters"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"

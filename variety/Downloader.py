@@ -22,6 +22,7 @@ import re
 import logging
 
 logger = logging.getLogger('variety')
+from variety.Util import Util
 
 class Downloader(object):
     def __init__(self, parent, name, location):
@@ -38,15 +39,13 @@ class Downloader(object):
         return ''.join(c if c in valid_chars else '_' for c in url)
 
     def get_local_filename(self, url):
-        filename = url[url.rindex('/') + 1:]
-        return os.path.join(self.target_folder, filename)
+        return os.path.join(self.target_folder, Util.get_local_name(url))
 
     def is_in_downloaded(self, url):
         return os.path.exists(self.get_local_filename(url))
 
     def is_in_favorites(self, url):
-        filename = url[url.rindex('/') + 1:]
-        return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, filename))
+        return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
     def save_locally(self, origin_url, image_url):
         if origin_url in self.parent.banned:

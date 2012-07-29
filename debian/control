@@ -1,8 +1,7 @@
 Source: variety
 Section: python
 Priority: extra
-Build-Depends: cdbs (>= 0.4.43),
- debhelper (>= 6), libglib2.0-bin, python (>= 2.6.6-3~),
+Build-Depends: debhelper (>= 8), libglib2.0-bin, python (>= 2.6.6-3~),
  python-distutils-extra (>= 2.10)
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
 Standards-Version: 3.9.3
@@ -16,6 +15,7 @@ Depends: ${misc:Depends},
  gir1.2-notify-0.7,
  python-configobj,
  gir1.2-gtk-3.0,
+ python-dbus,
  gir1.2-glib-2.0,
  python-imaging,
  python-apport,

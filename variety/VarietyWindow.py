@@ -16,7 +16,6 @@
 
 import gettext
 from gettext import gettext as _
-from variety.WallbaseDownloader import WallbaseDownloader
 from variety_lib.helpers import get_media_file
 
 gettext.textdomain('variety')
@@ -26,8 +25,6 @@ Notify.init("Variety")
 
 from variety_lib import Window
 from variety_lib import varietyconfig
-from variety.AboutVarietyDialog import AboutVarietyDialog
-from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 
 import os
 import shutil
@@ -42,12 +39,16 @@ import random
 
 random.seed()
 
+from variety.AboutVarietyDialog import AboutVarietyDialog
+from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
+from variety.WallbaseDownloader import WallbaseDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
+from variety.ImageFetcher import ImageFetcher
 
 MAX_FILES = 10000
 
@@ -816,8 +817,6 @@ class VarietyWindow(Window):
 
             Gtk.main_quit()
 
-            os.unlink(os.path.expanduser("~/.config/variety/.lock"))
-
     def is_image(self, filename):
         return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff'))
 
@@ -849,3 +848,33 @@ class VarietyWindow(Window):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
         self.update_indicator(self.current, True)
+
+    def process_urls(self, urls):
+        def fetch():
+            try:
+                fetched_dir = os.path.join(self.options.favorites_folder, "Fetched")
+                try:
+                    os.makedirs(fetched_dir)
+                except OSError:
+                    pass
+
+                for url in urls:
+                    if not self.running:
+                        return
+
+                    file = ImageFetcher.fetch(self, url, fetched_dir)
+                    if file:
+                        with self.prepared_lock:
+                            logger.info("Adding fetched file %s to used queue immediately after current file" % file)
+                            #self.prepared = [file] + self.prepared
+                            self.used.insert(self.position, file)
+                            self.position += 1
+
+            except Exception:
+                logger.exception("Exception in process_urls")
+
+        fetch_thread = threading.Thread(target=fetch)
+        fetch_thread.daemon = True
+        fetch_thread.start()
+
+

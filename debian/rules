@@ -7,7 +7,7 @@ else
 endif
 
 override_dh_auto_install:
-	dh_auto_install -- --install-scripts=/opt/extras.ubuntu.com/variety                 --install-data=/opt/extras.ubuntu.com/variety                 --install-lib=/opt/extras.ubuntu.com/variety
+	dh_auto_install -- --install-scripts=/opt/extras.ubuntu.com/variety/bin                 --install-data=/opt/extras.ubuntu.com/variety                 --install-lib=/opt/extras.ubuntu.com/variety
 
 override_dh_python2:
 	dh_python2 /opt/extras.ubuntu.com/variety
@@ -21,7 +21,7 @@ override_dh_install:
 		mkdir -p debian/variety/usr/share/applications; \
 		mv debian/variety/opt/extras.ubuntu.com/variety/share/applications/variety.desktop debian/variety/usr/share/applications/extras-variety.desktop; \
 		rmdir --ignore-fail-on-non-empty debian/variety/opt/extras.ubuntu.com/variety/share/applications; \
-		sed -i 's|Exec=.*|Exec=/opt/extras.ubuntu.com/variety/bin/variety|' debian/variety/usr/share/applications/extras-variety.desktop; \
+		sed -i 's|Exec=[^ ]*|Exec=/opt/extras.ubuntu.com/variety/bin/variety|' debian/variety/usr/share/applications/extras-variety.desktop; \
 		sed -i 's|Icon=/usr/|Icon=/opt/extras.ubuntu.com/variety/|' debian/variety/usr/share/applications/extras-variety.desktop; \
 	fi
 	grep -RlZ 'import gettext' debian/variety/* | xargs -0 -r sed -i 's|\(import\) gettext$$|\1 locale|'
