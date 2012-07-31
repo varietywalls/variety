@@ -24,6 +24,7 @@ from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+from variety_lib.varietyconfig import get_data_file
 from variety.AddWallbaseDialog import AddWallbaseDialog
 
 from variety.Options import Options
@@ -108,6 +109,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
             cb.set_margin_right(30)
             self.ui.filters_grid.add(cb)
             self.filter_checkboxes.append(cb)
+
+        try:
+            with open(get_data_file("ui/tips.txt")) as f:
+                self.ui.tips_buffer.set_text(f.read())
+        except Exception:
+            logger.warning("Missing ui/tips.txt file")
+        try:
+            with open(get_data_file("ui/changes.txt")) as f:
+                self.ui.changes_buffer.set_text(f.read())
+        except Exception:
+            logger.warning("Missing ui/changes.txt file")
 
         self.on_change_enabled_toggled()
         self.on_download_enabled_toggled()

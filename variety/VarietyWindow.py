@@ -30,7 +30,6 @@ import os
 import shutil
 import threading
 import time
-import urlparse
 
 import logging
 
@@ -136,13 +135,7 @@ class VarietyWindow(Window):
                 if not text:
                     return
 
-                valid = []
-                for line in text.split('\n'):
-                    p = urlparse.urlparse(line)
-                    if p.scheme in ['http', 'https']:
-                        for host in self.options.clipboard_hosts:
-                            if p.netloc.find(host) >= 0:
-                                valid.append(line)
+                valid = [url for url in text.split('\n') if ImageFetcher.url_ok(url, self.options.clipboard_hosts)]
                 if valid:
                     logger.info("Received clipboard URLs: " + str(valid))
                     self.process_urls(valid, verbose=False)
@@ -903,9 +896,11 @@ class VarietyWindow(Window):
                     if file:
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
+
                             self.prepared.insert(0, file)
-                            self.used.insert(self.position, file)
-                            self.position += 1
+                            if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
+                                self.used.insert(self.position, file)
+                                self.position += 1
 
             except Exception:
                 logger.exception("Exception in process_urls")
@@ -913,5 +908,3 @@ class VarietyWindow(Window):
         fetch_thread = threading.Thread(target=fetch)
         fetch_thread.daemon = True
         fetch_thread.start()
-
-

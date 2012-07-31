@@ -15,7 +15,7 @@
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="spacing">2</property>
+        <property name="valign">start</property>
         <child>
           <object class="GtkLabel" id="title">
             <property name="visible">True</property>
@@ -44,19 +44,15 @@
             <property name="valign">start</property>
             <property name="margin_bottom">80</property>
             <property name="xpad">30</property>
-            <property name="label" translatable="yes">Variety is an automatic wallpaper changer. You specify some images or picture folders 
-and it will change your desktop wallpaper on a regular interval to some random beautiful 
-image. It can also automatically download great wallpapers for you from a variety of online
-sources.
+            <property name="label" translatable="yes">Variety is an automatic wallpaper changer. You specify some images or picture folders and it will change your desktop wallpaper on a regular interval. It can also automatically download great wallpapers for you from a variety of online sources.
 
-Variety runs quietly in the background and can be contolled via the small mountain-like 
-indicator icon near the top-right corner of the screen. Tip: you can scroll the mouse wheel
-above the indicator to change wallpapers back and forth.
+Variety runs quietly in the background and can be contolled via the small mountain-like indicator icon near the clock. You can scroll the mouse wheel above the indicator to change wallpapers back and forth.
 
 Please take the time to set your preferences on the next screen.
 
-Variety was developed by Peter Levi for the Ubuntu App Showdown, June-July 2012 and is 
-licensed under GPL 3.</property>
+Variety was developed by Peter Levi for the Ubuntu App Showdown, June-July 2012 and is licensed under GPL-3.</property>
+            <property name="justify">fill</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -68,7 +64,7 @@ licensed under GPL 3.</property>
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">15</property>
+            <property name="margin_right">30</property>
             <property name="margin_bottom">15</property>
             <property name="layout_style">end</property>
             <child>

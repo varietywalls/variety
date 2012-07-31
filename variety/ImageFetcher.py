@@ -17,12 +17,26 @@ import os
 
 import urllib2
 import logging
+import urlparse
 from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
 
 class ImageFetcher:
+
+    @staticmethod
+    def url_ok(url, hosts_whitelist):
+        try:
+            p = urlparse.urlparse(url)
+            if p.scheme in ['http', 'https']:
+                for host in hosts_whitelist:
+                    if p.netloc.find(host) >= 0:
+                        return True
+            return False
+        except Exception:
+            return False
+
     @staticmethod
     def fetch(parent, url, to, verbose = True):
         reported = verbose
