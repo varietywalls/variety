@@ -49,6 +49,7 @@ from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
+from variety.Util import Util
 
 MAX_FILES = 10000
 
@@ -96,7 +97,7 @@ class VarietyWindow(Window):
         self.position = 0
         self.current = self.used[self.position]
 
-        self.last_change_time = 0
+        self.last_change_time = time.time()
 
         self.image_count = -1
         self.image_colors_cache = {}
@@ -118,10 +119,7 @@ class VarietyWindow(Window):
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
 
-        try:
-            os.makedirs(self.config_folder)
-        except Exception:
-            pass
+        Util.makedirs(self.config_folder)
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
                     os.path.join(self.config_folder, "variety_latest_default.conf"))
@@ -184,19 +182,9 @@ class VarietyWindow(Window):
         self.options = Options()
         self.options.read()
 
-        try:
-            os.makedirs(self.options.download_folder)
-        except OSError:
-            pass
-        try:
-            os.makedirs(self.options.favorites_folder)
-        except OSError:
-            pass
-        try:
-            os.makedirs(self.options.fetched_folder)
-        except OSError:
-            pass
-
+        Util.makedirs(self.options.download_folder)
+        Util.makedirs(self.options.favorites_folder)
+        Util.makedirs(self.options.fetched_folder)
 
         self.individual_images = [os.path.expanduser(s[2]) for s in self.options.sources if
                                   s[0] and s[1] == Options.SourceType.IMAGE]
@@ -237,10 +225,7 @@ class VarietyWindow(Window):
 
         for downloader in self.downloaders:
             downloader.update_download_folder()
-            try:
-                os.makedirs(downloader.target_folder)
-            except Exception:
-                pass
+            Util.makedirs(downloader.target_folder)
             self.folders.append(downloader.target_folder)
 
         self.filters = [f[2] for f in self.options.filters if f[0]]
@@ -890,10 +875,7 @@ class VarietyWindow(Window):
     def process_urls(self, urls, verbose=True):
         def fetch():
             try:
-                try:
-                    os.makedirs(self.options.fetched_folder)
-                except OSError:
-                    pass
+                Util.makedirs(self.options.fetched_folder)
 
                 for url in urls:
                     if not self.running:

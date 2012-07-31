@@ -39,5 +39,5 @@ class Util:
     def makedirs(path):
         try:
             os.makedirs(path)
-        except Exception:
+        except OSError:
             pass
