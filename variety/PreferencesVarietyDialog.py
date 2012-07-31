@@ -24,6 +24,7 @@ from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+from variety.Util import Util
 from variety_lib.varietyconfig import get_data_file
 from variety.AddWallbaseDialog import AddWallbaseDialog
 
@@ -363,7 +364,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
             self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
             buf = self.ui.clipboard_hosts.get_buffer()
-            self.options.clipboard_hosts = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).split('\n')
+            self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
 
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()

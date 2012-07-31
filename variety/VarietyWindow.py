@@ -157,6 +157,8 @@ class VarietyWindow(Window):
         logger.info("Quota size: " + str(self.options.quota_size))
         logger.info("Favorites folder: " + self.options.favorites_folder)
         logger.info("Fetched folder: " + self.options.fetched_folder)
+        logger.info("Clipboard enabled: " + str(self.options.clipboard_enabled))
+        logger.info("Clipboard hosts: " + str(self.options.clipboard_hosts))
         logger.info("Color enabled: " + str(self.options.desired_color_enabled))
         logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
         logger.info("Min size enabled: " + str(self.options.min_size_enabled))

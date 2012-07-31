@@ -28,5 +28,8 @@ class TestUtil(unittest.TestCase):
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg#x"))
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg?a=b#x"))
 
+    def test_split(self):
+        self.assertEqual(['a','b','c','d','e'], Util.split("a\nb,c ,,d\n   e"))
+
 if __name__ == '__main__':
     unittest.main()

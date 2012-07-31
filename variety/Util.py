@@ -25,3 +25,10 @@ class Util:
         if index > 0:
             filename = filename[:index]
         return filename
+
+    @staticmethod
+    def split(s, seps=[',',' ']):
+        result = s.split()
+        for sep in seps:
+            result = [x.strip() for y in result for x in y.split(sep) if x.strip()]
+        return result

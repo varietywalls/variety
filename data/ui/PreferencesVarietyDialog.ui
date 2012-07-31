@@ -1042,6 +1042,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkTextView" id="clipboard_hosts">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="margin_left">10</property>
+                            <property name="margin_right">10</property>
+                            <property name="margin_top">10</property>
+                            <property name="margin_bottom">10</property>
                             <property name="vexpand">True</property>
                           </object>
                         </child>

@@ -31,7 +31,7 @@ class ImageFetcher:
             p = urlparse.urlparse(url)
             if p.scheme in ['http', 'https']:
                 for host in hosts_whitelist:
-                    if p.netloc.find(host) >= 0:
+                    if host.strip() and p.netloc.find(host) >= 0:
                         return True
             return False
         except Exception:

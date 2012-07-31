@@ -34,6 +34,7 @@ class TestImageFetcher(unittest.TestCase):
         self.assertTrue(ImageFetcher.url_ok("https://www.flickr.com/a", ["flickr.com", "wallbase.cc"]))
         self.assertFalse(ImageFetcher.url_ok("some garbage", ["flickr.com", "wallbase.cc"]))
         self.assertFalse(ImageFetcher.url_ok("http://cnn.com/x/y", ["flickr.com", "wallbase.cc"]))
+        self.assertFalse(ImageFetcher.url_ok("http://somehost.com/x/y", ["","flickr.com", "wallbase.cc"]))
 
 if __name__ == '__main__':
     unittest.main()

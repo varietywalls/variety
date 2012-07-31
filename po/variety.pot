@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-31 03:12+0300\n"
+"POT-Creation-Date: 2012-07-31 14:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,27 +24,21 @@ msgstr ""
 #: ../data/ui/VarietyWindow.ui.h:2
 msgid ""
 "Variety is an automatic wallpaper changer. You specify some images or "
-"picture folders \n"
-"and it will change your desktop wallpaper on a regular interval to some "
-"random beautiful \n"
-"image. It can also automatically download great wallpapers for you from a "
-"variety of online\n"
-"sources.\n"
+"picture folders and it will change your desktop wallpaper on a regular "
+"interval. It can also automatically download great wallpapers for you from a "
+"variety of online sources.\n"
 "\n"
 "Variety runs quietly in the background and can be contolled via the small "
-"mountain-like \n"
-"indicator icon near the top-right corner of the screen. Tip: you can scroll "
-"the mouse wheel\n"
+"mountain-like indicator icon near the clock. You can scroll the mouse wheel "
 "above the indicator to change wallpapers back and forth.\n"
 "\n"
 "Please take the time to set your preferences on the next screen.\n"
 "\n"
 "Variety was developed by Peter Levi for the Ubuntu App Showdown, June-July "
-"2012 and is \n"
-"licensed under GPL 3."
+"2012 and is licensed under GPL-3."
 msgstr ""
 
-#: ../data/ui/VarietyWindow.ui.h:15
+#: ../data/ui/VarietyWindow.ui.h:9
 msgid "Continue"
 msgstr ""
 
@@ -241,6 +235,7 @@ msgid "An automatic wallpaper changer and manager."
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "https://launchpad.net/variety"
 msgstr ""
 
@@ -462,8 +457,8 @@ msgid ""
 "The Variety icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
 "Next to see it on your desktop.\n"
-"To show the icon in the launcher choose About or Preferences. Then you can "
-"lock it to the launcher for easy drag-and-drop access."
+"To show the icon in the launcher choose About or Preferences. You may wish "
+"to lock it there for easy drag-and-drop access."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:43
@@ -472,7 +467,8 @@ msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid ""
-"Fetch images from these hosts when their URL is copied to the clipboard:"
+"Monitor clipboard for image URLs and fetch them when the host is one of "
+"these:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:45
@@ -536,4 +532,32 @@ msgstr ""
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+msgid "Tips and tricks"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+msgid "Recent changes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+msgid "Visit website"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+msgid "Report a bug or request a feature"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+msgid "https://bugs.launchpad.net/variety/+filebug"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+msgid "Send feedback"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+msgid "peterlevi@peterlevi.com"
 msgstr ""
