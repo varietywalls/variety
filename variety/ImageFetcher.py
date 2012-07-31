@@ -24,13 +24,16 @@ logger = logging.getLogger('variety')
 
 class ImageFetcher:
     @staticmethod
-    def fetch(parent, url, to):
+    def fetch(parent, url, to, verbose = True):
+        reported = verbose
         try:
             logger.info("Trying to fetch URL %s to %s " % (url, to))
-            parent.show_notification("Fetching to Favorites/Fetched", url)
+            if verbose:
+                parent.show_notification("Fetching", url)
 
             if url.startswith('javascript:'):
-                parent.show_notification("Not an image", url)
+                if verbose:
+                    parent.show_notification("Not an image", url)
                 return None
 
             if url.find('://') < 0:
@@ -40,13 +43,15 @@ class ImageFetcher:
             info = u.info()
             if not "content-type" in info:
                 logger.info("Uknown content-type for url " + url)
-                parent.show_notification("Not an image", url)
+                if verbose:
+                    parent.show_notification("Not an image", url)
                 return None
 
             ct = info["content-type"]
             if not ct.startswith("image/"):
                 logger.info("Unsupported content-type for url " + url + ": " + ct)
-                parent.show_notification("Not an image", url)
+                if verbose:
+                    parent.show_notification("Not an image", url)
                 return None
 
             local_name = Util.get_local_name(url)
@@ -59,10 +64,13 @@ class ImageFetcher:
             filename = os.path.join(to, local_name)
             if os.path.exists(filename):
                 logger.info("Local file already exists (%s)" % filename)
-                parent.show_notification("Fetched", "Fetched %s to %s" % (url, filename))
+                parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name)
                 return filename
 
             logger.info("Fetching to " + filename)
+            if not reported:
+                reported = True
+                parent.show_notification("Fetching", url)
 
             data = u.read()
             localFile = open(filename, 'wb')
@@ -70,13 +78,14 @@ class ImageFetcher:
             localFile.close()
 
             logger.info("Fetched %s to %s." % (url, filename))
-            parent.show_notification("Fetched", "%s\n\nto\n\n%s" % (url, filename))
+            parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name)
 
             return filename
 
         except Exception:
             logger.exception("Fetch failed for URL " + url)
-            parent.show_notification("Fetch failed for some reason", "You may check the log if running in terminal with -v option")
+            if reported:
+                parent.show_notification("Fetch failed for some reason", "You may check the log if running in terminal with -v option")
             return None
 
     @staticmethod

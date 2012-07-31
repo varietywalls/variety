@@ -30,14 +30,16 @@ class Options:
         IMAGE = 1
         FOLDER = 2
         FAVORITES = 3
-        WN = 4
-        DESKTOPPR = 5
-        FLICKR = 6
-        APOD = 7
-        WALLBASE = 8
+        FETCHED = 4
+        WN = 5
+        DESKTOPPR = 6
+        FLICKR = 7
+        APOD = 8
+        WALLBASE = 9
 
         type_to_str = {
             FAVORITES: "favorites",
+            FETCHED: "fetched",
             IMAGE: "image",
             FOLDER: "folder",
             WN: "wn",
@@ -117,6 +119,21 @@ class Options:
 
             try:
                 self.favorites_folder = os.path.expanduser(config["favorites_folder"])
+            except Exception:
+                pass
+
+            try:
+                self.fetched_folder = os.path.expanduser(config["fetched_folder"])
+            except Exception:
+                pass
+
+            try:
+                self.clipboard_enabled = config["clipboard_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.clipboard_hosts = config["clipboard_hosts"].lower().split(',')
             except Exception:
                 pass
 
@@ -252,6 +269,10 @@ class Options:
 
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
 
+        self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
+        self.clipboard_enabled = False
+        self.clipboard_hosts = "wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+
         self.desired_color_enabled = False
         self.desired_color = None
         self.min_size_enabled = False
@@ -262,6 +283,7 @@ class Options:
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
+            [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
             [False, Options.SourceType.DESKTOPPR, "[NSFW Warning] Random wallpapers from Desktoppr.co. May contain nudity and porn."],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
@@ -297,6 +319,10 @@ class Options:
             config["quota_size"] = str(self.quota_size)
 
             config["favorites_folder"] = self.favorites_folder
+
+            config["fetched_folder"] = self.fetched_folder
+            config["clipboard_enabled"] = self.clipboard_enabled
+            config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
 
             config["desired_color_enabled"] = str(self.desired_color_enabled)
             config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"

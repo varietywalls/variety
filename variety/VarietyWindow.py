@@ -30,6 +30,7 @@ import os
 import shutil
 import threading
 import time
+import urlparse
 
 import logging
 
@@ -77,6 +78,8 @@ class VarietyWindow(Window):
         self.prepared = []
         self.prepared_lock = threading.Lock()
 
+        self.register_clipboard()
+
         # load config
         self.options = None
         self.reload_config()
@@ -123,6 +126,32 @@ class VarietyWindow(Window):
                         varietyconfig.get_data_file("config", "variety.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
 
+    def register_clipboard(self):
+        def clipboard_changed(clipboard, event):
+            try:
+                if not self.options.clipboard_enabled:
+                    return
+
+                text = clipboard.wait_for_text()
+                if not text:
+                    return
+
+                valid = []
+                for line in text.split('\n'):
+                    p = urlparse.urlparse(line)
+                    if p.scheme in ['http', 'https']:
+                        for host in self.options.clipboard_hosts:
+                            if p.netloc.find(host) >= 0:
+                                valid.append(line)
+                if valid:
+                    logger.info("Received clipboard URLs: " + str(valid))
+                    self.process_urls(valid, verbose=False)
+            except Exception:
+                logger.exception("Exception when processing clipboard:")
+
+        self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        self.clipboard.connect("owner-change", clipboard_changed)
+
     def log_options(self):
         logger.info("Loaded options:")
         logger.info("Change on start: " + str(self.options.change_on_start))
@@ -134,6 +163,7 @@ class VarietyWindow(Window):
         logger.info("Quota enabled: " + str(self.options.quota_enabled))
         logger.info("Quota size: " + str(self.options.quota_size))
         logger.info("Favorites folder: " + self.options.favorites_folder)
+        logger.info("Fetched folder: " + self.options.fetched_folder)
         logger.info("Color enabled: " + str(self.options.desired_color_enabled))
         logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
         logger.info("Min size enabled: " + str(self.options.min_size_enabled))
@@ -162,6 +192,11 @@ class VarietyWindow(Window):
             os.makedirs(self.options.favorites_folder)
         except OSError:
             pass
+        try:
+            os.makedirs(self.options.fetched_folder)
+        except OSError:
+            pass
+
 
         self.individual_images = [os.path.expanduser(s[2]) for s in self.options.sources if
                                   s[0] and s[1] == Options.SourceType.IMAGE]
@@ -171,6 +206,9 @@ class VarietyWindow(Window):
 
         if Options.SourceType.FAVORITES in [s[1] for s in self.options.sources if s[0]]:
             self.folders.append(self.options.favorites_folder)
+
+        if Options.SourceType.FETCHED in [s[1] for s in self.options.sources if s[0]]:
+            self.folders.append(self.options.fetched_folder)
 
         self.downloaders = []
         self.download_folder_size = -1
@@ -849,12 +887,11 @@ class VarietyWindow(Window):
         self.options.write()
         self.update_indicator(self.current, True)
 
-    def process_urls(self, urls):
+    def process_urls(self, urls, verbose=True):
         def fetch():
             try:
-                fetched_dir = os.path.join(self.options.favorites_folder, "Fetched")
                 try:
-                    os.makedirs(fetched_dir)
+                    os.makedirs(self.options.fetched_folder)
                 except OSError:
                     pass
 
@@ -862,11 +899,11 @@ class VarietyWindow(Window):
                     if not self.running:
                         return
 
-                    file = ImageFetcher.fetch(self, url, fetched_dir)
+                    file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
                     if file:
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
-                            #self.prepared = [file] + self.prepared
+                            self.prepared.insert(0, file)
                             self.used.insert(self.position, file)
                             self.position += 1
 

@@ -39,7 +39,7 @@ logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
 
-UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
+UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.FETCHED, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
 EDITABLE_TYPES = [Options.SourceType.WN, Options.SourceType.WALLBASE, Options.SourceType.FLICKR]
 
 class PreferencesVarietyDialog(PreferencesDialog):
@@ -72,6 +72,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.quota_size.set_text(str(self.options.quota_size))
 
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+
+        self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+        self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
+        self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
         self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
@@ -233,6 +237,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             os.system("xdg-open \"" + os.path.realpath(edited_row[2]) + "\"")
         elif type == Options.SourceType.FAVORITES:
             os.system("xdg-open \"" + self.parent.options.favorites_folder + "\"")
+        elif type == Options.SourceType.FETCHED:
+            os.system("xdg-open \"" + self.parent.options.fetched_folder + "\"")
         elif type in EDITABLE_TYPES:
             if type == Options.SourceType.WN:
                 self.dialog = AddWallpapersNetCategoryDialog()
@@ -257,7 +263,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if type == Options.SourceType.IMAGE:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("View Image")
-            elif type == Options.SourceType.FOLDER or type == Options.SourceType.FAVORITES:
+            elif type in [Options.SourceType.FOLDER, Options.SourceType.FAVORITES, Options.SourceType.FETCHED]:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("Open Folder")
             elif type in EDITABLE_TYPES:
@@ -340,6 +346,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.sources = []
             for r in self.ui.sources.get_model():
                 self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+
+            if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
+                self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
+            self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
+            buf = self.ui.clipboard_hosts.get_buffer()
+            self.options.clipboard_hosts = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).split('\n')
 
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()
@@ -472,4 +484,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
             self.ui.error_favorites.set_label("No write permissions")
         else:
-            self.ui.error_downloaded.set_label("")
+            self.ui.error_favorites.set_label("")
+
+    def on_fetched_changed(self, widget=None):
+        if not os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
+            self.ui.error_fetched.set_label("No write permissions")
+        else:
+            self.ui.error_fetched.set_label("")
