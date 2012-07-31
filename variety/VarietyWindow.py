@@ -118,6 +118,11 @@ class VarietyWindow(Window):
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
 
+        try:
+            os.makedirs(self.config_folder)
+        except Exception:
+            pass
+
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
                     os.path.join(self.config_folder, "variety_latest_default.conf"))
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):

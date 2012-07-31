@@ -14,6 +14,8 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import os
+
 class Util:
     @staticmethod
     def get_local_name(url):
@@ -32,3 +34,10 @@ class Util:
         for sep in seps:
             result = [x.strip() for y in result for x in y.split(sep) if x.strip()]
         return result
+
+    @staticmethod
+    def makedirs(path):
+        try:
+            os.makedirs(path)
+        except Exception:
+            pass
