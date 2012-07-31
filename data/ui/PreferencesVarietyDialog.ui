@@ -1009,7 +1009,7 @@ To show the icon in the launcher choose About or Preferences. Then you can lock 
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="clipboard_enabled">
-                        <property name="label" translatable="yes">Fetch images from these hosts when their URL is copied to the clipboard:</property>
+                        <property name="label" translatable="yes">Monitor clipboard for image URLs and fetch them when the host is one of these:</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
