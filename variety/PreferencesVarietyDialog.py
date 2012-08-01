@@ -265,10 +265,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if not f in existing:
                 self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
                 self.ui.sources.get_selection().select_path(len(self.ui.sources.get_model()) - 1)
+                self.ui.sources.scroll_to_cell(len(self.ui.sources.get_model()) - 1, None, False, 0, 0)
             else:
                 logger.info("Source already exists, activating it: " + f)
                 existing[f][0][0] = True
                 self.ui.sources.get_selection().select_path(existing[f][1])
+                self.ui.sources.scroll_to_cell(existing[f][1], None, False, 0, 0)
 
     def on_remove_sources_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()

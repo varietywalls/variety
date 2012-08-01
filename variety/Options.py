@@ -208,7 +208,7 @@ class Options:
                         continue
                     try:
                         s = Options.parse_source(line.strip())
-                        if [False] + s[1:] in self.sources or [True] + s[1:] in self.sources:
+                        if s[1] in [src[1] for src in self.sources]:
                             continue
                         self.sources.append(s)
                     except Exception:
@@ -224,7 +224,7 @@ class Options:
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
-                        if [False] + s[1:] in self.filters or [True] + s[1:] in self.filters:
+                        if s[1] in [f[1] for f in self.filters]:
                             continue
                         self.filters.append(s)
                     except Exception:
