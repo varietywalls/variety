@@ -129,7 +129,36 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_min_size_enabled_toggled()
         self.on_lightness_enabled_toggled()
 
+        self.build_add_button_menu()
+
         self.dialog = None
+
+    def on_add_button_clicked(self, widget=None):
+        def position(x, y):
+            button_alloc = self.ui.add_button.get_allocation()
+            window_pos = self.ui.add_button.get_window().get_position()
+            return button_alloc.x + window_pos[0], button_alloc.y + button_alloc.height + window_pos[1], True
+
+        self.add_menu.popup(None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time())
+
+    def build_add_button_menu(self):
+        self.add_menu = Gtk.Menu()
+
+        items = [
+            ("Images", self.on_add_images_clicked),
+            ("Folders", self.on_add_folders_clicked),
+            ("Flickr", self.on_add_flickr_clicked),
+            ("Wallbase.cc", self.on_add_wallbase_clicked),
+            ("Wallpapers.net", self.on_add_wn_clicked),
+        ]
+
+        for x in items:
+            item = Gtk.MenuItem()
+            item.set_label(x[0])
+            item.connect("activate", x[1])
+            self.add_menu.append(item)
+
+        self.add_menu.show_all()
 
     def source_enabled_toggled(self, widget, path, model):
         model[path][0] = not model[path][0]

@@ -139,6 +139,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="halign">start</property>
                         <property name="margin_left">30</property>
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
@@ -229,6 +230,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="halign">start</property>
                         <property name="margin_left">30</property>
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
@@ -350,13 +352,13 @@
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
+                            <property name="expand">True</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButtonBox" id="buttonbox1">
+                          <object class="GtkButtonBox" id="buttonbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">end</property>
@@ -364,109 +366,20 @@
                             <property name="orientation">vertical</property>
                             <property name="layout_style">start</property>
                             <child>
-                              <object class="GtkButton" id="add_images">
-                                <property name="label" translatable="yes">Add Images</property>
+                              <object class="GtkButton" id="add_button">
+                                <property name="label" translatable="yes">Add...</property>
                                 <property name="use_action_appearance">False</property>
+                                <property name="width_request">100</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Select individual images to use as wallpapers</property>
-                                <property name="tooltip_text" translatable="yes">Select individual images to use as wallpapers</property>
                                 <property name="use_action_appearance">False</property>
-                                <signal name="clicked" handler="on_add_images_clicked" swapped="no"/>
+                                <signal name="clicked" handler="on_add_button_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="add_folders">
-                                <property name="label" translatable="yes">Add Folders</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Select folders with images to be used as wallpapers. 
-Add only the root folders, subfolders will be searched automatically.</property>
-                                <property name="tooltip_text" translatable="yes">Select folders with images to be used as wallpapers. 
-Add only the root folders, subfolders will be searched automatically.</property>
-                                <property name="use_action_appearance">False</property>
-                                <signal name="clicked" handler="on_add_folders_clicked" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="add_wn">
-                                <property name="label" translatable="yes">Add Wallpapers.net</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Wallpapers.net has lots of good high-resolution wallpapers, categorized under categories and colors.</property>
-                                <property name="tooltip_text" translatable="yes">Wallpapers.net has lots of good high-resolution wallpapers, categorized under categories and colors.</property>
-                                <property name="use_action_appearance">False</property>
-                                <signal name="clicked" handler="on_add_wn_clicked" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="add_flickr">
-                                <property name="label" translatable="yes">Add Flickr</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Use Flickr images with a specific tag, or uploaded by a specific user, or belonging to some group.</property>
-                                <property name="tooltip_text" translatable="yes">Use Flickr images with a specific tag, or uploaded by a specific user, or belonging to some group.</property>
-                                <property name="use_action_appearance">False</property>
-                                <signal name="clicked" handler="on_add_flickr_clicked" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="add_wallbase">
-                                <property name="label" translatable="yes">Add Wallbase.cc</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_action_appearance">False</property>
-                                <signal name="clicked" handler="on_add_wallbase_clicked" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkSeparator" id="separator1">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="halign">start</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">5</property>
                               </packing>
                             </child>
                             <child>
@@ -482,7 +395,7 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">6</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                             <child>
@@ -501,8 +414,23 @@ Add only the root folders, subfolders will be searched automatically.</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">7</property>
+                                <property name="position">2</property>
                               </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSeparator" id="separator1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                           </object>
                           <packing>
@@ -1015,6 +943,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">25</property>
                         <property name="margin_top">10</property>
@@ -1696,9 +1625,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
   </object>
   <object class="GtkSizeGroup" id="sizegroup1">
     <widgets>
-      <widget name="add_images"/>
-      <widget name="add_folders"/>
-      <widget name="add_wn"/>
+      <widget name="add_button"/>
+      <widget name="edit_source"/>
       <widget name="remove_sources"/>
     </widgets>
   </object>
