@@ -310,7 +310,7 @@ class VarietyWindow(Window):
         logger.info("Setting file info to: " + file)
         try:
             self.url = None
-            label = os.path.dirname(file)
+            label = os.path.dirname(file).replace('_', '__')
             if os.path.exists(file + ".txt"):
                 with open(file + ".txt") as f:
                     lines = list(f)
@@ -328,7 +328,7 @@ class VarietyWindow(Window):
 
             for i in xrange(10):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
-                self.ind.file_label.set_label(os.path.basename(file))
+                self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
 
                 if self.auto_changed:
                     # delay enabling Move/Copy operations in this case - see comment below
