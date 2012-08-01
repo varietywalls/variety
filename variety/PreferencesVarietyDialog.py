@@ -20,7 +20,7 @@
 # data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio, Gtk, Gdk # pylint: disable=E0611
+from gi.repository import Gio, Gtk, Gdk, GdkPixbuf # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
@@ -175,24 +175,41 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog("Add Images", parent=self, action=Gtk.FileChooserAction.OPEN,
             buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+        self.dialog = chooser
+        preview = Gtk.Image()
+        chooser.set_preview_widget(preview)
+
+        def update_preview(c):
+            try:
+                file = chooser.get_preview_filename()
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 250, 250)
+                preview.set_from_pixbuf(pixbuf)
+                chooser.set_preview_widget_active(True)
+            except Exception:
+                chooser.set_preview_widget_active(False)
+
+        chooser.connect("update-preview", update_preview)
         chooser.set_select_multiple(True)
         chooser.set_local_only(True)
         filter = Gtk.FileFilter()
         filter.set_name("Images")
         for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff"]:
             filter.add_pattern("*." + s)
+            filter.add_pattern("*." + s.upper())
         chooser.add_filter(filter)
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
             self.add_sources(Options.SourceType.IMAGE, chooser.get_filenames())
 
+        self.dialog = None
         chooser.destroy()
 
     def on_add_folders_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog("Add Folders - Only add the root folders, subfolders are searched recursively",
             parent=self, action=Gtk.FileChooserAction.SELECT_FOLDER,
             buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+        self.dialog = chooser
         chooser.set_select_multiple(True)
         chooser.set_local_only(True)
         response = chooser.run()
@@ -200,6 +217,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if response == Gtk.ResponseType.OK:
             self.add_sources(Options.SourceType.FOLDER, chooser.get_filenames())
 
+        self.dialog = None
         chooser.destroy()
 
     def add_sources(self, type, locations):
@@ -485,7 +503,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_destroy(self, widget = None):
         if self.dialog:
-            self.dialog.destroy()
+            try:
+                self.dialog.destroy()
+            except Exception:
+                pass
 
     def on_downloaded_changed(self, widget=None):
         if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):

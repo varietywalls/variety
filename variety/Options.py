@@ -285,9 +285,11 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [False, Options.SourceType.DESKTOPPR, "[NSFW Warning] Random wallpapers from Desktoppr.co. May contain nudity and porn."],
+            [False, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co. May contain nudity and porn."],
+            [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
-            [False, Options.SourceType.WN, "http://wallpapers.net/top_wallpapers.html"]
+            [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
+            [True, Options.SourceType.WALLBASE, "type:text;query:autumn;order:random;nsfw:100;board:2"]
         ]
 
         self.filters = [
