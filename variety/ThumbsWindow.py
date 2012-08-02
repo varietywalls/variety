@@ -143,11 +143,11 @@ class ThumbsWindow(Gtk.Window):
 
     def destroy(self, widget=False):
         self.running = False
-        if self.image_count < 50:
+        if self.image_count <= 50:
             super(ThumbsWindow, self).destroy()
         else:
             # wait some time for running thread to finish
-            timer = threading.Timer(0.5, super(ThumbsWindow, self).destroy)
+            timer = threading.Timer(0.2, super(ThumbsWindow, self).destroy)
             timer.start()
 
     def connect(self, key, handler):

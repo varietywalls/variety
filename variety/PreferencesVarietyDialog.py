@@ -38,7 +38,9 @@ gettext.textdomain('variety')
 import os
 import itertools
 import logging
+import random
 
+random.seed()
 logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
@@ -374,8 +376,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if image_count > 0:
                 self.thumbs_window = ThumbsWindow(parent=self)
                 self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
-                folder_images = Util.list_files(folders=folders, filter_func=Util.is_image, max_files=300)
-                self.thumbs_window.start(itertools.chain(images, folder_images))
+                folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=3000))
+                random.shuffle(folder_images)
+                self.thumbs_window.start(images + folder_images[:300])
         except Exception:
             logger.exception("Could not create thumbs window:")
 
