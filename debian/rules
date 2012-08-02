@@ -12,3 +12,21 @@ override_dh_auto_install:
 override_dh_python2:
 	dh_python2 /opt/extras.ubuntu.com/variety
 
+
+override_dh_install:
+	dh_install
+	mkdir -p debian/variety/opt/extras.ubuntu.com/variety/bin
+	if [ -x debian/variety/opt/extras.ubuntu.com/variety/variety/variety ]; then mv debian/variety/opt/extras.ubuntu.com/variety/variety/variety debian/variety/opt/extras.ubuntu.com/variety/bin; fi
+	if [ -f debian/variety/opt/extras.ubuntu.com/variety/share/applications/variety.desktop ]; then \
+		mkdir -p debian/variety/usr/share/applications; \
+		mv debian/variety/opt/extras.ubuntu.com/variety/share/applications/variety.desktop debian/variety/usr/share/applications/extras-variety.desktop; \
+		rmdir --ignore-fail-on-non-empty debian/variety/opt/extras.ubuntu.com/variety/share/applications; \
+		sed -i 's|Exec=[^ ]*|Exec=/opt/extras.ubuntu.com/variety/bin/variety|' debian/variety/usr/share/applications/extras-variety.desktop; \
+		sed -i 's|Icon=/usr/|Icon=/opt/extras.ubuntu.com/variety/|' debian/variety/usr/share/applications/extras-variety.desktop; \
+	fi
+	grep -RlZ 'import gettext' debian/variety/* | xargs -0 -r sed -i 's|\(import\) gettext$$|\1 locale|'
+	grep -RlZ 'from gettext import gettext as _' debian/variety/* | xargs -0 -r sed -i 's|from gettext \(import gettext as _\)|from locale \1|'
+	grep -RlZ "gettext.textdomain('variety')" debian/variety/* | xargs -0 -r sed -i "s|gettext\(\.textdomain('variety')\)|locale\.bindtextdomain('variety', '/opt/extras.ubuntu.com/variety/share/locale')\nlocale\1|" 
+	sed -i "s|__variety_data_directory__ =.*|__variety_data_directory__ = '/opt/extras.ubuntu.com/variety/share/variety/'|" debian/variety/opt/extras.ubuntu.com/variety/variety*/varietyconfig.py
+	sed -i 's|        sys.path.insert(0, opt_path)|\0\n    os.putenv("XDG_DATA_DIRS", "%s:%s" % ("/opt/extras.ubuntu.com/variety/share/", os.getenv("XDG_DATA_DIRS", "")))|' debian/variety/opt/extras.ubuntu.com/variety/bin/variety
+	if [ -d debian/variety/opt/extras.ubuntu.com/variety/share/glib-2.0/schemas ]; then glib-compile-schemas debian/variety/opt/extras.ubuntu.com/variety/share/glib-2.0/schemas; fi
