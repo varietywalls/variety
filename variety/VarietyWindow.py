@@ -30,14 +30,11 @@ import os
 import shutil
 import threading
 import time
-
 import logging
-
-logger = logging.getLogger('variety')
-
 import random
 
 random.seed()
+logger = logging.getLogger('variety')
 
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
@@ -217,6 +214,7 @@ class VarietyWindow(Window):
                 self.downloaders.append(self.downloaders_cache[type][location])
             else:
                 try:
+                    logger.info("Creating new downloader for type %d, location %s" % (type, location))
                     dlr = self.create_downloader(type, location)
                     self.downloaders_cache[type][location] = dlr
                     self.downloaders.append(dlr)
@@ -258,8 +256,7 @@ class VarietyWindow(Window):
         for type in Options.SourceType.dl_types:
             self.downloaders_cache[type] = {}
 
-    def create_downloader(self, type, location=None):
-        logger.info("Creating new downloader for type %d, location %s" % (type, location))
+    def create_downloader(self, type, location):
         if type == Options.SourceType.DESKTOPPR:
             return DesktopprDownloader(self)
         elif type == Options.SourceType.APOD:
@@ -272,6 +269,23 @@ class VarietyWindow(Window):
             return WallbaseDownloader(self, location)
         else:
             raise Exception("Uknown downloader type")
+
+    def get_folder_of_source(self, source):
+        type = Options.str_to_type(source[1])
+        location = source[2]
+
+        if type == Options.SourceType.IMAGE:
+            return None
+        if type == Options.SourceType.FOLDER:
+            return location
+        elif type == Options.SourceType.FAVORITES:
+            return self.options.favorites_folder
+        elif type == Options.SourceType.FETCHED:
+            return self.options.fetched_folder
+        else:
+            dlr = self.create_downloader(type, location)
+            dlr.update_download_folder()
+            return dlr.target_folder
 
     def load_banned(self):
         self.banned = set()
@@ -477,7 +491,7 @@ class VarietyWindow(Window):
             files = []
             for dirpath, dirnames, filenames in os.walk(self.options.download_folder):
                 for f in filenames:
-                    if self.is_image(f):
+                    if Util.is_image(f):
                         fp = os.path.join(dirpath, f)
                         files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
             files = sorted(files, key=lambda x: x[2])
@@ -504,11 +518,11 @@ class VarietyWindow(Window):
                 total_size += os.path.getsize(fp)
         return total_size
 
-    def set_wp(self, filename):
+    def set_wp_throttled(self, filename, delay=0.3):
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
         self.set_wp_filename = filename
-        self.set_wp_timer = threading.Timer(0.3, self.do_set_wp)
+        self.set_wp_timer = threading.Timer(delay, self.do_set_wp)
         self.set_wp_timer.start()
 
     def do_set_wp(self):
@@ -545,26 +559,7 @@ class VarietyWindow(Window):
             logger.exception("Error while setting wallpaper")
 
     def list_images(self):
-        count = 0
-        for filepath in self.individual_images:
-            if self.is_image(filepath) and os.access(filepath, os.R_OK):
-                count += 1
-                yield filepath
-        folders = list(self.folders)
-        random.shuffle(folders)
-        for folder in folders:
-            if os.path.isdir(folder):
-                try:
-                    for root, subFolders, files in os.walk(folder):
-                        for filename in files:
-                            if self.is_image(filename):
-                                count += 1
-                                if count > MAX_FILES:
-                                    logger.info("More than %d files in the folders, stop listing" % MAX_FILES)
-                                    return
-                                yield os.path.join(root, filename)
-                except Exception:
-                    logger.exception("Cold not walk folder " + folder)
+        return Util.list_files(self.individual_images, self.folders, Util.is_image, MAX_FILES)
 
     def select_random_images(self, count):
         # refresh image count often when few images in the folders and rarely when many:
@@ -613,13 +608,13 @@ class VarietyWindow(Window):
             return
         else:
             self.position += 1
-            self.set_wp(self.used[self.position])
+            self.set_wp_throttled(self.used[self.position])
 
     def next_wallpaper(self, widget=None):
         self.auto_changed = widget is None
         if self.position > 0:
             self.position -= 1
-            self.set_wp(self.used[self.position])
+            self.set_wp_throttled(self.used[self.position])
         else:
             self.change_wallpaper()
 
@@ -658,14 +653,22 @@ class VarietyWindow(Window):
                         "Please add more image sources or wait for some downloads")
                 return
 
+            self.set_wallpaper(img, auto_changed=self.auto_changed)
+        except Exception:
+            logger.exception("Could not change wallpaper")
+
+    def set_wallpaper(self, img, throttle=True, auto_changed=False):
+        if os.access(img, os.R_OK):
             self.used = self.used[self.position:]
             self.used.insert(0, img)
             self.position = 0
             if len(self.used) > 1000:
                 self.used = self.used[:1000]
-            self.set_wp(img)
-        except Exception:
-            logger.exception("Could not change wallpaper")
+            self.auto_changed = auto_changed
+            if throttle:
+                self.set_wp_throttled(img)
+            else:
+                self.set_wp_throttled(img, 0)
 
     def image_ok(self, img, fuzziness):
         try:
@@ -839,9 +842,6 @@ class VarietyWindow(Window):
                 e.set()
 
             Gtk.main_quit()
-
-    def is_image(self, filename):
-        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff'))
 
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")

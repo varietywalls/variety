@@ -4,10 +4,13 @@ When the launcher icon is visible (no matter if locked there or not) you can dro
 
 To show the launcher icon in order to lock it or use it for dropping links, you can always click About or Preferences.
 
-Adding your own custom filters is quite easy - open ~/.config/variety/variety.conf in an editor and use the existing filters as an example. Every filter is just a line of options to be passed to ImageMagick's convert command.
+Adding your own custom filters is quite easy: open ~/.config/variety/variety.conf in an editor and use the existing filters as an example. Every filter is just a line of options to be passed to ImageMagick's convert command.
 
 The indicator has keyboard shortcuts for some of the actions - e.g. show indicator, then press F to copy to favorites, or T to move to Trash. This can speed up cleanup tasks.
+
+When you select an image source, its images are displayed in a window at the bottom of the screen. You can right-click this window to close it or pin it. If pinned, it will remain even after you close the Preferences dialog.
 
 Automatic downloading of images happens only if you have turned on downloading AND have some online image source enabled.
 
 Color and size options will be ignored if there are too few matching images. The color options are still experimental, so don't be surprised if they work somewhat strange.
+

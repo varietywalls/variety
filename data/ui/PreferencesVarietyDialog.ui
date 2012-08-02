@@ -1060,6 +1060,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="halign">start</property>
                         <property name="margin_left">20</property>
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>

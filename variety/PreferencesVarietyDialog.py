@@ -26,15 +26,17 @@ import gettext
 from gettext import gettext as _
 from variety.Util import Util
 from variety_lib.varietyconfig import get_data_file
-from variety.AddWallbaseDialog import AddWallbaseDialog
 
 from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 from variety.AddFlickrDialog import AddFlickrDialog
+from variety.AddWallbaseDialog import AddWallbaseDialog
+from variety.ThumbsWindow import ThumbsWindow
 
 gettext.textdomain('variety')
 
 import os
+import itertools
 import logging
 
 logger = logging.getLogger('variety')
@@ -57,6 +59,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.options = Options()
         self.options.read()
+
+        self.thumbs_window = None
 
         self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
 
@@ -318,10 +322,20 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
 
+        if hasattr(self, "previous_selection") and rows == self.previous_selection:
+            return
+
+        self.previous_selection = rows
+
         self.ui.edit_source.set_sensitive(False)
         self.ui.edit_source.set_label("Edit...")
+
+        if self.thumbs_window:
+            self.thumbs_window.destroy()
+
         if len(rows) == 1:
-            type = Options.str_to_type(model[rows[0]][1])
+            source = model[rows[0]]
+            type = Options.str_to_type(source[1])
             if type == Options.SourceType.IMAGE:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("View Image")
@@ -332,12 +346,38 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("Edit...")
 
+        self.show_thumbs(model[row] for row in rows)
+
         for row in rows:
             if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
                 self.ui.remove_sources.set_sensitive(False)
                 return
 
         self.ui.remove_sources.set_sensitive(len(rows) > 0)
+
+    def show_thumbs(self, sources):
+        try:
+            images = []
+            folders = []
+            image_count = 0
+
+            for source in sources:
+                type = Options.str_to_type(source[1])
+                if type == Options.SourceType.IMAGE:
+                    image_count += 1
+                    images.append(source[2])
+                else:
+                    folder = self.parent.get_folder_of_source(source)
+                    image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1))
+                    folders.append(folder)
+
+            if image_count > 0:
+                self.thumbs_window = ThumbsWindow(parent=self)
+                self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
+                folder_images = Util.list_files(folders=folders, filter_func=Util.is_image, max_files=300)
+                self.thumbs_window.start(itertools.chain(images, folder_images))
+        except Exception:
+            logger.exception("Could not create thumbs window:")
 
     def on_add_wn_clicked(self, widget=None):
         self.dialog = AddWallpapersNetCategoryDialog()
@@ -536,6 +576,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if self.dialog:
             try:
                 self.dialog.destroy()
+            except Exception:
+                pass
+        if self.thumbs_window and not self.thumbs_window.pinned:
+            try:
+                self.thumbs_window.destroy()
             except Exception:
                 pass
 
