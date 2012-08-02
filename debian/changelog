@@ -1,3 +1,18 @@
+variety (0.4.1) precise; urgency=low
+
+  * Update changes.txt
+  * Select files to show as thumbnails randomly
+  * Thumbnails, initial version
+  * Focus newly added sources; When auto-populating sources and filters,
+    only check the type/name for equality
+  * Single Add button with a drop-down menu for the different image
+    sources
+  * Image preview when adding images; Removed unnecessary default
+    sources
+  * Bugfix: underscores in filename and folder path in indicator
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 02 Aug 2012 23:53:50 +0300
+
 variety (0.4) precise; urgency=low
 
   * Extracted makedirs calls to Util
