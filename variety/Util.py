@@ -17,6 +17,9 @@
 import os
 import random
 import logging
+import threading
+import time
+import sys
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -52,7 +55,7 @@ class Util:
         return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff'))
 
     @staticmethod
-    def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=False):
+    def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):
         count = 0
         for filepath in files:
             if filter_func(filepath) and os.access(filepath, os.R_OK):
@@ -76,3 +79,14 @@ class Util:
                                 yield os.path.join(root, filename)
                 except Exception:
                     logger.exception("Cold not walk folder " + folder)
+
+    @staticmethod
+    def start_force_exit_thread(delay):
+        def force_exit():
+            time.sleep(delay)
+            print "Exiting takes too long. Calling os.kill."
+            os.kill(os.getpid(), 9)
+        force_exit_thread = threading.Thread(target=force_exit)
+        force_exit_thread.daemon = True
+        force_exit_thread.start()
+

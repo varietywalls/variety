@@ -60,6 +60,7 @@ class ThumbsWindow(Gtk.Window):
         self.menu.show_all()
 
         self.pinned = False
+        self.image_count = 0
 
     def pin(self, widget=None):
         self.pinned = True
@@ -80,12 +81,14 @@ class ThumbsWindow(Gtk.Window):
             total_width = 0
             shown = False
 
-            self.image_count = -1
             for i, file in enumerate(self.images):
                 if not self.running:
                     return
 
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 10000, self.height)
+                try:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 10000, self.height)
+                except Exception:
+                    continue
 
                 Gdk.threads_enter()
 
@@ -132,8 +135,9 @@ class ThumbsWindow(Gtk.Window):
                     self.scroll.set_min_content_width(min(total_width, self.screen_width))
 
                 Gdk.threads_leave()
-                if i < 20:
-                    time.sleep(0.01)
+
+                # we must yield from time to time, or GTK/cairo errors abound
+                time.sleep(0.02)
 
                 self.image_count = i
 

@@ -24,6 +24,7 @@ from gi.repository import Gio, Gtk, Gdk, GdkPixbuf # pylint: disable=E0611
 
 import gettext
 from gettext import gettext as _
+import threading
 from variety.Util import Util
 from variety_lib.varietyconfig import get_data_file
 
@@ -235,7 +236,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
-            self.add_sources(Options.SourceType.IMAGE, chooser.get_filenames())
+            images = list(chooser.get_filenames())
+            images = [f for f in images if Util.is_image(f) and os.path.isfile(f)]
+            self.add_sources(Options.SourceType.IMAGE, images)
 
         self.dialog = None
         chooser.destroy()
@@ -250,7 +253,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         response = chooser.run()
 
         if response == Gtk.ResponseType.OK:
-            self.add_sources(Options.SourceType.FOLDER, chooser.get_filenames())
+            folders = list(chooser.get_filenames())
+            folders = [f for f in folders if os.path.isdir(f)]
+            self.add_sources(Options.SourceType.FOLDER, folders)
 
         self.dialog = None
         chooser.destroy()
@@ -332,9 +337,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.edit_source.set_sensitive(False)
         self.ui.edit_source.set_label("Edit...")
 
-        if self.thumbs_window:
-            self.thumbs_window.destroy()
-
         if len(rows) == 1:
             source = model[rows[0]]
             type = Options.str_to_type(source[1])
@@ -348,7 +350,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("Edit...")
 
-        self.show_thumbs(model[row] for row in rows)
+        def timer_func(): self.show_thumbs(list(model[row] for row in rows))
+        if hasattr(self, "show_timer") and self.show_timer:
+            self.show_timer.cancel()
+        self.show_timer = threading.Timer(0.1, timer_func)
+        self.show_timer.start()
 
         for row in rows:
             if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
@@ -359,11 +365,19 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def show_thumbs(self, sources):
         try:
+            Gdk.threads_enter()
+            if self.thumbs_window:
+                self.thumbs_window.destroy()
+            Gdk.threads_leave()
+
             images = []
             folders = []
             image_count = 0
 
             for source in sources:
+                if not source:
+                    continue
+
                 type = Options.str_to_type(source[1])
                 if type == Options.SourceType.IMAGE:
                     image_count += 1
@@ -376,9 +390,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if image_count > 0:
                 self.thumbs_window = ThumbsWindow(parent=self)
                 self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
-                folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=3000))
+                folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                 random.shuffle(folder_images)
-                self.thumbs_window.start(images + folder_images[:300])
+                self.thumbs_window.start(images + folder_images[:150])
         except Exception:
             logger.exception("Could not create thumbs window:")
 

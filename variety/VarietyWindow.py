@@ -16,6 +16,7 @@
 
 import gettext
 from gettext import gettext as _
+import sys
 from variety_lib.helpers import get_media_file
 
 gettext.textdomain('variety')
@@ -826,21 +827,19 @@ class VarietyWindow(Window):
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
-            for d in self.dialogs:
+            for d in [self.dialogs, self.preferences_dialog, self.about]:
                 try:
-                    d.destroy()
+                    if d:
+                        d.destroy()
                 except Exception:
                     logger.exception("Could not destroy dialog")
                     pass
-            if self.preferences_dialog:
-                self.preferences_dialog.destroy()
-            if self.about:
-                self.about.destroy()
 
             self.running = False
             for e in self.events:
                 e.set()
 
+            Util.start_force_exit_thread(5)
             Gtk.main_quit()
 
     def first_run(self):

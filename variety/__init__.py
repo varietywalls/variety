@@ -28,12 +28,14 @@ gettext.textdomain('variety')
 from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 
 from variety import VarietyWindow
+from variety.Util import Util
 
 from variety_lib import set_up_logging, get_version
 
 import os
 import sys
 import signal
+import threading
 
 import dbus, dbus.service, dbus.glib
 
@@ -66,7 +68,7 @@ def sigint_handler(a, b):
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
         VARIETY_WINDOW.on_quit()
-    sys.exit()
+    Util.start_force_exit_thread(3/op)
 
 def main():
     args = parse_options()
