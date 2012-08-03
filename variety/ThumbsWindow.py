@@ -22,10 +22,9 @@ import logging
 
 logger = logging.getLogger('variety')
 
-THUMBS_THREAD_DELAY = 0
-
 class ThumbsWindow(Gtk.Window):
     def __init__(self, parent=None, height=120):
+        logger.debug("Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
 
         self.handlers = {}
@@ -61,6 +60,7 @@ class ThumbsWindow(Gtk.Window):
 
         self.pinned = False
         self.image_count = 0
+        self.running = True
 
     def pin(self, widget=None):
         self.pinned = True
@@ -73,16 +73,16 @@ class ThumbsWindow(Gtk.Window):
         self.thread.start()
 
     def _thumbs_thread(self):
+        logger.debug("Starting thumb thread %s, %d" % (str(self), time.time()))
         try:
-            time.sleep(THUMBS_THREAD_DELAY)
-
-            self.running = True
-
             total_width = 0
             shown = False
 
             for i, file in enumerate(self.images):
                 if not self.running:
+                    Gdk.threads_enter()
+                    self.destroy()
+                    Gdk.threads_leave()
                     return
 
                 try:
@@ -94,11 +94,12 @@ class ThumbsWindow(Gtk.Window):
 
                 if not shown:
                     self.set_default_size(10, 10)
+                    logger.debug("Showing thumb window %s, %d" % (str(self), time.time()))
                     self.show_all()
                     self.move(self.screen_width // 2, self.screen_height - self.height - 0)
                     shown = True
 
-                logger.debug("Thumbing " + file)
+                #logger.debug("Thumbing " + file)
 
                 thumb = Gtk.Image()
                 thumb.set_from_pixbuf(pixbuf)
@@ -146,13 +147,9 @@ class ThumbsWindow(Gtk.Window):
             logger.exception("Error while creating thumbs:")
 
     def destroy(self, widget=False):
+        logger.debug("Destroying thumb window %s, %d" % (str(self), time.time()))
         self.running = False
-        if self.image_count <= 50:
-            super(ThumbsWindow, self).destroy()
-        else:
-            # wait some time for running thread to finish
-            timer = threading.Timer(0.2, super(ThumbsWindow, self).destroy)
-            timer.start()
+        super(ThumbsWindow, self).destroy()
 
     def connect(self, key, handler):
         self.handlers.setdefault(key, []).append(handler)
@@ -171,7 +168,6 @@ if __name__ == "__main__":
     win.connect("delete-event", Gtk.main_quit)
 
     print "starting"
-    THUMBS_THREAD_DELAY = 0.5
     win.start(images)
 
     GObject.threads_init()

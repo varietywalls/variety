@@ -64,6 +64,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.options.read()
 
         self.thumbs_window = None
+        self.show_thumbs_lock = threading.Lock()
 
         self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
 
@@ -364,37 +365,41 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.remove_sources.set_sensitive(len(rows) > 0)
 
     def show_thumbs(self, sources):
-        try:
-            Gdk.threads_enter()
-            if self.thumbs_window:
-                self.thumbs_window.destroy()
-            Gdk.threads_leave()
+        with self.show_thumbs_lock:
+            try:
+                if self.thumbs_window:
+                    Gdk.threads_enter()
+                    self.thumbs_window.destroy()
+                    self.thumbs_window = None
+                    Gdk.threads_leave()
 
-            images = []
-            folders = []
-            image_count = 0
+                images = []
+                folders = []
+                image_count = 0
 
-            for source in sources:
-                if not source:
-                    continue
+                for source in sources:
+                    if not source:
+                        continue
 
-                type = Options.str_to_type(source[1])
-                if type == Options.SourceType.IMAGE:
-                    image_count += 1
-                    images.append(source[2])
-                else:
-                    folder = self.parent.get_folder_of_source(source)
-                    image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1))
-                    folders.append(folder)
+                    type = Options.str_to_type(source[1])
+                    if type == Options.SourceType.IMAGE:
+                        image_count += 1
+                        images.append(source[2])
+                    else:
+                        folder = self.parent.get_folder_of_source(source)
+                        image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1))
+                        folders.append(folder)
 
-            if image_count > 0:
-                self.thumbs_window = ThumbsWindow(parent=self)
-                self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
-                folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
-                random.shuffle(folder_images)
-                self.thumbs_window.start(images + folder_images[:150])
-        except Exception:
-            logger.exception("Could not create thumbs window:")
+                if image_count > 0:
+                    folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
+                    random.shuffle(folder_images)
+                    Gdk.threads_enter()
+                    self.thumbs_window = ThumbsWindow(parent=self)
+                    self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
+                    self.thumbs_window.start(images + folder_images[:150])
+                    Gdk.threads_leave()
+            except Exception:
+                logger.exception("Could not create thumbs window:")
 
     def on_add_wn_clicked(self, widget=None):
         self.dialog = AddWallpapersNetCategoryDialog()
