@@ -108,23 +108,20 @@ class ThumbsWindow(Gtk.Window):
                 eventbox = Gtk.EventBox()
                 eventbox.set_visible(True)
 
-                def click_maker(file):
-                    def click(widget, event):
-                        if event.button == 1:
-                            for func in self.handlers["clicked"]:
-                                func(file, widget, event)
-                        else:
-                            self.menu.popup(
-                                None,
-                                self.box,
-                                lambda x, y: (event.get_root_coords()[0], event.get_root_coords()[1], True),
-                                None,
-                                event.button,
-                                event.time)
+                def click(widget, event, file=file):
+                    if event.button == 1:
+                        for func in self.handlers["clicked"]:
+                            func(file, widget, event)
+                    else:
+                        self.menu.popup(
+                            None,
+                            self.box,
+                            lambda x, y: (event.get_root_coords()[0], event.get_root_coords()[1], True),
+                            None,
+                            event.button,
+                            event.time)
 
-                    return click
-
-                eventbox.connect("button-release-event", click_maker(file))
+                eventbox.connect("button-release-event", click)
                 eventbox.add(thumb)
 
                 total_width += pixbuf.get_width()
