@@ -418,10 +418,14 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkSeparator" id="separator1">
+                              <object class="GtkButton" id="use_button">
+                                <property name="label" translatable="yes">Use</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="halign">start</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
+                                <signal name="clicked" handler="on_use_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1629,6 +1633,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="add_button"/>
       <widget name="edit_source"/>
       <widget name="remove_sources"/>
+      <widget name="use_button"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup2">

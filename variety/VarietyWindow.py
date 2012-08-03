@@ -659,6 +659,8 @@ class VarietyWindow(Window):
             logger.exception("Could not change wallpaper")
 
     def set_wallpaper(self, img, throttle=True, auto_changed=False):
+        if img == self.current:
+            return
         if os.access(img, os.R_OK):
             self.used = self.used[self.position:]
             self.used.insert(0, img)

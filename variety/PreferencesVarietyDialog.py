@@ -304,6 +304,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if len(rows) == 1:
             self.edit_source(model[rows[0]])
 
+    def on_use_clicked(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        for row in model:
+            row[0] = False
+        for path in rows:
+            model[path][0] = True
+        self.on_sources_selection_changed()
+
     def edit_source(self, edited_row):
         type = Options.str_to_type(edited_row[1])
 
@@ -329,6 +337,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
+
+        enabled = set(i for i, row in enumerate(model) if row[0])
+        selected = set(row.get_indices()[0] for row in rows)
+        self.ui.use_button.set_sensitive(selected and enabled != selected)
 
         if hasattr(self, "previous_selection") and rows == self.previous_selection:
             return
