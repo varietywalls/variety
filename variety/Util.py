@@ -72,6 +72,9 @@ class Util:
             if os.path.isdir(folder):
                 try:
                     for root, subFolders, files in os.walk(folder):
+                        if randomize:
+                            random.shuffle(files)
+                            random.shuffle(subFolders)
                         for filename in files:
                             if filter_func(filename):
                                 count += 1

@@ -399,11 +399,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         images.append(source[2])
                     else:
                         folder = self.parent.get_folder_of_source(source)
-                        image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1))
+                        image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
                         folders.append(folder)
 
                 if image_count > 0:
-                    folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=2000))
+                    folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                     random.shuffle(folder_images)
                     Gdk.threads_enter()
                     self.thumbs_window = ThumbsWindow(parent=self)
