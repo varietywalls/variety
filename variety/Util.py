@@ -19,7 +19,9 @@ import random
 import logging
 import threading
 import time
-import sys
+import pyexiv2
+
+VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -52,7 +54,7 @@ class Util:
 
     @staticmethod
     def is_image(filename):
-        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff'))
+        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg'))
 
     @staticmethod
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):
@@ -89,4 +91,55 @@ class Util:
         force_exit_thread = threading.Thread(target=force_exit)
         force_exit_thread.daemon = True
         force_exit_thread.start()
+
+    @staticmethod
+    def write_metadata(filename, source, url):
+        try:
+            pyexiv2.xmp.register_namespace('https://launchpad.net/variety/', 'variety')
+        except KeyError:
+            pass
+
+        try:
+            m = pyexiv2.ImageMetadata(filename)
+            m.read()
+            m['Xmp.variety.info'] = VARIETY_INFO
+            m['Xmp.variety.sourceName'] = source
+            m['Xmp.variety.sourceURL'] = url
+            m.write()
+        except Exception:
+            # could not write metadata inside file, use txt instead
+            try:
+                with open(filename + ".txt", 'w') as f:
+                    f.write("INFO:\n" + source + "\n" + url +"\n" + VARIETY_INFO)
+            except Exception:
+                logger.exception("Could not write url metadata for file " + filename)
+
+    @staticmethod
+    def read_metadata(filename):
+        try:
+            pyexiv2.xmp.register_namespace('https://launchpad.net/variety/', 'variety')
+        except KeyError:
+            pass
+
+        try:
+            m = pyexiv2.ImageMetadata(filename)
+            m.read()
+            source = m['Xmp.variety.sourceName'].value
+            url = m['Xmp.variety.sourceURL'].value
+            return source, url
+        except Exception, e:
+            # could not read metadata inside file, use txt instead
+            try:
+                with open(filename + ".txt") as f:
+                    lines = list(f)
+                    if len(lines) >= 3 and lines[0].strip() == "INFO:":
+                        source = lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
+                        url = lines[2].strip()
+                        return source, url
+                    else:
+                        return None, None
+            except Exception:
+                return None, None
+
+
 

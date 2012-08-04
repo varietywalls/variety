@@ -230,7 +230,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.set_local_only(True)
         filter = Gtk.FileFilter()
         filter.set_name("Images")
-        for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff"]:
+        for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg"]:
             filter.add_pattern("*." + s)
             filter.add_pattern("*." + s.upper())
         chooser.add_filter(filter)
@@ -403,12 +403,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         folders.append(folder)
 
                 if image_count > 0:
-                    folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
+                    folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=2000))
                     random.shuffle(folder_images)
                     Gdk.threads_enter()
                     self.thumbs_window = ThumbsWindow(parent=self)
                     self.thumbs_window.connect("clicked", lambda file, arg1, arg2: self.parent.set_wallpaper(file, False))
-                    self.thumbs_window.start(images + folder_images[:150])
+                    self.thumbs_window.start(images + folder_images[:200])
                     Gdk.threads_leave()
             except Exception:
                 logger.exception("Could not create thumbs window:")

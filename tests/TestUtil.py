@@ -31,5 +31,12 @@ class TestUtil(unittest.TestCase):
     def test_split(self):
         self.assertEqual(['a','b','c','d','e'], Util.split("a\nb,c ,,d\n   e"))
 
+    def test_metadata(self):
+        self.assertTrue(os.path.exists('test.jpg'))
+        Util.write_metadata('test.jpg', 'a', 'b')
+        self.assertEqual(('a', 'b'), Util.read_metadata('test.jpg'))
+        Util.write_metadata('test.svg', 'a', 'b')
+        self.assertEqual(('a', 'b'), Util.read_metadata('test.svg'))
+
 if __name__ == '__main__':
     unittest.main()

@@ -66,13 +66,10 @@ class Downloader(object):
 
         u = urllib2.urlopen(image_url, timeout=20)
         data = u.read()
-        localFile = open(local_filename, 'wb')
-        localFile.write(data)
-        localFile.close()
+        with open(local_filename, 'wb') as f:
+            f.write(data)
 
-        localFile = open(local_filename + ".txt", 'w')
-        localFile.write("INFO:\n" + self.name + "\n" + origin_url)
-        localFile.close()
+        Util.write_metadata(local_filename, self.name, origin_url)
 
         logger.info("Download complete")
         return local_filename

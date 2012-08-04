@@ -87,9 +87,9 @@ class ImageFetcher:
                 parent.show_notification("Fetching", url)
 
             data = u.read()
-            localFile = open(filename, 'wb')
-            localFile.write(data)
-            localFile.close()
+            with open(filename, 'wb') as f:
+                f.write(data)
+            Util.write_metadata(filename, "Fetched", url)
 
             logger.info("Fetched %s to %s." % (url, filename))
             parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name)

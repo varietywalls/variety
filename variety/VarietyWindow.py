@@ -326,12 +326,10 @@ class VarietyWindow(Window):
         try:
             self.url = None
             label = os.path.dirname(file).replace('_', '__')
-            if os.path.exists(file + ".txt"):
-                with open(file + ".txt") as f:
-                    lines = list(f)
-                    if lines[0].strip() == "INFO:" and len(lines) == 3:
-                        label = "View at " + lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
-                        self.url = lines[2].strip()
+            source, url = Util.read_metadata(file)
+            if source and url:
+                label = "View at " + source if source.find("Fetched") < 0 else "Fetched: Show Origin"
+                self.url = url
             if len(label) > 50:
                 label = label[:50] + "..."
 
@@ -505,7 +503,10 @@ class VarietyWindow(Window):
                         self.remove_from_queues(file)
                         os.unlink(file)
                         self.download_folder_size -= files[i][1]
-                        os.unlink(file + ".txt")
+                        try:
+                            os.unlink(file + ".txt")
+                        except Exception:
+                            pass
                     except Exception:
                         logger.exception("Could not delete some file while purging download folder: " + file)
                 i += 1
