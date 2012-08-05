@@ -538,19 +538,24 @@ class VarietyWindow(Window):
             to_set = filename
             if self.filters:
                 filter = self.filters[random.randint(0, len(self.filters) - 1)]
-                logger.info("Applying filter: " + filter)
-                result = os.system(
-                    "convert \"" + filename + "\" " + filter + " " + os.path.join(self.config_folder, "wallpaper.jpg"))
+                if filter.strip():
+                    logger.info("Applying filter: " + filter)
+                    w = Gdk.Screen.get_default().get_width()
+                    h = Gdk.Screen.get_default().get_height()
+                    cmd = 'convert "%s" -scale %dx%d %s %s' % (
+                        filename, w, h, filter, os.path.join(self.config_folder, "wallpaper.jpg"))
+                    logger.info("Filter command: " + cmd)
+                    result = os.system(cmd)
 
-                if result == 0: #success
-                    to_set = os.path.join(self.config_folder, "wallpaper.jpg")
-                    try:
-                        with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
-                            f.write(filename)
-                    except Exception:
-                        pass
-                else:
-                    logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
+                    if result == 0: #success
+                        to_set = os.path.join(self.config_folder, "wallpaper.jpg")
+                        try:
+                            with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
+                                f.write(filename)
+                        except Exception:
+                            pass
+                    else:
+                        logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
 
             self.update_indicator(filename, False)
             self.gsettings.set_string(self.KEY, "file://" + to_set)
