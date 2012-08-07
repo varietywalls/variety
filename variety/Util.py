@@ -109,6 +109,7 @@ class Util:
             m['Xmp.variety.sourceName'] = source
             m['Xmp.variety.sourceURL'] = url
             m.write()
+            return True
         except Exception:
             # could not write metadata inside file, use txt instead
             try:
@@ -116,6 +117,7 @@ class Util:
                     f.write("INFO:\n" + source + "\n" + url +"\n" + VARIETY_INFO)
             except Exception:
                 logger.exception("Could not write url metadata for file " + filename)
+            return False
 
     @staticmethod
     def read_metadata(filename):
