@@ -16,6 +16,7 @@
 
 import gettext
 from gettext import gettext as _
+import subprocess
 import sys
 from variety_lib.helpers import get_media_file
 
@@ -83,17 +84,20 @@ class VarietyWindow(Window):
         self.reload_config()
         self.load_banned()
 
-        current = self.gsettings.get_string(self.KEY).replace("file://", "")
-        if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
-            try:
-                with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
-                    current = f.read().strip()
-            except Exception:
-                pass
+        self.used = []
 
-        self.used = [current, ]
+        current = self.get_desktop_wallpaper()
+        if current:
+            if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
+                try:
+                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
+                        current = f.read().strip()
+                except Exception:
+                    pass
+            self.used.append(current)
+
         self.position = 0
-        self.current = self.used[self.position]
+        self.current = current
 
         self.last_change_time = time.time()
 
@@ -121,10 +125,16 @@ class VarietyWindow(Window):
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
                     os.path.join(self.config_folder, "variety_latest_default.conf"))
+
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
             logger.info("Missing config file, copying it from " +
                         varietyconfig.get_data_file("config", "variety.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
+
+        self.scripts_folder = os.path.join(self.config_folder, "scripts")
+        if not os.path.exists(self.scripts_folder):
+            logger.info("Missing scripts dir, copying it from " + varietyconfig.get_data_file("scripts"))
+            shutil.copytree(varietyconfig.get_data_file("scripts"), self.scripts_folder)
 
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):
@@ -322,7 +332,7 @@ class VarietyWindow(Window):
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
     def update_indicator(self, file, is_gtk_thread):
-        logger.info("Setting file info to: " + file)
+        logger.info("Setting file info to: " + str(file))
         try:
             self.url = None
             label = os.path.dirname(file).replace('_', '__')
@@ -558,8 +568,7 @@ class VarietyWindow(Window):
                         logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
 
             self.update_indicator(filename, False)
-            self.gsettings.set_string(self.KEY, "file://" + to_set)
-            self.gsettings.apply()
+            self.set_desktop_wallpaper(to_set)
             self.current = filename
             self.last_change_time = time.time()
         except Exception:
@@ -904,3 +913,44 @@ class VarietyWindow(Window):
         fetch_thread = threading.Thread(target=fetch)
         fetch_thread.daemon = True
         fetch_thread.start()
+
+    def get_desktop_wallpaper(self):
+        script = os.path.join(self.scripts_folder, "get_wallpaper")
+
+        file = None
+
+        if os.access(script, os.X_OK):
+            logger.debug("Running get_wallpaper script")
+            try:
+                output = subprocess.check_output(script).strip()
+                if output:
+                    file = output
+            except subprocess.CalledProcessError:
+                logger.exception("Exception when calling set_wallpaper script")
+
+        if not file:
+            file = self.gsettings.get_string(self.KEY)
+
+        if not file:
+            return None
+
+        if file[0] == file[-1] == "'" or file[0] == file[-1] == '"':
+            file = file[1:-1]
+
+        file = file.replace("file://", "")
+        return file
+
+    def set_desktop_wallpaper(self, wallpaper):
+        script = os.path.join(self.scripts_folder, "set_wallpaper")
+        if os.access(script, os.X_OK):
+            auto = "auto" if self.auto_changed else "manual"
+            logger.debug("Running set_wallpaper script with parameters: %s, %s" % (wallpaper, auto))
+            try:
+                subprocess.call([script, wallpaper, auto])
+                return
+            except subprocess.CalledProcessError:
+                logger.exception("Exception when calling set_wallpaper script")
+
+        self.gsettings.set_string(self.KEY, "file://" + wallpaper)
+        self.gsettings.apply()
+

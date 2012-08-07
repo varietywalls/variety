@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# This script is run by Variety when a new wallpaper is set.
+# The first passed parameter (accessed with $1) is the absolute path to the wallpaper.
+# The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change)
+# and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
+# You can use bash, python or whatever suits you for the script.
+# Here you can put custom commands for setting the wallpaper on your specifc desktop environment
+# or run commands like notify-send to notify you of the change, or you can
+# run commands that would theme your browser, login screen or whatever you desire.
+
+# Below you will find some examples:
+
+# Gnome 3, Unity
+gsettings set org.gnome.desktop.background picture-uri "file://$1"
+
+# XFCE
+# xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1"
+
+# Show a notification on wallpaper change (only when the change is automatic)
+# if [ "$2" == "auto" ]; then notify-send --icon /opt/extras.ubuntu.com/variety/share/variety/media/variety.svg "Wallpaper changed" "$1" ; fi
