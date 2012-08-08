@@ -23,23 +23,29 @@ import logging
 logger = logging.getLogger('variety')
 
 class ThumbsWindow(Gtk.Window):
+    __gsignals__ = {
+        'clicked': (GObject.SIGNAL_RUN_FIRST, None, (str,Gtk.Widget,object))
+    }
+
     LEFT = 1
     RIGHT = 2
     BOTTOM = 3
     TOP = 4
 
-    def __init__(self, parent=None, position=BOTTOM, breadth=120):
+    def __init__(self, screen=None, position=BOTTOM, breadth=120):
         logger.debug("Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
 
         self.running = True
-        self.handlers = {}
 
-        self.parent = parent
         self.set_decorated(False)
 
+        self.screen = screen if screen else Gdk.Screen.get_default()
+        self.screen_width = self.screen.get_width()
+        self.screen_height = self.screen.get_height()
+
         self.position = position
-        self.breadth = breadth
+        self.breadth = int(breadth * (1 if self.is_horizontal() else float(self.screen_width) / self.screen_height))
 
         self.box = Gtk.HBox(False, 0) if self.is_horizontal() else Gtk.VBox(False, 0)
 
@@ -65,34 +71,18 @@ class ThumbsWindow(Gtk.Window):
             self.mouse_in = False
             self.mouse_position = None
 
-        self.eventbox = Gtk.EventBox()
-        self.eventbox.set_visible(True)
-        self.eventbox.add(self.scroll)
-        self.eventbox.set_events(Gdk.EventMask.ENTER_NOTIFY_MASK |
-                                 Gdk.EventMask.LEAVE_NOTIFY_MASK |
-                                 Gdk.EventMask.POINTER_MOTION_HINT_MASK)
-        self.eventbox.connect('enter-notify-event', mouse_enter)
-        self.eventbox.connect('leave-notify-event', mouse_leave)
-        self.eventbox.connect('motion-notify-event', mouse_motion)
+        eventbox = Gtk.EventBox()
+        eventbox.set_visible(True)
+        eventbox.add(self.scroll)
+        eventbox.set_events(Gdk.EventMask.ENTER_NOTIFY_MASK |
+                            Gdk.EventMask.LEAVE_NOTIFY_MASK |
+                            Gdk.EventMask.POINTER_MOTION_HINT_MASK)
+        eventbox.connect('enter-notify-event', mouse_enter)
+        eventbox.connect('leave-notify-event', mouse_leave)
+        eventbox.connect('motion-notify-event', mouse_motion)
 
-        self.add(self.eventbox)
+        self.add(eventbox)
 
-        self.screen = Gdk.Screen.get_default()
-        if self.parent:
-            self.screen = self.parent.get_screen()
-        self.screen_width = self.screen.get_width()
-        self.screen_height = self.screen.get_height()
-
-        self.menu = Gtk.Menu()
-        close_item = Gtk.MenuItem("Close")
-        close_item.connect("activate", self.destroy)
-        pin_item = Gtk.MenuItem("Pin")
-        pin_item.connect("activate", self.pin)
-        self.menu.append(close_item)
-        self.menu.append(pin_item)
-        self.menu.show_all()
-
-        self.pinned = False
         self.image_count = 0
 
     def is_horizontal(self):
@@ -159,18 +149,7 @@ class ThumbsWindow(Gtk.Window):
                 eventbox.set_visible(True)
 
                 def click(widget, event, file=file):
-                    if event.button == 1:
-                        for func in self.handlers["clicked"]:
-                            func(file, widget, event)
-                    else:
-                        self.menu.popup(
-                            None,
-                            self.box,
-                            lambda x, y: (event.get_root_coords()[0], event.get_root_coords()[1], True),
-                            None,
-                            event.button,
-                            event.time)
-
+                    self.emit("clicked", file, widget, event)
                 eventbox.connect("button-release-event", click)
                 eventbox.add(thumb)
 
@@ -207,10 +186,9 @@ class ThumbsWindow(Gtk.Window):
         self.running = False
         super(ThumbsWindow, self).destroy()
 
-    def connect(self, key, handler):
-        self.handlers.setdefault(key, []).append(handler)
-
     def autoscroll_step(self, adj, total_size, current):
+        if not adj:
+            return
         left_limit = total_size / 4
         right_limit = 3 * total_size / 4
         if current <= left_limit and adj.get_value() > adj.get_lower():

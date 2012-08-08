@@ -49,6 +49,7 @@ from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
+from variety.ThumbsManager import ThumbsManager
 
 MAX_FILES = 10000
 
@@ -67,6 +68,7 @@ class VarietyWindow(Window):
 
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
+        self.thumbs_manager = ThumbsManager(self)
 
         self.prepare_config_folder()
 
@@ -130,6 +132,11 @@ class VarietyWindow(Window):
             logger.info("Missing config file, copying it from " +
                         varietyconfig.get_data_file("config", "variety.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
+
+        if not os.path.exists(os.path.join(self.config_folder, "ui.conf")):
+            logger.info("Missing ui.conf file, copying it from " +
+                        varietyconfig.get_data_file("config", "ui.conf"))
+            shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
 
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         if not os.path.exists(self.scripts_folder):
