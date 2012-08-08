@@ -375,6 +375,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def show_thumbs(self, sources):
         try:
+            self.parent.thumbs_manager.hide(gdk_thread=False, force=True)
+
             images = []
             folders = []
             image_count = 0
@@ -395,7 +397,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if image_count > 0:
                 folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                 random.shuffle(folder_images)
-                self.parent.thumbs_manager.show(images + folder_images[:200], screen=self.get_screen())
+                self.parent.thumbs_manager.show(images + folder_images[:200], gdk_thread=False, screen=self.get_screen())
         except Exception:
             logger.exception("Could not create thumbs window:")
 

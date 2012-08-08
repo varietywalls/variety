@@ -192,7 +192,7 @@ class ThumbsManager():
                     Gdk.threads_enter()
                 self.thumbs_window.destroy()
                 self.thumbs_window = None
-                self.parent.update_indicator(is_gtk_thread=gdk_thread)
+                self.parent.update_indicator(is_gtk_thread=True)
                 if not gdk_thread:
                     Gdk.threads_leave()
             except Exception:
