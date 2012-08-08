@@ -45,9 +45,6 @@ class ThumbsWindow(Gtk.Window):
         self.mouse_in = False
         self.mouse_position = None
         self.autoscroll_event = threading.Event()
-        autoscroll_thread = threading.Thread(target=self._autoscroll_thread)
-        autoscroll_thread.daemon = True
-        autoscroll_thread.start()
 
         def mouse_enter(widget, event, data=None):
             self.mouse_in = True
@@ -96,9 +93,13 @@ class ThumbsWindow(Gtk.Window):
     def start(self, images):
         self.images = images
 
-        self.thread = threading.Thread(target=self._thumbs_thread)
-        self.thread.daemon = True
-        self.thread.start()
+        thumbs_thread = threading.Thread(target=self._thumbs_thread)
+        thumbs_thread.daemon = True
+        thumbs_thread.start()
+
+        autoscroll_thread = threading.Thread(target=self._autoscroll_thread)
+        autoscroll_thread.daemon = True
+        autoscroll_thread.start()
 
     def _thumbs_thread(self):
         logger.debug("Starting thumb thread %s, %d" % (str(self), time.time()))
