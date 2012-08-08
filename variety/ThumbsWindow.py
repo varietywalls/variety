@@ -23,7 +23,12 @@ import logging
 logger = logging.getLogger('variety')
 
 class ThumbsWindow(Gtk.Window):
-    def __init__(self, parent=None, height=120):
+    LEFT = 1
+    RIGHT = 2
+    BOTTOM = 3
+    TOP = 4
+
+    def __init__(self, parent=None, position=BOTTOM, breadth=120):
         logger.debug("Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
 
@@ -32,15 +37,18 @@ class ThumbsWindow(Gtk.Window):
 
         self.parent = parent
         self.set_decorated(False)
-        #self.set_keep_above(False)
 
-        self.height = height
+        self.position = position
+        self.breadth = breadth
 
-        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, 0)
+        self.box = Gtk.HBox(False, 0) if self.is_horizontal() else Gtk.VBox(False, 0)
 
         self.scroll = Gtk.ScrolledWindow()
         self.scroll.add_with_viewport(self.box)
-        self.scroll.set_min_content_height(self.height)
+        if self.is_horizontal():
+            self.scroll.set_min_content_height(self.breadth)
+        else:
+            self.scroll.set_min_content_width(self.breadth)
 
         self.mouse_in = False
         self.mouse_position = None
@@ -87,6 +95,9 @@ class ThumbsWindow(Gtk.Window):
         self.pinned = False
         self.image_count = 0
 
+    def is_horizontal(self):
+        return self.position == ThumbsWindow.TOP or self.position == ThumbsWindow.BOTTOM
+
     def pin(self, widget=None):
         self.pinned = True
 
@@ -115,7 +126,10 @@ class ThumbsWindow(Gtk.Window):
                     return
 
                 try:
-                    pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 10000, self.height)
+                    if self.is_horizontal():
+                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 10000, self.breadth)
+                    else:
+                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, self.breadth, 10000)
                 except Exception:
                     continue
 
@@ -125,10 +139,17 @@ class ThumbsWindow(Gtk.Window):
                     self.set_default_size(10, 10)
                     logger.debug("Showing thumb window %s, %d" % (str(self), time.time()))
                     self.show_all()
-                    self.move(self.screen_width // 2, self.screen_height - self.height - 0)
+                    if self.position == ThumbsWindow.BOTTOM:
+                        self.move(self.screen_width // 2, self.screen_height - self.breadth)
+                    elif self.position == ThumbsWindow.TOP:
+                        self.move(self.screen_width // 2, 0)
+                    elif self.position == ThumbsWindow.LEFT:
+                        self.move(0, self.screen_height // 2)
+                    elif self.position == ThumbsWindow.RIGHT:
+                        self.move(self.screen_width - self.screen_height, self.screen_height // 2)
+                    else:
+                        raise Exception("Unsupported thumbs position: " + str(self.position))
                     shown = True
-
-                #logger.debug("Thumbing " + file)
 
                 thumb = Gtk.Image()
                 thumb.set_from_pixbuf(pixbuf)
@@ -153,12 +174,22 @@ class ThumbsWindow(Gtk.Window):
                 eventbox.connect("button-release-event", click)
                 eventbox.add(thumb)
 
-                total_width += pixbuf.get_width()
+                total_width += (pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height())
                 self.box.pack_start(eventbox, False, False, 0)
 
-                if total_width < self.screen_width + 1000:
-                    self.move(max(0, (self.screen_width - total_width) // 2), self.screen_height - self.height)
-                    self.scroll.set_min_content_width(min(total_width, self.screen_width))
+                if total_width < (self.screen_width if self.is_horizontal() else self.screen_height) + 1000:
+                    if self.position == ThumbsWindow.BOTTOM:
+                        self.move(max(0, (self.screen_width - total_width) // 2), self.screen_height - self.breadth)
+                        self.scroll.set_min_content_width(min(total_width, self.screen_width))
+                    elif self.position == ThumbsWindow.TOP:
+                        self.move(max(0, (self.screen_width - total_width) // 2), 0)
+                        self.scroll.set_min_content_width(min(total_width, self.screen_width))
+                    elif self.position == ThumbsWindow.LEFT:
+                        self.move(0, max(0, (self.screen_height - total_width) // 2))
+                        self.scroll.set_min_content_height(min(total_width, self.screen_height))
+                    elif self.position == ThumbsWindow.RIGHT:
+                        self.move(self.screen_width - self.breadth, max(0, (self.screen_height - total_width) // 2))
+                        self.scroll.set_min_content_height(min(total_width, self.screen_height))
 
                 Gdk.threads_leave()
 
@@ -179,6 +210,16 @@ class ThumbsWindow(Gtk.Window):
     def connect(self, key, handler):
         self.handlers.setdefault(key, []).append(handler)
 
+    def autoscroll_step(self, adj, total_size, current):
+        left_limit = total_size / 4
+        right_limit = 3 * total_size / 4
+        if current <= left_limit and adj.get_value() > adj.get_lower():
+            speed = 30 * (left_limit - current) ** 3 / left_limit ** 3
+            adj.set_value(max(adj.get_lower(), adj.get_value() - speed))
+        elif current >= right_limit and adj.get_value() < adj.get_upper():
+            speed = 30 * (current - right_limit) ** 3 / (total_size - right_limit) ** 3
+            adj.set_value(min(adj.get_upper(), adj.get_value() + speed))
+
     def _autoscroll_thread(self):
         last_update = time.time()
         while self.running:
@@ -194,19 +235,11 @@ class ThumbsWindow(Gtk.Window):
             y = self.mouse_position[1]
 
             Gdk.threads_enter()
-            pos = self.scroll.get_hadjustment()
-            if y > 0:
-                total_width = self.scroll.get_min_content_width()
+            if self.is_horizontal() and y > 0:
+                self.autoscroll_step(self.scroll.get_hadjustment(), self.scroll.get_min_content_width(), x)
+            elif not self.is_horizontal() and x > 0:
+                self.autoscroll_step(self.scroll.get_vadjustment(), self.scroll.get_min_content_height(), y)
 
-                left_limit = total_width / 4
-                right_limit = 3 * total_width / 4
-
-                if x <= left_limit and pos.get_value() > pos.get_lower():
-                    speed = 20 * (left_limit - x)**3 / left_limit**3
-                    pos.set_value(max(pos.get_lower(), pos.get_value() - speed))
-                elif x >= right_limit and pos.get_value() < pos.get_upper():
-                    speed = 20 * (x - right_limit)**3 / (total_width - right_limit)**3
-                    pos.set_value(min(pos.get_upper(), pos.get_value() + speed))
             Gdk.threads_leave()
 
             last_update = time.time()
