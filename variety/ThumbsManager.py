@@ -86,6 +86,8 @@ class ThumbsManager():
         self.images = None
         self.screen = None
 
+        self.type = None
+
     def repaint(self):
         self.hide(gdk_thread=True)
         if self.images:
@@ -120,8 +122,9 @@ class ThumbsManager():
                 event.button,
                 event.time)
 
-    def show(self, images, gdk_thread=False, screen=None):
+    def show(self, images, gdk_thread=False, screen=None, type=None):
         with self.show_thumbs_lock:
+            self.type = type
             self.images = images
             self.screen = screen
 
@@ -188,6 +191,8 @@ class ThumbsManager():
                 if not gdk_thread:
                     Gdk.threads_enter()
                 self.thumbs_window.destroy()
+                self.thumbs_window = None
+                self.parent.update_indicator(is_gtk_thread=gdk_thread)
                 if not gdk_thread:
                     Gdk.threads_leave()
             except Exception:

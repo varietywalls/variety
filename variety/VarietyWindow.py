@@ -111,7 +111,7 @@ class VarietyWindow(Window):
         self.set_wp_timer = None
 
         self.auto_changed = False
-        self.update_indicator(self.current, False)
+        self.update_indicator()
         self.auto_changed = True
 
         self.start_threads()
@@ -338,7 +338,10 @@ class VarietyWindow(Window):
         filename = os.path.basename(file)
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
-    def update_indicator(self, file, is_gtk_thread):
+    def update_indicator(self, file=None, is_gtk_thread=True):
+        if not file:
+            file = self.current
+
         logger.info("Setting file info to: " + str(file))
         try:
             self.url = None
@@ -372,6 +375,11 @@ class VarietyWindow(Window):
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
+
+                if self.thumbs_manager.thumbs_window and self.thumbs_manager.type == "history":
+                    self.ind.history.set_label("Hide _History")
+                else:
+                    self.ind.history.set_label("Show _History")
 
                 self.update_pause_resume()
 
@@ -844,7 +852,7 @@ class VarietyWindow(Window):
             file = self.current
             if os.access(file, os.R_OK):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
-                self.update_indicator(self.current, True)
+                self.update_indicator()
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -893,7 +901,7 @@ class VarietyWindow(Window):
     def on_pause_resume(self, widget=None):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
-        self.update_indicator(self.current, True)
+        self.update_indicator()
 
     def process_urls(self, urls, verbose=True):
         def fetch():
@@ -961,3 +969,9 @@ class VarietyWindow(Window):
         self.gsettings.set_string(self.KEY, "file://" + wallpaper)
         self.gsettings.apply()
 
+    def show_history(self, widget=None):
+        if self.thumbs_manager.thumbs_window and self.thumbs_manager.type == "history":
+            self.thumbs_manager.hide(gdk_thread=True, force=True)
+        else:
+            self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
+        self.update_indicator()

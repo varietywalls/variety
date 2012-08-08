@@ -173,7 +173,7 @@ class ThumbsWindow(Gtk.Window):
                 Gdk.threads_leave()
 
                 # we must yield from time to time, or GTK/cairo errors abound
-                time.sleep(0.02)
+                time.sleep(0.02 if i <= 20 else 0)
 
                 self.image_count = i
 
@@ -193,9 +193,13 @@ class ThumbsWindow(Gtk.Window):
         right_limit = 3 * total_size / 4
         if current <= left_limit and adj.get_value() > adj.get_lower():
             speed = 30 * (left_limit - current) ** 3 / left_limit ** 3
+            if adj.get_value() < adj.get_lower() + 1000:
+                speed = speed * (adj.get_value() - adj.get_lower()) / 1000
             adj.set_value(max(adj.get_lower(), adj.get_value() - speed))
         elif current >= right_limit and adj.get_value() < adj.get_upper():
             speed = 30 * (current - right_limit) ** 3 / (total_size - right_limit) ** 3
+            if adj.get_value() > adj.get_upper() - adj.get_page_size() - 1000:
+                speed = speed * (adj.get_upper() - adj.get_page_size() - adj.get_value()) / 1000
             adj.set_value(min(adj.get_upper(), adj.get_value() + speed))
 
     def _autoscroll_thread(self):

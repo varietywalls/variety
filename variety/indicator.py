@@ -45,94 +45,79 @@ class Indicator:
 
 
         self.file_label = Gtk.MenuItem("Current desktop wallpaper")
-        self.file_label.show()
         self.file_label.connect("activate", window.open_file)
         self.menu.append(self.file_label)
 
         self.show_origin = Gtk.MenuItem("Show origin")
         self.show_origin.connect("activate", window.on_show_origin)
-        self.show_origin.show()
         self.show_origin.set_sensitive(False)
         self.menu.append(self.show_origin)
 
-        self.separator0 = Gtk.SeparatorMenuItem()
-        self.separator0.show()
-        self.menu.append(self.separator0)
+        self.menu.append(Gtk.SeparatorMenuItem())
 
         self.prev = Gtk.MenuItem("_Previous")
         self.prev.set_use_underline(True)
         self.prev.connect("activate", window.prev_wallpaper)
-        self.prev.show()
         self.menu.append(self.prev)
 
         self.next = Gtk.MenuItem("_Next")
         self.next.set_use_underline(True)
         self.next.connect("activate", window.next_wallpaper)
-        self.next.show()
         self.menu.append(self.next)
 
-        self.separator0 = Gtk.SeparatorMenuItem()
-        self.separator0.show()
-        self.menu.append(self.separator0)
+        self.menu.append(Gtk.SeparatorMenuItem())
 
         self.pause_resume = Gtk.MenuItem("Pause")
         self.pause_resume.connect("activate", window.on_pause_resume)
-        self.pause_resume.show()
         self.menu.append(self.pause_resume)
 
-        self.separator = Gtk.SeparatorMenuItem()
-        self.separator.show()
-        self.menu.append(self.separator)
+        self.menu.append(Gtk.SeparatorMenuItem())
+
+        self.history = Gtk.MenuItem("Show _History")
+        self.history.set_use_underline(True)
+        self.history.connect("activate", window.show_history)
+        self.menu.append(self.history)
+
+        self.menu.append(Gtk.SeparatorMenuItem())
 
         self.open_file = Gtk.MenuItem("Open in Image Viewer")
         self.open_file.connect("activate", window.open_file)
-        self.open_file.show()
         self.menu.append(self.open_file)
 
         self.open_folder = Gtk.MenuItem("Show Containing Folder")
         self.open_folder.connect("activate", window.open_folder)
-        self.open_folder.show()
         self.menu.append(self.open_folder)
 
         self.trash = Gtk.MenuItem("Move to _Trash")
         self.trash.set_use_underline(True)
         self.trash.connect("activate", window.move_to_trash)
-        self.trash.show()
         self.menu.append(self.trash)
 
         self.favorite = Gtk.MenuItem("Copy to _Favorites")
         self.favorite.set_use_underline(True)
         self.favorite.connect("activate", window.copy_to_favorites)
-        self.favorite.show()
         self.menu.append(self.favorite)
 
-        self.separator2 = Gtk.SeparatorMenuItem()
-        self.separator2.show()
-        self.menu.append(self.separator2)
+        self.menu.append(Gtk.SeparatorMenuItem())
 
         #Adding preferences button
         self.preferences = Gtk.MenuItem("Preferences...")
         self.preferences.connect("activate", window.on_mnu_preferences_activate)
-        self.preferences.show()
         self.menu.append(self.preferences)
 
 #        self.edit_config = Gtk.MenuItem("Edit config file...")
 #        self.edit_config.connect("activate", window.edit_prefs_file)
-#        self.edit_config.show()
 #        self.menu.append(self.edit_config)
 
         self.about = Gtk.MenuItem("About")
         self.about.connect("activate",window.on_mnu_about_activate)
-        self.about.show()
         self.menu.append(self.about)
 
         self.quit = Gtk.MenuItem("Quit")
         self.quit.connect("activate",window.on_quit)
-        self.quit.show()
         self.menu.append(self.quit)
 
         self.menu.show_all()
-        self.menu.show()
         self.indicator.set_menu(self.menu)
 
         window.ind = self
