@@ -27,6 +27,7 @@ class ThumbsWindow(Gtk.Window):
         logger.debug("Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
 
+        self.running = True
         self.handlers = {}
 
         self.parent = parent
@@ -41,7 +42,35 @@ class ThumbsWindow(Gtk.Window):
         self.scroll.add_with_viewport(self.box)
         self.scroll.set_min_content_height(self.height)
 
-        self.add(self.scroll)
+        self.mouse_in = False
+        self.mouse_position = None
+        self.autoscroll_event = threading.Event()
+        autoscroll_thread = threading.Thread(target=self._autoscroll_thread)
+        autoscroll_thread.daemon = True
+        autoscroll_thread.start()
+
+        def mouse_enter(widget, event, data=None):
+            self.mouse_in = True
+            self.autoscroll_event.set()
+
+        def mouse_motion(widget, event, data=None):
+            self.mouse_position = (event.x, event.y)
+
+        def mouse_leave(widget, event, data=None):
+            self.mouse_in = False
+            self.mouse_position = None
+
+        self.eventbox = Gtk.EventBox()
+        self.eventbox.set_visible(True)
+        self.eventbox.add(self.scroll)
+        self.eventbox.set_events(Gdk.EventMask.ENTER_NOTIFY_MASK |
+                                 Gdk.EventMask.LEAVE_NOTIFY_MASK |
+                                 Gdk.EventMask.POINTER_MOTION_HINT_MASK)
+        self.eventbox.connect('enter-notify-event', mouse_enter)
+        self.eventbox.connect('leave-notify-event', mouse_leave)
+        self.eventbox.connect('motion-notify-event', mouse_motion)
+
+        self.add(self.eventbox)
 
         self.screen = Gdk.Screen.get_default()
         if self.parent:
@@ -60,7 +89,6 @@ class ThumbsWindow(Gtk.Window):
 
         self.pinned = False
         self.image_count = 0
-        self.running = True
 
     def pin(self, widget=None):
         self.pinned = True
@@ -129,7 +157,6 @@ class ThumbsWindow(Gtk.Window):
 
                 if total_width < self.screen_width + 1000:
                     self.move(max(0, (self.screen_width - total_width) // 2), self.screen_height - self.height)
-                if i < 20 or i % 10 == 0:
                     self.scroll.set_min_content_width(min(total_width, self.screen_width))
 
                 Gdk.threads_leave()
@@ -150,6 +177,38 @@ class ThumbsWindow(Gtk.Window):
 
     def connect(self, key, handler):
         self.handlers.setdefault(key, []).append(handler)
+
+    def _autoscroll_thread(self):
+        last_update = time.time()
+        while self.running:
+            while not self.mouse_in:
+                self.autoscroll_event.wait()
+
+            time.sleep(max(0, last_update + 0.005 - time.time()))
+
+            if not self.mouse_position:
+                continue
+
+            x = self.mouse_position[0]
+            y = self.mouse_position[1]
+
+            Gdk.threads_enter()
+            pos = self.scroll.get_hadjustment()
+            if y > 0:
+                total_width = self.scroll.get_min_content_width()
+
+                left_limit = total_width / 4
+                right_limit = 3 * total_width / 4
+
+                if x <= left_limit and pos.get_value() > pos.get_lower():
+                    speed = 20 * (left_limit - x)**3 / left_limit**3
+                    pos.set_value(max(pos.get_lower(), pos.get_value() - speed))
+                elif x >= right_limit and pos.get_value() < pos.get_upper():
+                    speed = 20 * (x - right_limit)**3 / (total_width - right_limit)**3
+                    pos.set_value(min(pos.get_upper(), pos.get_value() + speed))
+            Gdk.threads_leave()
+
+            last_update = time.time()
 
 if __name__ == "__main__":
     images = []

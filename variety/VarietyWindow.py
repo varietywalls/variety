@@ -946,7 +946,7 @@ class VarietyWindow(Window):
             auto = "auto" if self.auto_changed else "manual"
             logger.debug("Running set_wallpaper script with parameters: %s, %s" % (wallpaper, auto))
             try:
-                subprocess.call([script, wallpaper, auto])
+                subprocess.check_call([script, wallpaper, auto])
                 return
             except subprocess.CalledProcessError:
                 logger.exception("Exception when calling set_wallpaper script")
