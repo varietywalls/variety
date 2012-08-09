@@ -17,7 +17,6 @@
 import gettext
 from gettext import gettext as _
 import subprocess
-import sys
 from variety_lib.helpers import get_media_file
 
 gettext.textdomain('variety')
@@ -29,6 +28,7 @@ from variety_lib import Window
 from variety_lib import varietyconfig
 
 import os
+import stat
 import shutil
 import threading
 import time
@@ -142,6 +142,10 @@ class VarietyWindow(Window):
         if not os.path.exists(self.scripts_folder):
             logger.info("Missing scripts dir, copying it from " + varietyconfig.get_data_file("scripts"))
             shutil.copytree(varietyconfig.get_data_file("scripts"), self.scripts_folder)
+        # make all scripts executable:
+        for f in os.listdir(self.scripts_folder):
+            path = os.path.join(self.scripts_folder, f)
+            os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
 
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):
@@ -941,7 +945,9 @@ class VarietyWindow(Window):
                 if output:
                     file = output
             except subprocess.CalledProcessError:
-                logger.exception("Exception when calling set_wallpaper script")
+                logger.exception("Exception when calling get_wallpaper script")
+        else:
+            logger.warning("get_wallpaper script is missing or not executable: " + script)
 
         if not file:
             file = self.gsettings.get_string(self.KEY)
@@ -965,6 +971,8 @@ class VarietyWindow(Window):
                 return
             except subprocess.CalledProcessError:
                 logger.exception("Exception when calling set_wallpaper script")
+        else:
+            logger.warning("set_wallpaper script is missing or not executable: " + script)
 
         self.gsettings.set_string(self.KEY, "file://" + wallpaper)
         self.gsettings.apply()
