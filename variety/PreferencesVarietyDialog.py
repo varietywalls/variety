@@ -375,6 +375,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def show_thumbs(self, sources):
         try:
+            if not sources:
+                return
+
             self.parent.thumbs_manager.hide(gdk_thread=False, force=True)
 
             images = []

@@ -184,6 +184,7 @@ class ThumbsWindow(Gtk.Window):
     def destroy(self, widget=False):
         logger.debug("Destroying thumb window %s, %d" % (str(self), time.time()))
         self.running = False
+        self.autoscroll_event.set()
         super(ThumbsWindow, self).destroy()
 
     def autoscroll_step(self, adj, total_size, current):
@@ -206,7 +207,9 @@ class ThumbsWindow(Gtk.Window):
         last_update = time.time()
         while self.running:
             while not self.mouse_in:
-                self.autoscroll_event.wait()
+                if not self.running:
+                    return
+                self.autoscroll_event.wait(10)
 
             time.sleep(max(0, last_update + 0.005 - time.time()))
 
