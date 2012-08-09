@@ -75,7 +75,7 @@ class Indicator:
 
         self.history = Gtk.MenuItem("Show _History")
         self.history.set_use_underline(True)
-        self.history.connect("activate", window.show_history)
+        self.history.connect("activate", window.show_hide_history)
         self.menu.append(self.history)
 
         self.menu.append(Gtk.SeparatorMenuItem())

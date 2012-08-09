@@ -698,6 +698,17 @@ class VarietyWindow(Window):
         if os.access(img, os.R_OK):
             self.used = self.used[self.position:]
             self.used.insert(0, img)
+
+            if self.thumbs_manager.is_showing("history"):
+                def _add(pos=self.position):
+                    if pos == 0:
+                        self.thumbs_manager.add_image(img, gdk_thread=False)
+                    else:
+                        self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
+                        self.thumbs_manager.pin()
+                add_timer = threading.Timer(0, _add)
+                add_timer.start()
+
             self.position = 0
             if len(self.used) > 1000:
                 self.used = self.used[:1000]
@@ -820,9 +831,10 @@ class VarietyWindow(Window):
                 self.dialogs.remove(dialog)
                 return False
 
-    def move_to_trash(self, widget=None):
+    def move_to_trash(self, widget=None, file=None):
         try:
-            file = self.current
+            if not file:
+                file = self.current
             url = self.url
             if not os.access(file, os.W_OK):
                 self.show_notification("Cannot move", "You don't have permissions to move %s to Trash." % file)
@@ -835,6 +847,8 @@ class VarietyWindow(Window):
                 self.remove_from_queues(file)
                 if url:
                     self.ban_url(url)
+
+                self.thumbs_manager.remove_image(file)
         except Exception:
             logger.exception("Exception in move_to_trash")
 
@@ -851,9 +865,10 @@ class VarietyWindow(Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
 
-    def copy_to_favorites(self, widget=None):
+    def copy_to_favorites(self, widget=None, file=None):
         try:
-            file = self.current
+            if not file:
+                file = self.current
             if os.access(file, os.R_OK):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator()
@@ -977,9 +992,10 @@ class VarietyWindow(Window):
         self.gsettings.set_string(self.KEY, "file://" + wallpaper)
         self.gsettings.apply()
 
-    def show_history(self, widget=None):
-        if self.thumbs_manager.thumbs_window and self.thumbs_manager.type == "history":
+    def show_hide_history(self, widget=None):
+        if self.thumbs_manager.is_showing("history"):
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
             self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
+            self.thumbs_manager.pin()
         self.update_indicator()
