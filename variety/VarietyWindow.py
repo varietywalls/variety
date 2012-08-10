@@ -653,6 +653,14 @@ class VarietyWindow(Window):
         else:
             self.change_wallpaper()
 
+    def move_to_history_position(self, position):
+        if 0 <= position < len(self.used):
+            self.auto_changed = False
+            self.position = position
+            self.set_wp_throttled(self.used[self.position])
+        else:
+            logger.warning("Invalid position passed to move_to_history_position")
+
     def show_notification(self, title, message):
         icon_uri = get_media_file("variety.svg")
         try:
@@ -770,11 +778,15 @@ class VarietyWindow(Window):
 
         return ok
 
-    def open_folder(self, widget=None):
-        os.system("xdg-open \"" + os.path.dirname(self.current) + "\"")
+    def open_folder(self, widget=None, file=None):
+        if not file:
+            file = self.current
+        os.system("xdg-open \"" + os.path.dirname(file) + "\"")
 
-    def open_file(self, widget=None):
-        os.system("xdg-open \"" + os.path.realpath(self.current) + "\"")
+    def open_file(self, widget=None, file=None):
+        if not file:
+            file = self.current
+        os.system("xdg-open \"" + os.path.realpath(file) + "\"")
 
     def on_show_origin(self, widget=None):
         if self.url:

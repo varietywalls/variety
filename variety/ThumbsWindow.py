@@ -24,7 +24,7 @@ logger = logging.getLogger('variety')
 
 class ThumbsWindow(Gtk.Window):
     __gsignals__ = {
-        'clicked': (GObject.SIGNAL_RUN_FIRST, None, (str,Gtk.Widget,object))
+        'clicked': (GObject.SIGNAL_RUN_FIRST, None, (str, Gtk.Widget, object))
     }
 
     LEFT = 1
@@ -64,6 +64,7 @@ class ThumbsWindow(Gtk.Window):
 
         def mouse_enter(widget, event, data=None):
             self.mouse_in = True
+            self.previous_speed = 0
             self.autoscroll_event.set()
 
         def mouse_motion(widget, event, data=None):
@@ -72,6 +73,7 @@ class ThumbsWindow(Gtk.Window):
         def mouse_leave(widget, event, data=None):
             self.mouse_in = False
             self.mouse_position = None
+            self.previous_speed = 0
 
         eventbox = Gtk.EventBox()
         eventbox.set_visible(True)
@@ -172,18 +174,21 @@ class ThumbsWindow(Gtk.Window):
         eventbox.add(thumb)
 
         image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
-        self.all.append((file, eventbox, thumb, image_size))
+
+        image_info = (file, eventbox, thumb, image_size)
+        if at_front:
+            self.all.insert(0, image_info)
+        else:
+            self.all.append(image_info)
 
         self.total_width += image_size
         self.box.pack_start(eventbox, False, False, 0)
 
         if at_front:
             self.box.reorder_child(eventbox, 0)
-            if self.is_horizontal():
-                adj = self.scroll.get_hadjustment()
-            else:
-                adj = self.scroll.get_vadjustment()
-            adj.set_value(adj.get_value() + image_size)
+            adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
+            if adj:
+                adj.set_value(adj.get_value() + image_size)
 
         self.update_size()
 
@@ -234,17 +239,26 @@ class ThumbsWindow(Gtk.Window):
     def autoscroll_step(self, adj, total_size, current):
         if not adj:
             return
-        left_limit = total_size / 4
-        right_limit = 3 * total_size / 4
+
+        if not hasattr(self, "previous_speed"):
+            self.previous_speed = 0
+
+        left_limit = total_size / 5
+        right_limit = 4 * total_size / 5
+
         if current <= left_limit and adj.get_value() > adj.get_lower():
             speed = 30 * (left_limit - current) ** 3 / left_limit ** 3
             if adj.get_value() < adj.get_lower() + 800:
                 speed = speed * (adj.get_value() - adj.get_lower()) / 800
+            speed = min(speed, self.previous_speed + 0.1)
+            self.previous_speed = speed
             adj.set_value(max(adj.get_lower(), adj.get_value() - speed))
         elif current >= right_limit and adj.get_value() < adj.get_upper():
             speed = 30 * (current - right_limit) ** 3 / (total_size - right_limit) ** 3
             if adj.get_value() > adj.get_upper() - adj.get_page_size() - 800:
                 speed = speed * (adj.get_upper() - adj.get_page_size() - adj.get_value()) / 800
+            speed = min(speed, self.previous_speed + 0.1)
+            self.previous_speed = speed
             adj.set_value(min(adj.get_upper(), adj.get_value() + speed))
 
     def _autoscroll_thread(self):

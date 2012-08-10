@@ -74,7 +74,6 @@ class ThumbsManager():
             item.connect("activate", _set_size)
             size_menu.append(item)
 
-
         position_item = Gtk.MenuItem("Position")
         position_item.set_submenu(position_menu)
         menu.append(position_item)
@@ -84,6 +83,16 @@ class ThumbsManager():
         menu.append(size_item)
 
         menu.append(Gtk.SeparatorMenuItem())
+
+        open_file = Gtk.MenuItem("Open in Image Viewer")
+        def _open_file(widget): self.parent.open_file(file)
+        open_file.connect("activate", _open_file)
+        menu.append(open_file)
+
+        open_folder = Gtk.MenuItem("Show Containing Folder")
+        def _open_folder(widget): self.parent.open_folder(file)
+        open_folder.connect("activate", _open_folder)
+        menu.append(open_folder)
 
         trash_item = Gtk.MenuItem("Move to Trash")
         def _trash(widget): self.parent.move_to_trash(widget, file)
@@ -106,17 +115,17 @@ class ThumbsManager():
     def repaint(self):
         self.hide(gdk_thread=True)
         if self.images:
-            self.show(self.images, gdk_thread=True, screen=self.screen)
+            self.show(self.images, gdk_thread=True, screen=self.screen, type=self.type)
 
-    def set_position(self, p):
-        logger.info("Setting thumbs position " + str(p))
+    def set_position(self, position):
+        logger.info("Setting thumbs position " + str(position))
         options = self.load_options()
-        options.position = ThumbsManager.POSITIONS[p]
+        options.position = ThumbsManager.POSITIONS[position]
         self.save_options(options)
         self.repaint()
 
     def set_size(self, size):
-        logger.info("Setting thumbs position " + str(size))
+        logger.info("Setting thumbs size " + str(size))
         options = self.load_options()
         options.breadth = size
         self.save_options(options)
@@ -128,13 +137,18 @@ class ThumbsManager():
     def on_click(self, thumbs_window, file, widget, event):
         self.pin()
         if event.button == 1:
-            self.parent.set_wallpaper(file, False)
+            if self.is_showing("history"):
+                index = [info[1] for info in thumbs_window.all].index(widget)
+                self.parent.move_to_history_position(index)
+            else:
+                self.parent.set_wallpaper(file, False)
         else:
             menu = self.create_menu(file)
-            h = menu.get_preferred_height()[1]
-            menu.popup(None, None,
-                lambda x, y: (event.get_root_coords()[0], event.get_root_coords()[1] - h, True), None,
-                event.button, event.time)
+            def _compute_position(a, b, event=event):
+                x, y = event.get_root_coords()[0], event.get_root_coords()[1]
+                h = menu.get_preferred_height()[1]
+                return x, y - h if y - h >= 40 else y, True
+            menu.popup(None, None, _compute_position, None, event.button, event.time)
 
     def show(self, images, gdk_thread=False, screen=None, type=None):
         with self.show_thumbs_lock:
