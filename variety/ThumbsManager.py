@@ -85,12 +85,12 @@ class ThumbsManager():
         menu.append(Gtk.SeparatorMenuItem())
 
         open_file = Gtk.MenuItem("Open in Image Viewer")
-        def _open_file(widget): self.parent.open_file(file)
+        def _open_file(widget): self.parent.open_file(widget, file)
         open_file.connect("activate", _open_file)
         menu.append(open_file)
 
         open_folder = Gtk.MenuItem("Show Containing Folder")
-        def _open_folder(widget): self.parent.open_folder(file)
+        def _open_folder(widget): self.parent.open_folder(widget, file)
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
 
