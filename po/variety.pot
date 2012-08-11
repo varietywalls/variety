@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-09 12:22+0300\n"
+"POT-Creation-Date: 2012-08-11 14:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgid "20"
 msgstr ""
 
 #: ../data/ui/AddWallbaseDialog.ui.h:13
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "100"
 msgstr ""
 
@@ -211,31 +211,16 @@ msgstr ""
 msgid "Only slightly erotic or otherwise sketchy"
 msgstr ""
 
-#: ../variety/__init__.py:57
-msgid ""
-"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
-"variety_lib too)"
-msgstr ""
-
-#: ../variety.desktop.in.h:1
-msgid "Variety"
-msgstr ""
-
-#: ../variety.desktop.in.h:2
-msgid "Variety Wallpaper Changer"
-msgstr ""
-
-#. Code for other initialization actions should be added here.
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "About Variety"
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:2
-msgid "An automatic wallpaper changer and manager."
+msgid "An automatic wallpaper changer, downloader and manager."
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "https://launchpad.net/variety"
 msgstr ""
 
@@ -254,6 +239,20 @@ msgid ""
 "# \n"
 "# You should have received a copy of the GNU General Public License along \n"
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+
+#: ../variety/__init__.py:57
+msgid ""
+"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
+"variety_lib too)"
+msgstr ""
+
+#: ../variety.desktop.in.h:1
+msgid "Variety"
+msgstr ""
+
+#: ../variety.desktop.in.h:2
+msgid "Variety Wallpaper Changer"
 msgstr ""
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
@@ -355,70 +354,90 @@ msgid "Add..."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
-msgid "Edit..."
+msgid "Add images, folders or online image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
-msgid "Remove"
+msgid "Edit..."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "Remove selected image sources"
+msgid "Edit the selected source"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
-msgid "Use"
+msgid "Remove"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "Download a wallpaper every "
+msgid "Remove selected image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
-msgid "Minimum interval is 30 seconds"
+msgid "Use"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
-msgid "to "
+msgid "Enable the selected sources and disable all others"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
-msgid "Limit download folder to "
+msgid "Download a wallpaper every "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
-msgid "Minimum size is 50 MB"
+msgid "Minimum interval is 30 seconds"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
-msgid "MB by deleting oldest files when necessary"
+msgid "to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
-msgid "Favorites folder"
+msgid "Select Download folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
-msgid "Copy favorite wallpapers to "
+msgid "Limit download folder to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:29
-msgid "Select a Folder"
+msgid "Minimum size is 50 MB"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:30
-msgid "Fetch folder"
+msgid "MB by deleting oldest files when necessary"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:31
-msgid "Save manually downloaded wallpapers to "
+msgid "Favorites folder"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
-msgid "Drag and drop"
+msgid "Copy favorite wallpapers to "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33
+msgid "Select Favorites folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+msgid "Fetch folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+msgid "Save manually downloaded wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+msgid "Select Fetch folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+msgid "Drag and drop"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
 msgid ""
 "The Variety icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -427,103 +446,103 @@ msgid ""
 "to lock it there for easy drag-and-drop access."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "Clipboard monitoring"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid ""
 "Monitor clipboard for image URLs and fetch them when the host is one of "
 "these:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Manual downloading"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid "Color and size"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid "When possible, use images that:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Have landscape orientation"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Are big at least "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "50"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "80"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Are dark or light:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Dark"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Light"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Contain this color: "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "(This is an experimental feature)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Filters"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:53
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Tips and tricks"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Recent changes"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Visit website"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Report a bug or request a feature"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "https://bugs.launchpad.net/variety/+filebug"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "Send feedback"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "peterlevi@peterlevi.com"
 msgstr ""
