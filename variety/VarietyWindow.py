@@ -350,10 +350,10 @@ class VarietyWindow(Window):
         try:
             self.url = None
             label = os.path.dirname(file).replace('_', '__')
-            source, url = Util.read_metadata(file)
-            if source and url:
-                label = "View at " + source if source.find("Fetched") < 0 else "Fetched: Show Origin"
-                self.url = url
+            info = Util.read_metadata(file)
+            if info and "sourceURL" in info and "sourceName" in info:
+                label = "View at " + info["sourceName"] if info["sourceName"].find("Fetched") < 0 else "Fetched: Show Origin"
+                self.url = info["sourceURL"]
             if len(label) > 50:
                 label = label[:50] + "..."
 

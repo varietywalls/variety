@@ -69,7 +69,12 @@ class Downloader(object):
         with open(local_filename, 'wb') as f:
             f.write(data)
 
-        Util.write_metadata(local_filename, self.name, origin_url)
+        Util.write_metadata(local_filename, {
+            "sourceName": self.name,
+            "sourceLocation": self.location,
+            "sourceURL": origin_url,
+            "imageURL": image_url
+        })
 
         logger.info("Download complete")
         return local_filename

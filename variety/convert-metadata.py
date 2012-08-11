@@ -14,10 +14,10 @@ for f in Util.list_files(files=(),
                          randomize=False):
     try:
         if os.path.exists(f + ".txt"):
-            src, url = Util.read_metadata(f)
-            if src and url:
+            info = Util.read_metadata(f)
+            if info:
                 print "Converting " + f
-                if Util.write_metadata(f, src, url):
+                if Util.write_metadata(f, info):
                     print "OK. Deleting " + f + ".txt"
                     os.unlink(f + ".txt")
                 else:

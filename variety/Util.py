@@ -96,25 +96,30 @@ class Util:
         force_exit_thread.start()
 
     @staticmethod
-    def write_metadata(filename, source, url):
+    def write_metadata(filename, info):
         try:
-            pyexiv2.xmp.register_namespace('https://launchpad.net/variety/', 'variety')
+            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
         except KeyError:
             pass
 
         try:
             m = pyexiv2.ImageMetadata(filename)
             m.read()
-            m['Xmp.variety.info'] = VARIETY_INFO
-            m['Xmp.variety.sourceName'] = source
-            m['Xmp.variety.sourceURL'] = url
+            m["Xmp.variety.info"] = VARIETY_INFO
+            for k, v in info.items():
+                m["Xmp.variety." + k] = v
             m.write()
             return True
         except Exception:
             # could not write metadata inside file, use txt instead
             try:
-                with open(filename + ".txt", 'w') as f:
-                    f.write("INFO:\n" + source + "\n" + url +"\n" + VARIETY_INFO)
+                with open(filename + ".txt", "w") as f:
+                    f.write("INFO:\n%s\n%s\n%s\n%s\n%s\n" % (
+                            info["sourceName"],
+                            info["sourceURL"],
+                            info["sourceLocation"],
+                            info["imageURL"],
+                            VARIETY_INFO))
             except Exception:
                 logger.exception("Could not write url metadata for file " + filename)
             return False
@@ -122,29 +127,35 @@ class Util:
     @staticmethod
     def read_metadata(filename):
         try:
-            pyexiv2.xmp.register_namespace('https://launchpad.net/variety/', 'variety')
+            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
         except KeyError:
             pass
 
         try:
             m = pyexiv2.ImageMetadata(filename)
             m.read()
-            source = m['Xmp.variety.sourceName'].value
-            url = m['Xmp.variety.sourceURL'].value
-            return source, url
+
+            info = {}
+            keys = ["sourceName", "sourceLocation", "sourceURL", "imageURL"]
+            for k in keys:
+                if "Xmp.variety." + k in m:
+                    info[k] = m["Xmp.variety." + k].value
+            return info
         except Exception, e:
             # could not read metadata inside file, use txt instead
             try:
                 with open(filename + ".txt") as f:
                     lines = list(f)
-                    if len(lines) >= 3 and lines[0].strip() == "INFO:":
-                        source = lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
-                        url = lines[2].strip()
-                        return source, url
+                    info = {}
+                    if len(lines) > 2 and lines[0].strip() == "INFO:":
+                        info["sourceName"] = lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
+                        info["sourceURL"] = lines[2].strip()
+                        if len(lines) > 3:
+                            info["sourceLocation"] = lines[3].strip()
+                        if len(lines) > 4:
+                            info["imageURL"] = lines[4].strip()
+                        return info
                     else:
-                        return None, None
+                        return None
             except Exception:
-                return None, None
-
-
-
+                return None

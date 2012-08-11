@@ -33,10 +33,11 @@ class TestUtil(unittest.TestCase):
 
     def test_metadata(self):
         self.assertTrue(os.path.exists('test.jpg'))
-        Util.write_metadata('test.jpg', 'a', 'b')
-        self.assertEqual(('a', 'b'), Util.read_metadata('test.jpg'))
-        Util.write_metadata('test.svg', 'a', 'b')
-        self.assertEqual(('a', 'b'), Util.read_metadata('test.svg'))
+        info = {"sourceName": 'a', "sourceURL": 'b', "sourceLocation": 'c', "imageURL": 'd'}
+        Util.write_metadata('test.jpg', info)
+        self.assertEqual(info, Util.read_metadata('test.jpg'))
+        Util.write_metadata('test.svg', info)
+        self.assertEqual(info, Util.read_metadata('test.svg'))
 
 if __name__ == '__main__':
     unittest.main()
