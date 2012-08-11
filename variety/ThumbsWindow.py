@@ -175,20 +175,32 @@ class ThumbsWindow(Gtk.Window):
 
         image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
 
-        image_info = (file, eventbox, thumb, image_size)
+        image_info = {"file": file, "eventbox": eventbox, "thumb": thumb, "size": image_size}
         if at_front:
+            image_info["start"] = 0
+            for info in self.all:
+                info["start"] += image_size
             self.all.insert(0, image_info)
         else:
+            image_info["start"] = self.total_width
             self.all.append(image_info)
 
         self.total_width += image_size
+
+        adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
+        scrollbar_at_start = not adj or adj.get_value() <= adj.get_lower() + 20
+
         self.box.pack_start(eventbox, False, False, 0)
 
         if at_front:
             self.box.reorder_child(eventbox, 0)
+            # get adj again - we just added at front, scrollbar might have appeared
             adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
             if adj:
-                adj.set_value(adj.get_value() + image_size)
+                if scrollbar_at_start:
+                    adj.set_value(adj.get_lower())
+                else:
+                    adj.set_value(adj.get_value() + image_size)
 
         self.update_size()
 
@@ -214,15 +226,19 @@ class ThumbsWindow(Gtk.Window):
     def remove_image(self, image, gdk_thread=True):
         if not gdk_thread:
             Gdk.threads_enter()
-        for entry in self.all:
-            if entry[0] == image:
-                eventbox = entry[1]
-                thumb = entry[2]
+
+        for info in self.all:
+            if info["file"] == image:
+                eventbox = info["eventbox"]
+                thumb = info["thumb"]
                 self.box.remove(eventbox)
                 eventbox.destroy()
                 thumb.destroy()
-                self.total_width -= entry[3]
+                self.total_width -= info["size"]
                 self.update_size()
+
+        self.all = [info for info in self.all if info["file"] != image]
+
         if not gdk_thread:
             Gdk.threads_leave()
 

@@ -373,6 +373,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_markup" translatable="yes">Add images, folders or online image sources</property>
+                                <property name="tooltip_text" translatable="yes">Add images, folders or online image sources</property>
                                 <property name="use_action_appearance">False</property>
                                 <signal name="clicked" handler="on_add_button_clicked" swapped="no"/>
                               </object>
@@ -389,6 +391,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_markup" translatable="yes">Edit the selected source</property>
+                                <property name="tooltip_text" translatable="yes">Edit the selected source</property>
                                 <property name="use_action_appearance">False</property>
                                 <signal name="clicked" handler="on_edit_source_clicked" swapped="no"/>
                               </object>
@@ -424,6 +428,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_markup" translatable="yes">Enable the selected sources and disable all others</property>
+                                <property name="tooltip_text" translatable="yes">Enable the selected sources and disable all others</property>
                                 <property name="use_action_appearance">False</property>
                                 <signal name="clicked" handler="on_use_clicked" swapped="no"/>
                               </object>
@@ -561,6 +567,7 @@
                                 <property name="orientation">vertical</property>
                                 <property name="action">select-folder</property>
                                 <property name="show_hidden">True</property>
+                                <property name="title" translatable="yes">Select Download folder</property>
                                 <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
                               </object>
                               <packing>
@@ -714,7 +721,7 @@
                                 <property name="orientation">vertical</property>
                                 <property name="action">select-folder</property>
                                 <property name="show_hidden">True</property>
-                                <property name="title" translatable="yes">Select a Folder</property>
+                                <property name="title" translatable="yes">Select Favorites folder</property>
                                 <signal name="selection-changed" handler="on_favorites_changed" swapped="no"/>
                               </object>
                               <packing>
@@ -837,7 +844,7 @@
                             <property name="orientation">vertical</property>
                             <property name="action">select-folder</property>
                             <property name="show_hidden">True</property>
-                            <property name="title" translatable="yes">Select a Folder</property>
+                            <property name="title" translatable="yes">Select Fetch folder</property>
                             <signal name="selection-changed" handler="on_fetched_changed" swapped="no"/>
                           </object>
                           <packing>
@@ -1628,21 +1635,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="add_button"/>
-      <widget name="edit_source"/>
-      <widget name="remove_sources"/>
-      <widget name="use_button"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup2">
-    <widgets>
-      <widget name="change_enabled"/>
-      <widget name="download_enabled"/>
-      <widget name="quota_enabled"/>
-    </widgets>
-  </object>
   <object class="GtkSizeGroup" id="sizegroup3">
     <widgets>
       <widget name="change_interval_text"/>
@@ -1675,4 +1667,19 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
     </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <widgets>
+      <widget name="add_button"/>
+      <widget name="edit_source"/>
+      <widget name="remove_sources"/>
+      <widget name="use_button"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup2">
+    <widgets>
+      <widget name="change_enabled"/>
+      <widget name="download_enabled"/>
+      <widget name="quota_enabled"/>
+    </widgets>
+  </object>
 </interface>

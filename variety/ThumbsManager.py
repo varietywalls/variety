@@ -138,7 +138,7 @@ class ThumbsManager():
         self.pin()
         if event.button == 1:
             if self.is_showing("history"):
-                index = [info[1] for info in thumbs_window.all].index(widget)
+                index = [info["eventbox"] for info in thumbs_window.all].index(widget)
                 self.parent.move_to_history_position(index)
             else:
                 self.parent.set_wallpaper(file, False)
