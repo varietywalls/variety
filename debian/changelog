@@ -1,3 +1,28 @@
+variety (0.4.5) precise; urgency=low
+
+  * More fixes to history display; some minor UI updates (tooltips,
+    etc.)
+  * Updated tips. Minor bugfix.
+  * Better clicking in history; Bugfixes
+  * Trash/Fav in thumbs menu; Live updating of thumbs for trash/history
+    operations
+  * Bugfix: Make scripts executable on start (Installation clears their
+    executable bits)
+  * Fixes - autosroll threads used to live forever and eat cpu
+  * GTK threading fixes again
+  * Slicker autoscrolling stop effect; Show History in menu
+  * Refactored ThumbsWindow; Added size and position options for
+    thumbnails
+  * ThumbsWindow: support for other positions (not only bottom); no GUI
+    yet
+  * Minor fix
+  * Autoscroll for thumbnails view
+  * Merged convert-metadata and set/get wallpaper scripts revisions
+  * Support for custom commands on wallpaper set - use scripts for
+    getting/setting the wallpaper
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 11 Aug 2012 14:47:44 +0300
+
 variety (0.4.4ubuntu1) precise; urgency=low
 
   * 
