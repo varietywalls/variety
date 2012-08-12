@@ -285,7 +285,7 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [False, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co. May contain nudity and porn."],
+            [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],

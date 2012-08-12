@@ -110,8 +110,7 @@ class VarietyWindow(Window):
         self.wheel_timer = None
         self.set_wp_timer = None
 
-        self.auto_changed = False
-        self.update_indicator()
+        self.update_indicator(auto_changed=False)
         self.auto_changed = True
 
         self.start_threads()
@@ -342,9 +341,11 @@ class VarietyWindow(Window):
         filename = os.path.basename(file)
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
-    def update_indicator(self, file=None, is_gtk_thread=True):
+    def update_indicator(self, file=None, is_gtk_thread=True, auto_changed=None):
         if not file:
             file = self.current
+        if auto_changed is None:
+            auto_changed = self.auto_changed
 
         logger.info("Setting file info to: " + str(file))
         try:
@@ -367,7 +368,7 @@ class VarietyWindow(Window):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
 
-                if self.auto_changed:
+                if auto_changed:
                     # delay enabling Move/Copy operations in this case - see comment below
                     self.ind.trash.set_sensitive(False)
                     self.ind.favorite.set_sensitive(False)
@@ -381,7 +382,7 @@ class VarietyWindow(Window):
                 self.ind.show_origin.set_sensitive(True)
 
                 if self.thumbs_manager.thumbs_window and self.thumbs_manager.type == "history":
-                    self.ind.history.set_label("Hide _History")
+                    self.ind.history.set_label("Close _History")
                 else:
                     self.ind.history.set_label("Show _History")
 
@@ -391,7 +392,7 @@ class VarietyWindow(Window):
                 Gdk.threads_leave()
 
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
-            if self.auto_changed:
+            if auto_changed:
                 def update_file_operations():
                     Gdk.threads_enter()
                     for i in xrange(10):
@@ -645,12 +646,14 @@ class VarietyWindow(Window):
             self.position += 1
             self.set_wp_throttled(self.used[self.position])
 
-    def next_wallpaper(self, widget=None):
+    def next_wallpaper(self, widget=None, bypass_history=False):
         self.auto_changed = widget is None
-        if self.position > 0:
+        if self.position > 0 and not bypass_history:
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
         else:
+            if bypass_history:
+                self.position = 0
             self.change_wallpaper()
 
     def move_to_history_position(self, position):
@@ -883,7 +886,7 @@ class VarietyWindow(Window):
                 file = self.current
             if os.access(file, os.R_OK):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
-                self.update_indicator()
+                self.update_indicator(auto_changed=False)
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -932,7 +935,7 @@ class VarietyWindow(Window):
     def on_pause_resume(self, widget=None):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
-        self.update_indicator()
+        self.update_indicator(auto_changed=False)
 
     def process_urls(self, urls, verbose=True):
         def fetch():
@@ -1010,4 +1013,4 @@ class VarietyWindow(Window):
         else:
             self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
             self.thumbs_manager.pin()
-        self.update_indicator()
+        self.update_indicator(auto_changed=False)

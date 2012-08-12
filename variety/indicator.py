@@ -55,6 +55,32 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
+        self.favorite = Gtk.MenuItem("Copy to _Favorites")
+        self.favorite.set_use_underline(True)
+        self.favorite.connect("activate", window.copy_to_favorites)
+        self.menu.append(self.favorite)
+
+        self.trash = Gtk.MenuItem("Move to _Trash")
+        self.trash.set_use_underline(True)
+        self.trash.connect("activate", window.move_to_trash)
+        self.menu.append(self.trash)
+
+#        self.open_file = Gtk.MenuItem("Open in Image Viewer")
+#        self.open_file.connect("activate", window.open_file)
+#        self.menu.append(self.open_file)
+#
+        self.open_folder = Gtk.MenuItem("Show Containing Folder")
+        self.open_folder.connect("activate", window.open_folder)
+        self.menu.append(self.open_folder)
+
+        self.menu.append(Gtk.SeparatorMenuItem())
+
+        self.pause_resume = Gtk.MenuItem("Pause")
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.menu.append(self.pause_resume)
+
+        self.menu.append(Gtk.SeparatorMenuItem())
+
         self.prev = Gtk.MenuItem("_Previous")
         self.prev.set_use_underline(True)
         self.prev.connect("activate", window.prev_wallpaper)
@@ -65,11 +91,12 @@ class Indicator:
         self.next.connect("activate", window.next_wallpaper)
         self.menu.append(self.next)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
-
-        self.pause_resume = Gtk.MenuItem("Pause")
-        self.pause_resume.connect("activate", window.on_pause_resume)
-        self.menu.append(self.pause_resume)
+        self.fast_forward = Gtk.MenuItem("Fast Forward")
+        self.fast_forward.set_use_underline(True)
+        def _fast_forward(widget):
+            window.next_wallpaper(widget, bypass_history=True)
+        self.fast_forward.connect("activate", _fast_forward)
+        self.menu.append(self.fast_forward)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
@@ -77,26 +104,6 @@ class Indicator:
         self.history.set_use_underline(True)
         self.history.connect("activate", window.show_hide_history)
         self.menu.append(self.history)
-
-        self.menu.append(Gtk.SeparatorMenuItem())
-
-        self.open_file = Gtk.MenuItem("Open in Image Viewer")
-        self.open_file.connect("activate", window.open_file)
-        self.menu.append(self.open_file)
-
-        self.open_folder = Gtk.MenuItem("Show Containing Folder")
-        self.open_folder.connect("activate", window.open_folder)
-        self.menu.append(self.open_folder)
-
-        self.trash = Gtk.MenuItem("Move to _Trash")
-        self.trash.set_use_underline(True)
-        self.trash.connect("activate", window.move_to_trash)
-        self.menu.append(self.trash)
-
-        self.favorite = Gtk.MenuItem("Copy to _Favorites")
-        self.favorite.set_use_underline(True)
-        self.favorite.connect("activate", window.copy_to_favorites)
-        self.menu.append(self.favorite)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
