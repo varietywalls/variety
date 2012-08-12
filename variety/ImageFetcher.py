@@ -78,7 +78,7 @@ class ImageFetcher:
             filename = os.path.join(to, local_name)
             if os.path.exists(filename):
                 logger.info("Local file already exists (%s)" % filename)
-                parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name)
+                parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
                 return filename
 
             logger.info("Fetching to " + filename)
@@ -92,7 +92,7 @@ class ImageFetcher:
             Util.write_metadata(filename, {"sourceName": "Fetched", "sourceURL": url, "imageURL": url})
 
             logger.info("Fetched %s to %s." % (url, filename))
-            parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name)
+            parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
 
             return filename
 

@@ -664,12 +664,13 @@ class VarietyWindow(Window):
         else:
             logger.warning("Invalid position passed to move_to_history_position")
 
-    def show_notification(self, title, message):
-        icon_uri = get_media_file("variety.svg")
+    def show_notification(self, title, message, icon=None):
+        if not icon:
+            icon = get_media_file("variety.svg")
         try:
-            self.notification.update(title, message, icon_uri)
+            self.notification.update(title, message, icon)
         except AttributeError:
-            self.notification = Notify.Notification.new(title, message, icon_uri)
+            self.notification = Notify.Notification.new(title, message, icon)
         self.notification.set_urgency(Notify.Urgency.LOW)
         self.notification.show()
 
