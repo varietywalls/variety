@@ -157,6 +157,7 @@ class ThumbsWindow(Gtk.Window):
             else:
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, self.breadth, 10000)
         except Exception:
+            logger.warning("Could not create thumbnail for file %s. File may be missing or invalid." % file)
             return
 
         if not gdk_thread:

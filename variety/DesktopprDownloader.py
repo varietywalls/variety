@@ -35,6 +35,11 @@ class DesktopprDownloader(Downloader.Downloader):
 
         content = urllib2.urlopen(self.location, timeout=20).read()
         response = json.loads(content)
+
+        if response["response"]["review_state"] != "safe":
+            logger.info("Non-safe image returned by Desktoppr, skipping")
+            return None
+
         image_url = response["response"]["image"]["url"]
 
         return self.save_locally(image_url, image_url)
