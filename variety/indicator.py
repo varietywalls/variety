@@ -75,12 +75,6 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        self.pause_resume = Gtk.MenuItem("Pause")
-        self.pause_resume.connect("activate", window.on_pause_resume)
-        self.menu.append(self.pause_resume)
-
-        self.menu.append(Gtk.SeparatorMenuItem())
-
         self.prev = Gtk.MenuItem("_Previous")
         self.prev.set_use_underline(True)
         self.prev.connect("activate", window.prev_wallpaper)
@@ -104,6 +98,12 @@ class Indicator:
         self.history.set_use_underline(True)
         self.history.connect("activate", window.show_hide_history)
         self.menu.append(self.history)
+
+        self.menu.append(Gtk.SeparatorMenuItem())
+
+        self.pause_resume = Gtk.MenuItem("Pause")
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.menu.append(self.pause_resume)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
