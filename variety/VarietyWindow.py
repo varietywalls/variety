@@ -85,21 +85,7 @@ class VarietyWindow(Window):
         self.options = None
         self.reload_config()
         self.load_banned()
-
-        self.used = []
-
-        current = self.get_desktop_wallpaper()
-        if current:
-            if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
-                try:
-                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
-                        current = f.read().strip()
-                except Exception:
-                    pass
-            self.used.append(current)
-
-        self.position = 0
-        self.current = current
+        self.load_history()
 
         self.last_change_time = time.time()
 
@@ -153,6 +139,7 @@ class VarietyWindow(Window):
                     return
 
                 text = clipboard.wait_for_text()
+                logger.debug("Clipboard: %s" % text)
                 if not text:
                     return
 
@@ -591,6 +578,8 @@ class VarietyWindow(Window):
             self.set_desktop_wallpaper(to_set)
             self.current = filename
             self.last_change_time = time.time()
+
+            self.save_history()
         except Exception:
             logger.exception("Error while setting wallpaper")
 
@@ -965,32 +954,36 @@ class VarietyWindow(Window):
         fetch_thread.start()
 
     def get_desktop_wallpaper(self):
-        script = os.path.join(self.scripts_folder, "get_wallpaper")
+        try:
+            script = os.path.join(self.scripts_folder, "get_wallpaper")
 
-        file = None
+            file = None
 
-        if os.access(script, os.X_OK):
-            logger.debug("Running get_wallpaper script")
-            try:
-                output = subprocess.check_output(script).strip()
-                if output:
-                    file = output
-            except subprocess.CalledProcessError:
-                logger.exception("Exception when calling get_wallpaper script")
-        else:
-            logger.warning("get_wallpaper script is missing or not executable: " + script)
+            if os.access(script, os.X_OK):
+                logger.debug("Running get_wallpaper script")
+                try:
+                    output = subprocess.check_output(script).strip()
+                    if output:
+                        file = output
+                except subprocess.CalledProcessError:
+                    logger.exception("Exception when calling get_wallpaper script")
+            else:
+                logger.warning("get_wallpaper script is missing or not executable: " + script)
 
-        if not file:
-            file = self.gsettings.get_string(self.KEY)
+            if not file:
+                file = self.gsettings.get_string(self.KEY)
 
-        if not file:
+            if not file:
+                return None
+
+            if file[0] == file[-1] == "'" or file[0] == file[-1] == '"':
+                file = file[1:-1]
+
+            file = file.replace("file://", "")
+            return file
+        except Exception:
+            logger.exception("Could not get current wallpaper")
             return None
-
-        if file[0] == file[-1] == "'" or file[0] == file[-1] == '"':
-            file = file[1:-1]
-
-        file = file.replace("file://", "")
-        return file
 
     def set_desktop_wallpaper(self, wallpaper):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
@@ -1015,3 +1008,45 @@ class VarietyWindow(Window):
             self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
+
+    def save_history(self):
+        try:
+            start = max(0, self.position - 50) # TODO do we want to rememeber forward history?
+            end = max(100, self.position + 50, len(self.used))
+            to_save = self.used[start:end]
+            with open(os.path.join(self.config_folder, "history.txt"), "w") as f:
+                f.write("%d\n" % (self.position - start))
+                for file in to_save:
+                    f.write(file + "\n")
+        except Exception:
+            logger.exception("Could not save history")
+
+    def load_history(self):
+        self.used = []
+        self.position = 0
+
+        try:
+            with open(os.path.join(self.config_folder, "history.txt"), "r") as f:
+                lines = list(f)
+            self.position = int(lines[0].strip())
+            for i, line in enumerate(lines[1:]):
+                if os.access(line.strip(), os.R_OK):
+                    self.used.append(line.strip())
+                elif i <= self.position:
+                    self.position = max(0, self.position - 1)
+        except Exception:
+            logger.warning("Could not load history file, continuing without it, no worries")
+
+        current = self.get_desktop_wallpaper()
+        if current:
+            if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
+                try:
+                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
+                        current = f.read().strip()
+                except Exception:
+                    pass
+
+        self.current = current
+        if self.current and (self.position >= len(self.used) or current != self.used[self.position]):
+            self.used.insert(0, self.current)
+            self.position = 0
