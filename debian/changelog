@@ -1,3 +1,17 @@
+variety (0.4.6) precise; urgency=low
+
+  * One more slight chnage to order in menu
+  * Updated changes
+  * ImageFetcher: use fetched image as notification icon
+  * Remove NSFW warning for Desktoppr - it now seems to return only safe
+    images; make a sanity check in DesktopprDownloader
+  * Reordered menu for faster access to most common actions (Fav/Trash);
+    Added Fast Forward
+  * Write more comprehensive origin metadata to downloaded images
+  * Make indicator icon stand out better with Radiance theme
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 13 Aug 2012 10:35:44 +0300
+
 variety (0.4.5ubuntu1) precise; urgency=low
 
   * 
