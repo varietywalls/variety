@@ -4,10 +4,31 @@
 # Its purpose is to print out the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
 # You need to edit this if you use something other than Gnome 3 or Unity for a desktop environment
 
+desktop=`env | grep DESKTOP_SESSION= | tail -c +17`
+
 # Gnome 3, Unity:
-gsettings get org.gnome.desktop.background picture-uri
+if [ "$desktop" == "ubuntu" ]; then
+        gsettings get org.gnome.desktop.background picture-uri
 
 # XFCE
-# TODO
+elif [ "$desktop" == "xubuntu" ]; then
+        xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path
 
-# Other examples - TODO
+# LXDE/PCmanFM
+elif [ "$desktop" == "Lubuntu" ]; then
+        grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
+
+# MATE
+elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
+        mateconftool-2 --get /desktop/mate/background/picture_filename
+
+# All above fails => fallback to the Gnome 3 way
+else
+        gsettings get org.gnome.desktop.background picture-uri
+fi
+
+# Feh
+# sed "s/\ /\n/g" ~/.fehbg | grep \'
+
+# Gnome 2
+# gconftool-2 --get /desktop/gnome/background/picture_filename

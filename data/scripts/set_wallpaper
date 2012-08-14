@@ -9,13 +9,23 @@
 # or run commands like notify-send to notify you of the change, or you can
 # run commands that would theme your browser, login screen or whatever you desire.
 
-# Below you will find some examples:
-
 # Gnome 3, Unity
-gsettings set org.gnome.desktop.background picture-uri "file://$1"
+gsettings set org.gnome.desktop.background picture-uri "file://$1" 2> /dev/null
 
 # XFCE
-# xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1"
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1" 2> /dev/null
+
+# LXDE/PCmanFM
+pcmanfm --set-wallpaper "$1" --wallpaper-mode=stretch 2> /dev/null
+
+# Feh
+feh --bg-scale "$1" 2> /dev/null
+
+# Mate
+mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$1" 2> /dev/null
+
+# Gnome 2
+gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$1" 2> /dev/null
 
 # Show a notification on wallpaper change (only when the change is automatic)
 # name=$(echo "$1" | sed 's/\//\n/g'| tail -n 1)

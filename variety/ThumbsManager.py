@@ -21,6 +21,7 @@ import os
 import threading
 import logging
 from variety.ThumbsWindow import ThumbsWindow
+from variety_lib.helpers import get_media_file
 
 logger = logging.getLogger('variety')
 
@@ -171,7 +172,13 @@ class ThumbsManager():
                     options = self.load_options()
                     self.thumbs_window = ThumbsWindow(
                         screen=screen, position=options.position, breadth=options.breadth)
+                    self.thumbs_window.set_icon_from_file(get_media_file("variety.svg").replace("file://", ""))
+                    self.thumbs_window.set_title("Variety%s" % (" History" if self.type == "history" else ""))
                     self.thumbs_window.connect("clicked", self.on_click)
+                    def _on_close(window=None):
+                        self.thumbs_window = None
+                        self.parent.update_indicator(is_gtk_thread=True)
+                    self.thumbs_window.connect("delete-event", _on_close)
                     self.thumbs_window.start(images)
                     if not gdk_thread:
                         Gdk.threads_leave()

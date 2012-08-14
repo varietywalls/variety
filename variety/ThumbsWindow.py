@@ -80,7 +80,7 @@ class ThumbsWindow(Gtk.Window):
         eventbox.add(self.scroll)
         eventbox.set_events(Gdk.EventMask.ENTER_NOTIFY_MASK |
                             Gdk.EventMask.LEAVE_NOTIFY_MASK |
-                            Gdk.EventMask.POINTER_MOTION_HINT_MASK)
+                            Gdk.EventMask.POINTER_MOTION_MASK)
         eventbox.connect('enter-notify-event', mouse_enter)
         eventbox.connect('leave-notify-event', mouse_leave)
         eventbox.connect('motion-notify-event', mouse_motion)
