@@ -33,7 +33,7 @@
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Variety Preferences</property>
-    <property name="modal">True</property>
+    <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
@@ -1635,6 +1635,21 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <widgets>
+      <widget name="add_button"/>
+      <widget name="edit_source"/>
+      <widget name="remove_sources"/>
+      <widget name="use_button"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup2">
+    <widgets>
+      <widget name="change_enabled"/>
+      <widget name="download_enabled"/>
+      <widget name="quota_enabled"/>
+    </widgets>
+  </object>
   <object class="GtkSizeGroup" id="sizegroup3">
     <widgets>
       <widget name="change_interval_text"/>
@@ -1667,19 +1682,4 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
     </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="add_button"/>
-      <widget name="edit_source"/>
-      <widget name="remove_sources"/>
-      <widget name="use_button"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup2">
-    <widgets>
-      <widget name="change_enabled"/>
-      <widget name="download_enabled"/>
-      <widget name="quota_enabled"/>
-    </widgets>
-  </object>
 </interface>

@@ -173,7 +173,8 @@ class ThumbsManager():
                     self.thumbs_window = ThumbsWindow(
                         screen=screen, position=options.position, breadth=options.breadth)
                     self.thumbs_window.set_icon_from_file(get_media_file("variety.svg").replace("file://", ""))
-                    self.thumbs_window.set_title("Variety%s" % (" History" if self.type == "history" else ""))
+                    title = "Variety %s" % ("History" if self.type == "history" else "Images")
+                    self.thumbs_window.set_title(title)
                     self.thumbs_window.connect("clicked", self.on_click)
                     def _on_close(window=None):
                         self.thumbs_window = None
