@@ -37,7 +37,6 @@ from variety.ThumbsWindow import ThumbsWindow
 gettext.textdomain('variety')
 
 import os
-import itertools
 import logging
 import random
 
@@ -348,7 +347,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label("Edit...")
 
-        def timer_func(): self.show_thumbs(list(model[row] for row in rows))
+        def timer_func():
+            self.show_thumbs(list(model[row] for row in rows))
         if hasattr(self, "show_timer") and self.show_timer:
             self.show_timer.cancel()
         self.show_timer = threading.Timer(0.1, timer_func)

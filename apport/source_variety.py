@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import apport
-
-def add_info(report):
-    """add report info"""
-
-    if not apport.packaging.is_distro_package(report['Package'].split()[0]):
-        report['ThirdParty'] = 'True'
-        report['CrashDB'] = 'variety'
+#import apport
+#
+#def add_info(report):
+#    """add report info"""
+#
+#    if not apport.packaging.is_distro_package(report['Package'].split()[0]):
+#        report['ThirdParty'] = 'True'
+#        report['CrashDB'] = 'variety'

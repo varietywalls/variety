@@ -16,7 +16,7 @@ gsettings set org.gnome.desktop.background picture-uri "file://$1" 2> /dev/null
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1" 2> /dev/null
 
 # LXDE/PCmanFM
-pcmanfm --set-wallpaper "$1" --wallpaper-mode=stretch 2> /dev/null
+pcmanfm --set-wallpaper "$1" 2> /dev/null
 
 # Feh
 feh --bg-scale "$1" 2> /dev/null

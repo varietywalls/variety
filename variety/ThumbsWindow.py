@@ -39,6 +39,7 @@ class ThumbsWindow(Gtk.Window):
         self.running = True
 
         self.set_decorated(False)
+        self.set_accept_focus(False)
 
         self.screen = screen if screen else Gdk.Screen.get_default()
         self.screen_width = self.screen.get_width()
