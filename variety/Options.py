@@ -295,7 +295,7 @@ class Options:
         self.filters = [
             [False, "Keep original", ""],
             [False, "Grayscale", "-type Grayscale"],
-            [False, "Heavy blur", "-blur 70x70"],
+            [False, "Heavy blur", "-blur 120x40"],
             [False, "Oil painting", "-paint 6"],
             [False, "Charcoal painting", "-charcoal 3"],
             [False, "Pointilism", "-spread 10 -noise 3"]
