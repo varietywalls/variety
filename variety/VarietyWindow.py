@@ -18,6 +18,7 @@ import gettext
 from gettext import gettext as _
 import subprocess
 from variety_lib.helpers import get_media_file
+from variety.FacebookHelper import FacebookHelper
 
 gettext.textdomain('variety')
 
@@ -373,6 +374,8 @@ class VarietyWindow(Window):
                 else:
                     self.ind.history.set_label("Show _History")
 
+#                self.ind.publish_fb.set_visible(self.url is not None)
+#
                 self.update_pause_resume()
 
             if not is_gtk_thread:
@@ -653,7 +656,7 @@ class VarietyWindow(Window):
         else:
             logger.warning("Invalid position passed to move_to_history_position")
 
-    def show_notification(self, title, message, icon=None):
+    def show_notification(self, title, message="", icon=None):
         if not icon:
             icon = get_media_file("variety.svg")
         try:
@@ -1050,3 +1053,11 @@ class VarietyWindow(Window):
         if self.current and (self.position >= len(self.used) or current != self.used[self.position]):
             self.used.insert(0, self.current)
             self.position = 0
+
+    def publish_on_facebook(self, widget):
+        fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
+        def on_success(fb, action, data):
+            self.show_notification("Published")
+        def on_failure(fb, action, data):
+            self.show_notification("Could not publish")
+        fb.publish(message="A great wallpaper!", link=self.url, on_success=on_success, on_failure=on_failure)
