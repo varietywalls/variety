@@ -654,7 +654,7 @@ class VarietyWindow(Window):
             self.position = position
             self.set_wp_throttled(self.used[self.position])
         else:
-            logger.warning("Invalid position passed to move_to_history_position")
+            logger.warning("Invalid position passed to move_to_history_position, %d, used len is %d" % (position, len(self.used)))
 
     def show_notification(self, title, message="", icon=None):
         if not icon:
@@ -700,18 +700,11 @@ class VarietyWindow(Window):
         if img == self.current:
             return
         if os.access(img, os.R_OK):
+            at_front = self.position == 0
             self.used = self.used[self.position:]
             self.used.insert(0, img)
 
-            if self.thumbs_manager.is_showing("history"):
-                def _add(pos=self.position):
-                    if pos == 0:
-                        self.thumbs_manager.add_image(img, gdk_thread=False)
-                    else:
-                        self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
-                        self.thumbs_manager.pin()
-                add_timer = threading.Timer(0, _add)
-                add_timer.start()
+            self.refresh_thumbs_history(img, at_front)
 
             self.position = 0
             if len(self.used) > 1000:
@@ -721,6 +714,17 @@ class VarietyWindow(Window):
                 self.set_wp_throttled(img)
             else:
                 self.set_wp_throttled(img, 0)
+
+    def refresh_thumbs_history(self, added_image, at_front=False):
+        if self.thumbs_manager.is_showing("history"):
+            def _add():
+                if at_front:
+                    self.thumbs_manager.add_image(added_image, gdk_thread=False)
+                else:
+                    self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
+                    self.thumbs_manager.pin()
+            add_timer = threading.Timer(0, _add)
+            add_timer.start()
 
     def image_ok(self, img, fuzziness):
         try:
@@ -939,15 +943,29 @@ class VarietyWindow(Window):
                     if not self.running:
                         return
 
-                    file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
+                    is_local = os.path.exists(url)
+
+                    if is_local:
+                        if not (os.path.isfile(url) and Util.is_image(url)):
+                            self.show_notification("Not an image", url)
+                            continue
+
+                        file = url
+                        local_name = os.path.basename(file)
+                        self.show_notification("Added to queue", "%s\nPress Next to see it" % local_name, icon=file)
+                    else:
+                        file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
+
                     if file:
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
 
                             self.prepared.insert(0, file)
                             if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
+                                at_front = self.position == 0
                                 self.used.insert(self.position, file)
                                 self.position += 1
+                                self.refresh_thumbs_history(file, at_front)
 
             except Exception:
                 logger.exception("Exception in process_urls")
