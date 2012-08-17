@@ -436,6 +436,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_save_clicked(self, widget):
         try:
+            self.options = Options()
+            self.options.read()
+
             self.options.change_enabled = self.ui.change_enabled.get_active()
             self.options.change_on_start = self.ui.change_on_start.get_active()
             self.options.change_interval = self.read_time(
