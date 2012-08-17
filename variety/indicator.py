@@ -73,10 +73,10 @@ class Indicator:
         self.open_folder.connect("activate", window.open_folder)
         self.menu.append(self.open_folder)
 
-#        self.publish_fb = Gtk.MenuItem("Share on Facebook")
-#        self.publish_fb.connect("activate", window.publish_on_facebook)
-#        self.menu.append(self.publish_fb)
-#
+        self.publish_fb = Gtk.MenuItem("Share on Facebook")
+        self.publish_fb.connect("activate", window.publish_on_facebook)
+        self.menu.append(self.publish_fb)
+
         self.menu.append(Gtk.SeparatorMenuItem())
 
         self.prev = Gtk.MenuItem("_Previous")

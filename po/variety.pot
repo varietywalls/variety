@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-15 16:13+0300\n"
+"POT-Creation-Date: 2012-08-17 18:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgid "20"
 msgstr ""
 
 #: ../data/ui/AddWallbaseDialog.ui.h:13
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "100"
 msgstr ""
 
@@ -211,6 +211,33 @@ msgstr ""
 msgid "Only slightly erotic or otherwise sketchy"
 msgstr ""
 
+#: ../data/ui/FacebookPublishDialog.ui.h:1
+msgid "Variety - Publish to Facebook"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:2
+msgid "Share on Facebook"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:3
+msgid ""
+"Publish a link to the current wallpaper on Facebook. \n"
+"Please keep in mind that the link to the original image will be published, "
+"not the modified image that you may be seeing.\n"
+"\n"
+"Publish this text along with the link (or just leave empty):"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:7
+msgid "Do not ask anymore, always use the text above"
+msgstr ""
+
+#: ../variety/__init__.py:57
+msgid ""
+"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
+"variety_lib too)"
+msgstr ""
+
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "About Variety"
 msgstr ""
@@ -220,7 +247,7 @@ msgid "An automatic wallpaper changer, downloader and manager."
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "https://launchpad.net/variety"
 msgstr ""
 
@@ -241,18 +268,38 @@ msgid ""
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
-#: ../variety/__init__.py:57
-msgid ""
-"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
-"variety_lib too)"
-msgstr ""
-
 #: ../variety.desktop.in.h:1
 msgid "Variety"
 msgstr ""
 
 #: ../variety.desktop.in.h:2
 msgid "Variety Wallpaper Changer"
+msgstr ""
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:1
+msgid "Variety - Facebook Sharing"
+msgstr ""
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:2
+msgid "Facebook Sharing"
+msgstr ""
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:3
+msgid ""
+"You have chosen to share an image on Facebook for the first time. Sharing "
+"from Variety is available for images which come from online sources and it "
+"works this way: \n"
+"\n"
+"You will be asked to choose a message that will appear in the post, then the "
+"Facebook login page will open in an embedded browser. After you login you "
+"will be asked to allow Variety to publish to your feed on your behalf. "
+"Variety will only use this permission to publish those image links that you "
+"have manually chosen to share, nothing else. Next time you choose to share, "
+"you will not have to login again.\n"
+"\n"
+"No passwords or login information is kept locally, just an OAuth facebook "
+"token that will be valid for a couple of weeks. After its period expires "
+"(this is determined by Facebook) you will be asked to login again."
 msgstr ""
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
@@ -310,134 +357,130 @@ msgid "Variety Preferences"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:6
-msgid "Cancel"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:7
 msgid "General"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:8
+#: ../data/ui/PreferencesVarietyDialog.ui.h:7
 msgid "Start Variety when the computer starts"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:9
+#: ../data/ui/PreferencesVarietyDialog.ui.h:8
 msgid "Change wallpaper every "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:10
+#: ../data/ui/PreferencesVarietyDialog.ui.h:9
 msgid "Minimum interval is 5 seconds"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:11
+#: ../data/ui/PreferencesVarietyDialog.ui.h:10
 msgid "Change wallpaper on start"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:12
+#: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:13
+#: ../data/ui/PreferencesVarietyDialog.ui.h:12
 msgid "Enabled"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:14
+#: ../data/ui/PreferencesVarietyDialog.ui.h:13
 msgid "Type"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:15
+#: ../data/ui/PreferencesVarietyDialog.ui.h:14
 msgid "Location"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:16
+#: ../data/ui/PreferencesVarietyDialog.ui.h:15
 msgid "Add..."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "Add images, folders or online image sources"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "Edit..."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "Edit the selected source"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "Remove"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Remove selected image sources"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "Use"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "Enable the selected sources and disable all others"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "Download a wallpaper every "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Minimum interval is 30 seconds"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Select Download folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "Limit download folder to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Minimum size is 50 MB"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "MB by deleting oldest files when necessary"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "Favorites folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Copy favorite wallpapers to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "Select Favorites folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Fetch folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Save manually downloaded wallpapers to "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Select Fetch folder"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid "Drag and drop"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
 msgid ""
 "The Variety icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -446,103 +489,130 @@ msgid ""
 "to lock it there for easy drag-and-drop access."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Clipboard monitoring"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid ""
 "Monitor clipboard for image URLs and fetch them when the host is one of "
 "these:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "Manual downloading"
 msgstr ""
 
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+msgid "Facebook"
+msgstr ""
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:43
-msgid "Color and size"
+msgid "Enable sharing on Facebook for images coming from online sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:44
-msgid "When possible, use images that:"
+msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:45
-msgid "Have landscape orientation"
+msgid "Sharing"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:46
-msgid "Are big at least "
+msgid "Color and size"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:47
-msgid "50"
+msgid "When possible, use images that:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:48
-msgid "80"
+msgid "Have landscape orientation"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+msgid "Are big at least "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+msgid "50"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:51
+msgid "80"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Are dark or light:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:53
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Dark"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Light"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Contain this color: "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "(This is an experimental feature)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Filters"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Tips and tricks"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Recent changes"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Visit website"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Report a bug or request a feature"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "https://bugs.launchpad.net/variety/+filebug"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Send feedback"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "peterlevi@peterlevi.com"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+msgid ""
+"Variety participates in the Ubuntu App Showdown contest. If you like it "
+"please support it <a href=\"http://www.surveymonkey.com/s/P56YNQ9\">here</"
+"a>. Thank you."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+msgid "Cancel"
 msgstr ""

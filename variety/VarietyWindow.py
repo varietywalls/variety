@@ -22,7 +22,7 @@ from variety.FacebookHelper import FacebookHelper
 
 gettext.textdomain('variety')
 
-from gi.repository import Gtk, Gdk, Gio, Notify # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject, Gio, Notify # pylint: disable=E0611
 Notify.init("Variety")
 
 from variety_lib import Window
@@ -41,6 +41,8 @@ logger = logging.getLogger('variety')
 
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
+from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
+from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
@@ -338,11 +340,17 @@ class VarietyWindow(Window):
         logger.info("Setting file info to: " + str(file))
         try:
             self.url = None
+            self.image_url = None
+            self.source_name = None
+
             label = os.path.dirname(file).replace('_', '__')
             info = Util.read_metadata(file)
             if info and "sourceURL" in info and "sourceName" in info:
+                self.source_name = info["sourceName"] if info["sourceName"].find("Fetched") < 0 else None
                 label = "View at " + info["sourceName"] if info["sourceName"].find("Fetched") < 0 else "Fetched: Show Origin"
                 self.url = info["sourceURL"]
+                if "imageURL" in info:
+                    self.image_url = info["imageURL"]
             if len(label) > 50:
                 label = label[:50] + "..."
 
@@ -374,8 +382,9 @@ class VarietyWindow(Window):
                 else:
                     self.ind.history.set_label("Show _History")
 
-#                self.ind.publish_fb.set_visible(self.url is not None)
-#
+                fb_enabled = self.options.facebook_enabled and self.url
+                self.ind.publish_fb.set_visible(fb_enabled)
+
                 self.update_pause_resume()
 
             if not is_gtk_thread:
@@ -562,7 +571,7 @@ class VarietyWindow(Window):
                     logger.info("Applying filter: " + filter)
                     w = Gdk.Screen.get_default().get_width()
                     h = Gdk.Screen.get_default().get_height()
-                    cmd = 'convert "%s" -scale %dx%d %s %s' % (
+                    cmd = 'convert "%s" -scale %dx%d^ %s %s' % (
                         filename, w, h, filter, os.path.join(self.config_folder, "wallpaper.jpg"))
                     logger.info("Filter command: " + cmd)
                     result = os.system(cmd)
@@ -890,7 +899,7 @@ class VarietyWindow(Window):
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
-            for d in [self.dialogs, self.preferences_dialog, self.about]:
+            for d in self.dialogs + [self.preferences_dialog, self.about]:
                 try:
                     if d:
                         d.destroy()
@@ -1073,9 +1082,66 @@ class VarietyWindow(Window):
             self.position = 0
 
     def publish_on_facebook(self, widget):
-        fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
-        def on_success(fb, action, data):
-            self.show_notification("Published")
-        def on_failure(fb, action, data):
-            self.show_notification("Could not publish")
-        fb.publish(message="A great wallpaper!", link=self.url, on_success=on_success, on_failure=on_failure)
+        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
+        if not os.path.exists(first_run_file):
+            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+                self.facebook_dialog.present()
+                return
+            else:
+                self.facebook_dialog = FacebookFirstRunDialog()
+                self.dialogs.append(self.facebook_dialog)
+                self.facebook_dialog.run()
+                if not self.running:
+                    return
+                with open(first_run_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
+        if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+            self.facebook_dialog.destroy()
+            try:
+                self.dialogs.remove(self.facebook_dialog)
+            except Exception:
+                pass
+
+        self.facebook_dialog = None
+        publish = True
+
+        if self.options.facebook_show_dialog:
+            self.facebook_dialog = FacebookPublishDialog()
+            self.dialogs.append(self.facebook_dialog)
+            buf = self.facebook_dialog.ui.message.get_buffer()
+            buf.set_text(self.options.facebook_message)
+            response = self.facebook_dialog.run()
+            if not self.running:
+                return
+            if response != Gtk.ResponseType.OK:
+                publish = False
+            else:
+                self.options.facebook_message = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).strip()
+                self.options.facebook_show_dialog = not self.facebook_dialog.ui.hide_dialog.get_active()
+                self.options.write()
+
+        try:
+            if self.facebook_dialog:
+                self.dialogs.remove(self.facebook_dialog)
+        except Exception:
+            pass
+
+        if publish:
+            def do_publish():
+                fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
+                def on_success(fb, action, data):
+                    self.show_notification("Published")
+                def on_failure(fb, action, data):
+                    self.show_notification("Could not publish")
+
+                caption = None
+                if self.source_name:
+                    caption = self.source_name + ", via Variety Wallpaper Changer"
+                fb.publish(message=self.options.facebook_message,
+                           link=self.url,
+                           picture=self.image_url,
+                           caption=caption,
+                           on_success=on_success,
+                           on_failure=on_failure)
+            GObject.idle_add(do_publish)

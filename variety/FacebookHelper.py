@@ -28,12 +28,15 @@
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gi.repository import Gtk, WebKit
+from gi.repository import Gtk, Gdk, WebKit
 import json
 import urllib
 import urlparse
 import pycurl
 import StringIO
+import logging
+
+logger = logging.getLogger('variety')
 
 AUTH_URL = 'https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s&response_type=token&scope=%s'
 PUBLISH_URL = "https://graph.facebook.com/me/feed"
@@ -59,13 +62,15 @@ class FacebookHelper:
         self.load_token()
 
     def authorize(self, on_success=None, on_failure=None):
-        print "Authorizing"
+        logger.info("Authorizing for Facebook")
 
         self.token = ''
         self.token_expire = ''
 
         # Creates the GTK+ app
         self.window = Gtk.Window()
+        self.window.set_title("Variety - Login to Facebook")
+        self.window.set_position(Gtk.WindowPosition.CENTER)
         self.scrolled_window = Gtk.ScrolledWindow()
 
         # Creates a WebKit view
@@ -129,33 +134,40 @@ class FacebookHelper:
             on_failure(self, "authorize", "Login window closed before authorization")
 
     def load_token(self):
-        print "Loading token from file"
+        logger.info("Loading token from file")
         try:
             with open(self.token_file, 'r') as token_file:
                 self.token = token_file.read().strip()
         except Exception:
-            self.token = ''
+            self.token = None
 
-    def publish(self, message=None, link=None, picture=None, on_success=None, on_failure=None, attempts=0):
+    def publish(self, message=None, link=None, picture=None, caption=None, description=None,
+                on_success=None, on_failure=None, attempts=0):
         def republish(action, token):
-            self.publish(message, link, picture, on_success, on_failure, attempts + 1)
+            self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
+                         on_success=on_success, on_failure=on_failure, attempts=attempts + 1)
 
-        print "Publishing to Faceboook, %d" % attempts
+        logger.info("Publishing to Faceboook, attempt %d" % attempts)
         if not self.token:
-            print "No auth token, loading from file"
+            logger.info("No auth token, loading from file")
             self.load_token()
 
         if not self.token:
-            print "Still no token, trying to authorize"
+            logger.info("Still no token, trying to authorize")
             self.authorize(on_success=republish, on_failure=on_failure)
             return
 
         # now we certainly have some token, but it may be expired or invalid
-        m = {"access_token": self.token}
+        m = {}
         if message: m["message"] = message
         if link: m["link"] = link
         if picture: m["picture"] = picture
+        if caption: m["caption"] = caption
+        if description: m["description"] = description
 
+        logger.info("Publish properties: " + str(m))
+
+        m["access_token"] = self.token
         try:
             content = FacebookHelper.post(PUBLISH_URL, m)
         except pycurl.error, e:
@@ -164,12 +176,12 @@ class FacebookHelper:
 
         response = json.loads(content)
 
-        print response
+        logger.info("Response: %s" % content)
 
         if "error" in response:
             code = response["error"]["code"]
             if attempts < 2 and code in [190, 200]: # 190 is invalid token, 200 means no permission to publish
-                print "Trying to reauthorize"
+                logger.info("Code %d, trying to reauthorize" % code)
                 self.authorize(on_success=republish, on_failure=on_failure)
                 return
             else:
@@ -194,8 +206,6 @@ if __name__ == '__main__':
     def success(browser, token):
         print "Token: %s" % token
         browser.authorize()
-
-        #Gtk.main_quit()
 
     def cancel(browser):
         print "Pity."

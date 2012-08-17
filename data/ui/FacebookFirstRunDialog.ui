@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires facebook_first_run_dialog 1.0 -->
+  <object class="FacebookFirstRunDialog" id="facebook_first_run_dialog">
+    <property name="can_focus">False</property>
+    <property name="valign">start</property>
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Variety - Facebook Sharing</property>
+    <property name="icon">../media/variety.svg</property>
+    <property name="type_hint">normal</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">600</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="valign">start</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="title">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">start</property>
+            <property name="xpad">30</property>
+            <property name="ypad">20</property>
+            <property name="label" translatable="yes">Facebook Sharing</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1.5"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="message">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">start</property>
+            <property name="margin_bottom">80</property>
+            <property name="xpad">30</property>
+            <property name="label" translatable="yes">You have chosen to share an image on Facebook for the first time. Sharing from Variety is available for images which come from online sources and it works this way: 
+
+You will be asked to choose a message that will appear in the post, then the Facebook login page will open in an embedded browser. After you login you will be asked to allow Variety to publish to your feed on your behalf. Variety will only use this permission to publish those image links that you have manually chosen to share, nothing else. Next time you choose to share, you will not have to login again.
+
+No passwords or login information is kept locally, just an OAuth facebook token that will be valid for a couple of weeks. After its period expires (this is determined by Facebook) you will be asked to login again.</property>
+            <property name="wrap">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="valign">end</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="continue">
+                <property name="label">Continue</property>
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="image_position">top</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-5">continue</action-widget>
+    </action-widgets>
+  </object>
+</interface>

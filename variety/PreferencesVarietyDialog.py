@@ -99,6 +99,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
         self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
 
+        self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
+        self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
@@ -486,6 +488,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.lightness_enabled = self.ui.lightness_enabled.get_active()
             self.options.lightness_mode = \
                 Options.LightnessMode.DARK if self.ui.lightness.get_active() == 0 else Options.LightnessMode.LIGHT
+
+            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
+            self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:

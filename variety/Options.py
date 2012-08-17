@@ -176,6 +176,21 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.facebook_enabled = config["facebook_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.facebook_show_dialog = config["facebook_show_dialog"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.facebook_message = config["facebook_message"].strip()
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -281,6 +296,10 @@ class Options:
         self.lightness_enabled = False
         self.lightness_mode = Options.LightnessMode.DARK
 
+        self.facebook_enabled = True
+        self.facebook_show_dialog = True
+        self.facebook_message = ""
+
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
@@ -333,6 +352,10 @@ class Options:
             config["use_landscape_enabled"] = str(self.use_landscape_enabled)
             config["lightness_enabled"] = str(self.lightness_enabled)
             config["lightness_mode"] = str(self.lightness_mode)
+
+            config["facebook_enabled"] = str(self.facebook_enabled)
+            config["facebook_show_dialog"] = str(self.facebook_show_dialog)
+            config["facebook_message"] = str(self.facebook_message)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
