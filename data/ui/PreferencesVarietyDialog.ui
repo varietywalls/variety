@@ -1017,6 +1017,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_top">7</property>
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
@@ -1034,6 +1036,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
+                            <property name="halign">start</property>
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
@@ -1338,7 +1341,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="box12">
+              <object class="GtkBox" id="effects_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
@@ -1430,6 +1433,60 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="position">1</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkLabel" id="label28">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_top">10</property>
+                    <property name="label" translatable="yes">Clock</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="clock_enabled">
+                    <property name="label" translatable="yes">Draw a nice big digital clock on the desktop, showing the current time and date</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_top">7</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="xalign">0</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label29">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_top">7</property>
+                    <property name="label" translatable="yes">This is an experimental feature, still under development. The current way to configure the clock is to edit the clock_filter property in Variety's settings file directly (~/.config/variety/variety.conf). There are comments there to guide you.</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">4</property>
@@ -1439,7 +1496,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Filters</property>
+                <property name="label" translatable="yes">Effects</property>
               </object>
               <packing>
                 <property name="position">4</property>
@@ -1690,7 +1747,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
           <object class="GtkLabel" id="label26">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Variety participates in the Ubuntu App Showdown contest. If you like it please support it &lt;a href="http://www.surveymonkey.com/s/P56YNQ9"&gt;here&lt;/a&gt;. Thank you.</property>
+            <property name="margin_bottom">5</property>
+            <property name="label" translatable="yes">Variety participates in the Ubuntu App Showdown contest. If you like it, please support it &lt;a href="http://www.surveymonkey.com/s/P56YNQ9"&gt;here&lt;/a&gt;. Thank you.</property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>
           </object>

@@ -191,6 +191,16 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.clock_enabled = config["clock_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.clock_filter = config["clock_filter"].strip()
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -300,6 +310,9 @@ class Options:
         self.facebook_show_dialog = True
         self.facebook_message = ""
 
+        self.clock_enabled = False
+        self.clock_filter = "-fill '#DDDDDD' -stroke black -strokewidth 1 -font Ubuntu-Regular -pointsize 150 -gravity SouthEast -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+100] '%H:%M' -pointsize 50 -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+50] '%A, %B %d'"
+
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
@@ -356,6 +369,9 @@ class Options:
             config["facebook_enabled"] = str(self.facebook_enabled)
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)
+
+            config["clock_enabled"] = str(self.clock_enabled)
+            config["clock_filter"] = str(self.clock_filter)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

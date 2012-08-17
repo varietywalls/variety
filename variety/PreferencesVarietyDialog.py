@@ -102,6 +102,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
         self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
+        self.ui.clock_enabled.set_active(self.options.clock_enabled)
+
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
         self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
@@ -491,6 +493,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
+
+            self.options.clock_enabled = self.ui.clock_enabled.get_active()
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:

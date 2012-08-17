@@ -35,6 +35,7 @@ import threading
 import time
 import logging
 import random
+import re
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -102,6 +103,7 @@ class VarietyWindow(Window):
         self.update_indicator(auto_changed=False)
         self.auto_changed = True
 
+        self.do_set_wp_lock = threading.Lock()
         self.start_threads()
 
         self.about = None
@@ -178,6 +180,8 @@ class VarietyWindow(Window):
         logger.info("Use landscape enabled: " + str(self.options.use_landscape_enabled))
         logger.info("Lightness enabled: " + str(self.options.lightness_enabled))
         logger.info("Lightness mode: " + str(self.options.lightness_mode))
+        logger.info("Facebook enabled: " + str(self.options.facebook_enabled))
+        logger.info("Facebook show dialog: " + str(self.options.facebook_show_dialog))
         logger.info("Images: " + str(self.individual_images))
         logger.info("Folders: " + str(self.folders))
         logger.info("All sources: " + str(self.options.sources))
@@ -252,6 +256,7 @@ class VarietyWindow(Window):
             self.prepared = []
         self.image_count = -1
 
+        GObject.idle_add(self.do_set_wp)
         if self.events:
             for e in self.events:
                 e.set()
@@ -325,7 +330,12 @@ class VarietyWindow(Window):
         dl_thread.daemon = True
         dl_thread.start()
 
-        self.events = [self.change_event, self.prepare_event, self.dl_event]
+        self.clock_event = threading.Event()
+        clock_thread = threading.Thread(target=self.clock_thread)
+        clock_thread.daemon = True
+        clock_thread.start()
+
+        self.events = [self.change_event, self.prepare_event, self.dl_event, self.clock_event]
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -382,7 +392,7 @@ class VarietyWindow(Window):
                 else:
                     self.ind.history.set_label("Show _History")
 
-                fb_enabled = self.options.facebook_enabled and self.url
+                fb_enabled = self.options.facebook_enabled and (self.url is not None)
                 self.ind.publish_fb.set_visible(fb_enabled)
 
                 self.update_pause_resume()
@@ -434,6 +444,31 @@ class VarietyWindow(Window):
                 self.change_wallpaper()
             except Exception:
                 logger.exception("Exception in regular_change_thread")
+
+    def clock_thread(self):
+        logger.info("clock thread running")
+
+        last_minute = -1
+        while self.running:
+            try:
+                while not self.options.clock_enabled:
+                    self.clock_event.wait()
+                    self.clock_event.clear()
+
+                if not self.running:
+                    return
+                if not self.options.clock_enabled:
+                    continue
+
+                time.sleep(1)
+                minute = int(time.strftime("%M", time.localtime()))
+                if minute != last_minute:
+                    logger.info("clock_thread updates wallpaper")
+                    self.auto_changed = False
+                    self.do_set_wp(self.current)
+                    last_minute = minute
+            except Exception:
+                logger.exception("Exception in clock_thread")
 
     def prepare_thread(self):
         logger.info("prepare thread running")
@@ -552,30 +587,77 @@ class VarietyWindow(Window):
     def set_wp_throttled(self, filename, delay=0.3):
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
-        self.set_wp_filename = filename
-        self.set_wp_timer = threading.Timer(delay, self.do_set_wp)
+        def _do_set_wp(): self.do_set_wp(filename)
+        self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
-    def do_set_wp(self):
-        self.set_wp_timer = None
-        filename = self.set_wp_filename
-        try:
-            if not os.access(filename, os.R_OK):
-                logger.info("Missing file or bad permissions, will not use it: " + filename)
-                return
+    def build_imagemagick_cmd(self, filename):
+        if not self.filters and not self.options.clock_enabled:
+            return None
 
-            to_set = filename
-            if self.filters:
-                filter = self.filters[random.randint(0, len(self.filters) - 1)]
-                if filter.strip():
-                    logger.info("Applying filter: " + filter)
-                    w = Gdk.Screen.get_default().get_width()
-                    h = Gdk.Screen.get_default().get_height()
-                    cmd = 'convert "%s" -scale %dx%d^ %s %s' % (
-                        filename, w, h, filter, os.path.join(self.config_folder, "wallpaper.jpg"))
-                    logger.info("Filter command: " + cmd)
+        w = Gdk.Screen.get_default().get_width()
+        h = Gdk.Screen.get_default().get_height()
+        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+
+        if self.filters:
+            filter = self.filters[random.randint(0, len(self.filters) - 1)]
+            if filter.strip():
+                logger.info("Applying filter: " + filter)
+                cmd += filter + ' '
+
+        if self.options.clock_enabled and self.options.clock_filter.strip():
+            hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, h, w)
+            clock_filter = self.options.clock_filter
+            clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
+            clock_filter = time.strftime(clock_filter, time.localtime())
+
+            logger.info("Applying clock filter: " + clock_filter)
+            cmd += clock_filter + ' '
+
+        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper.jpg") + '"'
+        logger.info("ImageMagick cmd: " + cmd)
+        return cmd
+
+    @staticmethod
+    def compute_clock_offsets(filename, h, w):
+        screen_ratio = float(w) / h
+        iw, ih = Util.get_size(filename)
+        hoffset = voffset = 0
+        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
+            scaledw = float(w)
+            scaledh = ih * scaledw / iw
+            voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
+        else: #image is "wider" than the screen ratio - need to offset horizontally
+            scaledh = float(h)
+            scaledw = iw * scaledh / ih
+            hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
+        logger.info("Clock filter debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
+            w, h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
+        return hoffset, voffset
+
+    @staticmethod
+    def replace_clock_filter_offsets(f, ho, vo):
+        def hrepl(m): return str(ho + int(m.group(1)))
+        def vrepl(m): return str(vo + int(m.group(1)))
+        f = re.sub(r"\[\%HOFFSET\+(\d+)\]", hrepl, f)
+        f = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, f)
+        return f
+
+    def do_set_wp(self, filename = None):
+        with self.do_set_wp_lock:
+            self.set_wp_timer = None
+            if not filename:
+                filename = self.current
+
+            try:
+                if not os.access(filename, os.R_OK):
+                    logger.info("Missing file or bad permissions, will not use it: " + filename)
+                    return
+
+                to_set = filename
+                cmd = self.build_imagemagick_cmd(filename)
+                if cmd:
                     result = os.system(cmd)
-
                     if result == 0: #success
                         to_set = os.path.join(self.config_folder, "wallpaper.jpg")
                         try:
@@ -586,14 +668,14 @@ class VarietyWindow(Window):
                     else:
                         logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
 
-            self.update_indicator(filename, False)
-            self.set_desktop_wallpaper(to_set)
-            self.current = filename
-            self.last_change_time = time.time()
+                self.update_indicator(filename, False)
+                self.set_desktop_wallpaper(to_set)
+                self.current = filename
+                self.last_change_time = time.time()
 
-            self.save_history()
-        except Exception:
-            logger.exception("Error while setting wallpaper")
+                self.save_history()
+            except Exception:
+                logger.exception("Error while setting wallpaper")
 
     def list_images(self):
         return Util.list_files(self.individual_images, self.folders, Util.is_image, MAX_FILES)

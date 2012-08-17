@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-17 18:55+0300\n"
+"POT-Creation-Date: 2012-08-18 02:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,7 +247,7 @@ msgid "An automatic wallpaper changer, downloader and manager."
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "https://launchpad.net/variety"
 msgstr ""
 
@@ -579,40 +579,62 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:62
-msgid "Tips and tricks"
+msgid "Clock"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:63
-msgid "Recent changes"
+msgid ""
+"Draw a nice big digital clock on the desktop, showing the current time and "
+"date"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:64
-msgid "Visit website"
+msgid ""
+"This is an experimental feature, still under development. The current way to "
+"configure the clock is to edit the clock_filter property in Variety's "
+"settings file directly (~/.config/variety/variety.conf). There are comments "
+"there to guide you."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+msgid "Effects"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
-msgid "Report a bug or request a feature"
+msgid "Tips and tricks"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:67
-msgid "https://bugs.launchpad.net/variety/+filebug"
+msgid "Recent changes"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:68
-msgid "Send feedback"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
-msgid "peterlevi@peterlevi.com"
+msgid "Visit website"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:70
+msgid "Report a bug or request a feature"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+msgid "https://bugs.launchpad.net/variety/+filebug"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+msgid "Send feedback"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+msgid "peterlevi@peterlevi.com"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid ""
 "Variety participates in the Ubuntu App Showdown contest. If you like it "
 "please support it <a href=\"http://www.surveymonkey.com/s/P56YNQ9\">here</"
 "a>. Thank you."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Cancel"
 msgstr ""

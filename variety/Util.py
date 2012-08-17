@@ -20,6 +20,7 @@ import logging
 import threading
 import time
 import pyexiv2
+from DominantColors import DominantColors
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -159,3 +160,8 @@ class Util:
                         return None
             except Exception:
                 return None
+
+    @staticmethod
+    def get_size(image):
+        d = DominantColors(image)
+        return d.get_width(), d.get_height()
