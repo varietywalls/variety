@@ -1,3 +1,18 @@
+variety (0.4.8) precise; urgency=low
+
+  * Facebook - show image in publish dialog; Clock - apply on start,
+    hide on quit; Bugfixes for Facebook and clock
+  * Clock, initial version
+  * Sharing on Facebook, initial version
+  * Reread options from file just before Save, so as not to persist
+    stale options
+  * Better handling of dropping local images - do not fetch them, add
+    them directly; Proper update of history view on fetch/add
+  * Sharing on Facebook, initial support infrastructure
+  * Beeter blur filter
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 18 Aug 2012 16:43:20 +0300
+
 variety (0.4.7ubuntu1) precise; urgency=low
 
   * 
