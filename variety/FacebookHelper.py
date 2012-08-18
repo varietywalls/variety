@@ -45,7 +45,7 @@ class FacebookHelper:
     """ Creates a web browser using GTK+ and WebKit to authorize a
         desktop application in Facebook. It uses OAuth 2.0.
         Requires the Facebook's Application ID. The token is then
-        saved to FB_TOKEN_FILE.
+        saved to token_file.
     """
 
     def __init__(self, token_file, app_key='368780939859975', scope='publish_stream'):
@@ -80,13 +80,13 @@ class FacebookHelper:
 
         # Connects events
 
-        def destroy_event_cb(widget):
-            self._destroy_event_cb(widget, on_failure=on_failure)
+        def destroy_event_cb(widget, parent=self, on_failure=on_failure):
+            parent._destroy_event_cb(widget, on_failure)
+
+        def load_committed_cb(web_view, frame, parent=self, on_success=on_success):
+            parent._load_committed_cb(web_view, frame, on_success)
 
         self.window.connect('destroy', destroy_event_cb) # Close window
-
-        def load_committed_cb(web_view, frame):
-            self._load_committed_cb(web_view, frame, on_success=on_success)
 
         self.web_view.connect('load-committed', load_committed_cb) # Load page
 
@@ -191,8 +191,10 @@ class FacebookHelper:
                 on_success(self, "publish", content)
 
     @staticmethod
-    def post(url, post_data):
+    def post(url, post_data, timeout=10):
         c = pycurl.Curl()
+        c.setopt(pycurl.CONNECTTIMEOUT, timeout)
+        c.setopt(pycurl.TIMEOUT, timeout)
         c.setopt(pycurl.URL, url)
         c.setopt(pycurl.POST, 1)
         c.setopt(pycurl.POSTFIELDS, urllib.urlencode(post_data))

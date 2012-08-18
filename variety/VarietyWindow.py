@@ -22,7 +22,7 @@ from variety.FacebookHelper import FacebookHelper
 
 gettext.textdomain('variety')
 
-from gi.repository import Gtk, Gdk, GObject, Gio, Notify # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
 Notify.init("Variety")
 
 from variety_lib import Window
@@ -87,9 +87,9 @@ class VarietyWindow(Window):
 
         # load config
         self.options = None
-        self.reload_config()
         self.load_banned()
         self.load_history()
+        self.reload_config()
 
         self.last_change_time = time.time()
 
@@ -606,7 +606,7 @@ class VarietyWindow(Window):
                 cmd += filter + ' '
 
         if self.options.clock_enabled and self.options.clock_filter.strip():
-            hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, h, w)
+            hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, w, h)
             clock_filter = self.options.clock_filter
             clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
             clock_filter = time.strftime(clock_filter, time.localtime())
@@ -619,29 +619,29 @@ class VarietyWindow(Window):
         return cmd
 
     @staticmethod
-    def compute_clock_offsets(filename, h, w):
-        screen_ratio = float(w) / h
+    def compute_clock_offsets(filename, screen_w, screen_h):
+        screen_ratio = float(screen_w) / screen_h
         iw, ih = Util.get_size(filename)
         hoffset = voffset = 0
         if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
-            scaledw = float(w)
+            scaledw = float(screen_w)
             scaledh = ih * scaledw / iw
             voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
         else: #image is "wider" than the screen ratio - need to offset horizontally
-            scaledh = float(h)
+            scaledh = float(screen_h)
             scaledw = iw * scaledh / ih
             hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
         logger.info("Clock filter debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
-            w, h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
+            screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
         return hoffset, voffset
 
     @staticmethod
-    def replace_clock_filter_offsets(f, ho, vo):
-        def hrepl(m): return str(ho + int(m.group(1)))
-        def vrepl(m): return str(vo + int(m.group(1)))
-        f = re.sub(r"\[\%HOFFSET\+(\d+)\]", hrepl, f)
-        f = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, f)
-        return f
+    def replace_clock_filter_offsets(filter, hoffset, voffset):
+        def hrepl(m): return str(hoffset + int(m.group(1)))
+        def vrepl(m): return str(voffset + int(m.group(1)))
+        filter = re.sub(r"\[\%HOFFSET\+(\d+)\]", hrepl, filter)
+        filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
+        return filter
 
     def do_set_wp(self, filename = None):
         with self.do_set_wp_lock:
@@ -993,8 +993,12 @@ class VarietyWindow(Window):
             for e in self.events:
                 e.set()
 
+            if self.options.clock_enabled:
+                self.options.clock_enabled = False
+                GObject.idle_add(self.do_set_wp)
+
             Util.start_force_exit_thread(5)
-            Gtk.main_quit()
+            GObject.idle_add(Gtk.main_quit)
 
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")
@@ -1164,6 +1168,18 @@ class VarietyWindow(Window):
             self.position = 0
 
     def publish_on_facebook(self, widget):
+        if not self.url:
+            logger.warning("publish_on_facebook called with no current URL")
+            return
+
+        file = self.current
+        link = self.url
+        picture = self.image_url
+        caption = None
+        if self.source_name:
+            caption = self.source_name + ", via Variety Wallpaper Changer"
+        logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
+
         first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
         if not os.path.exists(first_run_file):
             if hasattr(self, "facebook_dialog") and self.facebook_dialog:
@@ -1191,6 +1207,8 @@ class VarietyWindow(Window):
         if self.options.facebook_show_dialog:
             self.facebook_dialog = FacebookPublishDialog()
             self.dialogs.append(self.facebook_dialog)
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 200, 100)
+            self.facebook_dialog.ui.image.set_from_pixbuf(pixbuf)
             buf = self.facebook_dialog.ui.message.get_buffer()
             buf.set_text(self.options.facebook_message)
             response = self.facebook_dialog.run()
@@ -1213,17 +1231,10 @@ class VarietyWindow(Window):
             def do_publish():
                 fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
                 def on_success(fb, action, data):
-                    self.show_notification("Published")
+                    self.show_notification("Published", "You may open your Facebook feed to see the post", icon=file)
                 def on_failure(fb, action, data):
-                    self.show_notification("Could not publish")
+                    self.show_notification("Could not publish", str(data), icon=file)
 
-                caption = None
-                if self.source_name:
-                    caption = self.source_name + ", via Variety Wallpaper Changer"
-                fb.publish(message=self.options.facebook_message,
-                           link=self.url,
-                           picture=self.image_url,
-                           caption=caption,
-                           on_success=on_success,
-                           on_failure=on_failure)
+                fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
+                    on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
