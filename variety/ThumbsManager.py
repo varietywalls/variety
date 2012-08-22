@@ -176,7 +176,7 @@ class ThumbsManager():
                     title = "Variety %s" % ("History" if self.type == "history" else "Images")
                     self.thumbs_window.set_title(title)
                     self.thumbs_window.connect("clicked", self.on_click)
-                    def _on_close(window=None):
+                    def _on_close(window, event):
                         self.thumbs_window = None
                         self.parent.update_indicator(is_gtk_thread=True)
                     self.thumbs_window.connect("delete-event", _on_close)
