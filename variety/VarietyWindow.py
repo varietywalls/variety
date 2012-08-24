@@ -89,6 +89,7 @@ class VarietyWindow(Window):
         self.options = None
         self.load_banned()
         self.load_history()
+        self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
         self.reload_config()
 
         self.last_change_time = time.time()
@@ -585,6 +586,7 @@ class VarietyWindow(Window):
         return total_size
 
     def set_wp_throttled(self, filename, delay=0.3):
+        self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
         def _do_set_wp(): self.do_set_wp(filename)

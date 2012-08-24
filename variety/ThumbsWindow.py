@@ -90,6 +90,11 @@ class ThumbsWindow(Gtk.Window):
 
         self.image_count = 0
 
+        self.active_file = None
+        self.active_position = None
+        self.mark = None
+        self.marked_info = None
+
         self.all = []
 
     def is_horizontal(self):
@@ -164,28 +169,38 @@ class ThumbsWindow(Gtk.Window):
         if not gdk_thread:
             Gdk.threads_enter()
 
+        image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
+
         thumb = Gtk.Image()
         thumb.set_from_pixbuf(pixbuf)
         thumb.set_visible(True)
+
+        overlay = Gtk.Overlay()
+        overlay.add(thumb)
+        overlay.set_visible(True)
 
         eventbox = Gtk.EventBox()
         eventbox.set_visible(True)
         def click(widget, event, file=file):
             self.emit("clicked", file, widget, event)
         eventbox.connect("button-release-event", click)
-        eventbox.add(thumb)
+        eventbox.add(overlay)
 
-        image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
-
-        image_info = {"file": file, "eventbox": eventbox, "thumb": thumb, "size": image_size}
+        image_info = {"file": file,
+                      "eventbox": eventbox,
+                      "thumb": thumb,
+                      "size": image_size,
+                      "overlay": overlay}
         if at_front:
             image_info["start"] = 0
             for info in self.all:
                 info["start"] += image_size
             self.all.insert(0, image_info)
+            position = 0
         else:
             image_info["start"] = self.total_width
             self.all.append(image_info)
+            position = len(self.all) - 1
 
         self.total_width += image_size
 
@@ -208,6 +223,9 @@ class ThumbsWindow(Gtk.Window):
 
         if not gdk_thread:
             Gdk.threads_leave()
+
+        if file == self.active_file or position == self.active_position:
+            self.mark_active(self.active_file, self.active_position)
 
     def update_size(self):
         if self.total_width < (self.screen_width if self.is_horizontal() else self.screen_height) + 1000:
@@ -243,6 +261,58 @@ class ThumbsWindow(Gtk.Window):
 
         if not gdk_thread:
             Gdk.threads_leave()
+
+    def mark_active(self, file=None, position=None):
+        def _mark():
+            logger.debug("Marking file %s, position %s" % (str(file), str(position)))
+
+            self.active_file = file
+            self.active_position = position
+
+            pos = position
+            if self.active_file:
+                try:
+                    pos = [info["file"] for info in self.all].index(self.active_file)
+                except Exception:
+                    pass
+
+            if self.mark:
+                if self.marked_info:
+                    self.marked_info["overlay"].remove(self.mark)
+                    self.marked_info = None
+                self.mark.destroy()
+                self.mark = None
+
+            if pos is not None and len(self.all) > pos:
+                self.marked_info = self.all[pos]
+
+                image_size = self.marked_info["size"]
+
+                self.mark = Gtk.DrawingArea()
+                if self.is_horizontal():
+                    self.mark.set_size_request(image_size, 5)
+                    self.mark.set_valign(Gtk.Align.START)
+                    self.mark.set_halign(Gtk.Align.CENTER)
+                else:
+                    self.mark.set_size_request(5, image_size)
+                    self.mark.set_valign(Gtk.Align.CENTER)
+                    self.mark.set_halign(Gtk.Align.START)
+
+                def _draw_callback(widget, cr):
+                    if self.is_horizontal():
+                        cr.rectangle(0, 0, image_size, 5)
+                    else:
+                        cr.rectangle(0, 0, 5, image_size)
+                    cr.set_source_rgba(255.0/255, 105.0/255, 44.0/255)
+                    cr.fill()
+                    return False
+
+                self.mark.connect('draw', _draw_callback)
+                self.mark.set_visible(True)
+
+                self.marked_info["overlay"].add_overlay(self.mark)
+
+        GObject.idle_add(_mark)
 
     def fits_in_screen(self, with_reserve=0):
         if self.is_horizontal():

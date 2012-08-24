@@ -53,6 +53,9 @@ class ThumbsManager():
 
         self.type = None
 
+        self.active_file = None
+        self.active_position = None
+
     def create_menu(self, file):
         menu = Gtk.Menu()
 
@@ -151,6 +154,15 @@ class ThumbsManager():
                 return x, y - h if y - h >= 40 else y, True
             menu.popup(None, None, _compute_position, None, event.button, event.time)
 
+    def mark_active(self, file=None, position=None):
+        self.active_file = file
+        self.active_position = position
+        if self.thumbs_window:
+            if self.is_showing("history"):
+                self.thumbs_window.mark_active(position=position)
+            else:
+                self.thumbs_window.mark_active(file=file)
+
     def show(self, images, gdk_thread=False, screen=None, type=None):
         with self.show_thumbs_lock:
             self.type = type
@@ -180,6 +192,9 @@ class ThumbsManager():
                         self.thumbs_window = None
                         self.parent.update_indicator(is_gtk_thread=True)
                     self.thumbs_window.connect("delete-event", _on_close)
+
+                    self.mark_active(self.active_file, self.active_position)
+
                     self.thumbs_window.start(images)
                     if not gdk_thread:
                         Gdk.threads_leave()
