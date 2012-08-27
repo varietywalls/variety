@@ -148,7 +148,7 @@ class ThumbsWindow(Gtk.Window):
                 self.add_image(file, gdk_thread=False, at_front=False)
 
                 # we must yield from time to time, or GTK/cairo errors abound
-                time.sleep(0.02 if i <= 20 else 0)
+                time.sleep(0.02)
 
                 self.image_count = i
 

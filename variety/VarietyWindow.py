@@ -91,8 +91,7 @@ class VarietyWindow(Window):
         self.load_history()
         self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
         self.reload_config()
-
-        self.last_change_time = time.time()
+        self.load_last_change_time()
 
         self.image_count = -1
         self.image_colors_cache = {}
@@ -257,7 +256,7 @@ class VarietyWindow(Window):
             self.prepared = []
         self.image_count = -1
 
-        GObject.idle_add(self.do_set_wp)
+        GObject.idle_add(self.refresh_wallpaper)
         if self.events:
             for e in self.events:
                 e.set()
@@ -428,20 +427,23 @@ class VarietyWindow(Window):
 
         while self.running:
             try:
-                self.change_event.wait(self.options.change_interval)
-                self.change_event.clear()
+                while not self.options.change_enabled or \
+                      (time.time() - self.last_change_time) < self.options.change_interval:
+                    now = time.time()
+                    wait_more = self.options.change_interval - (now - self.last_change_time)
+                    if self.options.change_enabled:
+                        self.change_event.wait(max(0, wait_more))
+                    else:
+                        logger.info("regular_change: waiting till user resumes")
+                        self.change_event.wait()
+                    self.change_event.clear()
                 if not self.running:
                     return
                 if not self.options.change_enabled:
                     continue
-                while (time.time() - self.last_change_time) < self.options.change_interval:
-                    now = time.time()
-                    wait_more = self.options.change_interval - (now - self.last_change_time)
-                    self.change_event.wait(max(0, wait_more))
-                if not self.options.change_enabled:
-                    continue
                 logger.info("regular_change changes wallpaper")
                 self.auto_changed = True
+                self.last_change_time = time.time()
                 self.change_wallpaper()
             except Exception:
                 logger.exception("Exception in regular_change_thread")
@@ -466,7 +468,7 @@ class VarietyWindow(Window):
                 if minute != last_minute:
                     logger.info("clock_thread updates wallpaper")
                     self.auto_changed = False
-                    self.do_set_wp(self.current)
+                    self.refresh_wallpaper()
                     last_minute = minute
             except Exception:
                 logger.exception("Exception in clock_thread")
@@ -645,11 +647,12 @@ class VarietyWindow(Window):
         filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
         return filter
 
-    def do_set_wp(self, filename = None):
+    def refresh_wallpaper(self):
+        self.do_set_wp(self.current, just_a_refresh=True)
+
+    def do_set_wp(self, filename, just_a_refresh=False):
         with self.do_set_wp_lock:
             self.set_wp_timer = None
-            if not filename:
-                filename = self.current
 
             try:
                 if not os.access(filename, os.R_OK):
@@ -673,9 +676,11 @@ class VarietyWindow(Window):
                 self.update_indicator(filename, False)
                 self.set_desktop_wallpaper(to_set)
                 self.current = filename
-                self.last_change_time = time.time()
 
-                self.save_history()
+                if not just_a_refresh:
+                    self.last_change_time = time.time()
+                    self.save_last_change_time()
+                    self.save_history()
             except Exception:
                 logger.exception("Error while setting wallpaper")
 
@@ -803,6 +808,7 @@ class VarietyWindow(Window):
             if len(self.used) > 1000:
                 self.used = self.used[:1000]
             self.auto_changed = auto_changed
+            self.last_change_time = time.time()
             if throttle:
                 self.set_wp_throttled(img)
             else:
@@ -997,7 +1003,7 @@ class VarietyWindow(Window):
 
             if self.options.clock_enabled:
                 self.options.clock_enabled = False
-                GObject.idle_add(self.do_set_wp)
+                GObject.idle_add(self.refresh_wallpaper)
 
             Util.start_force_exit_thread(5)
             GObject.idle_add(Gtk.main_quit)
@@ -1030,6 +1036,7 @@ class VarietyWindow(Window):
         self.options.change_enabled = not self.options.change_enabled
         self.options.write()
         self.update_indicator(auto_changed=False)
+        self.change_event.set()
 
     def process_urls(self, urls, verbose=True):
         def fetch():
@@ -1127,10 +1134,39 @@ class VarietyWindow(Window):
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
+    def save_last_change_time(self):
+        with open(os.path.join(self.config_folder, ".last_change_time"), "w") as f:
+            f.write(str(self.last_change_time))
+
+    def load_last_change_time(self):
+        now = time.time()
+        self.last_change_time = now
+
+        # take persisted last_change_time into consideration only if the change interval is more than 6 hours:
+        # thus users who change often won't have the wallpaper changed practically on every start,
+        # and users who change rarely will still have their wallpaper changed sometimes even if Variety or the computer
+        # does not run all the time
+        if self.options.change_interval >= 6 * 60 * 60:
+            try:
+                with open(os.path.join(self.config_folder, ".last_change_time")) as f:
+                    self.last_change_time = float(f.read().strip())
+                    if self.last_change_time > now:
+                        logger.warning("Persisted last_change_time after current time, setting to current time")
+                        self.last_change_time = now
+                logger.info("Change interval >= 6 hours, using persisted last_change_time " + str(self.last_change_time))
+                logger.info("Still to wait: %d seconds" % max(0, self.options.change_interval - (time.time() - self.last_change_time)))
+            except Exception:
+                logger.info("Could not read last change time, setting it to current time")
+                self.last_change_time = now
+        else:
+            logger.info("Change interval < 6 hours, ignore persisted last_change_time, " \
+                        "wait initially the whole interval: " + str(self.options.change_interval))
+
+
     def save_history(self):
         try:
-            start = max(0, self.position - 50) # TODO do we want to rememeber forward history?
-            end = max(100, self.position + 50, len(self.used))
+            start = max(0, self.position - 100) # TODO do we want to remember forward history?
+            end = min(self.position + 100, len(self.used))
             to_save = self.used[start:end]
             with open(os.path.join(self.config_folder, "history.txt"), "w") as f:
                 f.write("%d\n" % (self.position - start))
