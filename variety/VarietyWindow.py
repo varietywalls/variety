@@ -429,6 +429,8 @@ class VarietyWindow(Window):
             try:
                 while not self.options.change_enabled or \
                       (time.time() - self.last_change_time) < self.options.change_interval:
+                    if not self.running:
+                        return
                     now = time.time()
                     wait_more = self.options.change_interval - (now - self.last_change_time)
                     if self.options.change_enabled:
@@ -468,7 +470,7 @@ class VarietyWindow(Window):
                 if minute != last_minute:
                     logger.info("clock_thread updates wallpaper")
                     self.auto_changed = False
-                    self.refresh_wallpaper()
+                    self.refresh_clock()
                     last_minute = minute
             except Exception:
                 logger.exception("Exception in clock_thread")
@@ -595,19 +597,30 @@ class VarietyWindow(Window):
         self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
-    def build_imagemagick_cmd(self, filename):
-        if not self.filters and not self.options.clock_enabled:
+    def build_imagemagick_filter_cmd(self, filename):
+        if not self.filters:
             return None
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
         cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        if self.filters:
-            filter = self.filters[random.randint(0, len(self.filters) - 1)]
-            if filter.strip():
-                logger.info("Applying filter: " + filter)
-                cmd += filter + ' '
+        filter = self.filters[random.randint(0, len(self.filters) - 1)]
+        if filter.strip():
+            logger.info("Applying filter: " + filter)
+            cmd += filter + ' '
+
+        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-filter.jpg") + '"'
+        logger.info("ImageMagick filter cmd: " + cmd)
+        return cmd
+
+    def build_imagemagick_clock_cmd(self, filename):
+        if not self.options.clock_enabled:
+            return None
+
+        w = Gdk.Screen.get_default().get_width()
+        h = Gdk.Screen.get_default().get_height()
+        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
         if self.options.clock_enabled and self.options.clock_filter.strip():
             hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, w, h)
@@ -618,8 +631,8 @@ class VarietyWindow(Window):
             logger.info("Applying clock filter: " + clock_filter)
             cmd += clock_filter + ' '
 
-        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper.jpg") + '"'
-        logger.info("ImageMagick cmd: " + cmd)
+        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-clock.jpg") + '"'
+        logger.info("ImageMagick clock cmd: " + cmd)
         return cmd
 
     @staticmethod
@@ -647,10 +660,26 @@ class VarietyWindow(Window):
         filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
         return filter
 
-    def refresh_wallpaper(self):
-        self.do_set_wp(self.current, just_a_refresh=True)
 
-    def do_set_wp(self, filename, just_a_refresh=False):
+    class RefreshLevel:
+        ALL = 0
+        FILTERS_AND_CLOCK = 1
+        CLOCK_ONLY = 2
+
+    def refresh_wallpaper(self):
+        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_CLOCK)
+
+    def refresh_clock(self):
+        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
+
+    def write_filtered_wallpaper_origin(self, filename):
+        try:
+            with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
+                f.write(filename)
+        except Exception:
+            pass
+
+    def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
         with self.do_set_wp_lock:
             self.set_wp_timer = None
 
@@ -660,24 +689,34 @@ class VarietyWindow(Window):
                     return
 
                 to_set = filename
-                cmd = self.build_imagemagick_cmd(filename)
-                if cmd:
+                if self.filters:
+                    if refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY:
+                        self.post_filter_filename = to_set
+                        cmd = self.build_imagemagick_filter_cmd(filename)
+                        result = os.system(cmd)
+                        if result == 0: #success
+                            to_set = os.path.join(self.config_folder, "wallpaper-filter.jpg")
+                            self.post_filter_filename = to_set
+                            self.write_filtered_wallpaper_origin(filename)
+                        else:
+                            logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
+                    else:
+                        to_set = self.post_filter_filename
+
+                if self.options.clock_enabled:
+                    cmd = self.build_imagemagick_clock_cmd(to_set)
                     result = os.system(cmd)
                     if result == 0: #success
-                        to_set = os.path.join(self.config_folder, "wallpaper.jpg")
-                        try:
-                            with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
-                                f.write(filename)
-                        except Exception:
-                            pass
+                        to_set = os.path.join(self.config_folder, "wallpaper-clock.jpg")
+                        self.write_filtered_wallpaper_origin(filename)
                     else:
-                        logger.warning("Could not execute convert command - missing ImageMagick or bad filter defined?")
+                        logger.warning("Could not execute clock convert command - missing ImageMagick or bad filter defined?")
 
                 self.update_indicator(filename, False)
                 self.set_desktop_wallpaper(to_set)
                 self.current = filename
 
-                if not just_a_refresh:
+                if refresh_level == VarietyWindow.RefreshLevel.ALL:
                     self.last_change_time = time.time()
                     self.save_last_change_time()
                     self.save_history()
@@ -1003,9 +1042,9 @@ class VarietyWindow(Window):
 
             if self.options.clock_enabled:
                 self.options.clock_enabled = False
-                GObject.idle_add(self.refresh_wallpaper)
+                GObject.idle_add(self.refresh_clock)
 
-            Util.start_force_exit_thread(5)
+            Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
 
     def first_run(self):
@@ -1193,7 +1232,7 @@ class VarietyWindow(Window):
 
         current = self.get_desktop_wallpaper()
         if current:
-            if os.path.normpath(current) == os.path.normpath(os.path.join(self.config_folder, "wallpaper.jpg")):
+            if os.path.normpath(os.path.dirname(current)) == os.path.normpath(self.config_folder):
                 try:
                     with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
                         current = f.read().strip()

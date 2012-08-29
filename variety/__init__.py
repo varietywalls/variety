@@ -68,7 +68,7 @@ def sigint_handler(a, b):
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
         VARIETY_WINDOW.on_quit()
-    Util.start_force_exit_thread(3)
+    Util.start_force_exit_thread(10)
 
 def main():
     args = parse_options()
