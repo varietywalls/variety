@@ -148,7 +148,9 @@ class VarietyWindow(Window):
                 if not text:
                     return
 
-                valid = [url for url in text.split('\n') if ImageFetcher.url_ok(url, self.options.clipboard_hosts)]
+                valid = [url for url in text.split('\n') if
+                         ImageFetcher.url_ok(url, self.options.clipboard_use_whitelist, self.options.clipboard_hosts)]
+
                 if valid:
                     logger.info("Received clipboard URLs: " + str(valid))
                     self.process_urls(valid, verbose=False)
@@ -171,6 +173,7 @@ class VarietyWindow(Window):
         logger.info("Favorites folder: " + self.options.favorites_folder)
         logger.info("Fetched folder: " + self.options.fetched_folder)
         logger.info("Clipboard enabled: " + str(self.options.clipboard_enabled))
+        logger.info("Clipboard use whitelist: " + str(self.options.clipboard_use_whitelist))
         logger.info("Clipboard hosts: " + str(self.options.clipboard_hosts))
         logger.info("Color enabled: " + str(self.options.desired_color_enabled))
         logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))

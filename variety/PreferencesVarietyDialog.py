@@ -81,6 +81,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
         self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
+        self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
         self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
@@ -136,6 +137,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_desired_color_enabled_toggled()
         self.on_min_size_enabled_toggled()
         self.on_lightness_enabled_toggled()
+        self.update_clipboard_state()
 
         self.build_add_button_menu()
 
@@ -472,6 +474,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
                 self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
             self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
+            self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
             buf = self.ui.clipboard_hosts.get_buffer()
             self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
 
@@ -622,3 +625,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.error_fetched.set_label("No write permissions")
         else:
             self.ui.error_fetched.set_label("")
+
+    def update_clipboard_state(self, widget=None):
+        self.ui.clipboard_use_whitelist.set_sensitive(self.ui.clipboard_enabled.get_active())
+        # keep the hosts list always enabled - user can wish to add hosts even when monitoring is not enabled - if undesired, uncomment below:
+        # self.ui.clipboard_hosts.set_sensitive(self.ui.clipboard_enabled.get_active() and self.ui.clipboard_use_whitelist.get_active())

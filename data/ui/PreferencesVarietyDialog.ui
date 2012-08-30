@@ -899,7 +899,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="clipboard_enabled">
-                        <property name="label" translatable="yes">Monitor clipboard for image URLs and fetch them when the host is one of these:</property>
+                        <property name="label" translatable="yes">Monitor clipboard for image URLs and fetch them</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -908,15 +908,36 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="valign">start</property>
                         <property name="margin_left">25</property>
                         <property name="margin_top">10</property>
-                        <property name="margin_bottom">5</property>
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="update_clipboard_state" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="clipboard_use_whitelist">
+                        <property name="label" translatable="yes">But fetch only when the URL host is one of these:</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">25</property>
+                        <property name="margin_bottom">5</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="update_clipboard_state" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -943,7 +964,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>

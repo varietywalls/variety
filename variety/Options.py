@@ -133,6 +133,11 @@ class Options:
                 pass
 
             try:
+                self.clipboard_use_whitelist = config["clipboard_use_whitelist"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.clipboard_hosts = config["clipboard_hosts"].lower().split(',')
             except Exception:
                 pass
@@ -296,6 +301,7 @@ class Options:
 
         self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
         self.clipboard_enabled = False
+        self.clipboard_use_whitelist = True
         self.clipboard_hosts = "wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
 
         self.desired_color_enabled = False
@@ -356,6 +362,7 @@ class Options:
 
             config["fetched_folder"] = self.fetched_folder
             config["clipboard_enabled"] = self.clipboard_enabled
+            config["clipboard_use_whitelist"] = self.clipboard_use_whitelist
             config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
 
             config["desired_color_enabled"] = str(self.desired_color_enabled)

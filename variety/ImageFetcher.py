@@ -19,6 +19,7 @@ import urllib2
 import logging
 import urlparse
 from variety.Util import Util
+from PIL import Image
 
 logger = logging.getLogger('variety')
 
@@ -26,13 +27,18 @@ logger = logging.getLogger('variety')
 class ImageFetcher:
 
     @staticmethod
-    def url_ok(url, hosts_whitelist):
+    def url_ok(url, use_whitelist, hosts_whitelist):
+        print "checking url " + url
         try:
             p = urlparse.urlparse(url)
             if p.scheme in ['http', 'https']:
-                for host in hosts_whitelist:
-                    if host.strip() and p.netloc.find(host) >= 0:
-                        return True
+                if use_whitelist:
+                    for host in hosts_whitelist:
+                        if host.strip() and p.netloc.find(host) >= 0:
+                            return True
+                else:
+                    return p.path.lower().endswith(('.jpg', '.jpeg', '.png', '.tiff'))
+                    # skip gif - they are usually small images
             return False
         except Exception:
             return False
@@ -89,6 +95,20 @@ class ImageFetcher:
             data = u.read()
             with open(filename, 'wb') as f:
                 f.write(data)
+
+            try:
+                img = Image.open(filename)
+            except Exception:
+                parent.show_notification("Not an image", url)
+                os.unlink(filename)
+                return None
+
+            if img.size[0] < 400 or img.size[1] < 400:
+                # too small - delete and do not use
+                parent.show_notification("Image too small, ignoring it", url)
+                os.unlink(filename)
+                return None
+
             Util.write_metadata(filename, {"sourceName": "Fetched", "sourceURL": url, "imageURL": url})
 
             logger.info("Fetched %s to %s." % (url, filename))
