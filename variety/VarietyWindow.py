@@ -517,7 +517,7 @@ class VarietyWindow(Window):
             except Exception:
                 logger.exception("Error in prepare thread:")
 
-            self.prepare_event.wait(30)
+            self.prepare_event.wait()
             self.prepare_event.clear()
 
     def download_thread(self):
@@ -1017,6 +1017,7 @@ class VarietyWindow(Window):
         self.used = [f for f in self.used if f != file]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
+            self.prepare_event.set()
 
     def copy_to_favorites(self, widget=None, file=None):
         try:
