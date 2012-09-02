@@ -259,7 +259,8 @@ class VarietyWindow(Window):
             self.prepared = []
         self.image_count = -1
 
-        GObject.idle_add(self.refresh_wallpaper)
+        threading.Timer(0.1, self.refresh_wallpaper).start()
+
         if self.events:
             for e in self.events:
                 e.set()
@@ -693,7 +694,7 @@ class VarietyWindow(Window):
 
                 to_set = filename
                 if self.filters:
-                    if refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY:
+                    if refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY or not hasattr(self, "post_filter_filename"):
                         self.post_filter_filename = to_set
                         cmd = self.build_imagemagick_filter_cmd(filename)
                         result = os.system(cmd)
