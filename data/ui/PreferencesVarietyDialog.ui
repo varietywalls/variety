@@ -1765,20 +1765,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label26">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_bottom">5</property>
-            <property name="label" translatable="yes">Variety participates in the Ubuntu App Showdown contest. If you like it, please support it &lt;a href="http://www.surveymonkey.com/s/P56YNQ9"&gt;here&lt;/a&gt;. Thank you.</property>
-            <property name="use_markup">True</property>
-            <property name="wrap">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">1</property>
-          </packing>
+          <placeholder/>
         </child>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
@@ -1837,6 +1824,16 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkListStore" id="sources_model">
+    <columns>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
+      <!-- column-name type -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkSizeGroup" id="sizegroup1">
     <widgets>
       <widget name="add_button"/>
@@ -1872,16 +1869,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="min_size"/>
       <widget name="lightness"/>
     </widgets>
-  </object>
-  <object class="GtkListStore" id="sources_model">
-    <columns>
-      <!-- column-name enabled -->
-      <column type="gboolean"/>
-      <!-- column-name type -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
 </interface>

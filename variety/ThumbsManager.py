@@ -64,16 +64,22 @@ class ThumbsManager():
         close_item.connect("activate", close)
         menu.append(close_item)
 
+        options = self.load_options()
+
         position_menu = Gtk.Menu()
-        for p in ThumbsManager.POSITIONS.keys():
-            item = Gtk.MenuItem(p[0].upper() + p[1:])
+        for p, v in ThumbsManager.POSITIONS.items():
+            item = Gtk.CheckMenuItem(p[0].upper() + p[1:])
+            item.set_draw_as_radio(True)
+            item.set_active(options.position == v)
             def _set_position(widget, pos=p): self.set_position(pos)
             item.connect("activate", _set_position)
             position_menu.append(item)
 
         size_menu = Gtk.Menu()
         for size in ThumbsManager.SIZES:
-            item = Gtk.MenuItem(str(size))
+            item = Gtk.CheckMenuItem(str(size))
+            item.set_draw_as_radio(True)
+            item.set_active(options.breadth == size)
             def _set_size(widget, size=size): self.set_size(size)
             item.connect("activate", _set_size)
             size_menu.append(item)
