@@ -718,9 +718,6 @@
                     <property name="position">2</property>
                   </packing>
                 </child>
-                <child>
-                  <placeholder/>
-                </child>
               </object>
             </child>
             <child type="tab">
@@ -1498,8 +1495,9 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="margin_left">30</property>
+                    <property name="margin_right">20</property>
                     <property name="margin_top">7</property>
-                    <property name="label" translatable="yes">This is an experimental feature, still under development. The current way to configure the clock is to edit the clock_filter property in Variety's settings file directly (~/.config/variety/variety.conf). There are comments there to guide you.</property>
+                    <property name="label" translatable="yes">This is an experimental feature, still under development. The current way to configure the clock is to edit the clock_filter property in Variety's settings file directly (~/.config/variety/variety.conf). There are comments there to guide you (or look in ~/.config/variety/variety_latest_default.conf if you do not see them).</property>
                     <property name="wrap">True</property>
                   </object>
                   <packing>

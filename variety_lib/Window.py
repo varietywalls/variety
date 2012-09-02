@@ -105,6 +105,20 @@ class Window(Gtk.Window):
             self.about.destroy()
             self.about = None
 
+    def create_preferences_dialog(self):
+        logger.debug('create new preferences_dialog')
+        self.preferences_dialog = self.PreferencesDialog(parent=self) # pylint: disable=E1102
+
+        def _on_preferences_dialog_destroyed(widget, data=None):
+            logger.debug('on_preferences_dialog_destroyed')
+            self.preferences_dialog = None
+        self.preferences_dialog.connect('destroy', _on_preferences_dialog_destroyed)
+
+        def _on_preferences_close_button(arg1, arg2):
+            self.preferences_dialog.close()
+            return True
+        self.preferences_dialog.connect('delete_event', _on_preferences_close_button)
+
     def on_mnu_preferences_activate(self, widget, data=None):
         """Display the preferences window for variety."""
 
@@ -114,15 +128,19 @@ class Window(Gtk.Window):
            use the present() method to move the already-open dialog
            where the user can see it."""
         if self.preferences_dialog is not None:
-            logger.debug('show existing preferences_dialog')
-            self.preferences_dialog.set_keep_above(True)
-            self.preferences_dialog.present()
-            self.preferences_dialog.set_keep_above(False)
-            self.preferences_dialog.present()
+            if self.preferences_dialog.get_visible():
+                logger.debug('bring to front existing and visible preferences_dialog')
+                self.preferences_dialog.set_keep_above(True)
+                self.preferences_dialog.present()
+                self.preferences_dialog.set_keep_above(False)
+                self.preferences_dialog.present()
+            else:
+                logger.debug('reload and show existing but non-visible preferences_dialog')
+                self.preferences_dialog.reload()
+                self.preferences_dialog.show()
+
         elif self.PreferencesDialog is not None:
-            logger.debug('create new preferences_dialog')
-            self.preferences_dialog = self.PreferencesDialog(parent=self) # pylint: disable=E1102
-            self.preferences_dialog.connect('destroy', self.on_preferences_dialog_destroyed)
+            self.create_preferences_dialog()
             self.preferences_dialog.show()
         # destroy command moved into dialog to allow for a help button
 
@@ -137,13 +155,3 @@ class Window(Gtk.Window):
 
     def on_preferences_changed(self, settings, key, data=None):
         logger.debug('preference changed: %s = %s' % (key, str(settings.get_value(key))))
-
-    def on_preferences_dialog_destroyed(self, widget, data=None):
-        '''only affects gui
-        
-        logically there is no difference between the user closing,
-        minimising or ignoring the preferences dialog'''
-        logger.debug('on_preferences_dialog_destroyed')
-        # to determine whether to create or present preferences_dialog
-        self.preferences_dialog = None
-

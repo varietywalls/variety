@@ -48,7 +48,7 @@ class ThumbsManager():
         self.show_thumbs_lock = threading.Lock()
 
         self.pinned = False
-        self.images = None
+        self.images = []
         self.screen = None
 
         self.type = None

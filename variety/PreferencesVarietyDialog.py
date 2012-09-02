@@ -58,6 +58,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # Bind each preference widget to gsettings
         #        widget = self.builder.get_object('example_entry')
         #        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+        self.reload()
+
+    def reload(self):
+        logger.info("Reloading preferences dialog")
 
         self.options = Options()
         self.options.read()
@@ -105,12 +109,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.clock_enabled.set_active(self.options.clock_enabled)
 
+        self.ui.sources.get_model().clear()
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
         self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
             self.ui.sources.get_model())
         #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
 
+        if hasattr(self, "filter_checkboxes"):
+            for cb in self.filter_checkboxes:
+                self.ui.filters_grid.remove(cb)
+                cb.destroy()
         self.filter_checkboxes = []
         for i, f in enumerate(self.options.filters):
             cb = Gtk.CheckButton(f[1])
@@ -437,8 +446,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
         self.dialog = None
 
+    def close(self):
+        self.hide()
+        self.on_destroy()
+
     def on_cancel_clicked(self, widget):
-        self.destroy()
+        self.close()
 
     def on_save_clicked(self, widget):
         try:
@@ -509,7 +522,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.update_autostart()
 
-            self.destroy()
+            self.close()
         except Exception:
             logger.exception("Error while saving")
             dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,

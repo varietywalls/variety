@@ -95,7 +95,6 @@ class VarietyWindow(Window):
 
         self.image_count = -1
         self.image_colors_cache = {}
-        #TODO load image cache
 
         self.wheel_timer = None
         self.set_wp_timer = None
@@ -108,6 +107,9 @@ class VarietyWindow(Window):
 
         self.about = None
         self.preferences_dialog = None
+
+        GObject.idle_add(self.create_preferences_dialog)
+
         self.dialogs = []
 
     def prepare_config_folder(self):
