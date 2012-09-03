@@ -9,6 +9,14 @@
 # or run commands like notify-send to notify you of the change, or you can
 # run commands that would theme your browser, login screen or whatever you desire.
 
+# KDE - User will have to manually choose ~/.config/variety/wallpaper-kde.jpg as a wallpaper.
+# Afterwards, with the command below, Variety will just overwrite the file when changing the wallpaper
+# and KDE will refresh it
+if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
+    cp "$1" ~/.config/variety/wallpaper-kde.jpg
+    exit 0
+fi
+
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$1" 2> /dev/null
 

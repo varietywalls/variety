@@ -21,7 +21,7 @@ import os
 import threading
 import logging
 from variety.ThumbsWindow import ThumbsWindow
-from variety_lib.helpers import get_media_file
+from variety_lib import varietyconfig
 
 logger = logging.getLogger('variety')
 
@@ -190,7 +190,12 @@ class ThumbsManager():
                     options = self.load_options()
                     self.thumbs_window = ThumbsWindow(
                         screen=screen, position=options.position, breadth=options.breadth)
-                    self.thumbs_window.set_icon_from_file(get_media_file("variety.svg").replace("file://", ""))
+                    try:
+                        icon = varietyconfig.get_data_file("media", "variety.svg")
+                        self.thumbs_window.set_icon_from_file(icon)
+                    except Exception:
+                        logger.exception("Could not set thumbs window icon")
+
                     title = "Variety %s" % ("History" if self.type == "history" else "Images")
                     self.thumbs_window.set_title(title)
                     self.thumbs_window.connect("clicked", self.on_click)

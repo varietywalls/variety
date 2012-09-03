@@ -42,7 +42,6 @@
             <property name="can_focus">False</property>
             <property name="halign">start</property>
             <property name="valign">start</property>
-            <property name="margin_bottom">80</property>
             <property name="xpad">30</property>
             <property name="label" translatable="yes">Variety is an automatic wallpaper changer. You specify some images or picture folders and it will change your desktop wallpaper on a regular interval. It can also automatically download great wallpapers for you from several online sources.
 
@@ -64,6 +63,7 @@ Please take the time to set your preferences on the next screen.</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_right">30</property>
+            <property name="margin_top">80</property>
             <property name="margin_bottom">15</property>
             <property name="layout_style">end</property>
             <child>
@@ -88,6 +88,57 @@ Please take the time to set your preferences on the next screen.</property>
             <property name="fill">True</property>
             <property name="pack_type">end</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="kde_warning">
+            <property name="can_focus">False</property>
+            <property name="margin_top">40</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="margin_left">30</property>
+                <property name="margin_bottom">10</property>
+                <property name="label" translatable="yes">KDE Users - Important, please read:</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                  <attribute name="foreground" value="#ffff00000000"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="message1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="xpad">30</property>
+                <property name="label" translatable="yes">You appear to be running KDE. Variety supports KDE, but you have to do something first:
+
+KDE makes it very hard for programs to set the wallpaper unless they use KDE-specific libraries and this is not an option for Variety. 
+Instead, please manually set the file ~/.config/variety/wallpaper-kde.jpg as your wallpaper and keep it that way. When changing wallpapers later on, Variety will update this file and KDE will automatically refresh the wallpaper.</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>

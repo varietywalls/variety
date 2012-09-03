@@ -17,7 +17,6 @@
 import gettext
 from gettext import gettext as _
 import subprocess
-from variety_lib.helpers import get_media_file
 from variety.FacebookHelper import FacebookHelper
 
 gettext.textdomain('variety')
@@ -801,7 +800,7 @@ class VarietyWindow(Window):
 
     def show_notification(self, title, message="", icon=None):
         if not icon:
-            icon = get_media_file("variety.svg")
+            icon = varietyconfig.get_data_file("media", "variety.svg")
         try:
             self.notification.update(title, message, icon)
         except AttributeError:
@@ -1060,6 +1059,12 @@ class VarietyWindow(Window):
             f = open(fr_file, "w")
             f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             f.close()
+
+            if os.environ.get('KDE_FULL_SESSION') == 'true':
+                logger.info("KDE detected")
+                shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), self.config_folder)
+                self.ui.kde_warning.set_visible(True)
+
             self.show()
 
     def on_continue_clicked(self, button=None):
@@ -1067,7 +1072,7 @@ class VarietyWindow(Window):
         self.on_mnu_preferences_activate(button)
 
     def edit_prefs_file(self, widget=None):
-        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTGROY_WITH_PARENT,
+        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTROY_WITH_PARENT,
             Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
             "I will open an editor with the config file and apply the changes after you save and close the editor.")
         self.dialogs.append(dialog)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-30 01:39+0300\n"
+"POT-Creation-Date: 2012-09-03 17:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,6 +40,23 @@ msgstr ""
 
 #: ../data/ui/VarietyWindow.ui.h:9
 msgid "Continue"
+msgstr ""
+
+#: ../data/ui/VarietyWindow.ui.h:10
+msgid "KDE Users - Important, please read:"
+msgstr ""
+
+#: ../data/ui/VarietyWindow.ui.h:11
+msgid ""
+"You appear to be running KDE. Variety supports KDE, but you have to do "
+"something first:\n"
+"\n"
+"KDE makes it very hard for programs to set the wallpaper unless they use KDE-"
+"specific libraries and this is not an option for Variety. \n"
+"Instead, please manually set the file ~/.config/variety/wallpaper-kde.jpg as "
+"your wallpaper and keep it that way. When changing wallpapers later on, "
+"Variety will update this file and KDE will automatically refresh the "
+"wallpaper."
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
@@ -163,7 +180,7 @@ msgid "20"
 msgstr ""
 
 #: ../data/ui/AddWallbaseDialog.ui.h:13
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "100"
 msgstr ""
 
@@ -244,7 +261,7 @@ msgid "An automatic wallpaper changer, downloader and manager."
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid "https://launchpad.net/variety"
 msgstr ""
 
@@ -491,145 +508,141 @@ msgid "Clipboard monitoring"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:40
-msgid ""
-"Monitor clipboard for image URLs and fetch them when the host is one of "
-"these:"
+msgid "Monitor clipboard for image URLs and fetch them"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:41
-msgid "Manual downloading"
+msgid "But fetch only when the URL host is one of these:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:42
-msgid "Facebook"
+msgid "Manual downloading"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:43
-msgid "Enable sharing on Facebook for images coming from online sources"
+msgid "Facebook"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:44
-msgid "Display dialog to customize the Facebook post before publishing"
+msgid "Enable sharing on Facebook for images coming from online sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:45
-msgid "Sharing"
+msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:46
-msgid "Color and size"
+msgid "Sharing"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:47
-msgid "When possible, use images that:"
+msgid "Color and size"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:48
-msgid "Have landscape orientation"
+msgid "When possible, use images that:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:49
-msgid "Are big at least "
+msgid "Have landscape orientation"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:50
-msgid "50"
+msgid "Are big at least "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:51
+msgid "50"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "80"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Are dark or light:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Dark"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Light"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Contain this color: "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "(This is an experimental feature)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Filters"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Clock"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid ""
 "Draw a nice big digital clock on the desktop, showing the current time and "
 "date"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid ""
 "This is an experimental feature, still under development. The current way to "
 "configure the clock is to edit the clock_filter property in Variety's "
 "settings file directly (~/.config/variety/variety.conf). There are comments "
-"there to guide you."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
-msgid "Effects"
+"there to guide you (or look in ~/.config/variety/variety_latest_default.conf "
+"if you do not see them)."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
-msgid "Tips and tricks"
+msgid "Effects"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:67
-msgid "Recent changes"
+msgid "Tips and tricks"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:68
+msgid "Recent changes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "Visit website"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Report a bug or request a feature"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "https://bugs.launchpad.net/variety/+filebug"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid "Send feedback"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
-msgid "peterlevi@peterlevi.com"
-msgstr ""
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
-msgid ""
-"Variety participates in the Ubuntu App Showdown contest. If you like it, "
-"please support it <a href=\"http://www.surveymonkey.com/s/P56YNQ9\">here</"
-"a>. Thank you."
+msgid "peterlevi@peterlevi.com"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:75

@@ -19,7 +19,7 @@
 from gi.repository import Gtk # pylint: disable=E0611
 from gi.repository import AppIndicator3 # pylint: disable=E0611
 
-from variety_lib.helpers import get_media_file
+from variety_lib import varietyconfig
 
 import gettext
 from gettext import gettext as _
@@ -30,8 +30,7 @@ class Indicator:
         self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
 
-        icon_uri = get_media_file("variety-indicator.svg")
-        icon_path = icon_uri.replace("file:///", '')
+        icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
         self.indicator.set_icon(icon_path)
 
         self.indicator.connect("scroll-event", window.on_indicator_scroll)
