@@ -437,7 +437,7 @@ class VarietyWindow(Window):
                     if not self.running:
                         return
                     now = time.time()
-                    wait_more = self.options.change_interval - (now - self.last_change_time)
+                    wait_more = self.options.change_interval - max(0, (now - self.last_change_time))
                     if self.options.change_enabled:
                         self.change_event.wait(max(0, wait_more))
                     else:

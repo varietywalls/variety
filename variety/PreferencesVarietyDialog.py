@@ -556,6 +556,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             else:
                 if not os.path.exists(file):
                     logger.info("Creating autostart entry")
+
+                    Util.makedirs(os.path.expanduser("~/.config/autostart/"))
+
                     with open("/proc/%s/cmdline" % os.getpid()) as f:
                         cmdline = f.read().strip()
 
