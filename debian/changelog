@@ -1,3 +1,28 @@
+variety (0.4.9) precise; urgency=low
+
+  * Autostart: create .config/autostart if needed; Handle case when user
+    sets local clock back in time
+  * KDE support, initial version
+  * Do not destroy preferences dialog, just hide it, cache it on start -
+    shows much faster now
+  * Thumbs menu: radio mark on the current size and position menu items
+  * Initial wallpaper refresh in a Timer - faster start when filters are
+    used
+  * Minor fix: make prepare thread not wake every 30 seconds
+  * Clipboard monitoring: option to bypass the whitelist
+  * Separate filter and clock filter so that only clock filter is
+    applied every minute (reduced CPU usage when both are used); Better
+    icon (128 px, not blurry in gnome shell)
+  * Persist last wallpaper change moment. Use it when change interval is
+    >= 6 hours to ensure wallpaper changes regularly even between
+    restarts; Fixed bug in history persisting - was persisting too much
+  * Minor fix to comments in variety.conf
+  * Marking of current file in thumbnails view
+  * Proper listening for thumbs window closed event - updates the
+    Close/Show history state
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 04 Sep 2012 23:02:17 +0300
+
 variety (0.4.8ubuntu1) precise; urgency=low
 
   * 
