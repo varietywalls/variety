@@ -17,7 +17,9 @@
 import gettext
 from gettext import gettext as _
 import subprocess
+from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
+from variety_lib.varietyconfig import get_version
 
 gettext.textdomain('variety')
 
@@ -397,8 +399,8 @@ class VarietyWindow(Window):
                 else:
                     self.ind.history.set_label("Show _History")
 
-                fb_enabled = self.options.facebook_enabled and (self.url is not None)
-                self.ind.publish_fb.set_visible(fb_enabled)
+                self.ind.publish_fb.set_visible(self.options.facebook_enabled)
+                self.ind.publish_fb.set_sensitive(self.url is not None)
 
                 self.update_pause_resume()
 
@@ -951,7 +953,8 @@ class VarietyWindow(Window):
     def move_or_copy_file(self, file, to, to_name, operation):
         op = "Moved" if operation == shutil.move else "Copied"
         try:
-            operation(file, to)
+            if file != to:
+                operation(file, to)
             try:
                 operation(file + ".txt", to)
             except Exception:
@@ -1025,7 +1028,7 @@ class VarietyWindow(Window):
         try:
             if not file:
                 file = self.current
-            if os.access(file, os.R_OK):
+            if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
         except Exception:
@@ -1083,11 +1086,134 @@ class VarietyWindow(Window):
         os.system("gedit ~/.config/variety/variety.conf")
         self.reload_config()
 
-    def on_pause_resume(self, widget=None):
-        self.options.change_enabled = not self.options.change_enabled
+    def on_pause_resume(self, widget=None, change_enabled=None):
+        if change_enabled is None:
+            self.options.change_enabled = not self.options.change_enabled
+        else:
+            self.options.change_enabled = change_enabled
+
         self.options.write()
         self.update_indicator(auto_changed=False)
         self.change_event.set()
+
+    @staticmethod
+    def parse_options(arguments, report_errors=True):
+        """Support for command line options"""
+        usage = """%prog [options] [files or urls]
+
+Passing local files will add them to Variety's queue
+Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue
+
+To set a specific wallpaper: %prog /some/local/image.jpg --next"""
+        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % get_version(), report_errors=report_errors)
+
+        parser.add_option(
+            "-v", "--verbose", action="count", dest="verbose",
+            help=_("Show logging messages (-vv shows even finer debugging messages, -vvv debugs variety_lib too)"))
+
+        parser.add_option(
+            "-q", "--quit", action="store_true", dest="quit",
+            help=_("Make the running instance quit"))
+
+        parser.add_option(
+            "--get", "--current", "--show-current", action="store_true", dest="show_current",
+            help=_("Print the current wallpaper location. Used only when the application is already running."))
+
+        parser.add_option(
+            "-n", "--next", action="store_true", dest="next",
+            help=_("Show Next wallpaper"))
+
+        parser.add_option(
+            "-p", "--previous", action="store_true", dest="previous",
+            help=_("Show Previous wallpaper"))
+
+        parser.add_option(
+            "--fast-forward", action="store_true", dest="fast_forward",
+            help=_("Show Next wallpaper, skipping the forward history"))
+
+        parser.add_option(
+            "-t", "--trash", action="store_true", dest="trash",
+            help=_("Move current wallpaper to Trash. Used only when the application is already running."))
+
+        parser.add_option(
+            "-f", "--favorite", action="store_true", dest="favorite",
+            help=_("Copy current wallpaper to Favorites. Used only when the application is already running."))
+
+        parser.add_option(
+            "--pause", action="store_true", dest="pause",
+            help=_("Pause"))
+
+        parser.add_option(
+            "--resume", action="store_true", dest="resume",
+            help=_("Resume"))
+
+        parser.add_option(
+            "--toggle-pause", action="store_true", dest="toggle_pause",
+            help=_("Toggle Pause/Resume state"))
+
+        options, args = parser.parse_args(arguments)
+
+        if report_errors:
+            if (options.next or options.fast_forward) and options.previous:
+                parser.error("options --next/--fast-forward and --previous are mutually exclusive")
+
+            if options.trash and options.favorite:
+                parser.error("options --trash and --favorite are mutually exclusive")
+
+            if options.pause and options.resume:
+                parser.error("options --pause and --resume are mutually exclusive")
+
+        return options, args
+
+    def process_command(self, arguments, initial_run):
+        try:
+            logger.info("Received command: " + str(arguments))
+
+            options, args = self.parse_options(arguments, report_errors=False)
+
+            if options.quit:
+                self.on_quit()
+                return
+
+            if args:
+                logger.info("Treating free arguments as urls: " + str(args))
+                self.process_urls(args)
+
+            def _process_command():
+                if not initial_run:
+                    if options.trash:
+                        self.move_to_trash()
+                    elif options.favorite:
+                        self.copy_to_favorites()
+
+                if options.fast_forward:
+                    self.next_wallpaper(bypass_history=True)
+                elif options.next:
+                    self.next_wallpaper()
+                elif options.previous:
+                    self.prev_wallpaper()
+
+                if options.pause:
+                    self.on_pause_resume(change_enabled=False)
+                elif options.resume:
+                    self.on_pause_resume(change_enabled=True)
+                elif options.toggle_pause:
+                    self.on_pause_resume()
+
+            def _process_command_on_gtk():
+                GObject.idle_add(_process_command)
+
+            delay = 0
+            if args:
+                delay = 1
+            if initial_run:
+                delay = 4
+            command_timer = threading.Timer(delay, _process_command_on_gtk)
+            command_timer.start()
+
+            return self.current if options.show_current else ""
+        except Exception:
+            logger.exception("Could not process passed command")
 
     def process_urls(self, urls, verbose=True):
         def fetch():
