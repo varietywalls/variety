@@ -83,9 +83,15 @@ class ImageFetcher:
 
             filename = os.path.join(to, local_name)
             if os.path.exists(filename):
-                logger.info("Local file already exists (%s)" % filename)
-                parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
-                return filename
+                m = Util.read_metadata(filename)
+                if m and m["imageURL"] == url:
+                    logger.info("Local file already exists (%s)" % filename)
+                    parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
+                    return filename
+                else:
+                    logger.info("File with same name already exists, but from different imageURL; renaming new download")
+                    filename = Util.find_unique_name(filename)
+                    local_name = os.path.basename(filename)
 
             logger.info("Fetching to " + filename)
             if not reported:

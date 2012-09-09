@@ -165,3 +165,18 @@ class Util:
     def get_size(image):
         d = DominantColors(image)
         return d.get_width(), d.get_height()
+
+    @staticmethod
+    def find_unique_name(filename):
+        index = filename.rfind('.')
+        if index < 0:
+            index = len(filename)
+        before_extension = filename[:index]
+        extension = filename[index:]
+        i = 1
+        f = filename
+        while os.path.exists(f):
+            f = before_extension + '_' + str(i) + extension
+            i += 1
+        return f
+

@@ -73,6 +73,7 @@
               <object class="GtkEntry" id="url">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
                 <property name="margin_right">10</property>
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
