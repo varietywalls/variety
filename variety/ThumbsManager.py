@@ -274,6 +274,6 @@ class ThumbsManager():
             self.thumbs_window.add_image(file, gdk_thread, at_front=True)
 
     def is_showing(self, type):
-        return self.thumbs_window and self.type == type
+        return self.thumbs_window is not None and self.type == type
 
 

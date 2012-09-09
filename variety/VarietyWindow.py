@@ -85,6 +85,8 @@ class VarietyWindow(Window):
         self.prepared = []
         self.prepared_lock = threading.Lock()
 
+        self.downloaded = []
+
         self.register_clipboard()
 
         # load config
@@ -397,10 +399,15 @@ class VarietyWindow(Window):
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
 
-                if self.thumbs_manager.thumbs_window and self.thumbs_manager.type == "history":
-                    self.ind.history.set_label("Close _History")
-                else:
-                    self.ind.history.set_label("Show _History")
+                self.ind.history.handler_block(self.ind.history_handler_id)
+                self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
+                self.ind.history.handler_unblock(self.ind.history_handler_id)
+
+                self.ind.downloads.set_visible(self.options.download_enabled)
+                self.ind.downloads.set_sensitive(len(self.downloaded) > 0)
+                self.ind.downloads.handler_block(self.ind.downloads_handler_id)
+                self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
+                self.ind.downloads.handler_unblock(self.ind.downloads_handler_id)
 
                 self.ind.publish_fb.set_visible(self.options.facebook_enabled)
                 self.ind.publish_fb.set_sensitive(self.url is not None)
@@ -543,6 +550,9 @@ class VarietyWindow(Window):
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     file = downloader.download_one()
                     if file:
+                        self.downloaded.insert(0, file)
+                        self.downloaded = self.downloaded[:200]
+                        self.refresh_thumbs_downloads(file)
                         self.download_folder_size += os.path.getsize(file)
                         if self.image_ok(file, 0):
                             pos = random.randint(0, 0) #TODO how much priority do we want to give it?
@@ -871,6 +881,13 @@ class VarietyWindow(Window):
                 else:
                     self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
                     self.thumbs_manager.pin()
+            add_timer = threading.Timer(0, _add)
+            add_timer.start()
+
+    def refresh_thumbs_downloads(self, added_image):
+        GObject.idle_add(self.update_indicator)
+        if self.thumbs_manager.is_showing("downloads"):
+            def _add(): self.thumbs_manager.add_image(added_image, gdk_thread=False)
             add_timer = threading.Timer(0, _add)
             add_timer.start()
 
@@ -1241,6 +1258,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
                         file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
 
                     if file:
+                        self.downloaded.insert(0, file)
+                        self.refresh_thumbs_downloads(file)
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
 
@@ -1311,6 +1330,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
             self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
+            self.thumbs_manager.pin()
+        self.update_indicator(auto_changed=False)
+
+    def show_hide_downloads(self, widget=None):
+        if self.thumbs_manager.is_showing("downloads"):
+            self.thumbs_manager.hide(gdk_thread=True, force=True)
+        else:
+            self.thumbs_manager.show(self.downloaded[:200], gdk_thread=True, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 

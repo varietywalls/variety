@@ -97,10 +97,17 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        self.history = Gtk.MenuItem("Show _History")
+        self.history = Gtk.CheckMenuItem("_History")
+        self.history.set_active(False)
         self.history.set_use_underline(True)
-        self.history.connect("activate", window.show_hide_history)
+        self.history_handler_id = self.history.connect("toggled", window.show_hide_history)
         self.menu.append(self.history)
+
+        self.downloads = Gtk.CheckMenuItem("Recent _Downloads")
+        self.downloads.set_active(False)
+        self.downloads.set_use_underline(True)
+        self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
+        self.menu.append(self.downloads)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
