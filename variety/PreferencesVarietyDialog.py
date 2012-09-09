@@ -32,7 +32,7 @@ from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
-from variety.ThumbsWindow import ThumbsWindow
+from variety.AddMediaRssDialog import AddMediaRssDialog
 
 gettext.textdomain('variety')
 
@@ -46,7 +46,7 @@ logger = logging.getLogger('variety')
 from variety_lib.PreferencesDialog import PreferencesDialog
 
 UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.FETCHED, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
-EDITABLE_TYPES = [Options.SourceType.WN, Options.SourceType.WALLBASE, Options.SourceType.FLICKR]
+EDITABLE_TYPES = [Options.SourceType.WN, Options.SourceType.WALLBASE, Options.SourceType.FLICKR, Options.SourceType.MEDIA_RSS]
 
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
@@ -169,6 +169,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             ("Flickr", self.on_add_flickr_clicked),
             ("Wallbase.cc", self.on_add_wallbase_clicked),
             ("Wallpapers.net", self.on_add_wn_clicked),
+            ("Media RSS", self.on_add_mediarss_clicked),
         ]
 
         for x in items:
@@ -327,6 +328,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLBASE:
                 self.dialog = AddWallbaseDialog()
+            elif type == Options.SourceType.MEDIA_RSS:
+                self.dialog = AddMediaRssDialog()
 
             self.dialog.set_edited_row(edited_row)
 
@@ -413,6 +416,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.set_transient_for(self)
         self.dialog.run()
 
+    def on_add_mediarss_clicked(self, widget=None):
+        self.dialog = AddMediaRssDialog()
+        self.dialog.parent = self
+        self.dialog.set_transient_for(self)
+        self.dialog.run()
+
     def on_add_flickr_clicked(self, widget=None):
         self.dialog = AddFlickrDialog()
         self.dialog.parent = self
@@ -430,6 +439,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
             edited_row[2] = url
         else:
             self.add_sources(Options.SourceType.WN, [url])
+        self.dialog = None
+
+    def on_mediarss_dialog_okay(self, url, edited_row):
+        if edited_row:
+            edited_row[2] = url
+        else:
+            self.add_sources(Options.SourceType.MEDIA_RSS, [url])
         self.dialog = None
 
     def on_flickr_dialog_okay(self, flickr_search, edited_row):

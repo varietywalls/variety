@@ -26,8 +26,8 @@ xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1" 2
 # LXDE/PCmanFM
 pcmanfm --set-wallpaper "$1" 2> /dev/null
 
-# Feh
-feh --bg-scale "$1" 2> /dev/null
+# Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
+# feh --bg-scale "$1" 2> /dev/null
 
 # Mate
 mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$1" 2> /dev/null

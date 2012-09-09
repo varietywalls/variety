@@ -35,6 +35,7 @@ class Downloader(object):
 
     def convert_to_filename(self, url):
         url = re.sub(r"http://", "", url)
+        url = re.sub(r"https://", "", url)
         valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
         return ''.join(c if c in valid_chars else '_' for c in url)
 
@@ -47,7 +48,10 @@ class Downloader(object):
     def is_in_favorites(self, url):
         return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
-    def save_locally(self, origin_url, image_url):
+    def save_locally(self, origin_url, image_url, origin_name = None):
+        if not origin_name:
+            origin_name = self.name
+
         if origin_url in self.parent.banned:
             logger.info("URL " + origin_url + " is banned, skip downloading")
             return None
@@ -70,7 +74,7 @@ class Downloader(object):
             f.write(data)
 
         Util.write_metadata(local_filename, {
-            "sourceName": self.name,
+            "sourceName": origin_name,
             "sourceLocation": self.location,
             "sourceURL": origin_url,
             "imageURL": image_url

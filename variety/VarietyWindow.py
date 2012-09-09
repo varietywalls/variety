@@ -51,6 +51,7 @@ from variety.WallbaseDownloader import WallbaseDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
+from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
@@ -290,6 +291,8 @@ class VarietyWindow(Window):
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLBASE:
             return WallbaseDownloader(self, location)
+        elif type == Options.SourceType.MEDIA_RSS:
+            return MediaRssDownloader(self, location)
         else:
             raise Exception("Uknown downloader type")
 

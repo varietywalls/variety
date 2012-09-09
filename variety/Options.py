@@ -36,6 +36,7 @@ class Options:
         FLICKR = 7
         APOD = 8
         WALLBASE = 9
+        MEDIA_RSS = 10
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -46,12 +47,13 @@ class Options:
             DESKTOPPR: "desktoppr",
             FLICKR: "flickr",
             APOD: "apod",
-            WALLBASE: "wallbase"
+            WALLBASE: "wallbase",
+            MEDIA_RSS: "mediarss",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS]
 
     class LightnessMode:
         DARK = 0
