@@ -76,21 +76,28 @@ class MediaRssDownloader(Downloader.Downloader):
             return None
 
         origin_url, image_url = self.queue.pop()
-        logger.info("Origin URL: " + origin_url)
         parse = urlparse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
         return self.save_locally(origin_url, image_url, origin_name=host)
 
+    @staticmethod
+    def picasa_hack(feed_url):
+        """ Picasa hack - by default Picasa's RSS feeds link to low-resolution images.
+        Add special parameter to request the full-resolution instead:"""
+        if feed_url.find("://picasaweb.") > 0:
+            logger.info("Picasa hack to get full resolution images: add imgmax=d to the feed URL")
+            feed_url = feed_url.replace("&imgmax=", "&imgmax_disabled=")
+            feed_url += "&imgmax=d"
+            logger.info("Final Picasa feed URL: " + feed_url)
+
+        return feed_url
+
     def fill_queue(self):
         logger.info("MediaRSS URL: " + self.location)
+        feed_url = self.location
+        feed_url = MediaRssDownloader.picasa_hack(feed_url)
 
-        # Picasa hack - by default Picasa's RSS feeds link to low-resolution images.
-        # Add special parameter to request the full-resolution instead:
-        if self.location.find("://picasaweb.") > 0 and self.location.find("imgmax=") < 0:
-            logger.info("Applying Picasa hack to get full resolution images: add imgmax=d to the feed URL")
-            s = self.fetch(self.location + "&imgmax=d")
-        else:
-            s = self.fetch(self.location)
+        s = self.fetch(feed_url)
 
 #        try:
 #            self.channel_title = s.find("channel/title").text

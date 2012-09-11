@@ -62,7 +62,9 @@ class Downloader(object):
             pass
 
         local_filename = self.get_local_filename(image_url)
-        logger.info("Name: " + local_filename)
+        logger.info("Origin URL: " + origin_url)
+        logger.info("Image URL: " + image_url)
+        logger.info("Local name: " + local_filename)
 
         if os.path.exists(local_filename):
             logger.info("File already exists, skip downloading")

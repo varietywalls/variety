@@ -17,9 +17,11 @@
 import os
 import random
 import logging
+import string
 import threading
 import time
 import pyexiv2
+import urllib
 from DominantColors import DominantColors
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
@@ -37,6 +39,12 @@ class Util:
         index = filename.find('#')
         if index > 0:
             filename = filename[:index]
+
+        filename = urllib.unquote_plus(filename)
+
+        valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
+        filename = ''.join(c if c in valid_chars else '_' for c in filename)
+
         return filename
 
     @staticmethod
