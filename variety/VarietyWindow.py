@@ -955,7 +955,8 @@ class VarietyWindow(Window):
 
     def on_show_origin(self, widget=None):
         if self.url:
-            os.system("xdg-open " + self.url)
+            logger.info("Opening url: " + self.url)
+            os.system("xdg-open \"" + self.url + "\"")
         else:
             self.open_folder()
 
