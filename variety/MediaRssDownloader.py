@@ -83,7 +83,14 @@ class MediaRssDownloader(Downloader.Downloader):
 
     def fill_queue(self):
         logger.info("MediaRSS URL: " + self.location)
-        s = self.fetch(self.location)
+
+        # Picasa hack - by default Picasa's RSS feeds link to low-resolution images.
+        # Add special parameter to request the full-resolution instead:
+        if self.location.find("://picasaweb.") > 0 and self.location.find("imgmax=") < 0:
+            logger.info("Applying Picasa hack to get full resolution images: add imgmax=d to the feed URL")
+            s = self.fetch(self.location + "&imgmax=d")
+        else:
+            s = self.fetch(self.location)
 
 #        try:
 #            self.channel_title = s.find("channel/title").text
