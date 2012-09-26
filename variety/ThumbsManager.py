@@ -104,6 +104,11 @@ class ThumbsManager():
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
 
+        focus = Gtk.MenuItem("Display Source")
+        def _focus(widget): self.parent.focus_in_preferences(widget, file)
+        focus.connect("activate", _focus)
+        menu.append(focus)
+
         trash_item = Gtk.MenuItem("Move to Trash")
         def _trash(widget): self.parent.move_to_trash(widget, file)
         trash_item.connect("activate", _trash)

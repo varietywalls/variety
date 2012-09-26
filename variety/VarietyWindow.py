@@ -299,7 +299,7 @@ class VarietyWindow(Window):
             raise Exception("Uknown downloader type")
 
     def get_folder_of_source(self, source):
-        type = Options.str_to_type(source[1])
+        type = source[1]
         location = source[2]
 
         if type == Options.SourceType.IMAGE:
@@ -385,6 +385,8 @@ class VarietyWindow(Window):
             for i in xrange(10):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
+
+                self.ind.focus.set_sensitive(self.get_source(file) is not None)
 
                 if auto_changed:
                     # delay enabling Move/Copy operations in this case - see comment below
@@ -959,6 +961,45 @@ class VarietyWindow(Window):
             os.system("xdg-open \"" + self.url + "\"")
         else:
             self.open_folder()
+
+    def get_source(self, file = None):
+        if not file:
+            file = self.current
+
+        prioritized_sources = []
+        prioritized_sources.extend(
+            s for s in self.options.sources if s[0] and s[1] == Options.SourceType.IMAGE)
+        prioritized_sources.extend(
+            s for s in self.options.sources if s[0] and s[1] == Options.SourceType.FOLDER)
+        prioritized_sources.extend(
+            s for s in self.options.sources if s[0] and s[1] in Options.SourceType.dl_types)
+        prioritized_sources.extend(
+            s for s in self.options.sources if s[0] and s[1] == Options.SourceType.FETCHED)
+        prioritized_sources.extend(
+            s for s in self.options.sources if s[0] and s[1] == Options.SourceType.FAVORITES)
+        prioritized_sources.extend(
+            s for s in self.options.sources if s not in prioritized_sources)
+
+        assert len(prioritized_sources) == len(self.options.sources)
+
+        for s in prioritized_sources:
+            if s[1] == Options.SourceType.IMAGE:
+                if os.path.normpath(s[2]) == os.path.normpath(file):
+                    return s
+            elif os.path.normpath(self.get_folder_of_source(s)) == os.path.normpath(os.path.dirname(file)):
+                return s
+
+        return None
+
+    def focus_in_preferences(self, widget=None, file=None):
+        if not file:
+            file = self.current
+        source = self.get_source(file)
+        if source is None:
+            self.show_notification("Current wallpaper is not in the image sources")
+        else:
+            self.on_mnu_preferences_activate()
+            self.preferences_dialog.focus_source_and_image(source, file)
 
     def confirm_move(self, move_or_copy, file, to):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,

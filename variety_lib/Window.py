@@ -119,7 +119,7 @@ class Window(Gtk.Window):
             return True
         self.preferences_dialog.connect('delete_event', _on_preferences_close_button)
 
-    def on_mnu_preferences_activate(self, widget, data=None):
+    def on_mnu_preferences_activate(self, widget=None, data=None):
         """Display the preferences window for variety."""
 
         """ From the PyGTK Reference manual

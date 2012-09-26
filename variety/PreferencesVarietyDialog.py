@@ -272,7 +272,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     existing[r[2]] = r, i
 
         for f in locations:
-            if type == Options.SourceType.FOLDER:
+            if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
             if not f in existing:
                 self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
@@ -283,6 +283,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 existing[f][0][0] = True
                 self.ui.sources.get_selection().select_path(existing[f][1])
                 self.ui.sources.scroll_to_cell(existing[f][1], None, False, 0, 0)
+
+    def focus_source_and_image(self, source, image):
+        self.ui.notebook.set_current_page(0)
+        self.ui.sources.get_selection().unselect_all()
+        for i, r in enumerate(self.ui.sources.get_model()):
+            if r[1] == Options.type_to_str(source[1]) and r[2] == source[2]:
+                self.focused_image = image
+                self.ui.sources.get_selection().select_path(i)
+                self.ui.sources.scroll_to_cell(i, None, False, 0, 0)
+                return
 
     def on_remove_sources_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -399,14 +409,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     image_count += 1
                     images.append(source[2])
                 else:
-                    folder = self.parent.get_folder_of_source(source)
+                    folder = self.parent.get_folder_of_source([source[0], Options.str_to_type(source[1]), source[2]])
                     image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
                     folders.append(folder)
 
             if image_count > 0:
                 folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                 random.shuffle(folder_images)
-                self.parent.thumbs_manager.show(images + folder_images[:200], gdk_thread=False, screen=self.get_screen())
+                to_show = images + folder_images[:200]
+                if hasattr(self, "focused_image") and self.focused_image is not None:
+                    try:
+                        to_show.remove(self.focused_image)
+                    except Exception:
+                        pass
+                    to_show.insert(0, self.focused_image)
+                    self.focused_image = None
+                self.parent.thumbs_manager.show(to_show, gdk_thread=False, screen=self.get_screen())
         except Exception:
             logger.exception("Could not create thumbs window:")
 

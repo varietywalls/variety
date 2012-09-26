@@ -40,9 +40,6 @@ class Indicator:
 
         self.menu = Gtk.Menu()
 
-        # Add items to Menu and connect signals.
-
-
         self.file_label = Gtk.MenuItem("Current desktop wallpaper")
         self.file_label.connect("activate", window.open_file)
         self.menu.append(self.file_label)
@@ -68,9 +65,13 @@ class Indicator:
 #        self.open_file.connect("activate", window.open_file)
 #        self.menu.append(self.open_file)
 #
-        self.open_folder = Gtk.MenuItem("Show Containing Folder")
-        self.open_folder.connect("activate", window.open_folder)
-        self.menu.append(self.open_folder)
+#        self.open_folder = Gtk.MenuItem("Show Containing Folder")
+#        self.open_folder.connect("activate", window.open_folder)
+#        self.menu.append(self.open_folder)
+
+        self.focus = Gtk.MenuItem("Display Source")
+        self.focus.connect("activate", window.focus_in_preferences)
+        self.menu.append(self.focus)
 
         self.publish_fb = Gtk.MenuItem("Share on Facebook")
         self.publish_fb.connect("activate", window.publish_on_facebook)
