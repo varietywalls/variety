@@ -48,11 +48,11 @@ class Downloader(object):
     def is_in_favorites(self, url):
         return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
-    def save_locally(self, origin_url, image_url, origin_name = None):
+    def save_locally(self, origin_url, image_url, origin_name = None, force_download = False):
         if not origin_name:
             origin_name = self.name
 
-        if origin_url in self.parent.banned:
+        if not force_download and origin_url in self.parent.banned:
             logger.info("URL " + origin_url + " is banned, skip downloading")
             return None
 
@@ -66,7 +66,7 @@ class Downloader(object):
         logger.info("Image URL: " + image_url)
         logger.info("Local name: " + local_filename)
 
-        if os.path.exists(local_filename):
+        if not force_download and os.path.exists(local_filename):
             logger.info("File already exists, skip downloading")
             return None
 

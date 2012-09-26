@@ -52,6 +52,7 @@ from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
+from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
@@ -287,6 +288,8 @@ class VarietyWindow(Window):
             return DesktopprDownloader(self)
         elif type == Options.SourceType.APOD:
             return APODDownloader(self)
+        elif type == Options.SourceType.EARTH:
+            return EarthDownloader(self)
         elif type == Options.SourceType.WN:
             return WallpapersNetDownloader(self, location)
         elif type == Options.SourceType.FLICKR:
@@ -376,7 +379,7 @@ class VarietyWindow(Window):
             if len(label) > 50:
                 label = label[:50] + "..."
 
-            trash_enabled = os.access(file, os.W_OK)
+            trash_enabled = os.access(file, os.W_OK) and self.url != EARTH_ORIGIN_URL
             in_favs = self.is_in_favorites(file)
 
             if not is_gtk_thread:
@@ -548,14 +551,15 @@ class VarietyWindow(Window):
                     #TODO do we want to download when not change_enabled?
                 if self.downloaders:
                     self.purge_downloaded()
-                if self.downloaders:
+
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     file = downloader.download_one()
                     if file:
-                        self.downloaded.insert(0, file)
-                        self.downloaded = self.downloaded[:200]
-                        self.refresh_thumbs_downloads(file)
-                        self.download_folder_size += os.path.getsize(file)
+                        if not self.downloaded or self.downloaded[0] != file:
+                            self.downloaded.insert(0, file)
+                            self.downloaded = self.downloaded[:200]
+                            self.refresh_thumbs_downloads(file)
+                            self.download_folder_size += os.path.getsize(file)
                         if self.image_ok(file, 0):
                             pos = random.randint(0, 0) #TODO how much priority do we want to give it?
                             logger.info("Adding downloaded file %s near queue front at position %d" % (file, pos))

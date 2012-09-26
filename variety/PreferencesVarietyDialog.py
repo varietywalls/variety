@@ -45,8 +45,18 @@ logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
 
-UNREMOVEABLE_TYPES = [Options.SourceType.FAVORITES, Options.SourceType.FETCHED, Options.SourceType.DESKTOPPR, Options.SourceType.APOD]
-EDITABLE_TYPES = [Options.SourceType.WN, Options.SourceType.WALLBASE, Options.SourceType.FLICKR, Options.SourceType.MEDIA_RSS]
+UNREMOVEABLE_TYPES = [
+    Options.SourceType.FAVORITES,
+    Options.SourceType.FETCHED,
+    Options.SourceType.DESKTOPPR,
+    Options.SourceType.APOD,
+    Options.SourceType.EARTH]
+
+EDITABLE_TYPES = [
+    Options.SourceType.WN,
+    Options.SourceType.WALLBASE,
+    Options.SourceType.FLICKR,
+    Options.SourceType.MEDIA_RSS]
 
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
