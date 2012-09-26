@@ -105,6 +105,7 @@ class ThumbsManager():
         menu.append(open_folder)
 
         focus = Gtk.MenuItem("Display Source")
+        focus.set_sensitive(self.parent.get_source(file) is not None)
         def _focus(widget): self.parent.focus_in_preferences(widget, file)
         focus.connect("activate", _focus)
         menu.append(focus)
@@ -206,7 +207,7 @@ class ThumbsManager():
                     self.thumbs_window.connect("clicked", self.on_click)
                     def _on_close(window, event):
                         self.thumbs_window = None
-                        self.parent.update_indicator(is_gtk_thread=True)
+                        self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
                     self.thumbs_window.connect("delete-event", _on_close)
 
                     self.mark_active(self.active_file, self.active_position)
@@ -259,7 +260,7 @@ class ThumbsManager():
                     Gdk.threads_enter()
                 self.thumbs_window.destroy()
                 self.thumbs_window = None
-                self.parent.update_indicator(is_gtk_thread=True)
+                self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
                 if not gdk_thread:
                     Gdk.threads_leave()
             except Exception:

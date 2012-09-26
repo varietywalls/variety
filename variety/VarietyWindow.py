@@ -734,7 +734,7 @@ class VarietyWindow(Window):
                     else:
                         logger.warning("Could not execute clock convert command - missing ImageMagick or bad filter defined?")
 
-                self.update_indicator(filename, False)
+                self.update_indicator(filename, is_gtk_thread=False)
                 self.set_desktop_wallpaper(to_set)
                 self.current = filename
 
@@ -887,7 +887,9 @@ class VarietyWindow(Window):
             add_timer.start()
 
     def refresh_thumbs_downloads(self, added_image):
-        GObject.idle_add(self.update_indicator)
+        def _update_indicator():
+            self.update_indicator(auto_changed=False)
+        GObject.idle_add(_update_indicator)
         if self.thumbs_manager.is_showing("downloads"):
             def _add(): self.thumbs_manager.add_image(added_image, gdk_thread=False)
             add_timer = threading.Timer(0, _add)

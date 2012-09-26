@@ -79,25 +79,6 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        self.prev = Gtk.MenuItem("_Previous")
-        self.prev.set_use_underline(True)
-        self.prev.connect("activate", window.prev_wallpaper)
-        self.menu.append(self.prev)
-
-        self.next = Gtk.MenuItem("_Next")
-        self.next.set_use_underline(True)
-        self.next.connect("activate", window.next_wallpaper)
-        self.menu.append(self.next)
-
-        self.fast_forward = Gtk.MenuItem("Fast Forward")
-        self.fast_forward.set_use_underline(True)
-        def _fast_forward(widget):
-            window.next_wallpaper(widget, bypass_history=True)
-        self.fast_forward.connect("activate", _fast_forward)
-        self.menu.append(self.fast_forward)
-
-        self.menu.append(Gtk.SeparatorMenuItem())
-
         self.history = Gtk.CheckMenuItem("_History")
         self.history.set_active(False)
         self.history.set_use_underline(True)
@@ -110,11 +91,42 @@ class Indicator:
         self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
         self.menu.append(self.downloads)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
+        self.playback_menu = Gtk.Menu()
+
+        self.prev = Gtk.MenuItem("_Previous")
+        self.prev.set_use_underline(True)
+        self.prev.connect("activate", window.prev_wallpaper)
+        self.playback_menu.append(self.prev)
+
+        self.next = Gtk.MenuItem("_Next")
+        self.next.set_use_underline(True)
+        self.next.connect("activate", window.next_wallpaper)
+        self.playback_menu.append(self.next)
+
+        self.fast_forward = Gtk.MenuItem("_Fast Forward")
+        self.fast_forward.set_use_underline(True)
+        def _fast_forward(widget):
+            window.next_wallpaper(widget, bypass_history=True)
+        self.fast_forward.connect("activate", _fast_forward)
+        self.playback_menu.append(self.fast_forward)
+
+        self.playback_menu.append(Gtk.SeparatorMenuItem())
 
         self.pause_resume = Gtk.MenuItem("Pause")
         self.pause_resume.connect("activate", window.on_pause_resume)
-        self.menu.append(self.pause_resume)
+        self.playback_menu.append(self.pause_resume)
+
+        self.playback_menu.append(Gtk.SeparatorMenuItem())
+        self.scroll_tip = Gtk.MenuItem("Tip: Scroll wheel over icon\nfor Next and Previous")
+        self.scroll_tip.set_sensitive(False)
+        self.playback_menu.append(self.scroll_tip)
+
+        self.menu.append(Gtk.SeparatorMenuItem())
+
+        self.playback = Gtk.MenuItem("_Playback")
+        self.playback.set_use_underline(True)
+        self.playback.set_submenu(self.playback_menu)
+        self.menu.append(self.playback)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
