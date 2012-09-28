@@ -25,10 +25,11 @@ logger = logging.getLogger('variety')
 from variety.Util import Util
 
 class Downloader(object):
-    def __init__(self, parent, name, location):
+    def __init__(self, parent, name, location, is_refresher=False):
         self.parent = parent
         self.name = name
         self.location = location
+        self.is_refresher = is_refresher
 
     def update_download_folder(self):
         self.target_folder = os.path.join(self.parent.options.download_folder, self.convert_to_filename(self.location))

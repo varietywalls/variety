@@ -114,6 +114,7 @@ class VarietyWindow(Window):
         self.preferences_dialog = None
 
         GObject.idle_add(self.create_preferences_dialog)
+        GObject.idle_add(self.prepare_earth_downloader)
 
         self.dialogs = []
 
@@ -356,6 +357,10 @@ class VarietyWindow(Window):
         filename = os.path.basename(file)
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
+    def is_current_refreshable(self):
+        #TODO this is a hacky check, but works while EarthDownloader is the only refreshing downloader
+        return self.url == EARTH_ORIGIN_URL
+
     def update_indicator(self, file=None, is_gtk_thread=True, auto_changed=None):
         if not file:
             file = self.current
@@ -379,7 +384,7 @@ class VarietyWindow(Window):
             if len(label) > 50:
                 label = label[:50] + "..."
 
-            trash_enabled = os.access(file, os.W_OK) and self.url != EARTH_ORIGIN_URL
+            trash_enabled = os.access(file, os.W_OK) and not self.is_current_refreshable()
             in_favs = self.is_in_favorites(file)
 
             if not is_gtk_thread:
@@ -548,27 +553,42 @@ class VarietyWindow(Window):
                     return
                 if not self.options.download_enabled:
                     continue
-                    #TODO do we want to download when not change_enabled?
+
                 if self.downloaders:
                     self.purge_downloaded()
 
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
-                    file = downloader.download_one()
-                    if file:
-                        if not self.downloaded or self.downloaded[0] != file:
-                            self.downloaded.insert(0, file)
-                            self.downloaded = self.downloaded[:200]
-                            self.refresh_thumbs_downloads(file)
-                            self.download_folder_size += os.path.getsize(file)
-                        if self.image_ok(file, 0):
-                            pos = random.randint(0, 0) #TODO how much priority do we want to give it?
-                            logger.info("Adding downloaded file %s near queue front at position %d" % (file, pos))
-                            with self.prepared_lock:
-                                self.prepared.insert(pos, file) # give priority to newly-downloaded images
-                        else:
-                            self.prepare_event.set()
+                    self.download_one_from(downloader)
+
+                    # Also download from all the refreshers - these need to be updated regularly
+                    for dl in self.downloaders:
+                        if dl.is_refresher and dl != downloader:
+                            self.download_one_from(dl)
+
             except Exception:
                 logger.exception("Could not download wallpaper:")
+
+    def prepare_earth_downloader(self):
+        dl = EarthDownloader(self)
+        dl.update_download_folder()
+        if not os.path.exists(dl.target_folder):
+            dl.download_one()
+
+    def download_one_from(self, downloader):
+        file = downloader.download_one()
+        if file:
+            if not self.downloaded or self.downloaded[0] != file:
+                self.downloaded.insert(0, file)
+                self.downloaded = self.downloaded[:200]
+                self.refresh_thumbs_downloads(file)
+                self.download_folder_size += os.path.getsize(file)
+            if downloader.is_refresher or self.image_ok(file, 0):
+                if not self.prepared or self.prepared[0] != file:
+                    logger.info("Adding downloaded file %s at queue front" % file)
+                    with self.prepared_lock:
+                        self.prepared.insert(0, file) # give priority to newly-downloaded images
+            else:
+                self.prepare_event.set()
 
     def purge_downloaded(self):
         if not self.options.quota_enabled:
@@ -835,7 +855,7 @@ class VarietyWindow(Window):
 
             with self.prepared_lock:
                 for prep in self.prepared:
-                    if prep != self.current and os.access(prep, os.R_OK):
+                    if (prep != self.current or self.is_current_refreshable()) and os.access(prep, os.R_OK):
                         img = prep
                         self.prepared.remove(img)
                         self.prepare_event.set()
@@ -844,7 +864,7 @@ class VarietyWindow(Window):
             if not img:
                 logger.info("No images yet in prepared buffer, using some random image")
                 rnd_images = self.select_random_images(10)
-                rnd_images = [f for f in rnd_images if f != self.current]
+                rnd_images = [f for f in rnd_images if f != self.current or self.is_current_refreshable()]
                 img = rnd_images[0] if rnd_images else None
 
             if not img:
@@ -860,7 +880,7 @@ class VarietyWindow(Window):
             logger.exception("Could not change wallpaper")
 
     def set_wallpaper(self, img, throttle=True, auto_changed=False):
-        if img == self.current:
+        if img == self.current and not self.is_current_refreshable():
             return
         if os.access(img, os.R_OK):
             at_front = self.position == 0

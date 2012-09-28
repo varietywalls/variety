@@ -15,22 +15,31 @@
 ### END LICENSE
 
 import logging
+import os
 
 logger = logging.getLogger('variety')
 
 from variety import Downloader
 
-EARTH_IMAGE_URL = "http://static.die.net/earth/mercator/1600.jpg"
-EARTH_ORIGIN_URL = "http://www.die.net/earth/"
+EARTH_IMAGE_URL = "http://www.opentopia.com/images/data/sunlight/world_sunlight_map_rectangular.jpg"
+EARTH_ORIGIN_URL = "http://www.opentopia.com/sunlightmaprect.html"
+EARTH_FILENAME = "earth.jpg"
 
 class EarthDownloader(Downloader.Downloader):
     def __init__(self, parent):
         super(EarthDownloader, self).__init__(
-            parent, "World Sunlight Map", EARTH_ORIGIN_URL)
+            parent, "Opentopia.com", EARTH_ORIGIN_URL, is_refresher=True)
 
     def convert_to_filename(self, url):
         return "Earth"
 
     def download_one(self):
         logger.info("Downloading world sunlight map from " + EARTH_ORIGIN_URL)
-        return self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True)
+        downloaded = self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True)
+        cropped = os.path.join(self.target_folder, EARTH_FILENAME)
+        os.system("convert \"" + downloaded + "\" -gravity north -crop 100%x95% \"" + cropped + "\"")
+        for f in os.listdir(self.target_folder):
+            if f != EARTH_FILENAME and f.lower().endswith(".jpg"):
+                os.unlink(os.path.join(self.target_folder, f))
+        return cropped
+

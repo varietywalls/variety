@@ -79,21 +79,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
 
         self.ui.change_enabled.set_active(self.options.change_enabled)
-        self.set_time(self.options.change_interval, self.ui.change_interval_text, self.ui.change_interval_time_unit)
+        self.set_change_interval(self.options.change_interval)
         self.ui.change_on_start.set_active(self.options.change_on_start)
 
         self.ui.download_enabled.set_active(self.options.download_enabled)
-        self.set_time(self.options.download_interval, self.ui.download_interval_text,
-            self.ui.download_interval_time_unit)
+        self.set_download_interval(self.options.download_interval)
 
         self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
 
         self.ui.quota_enabled.set_active(self.options.quota_enabled)
         self.ui.quota_size.set_text(str(self.options.quota_size))
 
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
 
         self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+        self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
         self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
         self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
         self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
@@ -122,8 +124,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.sources.get_model().clear()
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
-        self.ui.sources_enabled_checkbox_renderer.connect("toggled", self.source_enabled_toggled,
-            self.ui.sources.get_model())
+
+        if not hasattr(self, "enabled_toggled_handler_id"):
+            self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
+                    "toggled", self.source_enabled_toggled, self.ui.sources.get_model())
         #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
 
         if hasattr(self, "filter_checkboxes"):
@@ -191,7 +195,33 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu.show_all()
 
     def source_enabled_toggled(self, widget, path, model):
-        model[path][0] = not model[path][0]
+        row = model[path]
+        row[0] = not row[0]
+        self.on_row_enabled_state_changed(row)
+
+    def on_row_enabled_state_changed(self, row):
+        # Special case when enabling the Earth downloader:
+        if row[0] and row[1] == Options.type_to_str(Options.SourceType.EARTH):
+            updated = False
+            if not self.ui.change_enabled.get_active():
+                self.ui.change_enabled.set_active(True)
+                updated = True
+            if self.get_change_interval() > 30 * 60:
+                self.set_change_interval(30 * 60)
+                updated = True
+
+            if not self.ui.download_enabled.get_active():
+                self.ui.download_enabled.set_active(True)
+                updated = True
+            if self.get_download_interval() > 30 * 60:
+                self.set_download_interval(30 * 60)
+                updated = True
+
+            if updated:
+                self.parent.show_notification(
+                    "World Sunlight Map enabled",
+                    "Using the World Sunlight Map requires both downloading and changing "\
+                    "enabled at intervals of 30 minutes or less. Settings were adjusted automatically.")
 
     def set_time(self, interval, text, time_unit):
         if interval < 5:
@@ -203,6 +233,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         text.set_text(str(interval // times[x]))
         time_unit.set_active(x)
         return
+
+    def set_change_interval(self, seconds):
+        self.set_time(seconds, self.ui.change_interval_text, self.ui.change_interval_time_unit)
+
+    def set_download_interval(self, seconds):
+        self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit)
 
     def read_time(self, text_entry, time_unit_combo, minimum, default):
         result = default
@@ -218,6 +254,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         except Exception:
             logger.exception("Could not understand interval")
         return result
+
+    def get_change_interval(self):
+        return self.read_time(
+            self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
+
+    def get_download_interval(self):
+        return self.read_time(
+            self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
 
     def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog("Add Images", parent=self, action=Gtk.FileChooserAction.OPEN,
@@ -330,6 +374,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             row[0] = False
         for path in rows:
             model[path][0] = True
+        for row in model:
+            #TODO we trigger for all rows, though some of them don't actually change state - but no problem for now
+            self.on_row_enabled_state_changed(row)
         self.on_sources_selection_changed()
 
     def edit_source(self, edited_row):
@@ -504,12 +551,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.change_enabled = self.ui.change_enabled.get_active()
             self.options.change_on_start = self.ui.change_on_start.get_active()
-            self.options.change_interval = self.read_time(
-                self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
+            self.options.change_interval = self.get_change_interval()
 
             self.options.download_enabled = self.ui.download_enabled.get_active()
-            self.options.download_interval = self.read_time(
-                self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
+            self.options.download_interval = self.get_download_interval()
 
             self.options.quota_enabled = self.ui.quota_enabled.get_active()
             try:
