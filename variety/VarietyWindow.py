@@ -885,9 +885,9 @@ class VarietyWindow(Window):
         if os.access(img, os.R_OK):
             at_front = self.position == 0
             self.used = self.used[self.position:]
-            self.used.insert(0, img)
-
-            self.refresh_thumbs_history(img, at_front)
+            if len(self.used) == 0 or self.used[0] != img:
+                self.used.insert(0, img)
+                self.refresh_thumbs_history(img, at_front)
 
             self.position = 0
             if len(self.used) > 1000:
@@ -1436,7 +1436,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
         else:
             logger.info("Change interval < 6 hours, ignore persisted last_change_time, " \
                         "wait initially the whole interval: " + str(self.options.change_interval))
-
 
     def save_history(self):
         try:

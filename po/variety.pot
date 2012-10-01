@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-03 17:20+0300\n"
+"POT-Creation-Date: 2012-09-11 00:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,6 +123,7 @@ msgid "Just a moment to check this search"
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddWallbaseDialog.ui.h:26
+#: ../data/ui/AddMediaRssDialog.ui.h:5
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
 msgid "  "
 msgstr ""
@@ -228,6 +229,58 @@ msgstr ""
 msgid "Only slightly erotic or otherwise sketchy"
 msgstr ""
 
+#: ../variety/VarietyWindow.py:1132
+msgid ""
+"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
+"variety_lib too)"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1136
+msgid "Make the running instance quit"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1140
+msgid ""
+"Print the current wallpaper location. Used only when the application is "
+"already running."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1144
+msgid "Show Next wallpaper"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1148
+msgid "Show Previous wallpaper"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1152
+msgid "Show Next wallpaper, skipping the forward history"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1156
+msgid ""
+"Move current wallpaper to Trash. Used only when the application is already "
+"running."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1160
+msgid ""
+"Copy current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1164
+msgid "Pause"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1168
+msgid "Resume"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1172
+msgid "Toggle Pause/Resume state"
+msgstr ""
+
 #: ../data/ui/FacebookPublishDialog.ui.h:1
 msgid "Variety - Publish to Facebook"
 msgstr ""
@@ -244,12 +297,6 @@ msgstr ""
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
 msgid "Do not ask anymore, always use the text above"
-msgstr ""
-
-#: ../variety/__init__.py:57
-msgid ""
-"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
-"variety_lib too)"
 msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:1
@@ -316,6 +363,26 @@ msgid ""
 "(this is determined by Facebook) you will be asked to login again."
 msgstr ""
 
+#: ../data/ui/AddMediaRssDialog.ui.h:1
+msgid "Media RSS"
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:2
+msgid ""
+"Please paste the URL of the Media RSS feed below. Please note that only "
+"Media RSS feeds are supported, and not ordinary RSS feeds. Media RSS feeds "
+"contain media:content tags linking to the image content."
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:3
+msgid "Paste the URL of the Media RSS feed here: "
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:4
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
+msgid "Just a moment to check what's at that URL"
+msgstr ""
+
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
 msgstr ""
@@ -344,10 +411,6 @@ msgstr ""
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
 msgid "Paste URL here: "
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
-msgid "Just a moment to check what's at that URL"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
