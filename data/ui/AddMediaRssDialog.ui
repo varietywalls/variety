@@ -42,7 +42,7 @@
             <property name="margin_left">10</property>
             <property name="margin_right">10</property>
             <property name="margin_bottom">15</property>
-            <property name="label" translatable="yes">Please paste the URL of the Media RSS feed below. Please note that only Media RSS feeds are supported, and not ordinary RSS feeds. Media RSS feeds contain media:content tags linking to the image content.</property>
+            <property name="label" translatable="yes">Please paste the URL of the Media RSS feed below. Please note that only Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds contain media:content tags linking to the image content. Some examples of sites that provide Media RSS feeds are: Picasa, deviantART, SmugMug, Flickr (e.g. users' favorites), InterfaceLIFT (via paid feeds).</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
           </object>
@@ -97,6 +97,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>
+            <property name="valign">start</property>
             <child>
               <object class="GtkLabel" id="message">
                 <property name="can_focus">False</property>
