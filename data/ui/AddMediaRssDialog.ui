@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_media_rss_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddMediaRssDialog" id="add_media_rss_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -43,7 +43,7 @@
             <property name="margin_left">10</property>
             <property name="margin_right">10</property>
             <property name="margin_bottom">15</property>
-            <property name="label" translatable="yes">Please paste the URL of the Media RSS feed below. Please note that only Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds contain media:content tags linking to the image content. Some examples of sites that provide Media RSS feeds are: Picasa, deviantART, SmugMug, Flickr (e.g. users' favorites), InterfaceLIFT (via paid feeds).</property>
+            <property name="label" translatable="yes">Please paste the URL of the Media RSS feed below. Please note that only Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds contain media:content tags linking directly to the actual image content. Some examples of sites that provide Media RSS feeds are: Picasa, deviantART, SmugMug, Flickr, InterfaceLIFT.</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
           </object>
