@@ -28,7 +28,6 @@ class ImageFetcher:
 
     @staticmethod
     def url_ok(url, use_whitelist, hosts_whitelist):
-        print "checking url " + url
         try:
             p = urlparse.urlparse(url)
             if p.scheme in ['http', 'https']:

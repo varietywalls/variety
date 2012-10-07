@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_media_rss_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_media_rss_dialog 1.0 -->
   <object class="AddMediaRssDialog" id="add_media_rss_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
+    <property name="title" translatable="yes">Variety - add Media RSS feed</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
