@@ -1,3 +1,30 @@
+variety (0.4.10) precise; urgency=low
+
+  * Minor edit of Media RSS dialog text
+  * Set proper Media RSS dialog title
+  * Updated changes.txt for 0.4.10
+  * Updated MediaRSS dialog; Thumbs: show less thumbs (100, not 200),
+    but faster so dialog is fully responsive sooner
+  * Minor fix - append to history only when image is not same as
+    previous one
+  * More work for EarthDownloader; Bugfix: sources Enable checkboxes
+    were not always reacting to clicks
+  * Live Earth sunlight map support, initial version
+  * Simplified menu - moved rarely used playback items to a submenu
+  * Display Source option implemented, initial version
+  * URL-unquote and make safe local filename when downloading. More
+    Picasa-specific rss fixes
+  * Picasa RSS feeds - add imgmax=d parameter to feed URL to get full
+    image resolutions
+  * Wrap url in quotations when calling xdg-open with it
+  * Recent downloads view
+  * #1048238 Fix fetching a file with same name as existing file
+  * Media RSS feeds, initial support
+  * Command-line options for next, previous, fav, trash, pause, etc. Can
+    be used at start or passed via dbus to running instance
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 07 Oct 2012 15:50:37 +0300
+
 variety (0.4.9ubuntu1) precise; urgency=low
 
   * 
