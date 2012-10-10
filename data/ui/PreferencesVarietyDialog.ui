@@ -29,6 +29,16 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="sources_model">
+    <columns>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
+      <!-- column-name type -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -231,7 +241,7 @@
                         <property name="can_focus">False</property>
                         <property name="vexpand">True</property>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrolledwindow2">
+                          <object class="GtkScrolledWindow" id="sources_scrolled_window">
                             <property name="width_request">250</property>
                             <property name="height_request">200</property>
                             <property name="visible">True</property>
@@ -734,7 +744,6 @@
               <object class="GtkBox" id="fetch_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="valign">start</property>
                 <property name="vexpand">True</property>
                 <property name="orientation">vertical</property>
                 <child>
@@ -871,7 +880,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   <object class="GtkBox" id="box17">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="valign">start</property>
                     <property name="margin_bottom">20</property>
                     <property name="vexpand">True</property>
                     <property name="orientation">vertical</property>
@@ -924,6 +932,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="halign">start</property>
+                        <property name="valign">start</property>
                         <property name="margin_left">25</property>
                         <property name="margin_bottom">5</property>
                         <property name="use_action_appearance">False</property>
@@ -938,7 +947,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkScrolledWindow" id="hosts_scrolled_window">
                         <property name="height_request">200</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -1546,7 +1555,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow" id="scrolledwindow3">
+                  <object class="GtkScrolledWindow" id="tips_scrolled_window">
                     <property name="height_request">150</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -1595,7 +1604,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow" id="scrolledwindow4">
+                  <object class="GtkScrolledWindow" id="changes_scrolled_window">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
@@ -1857,16 +1866,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="min_size"/>
       <widget name="lightness"/>
     </widgets>
-  </object>
-  <object class="GtkListStore" id="sources_model">
-    <columns>
-      <!-- column-name enabled -->
-      <column type="gboolean"/>
-      <!-- column-name type -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
 </interface>

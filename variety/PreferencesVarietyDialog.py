@@ -68,6 +68,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # Bind each preference widget to gsettings
         #        widget = self.builder.get_object('example_entry')
         #        settings.bind("example", widget, "text", Gio.SettingsBindFlags.DEFAULT)
+
+        if Gdk.Screen.get_default().get_height() < 750:
+            self.ui.sources_scrolled_window.set_size_request(0, 0)
+            self.ui.hosts_scrolled_window.set_size_request(0, 0)
+            self.ui.tips_scrolled_window.set_size_request(0, 0)
+
         self.reload()
 
     def reload(self):
