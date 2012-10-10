@@ -62,6 +62,8 @@ class ThumbsWindow(Gtk.Window):
         self.mouse_in = False
         self.mouse_position = None
         self.autoscroll_event = threading.Event()
+        self.scrolling_paused = False
+        self.scrolling_locked = False
 
         def mouse_enter(widget, event, data=None):
             self.mouse_in = True
@@ -70,6 +72,8 @@ class ThumbsWindow(Gtk.Window):
 
         def mouse_motion(widget, event, data=None):
             self.mouse_position = (event.x, event.y)
+            if not self.scrolling_locked:
+                self.scrolling_paused = False
 
         def mouse_leave(widget, event, data=None):
             self.mouse_in = False
@@ -96,6 +100,14 @@ class ThumbsWindow(Gtk.Window):
         self.marked_info = None
 
         self.all = []
+
+    def pause_scrolling(self):
+        self.previous_speed = 0
+        self.scrolling_paused = True
+        self.scrolling_locked = True
+
+    def resume_scrolling(self):
+        self.scrolling_locked = False
 
     def is_horizontal(self):
         return self.position == ThumbsWindow.TOP or self.position == ThumbsWindow.BOTTOM
@@ -360,7 +372,7 @@ class ThumbsWindow(Gtk.Window):
 
             time.sleep(max(0, last_update + 0.005 - time.time()))
 
-            if not self.mouse_position:
+            if not self.mouse_position or self.scrolling_paused:
                 continue
 
             x = self.mouse_position[0]

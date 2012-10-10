@@ -152,18 +152,23 @@ class ThumbsManager():
 
     def on_click(self, thumbs_window, file, widget, event):
         self.pin()
+        def _resume_scrolling(menu=None):
+            thumbs_window.resume_scrolling()
+        thumbs_window.pause_scrolling()
         if event.button == 1:
             if self.is_showing("history"):
                 index = [info["eventbox"] for info in thumbs_window.all].index(widget)
                 self.parent.move_to_history_position(index)
             else:
                 self.parent.set_wallpaper(file, False)
+            _resume_scrolling()
         else:
             menu = self.create_menu(file)
             def _compute_position(a, b, event=event):
                 x, y = event.get_root_coords()[0], event.get_root_coords()[1]
                 h = menu.get_preferred_height()[1]
                 return x, y - h if y - h >= 40 else y, True
+            menu.connect("deactivate", _resume_scrolling)
             menu.popup(None, None, _compute_position, None, event.button, event.time)
 
     def mark_active(self, file=None, position=None):
