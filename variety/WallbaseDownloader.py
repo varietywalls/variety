@@ -15,12 +15,12 @@
 ### END LICENSE
 
 import urllib
-import urllib2
 from bs4 import BeautifulSoup
 import random
 
 import logging
 from variety import Downloader
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
@@ -47,7 +47,7 @@ class WallbaseDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url):
-        content = urllib2.urlopen(url, timeout=20).read()
+        content = Util.urlopen(url).read()
         return BeautifulSoup(content)
 
     def search(self, start_from = None, thpp = 60):
@@ -83,7 +83,7 @@ class WallbaseDownloader(Downloader.Downloader):
 
         logger.info("Performing wallbase search: url=%s, data=%s" % (url, data))
 
-        content = urllib2.urlopen(url, data=data, timeout=20).read()
+        content = Util.urlopen(url, data=data).read()
         return BeautifulSoup(content)
 
     @staticmethod

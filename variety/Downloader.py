@@ -16,13 +16,11 @@
 
 import os
 import string
-import urllib2
 import re
-
 import logging
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
-from variety.Util import Util
 
 class Downloader(object):
     def __init__(self, parent, name, location, is_refresher=False):
@@ -71,7 +69,7 @@ class Downloader(object):
             logger.info("File already exists, skip downloading")
             return None
 
-        u = urllib2.urlopen(image_url, timeout=20)
+        u = Util.urlopen(image_url)
         data = u.read()
         with open(local_filename, 'wb') as f:
             f.write(data)

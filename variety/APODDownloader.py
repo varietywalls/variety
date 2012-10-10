@@ -14,13 +14,11 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import urllib2
 from bs4 import BeautifulSoup
 import random
-import re
-
 import logging
 from variety import Downloader
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
@@ -34,7 +32,7 @@ class APODDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url, xml = False):
-        content = urllib2.urlopen(url, timeout=20).read()
+        content = Util.urlopen(url).read()
         return BeautifulSoup(content, "xml") if xml else BeautifulSoup(content)
 
     def download_one(self):

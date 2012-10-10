@@ -14,13 +14,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import urllib2
 import json
 import logging
+from variety import Downloader
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
-
-from variety import Downloader
 
 class DesktopprDownloader(Downloader.Downloader):
     def __init__(self, parent):
@@ -33,7 +32,7 @@ class DesktopprDownloader(Downloader.Downloader):
     def download_one(self):
         logger.info("Downloading a random image from desktoppr.co")
 
-        content = urllib2.urlopen(self.location, timeout=20).read()
+        content = Util.urlopen(self.location).read()
         response = json.loads(content)
 
         if response["response"]["review_state"] != "safe":

@@ -21,6 +21,7 @@ import re
 
 import logging
 from variety import Downloader
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
@@ -34,7 +35,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url):
-        content = urllib2.urlopen(url, timeout=20).read()
+        content = Util.urlopen(url).read()
         return BeautifulSoup(content)
 
     @staticmethod

@@ -15,13 +15,11 @@
 ### END LICENSE
 
 import urllib
-import urllib2
 import random
 import json
-import os
-
 import logging
 from variety import Downloader
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
@@ -56,7 +54,7 @@ class FlickrDownloader(Downloader.Downloader):
     @staticmethod
     def fetch(call):
         logger.info("Making flickr API call: " + call)
-        content = urllib2.urlopen(call, timeout=20).read()
+        content = Util.urlopen(call).read()
         resp = json.loads(content)
         return resp
 

@@ -15,7 +15,6 @@
 ### END LICENSE
 import os
 
-import urllib2
 import logging
 import urlparse
 from variety.Util import Util
@@ -58,7 +57,7 @@ class ImageFetcher:
             if url.find('://') < 0:
                 url = "file://" + url
 
-            u = urllib2.urlopen(url, timeout=20)
+            u = Util.urlopen(url)
             info = u.info()
             if not "content-type" in info:
                 logger.info("Uknown content-type for url " + url)

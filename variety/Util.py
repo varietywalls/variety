@@ -22,9 +22,12 @@ import threading
 import time
 import pyexiv2
 import urllib
+import urllib2
 from DominantColors import DominantColors
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
+
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Gecko) Ubuntu/12.04 Chromium/20.0.1132.47 Chrome/20.0.1132.47 Safari/536.11"
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -188,3 +191,8 @@ class Util:
             i += 1
         return f
 
+    @staticmethod
+    def urlopen(url, data=None):
+        request = urllib2.Request(url)
+        request.add_header('User-agent', USER_AGENT)
+        return urllib2.urlopen(request, data=data, timeout=20)

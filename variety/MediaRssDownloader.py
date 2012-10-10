@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import urllib2
 import random
 import urlparse
 import xml.etree.ElementTree as ET
@@ -39,7 +38,7 @@ class MediaRssDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url):
-        content = urllib2.urlopen(url, timeout=20).read()
+        content = Util.urlopen(url).read()
         return ET.fromstring(content)
 
     @staticmethod
