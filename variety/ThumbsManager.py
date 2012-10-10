@@ -206,6 +206,7 @@ class ThumbsManager():
                     self.thumbs_window.set_title(title)
                     self.thumbs_window.connect("clicked", self.on_click)
                     def _on_close(window, event):
+                        self.thumbs_window.destroy()
                         self.thumbs_window = None
                         self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
                     self.thumbs_window.connect("delete-event", _on_close)
