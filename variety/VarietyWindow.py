@@ -1085,8 +1085,8 @@ class VarietyWindow(Window):
             if not os.access(file, os.W_OK):
                 self.show_notification("Cannot move", "You don't have permissions to move %s to Trash." % file)
             else:
-                trash = os.path.expanduser("~/.local/share/Trash")
-                self.move_or_copy_file(file, trash, "trash", shutil.move)
+                os.system('gvfs-trash "%s"' % file)
+
                 if self.current == file:
                     self.next_wallpaper(widget)
 
