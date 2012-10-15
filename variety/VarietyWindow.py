@@ -179,6 +179,7 @@ class VarietyWindow(Window):
         logger.info("Quota enabled: " + str(self.options.quota_enabled))
         logger.info("Quota size: " + str(self.options.quota_size))
         logger.info("Favorites folder: " + self.options.favorites_folder)
+        logger.info("Favorites operations: " + str(self.options.favorites_operations))
         logger.info("Fetched folder: " + self.options.fetched_folder)
         logger.info("Clipboard enabled: " + str(self.options.clipboard_enabled))
         logger.info("Clipboard use whitelist: " + str(self.options.clipboard_use_whitelist))
@@ -361,6 +362,32 @@ class VarietyWindow(Window):
         #TODO this is a hacky check, but works while EarthDownloader is the only refreshing downloader
         return self.url == EARTH_ORIGIN_URL
 
+    def update_favorites_menuitems(self, holder, auto_changed, favs_op):
+        if auto_changed:
+            # delay enabling Move/Copy operations in this case - see comment below
+            holder.copy_to_favorites.set_sensitive(False)
+            holder.move_to_favorites.set_sensitive(False)
+        else:
+            holder.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
+            holder.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
+        if favs_op is None:
+            holder.copy_to_favorites.set_label("Already in Favorites")
+            holder.copy_to_favorites.set_visible(True)
+            holder.move_to_favorites.set_visible(False)
+        else:
+            holder.copy_to_favorites.set_label("Copy to _Favorites")
+            holder.move_to_favorites.set_label("Move to _Favorites")
+            if favs_op == "copy":
+                holder.copy_to_favorites.set_visible(True)
+                holder.move_to_favorites.set_visible(False)
+            elif favs_op == "move":
+                holder.copy_to_favorites.set_visible(False)
+                holder.move_to_favorites.set_visible(True)
+            else: # both
+                holder.move_to_favorites.set_label("Move to Favorites")
+                holder.copy_to_favorites.set_visible(True)
+                holder.move_to_favorites.set_visible(True)
+
     def update_indicator(self, file=None, is_gtk_thread=True, auto_changed=None):
         if not file:
             file = self.current
@@ -384,8 +411,8 @@ class VarietyWindow(Window):
             if len(label) > 50:
                 label = label[:50] + "..."
 
-            trash_enabled = os.access(file, os.W_OK) and not self.is_current_refreshable()
-            in_favs = self.is_in_favorites(file)
+            deleteable = os.access(file, os.W_OK) and not self.is_current_refreshable()
+            favs_op = self.determine_favorites_operation(file)
 
             if not is_gtk_thread:
                 Gdk.threads_enter()
@@ -396,15 +423,10 @@ class VarietyWindow(Window):
 
                 self.ind.focus.set_sensitive(self.get_source(file) is not None)
 
-                if auto_changed:
-                    # delay enabling Move/Copy operations in this case - see comment below
-                    self.ind.trash.set_sensitive(False)
-                    self.ind.favorite.set_sensitive(False)
-                else:
-                    self.ind.trash.set_sensitive(trash_enabled)
-                    self.ind.favorite.set_sensitive(not in_favs)
+                # delay enabling Trash if auto_changed
+                self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
-                self.ind.favorite.set_label("Already in Favorites" if in_favs else "Copy to _Favorites")
+                self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
@@ -432,8 +454,9 @@ class VarietyWindow(Window):
                 def update_file_operations():
                     Gdk.threads_enter()
                     for i in xrange(10):
-                        self.ind.trash.set_sensitive(trash_enabled)
-                        self.ind.favorite.set_sensitive(not in_favs)
+                        self.ind.trash.set_sensitive(deleteable)
+                        self.ind.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
+                        self.ind.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
                     Gdk.threads_leave()
                 enable_timer = threading.Timer(2, update_file_operations)
                 enable_timer.start()
@@ -1051,31 +1074,28 @@ class VarietyWindow(Window):
             #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
             return True
         except Exception as err:
-            success = False
-
             if str(err).find("already exists") > 0:
                 if operation == shutil.move:
                     try:
                         os.unlink(file)
-                        success = True
                         #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
+                        return True
                     except Exception:
                         pass
                 else:
-                    success = True
+                    return True
 
-            if not success:
-                logger.exception("Could not move/copy to " + to)
-                op = ("Move" if operation == shutil.move else "Copy")
-                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                    Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
-                    "Could not " + op.lower() + " to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
-                self.dialogs.append(dialog)
-                dialog.set_title(op + " failed")
-                dialog.run()
-                dialog.destroy()
-                self.dialogs.remove(dialog)
-                return False
+            logger.exception("Could not move/copy to " + to)
+            op = ("Move" if operation == shutil.move else "Copy")
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
+                "Could not " + op.lower() + " to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
+            self.dialogs.append(dialog)
+            dialog.set_title(op + " failed")
+            dialog.run()
+            dialog.destroy()
+            self.dialogs.remove(dialog)
+            return False
 
     def move_to_trash(self, widget=None, file=None):
         try:
@@ -1121,6 +1141,56 @@ class VarietyWindow(Window):
                 self.update_indicator(auto_changed=False)
         except Exception:
             logger.exception("Exception in copy_to_favorites")
+
+    def move_to_favorites(self, widget=None, file=None):
+        try:
+            if not file:
+                file = self.current
+            if os.access(file, os.R_OK) and not self.is_in_favorites(file):
+                operation = shutil.move if os.access(file, os.W_OK) else shutil.copy
+                ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
+                if ok:
+                    new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
+                    self.used = [(new_file if f == file else f) for f in self.used]
+                    with self.prepared_lock:
+                        self.prepared = [(new_file if f == file else f) for f in self.prepared]
+                        self.prepare_event.set()
+                    if self.current == file:
+                        self.current = new_file
+                        self.set_wp_throttled(new_file, delay=0)
+        except Exception:
+            logger.exception("Exception in move_to_favorites")
+
+    def determine_favorites_operation(self, file=None):
+        if not file:
+            file = self.current
+
+        if self.is_in_favorites(file):
+            return None
+
+        if not os.access(file, os.W_OK):
+            return "copy"
+
+        file_normpath = os.path.normpath(file)
+        for pair in self.options.favorites_operations:
+            folder = pair[0]
+            folder_lower = folder.lower().strip()
+            if folder_lower == "downloaded":
+                folder = self.options.download_folder
+            elif folder_lower == "fetched":
+                folder = self.options.fetched_folder
+            elif folder_lower == "others":
+                folder = "/"
+
+            folder = os.path.normpath(folder)
+            if not folder.endswith("/"):
+                folder += "/"
+
+            if file_normpath.startswith(folder):
+                op = pair[1].lower().strip()
+                return op if op in ("copy", "move", "both") else "copy"
+
+        return "copy"
 
     def on_quit(self, widget=None):
         logger.info("Quitting")
@@ -1228,6 +1298,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
             help=_("Copy current wallpaper to Favorites. Used only when the application is already running."))
 
         parser.add_option(
+            "--move-to-favorites", action="store_true", dest="movefavorite",
+            help=_("Move current wallpaper to Favorites. Used only when the application is already running."))
+
+        parser.add_option(
             "--pause", action="store_true", dest="pause",
             help=_("Pause"))
 
@@ -1273,6 +1347,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
                         self.move_to_trash()
                     elif options.favorite:
                         self.copy_to_favorites()
+                    elif options.movefavorite:
+                        self.move_to_favorites()
 
                 if options.fast_forward:
                     self.next_wallpaper(bypass_history=True)

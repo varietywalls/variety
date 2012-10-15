@@ -51,12 +51,18 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        self.favorite = Gtk.MenuItem("Copy to _Favorites")
-        self.favorite.set_use_underline(True)
-        self.favorite.connect("activate", window.copy_to_favorites)
-        self.menu.append(self.favorite)
+        self.copy_to_favorites = Gtk.MenuItem("Copy to _Favorites")
+        self.copy_to_favorites.set_use_underline(True)
+        self.copy_to_favorites.connect("activate", window.copy_to_favorites)
+        self.menu.append(self.copy_to_favorites)
 
-        self.trash = Gtk.MenuItem("Move to _Trash")
+        self.move_to_favorites = Gtk.MenuItem("Move to Favorites")
+        self.move_to_favorites.set_use_underline(True)
+        self.move_to_favorites.connect("activate", window.move_to_favorites)
+        self.move_to_favorites.set_visible(False)
+        self.menu.append(self.move_to_favorites)
+
+        self.trash = Gtk.MenuItem("Delete to _Trash")
         self.trash.set_use_underline(True)
         self.trash.connect("activate", window.move_to_trash)
         self.menu.append(self.trash)

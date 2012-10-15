@@ -33,6 +33,7 @@ from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialo
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
+from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 
 gettext.textdomain('variety')
 
@@ -99,6 +100,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
         self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+        self.favorites_operations = self.options.favorites_operations
 
         self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
         self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
@@ -574,6 +576,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.download_folder = self.ui.download_folder_chooser.get_filename()
             if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
                 self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            self.options.favorites_operations = self.favorites_operations
 
             self.options.sources = []
             for r in self.ui.sources.get_model():
@@ -741,3 +744,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.clipboard_use_whitelist.set_sensitive(self.ui.clipboard_enabled.get_active())
         # keep the hosts list always enabled - user can wish to add hosts even when monitoring is not enabled - if undesired, uncomment below:
         # self.ui.clipboard_hosts.set_sensitive(self.ui.clipboard_enabled.get_active() and self.ui.clipboard_use_whitelist.get_active())
+
+    def on_edit_favorite_operations_clicked(self, widget=None):
+        self.dialog = EditFavoriteOperationsDialog()
+        self.dialog.set_transient_for(self)
+        buf = self.dialog.ui.textbuffer
+        buf.set_text('\n'.join(':'.join(x) for x in self.favorites_operations))
+        if self.dialog.run() == Gtk.ResponseType.OK:
+            text = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)
+            self.favorites_operations = list([x.strip().split(':') for x in text.split('\n') if x])
+        self.dialog.destroy()
+        self.dialog = None

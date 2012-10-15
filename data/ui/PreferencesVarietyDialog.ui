@@ -3,6 +3,11 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires preferences_variety_dialog 1.0 -->
   <object class="GtkTextBuffer" id="changes_buffer"/>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-properties</property>
+  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name time_period -->
@@ -28,16 +33,6 @@
         <col id="1">86400</col>
       </row>
     </data>
-  </object>
-  <object class="GtkListStore" id="sources_model">
-    <columns>
-      <!-- column-name enabled -->
-      <column type="gboolean"/>
-      <!-- column-name type -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
   </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
@@ -444,7 +439,7 @@
                             <property name="can_focus">False</property>
                             <property name="valign">end</property>
                             <property name="margin_left">30</property>
-                            <property name="margin_right">10</property>
+                            <property name="margin_right">20</property>
                             <property name="margin_top">20</property>
                             <property name="hexpand">True</property>
                             <child>
@@ -522,7 +517,6 @@
                               <object class="GtkFileChooserButton" id="download_folder_chooser">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_right">10</property>
                                 <property name="hexpand">True</property>
                                 <property name="orientation">vertical</property>
                                 <property name="action">select-folder</property>
@@ -640,7 +634,7 @@
                             <property name="halign">start</property>
                             <property name="margin_left">15</property>
                             <property name="margin_top">20</property>
-                            <property name="label" translatable="yes">Favorites folder</property>
+                            <property name="label" translatable="yes">Favorites</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
                             </attributes>
@@ -657,7 +651,7 @@
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
                             <property name="margin_left">30</property>
-                            <property name="margin_right">10</property>
+                            <property name="margin_right">20</property>
                             <property name="margin_bottom">20</property>
                             <property name="hexpand">True</property>
                             <child>
@@ -676,7 +670,6 @@
                               <object class="GtkFileChooserButton" id="favorites_folder_chooser">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_right">10</property>
                                 <property name="hexpand">True</property>
                                 <property name="orientation">vertical</property>
                                 <property name="action">select-folder</property>
@@ -702,6 +695,22 @@
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="edit_favorite_operations">
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="image">image1</property>
+                                <signal name="clicked" handler="on_edit_favorite_operations_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>
@@ -1866,6 +1875,16 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="min_size"/>
       <widget name="lightness"/>
     </widgets>
+  </object>
+  <object class="GtkListStore" id="sources_model">
+    <columns>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
+      <!-- column-name type -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
 </interface>

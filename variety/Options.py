@@ -127,6 +127,12 @@ class Options:
                 pass
 
             try:
+                favorites_ops_text = config["favorites_operations"]
+                self.favorites_operations = list([x.strip().split(':') for x in favorites_ops_text.split(';') if x])
+            except Exception:
+                pass
+
+            try:
                 self.fetched_folder = os.path.expanduser(config["fetched_folder"])
             except Exception:
                 pass
@@ -302,6 +308,7 @@ class Options:
         self.quota_size = 500
 
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
+        self.favorites_operations = [["Downloaded", "Copy"], ["Fetched", "Move"], ["Others", "Copy"]]
 
         self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
         self.clipboard_enabled = False
@@ -363,6 +370,7 @@ class Options:
             config["quota_size"] = str(self.quota_size)
 
             config["favorites_folder"] = self.favorites_folder
+            config["favorites_operations"] = ';'.join(':'.join(x) for x in self.favorites_operations)
 
             config["fetched_folder"] = self.fetched_folder
             config["clipboard_enabled"] = self.clipboard_enabled

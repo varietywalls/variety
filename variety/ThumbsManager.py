@@ -57,14 +57,9 @@ class ThumbsManager():
         self.active_position = None
 
     def create_menu(self, file):
-        menu = Gtk.Menu()
-
-        def close(widget): self.hide(gdk_thread=True, force=True)
-        close_item = Gtk.MenuItem("Close")
-        close_item.connect("activate", close)
-        menu.append(close_item)
-
         options = self.load_options()
+
+        menu = Gtk.Menu()
 
         position_menu = Gtk.Menu()
         for p, v in ThumbsManager.POSITIONS.items():
@@ -92,17 +87,44 @@ class ThumbsManager():
         size_item.set_submenu(size_menu)
         menu.append(size_item)
 
-        menu.append(Gtk.SeparatorMenuItem())
+        menu.append(Gtk.SeparatorMenuItem.new())
 
-        open_file = Gtk.MenuItem("Open in Image Viewer")
+        open_file = Gtk.MenuItem(os.path.basename(file).replace('_', '__'))
         def _open_file(widget): self.parent.open_file(widget, file)
         open_file.connect("activate", _open_file)
         menu.append(open_file)
 
-        open_folder = Gtk.MenuItem("Show Containing Folder")
+        dirlabel = os.path.dirname(file).replace('_', '__')
+        if len(dirlabel) > 50:
+            dirlabel = dirlabel[:50] + "..."
+        open_folder = Gtk.MenuItem(dirlabel)
         def _open_folder(widget): self.parent.open_folder(widget, file)
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
+
+        menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.copy_to_favorites = Gtk.MenuItem("Copy to _Favorites")
+        self.copy_to_favorites.set_use_underline(True)
+        def _copy_to_favorites(widget):
+            self.parent.copy_to_favorites(widget, file)
+        self.copy_to_favorites.connect("activate", _copy_to_favorites)
+        menu.append(self.copy_to_favorites)
+
+        self.move_to_favorites = Gtk.MenuItem("Move to _Favorites")
+        self.move_to_favorites.set_use_underline(True)
+        def _move_to_favorites(widget):
+            self.parent.move_to_favorites(widget, file)
+            self.remove_image(file)
+        self.move_to_favorites.connect("activate", _move_to_favorites)
+        self.move_to_favorites.set_visible(False)
+        menu.append(self.move_to_favorites)
+
+        trash_item = Gtk.MenuItem("Delete to _Trash")
+        trash_item.set_use_underline(True)
+        def _trash(widget): self.parent.move_to_trash(widget, file)
+        trash_item.connect("activate", _trash)
+        menu.append(trash_item)
 
         focus = Gtk.MenuItem("Display Source")
         focus.set_sensitive(self.parent.get_source(file) is not None)
@@ -110,21 +132,17 @@ class ThumbsManager():
         focus.connect("activate", _focus)
         menu.append(focus)
 
-        trash_item = Gtk.MenuItem("Move to Trash")
-        def _trash(widget): self.parent.move_to_trash(widget, file)
-        trash_item.connect("activate", _trash)
-        menu.append(trash_item)
+        menu.append(Gtk.SeparatorMenuItem.new())
 
-        in_favs = self.parent.is_in_favorites(file)
-        favorites_item = Gtk.MenuItem()
-        favorites_item.set_label("Already in Favorites" if in_favs else "Copy to Favorites")
-        favorites_item.set_sensitive(not in_favs)
-        def _favorite(widget): self.parent.copy_to_favorites(widget, file)
-        if not in_favs:
-            favorites_item.connect("activate", _favorite)
-        menu.append(favorites_item)
+        def close(widget): self.hide(gdk_thread=True, force=True)
+        close_item = Gtk.MenuItem("Close")
+        close_item.connect("activate", close)
+        menu.append(close_item)
 
         menu.show_all()
+
+        favs_op = self.parent.determine_favorites_operation(file)
+        self.parent.update_favorites_menuitems(self, False, favs_op)
 
         return menu
 
@@ -169,7 +187,7 @@ class ThumbsManager():
                 h = menu.get_preferred_height()[1]
                 return x, y - h if y - h >= 40 else y, True
             menu.connect("deactivate", _resume_scrolling)
-            menu.popup(None, None, _compute_position, None, event.button, event.time)
+            menu.popup(None, None, _compute_position, None, 0, event.time)
 
     def mark_active(self, file=None, position=None):
         self.active_file = file
