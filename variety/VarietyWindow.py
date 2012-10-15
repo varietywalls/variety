@@ -1152,6 +1152,7 @@ class VarietyWindow(Window):
                 if ok:
                     new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
                     self.used = [(new_file if f == file else f) for f in self.used]
+                    self.downloaded = [(new_file if f == file else f) for f in self.downloaded]
                     with self.prepared_lock:
                         self.prepared = [(new_file if f == file else f) for f in self.prepared]
                         self.prepare_event.set()

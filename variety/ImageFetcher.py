@@ -82,7 +82,7 @@ class ImageFetcher:
             filename = os.path.join(to, local_name)
             if os.path.exists(filename):
                 m = Util.read_metadata(filename)
-                if m and m["imageURL"] == url:
+                if m and m.get("imageURL") == url:
                     logger.info("Local file already exists (%s)" % filename)
                     parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
                     return filename
