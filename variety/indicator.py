@@ -49,7 +49,7 @@ class Indicator:
         self.show_origin.set_sensitive(False)
         self.menu.append(self.show_origin)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.copy_to_favorites = Gtk.MenuItem("Copy to _Favorites")
         self.copy_to_favorites.set_use_underline(True)
@@ -83,7 +83,7 @@ class Indicator:
         self.publish_fb.connect("activate", window.publish_on_facebook)
         self.menu.append(self.publish_fb)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.history = Gtk.CheckMenuItem("_History")
         self.history.set_active(False)
@@ -116,25 +116,25 @@ class Indicator:
         self.fast_forward.connect("activate", _fast_forward)
         self.playback_menu.append(self.fast_forward)
 
-        self.playback_menu.append(Gtk.SeparatorMenuItem())
+        self.playback_menu.append(Gtk.SeparatorMenuItem.new())
 
         self.pause_resume = Gtk.MenuItem("Pause")
         self.pause_resume.connect("activate", window.on_pause_resume)
         self.playback_menu.append(self.pause_resume)
 
-        self.playback_menu.append(Gtk.SeparatorMenuItem())
+        self.playback_menu.append(Gtk.SeparatorMenuItem.new())
         self.scroll_tip = Gtk.MenuItem("Tip: Scroll wheel over icon\nfor Next and Previous")
         self.scroll_tip.set_sensitive(False)
         self.playback_menu.append(self.scroll_tip)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.playback = Gtk.MenuItem("_Playback")
         self.playback.set_use_underline(True)
         self.playback.set_submenu(self.playback_menu)
         self.menu.append(self.playback)
 
-        self.menu.append(Gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem.new())
 
         #Adding preferences button
         self.preferences = Gtk.MenuItem("Preferences...")
