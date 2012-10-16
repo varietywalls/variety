@@ -1,3 +1,24 @@
+variety (0.4.11) precise; urgency=low
+
+  * Fix for WB
+  * Minor bugfixes
+  * Fix separators - call SeparatorMenuItem.new() instead of
+    SeparatorMenuItem()
+  * Option to choose between Copy to Fav, Move to Fav.
+  * Option to choose between Copy to Fav, Move to Fav. Fixes to thumbs
+    popup menu.
+  * Use gvfs-trash for proper moving to trash, not custom file move
+    operation
+  * Bugfix 1064592: Preferences dialog too high for netbooks
+    (1024x600px)
+  * Bugfix 1065284: Thumbs: Auto-scrolling continues even after user
+    pops a right-click menu or sets a wallpaper
+  * Bugfix for 1064667: Variety doesn't fetch images urls from
+    InterfaceLift - use a normally looking User-Agent for all requests
+  * Bugfix for 1051743: Variety sometimes uses 100% of the CPU
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 16 Oct 2012 22:25:20 +0300
+
 variety (0.4.10) precise; urgency=low
 
   * Minor edit of Media RSS dialog text
