@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import base64
 
 import urllib
 from bs4 import BeautifulSoup
@@ -114,7 +115,9 @@ class WallbaseDownloader(Downloader.Downloader):
         logger.info("Wallpaper URL: " + wallpaper_url)
 
         s = self.fetch(wallpaper_url)
-        src_url = s.find('div', id='bigwall').find('img')['src']
+        wall = str(s.find('div', id='bigwall'))
+        b64url = wall[wall.find("B('") + 3 : wall.find("')")]
+        src_url = base64.b64decode(b64url)
         logger.info("Image src URL: " + src_url)
 
         return self.save_locally(wallpaper_url, src_url)
