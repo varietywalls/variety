@@ -110,6 +110,6 @@ DistUtilsExtra.auto.setup(
 "desktop is always fresh and unique. Heavy blurring for example is a great way to "
 "get abstract-looking and unobtrusive, yet colorful wallpapers, similar in spirit "
 "to the default one in Ubuntu. ",
-    url='https://launchpad.net/variety',
+    url='http://peterlevi.com/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )

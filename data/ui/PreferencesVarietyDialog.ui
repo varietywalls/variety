@@ -1663,7 +1663,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 </child>
                 <child>
                   <object class="GtkLinkButton" id="linkbutton3">
-                    <property name="label" translatable="yes">https://launchpad.net/variety</property>
+                    <property name="label" translatable="yes">http://peterlevi.com/variety</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -1673,7 +1673,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="margin_left">30</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <property name="uri">https://launchpad.net/variety</property>
+                    <property name="uri">http://peterlevi.com/variety</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1773,6 +1773,103 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 <property name="tab_fill">False</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkBox" id="box12">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel" id="label30">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_top">10</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="label" translatable="yes">Donate to Variety</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label31">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_right">30</property>
+                    <property name="label" translatable="yes">Variety is currently developed by a single developer, me, in my spare time, which usually means the hours between 11 p.m. and 3 a.m... Wife quite often asks me: "What do you get out of this?". Answers like experience, kudos and acquaintances are faced rather coldly... </property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLinkButton" id="linkbutton4">
+                    <property name="label" translatable="yes">Donate via PayPal</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="height_request">35</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">25</property>
+                    <property name="margin_bottom">5</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="relief">none</property>
+                    <property name="xalign">0</property>
+                    <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label32">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_right">30</property>
+                    <property name="label" translatable="yes">Just kidding, of course. Still, any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to keep working actively on it.
+
+--Peter Levi</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">6</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label26">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Donate</property>
+              </object>
+              <packing>
+                <property name="position">6</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1788,7 +1885,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
             <property name="height_request">50</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">15</property>
+            <property name="margin_right">30</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="cancel">
@@ -1840,6 +1937,16 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkListStore" id="sources_model">
+    <columns>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
+      <!-- column-name type -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkSizeGroup" id="sizegroup1">
     <widgets>
       <widget name="add_button"/>
@@ -1875,16 +1982,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="min_size"/>
       <widget name="lightness"/>
     </widgets>
-  </object>
-  <object class="GtkListStore" id="sources_model">
-    <columns>
-      <!-- column-name enabled -->
-      <column type="gboolean"/>
-      <!-- column-name type -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
 </interface>
