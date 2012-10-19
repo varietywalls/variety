@@ -652,6 +652,7 @@ class VarietyWindow(Window):
                     except Exception:
                         logger.exception("Could not delete some file while purging download folder: " + file)
                 i += 1
+            self.prepare_event.set()
 
     @staticmethod
     def get_folder_size(start_path):
@@ -1120,6 +1121,7 @@ class VarietyWindow(Window):
                     self.next_wallpaper(widget)
 
                 self.remove_from_queues(file)
+                self.prepare_event.set()
                 if url:
                     self.ban_url(url)
 
@@ -1140,7 +1142,6 @@ class VarietyWindow(Window):
         self.downloaded = [f for f in self.downloaded if f != file]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
-            self.prepare_event.set()
 
     def copy_to_favorites(self, widget=None, file=None):
         try:
