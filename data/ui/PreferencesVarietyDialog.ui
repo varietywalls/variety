@@ -1663,7 +1663,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 </child>
                 <child>
                   <object class="GtkLinkButton" id="linkbutton3">
-                    <property name="label" translatable="yes">http://peterlevi.com/variety</property>
+                    <property name="label">http://peterlevi.com/variety</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -1701,7 +1701,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 </child>
                 <child>
                   <object class="GtkLinkButton" id="linkbutton1">
-                    <property name="label" translatable="yes">https://bugs.launchpad.net/variety/+filebug</property>
+                    <property name="label">https://bugs.launchpad.net/variety/+filebug</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -1739,7 +1739,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 </child>
                 <child>
                   <object class="GtkLinkButton" id="linkbutton2">
-                    <property name="label" translatable="yes">peterlevi@peterlevi.com</property>
+                    <property name="label">peterlevi@peterlevi.com</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

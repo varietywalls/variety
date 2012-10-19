@@ -85,6 +85,7 @@ class VarietyWindow(Window):
 
         self.prepared = []
         self.prepared_lock = threading.Lock()
+        self.prepared_from_downloads = []
 
         self.downloaded = []
 
@@ -580,13 +581,14 @@ class VarietyWindow(Window):
                 if self.downloaders:
                     self.purge_downloaded()
 
+                    # download from a random downloader (gives equal chance to all)
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     self.download_one_from(downloader)
 
-                    # Also download from all the refreshers - these need to be updated regularly
+                    # Also refresh the images for all the refreshers - these need to be updated regularly
                     for dl in self.downloaders:
                         if dl.is_refresher and dl != downloader:
-                            self.download_one_from(dl)
+                            dl.download_one()
 
             except Exception:
                 logger.exception("Could not download wallpaper:")
@@ -605,12 +607,14 @@ class VarietyWindow(Window):
                 self.downloaded = self.downloaded[:200]
                 self.refresh_thumbs_downloads(file)
                 self.download_folder_size += os.path.getsize(file)
+
             if downloader.is_refresher or self.image_ok(file, 0):
-                if not self.prepared or self.prepared[0] != file:
-                    logger.info("Adding downloaded file %s at queue front" % file)
-                    with self.prepared_lock:
-                        self.prepared.insert(0, file) # give priority to newly-downloaded images
+                # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
+                logger.info("Adding downloaded file %s to prepared_from_downloads queue" % file)
+                with self.prepared_lock:
+                    self.prepared_from_downloads.append(file)
             else:
+                # image is not ok, but still notify prepare thread that there is a new image - it might be "desperate"
                 self.prepare_event.set()
 
     def purge_downloaded(self):
@@ -877,8 +881,13 @@ class VarietyWindow(Window):
             img = None
 
             with self.prepared_lock:
+                # prepend the prepared_from_downloads queue and clear it:
+                random.shuffle(self.prepared_from_downloads)
+                self.prepared[0:0] = self.prepared_from_downloads
+                self.prepared_from_downloads = []
+
                 for prep in self.prepared:
-                    if (prep != self.current or self.is_current_refreshable()) and os.access(prep, os.R_OK):
+                    if prep != self.current and os.access(prep, os.R_OK):
                         img = prep
                         self.prepared.remove(img)
                         self.prepare_event.set()
@@ -1128,6 +1137,7 @@ class VarietyWindow(Window):
 
     def remove_from_queues(self, file):
         self.used = [f for f in self.used if f != file]
+        self.downloaded = [f for f in self.downloaded if f != file]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
             self.prepare_event.set()
