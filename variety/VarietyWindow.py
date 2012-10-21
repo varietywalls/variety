@@ -1411,11 +1411,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
 
-                            self.prepared.insert(0, file)
+                            #self.prepared.insert(0, file)
                             if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
                                 at_front = self.position == 0
                                 self.used.insert(self.position, file)
                                 self.position += 1
+                                self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
                                 self.refresh_thumbs_history(file, at_front)
 
             except Exception:

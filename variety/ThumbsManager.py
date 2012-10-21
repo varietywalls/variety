@@ -105,10 +105,7 @@ class ThumbsManager():
         open_file.connect("activate", _open_file)
         menu.append(open_file)
 
-        dirlabel = os.path.dirname(file).replace('_', '__')
-        if len(dirlabel) > 50:
-            dirlabel = dirlabel[:50] + "..."
-        open_folder = Gtk.MenuItem(dirlabel)
+        open_folder = Gtk.MenuItem(_("Show Containing Folder"))
         def _open_folder(widget): self.parent.open_folder(widget, file)
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)

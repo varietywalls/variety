@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-21 22:12+0300\n"
+"POT-Creation-Date: 2012-10-21 22:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,12 +326,12 @@ msgstr ""
 msgid "Already in Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:379 ../variety/ThumbsManager.py:118
+#: ../variety/VarietyWindow.py:379 ../variety/ThumbsManager.py:115
 #: ../variety/indicator.py:54
 msgid "Copy to _Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:380 ../variety/ThumbsManager.py:125
+#: ../variety/VarietyWindow.py:380 ../variety/ThumbsManager.py:122
 msgid "Move to _Favorites"
 msgstr ""
 
@@ -485,15 +485,15 @@ msgstr ""
 msgid "Press Next to see it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1626
+#: ../variety/VarietyWindow.py:1627
 msgid "Published"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1626
+#: ../variety/VarietyWindow.py:1627
 msgid "You may open your Facebook feed to see the post"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1628
+#: ../variety/VarietyWindow.py:1629
 msgid "Could not publish"
 msgstr ""
 
@@ -542,7 +542,11 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:134 ../variety/indicator.py:65
+#: ../variety/ThumbsManager.py:108
+msgid "Show Containing Folder"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:131 ../variety/indicator.py:65
 msgid "Delete to _Trash"
 msgstr ""
 
@@ -553,23 +557,23 @@ msgstr ""
 #. self.open_folder = Gtk.MenuItem(_("Show Containing Folder"))
 #. self.open_folder.connect("activate", window.open_folder)
 #. self.menu.append(self.open_folder)
-#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:78
+#: ../variety/ThumbsManager.py:137 ../variety/indicator.py:78
 msgid "Display Source"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:149
+#: ../variety/ThumbsManager.py:146
 msgid "Close"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:240
+#: ../variety/ThumbsManager.py:237
 msgid "Variety History"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:242
+#: ../variety/ThumbsManager.py:239
 msgid "Variety Recent Downloads"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:244
+#: ../variety/ThumbsManager.py:241
 msgid "Variety Images"
 msgstr ""
 
