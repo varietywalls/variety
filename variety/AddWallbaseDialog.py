@@ -180,7 +180,7 @@ class AddWallbaseDialog(Gtk.Dialog):
         self.error = ""
         self.show_spinner()
         if not WallbaseDownloader.validate(search):
-            self.error = "No images found"
+            self.error = _("No images found")
 
         Gdk.threads_enter()
 

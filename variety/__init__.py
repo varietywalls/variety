@@ -49,7 +49,7 @@ class VarietyService(dbus.service.Object):
 VARIETY_WINDOW = None
 
 def sigint_handler(a, b):
-    print "CTRL-C pressed, quitting..."
+    print _("CTRL-C pressed, quitting...")
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
         VARIETY_WINDOW.on_quit()
@@ -64,13 +64,13 @@ def main():
     # ensure singleton
     if dbus.SessionBus().request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if arguments:
-            print "Variety is already running. Sending the command to the running instance."
+            print _("Variety is already running. Sending the command to the running instance.")
             method = dbus.SessionBus().get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
             result = method(arguments)
             if result:
                 print result
         else:
-            print "Variety is already running."
+            print _("Variety is already running.")
         return
 
     # ignore Ctrl-C

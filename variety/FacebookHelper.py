@@ -36,6 +36,10 @@ import pycurl
 import StringIO
 import logging
 
+import gettext
+from gettext import gettext as _
+gettext.textdomain('variety')
+
 logger = logging.getLogger('variety')
 
 AUTH_URL = 'https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s&response_type=token&scope=%s'
@@ -69,7 +73,7 @@ class FacebookHelper:
 
         # Creates the GTK+ app
         self.window = Gtk.Window()
-        self.window.set_title("Variety - Login to Facebook")
+        self.window.set_title(_("Variety - Login to Facebook"))
         self.window.set_position(Gtk.WindowPosition.CENTER)
         self.scrolled_window = Gtk.ScrolledWindow()
 
@@ -131,7 +135,7 @@ class FacebookHelper:
     def _destroy_event_cb(self, widget, on_failure):
         self.window.destroy()
         if not self.token and on_failure:
-            on_failure(self, "authorize", "Login window closed before authorization")
+            on_failure(self, "authorize", _("Login window closed before authorization"))
 
     def load_token(self):
         logger.info("Loading token from file")

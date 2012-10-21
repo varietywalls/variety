@@ -101,7 +101,7 @@ class Util:
     def start_force_exit_thread(delay):
         def force_exit():
             time.sleep(delay)
-            print "Exiting takes too long. Calling os.kill."
+            print _("Exiting takes too long. Calling os.kill.")
             os.kill(os.getpid(), 9)
         force_exit_thread = threading.Thread(target=force_exit)
         force_exit_thread.daemon = True

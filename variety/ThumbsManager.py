@@ -23,6 +23,10 @@ import logging
 from variety.ThumbsWindow import ThumbsWindow
 from variety_lib import varietyconfig
 
+import gettext
+from gettext import gettext as _
+gettext.textdomain('variety')
+
 logger = logging.getLogger('variety')
 
 class ThumbsManager():
@@ -31,6 +35,13 @@ class ThumbsManager():
         "top": ThumbsWindow.TOP,
         "left": ThumbsWindow.LEFT,
         "right": ThumbsWindow.RIGHT
+    }
+
+    POSITION_NAMES = {
+        "bottom": _("Bottom"),
+        "top": _("Top"),
+        "left": _("Left"),
+        "right": _("Right")
     }
 
     R_POSITIONS = dict((v, k) for (k,v) in POSITIONS.items())
@@ -63,7 +74,7 @@ class ThumbsManager():
 
         position_menu = Gtk.Menu()
         for p, v in ThumbsManager.POSITIONS.items():
-            item = Gtk.CheckMenuItem(p[0].upper() + p[1:])
+            item = Gtk.CheckMenuItem(ThumbsManager.POSITION_NAMES[p])
             item.set_draw_as_radio(True)
             item.set_active(options.position == v)
             def _set_position(widget, pos=p): self.set_position(pos)
@@ -79,11 +90,11 @@ class ThumbsManager():
             item.connect("activate", _set_size)
             size_menu.append(item)
 
-        position_item = Gtk.MenuItem("Position")
+        position_item = Gtk.MenuItem(_("Position"))
         position_item.set_submenu(position_menu)
         menu.append(position_item)
 
-        size_item = Gtk.MenuItem("Size")
+        size_item = Gtk.MenuItem(_("Size"))
         size_item.set_submenu(size_menu)
         menu.append(size_item)
 
@@ -104,14 +115,14 @@ class ThumbsManager():
 
         menu.append(Gtk.SeparatorMenuItem.new())
 
-        self.copy_to_favorites = Gtk.MenuItem("Copy to _Favorites")
+        self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
         self.copy_to_favorites.set_use_underline(True)
         def _copy_to_favorites(widget):
             self.parent.copy_to_favorites(widget, file)
         self.copy_to_favorites.connect("activate", _copy_to_favorites)
         menu.append(self.copy_to_favorites)
 
-        self.move_to_favorites = Gtk.MenuItem("Move to _Favorites")
+        self.move_to_favorites = Gtk.MenuItem(_("Move to _Favorites"))
         self.move_to_favorites.set_use_underline(True)
         def _move_to_favorites(widget):
             self.parent.move_to_favorites(widget, file)
@@ -120,13 +131,13 @@ class ThumbsManager():
         self.move_to_favorites.set_visible(False)
         menu.append(self.move_to_favorites)
 
-        trash_item = Gtk.MenuItem("Delete to _Trash")
+        trash_item = Gtk.MenuItem(_("Delete to _Trash"))
         trash_item.set_use_underline(True)
         def _trash(widget): self.parent.move_to_trash(widget, file)
         trash_item.connect("activate", _trash)
         menu.append(trash_item)
 
-        focus = Gtk.MenuItem("Display Source")
+        focus = Gtk.MenuItem(_("Display Source"))
         focus.set_sensitive(self.parent.get_source(file) is not None)
         def _focus(widget): self.parent.focus_in_preferences(widget, file)
         focus.connect("activate", _focus)
@@ -135,7 +146,7 @@ class ThumbsManager():
         menu.append(Gtk.SeparatorMenuItem.new())
 
         def close(widget): self.hide(gdk_thread=True, force=True)
-        close_item = Gtk.MenuItem("Close")
+        close_item = Gtk.MenuItem(_("Close"))
         close_item.connect("activate", close)
         menu.append(close_item)
 
@@ -225,7 +236,13 @@ class ThumbsManager():
                     except Exception:
                         logger.exception("Could not set thumbs window icon")
 
-                    title = "Variety %s" % ("History" if self.type == "history" else "Images")
+                    if self.type == "history":
+                        title = _("Variety History")
+                    elif self.type == "downloads":
+                        title = _("Variety Recent Downloads")
+                    else:
+                        title = _("Variety Images")
+
                     self.thumbs_window.set_title(title)
                     self.thumbs_window.connect("clicked", self.on_click)
                     def _on_close(window, event):

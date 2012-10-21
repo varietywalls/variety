@@ -22,8 +22,6 @@
 
 from gi.repository import Gio, Gtk, Gdk, GdkPixbuf # pylint: disable=E0611
 
-import gettext
-from gettext import gettext as _
 import threading
 from variety.Util import Util
 from variety_lib.varietyconfig import get_data_file
@@ -35,6 +33,8 @@ from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 
+import gettext
+from gettext import gettext as _
 gettext.textdomain('variety')
 
 import os
@@ -227,9 +227,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             if updated:
                 self.parent.show_notification(
-                    "World Sunlight Map enabled",
-                    "Using the World Sunlight Map requires both downloading and changing "\
-                    "enabled at intervals of 30 minutes or less. Settings were adjusted automatically.")
+                    _("World Sunlight Map enabled"),
+                    _("Using the World Sunlight Map requires both downloading and changing "
+                    "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
 
     def set_time(self, interval, text, time_unit):
         if interval < 5:
@@ -272,8 +272,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
 
     def on_add_images_clicked(self, widget=None):
-        chooser = Gtk.FileChooserDialog("Add Images", parent=self, action=Gtk.FileChooserAction.OPEN,
-            buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+        chooser = Gtk.FileChooserDialog(_("Add Images"), parent=self, action=Gtk.FileChooserAction.OPEN,
+            buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK])
         self.dialog = chooser
         preview = Gtk.Image()
         chooser.set_preview_widget(preview)
@@ -291,7 +291,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.set_select_multiple(True)
         chooser.set_local_only(True)
         filter = Gtk.FileFilter()
-        filter.set_name("Images")
+        filter.set_name(_("Images"))
         for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg"]:
             filter.add_pattern("*." + s)
             filter.add_pattern("*." + s.upper())
@@ -307,9 +307,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.destroy()
 
     def on_add_folders_clicked(self, widget=None):
-        chooser = Gtk.FileChooserDialog("Add Folders - Only add the root folders, subfolders are searched recursively",
+        chooser = Gtk.FileChooserDialog(_("Add Folders - Only add the root folders, subfolders are searched recursively"),
             parent=self, action=Gtk.FileChooserAction.SELECT_FOLDER,
-            buttons=["Cancel", Gtk.ResponseType.CANCEL, "Add", Gtk.ResponseType.OK])
+            buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK])
         self.dialog = chooser
         chooser.set_select_multiple(True)
         chooser.set_local_only(True)
@@ -425,20 +425,20 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.previous_selection = rows
 
         self.ui.edit_source.set_sensitive(False)
-        self.ui.edit_source.set_label("Edit...")
+        self.ui.edit_source.set_label(_("Edit..."))
 
         if len(rows) == 1:
             source = model[rows[0]]
             type = Options.str_to_type(source[1])
             if type == Options.SourceType.IMAGE:
                 self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label("View Image")
+                self.ui.edit_source.set_label(_("View Image"))
             elif type in [Options.SourceType.FOLDER, Options.SourceType.FAVORITES, Options.SourceType.FETCHED]:
                 self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label("Open Folder")
+                self.ui.edit_source.set_label(_("Open Folder"))
             elif type in EDITABLE_TYPES:
                 self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label("Edit...")
+                self.ui.edit_source.set_label(_("Edit..."))
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
@@ -494,25 +494,19 @@ class PreferencesVarietyDialog(PreferencesDialog):
             logger.exception("Could not create thumbs window:")
 
     def on_add_wn_clicked(self, widget=None):
-        self.dialog = AddWallpapersNetCategoryDialog()
-        self.dialog.parent = self
-        self.dialog.set_transient_for(self)
-        self.dialog.run()
+        self.show_dialog(AddWallpapersNetCategoryDialog())
 
     def on_add_mediarss_clicked(self, widget=None):
-        self.dialog = AddMediaRssDialog()
-        self.dialog.parent = self
-        self.dialog.set_transient_for(self)
-        self.dialog.run()
+        self.show_dialog(AddMediaRssDialog())
 
     def on_add_flickr_clicked(self, widget=None):
-        self.dialog = AddFlickrDialog()
-        self.dialog.parent = self
-        self.dialog.set_transient_for(self)
-        self.dialog.run()
+        self.show_dialog(AddFlickrDialog())
 
     def on_add_wallbase_clicked(self, widget=None):
-        self.dialog = AddWallbaseDialog()
+        self.show_dialog(AddWallbaseDialog())
+
+    def show_dialog(self, dialog):
+        self.dialog = dialog
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
         self.dialog.run()
@@ -679,9 +673,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             logger.exception("Error while creating autostart desktop entry")
             dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
                 Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
-                "An error occurred while creating the autostart desktop entry\n"
-                "Please run from a terminal with the -v flag and try again.")
-            dialog.set_title("Oops")
+                _("An error occurred while creating the autostart desktop entry\n"
+                "Please run from a terminal with the -v flag and try again."))
+            dialog.set_title(_("Oops"))
             dialog.run()
             dialog.destroy()
 
@@ -724,19 +718,19 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_downloaded_changed(self, widget=None):
         if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
-            self.ui.error_downloaded.set_label("No write permissions")
+            self.ui.error_downloaded.set_label(_("No write permissions"))
         else:
             self.ui.error_downloaded.set_label("")
 
     def on_favorites_changed(self, widget=None):
         if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
-            self.ui.error_favorites.set_label("No write permissions")
+            self.ui.error_favorites.set_label(_("No write permissions"))
         else:
             self.ui.error_favorites.set_label("")
 
     def on_fetched_changed(self, widget=None):
         if not os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
-            self.ui.error_fetched.set_label("No write permissions")
+            self.ui.error_fetched.set_label(_("No write permissions"))
         else:
             self.ui.error_fetched.set_label("")
 

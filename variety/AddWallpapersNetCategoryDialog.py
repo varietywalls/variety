@@ -81,7 +81,7 @@ class AddWallpapersNetCategoryDialog(Gtk.Dialog):
 
         Gdk.threads_enter()
         if not valid:
-            self.ui.error.set_label("Could not find wallpapers there. Please check the URL.")
+            self.ui.error.set_label(_("Could not find wallpapers there. Please check the URL."))
             self.ui.spinner.stop()
             self.ui.url.set_sensitive(True)
             self.ui.message.set_visible(False)

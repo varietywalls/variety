@@ -81,7 +81,7 @@ class AddMediaRssDialog(Gtk.Dialog):
 
         Gdk.threads_enter()
         if not valid:
-            self.ui.error.set_label("This does not seem to be a valid Media RSS feed URL or there is no content there.")
+            self.ui.error.set_label(_("This does not seem to be a valid Media RSS feed URL or there is no content there."))
             self.ui.spinner.stop()
             self.ui.url.set_sensitive(True)
             self.ui.message.set_visible(False)

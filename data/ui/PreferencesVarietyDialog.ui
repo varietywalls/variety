@@ -1803,7 +1803,13 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="can_focus">False</property>
                     <property name="margin_left">30</property>
                     <property name="margin_right">30</property>
-                    <property name="label" translatable="yes">Variety is currently developed by a single developer, me, in my spare time, which usually means the hours between 11 p.m. and 3 a.m... Wife quite often asks me: "What do you get out of this?". Answers like experience, kudos and acquaintances are faced rather coldly... </property>
+                    <property name="label" translatable="yes">I am developing Variety in my spare time, which usually means the late hours after my kids go to bed. I do not do it for money, I do it because I like it and also because this way I get experience, kudos and acquaintances.
+Variety's running costs - mainly for the site hosting - are also relatively small for now. 
+
+Still, any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to continue working actively on it.   
+
+Thank you,
+Peter Levi</property>
                     <property name="justify">fill</property>
                     <property name="wrap">True</property>
                   </object>
@@ -1837,22 +1843,48 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label32">
+                  <object class="GtkLabel" id="label33">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">30</property>
-                    <property name="margin_right">30</property>
-                    <property name="label" translatable="yes">Just kidding, of course. Still, any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to keep working actively on it.
-
---Peter Levi</property>
-                    <property name="justify">fill</property>
-                    <property name="wrap">True</property>
+                    <property name="halign">start</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_top">15</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="label" translatable="yes">Other ways to help</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">3</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label34">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">30</property>
+                    <property name="margin_right">30</property>
+                    <property name="label" translatable="yes">You can also help by making Variety more popular. Here are some suggestions:
+
+Write a post about it on your blog, on Facebook, Twitter or Google+. Please mention Variety's official page &lt;a href="http://peterlevi.com/variety"&gt;http://peterlevi.com/variety&lt;/a&gt;.
+Review it in Ubuntu Software Center.
+Vote for it on &lt;a href="http://alternativeto.net/software/variety-wallpaper-changer/"&gt;alternativeto.net&lt;/a&gt;.
+</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -1937,24 +1969,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkListStore" id="sources_model">
-    <columns>
-      <!-- column-name enabled -->
-      <column type="gboolean"/>
-      <!-- column-name type -->
-      <column type="gchararray"/>
-      <!-- column-name location -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="add_button"/>
-      <widget name="edit_source"/>
-      <widget name="remove_sources"/>
-      <widget name="use_button"/>
-    </widgets>
-  </object>
   <object class="GtkSizeGroup" id="sizegroup2">
     <widgets>
       <widget name="change_enabled"/>
@@ -1983,5 +1997,23 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
       <widget name="lightness"/>
     </widgets>
   </object>
+  <object class="GtkListStore" id="sources_model">
+    <columns>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
+      <!-- column-name type -->
+      <column type="gchararray"/>
+      <!-- column-name location -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <widgets>
+      <widget name="add_button"/>
+      <widget name="edit_source"/>
+      <widget name="remove_sources"/>
+      <widget name="use_button"/>
+    </widgets>
+  </object>
 </interface>

@@ -20,6 +20,10 @@ import urlparse
 from variety.Util import Util
 from PIL import Image
 
+import gettext
+from gettext import gettext as _
+gettext.textdomain('variety')
+
 logger = logging.getLogger('variety')
 
 
@@ -47,11 +51,11 @@ class ImageFetcher:
         try:
             logger.info("Trying to fetch URL %s to %s " % (url, to))
             if verbose:
-                parent.show_notification("Fetching", url)
+                parent.show_notification(_("Fetching"), url)
 
             if url.startswith('javascript:'):
                 if verbose:
-                    parent.show_notification("Not an image", url)
+                    parent.show_notification(_("Not an image"), url)
                 return None
 
             if url.find('://') < 0:
@@ -62,14 +66,14 @@ class ImageFetcher:
             if not "content-type" in info:
                 logger.info("Uknown content-type for url " + url)
                 if verbose:
-                    parent.show_notification("Not an image", url)
+                    parent.show_notification(_("Not an image"), url)
                 return None
 
             ct = info["content-type"]
             if not ct.startswith("image/"):
                 logger.info("Unsupported content-type for url " + url + ": " + ct)
                 if verbose:
-                    parent.show_notification("Not an image", url)
+                    parent.show_notification(_("Not an image"), url)
                 return None
 
             local_name = Util.get_local_name(url)
@@ -84,7 +88,7 @@ class ImageFetcher:
                 m = Util.read_metadata(filename)
                 if m and m.get("imageURL") == url:
                     logger.info("Local file already exists (%s)" % filename)
-                    parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
+                    parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
                     return filename
                 else:
                     logger.info("File with same name already exists, but from different imageURL; renaming new download")
@@ -94,7 +98,7 @@ class ImageFetcher:
             logger.info("Fetching to " + filename)
             if not reported:
                 reported = True
-                parent.show_notification("Fetching", url)
+                parent.show_notification(_("Fetching"), url)
 
             data = u.read()
             with open(filename, 'wb') as f:
@@ -103,27 +107,29 @@ class ImageFetcher:
             try:
                 img = Image.open(filename)
             except Exception:
-                parent.show_notification("Not an image", url)
+                parent.show_notification(_("Not an image"), url)
                 os.unlink(filename)
                 return None
 
             if img.size[0] < 400 or img.size[1] < 400:
                 # too small - delete and do not use
-                parent.show_notification("Image too small, ignoring it", url)
+                parent.show_notification(_("Image too small, ignoring it"), url)
                 os.unlink(filename)
                 return None
 
             Util.write_metadata(filename, {"sourceName": "Fetched", "sourceURL": url, "imageURL": url})
 
             logger.info("Fetched %s to %s." % (url, filename))
-            parent.show_notification("Fetched", "%s\nPress Next to see it" % local_name, icon=filename)
+            parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
 
             return filename
 
         except Exception:
             logger.exception("Fetch failed for URL " + url)
             if reported:
-                parent.show_notification("Fetch failed for some reason", "You may check the log if running in terminal with -v option")
+                parent.show_notification(
+                    _("Fetch failed for some reason"),
+                    _("To get more information, please run Variety from terminal with -v option and retry the action"))
             return None
 
     @staticmethod

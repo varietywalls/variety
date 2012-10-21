@@ -372,12 +372,12 @@ class VarietyWindow(Window):
             holder.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
             holder.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
         if favs_op is None:
-            holder.copy_to_favorites.set_label("Already in Favorites")
+            holder.copy_to_favorites.set_label(_("Already in Favorites"))
             holder.copy_to_favorites.set_visible(True)
             holder.move_to_favorites.set_visible(False)
         else:
-            holder.copy_to_favorites.set_label("Copy to _Favorites")
-            holder.move_to_favorites.set_label("Move to _Favorites")
+            holder.copy_to_favorites.set_label(_("Copy to _Favorites"))
+            holder.move_to_favorites.set_label(_("Move to _Favorites"))
             if favs_op == "copy":
                 holder.copy_to_favorites.set_visible(True)
                 holder.move_to_favorites.set_visible(False)
@@ -385,7 +385,7 @@ class VarietyWindow(Window):
                 holder.copy_to_favorites.set_visible(False)
                 holder.move_to_favorites.set_visible(True)
             else: # both
-                holder.move_to_favorites.set_label("Move to Favorites")
+                holder.move_to_favorites.set_label(_("Move to Favorites"))
                 holder.copy_to_favorites.set_visible(True)
                 holder.move_to_favorites.set_visible(True)
 
@@ -405,7 +405,7 @@ class VarietyWindow(Window):
             info = Util.read_metadata(file)
             if info and "sourceURL" in info and "sourceName" in info:
                 self.source_name = info["sourceName"] if info["sourceName"].find("Fetched") < 0 else None
-                label = "View at " + info["sourceName"] if info["sourceName"].find("Fetched") < 0 else "Fetched: Show Origin"
+                label = (_("View at %s") % info["sourceName"]) if info["sourceName"].find("Fetched") < 0 else _("Fetched: Show Origin")
                 self.url = info["sourceURL"]
                 if "imageURL" in info:
                     self.image_url = info["imageURL"]
@@ -466,7 +466,7 @@ class VarietyWindow(Window):
             logger.exception("Error updating file info")
 
     def update_pause_resume(self):
-        self.ind.pause_resume.set_label("Pause" if self.options.change_enabled else "Resume")
+        self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
     def regular_change_thread(self):
         logger.info("regular_change thread running")
@@ -904,8 +904,8 @@ class VarietyWindow(Window):
                 logger.info("No images found")
                 if not self.auto_changed:
                     self.show_notification(
-                        "No more wallpapers",
-                        "Please add more image sources or wait for some downloads")
+                        _("No more wallpapers"),
+                        _("Please add more image sources or wait for some downloads"))
                 return
 
             self.set_wallpaper(img, auto_changed=self.auto_changed)
@@ -1055,24 +1055,13 @@ class VarietyWindow(Window):
             file = self.current
         source = self.get_source(file)
         if source is None:
-            self.show_notification("Current wallpaper is not in the image sources")
+            self.show_notification(_("Current wallpaper is not in the image sources"))
         else:
             self.on_mnu_preferences_activate()
             self.preferences_dialog.focus_source_and_image(source, file)
 
-    def confirm_move(self, move_or_copy, file, to):
-        dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-            Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
-            move_or_copy + " " + os.path.basename(file) + " to " + to + ". Are you sure?")
-        dialog.set_title("Confirm " + move_or_copy + " to " + to)
-        self.dialogs.append(dialog)
-        response = dialog.run()
-        dialog.destroy()
-        self.dialogs.remove(dialog)
-        return response == Gtk.ResponseType.YES
-
     def move_or_copy_file(self, file, to, to_name, operation):
-        op = "Moved" if operation == shutil.move else "Copied"
+        is_move = operation == shutil.move
         try:
             if file != to:
                 operation(file, to)
@@ -1080,8 +1069,8 @@ class VarietyWindow(Window):
                 operation(file + ".txt", to)
             except Exception:
                 pass
-            logger.info(op + " " + file + " to " + to)
-            #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
+            logger.info(("Moved %s to %s" if is_move else "Copied %s to %s") % (file, to))
+            #self.show_notification(("Moved %s to %s" if is_move else "Copied %s to %s") % (os.path.basename(file), to_name))
             return True
         except Exception as err:
             if str(err).find("already exists") > 0:
@@ -1096,12 +1085,13 @@ class VarietyWindow(Window):
                     return True
 
             logger.exception("Could not move/copy to " + to)
-            op = ("Move" if operation == shutil.move else "Copy")
-            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.WARNING, Gtk.ButtonsType.OK,
-                "Could not " + op.lower() + " to " + to + ". You probably don't have permissions to " + op.lower() + " this file.")
+            if is_move:
+                msg = _("Could not move to %s. You probably don't have permissions to move this file.") % to
+            else:
+                msg = _("Could not copy to %s. You probably don't have permissions to copy this file.") % to
+            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK, msg)
             self.dialogs.append(dialog)
-            dialog.set_title(op + " failed")
+            dialog.set_title("Move failed" if is_move else "Copy failed")
             dialog.run()
             dialog.destroy()
             self.dialogs.remove(dialog)
@@ -1113,7 +1103,9 @@ class VarietyWindow(Window):
                 file = self.current
             url = self.url
             if not os.access(file, os.W_OK):
-                self.show_notification("Cannot move", "You don't have permissions to move %s to Trash." % file)
+                self.show_notification(
+                    _("Cannot delete"),
+                    _("You don't have permissions to delete %s to Trash.") % file)
             else:
                 os.system('gvfs-trash "%s"' % file)
 
@@ -1247,7 +1239,7 @@ class VarietyWindow(Window):
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTROY_WITH_PARENT,
             Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-            "I will open an editor with the config file and apply the changes after you save and close the editor.")
+            _("I will open an editor with the config file and apply the changes after you save and close the editor."))
         self.dialogs.append(dialog)
         dialog.set_title("Edit config file")
         dialog.run()
@@ -1269,12 +1261,12 @@ class VarietyWindow(Window):
     @staticmethod
     def parse_options(arguments, report_errors=True):
         """Support for command line options"""
-        usage = """%prog [options] [files or urls]
+        usage = _("""%prog [options] [files or urls]
 
-Passing local files will add them to Variety's queue
-Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue
+Passing local files will add them to Variety's queue.
+Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
 
-To set a specific wallpaper: %prog /some/local/image.jpg --next"""
+To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         parser = VarietyOptionParser(usage=usage, version="%%prog %s" % get_version(), report_errors=report_errors)
 
         parser.add_option(
@@ -1329,13 +1321,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
 
         if report_errors:
             if (options.next or options.fast_forward) and options.previous:
-                parser.error("options --next/--fast-forward and --previous are mutually exclusive")
+                parser.error(_("options --next/--fast-forward and --previous are mutually exclusive"))
 
             if options.trash and options.favorite:
-                parser.error("options --trash and --favorite are mutually exclusive")
+                parser.error(_("options --trash and --favorite are mutually exclusive"))
 
             if options.pause and options.resume:
-                parser.error("options --pause and --resume are mutually exclusive")
+                parser.error(_("options --pause and --resume are mutually exclusive"))
 
         return options, args
 
@@ -1404,12 +1396,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
 
                     if is_local:
                         if not (os.path.isfile(url) and Util.is_image(url)):
-                            self.show_notification("Not an image", url)
+                            self.show_notification(_("Not an image"), url)
                             continue
 
                         file = url
                         local_name = os.path.basename(file)
-                        self.show_notification("Added to queue", "%s\nPress Next to see it" % local_name, icon=file)
+                        self.show_notification(_("Added to queue"), local_name + "\n" + _("Press Next to see it"), icon=file)
                     else:
                         file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
 
@@ -1631,9 +1623,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next"""
             def do_publish():
                 fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
                 def on_success(fb, action, data):
-                    self.show_notification("Published", "You may open your Facebook feed to see the post", icon=file)
+                    self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"), icon=file)
                 def on_failure(fb, action, data):
-                    self.show_notification("Could not publish", str(data), icon=file)
+                    self.show_notification(_("Could not publish"), str(data), icon=file)
 
                 fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
