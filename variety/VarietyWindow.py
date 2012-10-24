@@ -828,14 +828,18 @@ class VarietyWindow(Window):
         return result
 
     def on_indicator_scroll(self, indicator, steps, direction):
+        if direction == Gdk.ScrollDirection.SMOOTH:
+            return
+
         if self.wheel_timer:
             self.wheel_timer.cancel()
-        self.wheel_direction = direction
+        self.wheel_direction_forward = direction in [Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.LEFT]
+        print self.wheel_direction_forward
         self.wheel_timer = threading.Timer(0.3, self.handle_scroll)
         self.wheel_timer.start()
 
     def handle_scroll(self):
-        if self.wheel_direction:
+        if self.wheel_direction_forward:
             self.next_wallpaper(widget=self)
         else:
             self.prev_wallpaper(widget=self)

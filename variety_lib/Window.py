@@ -82,8 +82,7 @@ class Window(Gtk.Window):
         try:
             from variety import indicator
             # self is passed so methods of this class can be called from indicator.py
-            # Comment this next line out to disable appindicator
-            self.indicator = indicator.new_application_indicator(self)
+            self.indicator, self.status_icon = indicator.new_application_indicator(self)
         except ImportError:
             pass
 

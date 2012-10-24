@@ -17,7 +17,12 @@
 """Code to add AppIndicator."""
 
 from gi.repository import Gtk # pylint: disable=E0611
-from gi.repository import AppIndicator3 # pylint: disable=E0611
+
+try:
+    from gi.repository import AppIndicator3 # pylint: disable=E0611
+    use_appindicator = True
+except ImportError:
+    use_appindicator = False
 
 from variety_lib import varietyconfig
 
@@ -27,17 +32,11 @@ gettext.textdomain('variety')
 
 class Indicator:
     def __init__(self, window):
-        self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
-        self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+        self.create_menu(window)
+        self.create_indicator(window)
+        window.ind = self
 
-        icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
-        self.indicator.set_icon(icon_path)
-
-        self.indicator.connect("scroll-event", window.on_indicator_scroll)
-
-        #Uncomment and choose an icon for attention state.
-        #self.indicator.set_attention_icon("ICON-NAME")
-
+    def create_menu(self, window):
         self.menu = Gtk.Menu()
 
         self.file_label = Gtk.MenuItem(_("Current desktop wallpaper"))
@@ -154,10 +153,37 @@ class Indicator:
         self.menu.append(self.quit)
 
         self.menu.show_all()
-        self.indicator.set_menu(self.menu)
 
-        window.ind = self
+    def create_indicator(self, window):
+        self.indicator = None
+        self.status_icon = None
+
+        def pos(menu, icon):
+            return Gtk.StatusIcon.position_menu(self.menu, icon)
+
+        def right_click_event(icon, button, time):
+            self.menu.popup(None, None, pos, self.status_icon, 0, time)
+
+        def left_click_event(data):
+            self.menu.popup(None, None, pos, self.status_icon, 0, Gtk.get_current_event_time())
+
+        def on_indicator_scroll_status_icon(status_icon, event):
+            window.on_indicator_scroll(None, 1, event.direction)
+
+        icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+        if use_appindicator:
+            self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
+            self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+            self.indicator.set_icon(icon_path)
+            self.indicator.connect("scroll-event", window.on_indicator_scroll)
+            self.indicator.set_menu(self.menu)
+        else:
+            self.status_icon = Gtk.StatusIcon.new_from_file(icon_path)
+            self.status_icon.set_visible(True)
+            self.status_icon.connect("activate", left_click_event)
+            self.status_icon.connect("popup-menu", right_click_event)
+            self.status_icon.connect("scroll-event", on_indicator_scroll_status_icon)
 
 def new_application_indicator(window):
     ind = Indicator(window)
-    return ind.indicator
+    return ind.indicator, ind.status_icon

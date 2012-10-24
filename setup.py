@@ -104,6 +104,7 @@ DistUtilsExtra.auto.setup(
 "Apart from displaying images from local folders, several different online "
 "sources can be used to fetch wallpapers according to user-specified criteria - "
 "Flickr, Wallbase.cc, Wallpapers.net, NASA Astronomy Picture of the Day, Desktoppr.co. "
+"Media RSS feeds from Picasa, deviantART or any other place are also supported."
 ""
 "Variety can also automatically apply various fancy filters to the displayed "
 "images - heavy blurring, oil painting, charcoal painting, etc. - so that your "
