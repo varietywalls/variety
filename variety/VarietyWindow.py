@@ -91,6 +91,9 @@ class VarietyWindow(Window):
 
         self.register_clipboard()
 
+        self.do_set_wp_lock = threading.Lock()
+        self.auto_changed = True
+
         # load config
         self.options = None
         self.load_banned()
@@ -106,9 +109,7 @@ class VarietyWindow(Window):
         self.set_wp_timer = None
 
         self.update_indicator(auto_changed=False)
-        self.auto_changed = True
 
-        self.do_set_wp_lock = threading.Lock()
         self.start_threads()
 
         self.about = None
@@ -1321,6 +1322,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             "--toggle-pause", action="store_true", dest="toggle_pause",
             help=_("Toggle Pause/Resume state"))
 
+        parser.add_option(
+            "--history", action="store_true", dest="history",
+            help=_("Toggle History display"))
+
+        parser.add_option(
+            "--downloads", action="store_true", dest="downloads",
+            help=_("Toggle History display"))
+
         options, args = parser.parse_args(arguments)
 
         if report_errors:
@@ -1372,10 +1381,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 elif options.toggle_pause:
                     self.on_pause_resume()
 
+                if options.history:
+                    self.show_hide_history()
+                if options.downloads:
+                    self.show_hide_downloads()
+
             def _process_command_on_gtk():
                 GObject.idle_add(_process_command)
 
-            delay = 0
+            delay = 0.1
             if args:
                 delay = 1
             if initial_run:
