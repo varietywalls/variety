@@ -834,8 +834,8 @@ class VarietyWindow(Window):
 
         if self.wheel_timer:
             self.wheel_timer.cancel()
+
         self.wheel_direction_forward = direction in [Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.LEFT]
-        print self.wheel_direction_forward
         self.wheel_timer = threading.Timer(0.3, self.handle_scroll)
         self.wheel_timer.start()
 
@@ -1328,7 +1328,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         parser.add_option(
             "--downloads", action="store_true", dest="downloads",
-            help=_("Toggle History display"))
+            help=_("Toggle Recent Downloads display"))
 
         options, args = parser.parse_args(arguments)
 
