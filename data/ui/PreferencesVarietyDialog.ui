@@ -1122,13 +1122,14 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="label13">
+                  <object class="GtkLabel" id="label8">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="margin_left">15</property>
-                    <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Color and size</property>
+                    <property name="margin_top">15</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="label" translatable="yes">When possible use images that:</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -1143,17 +1144,18 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   <object class="GtkBox" id="box3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkLabel" id="label8">
+                      <object class="GtkLabel" id="label13">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="margin_left">20</property>
-                        <property name="margin_top">7</property>
-                        <property name="margin_bottom">10</property>
-                        <property name="label" translatable="yes">When possible, use images that:</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Size</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1169,7 +1171,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="halign">start</property>
-                        <property name="margin_left">20</property>
+                        <property name="margin_left">30</property>
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
@@ -1177,14 +1179,14 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="box4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">20</property>
+                        <property name="margin_left">30</property>
                         <property name="margin_right">10</property>
                         <child>
                           <object class="GtkCheckButton" id="min_size_enabled">
@@ -1227,6 +1229,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkLabel" id="min_size_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="margin_left">5</property>
                             <property name="label" translatable="yes">% of the screen resolution</property>
                           </object>
                           <packing>
@@ -1239,14 +1242,44 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box19">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label36">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Color</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="box7">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">20</property>
+                        <property name="margin_left">30</property>
                         <property name="margin_right">10</property>
                         <child>
                           <object class="GtkCheckButton" id="lightness_enabled">
@@ -1288,14 +1321,14 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="box8">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">20</property>
+                        <property name="margin_left">30</property>
                         <property name="margin_right">10</property>
                         <child>
                           <object class="GtkCheckButton" id="desired_color_enabled">
@@ -1334,6 +1367,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
+                            <property name="margin_left">5</property>
                             <property name="label" translatable="yes">(This is an experimental feature)</property>
                             <attributes>
                               <attribute name="style" value="italic"/>
@@ -1350,15 +1384,117 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">4</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box20">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label32">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">10</property>
+                        <property name="margin_bottom">5</property>
+                        <property name="label" translatable="yes">Rating</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="box15">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkCheckButton" id="min_rating_enabled">
+                            <property name="label" translatable="yes">Are rated and their rating is at least </property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">30</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="on_min_rating_enabled_toggled" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="min_rating">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="entry_text_column">0</property>
+                            <property name="id_column">1</property>
+                            <items>
+                              <item translatable="yes">1</item>
+                              <item translatable="yes">2</item>
+                              <item translatable="yes">3</item>
+                              <item translatable="yes">4</item>
+                              <item translatable="yes">5</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label35">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_right">30</property>
+                        <property name="label" translatable="yes">Rating can be set in the thumbnails bar or in external photo organization programs like Shotwell, Darktable, etc.</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -1969,32 +2105,34 @@ Vote for it on &lt;a href="http://alternativeto.net/software/variety-wallpaper-c
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup2">
+  <object class="GtkSizeGroup" id="sizegroup_filtering_combos">
+    <widgets>
+      <widget name="desired_color"/>
+      <widget name="min_size"/>
+      <widget name="lightness"/>
+      <widget name="lightness"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup_general_buttons">
+    <widgets>
+      <widget name="add_button"/>
+      <widget name="edit_source"/>
+      <widget name="remove_sources"/>
+      <widget name="use_button"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup_general_checkboxes">
     <widgets>
       <widget name="change_enabled"/>
       <widget name="download_enabled"/>
       <widget name="quota_enabled"/>
     </widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup3">
+  <object class="GtkSizeGroup" id="sizegroup_general_combos">
     <widgets>
       <widget name="change_interval_text"/>
       <widget name="download_interval_text"/>
       <widget name="quota_size"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup4">
-    <widgets>
-      <widget name="desired_color_enabled"/>
-      <widget name="min_size_enabled"/>
-      <widget name="lightness_enabled"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup5">
-    <widgets>
-      <widget name="desired_color"/>
-      <widget name="min_size"/>
-      <widget name="lightness"/>
     </widgets>
   </object>
   <object class="GtkListStore" id="sources_model">
@@ -2008,12 +2146,12 @@ Vote for it on &lt;a href="http://alternativeto.net/software/variety-wallpaper-c
     </columns>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
-  <object class="GtkSizeGroup" id="sizegroup1">
+  <object class="GtkSizeGroup" id="sizegroup_filtering_checkboxes">
     <widgets>
-      <widget name="add_button"/>
-      <widget name="edit_source"/>
-      <widget name="remove_sources"/>
-      <widget name="use_button"/>
+      <widget name="desired_color_enabled"/>
+      <widget name="min_size_enabled"/>
+      <widget name="lightness_enabled"/>
+      <widget name="lightness_enabled"/>
     </widgets>
   </object>
 </interface>

@@ -173,6 +173,31 @@ class Util:
                 return None
 
     @staticmethod
+    def write_rating(filename, rating):
+        if rating is not None and (rating < 0 or rating > 5):
+            raise ValueError("Rating should be between 0 and 5, or None")
+        m = pyexiv2.ImageMetadata(filename)
+        m.read()
+        if rating is None:
+            del m["Exif.Image.Rating"]
+            if "Exif.Image.RatingPercent" in m:
+                del m["Exif.Image.RatingPercent"]
+        else:
+            m["Exif.Image.Rating"] = rating
+            m["Exif.Image.RatingPercent"] = rating * 20
+        m.write()
+
+    @staticmethod
+    def read_rating(filename):
+        m = pyexiv2.ImageMetadata(filename)
+        m.read()
+        if "Exif.Image.Rating" in m:
+            return m["Exif.Image.Rating"].value
+        if "Exif.Image.RatingPercent" in m:
+            return m["Exif.Image.RatingPercent"].value // 20
+        return None
+
+    @staticmethod
     def get_size(image):
         d = DominantColors(image)
         return d.get_width(), d.get_height()

@@ -123,6 +123,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
         self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
         self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
+        self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
+        self.ui.min_rating.set_active(self.options.min_rating - 1)
 
         self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
         self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
@@ -168,6 +170,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_desired_color_enabled_toggled()
         self.on_min_size_enabled_toggled()
         self.on_lightness_enabled_toggled()
+        self.on_min_rating_enabled_toggled()
         self.update_clipboard_state()
 
         self.build_add_button_menu()
@@ -599,6 +602,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.lightness_mode = \
                 Options.LightnessMode.DARK if self.ui.lightness.get_active() == 0 else Options.LightnessMode.LIGHT
 
+            self.options.min_rating_enabled = self.ui.min_rating_enabled.get_active()
+            try:
+                self.options.min_rating = int(self.ui.min_rating.get_active_text())
+            except Exception:
+                pass
+
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -704,6 +713,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_min_size_enabled_toggled(self, widget = None):
         self.ui.min_size.set_sensitive(self.ui.min_size_enabled.get_active())
         self.ui.min_size_label.set_sensitive(self.ui.min_size_enabled.get_active())
+
+    def on_min_rating_enabled_toggled(self, widget = None):
+        self.ui.min_rating.set_sensitive(self.ui.min_rating_enabled.get_active())
 
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())

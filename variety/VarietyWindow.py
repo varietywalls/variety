@@ -194,6 +194,8 @@ class VarietyWindow(Window):
         logger.info("Use landscape enabled: " + str(self.options.use_landscape_enabled))
         logger.info("Lightness enabled: " + str(self.options.lightness_enabled))
         logger.info("Lightness mode: " + str(self.options.lightness_mode))
+        logger.info("Min rating enabled: " + str(self.options.min_rating_enabled))
+        logger.info("Min rating: " + str(self.options.min_rating))
         logger.info("Facebook enabled: " + str(self.options.facebook_enabled))
         logger.info("Facebook show dialog: " + str(self.options.facebook_show_dialog))
         logger.info("Images: " + str(self.individual_images))
@@ -547,7 +549,8 @@ class VarietyWindow(Window):
                                     if not img in found:
                                         found.add(img)
                                         if self.options.desired_color_enabled or self.options.use_landscape_enabled or\
-                                           self.options.min_size_enabled or self.options.lightness_enabled:
+                                           self.options.min_size_enabled or self.options.lightness_enabled or\
+                                           self.options.min_rating_enabled:
                                             logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
                             except Exception:
                                 logger.exception("Excepion while testing image_ok on file " + img)
@@ -959,6 +962,9 @@ class VarietyWindow(Window):
 
     def image_ok(self, img, fuzziness):
         try:
+            if self.options.min_rating_enabled and Util.read_rating(img) < self.options.min_rating - fuzziness:
+                return False
+
             if not self.options.desired_color_enabled and not self.options.lightness_enabled:
                 if not self.options.use_landscape_enabled and not self.options.min_size_enabled:
                     return True

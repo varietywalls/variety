@@ -41,6 +41,19 @@ class TestUtil(unittest.TestCase):
         Util.write_metadata('test.svg', info)
         self.assertEqual(info, Util.read_metadata('test.svg'))
 
+    def test_read_write_rating(self):
+        self.assertTrue(os.path.exists('test.jpg'))
+        Util.write_rating('test.jpg', 4)
+        self.assertEqual(4, Util.read_rating('test.jpg'))
+        Util.write_rating('test.jpg', None)
+        self.assertEqual(None, Util.read_rating('test.jpg'))
+
+        try:
+            Util.write_rating('test.jpg', -1)
+            self.assertTrue(False, "Exception expected")
+        except ValueError:
+            pass #OK
+
     def test_find_unique_name(self):
         self.assertEquals('/etc/fstab_1', Util.find_unique_name('/etc/fstab'))
         self.assertEquals('/etc/bash_1.bashrc', Util.find_unique_name('/etc/bash.bashrc'))
