@@ -125,6 +125,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
         self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
         self.ui.min_rating.set_active(self.options.min_rating - 1)
+        self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
 
         self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
         self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
@@ -171,6 +172,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_min_size_enabled_toggled()
         self.on_lightness_enabled_toggled()
         self.on_min_rating_enabled_toggled()
+        self.on_facebook_enabled_toggled()
         self.update_clipboard_state()
 
         self.build_add_button_menu()
@@ -608,6 +610,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 pass
 
+            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
+
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -719,6 +723,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
+
+    def on_facebook_enabled_toggled(self, widget = None):
+        self.ui.facebook_show_dialog.set_sensitive(self.ui.facebook_enabled.get_active())
 
     def on_destroy(self, widget = None):
         if self.dialog:

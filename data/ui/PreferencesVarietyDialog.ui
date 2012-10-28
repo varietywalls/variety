@@ -1058,6 +1058,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="on_facebook_enabled_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -1422,7 +1423,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <object class="GtkBox" id="box15">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_bottom">5</property>
                         <child>
                           <object class="GtkCheckButton" id="min_rating_enabled">
                             <property name="label" translatable="yes">Are rated and their rating is at least </property>
@@ -1471,20 +1471,40 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkCheckButton" id="show_rating_enabled">
+                        <property name="label" translatable="yes">Show option to edit ratings in the main menu</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_bottom">5</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkLabel" id="label35">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="margin_left">30</property>
                         <property name="margin_right">30</property>
-                        <property name="label" translatable="yes">Rating can be set in the thumbnails bar or in external photo organization programs like Shotwell, Darktable, etc.</property>
+                        <property name="label" translatable="yes">Ratings can be edited from the thumbnails context menu. Rating metadata is universal and can also be edited or used in external photo organization programs like Shotwell, Darktable, etc.</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>

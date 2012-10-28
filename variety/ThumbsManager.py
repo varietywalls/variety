@@ -111,8 +111,11 @@ class ThumbsManager():
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
 
-        rating_item  = Gtk.MenuItem(_("Rating"))
+        menu.append(Gtk.SeparatorMenuItem.new())
+        rating_item  = Gtk.MenuItem(_("Set Rating"))
         rating_item.set_submenu(ThumbsManager.create_rating_menu(file, self.parent))
+        if not os.access(file, os.W_OK):
+            rating_item.set_sensitive(False)
         menu.append(rating_item)
 
         menu.append(Gtk.SeparatorMenuItem.new())
@@ -201,6 +204,7 @@ class ThumbsManager():
         rejected_item.connect("activate", _set_rating_maker(-1))
         rating_menu.append(rejected_item)
 
+        rating_menu.show_all()
         return rating_menu
 
     def repaint(self):

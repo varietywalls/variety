@@ -196,6 +196,7 @@ class VarietyWindow(Window):
         logger.info("Lightness mode: " + str(self.options.lightness_mode))
         logger.info("Min rating enabled: " + str(self.options.min_rating_enabled))
         logger.info("Min rating: " + str(self.options.min_rating))
+        logger.info("Show rating enabled: " + str(self.options.show_rating_enabled))
         logger.info("Facebook enabled: " + str(self.options.facebook_enabled))
         logger.info("Facebook show dialog: " + str(self.options.facebook_show_dialog))
         logger.info("Images: " + str(self.individual_images))
@@ -421,6 +422,10 @@ class VarietyWindow(Window):
             if not is_gtk_thread:
                 Gdk.threads_enter()
 
+            rating_menu = None
+            if deleteable and self.options.show_rating_enabled:
+                rating_menu = ThumbsManager.create_rating_menu(file, self)
+
             for i in xrange(10):
                 self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                 self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
@@ -434,6 +439,12 @@ class VarietyWindow(Window):
 
                 self.ind.show_origin.set_label(label)
                 self.ind.show_origin.set_sensitive(True)
+
+                self.ind.rating_separator.set_visible(self.options.show_rating_enabled)
+                self.ind.rating.set_visible(self.options.show_rating_enabled)
+                self.ind.rating.set_sensitive(rating_menu is not None)
+                if rating_menu:
+                    self.ind.rating.set_submenu(rating_menu)
 
                 self.ind.history.handler_block(self.ind.history_handler_id)
                 self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
@@ -967,8 +978,10 @@ class VarietyWindow(Window):
 
     def image_ok(self, img, fuzziness):
         try:
-            if self.options.min_rating_enabled and Util.get_rating(img) < self.options.min_rating - fuzziness:
-                return False
+            if self.options.min_rating_enabled:
+                rating = Util.get_rating(img)
+                if rating is None or rating <= 0 or rating < self.options.min_rating - fuzziness:
+                    return False
 
             if not self.options.desired_color_enabled and not self.options.lightness_enabled:
                 if not self.options.use_landscape_enabled and not self.options.min_size_enabled:

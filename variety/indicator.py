@@ -48,6 +48,12 @@ class Indicator:
         self.show_origin.set_sensitive(False)
         self.menu.append(self.show_origin)
 
+        self.rating_separator = Gtk.SeparatorMenuItem.new()
+        self.menu.append(self.rating_separator)
+
+        self.rating = Gtk.MenuItem(_("Set Rating"))
+        self.menu.append(self.rating)
+
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
