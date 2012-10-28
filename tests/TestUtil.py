@@ -43,13 +43,17 @@ class TestUtil(unittest.TestCase):
 
     def test_read_write_rating(self):
         self.assertTrue(os.path.exists('test.jpg'))
-        Util.write_rating('test.jpg', 4)
-        self.assertEqual(4, Util.read_rating('test.jpg'))
-        Util.write_rating('test.jpg', None)
-        self.assertEqual(None, Util.read_rating('test.jpg'))
+        Util.set_rating('test.jpg', 4)
+        self.assertEqual(4, Util.get_rating('test.jpg'))
+        Util.set_rating('test.jpg', -1)
+        self.assertEqual(-1, Util.get_rating('test.jpg'))
+        Util.set_rating('test.jpg', 0)
+        self.assertEqual(0, Util.get_rating('test.jpg'))
+        Util.set_rating('test.jpg', None)
+        self.assertEqual(None, Util.get_rating('test.jpg'))
 
         try:
-            Util.write_rating('test.jpg', -1)
+            Util.set_rating('test.jpg', -10)
             self.assertTrue(False, "Exception expected")
         except ValueError:
             pass #OK
@@ -57,6 +61,10 @@ class TestUtil(unittest.TestCase):
     def test_find_unique_name(self):
         self.assertEquals('/etc/fstab_1', Util.find_unique_name('/etc/fstab'))
         self.assertEquals('/etc/bash_1.bashrc', Util.find_unique_name('/etc/bash.bashrc'))
+
+    def test_folderpath(self):
+        self.assertEquals("/", Util.folderpath("/"))
+        self.assertEquals("/a/b/c/", Util.folderpath("/a/b/c"))
 
 if __name__ == '__main__':
     unittest.main()

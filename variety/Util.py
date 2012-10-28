@@ -173,29 +173,41 @@ class Util:
                 return None
 
     @staticmethod
-    def write_rating(filename, rating):
-        if rating is not None and (rating < 0 or rating > 5):
-            raise ValueError("Rating should be between 0 and 5, or None")
+    def set_rating(filename, rating):
+        if rating is not None and (rating < -1 or rating > 5):
+            raise ValueError("Rating should be between -1 and 5, or None")
+
         m = pyexiv2.ImageMetadata(filename)
         m.read()
+
         if rating is None:
-            del m["Exif.Image.Rating"]
-            if "Exif.Image.RatingPercent" in m:
-                del m["Exif.Image.RatingPercent"]
+            for key in ["Xmp.xmp.Rating", "Exif.Image.Rating", "Exif.Image.RatingPercent"]:
+                if key in m:
+                    del m[key]
         else:
-            m["Exif.Image.Rating"] = rating
-            m["Exif.Image.RatingPercent"] = rating * 20
+            m["Xmp.xmp.Rating"] = rating
+            m["Exif.Image.Rating"] = max(0, rating)
+            if rating >= 1:
+                m["Exif.Image.RatingPercent"] = (rating - 1) * 25
+            elif "Exif.Image.RatingPercent" in m:
+                del m["Exif.Image.RatingPercent"]
+
         m.write()
 
     @staticmethod
-    def read_rating(filename):
+    def get_rating(filename):
         m = pyexiv2.ImageMetadata(filename)
         m.read()
-        if "Exif.Image.Rating" in m:
-            return m["Exif.Image.Rating"].value
-        if "Exif.Image.RatingPercent" in m:
-            return m["Exif.Image.RatingPercent"].value // 20
-        return None
+        rating = None
+        if "Xmp.xmp.Rating" in m:
+            rating = m["Xmp.xmp.Rating"].value
+        elif "Exif.Image.Rating" in m:
+            rating = m["Exif.Image.Rating"].value
+        elif "Exif.Image.RatingPercent" in m:
+            rating = m["Exif.Image.RatingPercent"].value // 25 + 1
+        if rating is not None:
+            rating = max(-1, min(5, rating))
+        return rating
 
     @staticmethod
     def get_size(image):
@@ -221,3 +233,10 @@ class Util:
         request = urllib2.Request(url)
         request.add_header('User-agent', USER_AGENT)
         return urllib2.urlopen(request, data=data, timeout=20)
+
+    @staticmethod
+    def folderpath(folder):
+        p = os.path.normpath(folder)
+        if not p.endswith("/"):
+            p += "/"
+        return p

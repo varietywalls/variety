@@ -960,9 +960,14 @@ class VarietyWindow(Window):
             add_timer = threading.Timer(0, _add)
             add_timer.start()
 
+    def on_rating_changed(self, file):
+        with self.prepared_lock:
+            self.prepared = [f for f in self.prepared if f != file]
+        self.prepare_event.set()
+
     def image_ok(self, img, fuzziness):
         try:
-            if self.options.min_rating_enabled and Util.read_rating(img) < self.options.min_rating - fuzziness:
+            if self.options.min_rating_enabled and Util.get_rating(img) < self.options.min_rating - fuzziness:
                 return False
 
             if not self.options.desired_color_enabled and not self.options.lightness_enabled:
@@ -1052,11 +1057,12 @@ class VarietyWindow(Window):
 
         assert len(prioritized_sources) == len(self.options.sources)
 
+        file_normpath = os.path.normpath(file)
         for s in prioritized_sources:
             if s[1] == Options.SourceType.IMAGE:
-                if os.path.normpath(s[2]) == os.path.normpath(file):
+                if os.path.normpath(s[2]) == file_normpath:
                     return s
-            elif os.path.normpath(self.get_folder_of_source(s)) == os.path.normpath(os.path.dirname(file)):
+            elif file_normpath.startswith(Util.folderpath(self.get_folder_of_source(s))):
                 return s
 
         return None
@@ -1197,9 +1203,7 @@ class VarietyWindow(Window):
             elif folder_lower == "others":
                 folder = "/"
 
-            folder = os.path.normpath(folder)
-            if not folder.endswith("/"):
-                folder += "/"
+            folder = Util.folderpath(folder)
 
             if file_normpath.startswith(folder):
                 op = pair[1].lower().strip()

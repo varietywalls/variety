@@ -1422,6 +1422,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <object class="GtkBox" id="box15">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_bottom">5</property>
                         <child>
                           <object class="GtkCheckButton" id="min_rating_enabled">
                             <property name="label" translatable="yes">Are rated and their rating is at least </property>

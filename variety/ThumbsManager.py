@@ -20,6 +20,7 @@ import os
 
 import threading
 import logging
+from variety.Util import Util
 from variety.ThumbsWindow import ThumbsWindow
 from variety_lib import varietyconfig
 
@@ -110,6 +111,10 @@ class ThumbsManager():
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
 
+        rating_item  = Gtk.MenuItem(_("Rating"))
+        rating_item.set_submenu(ThumbsManager.create_rating_menu(file, self.parent))
+        menu.append(rating_item)
+
         menu.append(Gtk.SeparatorMenuItem.new())
 
         self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
@@ -153,6 +158,50 @@ class ThumbsManager():
         self.parent.update_favorites_menuitems(self, False, favs_op)
 
         return menu
+
+    @staticmethod
+    def create_rating_menu(file, main_window):
+        def _set_rating_maker(rating):
+            def _set_rating(widget, rating=rating):
+                try:
+                    Util.set_rating(file, rating)
+                    main_window.on_rating_changed(file)
+                except Exception:
+                    logger.exception("Could not set rating")
+                    main_window.show_notification(_("Could not set rating"))
+            return _set_rating
+
+        try:
+            actual_rating = Util.get_rating(file)
+        except Exception:
+            actual_rating = None
+
+        rating_menu = Gtk.Menu()
+        for rating in xrange(5, 0, -1):
+            item = Gtk.CheckMenuItem(u"\u2605" * rating)
+            item.set_draw_as_radio(True)
+            item.set_active(actual_rating == rating)
+            item.set_sensitive(not item.get_active())
+            item.connect("activate", _set_rating_maker(rating))
+            rating_menu.append(item)
+
+        rating_menu.append(Gtk.SeparatorMenuItem.new())
+
+        unrated_item = Gtk.CheckMenuItem(_("Unrated"))
+        unrated_item.set_draw_as_radio(True)
+        unrated_item.set_active(actual_rating is None or actual_rating == 0)
+        unrated_item.set_sensitive(not unrated_item.get_active())
+        unrated_item.connect("activate", _set_rating_maker(None))
+        rating_menu.append(unrated_item)
+
+        rejected_item = Gtk.CheckMenuItem(_("Rejected"))
+        rejected_item.set_draw_as_radio(True)
+        rejected_item.set_active(actual_rating is not None and actual_rating < 0)
+        rejected_item.set_sensitive(not rejected_item.get_active())
+        rejected_item.connect("activate", _set_rating_maker(-1))
+        rating_menu.append(rejected_item)
+
+        return rating_menu
 
     def repaint(self):
         self.hide(gdk_thread=True)
