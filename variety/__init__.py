@@ -78,10 +78,11 @@ def main():
 
     # Run the application.
     window = VarietyWindow.VarietyWindow()
-    service = VarietyService(window)
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
-    window.first_run()
+    service = VarietyService(window)
+
+    window.start(options)
     window.process_command(arguments, initial_run=True)
 
     GObject.threads_init()

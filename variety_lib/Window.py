@@ -74,18 +74,6 @@ class Window(Gtk.Window):
         except ImportError:
             pass
 
-        # Optional application indicator support
-        # Run 'quickly add indicator' to get started.
-        # More information:
-        #  http://owaislone.org/quickly-add-indicator/
-        #  https://wiki.ubuntu.com/DesktopExperienceTeam/ApplicationIndicators
-        try:
-            from variety import indicator
-            # self is passed so methods of this class can be called from indicator.py
-            self.indicator, self.status_icon = indicator.new_application_indicator(self)
-        except ImportError:
-            pass
-
     def on_mnu_contents_activate(self, widget, data=None):
         show_uri(self, "ghelp:%s" % get_help_uri())
 

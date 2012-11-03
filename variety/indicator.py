@@ -30,11 +30,13 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('variety')
 
+import logging
+logger = logging.getLogger('variety')
+
 class Indicator:
     def __init__(self, window):
         self.create_menu(window)
         self.create_indicator(window)
-        window.ind = self
 
     def create_menu(self, window):
         self.menu = Gtk.Menu()
@@ -163,6 +165,7 @@ class Indicator:
     def create_indicator(self, window):
         self.indicator = None
         self.status_icon = None
+        self.visible = True
 
         def pos(menu, icon):
             return Gtk.StatusIcon.position_menu(self.menu, icon)
@@ -190,6 +193,26 @@ class Indicator:
             self.status_icon.connect("popup-menu", right_click_event)
             self.status_icon.connect("scroll-event", on_indicator_scroll_status_icon)
 
+    def set_visible(self, visible):
+        self.visible = visible
+        if visible:
+            if self.indicator:
+                logger.info("Showing indicator icon")
+                self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+            if self.status_icon:
+                logger.info("Showing status icon")
+                self.status_icon.set_visible(True)
+        else:
+            if self.indicator:
+                logger.info("Hiding indicator icon")
+                self.indicator.set_status(AppIndicator3.IndicatorStatus.PASSIVE)
+            if self.status_icon:
+                logger.info("Hiding status icon")
+                self.status_icon.set_visible(False)
+
+    def get_visible(self):
+        return self.visible
+
 def new_application_indicator(window):
     ind = Indicator(window)
-    return ind.indicator, ind.status_icon
+    return ind, ind.indicator, ind.status_icon

@@ -57,6 +57,7 @@ from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
 from variety.ThumbsManager import ThumbsManager
+from variety import indicator
 
 MAX_FILES = 10000
 
@@ -70,6 +71,11 @@ class VarietyWindow(Window):
     def finish_initializing(self, builder): # pylint: disable=E1002
         """Set up the main window"""
         super(VarietyWindow, self).finish_initializing(builder)
+
+    def start(self, cmdoptions):
+        self.ind = None
+        if not cmdoptions.hide_icon:
+            self.toggle_indicator(show=True, initial_run=True)
 
         self.gsettings = Gio.Settings.new(self.SCHEMA)
 
@@ -116,9 +122,12 @@ class VarietyWindow(Window):
         self.preferences_dialog = None
 
         GObject.idle_add(self.create_preferences_dialog)
-        GObject.idle_add(self.prepare_earth_downloader)
+        prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
+        prepare_earth_timer.start()
 
         self.dialogs = []
+
+        self.first_run()
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
@@ -415,6 +424,9 @@ class VarietyWindow(Window):
                     self.image_url = info["imageURL"]
             if len(label) > 50:
                 label = label[:50] + "..."
+
+            if not self.ind:
+                return
 
             deleteable = os.access(file, os.W_OK) and not self.is_current_refreshable()
             favs_op = self.determine_favorites_operation(file)
@@ -1346,12 +1358,31 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Toggle Pause/Resume state"))
 
         parser.add_option(
+            "--hide-icon", "--hide-indicator", action="store_true", dest="hide_icon",
+            help=_("Hide the indicator icon and run entirely in background. "
+                   "Variety can only be commanded from the terminal if this option is used. "
+                   "May be used both at start or while running."))
+
+        parser.add_option(
+            "--show-icon", "--show-indicator", action="store_true", dest="show_icon",
+            help=_("Show the indicator icon if it is hidden"))
+
+        parser.add_option(
+            "--toggle-icon", "--toggle-indicator", action="store_true", dest="toggle_icon",
+            help=_("Toggle the visibility of the indicator icon. "
+                   "Used only when the application is already running."))
+
+        parser.add_option(
             "--history", action="store_true", dest="history",
             help=_("Toggle History display"))
 
         parser.add_option(
             "--downloads", action="store_true", dest="downloads",
             help=_("Toggle Recent Downloads display"))
+
+        parser.add_option(
+            "--preferences", "--show-preferences", action="store_true", dest="preferences",
+            help=_("Show Preferences dialog"))
 
         options, args = parser.parse_args(arguments)
 
@@ -1364,6 +1395,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if options.pause and options.resume:
                 parser.error(_("options --pause and --resume are mutually exclusive"))
+
+            if options.hide_icon and options.show_icon:
+                parser.error(_("options --show-icon and --hide-icon are mutually exclusive"))
 
         return options, args
 
@@ -1408,6 +1442,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_history()
                 if options.downloads:
                     self.show_hide_downloads()
+                if options.preferences:
+                    self.on_mnu_preferences_activate()
+
+                if options.hide_icon:
+                    self.toggle_indicator(show=False, initial_run=initial_run)
+                elif options.show_icon:
+                    self.toggle_indicator(show=True, initial_run=initial_run)
+                elif options.toggle_icon and not initial_run:
+                    self.toggle_indicator(initial_run=initial_run)
 
             def _process_command_on_gtk():
                 GObject.idle_add(_process_command)
@@ -1423,6 +1466,23 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             return self.current if options.show_current else ""
         except Exception:
             logger.exception("Could not process passed command")
+
+    def toggle_indicator(self, show=None, initial_run=False):
+        if show is None:
+            show = self.ind is None or not self.ind.get_visible()
+
+        if show:
+            if self.ind is None:
+                logger.info("Creating indicator")
+                self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
+            else:
+                self.ind.set_visible(True)
+            if not initial_run:
+                self.update_indicator()
+
+        else:
+            if self.ind is not None:
+                self.ind.set_visible(False)
 
     def process_urls(self, urls, verbose=True):
         def fetch():
