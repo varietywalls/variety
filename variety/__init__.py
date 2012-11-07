@@ -63,14 +63,13 @@ def main():
 
     # ensure singleton
     if dbus.SessionBus().request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
-        if arguments:
-            print _("Variety is already running. Sending the command to the running instance.")
-            method = dbus.SessionBus().get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
-            result = method(arguments)
-            if result:
-                print result
-        else:
-            print _("Variety is already running.")
+        if not arguments:
+            arguments = ["--preferences"]
+        print _("Variety is already running. Sending the command to the running instance.")
+        method = dbus.SessionBus().get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+        result = method(arguments)
+        if result:
+            print result
         return
 
     # ignore Ctrl-C
