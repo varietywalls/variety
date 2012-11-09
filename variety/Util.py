@@ -240,3 +240,24 @@ class Util:
         if not p.endswith("/"):
             p += "/"
         return p
+
+    @staticmethod
+    def compute_trimmed_offsets(image_size, screen_size):
+        """Computes what width or height of the wallpaper image will be trimmed on each side, as it is zoomed in to fill
+        the whole screen. Returns a pair (h, v) in which h or v will be zero. The other one is the pixel
+        width or height that will be trimmed on each one of the sides of the image (top and down or left and right)"""
+        iw, ih = image_size
+        screen_w, screen_h = screen_size
+        screen_ratio = float(screen_w) / screen_h
+        hoffset = voffset = 0
+        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
+            scaledw = float(screen_w)
+            scaledh = ih * scaledw / iw
+            voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
+        else: #image is "wider" than the screen ratio - need to offset horizontally
+            scaledh = float(screen_h)
+            scaledw = iw * scaledh / ih
+            hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
+        logger.info("Trimmed offsets debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
+            screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
+        return hoffset, voffset

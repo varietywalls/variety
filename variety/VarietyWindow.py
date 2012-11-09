@@ -724,7 +724,7 @@ class VarietyWindow(Window):
         cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
         if self.options.clock_enabled and self.options.clock_filter.strip():
-            hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, w, h)
+            hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
             clock_filter = self.options.clock_filter
             clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
             clock_filter = time.strftime(clock_filter, time.localtime())
@@ -735,23 +735,6 @@ class VarietyWindow(Window):
         cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-clock.jpg") + '"'
         logger.info("ImageMagick clock cmd: " + cmd)
         return cmd
-
-    @staticmethod
-    def compute_clock_offsets(filename, screen_w, screen_h):
-        screen_ratio = float(screen_w) / screen_h
-        iw, ih = Util.get_size(filename)
-        hoffset = voffset = 0
-        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
-            scaledw = float(screen_w)
-            scaledh = ih * scaledw / iw
-            voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
-        else: #image is "wider" than the screen ratio - need to offset horizontally
-            scaledh = float(screen_h)
-            scaledw = iw * scaledh / ih
-            hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
-        logger.info("Clock filter debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
-            screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
-        return hoffset, voffset
 
     @staticmethod
     def replace_clock_filter_offsets(filter, hoffset, voffset):
