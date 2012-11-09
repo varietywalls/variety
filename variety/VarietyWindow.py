@@ -147,10 +147,25 @@ class VarietyWindow(Window):
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
 
+        # TODO: Sort of hacky to have filter-related code here, they should be more isolated
+        pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
+        if not os.path.exists(pencil_tile_filename):
+            def _generate_pencil_tile():
+                logger.info("Missing pencil_tile.png file, generating it" +
+                            varietyconfig.get_data_file("media", "pencil_tile.png"))
+                try:
+                    os.system(
+                        "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename)
+                except Exception:
+                    logger.exception("Could not generate pencil_tile.gif")
+            threading.Timer(0, _generate_pencil_tile).start()
+
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         if not os.path.exists(self.scripts_folder):
             logger.info("Missing scripts dir, copying it from " + varietyconfig.get_data_file("scripts"))
             shutil.copytree(varietyconfig.get_data_file("scripts"), self.scripts_folder)
+
         # make all scripts executable:
         for f in os.listdir(self.scripts_folder):
             path = os.path.join(self.scripts_folder, f)

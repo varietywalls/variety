@@ -132,6 +132,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.clock_enabled.set_active(self.options.clock_enabled)
 
+        self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
+        self.ui.quotes_font.set_font_name(self.options.quotes_font)
+        self.ui.quotes_tags.set_text(self.options.quotes_tags)
+        self.ui.quotes_authors.set_text(self.options.quotes_authors)
+
         self.ui.sources.get_model().clear()
         for s in self.options.sources:
             self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
@@ -151,7 +156,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             cb.set_visible(True)
             cb.set_active(f[0])
             cb.set_margin_right(30)
-            self.ui.filters_grid.add(cb)
+            self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
             self.filter_checkboxes.append(cb)
 
         try:
@@ -616,6 +621,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
+
+            self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
+            self.options.quotes_font = self.ui.quotes_font.get_font_name()
+            self.options.quotes_tags = self.ui.quotes_tags.get_text()
+            self.options.quotes_authors = self.ui.quotes_authors.get_text()
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:

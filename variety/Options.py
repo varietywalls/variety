@@ -232,6 +232,26 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.quotes_enabled = config["quotes_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quotes_font = config["quotes_font"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_tags = config["quotes_tags"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_authors = config["quotes_authors"]
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -248,6 +268,7 @@ class Options:
                 filters = config["filters"]
                 for v in filters.values():
                     try:
+                        print v
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
                         logger.exception("Cannot parse filter: " + v)
@@ -280,9 +301,8 @@ class Options:
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
-                        if s[1] in [f[1] for f in self.filters]:
-                            continue
-                        self.filters.append(s)
+                        if not s[1].lower() in [f[1].lower() for f in self.filters]:
+                            self.filters.append(s)
                     except Exception:
                         logger.exception("Cannot parse filter in filters.txt: " + line)
         except Exception:
@@ -349,6 +369,11 @@ class Options:
         self.clock_enabled = False
         self.clock_filter = "-fill '#DDDDDD' -stroke black -strokewidth 1 -font Ubuntu-Regular -pointsize 150 -gravity SouthEast -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+100] '%H:%M' -pointsize 50 -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+50] '%A, %B %d'"
 
+        self.quotes_enabled = False
+        self.quotes_font = "Ubuntu Light 35"
+        self.quotes_tags = ""
+        self.quotes_authors = ""
+
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
@@ -366,7 +391,9 @@ class Options:
             [False, "Heavy blur", "-blur 120x40"],
             [False, "Oil painting", "-paint 6"],
             [False, "Charcoal painting", "-charcoal 3"],
-            [False, "Pointilism", "-spread 10 -noise 3"]
+            [False, "Pencil sketch", """-colorspace gray \( +clone -tile ~/.config/variety/pencil_tile.gif -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \) -fx 'u*.2+v*.8'"""],
+            [False, "Pointilism", "-spread 10 -noise 3"],
+            [False, "Pixellate", "-scale 3% -scale 3333%"]
         ]
 
     def write(self):
@@ -413,6 +440,11 @@ class Options:
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = str(self.clock_filter)
+
+            config["quotes_enabled"] = str(self.quotes_enabled)
+            config["quotes_font"] = str(self.quotes_font)
+            config["quotes_tags"] = str(self.quotes_tags)
+            config["quotes_authors"] = str(self.quotes_authors)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
