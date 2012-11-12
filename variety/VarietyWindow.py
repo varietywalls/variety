@@ -57,6 +57,8 @@ from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
 from variety.ThumbsManager import ThumbsManager
+from variety.QuotesEngine import QuotesEngine
+from variety.QuoteWriter import QuoteWriter
 from variety import indicator
 
 MAX_FILES = 10000
@@ -82,6 +84,8 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
         self.thumbs_manager = ThumbsManager(self)
+        self.quotes_engine = QuotesEngine(self)
+        self.quote = None
 
         self.prepare_config_folder()
 
@@ -116,6 +120,7 @@ class VarietyWindow(Window):
 
         self.update_indicator(auto_changed=False)
 
+        self.quotes_engine.start()
         self.start_threads()
 
         self.about = None
@@ -302,6 +307,8 @@ class VarietyWindow(Window):
         if self.events:
             for e in self.events:
                 e.set()
+
+        self.quotes_engine.on_options_updated()
 
     def size_options_changed(self):
         return self.previous_options and (
@@ -762,14 +769,18 @@ class VarietyWindow(Window):
 
     class RefreshLevel:
         ALL = 0
-        FILTERS_AND_CLOCK = 1
-        CLOCK_ONLY = 2
+        FILTERS_AND_TEXTS = 1
+        TEXTS = 2
+        CLOCK_ONLY = 3
 
     def refresh_wallpaper(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_CLOCK)
+        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS)
 
     def refresh_clock(self):
         self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
+
+    def refresh_texts(self):
+        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.TEXTS)
 
     def write_filtered_wallpaper_origin(self, filename):
         try:
@@ -788,8 +799,10 @@ class VarietyWindow(Window):
                     return
 
                 to_set = filename
+
                 if self.filters:
-                    if refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY or not hasattr(self, "post_filter_filename"):
+                    if refresh_level in [VarietyWindow.RefreshLevel.ALL, VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS] \
+                    or not hasattr(self, "post_filter_filename"):
                         self.post_filter_filename = to_set
                         cmd = self.build_imagemagick_filter_cmd(filename)
                         result = os.system(cmd)
@@ -801,6 +814,14 @@ class VarietyWindow(Window):
                             logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
                     else:
                         to_set = self.post_filter_filename
+
+                if self.options.quotes_enabled:
+                    if self.quote is None or refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY:
+                        self.quote = self.quotes_engine.get_quote()
+                    if self.quote:
+                        quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
+                        QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
+                        to_set = quote_outfile
 
                 if self.options.clock_enabled:
                     cmd = self.build_imagemagick_clock_cmd(to_set)
@@ -1249,9 +1270,12 @@ class VarietyWindow(Window):
             for e in self.events:
                 e.set()
 
-            if self.options.clock_enabled:
+            self.quotes_engine.quit()
+
+            if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
-                GObject.idle_add(self.refresh_clock)
+                self.options.quotes_enabled = False
+                GObject.idle_add(self.refresh_texts)
 
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)

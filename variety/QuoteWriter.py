@@ -19,76 +19,84 @@ from PIL import Image
 from gi.repository import Gdk, Pango, PangoCairo, GdkPixbuf
 from variety.Util import Util
 
-def write_quote(quote, author, infile, outfile):
-    surface = load_cairo_surface(infile)
-    write_quote_on_surface(surface, quote, author)
-    save_cairo_surface(surface, outfile)
+class QuoteWriter:
 
-def load_cairo_surface(filename):
-    pixbuf = GdkPixbuf.Pixbuf.new_from_file(filename)
-    surface = cairo.ImageSurface(0, pixbuf.get_width(), pixbuf.get_height())
-    context = cairo.Context(surface)
-    Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)
-    context.paint()
-    return surface
+    @staticmethod
+    def write_quote(quote, author, infile, outfile, options = None):
+        w, h = Util.get_scaled_size(infile)
+        surface = QuoteWriter.load_cairo_surface(infile, w, h)
+        QuoteWriter.write_quote_on_surface(surface, quote, author, options)
+        QuoteWriter.save_cairo_surface(surface, outfile)
 
-def save_cairo_surface(surface, filename):
-    size = surface.get_width(), surface.get_height()
-    image = Image.frombuffer('RGBA', size, surface.get_data(), 'raw', 'BGRA', 0, 1)
-    image.save(filename, quality=100)
+    @staticmethod
+    def load_cairo_surface(filename, w, h):
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, w, h)
+        surface = cairo.ImageSurface(0, pixbuf.get_width(), pixbuf.get_height())
+        context = cairo.Context(surface)
+        Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)
+        context.paint()
+        return surface
 
-def write_quote_on_surface(surface, quote, author, font="Ubuntu Light 37", margin = 30):
-    qcontext = cairo.Context(surface)
-    acontext = cairo.Context(surface)
+    @staticmethod
+    def save_cairo_surface(surface, filename):
+        size = surface.get_width(), surface.get_height()
+        image = Image.frombuffer('RGBA', size, surface.get_data(), 'raw', 'BGRA', 0, 1)
+        image.save(filename, quality=100)
 
-    sw = surface.get_width()
-    sh = surface.get_height()
+    @staticmethod
+    def write_quote_on_surface(surface, quote, author, options = None, margin = 30):
+        qcontext = cairo.Context(surface)
+        acontext = cairo.Context(surface)
 
-    trimw = Util.compute_trimmed_offsets((sw, sh),
-        (Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()))[0]
+        sw = surface.get_width()
+        sh = surface.get_height()
 
-    width = (sw - 2 * trimw) * 70 // 100 # use 70% of the visible width
+        trimw = Util.compute_trimmed_offsets((sw, sh),
+            (Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()))[0]
 
-    qlayout = PangoCairo.create_layout(qcontext)
-    qlayout.set_width((width - 4 * margin) * Pango.SCALE)
-    qlayout.set_alignment(Pango.Alignment.LEFT)
-    qlayout.set_wrap(Pango.WrapMode.WORD)
-    qlayout.set_font_description(Pango.FontDescription(font))
-    qlayout.set_text(quote, -1)
+        width = (sw - 2 * trimw) * 70 // 100 # use 70% of the visible width
 
-    qheight = qlayout.get_pixel_size()[1]
-    qwidth = qlayout.get_pixel_size()[0]
+        qlayout = PangoCairo.create_layout(qcontext)
+        qlayout.set_width((width - 4 * margin) * Pango.SCALE)
+        qlayout.set_alignment(Pango.Alignment.LEFT)
+        qlayout.set_wrap(Pango.WrapMode.WORD)
+        font = options.quotes_font if options else "Ubuntu Light 37"
+        qlayout.set_font_description(Pango.FontDescription(font))
+        qlayout.set_text(quote, -1)
 
-    alayout = PangoCairo.create_layout(acontext)
-    alayout.set_width(qwidth * Pango.SCALE)
-    alayout.set_alignment(Pango.Alignment.RIGHT)
-    alayout.set_wrap(Pango.WrapMode.WORD)
-    alayout.set_font_description(Pango.FontDescription(font))
-    alayout.set_text("\n" + author, -1)
+        qheight = qlayout.get_pixel_size()[1]
+        qwidth = qlayout.get_pixel_size()[0]
 
-    aheight = alayout.get_pixel_size()[1]
+        alayout = PangoCairo.create_layout(acontext)
+        alayout.set_width(qwidth * Pango.SCALE)
+        alayout.set_alignment(Pango.Alignment.RIGHT)
+        alayout.set_wrap(Pango.WrapMode.WORD)
+        alayout.set_font_description(Pango.FontDescription(font))
+        alayout.set_text("\n" + author, -1)
 
-    height = qheight + aheight
+        aheight = alayout.get_pixel_size()[1]
 
-    qcontext.set_source_rgba(0.55, 0.55, 0.55, 0.55) # gray semi-transparent background
-    qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 200 - margin, 20000, height + margin * 2)
-    qcontext.fill()
+        height = qheight + aheight
 
-    qcontext.set_source_rgb(1, 1, 1)
-    qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200)
-    PangoCairo.update_layout(qcontext, qlayout)
-    PangoCairo.show_layout(qcontext, qlayout)
+        qcontext.set_source_rgba(0.45, 0.45, 0.45, 0.65) # gray semi-transparent background
+        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 200 - margin, 20000, height + margin * 2)
+        qcontext.fill()
 
-    acontext.set_source_rgb(1, 1, 1)
-    acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200 + qheight)
-    PangoCairo.update_layout(acontext, alayout)
-    PangoCairo.show_layout(acontext, alayout)
+        qcontext.set_source_rgb(1, 1, 1)
+        qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200)
+        PangoCairo.update_layout(qcontext, qlayout)
+        PangoCairo.show_layout(qcontext, qlayout)
 
-    qcontext.show_page()
-    acontext.show_page()
+        acontext.set_source_rgb(1, 1, 1)
+        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200 + qheight)
+        PangoCairo.update_layout(acontext, alayout)
+        PangoCairo.show_layout(acontext, alayout)
+
+        qcontext.show_page()
+        acontext.show_page()
 
 if __name__ == "__main__":
-    write_quote(
+    QuoteWriter.write_quote(
         '"I may be drunk, Miss, but in the morning I will be sober and you will still be ugly."',
         "Winston Churchill",
         "test.jpg",

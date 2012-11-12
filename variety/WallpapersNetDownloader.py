@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from bs4 import BeautifulSoup
 import random
 import re
 
@@ -33,11 +32,6 @@ class WallpapersNetDownloader(Downloader.Downloader):
         self.queue = []
 
     @staticmethod
-    def fetch(url):
-        content = Util.urlopen(url).read()
-        return BeautifulSoup(content)
-
-    @staticmethod
     def validate(url):
         logger.info("Validating WN url " + url)
         try:
@@ -46,7 +40,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
             if not url.lower().startswith("http://www.wallpapers.net") and not url.lower().startswith("http://wallpapers.net"):
                 return False
 
-            s = WallpapersNetDownloader.fetch(url)
+            s = Util.html_soup(url)
             walls = [wall.find("div", "thumb") for wall in s.findAll("li", "wall")]
             return len(walls) > 0
         except Exception:
@@ -66,11 +60,11 @@ class WallpapersNetDownloader(Downloader.Downloader):
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
 
-        s = self.fetch(wallpaper_url)
+        s = Util.html_soup(wallpaper_url)
         img_url = self.host + s.find('a', text=re.compile("Original format"))['href']
         logger.info("Image page URL: " + img_url)
 
-        s = self.fetch(img_url)
+        s = Util.html_soup(img_url)
         src_url = s.img['src']
         logger.info("Image src URL: " + src_url)
 
@@ -78,7 +72,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     def fill_queue(self):
         logger.info("Category URL: " + self.location)
-        s = self.fetch(self.location)
+        s = Util.html_soup(self.location)
         mp = 0
         urls = [url['href'] for x in s.find_all('div', 'pagination') for url in x.find_all('a') if
                 url['href'].index('/page/') > 0]
@@ -97,7 +91,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
             page_url = self.host + h[:h.index("/page/") + 6] + str(page)
 
             logger.info("Page URL: " + page_url)
-            s = self.fetch(page_url)
+            s = Util.html_soup(page_url)
         else:
             logger.info("Single page in category")
 

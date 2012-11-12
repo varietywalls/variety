@@ -46,11 +46,6 @@ class WallbaseDownloader(Downloader.Downloader):
                 k, v = x.split(':')
                 self.params[k.lower()] = v
 
-    @staticmethod
-    def fetch(url):
-        content = Util.urlopen(url).read()
-        return BeautifulSoup(content)
-
     def search(self, start_from = None, thpp = 60):
         m = {"thpp": thpp}
 
@@ -84,7 +79,7 @@ class WallbaseDownloader(Downloader.Downloader):
 
         logger.info("Performing wallbase search: url=%s, data=%s" % (url, data))
 
-        content = Util.urlopen(url, data=data).read()
+        content = Util.fetch(url, data=data)
         return BeautifulSoup(content)
 
     @staticmethod
@@ -114,7 +109,7 @@ class WallbaseDownloader(Downloader.Downloader):
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
 
-        s = self.fetch(wallpaper_url)
+        s = Util.html_soup(wallpaper_url)
         wall = str(s.find('div', id='bigwall'))
         b64url = wall[wall.find("B('") + 3 : wall.find("')")]
         src_url = base64.b64decode(b64url)

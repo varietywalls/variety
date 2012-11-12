@@ -268,7 +268,6 @@ class Options:
                 filters = config["filters"]
                 for v in filters.values():
                     try:
-                        print v
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
                         logger.exception("Cannot parse filter: " + v)
