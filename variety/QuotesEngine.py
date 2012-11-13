@@ -17,6 +17,7 @@
 from bs4 import BeautifulSoup
 import random
 import urllib
+import time
 from variety.Util import Util
 
 import logging
@@ -82,11 +83,11 @@ class QuotesEngine:
                     if quote:
                         with self.prepared_lock:
                             self.prepared.append(quote)
-                    if not parent_refreshed and self.parent.options.quotes_enabled and self.parent.quote is None:
-                        self.parent.refresh_texts()
-                        parent_refreshed = True
-                    self.prepare_event.wait(2)
-                    self.prepare_event.clear()
+                        if not parent_refreshed and self.parent.options.quotes_enabled and self.parent.quote is None:
+                            self.parent.refresh_texts()
+                            parent_refreshed = True
+
+                    time.sleep(2)
 
                 if not self.running:
                     return
@@ -100,7 +101,7 @@ class QuotesEngine:
 
     def download_one_quote(self):
         skip = set()
-        while True:
+        while self.running and self.parent.options.quotes_enabled:
             url = QuotesEngine.choose_random_feed_url(self.parent.options, skip)
             if not url:
                 logger.warning("Could not fetch any quotes")
@@ -118,8 +119,8 @@ class QuotesEngine:
                 logger.exception("Could not extract quote")
                 skip.add(url)
 
-            self.prepare_event.clear()
-            self.prepare_event.wait(2)
+            time.sleep(2)
+        return None
 
     @staticmethod
     def extract_quote(xml):

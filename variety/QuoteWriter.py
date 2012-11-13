@@ -79,17 +79,28 @@ class QuoteWriter:
 
         height = qheight + aheight
 
-        qcontext.set_source_rgba(0.45, 0.45, 0.45, 0.65) # gray semi-transparent background
+        qcontext.set_source_rgba(0.55, 0.55, 0.55, 0.55) # gray semi-transparent background
         qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 3)
         qcontext.fill()
 
-        qcontext.set_source_rgb(1, 1, 1)
         qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150)
+
+        qcontext.set_source_rgba(0, 0, 0, 0.2)
+        PangoCairo.update_layout(qcontext, qlayout)
+        PangoCairo.show_layout(qcontext, qlayout)
+        qcontext.translate(-2, -2)
+
+        qcontext.set_source_rgb(1, 1, 1)
         PangoCairo.update_layout(qcontext, qlayout)
         PangoCairo.show_layout(qcontext, qlayout)
 
-        acontext.set_source_rgb(1, 1, 1)
+        acontext.set_source_rgba(0, 0, 0, 0.2)
         acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150 + qheight + margin)
+        PangoCairo.update_layout(acontext, alayout)
+        PangoCairo.show_layout(acontext, alayout)
+
+        acontext.set_source_rgb(1, 1, 1)
+        acontext.translate(-2, -2)
         PangoCairo.update_layout(acontext, alayout)
         PangoCairo.show_layout(acontext, alayout)
 

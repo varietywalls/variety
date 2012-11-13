@@ -17,6 +17,7 @@
 import gettext
 from gettext import gettext as _
 import subprocess
+import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from variety_lib.varietyconfig import get_version
@@ -503,6 +504,8 @@ class VarietyWindow(Window):
                 self.ind.publish_fb.set_visible(self.options.facebook_enabled)
                 self.ind.publish_fb.set_sensitive(self.url is not None)
 
+                self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+
                 self.update_pause_resume()
 
             if not is_gtk_thread:
@@ -722,11 +725,17 @@ class VarietyWindow(Window):
                 total_size += os.path.getsize(fp)
         return total_size
 
-    def set_wp_throttled(self, filename, delay=0.3):
+    class RefreshLevel:
+        ALL = 0
+        FILTERS_AND_TEXTS = 1
+        TEXTS = 2
+        CLOCK_ONLY = 3
+
+    def set_wp_throttled(self, filename, delay=0.3, refresh_level=RefreshLevel.ALL):
         self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
-        def _do_set_wp(): self.do_set_wp(filename)
+        def _do_set_wp(): self.do_set_wp(filename, refresh_level)
         self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
@@ -787,21 +796,14 @@ class VarietyWindow(Window):
         filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
         return filter
 
-
-    class RefreshLevel:
-        ALL = 0
-        FILTERS_AND_TEXTS = 1
-        TEXTS = 2
-        CLOCK_ONLY = 3
-
     def refresh_wallpaper(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS)
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS)
 
     def refresh_clock(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
 
     def refresh_texts(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.TEXTS)
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.TEXTS)
 
     def write_filtered_wallpaper_origin(self, filename):
         try:
@@ -1782,3 +1784,22 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
+
+    def next_quote(self, widget=None):
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.get_quote()
+            self.refresh_texts()
+
+    def view_quote(self, widget=None):
+        if self.quote and self.quote["link"]:
+            os.system("xdg-open \"" + self.quote["link"] + "\"")
+
+    def google_quote_text(self, widget=None):
+        if self.quote and self.quote["quote"]:
+            os.system("xdg-open \"http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["quote"][1:-1].encode('utf8')) + "\"")
+
+    def google_quote_author(self, widget=None):
+        if self.quote and self.quote["author"]:
+            os.system("xdg-open \"http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["author"].encode('utf8')) + "\"")

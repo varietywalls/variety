@@ -74,14 +74,6 @@ class Indicator:
         self.trash.connect("activate", window.move_to_trash)
         self.menu.append(self.trash)
 
-#        self.open_file = Gtk.MenuItem(_("Open in Image Viewer"))
-#        self.open_file.connect("activate", window.open_file)
-#        self.menu.append(self.open_file)
-#
-#        self.open_folder = Gtk.MenuItem(_("Show Containing Folder"))
-#        self.open_folder.connect("activate", window.open_folder)
-#        self.menu.append(self.open_folder)
-
         self.focus = Gtk.MenuItem(_("Display Source"))
         self.focus.connect("activate", window.focus_in_preferences)
         self.menu.append(self.focus)
@@ -141,16 +133,38 @@ class Indicator:
         self.playback.set_submenu(self.playback_menu)
         self.menu.append(self.playback)
 
+        self.quotes_menu = Gtk.Menu()
+
+        self.next_quote = Gtk.MenuItem(_("Next _Quote"))
+        self.next_quote.set_use_underline(True)
+        self.next_quote.connect("activate", window.next_quote)
+        self.quotes_menu.append(self.next_quote)
+
+        self.view_quote = Gtk.MenuItem(_("View at QuotesDaddy"))
+        self.view_quote.set_use_underline(True)
+        self.view_quote.connect("activate", window.view_quote)
+        self.quotes_menu.append(self.view_quote)
+
+        self.google_quote_text = Gtk.MenuItem(_("Google Quote"))
+        self.google_quote_text.set_use_underline(True)
+        self.google_quote_text.connect("activate", window.google_quote_text)
+        self.quotes_menu.append(self.google_quote_text)
+
+        self.google_quote_author = Gtk.MenuItem(_("Google Author"))
+        self.google_quote_author.set_use_underline(True)
+        self.google_quote_author.connect("activate", window.google_quote_author)
+        self.quotes_menu.append(self.google_quote_author)
+
+        self.quotes = Gtk.MenuItem(_("_Quote"))
+        self.quotes.set_use_underline(True)
+        self.quotes.set_submenu(self.quotes_menu)
+        self.menu.append(self.quotes)
+
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
-        #Adding preferences button
         self.preferences = Gtk.MenuItem(_("Preferences..."))
         self.preferences.connect("activate", window.on_mnu_preferences_activate)
         self.menu.append(self.preferences)
-
-#        self.edit_config = Gtk.MenuItem("Edit config file...")
-#        self.edit_config.connect("activate", window.edit_prefs_file)
-#        self.menu.append(self.edit_config)
 
         self.about = Gtk.MenuItem(_("About"))
         self.about.connect("activate",window.on_mnu_about_activate)
