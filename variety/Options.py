@@ -233,6 +233,16 @@ class Options:
                 pass
 
             try:
+                self.clock_font = config["clock_font"]
+            except Exception:
+                pass
+
+            try:
+                self.clock_date_font = config["clock_date_font"]
+            except Exception:
+                pass
+
+            try:
                 self.quotes_enabled = config["quotes_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -366,7 +376,9 @@ class Options:
         self.facebook_message = ""
 
         self.clock_enabled = False
-        self.clock_filter = "-fill '#FFFFFF' -density 96 -font Bitstream-Charter-Regular -pointsize 80 -gravity SouthEast -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -pointsize 30 -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
+        self.clock_font = "Bitstream Charter 80"
+        self.clock_date_font = "Bitstream Charter 30"
+        self.clock_filter = "-density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
 
         self.quotes_enabled = False
         self.quotes_font = "Bitstream Charter 30"
@@ -439,6 +451,8 @@ class Options:
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = str(self.clock_filter)
+            config["clock_font"] = str(self.clock_font)
+            config["clock_date_font"] = str(self.clock_date_font)
 
             config["quotes_enabled"] = str(self.quotes_enabled)
             config["quotes_font"] = str(self.quotes_font)

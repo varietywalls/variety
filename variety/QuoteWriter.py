@@ -79,7 +79,7 @@ class QuoteWriter:
 
         height = qheight + aheight
 
-        qcontext.set_source_rgba(0.55, 0.55, 0.55, 0.55) # gray semi-transparent background
+        qcontext.set_source_rgba(0.45, 0.45, 0.45, 0.65) # gray semi-transparent background
         qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 3)
         qcontext.fill()
 

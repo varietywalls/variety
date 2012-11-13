@@ -131,6 +131,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
         self.ui.clock_enabled.set_active(self.options.clock_enabled)
+        self.ui.clock_font.set_font_name(self.options.clock_font)
+        self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
 
         self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
         self.ui.quotes_font.set_font_name(self.options.quotes_font)
@@ -621,6 +623,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
+            self.options.clock_font = self.ui.clock_font.get_font_name()
+            self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
 
             self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
             self.options.quotes_font = self.ui.quotes_font.get_font_name()

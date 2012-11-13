@@ -84,8 +84,10 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
         self.thumbs_manager = ThumbsManager(self)
-        self.quotes_engine = QuotesEngine(self)
+
+        self.quotes_engine = None
         self.quote = None
+        self.clock_thread = None
 
         self.prepare_config_folder()
 
@@ -120,7 +122,6 @@ class VarietyWindow(Window):
 
         self.update_indicator(auto_changed=False)
 
-        self.quotes_engine.start()
         self.start_threads()
 
         self.about = None
@@ -302,13 +303,19 @@ class VarietyWindow(Window):
             self.prepared = []
         self.image_count = -1
 
+        self.start_clock_thread()
+
+        if self.options.quotes_enabled and not self.quotes_engine:
+            self.quotes_engine = QuotesEngine(self)
+            self.quotes_engine.start()
+        if self.quotes_engine:
+            self.quotes_engine.on_options_updated()
+
         threading.Timer(0.1, self.refresh_wallpaper).start()
 
         if self.events:
             for e in self.events:
                 e.set()
-
-        self.quotes_engine.on_options_updated()
 
     def size_options_changed(self):
         return self.previous_options and (
@@ -365,6 +372,14 @@ class VarietyWindow(Window):
         except Exception:
             logger.info("Missing or invalid banned URLs list, no URLs will be banned")
 
+    def start_clock_thread(self):
+        if not self.clock_thread and self.options.clock_enabled:
+            self.clock_event = threading.Event()
+            self.events.append(self.clock_event)
+            self.clock_thread = threading.Thread(target=self.clock_thread)
+            self.clock_thread.daemon = True
+            self.clock_thread.start()
+
     def start_threads(self):
         self.running = True
 
@@ -383,12 +398,7 @@ class VarietyWindow(Window):
         dl_thread.daemon = True
         dl_thread.start()
 
-        self.clock_event = threading.Event()
-        clock_thread = threading.Thread(target=self.clock_thread)
-        clock_thread.daemon = True
-        clock_thread.start()
-
-        self.events = [self.change_event, self.prepare_event, self.dl_event, self.clock_event]
+        self.events = [self.change_event, self.prepare_event, self.dl_event]
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -749,7 +759,9 @@ class VarietyWindow(Window):
             hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
             clock_filter = self.options.clock_filter
             clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
-            clock_filter = time.strftime(clock_filter, time.localtime())
+            clock_filter = self.replace_clock_filter_fonts(clock_filter)
+
+            clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
 
             logger.info("Applying clock filter: " + clock_filter)
             cmd += clock_filter + ' '
@@ -757,6 +769,15 @@ class VarietyWindow(Window):
         cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-clock.jpg") + '"'
         logger.info("ImageMagick clock cmd: " + cmd)
         return cmd
+
+    def replace_clock_filter_fonts(self, clock_filter):
+        clock_font_name, clock_font_size = Util.gtk_to_fcmatch_font(self.options.clock_font)
+        date_font_name, date_font_size = Util.gtk_to_fcmatch_font(self.options.clock_date_font)
+        clock_filter = clock_filter.replace("%CLOCK_FONT_NAME", clock_font_name)
+        clock_filter = clock_filter.replace("%CLOCK_FONT_SIZE", clock_font_size)
+        clock_filter = clock_filter.replace("%DATE_FONT_NAME", date_font_name)
+        clock_filter = clock_filter.replace("%DATE_FONT_SIZE", date_font_size)
+        return clock_filter
 
     @staticmethod
     def replace_clock_filter_offsets(filter, hoffset, voffset):
@@ -1273,7 +1294,12 @@ class VarietyWindow(Window):
             for e in self.events:
                 e.set()
 
-            self.quotes_engine.quit()
+            try:
+                if self.quotes_engine:
+                    self.quotes_engine.quit()
+            except Exception:
+                logger.exception("Could not stop quotes engine")
+                pass
 
             if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False

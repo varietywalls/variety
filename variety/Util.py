@@ -25,7 +25,7 @@ import pyexiv2
 import urllib
 import urllib2
 from DominantColors import DominantColors
-from gi.repository import Gdk
+from gi.repository import Gdk, Pango
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -299,3 +299,11 @@ class Util:
             return int(float(screen_w) / iw)
         else: #image is "wider" than the screen ratio - need to offset horizontally
             return int(float(screen_h) / ih)
+
+    @staticmethod
+    def gtk_to_fcmatch_font(gtk_font_name):
+        fd = Pango.FontDescription(gtk_font_name)
+        family = fd.get_family()
+        size = gtk_font_name[gtk_font_name.rindex(' '):].strip()
+        rest = gtk_font_name.replace(family, '').strip().replace(' ', ':')
+        return family + ":" + rest, size

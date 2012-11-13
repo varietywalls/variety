@@ -28,6 +28,7 @@ class QuotesEngine:
     def __init__(self, parent = None):
         self.parent = parent
         self.prepared = []
+        self.used = []
         self.prepared_lock = threading.Lock()
         self.prepare_event = threading.Event()
         self.started = False
@@ -54,8 +55,13 @@ class QuotesEngine:
             if self.prepared:
                 quote = self.prepared[0]
                 self.prepared = self.prepared[1:]
+                self.used.insert(0, quote)
+                if len(self.used) > 200:
+                    self.used = self.used[:200]
                 self.prepare_event.set()
                 return quote
+            elif self.used:
+                random.choice(self.used)
             else:
                 return None
 
@@ -63,8 +69,6 @@ class QuotesEngine:
         with self.prepared_lock:
             self.prepared = []
         self.prepare_event.set()
-        if not self.started:
-            self.start()
 
     def prepare_thread(self):
         logger.info("Quotes prepare thread running")
@@ -81,7 +85,7 @@ class QuotesEngine:
                     if not parent_refreshed and self.parent.options.quotes_enabled and self.parent.quote is None:
                         self.parent.refresh_texts()
                         parent_refreshed = True
-                    self.prepare_event.wait(5)
+                    self.prepare_event.wait(2)
                     self.prepare_event.clear()
 
                 if not self.running:
@@ -108,17 +112,14 @@ class QuotesEngine:
                 if not quote:
                     logger.warning("Could not find quotes for URL " + url)
                     skip.add(url)
-                    continue
-                if len(quote) > 200:
-                    continue
-
-                return quote
+                elif len(quote["quote"]) < 250:
+                    return quote
             except Exception:
                 logger.exception("Could not extract quote")
                 skip.add(url)
 
-            self.prepare_event.wait(5)
             self.prepare_event.clear()
+            self.prepare_event.wait(2)
 
     @staticmethod
     def extract_quote(xml):
