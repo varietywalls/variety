@@ -77,7 +77,7 @@ class QuotesEngine:
         while self.running:
             try:
                 parent_refreshed = False
-                while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 5:
+                while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
                     logger.info("Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
                     quote = self.download_one_quote()
                     if quote:

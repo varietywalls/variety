@@ -136,6 +136,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
         self.ui.quotes_font.set_font_name(self.options.quotes_font)
+        c = self.options.quotes_text_color
+        self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+        c = self.options.quotes_bg_color
+        self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+        self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
+        self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
         self.ui.quotes_tags.set_text(self.options.quotes_tags)
         self.ui.quotes_authors.set_text(self.options.quotes_authors)
 
@@ -628,6 +634,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
             self.options.quotes_font = self.ui.quotes_font.get_font_name()
+            c = self.ui.quotes_text_color.get_color()
+            self.options.quotes_text_color = (c.red // 256, c.green // 256, c.blue // 256)
+            c = self.ui.quotes_bg_color.get_color()
+            self.options.quotes_bg_color = (c.red // 256, c.green // 256, c.blue // 256)
+            self.options.quotes_bg_opacity = max(0, min(100, int(self.ui.quotes_bg_opacity.get_value())))
+            self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
             self.options.quotes_tags = self.ui.quotes_tags.get_text()
             self.options.quotes_authors = self.ui.quotes_authors.get_text()
 

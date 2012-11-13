@@ -76,6 +76,8 @@ class VarietyWindow(Window):
         super(VarietyWindow, self).finish_initializing(builder)
 
     def start(self, cmdoptions):
+        self.running = True
+
         self.ind = None
         if not cmdoptions.hide_icon:
             self.toggle_indicator(show=True, initial_run=True)
@@ -315,6 +317,7 @@ class VarietyWindow(Window):
         threading.Timer(0.1, self.refresh_wallpaper).start()
 
         if self.events:
+            print "YYYYYY ", self.events
             for e in self.events:
                 e.set()
 
@@ -376,14 +379,13 @@ class VarietyWindow(Window):
     def start_clock_thread(self):
         if not self.clock_thread and self.options.clock_enabled:
             self.clock_event = threading.Event()
+            print "XXXXXXX ", self.clock_event
             self.events.append(self.clock_event)
-            self.clock_thread = threading.Thread(target=self.clock_thread)
+            self.clock_thread = threading.Thread(target=self.clock_thread_method)
             self.clock_thread.daemon = True
             self.clock_thread.start()
 
     def start_threads(self):
-        self.running = True
-
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
         change_thread.daemon = True
@@ -399,7 +401,8 @@ class VarietyWindow(Window):
         dl_thread.daemon = True
         dl_thread.start()
 
-        self.events = [self.change_event, self.prepare_event, self.dl_event]
+        self.events.extend([self.change_event, self.prepare_event, self.dl_event])
+        print self.events
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -562,7 +565,7 @@ class VarietyWindow(Window):
             except Exception:
                 logger.exception("Exception in regular_change_thread")
 
-    def clock_thread(self):
+    def clock_thread_method(self):
         logger.info("clock thread running")
 
         last_minute = -1

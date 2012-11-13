@@ -253,6 +253,31 @@ class Options:
                 pass
 
             try:
+                self.quotes_text_color = map(int, config["quotes_text_color"].split())
+                for i, x in enumerate(self.quotes_text_color):
+                    self.quotes_text_color[i] = max(0, min(255, x))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_bg_color = map(int, config["quotes_bg_color"].split())
+                for i, x in enumerate(self.quotes_bg_color):
+                    self.quotes_bg_color[i] = max(0, min(255, x))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_bg_opacity = int(float(config["quotes_bg_opacity"]))
+                self.quotes_bg_opacity = max(0, min(100, self.quotes_bg_opacity))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_text_shadow = config["quotes_text_shadow"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.quotes_tags = config["quotes_tags"]
             except Exception:
                 pass
@@ -382,6 +407,10 @@ class Options:
 
         self.quotes_enabled = False
         self.quotes_font = "Bitstream Charter 30"
+        self.quotes_text_color = (255, 255, 255)
+        self.quotes_bg_color = (140, 140, 140)
+        self.quotes_bg_opacity = 55
+        self.quotes_text_shadow = False
         self.quotes_tags = ""
         self.quotes_authors = ""
 
@@ -456,6 +485,10 @@ class Options:
 
             config["quotes_enabled"] = str(self.quotes_enabled)
             config["quotes_font"] = str(self.quotes_font)
+            config["quotes_text_color"] = " ".join(map(str, self.quotes_text_color))
+            config["quotes_bg_color"] = " ".join(map(str, self.quotes_bg_color))
+            config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
+            config["quotes_text_shadow"] = str(self.quotes_text_shadow)
             config["quotes_tags"] = str(self.quotes_tags)
             config["quotes_authors"] = str(self.quotes_authors)
 

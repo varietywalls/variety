@@ -73,34 +73,40 @@ class QuoteWriter:
         alayout.set_alignment(Pango.Alignment.RIGHT)
         alayout.set_wrap(Pango.WrapMode.WORD)
         alayout.set_font_description(Pango.FontDescription(font))
-        alayout.set_text(author, -1)
+        alayout.set_text("\n" + author, -1)
 
         aheight = alayout.get_pixel_size()[1]
 
         height = qheight + aheight
 
-        qcontext.set_source_rgba(0.55, 0.55, 0.55, 0.55) # gray semi-transparent background
-        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 3)
+        bgc = options.quotes_bg_color
+        qcontext.set_source_rgba(bgc[0]/255.0, bgc[1]/255.0, bgc[2]/255.0, options.quotes_bg_opacity/100.0) # gray semi-transparent background
+        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 2)
         qcontext.fill()
 
         qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150)
 
-        qcontext.set_source_rgba(0, 0, 0, 0.2)
+        if options.quotes_text_shadow:
+            qcontext.set_source_rgba(0, 0, 0, 0.2)
+            PangoCairo.update_layout(qcontext, qlayout)
+            PangoCairo.show_layout(qcontext, qlayout)
+            qcontext.translate(-2, -2)
+
+        tc = options.quotes_text_color
+
+        qcontext.set_source_rgb(tc[0]/255.0, tc[1]/255.0, tc[2]/255.0)
         PangoCairo.update_layout(qcontext, qlayout)
         PangoCairo.show_layout(qcontext, qlayout)
-        qcontext.translate(-2, -2)
 
-        qcontext.set_source_rgb(1, 1, 1)
-        PangoCairo.update_layout(qcontext, qlayout)
-        PangoCairo.show_layout(qcontext, qlayout)
+        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150 + qheight)
 
-        acontext.set_source_rgba(0, 0, 0, 0.2)
-        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150 + qheight + margin)
-        PangoCairo.update_layout(acontext, alayout)
-        PangoCairo.show_layout(acontext, alayout)
+        if options.quotes_text_shadow:
+            acontext.set_source_rgba(0, 0, 0, 0.2)
+            PangoCairo.update_layout(acontext, alayout)
+            PangoCairo.show_layout(acontext, alayout)
+            acontext.translate(-2, -2)
 
-        acontext.set_source_rgb(1, 1, 1)
-        acontext.translate(-2, -2)
+        acontext.set_source_rgb(tc[0]/255.0, tc[1]/255.0, tc[2]/255.0)
         PangoCairo.update_layout(acontext, alayout)
         PangoCairo.show_layout(acontext, alayout)
 
