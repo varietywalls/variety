@@ -366,10 +366,10 @@ class Options:
         self.facebook_message = ""
 
         self.clock_enabled = False
-        self.clock_filter = "-fill '#DDDDDD' -stroke black -strokewidth 1 -font Ubuntu-Regular -pointsize 150 -gravity SouthEast -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+100] '%H:%M' -pointsize 50 -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+50] '%A, %B %d'"
+        self.clock_filter = "-fill '#FFFFFF' -density 96 -font Bitstream-Charter-Regular -pointsize 80 -gravity SouthEast -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -pointsize 30 -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
 
         self.quotes_enabled = False
-        self.quotes_font = "Ubuntu Light 35"
+        self.quotes_font = "Bitstream Charter 30"
         self.quotes_tags = ""
         self.quotes_authors = ""
 

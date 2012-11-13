@@ -816,7 +816,7 @@ class VarietyWindow(Window):
                         to_set = self.post_filter_filename
 
                 if self.options.quotes_enabled:
-                    if self.quote is None or refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY:
+                    if self.quote is None:
                         self.quote = self.quotes_engine.get_quote()
                     if self.quote:
                         quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
@@ -893,6 +893,7 @@ class VarietyWindow(Window):
 
     def prev_wallpaper(self, widget=None):
         self.auto_changed = widget is None
+        self.quote = None
         if self.position >= len(self.used) - 1:
             return
         else:
@@ -901,6 +902,7 @@ class VarietyWindow(Window):
 
     def next_wallpaper(self, widget=None, bypass_history=False):
         self.auto_changed = widget is None
+        self.quote = None
         if self.position > 0 and not bypass_history:
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
@@ -958,6 +960,7 @@ class VarietyWindow(Window):
                         _("Please add more image sources or wait for some downloads"))
                 return
 
+            self.quote = None
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")

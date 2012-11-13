@@ -60,35 +60,36 @@ class QuoteWriter:
         qlayout.set_width((width - 4 * margin) * Pango.SCALE)
         qlayout.set_alignment(Pango.Alignment.LEFT)
         qlayout.set_wrap(Pango.WrapMode.WORD)
-        font = options.quotes_font if options else "Ubuntu Light 37"
+        font = options.quotes_font if options else "Bitstream Charter 30"
         qlayout.set_font_description(Pango.FontDescription(font))
         qlayout.set_text(quote, -1)
 
         qheight = qlayout.get_pixel_size()[1]
         qwidth = qlayout.get_pixel_size()[0]
+        width = qwidth + 4 * margin
 
         alayout = PangoCairo.create_layout(acontext)
         alayout.set_width(qwidth * Pango.SCALE)
         alayout.set_alignment(Pango.Alignment.RIGHT)
         alayout.set_wrap(Pango.WrapMode.WORD)
         alayout.set_font_description(Pango.FontDescription(font))
-        alayout.set_text("\n" + author, -1)
+        alayout.set_text(author, -1)
 
         aheight = alayout.get_pixel_size()[1]
 
         height = qheight + aheight
 
-        qcontext.set_source_rgba(0.45, 0.45, 0.45, 0.65) # gray semi-transparent background
-        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 200 - margin, 20000, height + margin * 2)
+        qcontext.set_source_rgba(0.55, 0.55, 0.55, 0.55) # gray semi-transparent background
+        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 3)
         qcontext.fill()
 
         qcontext.set_source_rgb(1, 1, 1)
-        qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200)
+        qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150)
         PangoCairo.update_layout(qcontext, qlayout)
         PangoCairo.show_layout(qcontext, qlayout)
 
         acontext.set_source_rgb(1, 1, 1)
-        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 200 + qheight)
+        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150 + qheight + margin)
         PangoCairo.update_layout(acontext, alayout)
         PangoCairo.show_layout(acontext, alayout)
 

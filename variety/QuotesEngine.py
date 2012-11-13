@@ -81,6 +81,8 @@ class QuotesEngine:
                     if not parent_refreshed and self.parent.options.quotes_enabled and self.parent.quote is None:
                         self.parent.refresh_texts()
                         parent_refreshed = True
+                    self.prepare_event.wait(5)
+                    self.prepare_event.clear()
 
                 if not self.running:
                     return
@@ -95,7 +97,7 @@ class QuotesEngine:
     def download_one_quote(self):
         skip = set()
         while True:
-            url = QuotesEngine.choose_random_feed_url(self.parent.options)
+            url = QuotesEngine.choose_random_feed_url(self.parent.options, skip)
             if not url:
                 logger.warning("Could not fetch any quotes")
                 return None
@@ -104,19 +106,26 @@ class QuotesEngine:
                 xml = Util.fetch(url)
                 quote = QuotesEngine.extract_quote(xml)
                 if not quote:
+                    logger.warning("Could not find quotes for URL " + url)
                     skip.add(url)
                     continue
-                if len(quote) > 300:
+                if len(quote) > 200:
                     continue
 
                 return quote
             except Exception:
                 logger.exception("Could not extract quote")
+                skip.add(url)
+
+            self.prepare_event.wait(5)
+            self.prepare_event.clear()
 
     @staticmethod
     def extract_quote(xml):
         bs = BeautifulSoup(xml, "xml")
         item = bs.find("item")
+        if not item:
+            return None
         link = item.find("link").contents[0].strip()
         s = item.find("description").contents[0]
         author = s[s.rindex('- ') + 1:].strip()
