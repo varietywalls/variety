@@ -144,6 +144,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
         self.ui.quotes_tags.set_text(self.options.quotes_tags)
         self.ui.quotes_authors.set_text(self.options.quotes_authors)
+        self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
+        self.set_quotes_change_interval(self.options.quotes_change_interval)
 
         self.ui.sources.get_model().clear()
         for s in self.options.sources:
@@ -186,6 +188,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_lightness_enabled_toggled()
         self.on_min_rating_enabled_toggled()
         self.on_facebook_enabled_toggled()
+        self.on_quotes_change_enabled_toggled()
         self.update_clipboard_state()
 
         self.build_add_button_menu()
@@ -266,6 +269,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def set_download_interval(self, seconds):
         self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit)
 
+    def set_quotes_change_interval(self, seconds):
+        self.set_time(seconds, self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit)
+
     def read_time(self, text_entry, time_unit_combo, minimum, default):
         result = default
         try:
@@ -288,6 +294,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def get_download_interval(self):
         return self.read_time(
             self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
+
+    def get_quotes_change_interval(self):
+        return self.read_time(
+            self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit, 10, self.options.quotes_change_interval)
 
     def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog(_("Add Images"), parent=self, action=Gtk.FileChooserAction.OPEN,
@@ -642,6 +652,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
             self.options.quotes_tags = self.ui.quotes_tags.get_text()
             self.options.quotes_authors = self.ui.quotes_authors.get_text()
+            self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
+            self.options.quotes_change_interval = self.get_quotes_change_interval()
+
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:
@@ -722,6 +735,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_change_enabled_toggled(self, widget = None):
         self.ui.change_interval_text.set_sensitive(self.ui.change_enabled.get_active())
         self.ui.change_interval_time_unit.set_sensitive(self.ui.change_enabled.get_active())
+
+    def on_quotes_change_enabled_toggled(self, widget = None):
+        self.ui.quotes_change_interval_text.set_sensitive(self.ui.quotes_change_enabled.get_active())
+        self.ui.quotes_change_interval_time_unit.set_sensitive(self.ui.quotes_change_enabled.get_active())
 
     def on_download_enabled_toggled(self, widget = None):
         active = self.ui.download_enabled.get_active()

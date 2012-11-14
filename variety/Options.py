@@ -287,6 +287,18 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.quotes_change_enabled = config["quotes_change_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quotes_change_interval = int(config["quotes_change_interval"])
+                if self.quotes_change_interval < 10:
+                    self.quotes_change_interval = 10
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -413,6 +425,8 @@ class Options:
         self.quotes_text_shadow = False
         self.quotes_tags = ""
         self.quotes_authors = ""
+        self.quotes_change_enabled = False
+        self.quotes_change_interval = 300
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -491,6 +505,8 @@ class Options:
             config["quotes_text_shadow"] = str(self.quotes_text_shadow)
             config["quotes_tags"] = str(self.quotes_tags)
             config["quotes_authors"] = str(self.quotes_authors)
+            config["quotes_change_enabled"] = str(self.quotes_change_enabled)
+            config["quotes_change_interval"] = str(self.quotes_change_interval)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

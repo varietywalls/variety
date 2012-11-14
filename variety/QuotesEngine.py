@@ -32,8 +32,10 @@ class QuotesEngine:
         self.used = []
         self.prepared_lock = threading.Lock()
         self.prepare_event = threading.Event()
+        self.change_event = threading.Event()
         self.started = False
         self.running = False
+        self.last_change_time = time.time()
 
     def start(self):
         if self.started:
@@ -43,15 +45,21 @@ class QuotesEngine:
             logger.info("Starting QuotesEngine")
             self.started = False
             self.running = True
+
             prep_thread = threading.Thread(target=self.prepare_thread)
             prep_thread.daemon = True
             prep_thread.start()
+
+            change_thread = threading.Thread(target=self.regular_change_thread)
+            change_thread.daemon = True
+            change_thread.start()
 
     def quit(self):
         self.running = False
         self.prepare_event.set()
 
     def get_quote(self):
+        self.last_change_time = time.time()
         with self.prepared_lock:
             if self.prepared:
                 quote = self.prepared[0]
@@ -70,6 +78,37 @@ class QuotesEngine:
         with self.prepared_lock:
             self.prepared = []
         self.prepare_event.set()
+        self.change_event.set()
+
+    def regular_change_thread(self):
+        logger.info("Quotes regular change thread running")
+
+        while self.running:
+            try:
+                while not self.parent.options.quotes_change_enabled or \
+                      (time.time() - self.last_change_time) < self.parent.options.quotes_change_interval:
+                    if not self.running:
+                        return
+                    now = time.time()
+                    wait_more = self.parent.options.quotes_change_interval - max(0, (now - self.last_change_time))
+                    if self.parent.options.quotes_change_enabled:
+                        self.change_event.wait(max(0, wait_more))
+                    else:
+                        self.change_event.wait()
+                    self.change_event.clear()
+                if not self.running:
+                    return
+                if not self.parent.options.quotes_change_enabled:
+                    continue
+                logger.info("Quotes regular_change changes quote")
+                self.last_change_time = time.time()
+                self.change_quote()
+            except Exception:
+                logger.exception("Exception in regular_change_thread")
+
+    def change_quote(self):
+        self.parent.quote = None
+        self.parent.refresh_texts()
 
     def prepare_thread(self):
         logger.info("Quotes prepare thread running")
@@ -156,3 +195,4 @@ class QuotesEngine:
             urls.append("http://www.quotesdaddy.com/feed")
 
         return random.choice(urls)
+
