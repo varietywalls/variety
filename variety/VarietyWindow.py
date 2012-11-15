@@ -316,7 +316,6 @@ class VarietyWindow(Window):
         threading.Timer(0.1, self.refresh_wallpaper).start()
 
         if self.events:
-            print "YYYYYY ", self.events
             for e in self.events:
                 e.set()
 
@@ -378,7 +377,6 @@ class VarietyWindow(Window):
     def start_clock_thread(self):
         if not self.clock_thread and self.options.clock_enabled:
             self.clock_event = threading.Event()
-            print "XXXXXXX ", self.clock_event
             self.events.append(self.clock_event)
             self.clock_thread = threading.Thread(target=self.clock_thread_method)
             self.clock_thread.daemon = True
@@ -401,7 +399,6 @@ class VarietyWindow(Window):
         dl_thread.start()
 
         self.events.extend([self.change_event, self.prepare_event, self.dl_event])
-        print self.events
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -511,7 +508,7 @@ class VarietyWindow(Window):
                 self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
                 if self.quotes_engine:
                     self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
-
+                self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
                 self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
 
             if not is_gtk_thread:
@@ -1831,6 +1828,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quote = self.quotes_engine.next_quote(bypass_history)
             GObject.idle_add(self.update_indicator)
             self.refresh_texts()
+
+    def quote_copy_to_clipboard(self, widget=None):
+        if self.quote:
+            text = self.quote["quote"] + " - " + self.quote["author"]
+            clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+            clipboard.set_text(text, -1)
+            clipboard.store()
 
     def on_quotes_pause_resume(self, widget=None, change_enabled=None):
         if change_enabled is None:

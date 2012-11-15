@@ -38,6 +38,7 @@ class QuotesEngine:
         self.started = False
         self.running = False
         self.last_change_time = time.time()
+        self.last_error_notification_time = 0
 
     def start(self):
         if self.started:
@@ -176,14 +177,23 @@ class QuotesEngine:
 
             try:
                 xml = Util.fetch(url)
-                quote = QuotesEngine.extract_quote(xml)
-                if not quote:
-                    logger.warning("Could not find quotes for URL " + url)
+
+                try:
+                    quote = QuotesEngine.extract_quote(xml)
+                    if not quote:
+                        logger.warning("Could not find quotes for URL " + url)
+                        skip.add(url)
+                    elif len(quote["quote"]) < 250:
+                        return quote
+                except Exception:
+                    logger.exception("Could not extract quote")
                     skip.add(url)
-                elif len(quote["quote"]) < 250:
-                    return quote
             except Exception:
-                logger.exception("Could not extract quote")
+                logger.exception("Could not fetch quote")
+                if time.time() - self.last_error_notification_time > 3600:
+                    self.last_error_notification_time = time.time()
+                    self.parent.show_notification("Could not fetch quotes",
+                                                  "QuotesDaddy service seems to be down, but we will continue trying")
                 skip.add(url)
 
             time.sleep(2)

@@ -438,7 +438,7 @@ class Options:
         self.quotes_enabled = False
         self.quotes_font = "Bitstream Charter 30"
         self.quotes_text_color = (255, 255, 255)
-        self.quotes_bg_color = (140, 140, 140)
+        self.quotes_bg_color = (80, 80, 80)
         self.quotes_bg_opacity = 55
         self.quotes_text_shadow = False
         self.quotes_tags = ""

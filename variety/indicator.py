@@ -160,6 +160,11 @@ class Indicator:
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
+        self.quote_clipboard = Gtk.MenuItem(_("Copy to Clipboard"))
+        self.quote_clipboard.set_use_underline(True)
+        self.quote_clipboard.connect("activate", window.quote_copy_to_clipboard)
+        self.quotes_menu.append(self.quote_clipboard)
+
         self.view_quote = Gtk.MenuItem(_("View at QuotesDaddy"))
         self.view_quote.set_use_underline(True)
         self.view_quote.connect("activate", window.view_quote)
