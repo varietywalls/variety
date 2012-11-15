@@ -31,7 +31,7 @@ class TestUtil(unittest.TestCase):
         self.assertEqual("im_g.jpg", Util.get_local_name("http://example.com/a/im%22g.jpg?a=b#x"))
 
     def test_split(self):
-        self.assertEqual(['a','b','c','d','e'], Util.split("a\nb,c ,,d\n   e"))
+        self.assertEqual(['a', 'b', 'c', 'd', 'e'], Util.split("a\nb,c ,,d\n   e"))
 
     def test_metadata(self):
         self.assertTrue(os.path.exists('test.jpg'))
@@ -65,6 +65,10 @@ class TestUtil(unittest.TestCase):
     def test_folderpath(self):
         self.assertEquals("/", Util.folderpath("/"))
         self.assertEquals("/a/b/c/", Util.folderpath("/a/b/c"))
+
+    def test_gtk_to_fcmatch_font(self):
+        self.assertEquals(
+            ("Bitstream Charter:Bold:Italic:10", '10'), Util.gtk_to_fcmatch_font("Bitstream Charter Bold Italic 10"))
 
 if __name__ == '__main__':
     unittest.main()

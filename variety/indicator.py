@@ -74,14 +74,6 @@ class Indicator:
         self.trash.connect("activate", window.move_to_trash)
         self.menu.append(self.trash)
 
-#        self.open_file = Gtk.MenuItem(_("Open in Image Viewer"))
-#        self.open_file.connect("activate", window.open_file)
-#        self.menu.append(self.open_file)
-#
-#        self.open_folder = Gtk.MenuItem(_("Show Containing Folder"))
-#        self.open_folder.connect("activate", window.open_folder)
-#        self.menu.append(self.open_folder)
-
         self.focus = Gtk.MenuItem(_("Display Source"))
         self.focus.connect("activate", window.focus_in_preferences)
         self.menu.append(self.focus)
@@ -141,16 +133,63 @@ class Indicator:
         self.playback.set_submenu(self.playback_menu)
         self.menu.append(self.playback)
 
+        self.quotes_menu = Gtk.Menu()
+
+        self.prev_quote = Gtk.MenuItem(_("_Previous"))
+        self.prev_quote.set_use_underline(True)
+        self.prev_quote.connect("activate", window.prev_quote)
+        self.quotes_menu.append(self.prev_quote)
+
+        self.next_quote = Gtk.MenuItem(_("_Next"))
+        self.next_quote.set_use_underline(True)
+        self.next_quote.connect("activate", window.next_quote)
+        self.quotes_menu.append(self.next_quote)
+
+        self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward_quote .set_use_underline(True)
+        def _fast_forward_quote(widget):
+            window.next_quote(widget, bypass_history=True)
+        self.fast_forward_quote .connect("activate", _fast_forward_quote)
+        self.quotes_menu.append(self.fast_forward_quote)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.quotes_pause_resume = Gtk.MenuItem(_("Pause"))
+        self.quotes_pause_resume.connect("activate", window.on_quotes_pause_resume)
+        self.quotes_menu.append(self.quotes_pause_resume)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.quote_clipboard = Gtk.MenuItem(_("Copy to Clipboard"))
+        self.quote_clipboard.set_use_underline(True)
+        self.quote_clipboard.connect("activate", window.quote_copy_to_clipboard)
+        self.quotes_menu.append(self.quote_clipboard)
+
+        self.view_quote = Gtk.MenuItem(_("View at QuotesDaddy"))
+        self.view_quote.set_use_underline(True)
+        self.view_quote.connect("activate", window.view_quote)
+        self.quotes_menu.append(self.view_quote)
+
+        self.google_quote_text = Gtk.MenuItem(_("Google Quote"))
+        self.google_quote_text.set_use_underline(True)
+        self.google_quote_text.connect("activate", window.google_quote_text)
+        self.quotes_menu.append(self.google_quote_text)
+
+        self.google_quote_author = Gtk.MenuItem(_("Google Author"))
+        self.google_quote_author.set_use_underline(True)
+        self.google_quote_author.connect("activate", window.google_quote_author)
+        self.quotes_menu.append(self.google_quote_author)
+
+        self.quotes = Gtk.MenuItem(_("_Quotes"))
+        self.quotes.set_use_underline(True)
+        self.quotes.set_submenu(self.quotes_menu)
+        self.menu.append(self.quotes)
+
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
-        #Adding preferences button
         self.preferences = Gtk.MenuItem(_("Preferences..."))
         self.preferences.connect("activate", window.on_mnu_preferences_activate)
         self.menu.append(self.preferences)
-
-#        self.edit_config = Gtk.MenuItem("Edit config file...")
-#        self.edit_config.connect("activate", window.edit_prefs_file)
-#        self.menu.append(self.edit_config)
 
         self.about = Gtk.MenuItem(_("About"))
         self.about.connect("activate",window.on_mnu_about_activate)

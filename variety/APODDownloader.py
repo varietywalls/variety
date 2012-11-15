@@ -32,7 +32,7 @@ class APODDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url, xml = False):
-        content = Util.urlopen(url).read()
+        content = Util.fetch(url)
         return BeautifulSoup(content, "xml") if xml else BeautifulSoup(content)
 
     def download_one(self):

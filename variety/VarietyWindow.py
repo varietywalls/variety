@@ -17,6 +17,7 @@
 import gettext
 from gettext import gettext as _
 import subprocess
+import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from variety_lib.varietyconfig import get_version
@@ -57,6 +58,8 @@ from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
 from variety.ThumbsManager import ThumbsManager
+from variety.QuotesEngine import QuotesEngine
+from variety.QuoteWriter import QuoteWriter
 from variety import indicator
 
 MAX_FILES = 10000
@@ -73,6 +76,8 @@ class VarietyWindow(Window):
         super(VarietyWindow, self).finish_initializing(builder)
 
     def start(self, cmdoptions):
+        self.running = True
+
         self.ind = None
         if not cmdoptions.hide_icon:
             self.toggle_indicator(show=True, initial_run=True)
@@ -82,6 +87,10 @@ class VarietyWindow(Window):
         self.AboutDialog = AboutVarietyDialog
         self.PreferencesDialog = PreferencesVarietyDialog
         self.thumbs_manager = ThumbsManager(self)
+
+        self.quotes_engine = None
+        self.quote = None
+        self.clock_thread = None
 
         self.prepare_config_folder()
 
@@ -121,7 +130,6 @@ class VarietyWindow(Window):
         self.about = None
         self.preferences_dialog = None
 
-        GObject.idle_add(self.create_preferences_dialog)
         prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
         prepare_earth_timer.start()
 
@@ -147,10 +155,25 @@ class VarietyWindow(Window):
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
 
+        # TODO: Sort of hacky to have filter-related code here, they should be more isolated
+        pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
+        if not os.path.exists(pencil_tile_filename):
+            def _generate_pencil_tile():
+                logger.info("Missing pencil_tile.png file, generating it" +
+                            varietyconfig.get_data_file("media", "pencil_tile.png"))
+                try:
+                    os.system(
+                        "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename)
+                except Exception:
+                    logger.exception("Could not generate pencil_tile.gif")
+            threading.Timer(0, _generate_pencil_tile).start()
+
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         if not os.path.exists(self.scripts_folder):
             logger.info("Missing scripts dir, copying it from " + varietyconfig.get_data_file("scripts"))
             shutil.copytree(varietyconfig.get_data_file("scripts"), self.scripts_folder)
+
         # make all scripts executable:
         for f in os.listdir(self.scripts_folder):
             path = os.path.join(self.scripts_folder, f)
@@ -282,6 +305,14 @@ class VarietyWindow(Window):
             self.prepared = []
         self.image_count = -1
 
+        self.start_clock_thread()
+
+        if self.options.quotes_enabled and not self.quotes_engine:
+            self.quotes_engine = QuotesEngine(self)
+            self.quotes_engine.start()
+        if self.quotes_engine:
+            self.quotes_engine.on_options_updated()
+
         threading.Timer(0.1, self.refresh_wallpaper).start()
 
         if self.events:
@@ -343,9 +374,15 @@ class VarietyWindow(Window):
         except Exception:
             logger.info("Missing or invalid banned URLs list, no URLs will be banned")
 
-    def start_threads(self):
-        self.running = True
+    def start_clock_thread(self):
+        if not self.clock_thread and self.options.clock_enabled:
+            self.clock_event = threading.Event()
+            self.events.append(self.clock_event)
+            self.clock_thread = threading.Thread(target=self.clock_thread_method)
+            self.clock_thread.daemon = True
+            self.clock_thread.start()
 
+    def start_threads(self):
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
         change_thread.daemon = True
@@ -361,12 +398,7 @@ class VarietyWindow(Window):
         dl_thread.daemon = True
         dl_thread.start()
 
-        self.clock_event = threading.Event()
-        clock_thread = threading.Thread(target=self.clock_thread)
-        clock_thread.daemon = True
-        clock_thread.start()
-
-        self.events = [self.change_event, self.prepare_event, self.dl_event, self.clock_event]
+        self.events.extend([self.change_event, self.prepare_event, self.dl_event])
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -471,7 +503,13 @@ class VarietyWindow(Window):
                 self.ind.publish_fb.set_visible(self.options.facebook_enabled)
                 self.ind.publish_fb.set_sensitive(self.url is not None)
 
-                self.update_pause_resume()
+                self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
+
+                self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                if self.quotes_engine:
+                    self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
+                self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
+                self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
 
             if not is_gtk_thread:
                 Gdk.threads_leave()
@@ -490,9 +528,6 @@ class VarietyWindow(Window):
 
         except Exception:
             logger.exception("Error updating file info")
-
-    def update_pause_resume(self):
-        self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
     def regular_change_thread(self):
         logger.info("regular_change thread running")
@@ -527,7 +562,7 @@ class VarietyWindow(Window):
             except Exception:
                 logger.exception("Exception in regular_change_thread")
 
-    def clock_thread(self):
+    def clock_thread_method(self):
         logger.info("clock thread running")
 
         last_minute = -1
@@ -690,11 +725,17 @@ class VarietyWindow(Window):
                 total_size += os.path.getsize(fp)
         return total_size
 
-    def set_wp_throttled(self, filename, delay=0.3):
+    class RefreshLevel:
+        ALL = 0
+        FILTERS_AND_TEXTS = 1
+        TEXTS = 2
+        CLOCK_ONLY = 3
+
+    def set_wp_throttled(self, filename, delay=0.3, refresh_level=RefreshLevel.ALL):
         self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
-        def _do_set_wp(): self.do_set_wp(filename)
+        def _do_set_wp(): self.do_set_wp(filename, refresh_level)
         self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
@@ -724,10 +765,12 @@ class VarietyWindow(Window):
         cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
         if self.options.clock_enabled and self.options.clock_filter.strip():
-            hoffset, voffset = VarietyWindow.compute_clock_offsets(filename, w, h)
+            hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
             clock_filter = self.options.clock_filter
             clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
-            clock_filter = time.strftime(clock_filter, time.localtime())
+            clock_filter = self.replace_clock_filter_fonts(clock_filter)
+
+            clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
 
             logger.info("Applying clock filter: " + clock_filter)
             cmd += clock_filter + ' '
@@ -736,22 +779,14 @@ class VarietyWindow(Window):
         logger.info("ImageMagick clock cmd: " + cmd)
         return cmd
 
-    @staticmethod
-    def compute_clock_offsets(filename, screen_w, screen_h):
-        screen_ratio = float(screen_w) / screen_h
-        iw, ih = Util.get_size(filename)
-        hoffset = voffset = 0
-        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
-            scaledw = float(screen_w)
-            scaledh = ih * scaledw / iw
-            voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
-        else: #image is "wider" than the screen ratio - need to offset horizontally
-            scaledh = float(screen_h)
-            scaledw = iw * scaledh / ih
-            hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
-        logger.info("Clock filter debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
-            screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
-        return hoffset, voffset
+    def replace_clock_filter_fonts(self, clock_filter):
+        clock_font_name, clock_font_size = Util.gtk_to_fcmatch_font(self.options.clock_font)
+        date_font_name, date_font_size = Util.gtk_to_fcmatch_font(self.options.clock_date_font)
+        clock_filter = clock_filter.replace("%CLOCK_FONT_NAME", clock_font_name)
+        clock_filter = clock_filter.replace("%CLOCK_FONT_SIZE", clock_font_size)
+        clock_filter = clock_filter.replace("%DATE_FONT_NAME", date_font_name)
+        clock_filter = clock_filter.replace("%DATE_FONT_SIZE", date_font_size)
+        return clock_filter
 
     @staticmethod
     def replace_clock_filter_offsets(filter, hoffset, voffset):
@@ -761,17 +796,14 @@ class VarietyWindow(Window):
         filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
         return filter
 
-
-    class RefreshLevel:
-        ALL = 0
-        FILTERS_AND_CLOCK = 1
-        CLOCK_ONLY = 2
-
     def refresh_wallpaper(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_CLOCK)
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS)
 
     def refresh_clock(self):
-        self.do_set_wp(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.CLOCK_ONLY)
+
+    def refresh_texts(self):
+        self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.TEXTS)
 
     def write_filtered_wallpaper_origin(self, filename):
         try:
@@ -790,8 +822,10 @@ class VarietyWindow(Window):
                     return
 
                 to_set = filename
+
                 if self.filters:
-                    if refresh_level != VarietyWindow.RefreshLevel.CLOCK_ONLY or not hasattr(self, "post_filter_filename"):
+                    if refresh_level in [VarietyWindow.RefreshLevel.ALL, VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS] \
+                    or not hasattr(self, "post_filter_filename"):
                         self.post_filter_filename = to_set
                         cmd = self.build_imagemagick_filter_cmd(filename)
                         result = os.system(cmd)
@@ -803,6 +837,12 @@ class VarietyWindow(Window):
                             logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
                     else:
                         to_set = self.post_filter_filename
+
+                if self.options.quotes_enabled:
+                    if self.quote:
+                        quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
+                        QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
+                        to_set = quote_outfile
 
                 if self.options.clock_enabled:
                     cmd = self.build_imagemagick_clock_cmd(to_set)
@@ -874,6 +914,8 @@ class VarietyWindow(Window):
 
     def prev_wallpaper(self, widget=None):
         self.auto_changed = widget is None
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.prev_quote()
         if self.position >= len(self.used) - 1:
             return
         else:
@@ -883,9 +925,13 @@ class VarietyWindow(Window):
     def next_wallpaper(self, widget=None, bypass_history=False):
         self.auto_changed = widget is None
         if self.position > 0 and not bypass_history:
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.next_quote(bypass_history)
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
         else:
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.next_quote(bypass_history)
             if bypass_history:
                 self.position = 0
             self.change_wallpaper()
@@ -939,6 +985,8 @@ class VarietyWindow(Window):
                         _("Please add more image sources or wait for some downloads"))
                 return
 
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.change_quote()
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")
@@ -1100,7 +1148,7 @@ class VarietyWindow(Window):
             self.show_notification(_("Current wallpaper is not in the image sources"))
         else:
             self.on_mnu_preferences_activate()
-            self.preferences_dialog.focus_source_and_image(source, file)
+            self.get_preferences_dialog().focus_source_and_image(source, file)
 
     def move_or_copy_file(self, file, to, to_name, operation):
         is_move = operation == shutil.move
@@ -1251,9 +1299,17 @@ class VarietyWindow(Window):
             for e in self.events:
                 e.set()
 
-            if self.options.clock_enabled:
+            try:
+                if self.quotes_engine:
+                    self.quotes_engine.quit()
+            except Exception:
+                logger.exception("Could not stop quotes engine")
+                pass
+
+            if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
-                GObject.idle_add(self.refresh_clock)
+                self.options.quotes_enabled = False
+                GObject.idle_add(self.refresh_texts)
 
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
@@ -1358,6 +1414,22 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Toggle Pause/Resume state"))
 
         parser.add_option(
+            "--quotes-next", action="store_true", dest="quotes_next",
+            help=_("Show Next quote"))
+
+        parser.add_option(
+            "--quotes-previous", action="store_true", dest="quotes_previous",
+            help=_("Show Previous quote"))
+
+        parser.add_option(
+            "--quotes-fast-forward", action="store_true", dest="quotes_fast_forward",
+            help=_("Show Next quote, skipping the forward history"))
+
+        parser.add_option(
+            "--quotes-toggle-pause", action="store_true", dest="quotes_toggle_pause",
+            help=_("Toggle Quotes Pause/Resume state"))
+
+        parser.add_option(
             "--hide-icon", "--hide-indicator", action="store_true", dest="hide_icon",
             help=_("Hide the indicator icon and run entirely in background. "
                    "Variety can only be commanded from the terminal if this option is used. "
@@ -1395,6 +1467,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if options.pause and options.resume:
                 parser.error(_("options --pause and --resume are mutually exclusive"))
+
+            if (options.quotes_next or options.quotes_fast_forward) and options.quotes_previous:
+                parser.error(_("options --quotes-next/--quotes-fast-forward and --quotes-previous are mutually exclusive"))
 
             if options.hide_icon and options.show_icon:
                 parser.error(_("options --show-icon and --hide-icon are mutually exclusive"))
@@ -1444,6 +1519,16 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_downloads()
                 if options.preferences:
                     self.on_mnu_preferences_activate()
+
+                if options.quotes_fast_forward:
+                    self.next_quote(bypass_history=True)
+                elif options.quotes_next:
+                    self.next_quote()
+                elif options.quotes_previous:
+                    self.prev_quote()
+
+                if options.quotes_toggle_pause:
+                    self.on_quotes_pause_resume()
 
                 if options.hide_icon:
                     self.toggle_indicator(show=False, initial_run=initial_run)
@@ -1731,3 +1816,47 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
+
+    def prev_quote(self, widget=None):
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.prev_quote()
+            GObject.idle_add(self.update_indicator)
+            self.refresh_texts()
+
+    def next_quote(self, widget=None, bypass_history=False):
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.next_quote(bypass_history)
+            GObject.idle_add(self.update_indicator)
+            self.refresh_texts()
+
+    def quote_copy_to_clipboard(self, widget=None):
+        if self.quote:
+            text = self.quote["quote"] + " - " + self.quote["author"]
+            clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+            clipboard.set_text(text, -1)
+            clipboard.store()
+
+    def on_quotes_pause_resume(self, widget=None, change_enabled=None):
+        if change_enabled is None:
+            self.options.quotes_change_enabled = not self.options.quotes_change_enabled
+        else:
+            self.options.quotes_change_enabled = change_enabled
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
+        if self.quotes_engine:
+            self.quotes_engine.on_options_updated(False)
+
+    def view_quote(self, widget=None):
+        if self.quote and self.quote["link"]:
+            os.system("xdg-open \"" + self.quote["link"] + "\"")
+
+    def google_quote_text(self, widget=None):
+        if self.quote and self.quote["quote"]:
+            os.system("xdg-open \"http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["quote"][1:-1].encode('utf8')) + "\"")
+
+    def google_quote_author(self, widget=None):
+        if self.quote and self.quote["author"]:
+            os.system("xdg-open \"http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["author"].encode('utf8')) + "\"")

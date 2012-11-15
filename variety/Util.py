@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import bs4
 
 import os
 import random
@@ -24,6 +25,7 @@ import pyexiv2
 import urllib
 import urllib2
 from DominantColors import DominantColors
+from gi.repository import Gdk, Pango
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -101,7 +103,7 @@ class Util:
     def start_force_exit_thread(delay):
         def force_exit():
             time.sleep(delay)
-            print _("Exiting takes too long. Calling os.kill.")
+            print "Exiting takes too long. Calling os.kill."
             os.kill(os.getpid(), 9)
         force_exit_thread = threading.Thread(target=force_exit)
         force_exit_thread.daemon = True
@@ -235,8 +237,73 @@ class Util:
         return urllib2.urlopen(request, data=data, timeout=20)
 
     @staticmethod
+    def fetch(url, data=None):
+        return Util.urlopen(url, data).read()
+
+    @staticmethod
+    def html_soup(url, data=None):
+        return bs4.BeautifulSoup(Util.urlopen(url, data).read())
+
+    @staticmethod
+    def xml_soup(url, data=None):
+        return bs4.BeautifulSoup(Util.urlopen(url, data).read(), "xml")
+
+    @staticmethod
     def folderpath(folder):
         p = os.path.normpath(folder)
         if not p.endswith("/"):
             p += "/"
         return p
+
+    @staticmethod
+    def compute_trimmed_offsets(image_size, screen_size):
+        """Computes what width or height of the wallpaper image will be trimmed on each side, as it is zoomed in to fill
+        the whole screen. Returns a tuple (h, v, scale_ratio) in which h or v will be zero. The other one is the pixel
+        width or height that will be trimmed on each one of the sides of the image (top and down or left and right)."""
+        iw, ih = image_size
+        screen_w, screen_h = screen_size
+        screen_ratio = float(screen_w) / screen_h
+        hoffset = voffset = 0
+        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
+            scaledw = float(screen_w)
+            scaledh = ih * scaledw / iw
+            voffset = int((scaledh - float(scaledw) / screen_ratio) / 2)
+        else: #image is "wider" than the screen ratio - need to offset horizontally
+            scaledh = float(screen_h)
+            scaledw = iw * scaledh / ih
+            hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
+
+        logger.info("Trimmed offsets debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
+            screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
+        return hoffset, voffset
+
+    @staticmethod
+    def get_scaled_size(image):
+        """Computes the size to which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
+        iw, ih = Util.get_size(image)
+        screen_w, screen_h = Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()
+        screen_ratio = float(screen_w) / screen_h
+        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
+            ratio = float(screen_w) / iw
+        else: #image is "wider" than the screen ratio - need to offset horizontally
+            ratio = float(screen_h) / ih
+        return int(iw * ratio), int(ih * ratio)
+
+    @staticmethod
+    def get_scale_to_screen_ratio(image):
+        """Computes the ratio by which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
+        iw, ih = Util.get_size(image)
+        screen_w, screen_h = Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()
+        screen_ratio = float(screen_w) / screen_h
+        if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
+            return int(float(screen_w) / iw)
+        else: #image is "wider" than the screen ratio - need to offset horizontally
+            return int(float(screen_h) / ih)
+
+    @staticmethod
+    def gtk_to_fcmatch_font(gtk_font_name):
+        fd = Pango.FontDescription(gtk_font_name)
+        family = fd.get_family()
+        size = gtk_font_name[gtk_font_name.rindex(' '):].strip()
+        rest = gtk_font_name.replace(family, '').strip().replace(' ', ':')
+        return family + ":" + rest, size

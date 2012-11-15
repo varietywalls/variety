@@ -232,6 +232,91 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.clock_font = config["clock_font"]
+            except Exception:
+                pass
+
+            try:
+                self.clock_date_font = config["clock_date_font"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_enabled = config["quotes_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quotes_font = config["quotes_font"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_text_color = map(int, config["quotes_text_color"].split())
+                for i, x in enumerate(self.quotes_text_color):
+                    self.quotes_text_color[i] = max(0, min(255, x))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_bg_color = map(int, config["quotes_bg_color"].split())
+                for i, x in enumerate(self.quotes_bg_color):
+                    self.quotes_bg_color[i] = max(0, min(255, x))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_bg_opacity = int(float(config["quotes_bg_opacity"]))
+                self.quotes_bg_opacity = max(0, min(100, self.quotes_bg_opacity))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_text_shadow = config["quotes_text_shadow"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quotes_tags = config["quotes_tags"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_authors = config["quotes_authors"]
+            except Exception:
+                pass
+
+            try:
+                self.quotes_change_enabled = config["quotes_change_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quotes_change_interval = int(config["quotes_change_interval"])
+                if self.quotes_change_interval < 10:
+                    self.quotes_change_interval = 10
+            except Exception:
+                pass
+
+            try:
+                self.quotes_width = int(float(config["quotes_width"]))
+                self.quotes_width = max(0, min(100, self.quotes_width))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_hpos = int(float(config["quotes_hpos"]))
+                self.quotes_hpos = max(0, min(100, self.quotes_hpos))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_vpos = int(float(config["quotes_vpos"]))
+                self.quotes_vpos = max(0, min(100, self.quotes_vpos))
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -280,9 +365,8 @@ class Options:
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
-                        if s[1] in [f[1] for f in self.filters]:
-                            continue
-                        self.filters.append(s)
+                        if not s[1].lower() in [f[1].lower() for f in self.filters]:
+                            self.filters.append(s)
                     except Exception:
                         logger.exception("Cannot parse filter in filters.txt: " + line)
         except Exception:
@@ -347,7 +431,23 @@ class Options:
         self.facebook_message = ""
 
         self.clock_enabled = False
-        self.clock_filter = "-fill '#DDDDDD' -stroke black -strokewidth 1 -font Ubuntu-Regular -pointsize 150 -gravity SouthEast -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+100] '%H:%M' -pointsize 50 -annotate 0x0+[%HOFFSET+50]+[%VOFFSET+50] '%A, %B %d'"
+        self.clock_font = "Bitstream Charter 80"
+        self.clock_date_font = "Bitstream Charter 30"
+        self.clock_filter = "-density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
+
+        self.quotes_enabled = False
+        self.quotes_font = "Bitstream Charter 30"
+        self.quotes_text_color = (255, 255, 255)
+        self.quotes_bg_color = (80, 80, 80)
+        self.quotes_bg_opacity = 55
+        self.quotes_text_shadow = False
+        self.quotes_tags = ""
+        self.quotes_authors = ""
+        self.quotes_change_enabled = False
+        self.quotes_change_interval = 300
+        self.quotes_width = 70
+        self.quotes_hpos = 100
+        self.quotes_vpos = 40
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -366,7 +466,9 @@ class Options:
             [False, "Heavy blur", "-blur 120x40"],
             [False, "Oil painting", "-paint 6"],
             [False, "Charcoal painting", "-charcoal 3"],
-            [False, "Pointilism", "-spread 10 -noise 3"]
+            [False, "Pencil sketch", """-colorspace gray \( +clone -tile ~/.config/variety/pencil_tile.gif -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \) -fx 'u*.2+v*.8'"""],
+            [False, "Pointilism", "-spread 10 -noise 3"],
+            [False, "Pixellate", "-scale 3% -scale 3333%"]
         ]
 
     def write(self):
@@ -413,6 +515,22 @@ class Options:
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = str(self.clock_filter)
+            config["clock_font"] = str(self.clock_font)
+            config["clock_date_font"] = str(self.clock_date_font)
+
+            config["quotes_enabled"] = str(self.quotes_enabled)
+            config["quotes_font"] = str(self.quotes_font)
+            config["quotes_text_color"] = " ".join(map(str, self.quotes_text_color))
+            config["quotes_bg_color"] = " ".join(map(str, self.quotes_bg_color))
+            config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
+            config["quotes_text_shadow"] = str(self.quotes_text_shadow)
+            config["quotes_tags"] = str(self.quotes_tags)
+            config["quotes_authors"] = str(self.quotes_authors)
+            config["quotes_change_enabled"] = str(self.quotes_change_enabled)
+            config["quotes_change_interval"] = str(self.quotes_change_interval)
+            config["quotes_width"] = str(self.quotes_width)
+            config["quotes_hpos"] = str(self.quotes_hpos)
+            config["quotes_vpos"] = str(self.quotes_vpos)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

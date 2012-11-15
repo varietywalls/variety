@@ -38,7 +38,7 @@ class MediaRssDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(url):
-        content = Util.urlopen(url).read()
+        content = Util.fetch(url)
         return ET.fromstring(content)
 
     @staticmethod

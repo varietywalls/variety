@@ -131,6 +131,24 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
         self.ui.clock_enabled.set_active(self.options.clock_enabled)
+        self.ui.clock_font.set_font_name(self.options.clock_font)
+        self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
+
+        self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
+        self.ui.quotes_font.set_font_name(self.options.quotes_font)
+        c = self.options.quotes_text_color
+        self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+        c = self.options.quotes_bg_color
+        self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+        self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
+        self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
+        self.ui.quotes_tags.set_text(self.options.quotes_tags)
+        self.ui.quotes_authors.set_text(self.options.quotes_authors)
+        self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
+        self.set_quotes_change_interval(self.options.quotes_change_interval)
+        self.ui.quotes_width.set_value(self.options.quotes_width)
+        self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
+        self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
 
         self.ui.sources.get_model().clear()
         for s in self.options.sources:
@@ -151,7 +169,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             cb.set_visible(True)
             cb.set_active(f[0])
             cb.set_margin_right(30)
-            self.ui.filters_grid.add(cb)
+            self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
             self.filter_checkboxes.append(cb)
 
         try:
@@ -173,6 +191,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_lightness_enabled_toggled()
         self.on_min_rating_enabled_toggled()
         self.on_facebook_enabled_toggled()
+        self.on_quotes_change_enabled_toggled()
         self.update_clipboard_state()
 
         self.build_add_button_menu()
@@ -253,6 +272,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def set_download_interval(self, seconds):
         self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit)
 
+    def set_quotes_change_interval(self, seconds):
+        self.set_time(seconds, self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit)
+
     def read_time(self, text_entry, time_unit_combo, minimum, default):
         result = default
         try:
@@ -275,6 +297,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def get_download_interval(self):
         return self.read_time(
             self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
+
+    def get_quotes_change_interval(self):
+        return self.read_time(
+            self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit, 10, self.options.quotes_change_interval)
 
     def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog(_("Add Images"), parent=self, action=Gtk.FileChooserAction.OPEN,
@@ -616,6 +642,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
+            self.options.clock_font = self.ui.clock_font.get_font_name()
+            self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
+
+            self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
+            self.options.quotes_font = self.ui.quotes_font.get_font_name()
+            c = self.ui.quotes_text_color.get_color()
+            self.options.quotes_text_color = (c.red // 256, c.green // 256, c.blue // 256)
+            c = self.ui.quotes_bg_color.get_color()
+            self.options.quotes_bg_color = (c.red // 256, c.green // 256, c.blue // 256)
+            self.options.quotes_bg_opacity = max(0, min(100, int(self.ui.quotes_bg_opacity.get_value())))
+            self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
+            self.options.quotes_tags = self.ui.quotes_tags.get_text()
+            self.options.quotes_authors = self.ui.quotes_authors.get_text()
+            self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
+            self.options.quotes_change_interval = self.get_quotes_change_interval()
+            self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
+            self.options.quotes_hpos = max(0, min(100, int(self.ui.quotes_hpos.get_value())))
+            self.options.quotes_vpos = max(0, min(100, int(self.ui.quotes_vpos.get_value())))
+
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:
@@ -623,7 +668,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.write()
             self.parent.reload_config()
-            self.parent.update_pause_resume()
 
             self.update_autostart()
 
@@ -696,6 +740,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_change_enabled_toggled(self, widget = None):
         self.ui.change_interval_text.set_sensitive(self.ui.change_enabled.get_active())
         self.ui.change_interval_time_unit.set_sensitive(self.ui.change_enabled.get_active())
+
+    def on_quotes_change_enabled_toggled(self, widget = None):
+        self.ui.quotes_change_interval_text.set_sensitive(self.ui.quotes_change_enabled.get_active())
+        self.ui.quotes_change_interval_time_unit.set_sensitive(self.ui.quotes_change_enabled.get_active())
 
     def on_download_enabled_toggled(self, widget = None):
         active = self.ui.download_enabled.get_active()

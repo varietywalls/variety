@@ -69,8 +69,7 @@ class Downloader(object):
             logger.info("File already exists, skip downloading")
             return None
 
-        u = Util.urlopen(image_url)
-        data = u.read()
+        data = Util.fetch(image_url)
         with open(local_filename, 'wb') as f:
             f.write(data)
 
