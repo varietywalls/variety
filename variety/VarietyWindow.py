@@ -130,7 +130,6 @@ class VarietyWindow(Window):
         self.about = None
         self.preferences_dialog = None
 
-        GObject.idle_add(self.create_preferences_dialog)
         prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
         prepare_earth_timer.start()
 
@@ -1148,7 +1147,7 @@ class VarietyWindow(Window):
             self.show_notification(_("Current wallpaper is not in the image sources"))
         else:
             self.on_mnu_preferences_activate()
-            self.preferences_dialog.focus_source_and_image(source, file)
+            self.get_preferences_dialog().focus_source_and_image(source, file)
 
     def move_or_copy_file(self, file, to, to_name, operation):
         is_move = operation == shutil.move

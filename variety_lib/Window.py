@@ -92,19 +92,25 @@ class Window(Gtk.Window):
             self.about.destroy()
             self.about = None
 
+    def get_preferences_dialog(self):
+        if not self.preferences_dialog:
+            self.create_preferences_dialog()
+        return self.preferences_dialog
+
     def create_preferences_dialog(self):
-        logger.debug('create new preferences_dialog')
-        self.preferences_dialog = self.PreferencesDialog(parent=self) # pylint: disable=E1102
+        if not self.preferences_dialog:
+            logger.debug('create new preferences_dialog')
+            self.preferences_dialog = self.PreferencesDialog(parent=self) # pylint: disable=E1102
 
-        def _on_preferences_dialog_destroyed(widget, data=None):
-            logger.debug('on_preferences_dialog_destroyed')
-            self.preferences_dialog = None
-        self.preferences_dialog.connect('destroy', _on_preferences_dialog_destroyed)
+            def _on_preferences_dialog_destroyed(widget, data=None):
+                logger.debug('on_preferences_dialog_destroyed')
+                self.preferences_dialog = None
+            self.preferences_dialog.connect('destroy', _on_preferences_dialog_destroyed)
 
-        def _on_preferences_close_button(arg1, arg2):
-            self.preferences_dialog.close()
-            return True
-        self.preferences_dialog.connect('delete_event', _on_preferences_close_button)
+            def _on_preferences_close_button(arg1, arg2):
+                self.preferences_dialog.close()
+                return True
+            self.preferences_dialog.connect('delete_event', _on_preferences_close_button)
 
     def on_mnu_preferences_activate(self, widget=None, data=None):
         """Display the preferences window for variety."""
@@ -137,6 +143,7 @@ class Window(Gtk.Window):
 
     def on_destroy(self, widget, data=None):
         """Called when the VarietyWindow is closed."""
+        pass
         # Clean up code for saving application state should be added here.
         # Gtk.main_quit()
 
