@@ -299,6 +299,24 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.quotes_width = int(float(config["quotes_width"]))
+                self.quotes_width = max(0, min(100, self.quotes_width))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_hpos = int(float(config["quotes_hpos"]))
+                self.quotes_hpos = max(0, min(100, self.quotes_hpos))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_vpos = int(float(config["quotes_vpos"]))
+                self.quotes_vpos = max(0, min(100, self.quotes_vpos))
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -427,6 +445,9 @@ class Options:
         self.quotes_authors = ""
         self.quotes_change_enabled = False
         self.quotes_change_interval = 300
+        self.quotes_width = 70
+        self.quotes_hpos = 100
+        self.quotes_vpos = 40
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -507,6 +528,9 @@ class Options:
             config["quotes_authors"] = str(self.quotes_authors)
             config["quotes_change_enabled"] = str(self.quotes_change_enabled)
             config["quotes_change_interval"] = str(self.quotes_change_interval)
+            config["quotes_width"] = str(self.quotes_width)
+            config["quotes_hpos"] = str(self.quotes_hpos)
+            config["quotes_vpos"] = str(self.quotes_vpos)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):

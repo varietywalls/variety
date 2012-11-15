@@ -48,13 +48,14 @@ class QuoteWriter:
         qcontext = cairo.Context(surface)
         acontext = cairo.Context(surface)
 
-        sw = surface.get_width()
-        sh = surface.get_height()
+        iw = surface.get_width()
+        ih = surface.get_height()
 
-        trimw = Util.compute_trimmed_offsets((sw, sh),
-            (Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()))[0]
+        sw = Gdk.Screen.get_default().get_width()
+        sh = Gdk.Screen.get_default().get_height()
+        trimw, trimh = Util.compute_trimmed_offsets((iw, ih), (sw, sh))
 
-        width = (sw - 2 * trimw) * 70 // 100 # use 70% of the visible width
+        width = max(200, sw * options.quotes_width // 100) # use quotes_width percent of the visible width
 
         qlayout = PangoCairo.create_layout(qcontext)
         qlayout.set_width((width - 4 * margin) * Pango.SCALE)
@@ -66,7 +67,10 @@ class QuoteWriter:
 
         qheight = qlayout.get_pixel_size()[1]
         qwidth = qlayout.get_pixel_size()[0]
-        width = qwidth + 4 * margin
+        if options.quotes_width < 98:
+            width = qwidth + 4 * margin
+        else:
+            width = sw
 
         alayout = PangoCairo.create_layout(acontext)
         alayout.set_width(qwidth * Pango.SCALE)
@@ -77,14 +81,17 @@ class QuoteWriter:
 
         aheight = alayout.get_pixel_size()[1]
 
-        height = qheight + aheight
+        height = qheight + aheight + 2.5*margin
 
         bgc = options.quotes_bg_color
         qcontext.set_source_rgba(bgc[0]/255.0, bgc[1]/255.0, bgc[2]/255.0, options.quotes_bg_opacity/100.0) # gray semi-transparent background
-        qcontext.rectangle(sw - width - trimw, sh//2 - height//2 - 150 - margin, 20000, height + margin * 2.5)
+
+        hpos = trimw + (sw - width) * options.quotes_hpos // 100
+        vpos = trimh + (sh - height) * options.quotes_vpos // 100
+        qcontext.rectangle(hpos, vpos, width, height)
         qcontext.fill()
 
-        qcontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150)
+        qcontext.translate(hpos + (width - qwidth)/2, vpos + margin)
 
         if options.quotes_text_shadow:
             qcontext.set_source_rgba(0, 0, 0, 0.2)
@@ -98,7 +105,7 @@ class QuoteWriter:
         PangoCairo.update_layout(qcontext, qlayout)
         PangoCairo.show_layout(qcontext, qlayout)
 
-        acontext.translate(sw - width - trimw + 2 * margin, sh//2 - height//2 - 150 + qheight + margin//2)
+        acontext.translate(hpos + (width - qwidth)/2, vpos + margin + qheight + margin/2)
 
         if options.quotes_text_shadow:
             acontext.set_source_rgba(0, 0, 0, 0.2)

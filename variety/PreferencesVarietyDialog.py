@@ -146,6 +146,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.quotes_authors.set_text(self.options.quotes_authors)
         self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
         self.set_quotes_change_interval(self.options.quotes_change_interval)
+        self.ui.quotes_width.set_value(self.options.quotes_width)
+        self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
+        self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
 
         self.ui.sources.get_model().clear()
         for s in self.options.sources:
@@ -654,6 +657,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.quotes_authors = self.ui.quotes_authors.get_text()
             self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
             self.options.quotes_change_interval = self.get_quotes_change_interval()
+            self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
+            self.options.quotes_hpos = max(0, min(100, int(self.ui.quotes_hpos.get_value())))
+            self.options.quotes_vpos = max(0, min(100, int(self.ui.quotes_vpos.get_value())))
 
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]

@@ -115,16 +115,15 @@ class QuotesEngine:
 
         while self.running:
             try:
-                parent_refreshed = False
                 while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
                     logger.info("Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
                     quote = self.download_one_quote()
                     if quote:
                         with self.prepared_lock:
                             self.prepared.append(quote)
-                        if not parent_refreshed and self.parent.options.quotes_enabled and self.parent.quote is None:
+                        if self.parent.options.quotes_enabled and self.parent.quote is None:
+                            self.parent.quote = quote
                             self.parent.refresh_texts()
-                            parent_refreshed = True
 
                     time.sleep(2)
 
