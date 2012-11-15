@@ -668,7 +668,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.write()
             self.parent.reload_config()
-            self.parent.update_pause_resume()
 
             self.update_autostart()
 

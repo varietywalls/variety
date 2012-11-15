@@ -506,9 +506,13 @@ class VarietyWindow(Window):
                 self.ind.publish_fb.set_visible(self.options.facebook_enabled)
                 self.ind.publish_fb.set_sensitive(self.url is not None)
 
-                self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
-                self.update_pause_resume()
+                self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                if self.quotes_engine:
+                    self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
+
+                self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
 
             if not is_gtk_thread:
                 Gdk.threads_leave()
@@ -527,9 +531,6 @@ class VarietyWindow(Window):
 
         except Exception:
             logger.exception("Error updating file info")
-
-    def update_pause_resume(self):
-        self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
     def regular_change_thread(self):
         logger.info("regular_change thread running")
@@ -841,8 +842,6 @@ class VarietyWindow(Window):
                         to_set = self.post_filter_filename
 
                 if self.options.quotes_enabled:
-                    if self.quote is None:
-                        self.quote = self.quotes_engine.get_quote()
                     if self.quote:
                         quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
                         QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
@@ -918,7 +917,8 @@ class VarietyWindow(Window):
 
     def prev_wallpaper(self, widget=None):
         self.auto_changed = widget is None
-        self.quote = None
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.prev_quote()
         if self.position >= len(self.used) - 1:
             return
         else:
@@ -927,11 +927,14 @@ class VarietyWindow(Window):
 
     def next_wallpaper(self, widget=None, bypass_history=False):
         self.auto_changed = widget is None
-        self.quote = None
         if self.position > 0 and not bypass_history:
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.next_quote(bypass_history)
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
         else:
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.next_quote(bypass_history)
             if bypass_history:
                 self.position = 0
             self.change_wallpaper()
@@ -985,7 +988,8 @@ class VarietyWindow(Window):
                         _("Please add more image sources or wait for some downloads"))
                 return
 
-            self.quote = None
+            if self.quotes_engine and self.options.quotes_enabled:
+                self.quote = self.quotes_engine.change_quote()
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")
@@ -1413,6 +1417,22 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Toggle Pause/Resume state"))
 
         parser.add_option(
+            "--quotes-next", action="store_true", dest="quotes_next",
+            help=_("Show Next quote"))
+
+        parser.add_option(
+            "--quotes-previous", action="store_true", dest="quotes_previous",
+            help=_("Show Previous quote"))
+
+        parser.add_option(
+            "--quotes-fast-forward", action="store_true", dest="quotes_fast_forward",
+            help=_("Show Next quote, skipping the forward history"))
+
+        parser.add_option(
+            "--quotes-toggle-pause", action="store_true", dest="quotes_toggle_pause",
+            help=_("Toggle Quotes Pause/Resume state"))
+
+        parser.add_option(
             "--hide-icon", "--hide-indicator", action="store_true", dest="hide_icon",
             help=_("Hide the indicator icon and run entirely in background. "
                    "Variety can only be commanded from the terminal if this option is used. "
@@ -1450,6 +1470,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if options.pause and options.resume:
                 parser.error(_("options --pause and --resume are mutually exclusive"))
+
+            if (options.quotes_next or options.quotes_fast_forward) and options.quotes_previous:
+                parser.error(_("options --quotes-next/--quotes-fast-forward and --quotes-previous are mutually exclusive"))
 
             if options.hide_icon and options.show_icon:
                 parser.error(_("options --show-icon and --hide-icon are mutually exclusive"))
@@ -1499,6 +1522,16 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_downloads()
                 if options.preferences:
                     self.on_mnu_preferences_activate()
+
+                if options.quotes_fast_forward:
+                    self.next_quote(bypass_history=True)
+                elif options.quotes_next:
+                    self.next_quote()
+                elif options.quotes_previous:
+                    self.prev_quote()
+
+                if options.quotes_toggle_pause:
+                    self.on_quotes_pause_resume()
 
                 if options.hide_icon:
                     self.toggle_indicator(show=False, initial_run=initial_run)
@@ -1787,10 +1820,28 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
 
-    def next_quote(self, widget=None):
+    def prev_quote(self, widget=None):
         if self.quotes_engine and self.options.quotes_enabled:
-            self.quote = self.quotes_engine.get_quote()
+            self.quote = self.quotes_engine.prev_quote()
+            GObject.idle_add(self.update_indicator)
             self.refresh_texts()
+
+    def next_quote(self, widget=None, bypass_history=False):
+        if self.quotes_engine and self.options.quotes_enabled:
+            self.quote = self.quotes_engine.next_quote(bypass_history)
+            GObject.idle_add(self.update_indicator)
+            self.refresh_texts()
+
+    def on_quotes_pause_resume(self, widget=None, change_enabled=None):
+        if change_enabled is None:
+            self.options.quotes_change_enabled = not self.options.quotes_change_enabled
+        else:
+            self.options.quotes_change_enabled = change_enabled
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
+        if self.quotes_engine:
+            self.quotes_engine.on_options_updated(False)
 
     def view_quote(self, widget=None):
         if self.quote and self.quote["link"]:

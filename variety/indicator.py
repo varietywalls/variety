@@ -135,10 +135,30 @@ class Indicator:
 
         self.quotes_menu = Gtk.Menu()
 
-        self.next_quote = Gtk.MenuItem(_("Next _Quote"))
+        self.prev_quote = Gtk.MenuItem(_("_Previous"))
+        self.prev_quote.set_use_underline(True)
+        self.prev_quote.connect("activate", window.prev_quote)
+        self.quotes_menu.append(self.prev_quote)
+
+        self.next_quote = Gtk.MenuItem(_("_Next"))
         self.next_quote.set_use_underline(True)
         self.next_quote.connect("activate", window.next_quote)
         self.quotes_menu.append(self.next_quote)
+
+        self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward_quote .set_use_underline(True)
+        def _fast_forward_quote(widget):
+            window.next_quote(widget, bypass_history=True)
+        self.fast_forward_quote .connect("activate", _fast_forward_quote)
+        self.quotes_menu.append(self.fast_forward_quote)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.quotes_pause_resume = Gtk.MenuItem(_("Pause"))
+        self.quotes_pause_resume.connect("activate", window.on_quotes_pause_resume)
+        self.quotes_menu.append(self.quotes_pause_resume)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
         self.view_quote = Gtk.MenuItem(_("View at QuotesDaddy"))
         self.view_quote.set_use_underline(True)
@@ -155,7 +175,7 @@ class Indicator:
         self.google_quote_author.connect("activate", window.google_quote_author)
         self.quotes_menu.append(self.google_quote_author)
 
-        self.quotes = Gtk.MenuItem(_("_Quote"))
+        self.quotes = Gtk.MenuItem(_("_Quotes"))
         self.quotes.set_use_underline(True)
         self.quotes.set_submenu(self.quotes_menu)
         self.menu.append(self.quotes)

@@ -28,8 +28,10 @@ logger = logging.getLogger('variety')
 class QuotesEngine:
     def __init__(self, parent = None):
         self.parent = parent
+        self.quote = None
         self.prepared = []
         self.used = []
+        self.position = 0
         self.prepared_lock = threading.Lock()
         self.prepare_event = threading.Event()
         self.change_event = threading.Event()
@@ -59,24 +61,54 @@ class QuotesEngine:
         self.prepare_event.set()
 
     def get_quote(self):
+        return self.quote
+
+    def has_previous(self):
+        return self.position < len(self.used) - 1
+
+    def prev_quote(self):
+        if self.position >= len(self.used) - 1:
+            return self.quote
+        else:
+            self.last_change_time = time.time()
+            self.position += 1
+            self.quote = self.used[self.position]
+            return self.quote
+
+    def next_quote(self, bypass_history=False):
         self.last_change_time = time.time()
+        if self.position > 0 and not bypass_history:
+            self.position -= 1
+            self.quote = self.used[self.position]
+            return self.quote
+        else:
+            if bypass_history:
+                self.position = 0
+            return self.change_quote()
+
+    def change_quote(self):
+        self.last_change_time = time.time()
+
         with self.prepared_lock:
             if self.prepared:
-                quote = self.prepared[0]
+                self.quote = self.prepared[0]
                 self.prepared = self.prepared[1:]
-                self.used.insert(0, quote)
-                if len(self.used) > 200:
-                    self.used = self.used[:200]
                 self.prepare_event.set()
-                return quote
             elif self.used:
-                random.choice(self.used)
-            else:
-                return None
+                self.quote = random.choice(self.used)
 
-    def on_options_updated(self):
-        with self.prepared_lock:
-            self.prepared = []
+            self.used = self.used[self.position:]
+            self.position = 0
+            self.used.insert(0, self.quote)
+            if len(self.used) > 200:
+                self.used = self.used[:200]
+
+        return self.quote
+
+    def on_options_updated(self, clear_prepared = True):
+        if clear_prepared:
+            with self.prepared_lock:
+                self.prepared = []
         self.prepare_event.set()
         self.change_event.set()
 
@@ -102,13 +134,10 @@ class QuotesEngine:
                     continue
                 logger.info("Quotes regular_change changes quote")
                 self.last_change_time = time.time()
-                self.change_quote()
+                self.parent.quote = self.change_quote()
+                self.parent.refresh_texts()
             except Exception:
                 logger.exception("Exception in regular_change_thread")
-
-    def change_quote(self):
-        self.parent.quote = None
-        self.parent.refresh_texts()
 
     def prepare_thread(self):
         logger.info("Quotes prepare thread running")
@@ -122,7 +151,7 @@ class QuotesEngine:
                         with self.prepared_lock:
                             self.prepared.append(quote)
                         if self.parent.options.quotes_enabled and self.parent.quote is None:
-                            self.parent.quote = quote
+                            self.parent.quote = self.change_quote()
                             self.parent.refresh_texts()
 
                     time.sleep(2)
