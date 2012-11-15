@@ -30,7 +30,7 @@ class QuoteWriter:
 
     @staticmethod
     def load_cairo_surface(filename, w, h):
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, w, h)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(filename, w, h, False)
         surface = cairo.ImageSurface(0, pixbuf.get_width(), pixbuf.get_height())
         context = cairo.Context(surface)
         Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)

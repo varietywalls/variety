@@ -284,10 +284,9 @@ class Util:
         screen_w, screen_h = Gdk.Screen.get_default().get_width(), Gdk.Screen.get_default().get_height()
         screen_ratio = float(screen_w) / screen_h
         if screen_ratio > float(iw) / ih: #image is "taller" than the screen ratio - need to offset vertically
-            ratio = float(screen_w) / iw
+            return screen_w, int(round(ih * float(screen_w) / iw))
         else: #image is "wider" than the screen ratio - need to offset horizontally
-            ratio = float(screen_h) / ih
-        return int(iw * ratio), int(ih * ratio)
+            return int(round(iw * float(screen_h) / ih)), screen_h
 
     @staticmethod
     def get_scale_to_screen_ratio(image):
