@@ -3,6 +3,11 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires preferences_variety_dialog 1.0 -->
   <object class="GtkTextBuffer" id="changes_buffer"/>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-properties</property>
+  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name time_period -->
@@ -48,11 +53,6 @@
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-properties</property>
   </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
@@ -575,6 +575,7 @@
                           <object class="GtkBox" id="box10">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="tooltip_text" translatable="yes">Caution: do NOT use this option if you use a custom download folder with valuable files in it. Variety will maintain the limit regardless of what is in the download folder.</property>
                             <property name="valign">end</property>
                             <property name="margin_left">30</property>
                             <property name="margin_right">10</property>

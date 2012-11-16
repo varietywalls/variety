@@ -27,7 +27,6 @@ gettext.textdomain('variety')
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
 Notify.init("Variety")
 
-from variety_lib import Window
 from variety_lib import varietyconfig
 
 import os
@@ -43,6 +42,7 @@ random.seed()
 logger = logging.getLogger('variety')
 
 from variety.AboutVarietyDialog import AboutVarietyDialog
+from variety.WelcomeDialog import WelcomeDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
@@ -62,21 +62,22 @@ from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety import indicator
 
-MAX_FILES = 10000
 
-# See variety_lib.Window.py for more details about how this class works
-class VarietyWindow(Window):
+class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
+    MAX_FILES = 10000
     SCHEMA = 'org.gnome.desktop.background'
     KEY = 'picture-uri'
 
-    def finish_initializing(self, builder): # pylint: disable=E1002
-        """Set up the main window"""
-        super(VarietyWindow, self).finish_initializing(builder)
+    def __init__(self):
+        pass
 
     def start(self, cmdoptions):
         self.running = True
+
+        self.about = None
+        self.preferences_dialog = None
 
         self.ind = None
         if not cmdoptions.hide_icon:
@@ -84,8 +85,6 @@ class VarietyWindow(Window):
 
         self.gsettings = Gio.Settings.new(self.SCHEMA)
 
-        self.AboutDialog = AboutVarietyDialog
-        self.PreferencesDialog = PreferencesVarietyDialog
         self.thumbs_manager = ThumbsManager(self)
 
         self.quotes_engine = None
@@ -127,15 +126,65 @@ class VarietyWindow(Window):
 
         self.start_threads()
 
-        self.about = None
-        self.preferences_dialog = None
-
         prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
         prepare_earth_timer.start()
 
         self.dialogs = []
 
         self.first_run()
+
+    def on_mnu_about_activate(self, widget, data=None):
+        """Display the about box for variety."""
+        if self.about is not None:
+            logger.debug('show existing about_dialog')
+            self.about.set_keep_above(True)
+            self.about.present()
+            self.about.set_keep_above(False)
+            self.about.present()
+        else:
+            logger.debug('create new about dialog')
+            self.about = AboutVarietyDialog() # pylint: disable=E1102
+            self.about.run()
+            self.about.destroy()
+            self.about = None
+
+    def get_preferences_dialog(self):
+        if not self.preferences_dialog:
+            self.create_preferences_dialog()
+        return self.preferences_dialog
+
+    def create_preferences_dialog(self):
+        if not self.preferences_dialog:
+            logger.debug('create new preferences_dialog')
+            self.preferences_dialog = PreferencesVarietyDialog(parent=self) # pylint: disable=E1102
+
+            def _on_preferences_dialog_destroyed(widget, data=None):
+                logger.debug('on_preferences_dialog_destroyed')
+                self.preferences_dialog = None
+            self.preferences_dialog.connect('destroy', _on_preferences_dialog_destroyed)
+
+            def _on_preferences_close_button(arg1, arg2):
+                self.preferences_dialog.close()
+                return True
+            self.preferences_dialog.connect('delete_event', _on_preferences_close_button)
+
+    def on_mnu_preferences_activate(self, widget=None, data=None):
+        """Display the preferences window for variety."""
+        if self.preferences_dialog is not None:
+            if self.preferences_dialog.get_visible():
+                logger.debug('bring to front existing and visible preferences_dialog')
+                self.preferences_dialog.set_keep_above(True)
+                self.preferences_dialog.present()
+                self.preferences_dialog.set_keep_above(False)
+                self.preferences_dialog.present()
+            else:
+                logger.debug('reload and show existing but non-visible preferences_dialog')
+                self.preferences_dialog.reload()
+                self.preferences_dialog.show()
+        else:
+            self.create_preferences_dialog()
+            self.preferences_dialog.show()
+            # destroy command moved into dialog to allow for a help button
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
@@ -865,7 +914,7 @@ class VarietyWindow(Window):
                 logger.exception("Error while setting wallpaper")
 
     def list_images(self):
-        return Util.list_files(self.individual_images, self.folders, Util.is_image, MAX_FILES)
+        return Util.list_files(self.individual_images, self.folders, Util.is_image, VarietyWindow.MAX_FILES)
 
     def select_random_images(self, count):
         # refresh image count often when few images in the folders and rarely when many:
@@ -1320,17 +1369,23 @@ class VarietyWindow(Window):
             f = open(fr_file, "w")
             f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             f.close()
+            self.show_welcome_dialog()
 
-            if os.environ.get('KDE_FULL_SESSION') == 'true':
-                logger.info("KDE detected")
-                shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), self.config_folder)
-                self.ui.kde_warning.set_visible(True)
+    def show_welcome_dialog(self):
+        dialog = WelcomeDialog()
+        if os.environ.get('KDE_FULL_SESSION') == 'true':
+            logger.info("KDE detected")
+            shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), self.config_folder)
+            dialog.ui.kde_warning.set_visible(True)
 
-            self.show()
+        def _on_continue(button):
+            dialog.destroy()
+            self.dialogs.remove(dialog)
+            self.on_mnu_preferences_activate(button)
 
-    def on_continue_clicked(self, button=None):
-        self.destroy()
-        self.on_mnu_preferences_activate(button)
+        dialog.ui.continue_button.connect("clicked", _on_continue)
+        self.dialogs.append(dialog)
+        dialog.run()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTROY_WITH_PARENT,
