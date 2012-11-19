@@ -572,14 +572,11 @@ class VarietyWindow(Gtk.Window):
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
             if auto_changed:
                 def update_file_operations():
-                    Gdk.threads_enter()
                     for i in xrange(10):
                         self.ind.trash.set_sensitive(deleteable)
                         self.ind.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
                         self.ind.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
-                    Gdk.threads_leave()
-                enable_timer = threading.Timer(2, update_file_operations)
-                enable_timer.start()
+                GObject.timeout_add(2000, update_file_operations)
 
         except Exception:
             logger.exception("Error updating file info")
@@ -1596,16 +1593,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if options.quotes_toggle_pause:
                     self.on_quotes_pause_resume()
 
-            def _process_command_on_gtk():
-                GObject.idle_add(_process_command)
-
-            delay = 0.1
-            if args:
-                delay = 1
-            if initial_run:
-                delay = 3
-            GObject.timeout_add(int(delay * 1000), _process_command)
-            #command_timer.start()
+            GObject.timeout_add(3000 if initial_run else 100, _process_command)
 
             return self.current if options.show_current else ""
         except Exception:
