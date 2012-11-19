@@ -37,6 +37,7 @@ import time
 import logging
 import random
 import re
+from pprint import pprint
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -253,38 +254,7 @@ class VarietyWindow(Gtk.Window):
 
     def log_options(self):
         logger.info("Loaded options:")
-        logger.info("Change on start: " + str(self.options.change_on_start))
-        logger.info("Change enabled: " + str(self.options.change_enabled))
-        logger.info("Change interval: " + str(self.options.change_interval))
-        logger.info("Download enabled: " + str(self.options.download_enabled))
-        logger.info("Download interval: " + str(self.options.download_interval))
-        logger.info("Download folder: " + self.options.download_folder)
-        logger.info("Quota enabled: " + str(self.options.quota_enabled))
-        logger.info("Quota size: " + str(self.options.quota_size))
-        logger.info("Favorites folder: " + self.options.favorites_folder)
-        logger.info("Favorites operations: " + str(self.options.favorites_operations))
-        logger.info("Fetched folder: " + self.options.fetched_folder)
-        logger.info("Clipboard enabled: " + str(self.options.clipboard_enabled))
-        logger.info("Clipboard use whitelist: " + str(self.options.clipboard_use_whitelist))
-        logger.info("Clipboard hosts: " + str(self.options.clipboard_hosts))
-        logger.info("Color enabled: " + str(self.options.desired_color_enabled))
-        logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
-        logger.info("Min size enabled: " + str(self.options.min_size_enabled))
-        logger.info("Min size: " + str(self.options.min_size))
-        logger.info("Min width, height: %d %d" % (self.min_width, self.min_height))
-        logger.info("Use landscape enabled: " + str(self.options.use_landscape_enabled))
-        logger.info("Lightness enabled: " + str(self.options.lightness_enabled))
-        logger.info("Lightness mode: " + str(self.options.lightness_mode))
-        logger.info("Min rating enabled: " + str(self.options.min_rating_enabled))
-        logger.info("Min rating: " + str(self.options.min_rating))
-        logger.info("Show rating enabled: " + str(self.options.show_rating_enabled))
-        logger.info("Facebook enabled: " + str(self.options.facebook_enabled))
-        logger.info("Facebook show dialog: " + str(self.options.facebook_show_dialog))
-        logger.info("Images: " + str(self.individual_images))
-        logger.info("Folders: " + str(self.folders))
-        logger.info("All sources: " + str(self.options.sources))
-        logger.info("Total downloaders: " + str(len(self.downloaders)))
-        logger.info("Filters: " + str(self.filters))
+        pprint(self.options.__dict__)
 
     def reload_config(self):
         self.previous_options = self.options
@@ -362,13 +332,19 @@ class VarietyWindow(Gtk.Window):
             self.quotes_engine = QuotesEngine(self)
             self.quotes_engine.start()
         if self.quotes_engine:
-            self.quotes_engine.on_options_updated()
+            clear_prepared = self.previous_options is None or \
+                self.options.quotes_tags != self.previous_options.quotes_tags or \
+                self.options.quotes_authors != self.previous_options.quotes_authors
+            self.quotes_engine.on_options_updated(clear_prepared=clear_prepared)
 
         def _update_indicator():
             self.update_indicator(auto_changed=False)
         GObject.idle_add(_update_indicator)
 
-        threading.Timer(0.1, self.refresh_wallpaper).start()
+        if self.previous_options is None or self.options.filters != self.previous_options.filters:
+            threading.Timer(0.1, self.refresh_wallpaper).start()
+        else:
+            threading.Timer(0.1, self.refresh_texts).start()
 
         if self.events:
             for e in self.events:
@@ -683,15 +659,27 @@ class VarietyWindow(Gtk.Window):
             self.prepare_event.clear()
 
     def download_thread(self):
+        last_dl_time = time.time()
         while self.running:
             try:
-                self.dl_event.wait(self.options.download_interval)
-                self.dl_event.clear()
+                while not self.options.download_enabled or \
+                      (time.time() - last_dl_time) < self.options.download_interval:
+                    if not self.running:
+                        return
+                    now = time.time()
+                    wait_more = self.options.download_interval - max(0, (now - last_dl_time))
+                    if self.options.download_enabled:
+                        self.dl_event.wait(max(0, wait_more))
+                    else:
+                        self.dl_event.wait()
+                    self.dl_event.clear()
+
                 if not self.running:
                     return
                 if not self.options.download_enabled:
                     continue
 
+                last_dl_time = time.time()
                 if self.downloaders:
                     self.purge_downloaded()
 
