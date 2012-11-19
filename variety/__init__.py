@@ -56,6 +56,9 @@ def sigint_handler(a, b):
     Util.start_force_exit_thread(10)
 
 def main():
+    # Ctrl-C
+    signal.signal(signal.SIGINT, sigint_handler)
+
     arguments = sys.argv[1:]
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
@@ -72,17 +75,13 @@ def main():
             print result
         return
 
-    # ignore Ctrl-C
-    signal.signal(signal.SIGINT, sigint_handler)
-
     # Run the application.
     window = VarietyWindow.VarietyWindow()
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
     service = VarietyService(window)
 
-    window.start(options)
-    window.process_command(arguments, initial_run=True)
+    window.start(arguments)
 
     GObject.threads_init()
     Gdk.threads_init()

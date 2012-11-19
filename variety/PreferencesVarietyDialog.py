@@ -112,10 +112,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.icon.set_active(0)
         elif self.options.icon == "Dark":
             self.ui.icon.set_active(1)
-        elif self.options.icon == "None":
-            self.ui.icon.set_active(3)
-        else:
+        elif self.options.icon == "Current":
             self.ui.icon.set_active(2)
+        elif self.options.icon == "None":
+            self.ui.icon.set_active(4)
+        else:
+            self.ui.icon.set_active(3)
             self.ui.icon_chooser.set_filename(self.options.icon)
 
         if self.options.favorites_operations == [["/", "Copy"]]:
@@ -645,9 +647,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.icon = "Light"
             elif self.ui.icon.get_active() == 1:
                 self.options.icon = "Dark"
-            elif self.ui.icon.get_active() == 3:
-                self.options.icon = "None"
             elif self.ui.icon.get_active() == 2:
+                self.options.icon = "Current"
+            elif self.ui.icon.get_active() == 4:
+                self.options.icon = "None"
+            elif self.ui.icon.get_active() == 3:
                 file = self.ui.icon_chooser.get_filename()
                 if file and os.access(file, os.R_OK):
                     self.options.icon = file
@@ -868,7 +872,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def on_icon_changed(self, widget=None):
-        self.ui.icon_chooser.set_visible(self.ui.icon.get_active() == 2)
+        self.ui.icon_chooser.set_visible(self.ui.icon.get_active() == 3)
 
     def on_favorites_operations_changed(self, widget=None):
         self.ui.edit_favorites_operations.set_visible(self.ui.favorites_operations.get_active() == 3)

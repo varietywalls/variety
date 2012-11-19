@@ -69,12 +69,7 @@ class Options:
         self.set_defaults()
 
         try:
-            config = ConfigObj(raise_errors=False)
-            config.filename = self.configfile
-            try:
-                config.reload()
-            except DuplicateError:
-                logger.warning("Duplicate keys in config file, please fix this")
+            config = self.read_config()
 
             try:
                 self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
@@ -155,7 +150,7 @@ class Options:
 
             try:
                 icon = config["icon"]
-                if icon in ["Light", "Dark", "None"] or (os.access(icon, os.R_OK) and Util.is_image(icon)):
+                if icon in ["Light", "Dark", "Current", "None"] or (os.access(icon, os.R_OK) and Util.is_image(icon)):
                     self.icon = icon
             except Exception:
                 pass
@@ -557,6 +552,21 @@ class Options:
         except Exception:
             logger.exception("Could not write configuration:")
 
+    @staticmethod
+    def set_options(opts):
+        config = Options().read_config()
+        for key, value in opts:
+            config[key] = value
+        config.write()
+
+    def read_config(self):
+        config = ConfigObj(raise_errors=False)
+        config.filename = self.configfile
+        try:
+            config.reload()
+        except DuplicateError:
+            logger.warning("Duplicate keys in config file, please fix this")
+        return config
 
 if __name__ == "__main__":
     formatter = logging.Formatter("%(levelname)s:%(name)s: %(funcName)s() '%(message)s'")

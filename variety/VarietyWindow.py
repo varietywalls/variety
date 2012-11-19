@@ -106,6 +106,8 @@ class VarietyWindow(Gtk.Window):
         self.do_set_wp_lock = threading.Lock()
         self.auto_changed = True
 
+        self.process_command(cmdoptions, initial_run=True)
+
         # load config
         self.options = None
         self.load_banned()
@@ -290,7 +292,7 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
-        self.update_indicator_icon()
+        GObject.idle_add(self.update_indicator_icon)
 
         Util.makedirs(self.options.download_folder)
         Util.makedirs(self.options.favorites_folder)
@@ -907,8 +909,15 @@ class VarietyWindow(Gtk.Window):
                         logger.warning("Could not execute clock convert command - missing ImageMagick or bad filter defined?")
 
                 self.update_indicator(filename, is_gtk_thread=False)
+
                 self.set_desktop_wallpaper(to_set)
                 self.current = filename
+
+                if self.options.icon == "Current":
+                    def _set_icon_to_current():
+                        if self.ind:
+                            self.ind.set_icon(self.current)
+                    GObject.idle_add(_set_icon_to_current)
 
                 if refresh_level == VarietyWindow.RefreshLevel.ALL:
                     self.last_change_time = time.time()
@@ -1500,6 +1509,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             "--preferences", "--show-preferences", action="store_true", dest="preferences",
             help=_("Show Preferences dialog"))
 
+        parser.add_option(
+            "--set-option", action="append", dest="set_options", nargs=2,
+            help=_("Sets and applies an option. "
+                   "The option names are the same that are used in Variety's config file ~/.config/variety/variety.conf. "
+                   "Multiple options can be set in a single command. "
+                   "Example: 'variety --set-option icon Dark --set-option clock_enabled True'. "
+                   "USE WITH CAUTION: You are changing the settings file directly in an unguarded way."))
+
         options, args = parser.parse_args(arguments)
 
         if report_errors:
@@ -1530,6 +1547,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             if args:
                 logger.info("Treating free arguments as urls: " + str(args))
                 self.process_urls(args)
+
+            if options.set_options:
+                try:
+                    Options.set_options(options.set_options)
+                    if not initial_run:
+                        self.reload_config()
+                except Exception:
+                    logger.exception("Could not read/write configuration:")
 
             def _process_command():
                 if not initial_run:
@@ -1578,9 +1603,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             if args:
                 delay = 1
             if initial_run:
-                delay = 4
-            command_timer = threading.Timer(delay, _process_command_on_gtk)
-            command_timer.start()
+                delay = 3
+            GObject.timeout_add(int(delay * 1000), _process_command)
+            #command_timer.start()
 
             return self.current if options.show_current else ""
         except Exception:
@@ -1593,7 +1618,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
             else:
                 self.ind.set_visible(True)
-            self.ind.set_icon(self.options.icon)
+            if self.options.icon == "Current":
+                self.ind.set_icon(self.current)
+            else:
+                self.ind.set_icon(self.options.icon)
         else:
             if self.ind is not None:
                 self.ind.set_visible(False)
