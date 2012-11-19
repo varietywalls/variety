@@ -75,6 +75,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.hosts_scrolled_window.set_size_request(0, 0)
             self.ui.tips_scrolled_window.set_size_request(0, 0)
 
+        PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.reload()
 
     def reload(self):
@@ -100,13 +101,38 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
         self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
-        self.favorites_operations = self.options.favorites_operations
 
         self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
         self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
         self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
         self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
         self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
+
+        if self.options.icon == "Light":
+            self.ui.icon.set_active(0)
+        elif self.options.icon == "Dark":
+            self.ui.icon.set_active(1)
+        elif self.options.icon == "None":
+            self.ui.icon.set_active(3)
+        else:
+            self.ui.icon.set_active(2)
+            self.ui.icon_chooser.set_filename(self.options.icon)
+
+        if self.options.favorites_operations == [["/", "Copy"]]:
+            self.ui.favorites_operations.set_active(0)
+        elif self.options.favorites_operations == [["/", "Move"]]:
+            self.ui.favorites_operations.set_active(1)
+        elif self.options.favorites_operations == [["/", "Both"]]:
+            self.ui.favorites_operations.set_active(2)
+        else:
+            self.ui.favorites_operations.set_active(3)
+
+        self.favorites_operations = self.options.favorites_operations
+
+        self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
+
+        self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
+        self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
         self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
         self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
@@ -125,11 +151,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
         self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
         self.ui.min_rating.set_active(self.options.min_rating - 1)
-        self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
-
-        self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
-        self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
-
         self.ui.clock_enabled.set_active(self.options.clock_enabled)
         self.ui.clock_font.set_font_name(self.options.clock_font)
         self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
@@ -192,6 +213,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_min_rating_enabled_toggled()
         self.on_facebook_enabled_toggled()
         self.on_quotes_change_enabled_toggled()
+        self.on_icon_changed()
+        self.on_favorites_operations_changed()
         self.update_clipboard_state()
 
         self.build_add_button_menu()
@@ -302,23 +325,27 @@ class PreferencesVarietyDialog(PreferencesDialog):
         return self.read_time(
             self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit, 10, self.options.quotes_change_interval)
 
-    def on_add_images_clicked(self, widget=None):
-        chooser = Gtk.FileChooserDialog(_("Add Images"), parent=self, action=Gtk.FileChooserAction.OPEN,
-            buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK])
-        self.dialog = chooser
+    @staticmethod
+    def add_image_preview(chooser, size = 250):
         preview = Gtk.Image()
         chooser.set_preview_widget(preview)
 
         def update_preview(c):
             try:
                 file = chooser.get_preview_filename()
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 250, 250)
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, size, size)
                 preview.set_from_pixbuf(pixbuf)
                 chooser.set_preview_widget_active(True)
             except Exception:
                 chooser.set_preview_widget_active(False)
 
         chooser.connect("update-preview", update_preview)
+
+    def on_add_images_clicked(self, widget=None):
+        chooser = Gtk.FileChooserDialog(_("Add Images"), parent=self, action=Gtk.FileChooserAction.OPEN,
+            buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK])
+        self.dialog = chooser
+        PreferencesVarietyDialog.add_image_preview(chooser)
         chooser.set_select_multiple(True)
         chooser.set_local_only(True)
         filter = Gtk.FileFilter()
@@ -475,7 +502,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.show_thumbs(list(model[row] for row in rows))
         if hasattr(self, "show_timer") and self.show_timer:
             self.show_timer.cancel()
-        self.show_timer = threading.Timer(0.1, timer_func)
+        self.show_timer = threading.Timer(0.3, timer_func)
         self.show_timer.start()
 
         for row in rows:
@@ -614,6 +641,34 @@ class PreferencesVarietyDialog(PreferencesDialog):
             buf = self.ui.clipboard_hosts.get_buffer()
             self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
 
+            if self.ui.icon.get_active() == 0:
+                self.options.icon = "Light"
+            elif self.ui.icon.get_active() == 1:
+                self.options.icon = "Dark"
+            elif self.ui.icon.get_active() == 3:
+                self.options.icon = "None"
+            elif self.ui.icon.get_active() == 2:
+                file = self.ui.icon_chooser.get_filename()
+                if file and os.access(file, os.R_OK):
+                    self.options.icon = file
+                else:
+                    self.options.icon = "Light"
+
+            if self.ui.favorites_operations.get_active() == 0:
+                self.options.favorites_operations = [["/", "Copy"]]
+            elif self.ui.favorites_operations.get_active() == 1:
+                self.options.favorites_operations = [["/", "Move"]]
+            elif self.ui.favorites_operations.get_active() == 2:
+                self.options.favorites_operations = [["/", "Both"]]
+            elif self.ui.favorites_operations.get_active() == 3:
+                # will be set in the favops editor dialog
+                pass
+
+            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
+
+            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
+            self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
+
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()
             self.options.desired_color = (c.red // 256, c.green // 256, c.blue // 256)
@@ -635,11 +690,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.min_rating = int(self.ui.min_rating.get_active_text())
             except Exception:
                 pass
-
-            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
-
-            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
-            self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
             self.options.clock_font = self.ui.clock_font.get_font_name()
@@ -806,7 +856,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         # keep the hosts list always enabled - user can wish to add hosts even when monitoring is not enabled - if undesired, uncomment below:
         # self.ui.clipboard_hosts.set_sensitive(self.ui.clipboard_enabled.get_active() and self.ui.clipboard_use_whitelist.get_active())
 
-    def on_edit_favorite_operations_clicked(self, widget=None):
+    def on_edit_favorites_operations_clicked(self, widget=None):
         self.dialog = EditFavoriteOperationsDialog()
         self.dialog.set_transient_for(self)
         buf = self.dialog.ui.textbuffer
@@ -816,3 +866,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.favorites_operations = list([x.strip().split(':') for x in text.split('\n') if x])
         self.dialog.destroy()
         self.dialog = None
+
+    def on_icon_changed(self, widget=None):
+        self.ui.icon_chooser.set_visible(self.ui.icon.get_active() == 2)
+
+    def on_favorites_operations_changed(self, widget=None):
+        self.ui.edit_favorites_operations.set_visible(self.ui.favorites_operations.get_active() == 3)

@@ -62,6 +62,10 @@ class EditFavoriteOperationsDialog(Gtk.Dialog):
         """
         pass
 
+    def on_reset_clicked(self, widget):
+        self.ui.textbuffer.set_text("Downloaded:Copy\nFetched:Move\nOthers:Copy")
+        return True
+
 
 if __name__ == "__main__":
     dialog = EditFavoriteOperationsDialog()

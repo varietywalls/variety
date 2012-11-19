@@ -17,6 +17,8 @@
 """Code to add AppIndicator."""
 
 from gi.repository import Gtk # pylint: disable=E0611
+import os
+from variety.Util import Util
 
 try:
     from gi.repository import AppIndicator3 # pylint: disable=E0611
@@ -248,6 +250,23 @@ class Indicator:
             if self.status_icon:
                 logger.info("Hiding status icon")
                 self.status_icon.set_visible(False)
+
+    def set_icon(self, icon):
+        if icon == "Light":
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+        elif icon == "Dark":
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.svg")
+        elif os.access(icon, os.R_OK) and Util.is_image(icon):
+            icon_path = icon
+        else:
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+
+        if self.indicator:
+            logger.info("Showing indicator icon image: " + icon_path)
+            self.indicator.set_icon(icon_path)
+        if self.status_icon:
+            logger.info("Showing status icon image: " + icon_path)
+            self.status_icon.set_from_file(icon_path)
 
     def get_visible(self):
         return self.visible

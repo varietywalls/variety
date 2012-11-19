@@ -17,6 +17,7 @@
 import os
 from configobj import ConfigObj
 from configobj import DuplicateError
+from variety.Util import Util
 from variety_lib import varietyconfig
 
 import logging
@@ -149,6 +150,13 @@ class Options:
 
             try:
                 self.clipboard_hosts = config["clipboard_hosts"].lower().split(',')
+            except Exception:
+                pass
+
+            try:
+                icon = config["icon"]
+                if icon in ["Light", "Dark", "None"] or (os.access(icon, os.R_OK) and Util.is_image(icon)):
+                    self.icon = icon
             except Exception:
                 pass
 
@@ -415,6 +423,8 @@ class Options:
         self.clipboard_use_whitelist = True
         self.clipboard_hosts = "wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
 
+        self.icon = "Light"
+
         self.desired_color_enabled = False
         self.desired_color = None
         self.min_size_enabled = False
@@ -497,6 +507,8 @@ class Options:
             config["clipboard_enabled"] = self.clipboard_enabled
             config["clipboard_use_whitelist"] = self.clipboard_use_whitelist
             config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
+
+            config["icon"] = self.icon
 
             config["desired_color_enabled"] = str(self.desired_color_enabled)
             config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"

@@ -68,7 +68,7 @@ class Util:
 
     @staticmethod
     def is_image(filename):
-        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg'))
+        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg', '.bmp'))
 
     @staticmethod
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):

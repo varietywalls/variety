@@ -80,8 +80,6 @@ class VarietyWindow(Gtk.Window):
         self.preferences_dialog = None
 
         self.ind = None
-        if not cmdoptions.hide_icon:
-            self.toggle_indicator(show=True, initial_run=True)
 
         self.gsettings = Gio.Settings.new(self.SCHEMA)
 
@@ -292,6 +290,8 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
+        self.update_indicator_icon()
+
         Util.makedirs(self.options.download_folder)
         Util.makedirs(self.options.favorites_folder)
         Util.makedirs(self.options.fetched_folder)
@@ -361,6 +361,10 @@ class VarietyWindow(Gtk.Window):
             self.quotes_engine.start()
         if self.quotes_engine:
             self.quotes_engine.on_options_updated()
+
+        def _update_indicator():
+            self.update_indicator(auto_changed=False)
+        GObject.idle_add(_update_indicator)
 
         threading.Timer(0.1, self.refresh_wallpaper).start()
 
@@ -1485,21 +1489,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Toggle Quotes Pause/Resume state"))
 
         parser.add_option(
-            "--hide-icon", "--hide-indicator", action="store_true", dest="hide_icon",
-            help=_("Hide the indicator icon and run entirely in background. "
-                   "Variety can only be commanded from the terminal if this option is used. "
-                   "May be used both at start or while running."))
-
-        parser.add_option(
-            "--show-icon", "--show-indicator", action="store_true", dest="show_icon",
-            help=_("Show the indicator icon if it is hidden"))
-
-        parser.add_option(
-            "--toggle-icon", "--toggle-indicator", action="store_true", dest="toggle_icon",
-            help=_("Toggle the visibility of the indicator icon. "
-                   "Used only when the application is already running."))
-
-        parser.add_option(
             "--history", action="store_true", dest="history",
             help=_("Toggle History display"))
 
@@ -1525,9 +1514,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if (options.quotes_next or options.quotes_fast_forward) and options.quotes_previous:
                 parser.error(_("options --quotes-next/--quotes-fast-forward and --quotes-previous are mutually exclusive"))
-
-            if options.hide_icon and options.show_icon:
-                parser.error(_("options --show-icon and --hide-icon are mutually exclusive"))
 
         return options, args
 
@@ -1585,13 +1571,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if options.quotes_toggle_pause:
                     self.on_quotes_pause_resume()
 
-                if options.hide_icon:
-                    self.toggle_indicator(show=False, initial_run=initial_run)
-                elif options.show_icon:
-                    self.toggle_indicator(show=True, initial_run=initial_run)
-                elif options.toggle_icon and not initial_run:
-                    self.toggle_indicator(initial_run=initial_run)
-
             def _process_command_on_gtk():
                 GObject.idle_add(_process_command)
 
@@ -1607,19 +1586,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         except Exception:
             logger.exception("Could not process passed command")
 
-    def toggle_indicator(self, show=None, initial_run=False):
-        if show is None:
-            show = self.ind is None or not self.ind.get_visible()
-
-        if show:
+    def update_indicator_icon(self):
+        if self.options.icon != "None":
             if self.ind is None:
                 logger.info("Creating indicator")
                 self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
             else:
                 self.ind.set_visible(True)
-            if not initial_run:
-                self.update_indicator()
-
+            self.ind.set_icon(self.options.icon)
         else:
             if self.ind is not None:
                 self.ind.set_visible(False)
