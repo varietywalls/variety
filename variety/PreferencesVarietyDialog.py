@@ -625,7 +625,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.apply_timer.cancel()
                 self.apply_timer = None
 
-            self.apply_timer = threading.Timer(0.3, self.apply)
+            self.apply_timer = threading.Timer(0.1, self.apply)
             self.apply_timer.start()
 
     def apply(self):
@@ -891,6 +891,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if self.dialog.run() == Gtk.ResponseType.OK:
             text = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)
             self.favorites_operations = list([x.strip().split(':') for x in text.split('\n') if x])
+            self.delayed_apply()
         self.dialog.destroy()
         self.dialog = None
 
