@@ -1824,8 +1824,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Minimum interval is 5 seconds</property>
-                                <property name="tooltip_text" translatable="yes">Minimum interval is 5 seconds</property>
+                                <property name="tooltip_markup" translatable="yes">Minimum interval is 10 seconds</property>
+                                <property name="tooltip_text" translatable="yes">Minimum interval is 10 seconds</property>
                                 <property name="model">liststore1</property>
                                 <property name="active">0</property>
                                 <signal name="changed" handler="delayed_apply" swapped="no"/>
