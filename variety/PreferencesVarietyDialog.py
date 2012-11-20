@@ -76,153 +76,159 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.tips_scrolled_window.set_size_request(0, 0)
 
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
+        self.loading = False
         self.reload()
 
     def reload(self):
-        logger.info("Reloading preferences dialog")
-
-        self.options = Options()
-        self.options.read()
-
-        self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
-
-        self.ui.change_enabled.set_active(self.options.change_enabled)
-        self.set_change_interval(self.options.change_interval)
-        self.ui.change_on_start.set_active(self.options.change_on_start)
-
-        self.ui.download_enabled.set_active(self.options.download_enabled)
-        self.set_download_interval(self.options.download_interval)
-
-        self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
-        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
-
-        self.ui.quota_enabled.set_active(self.options.quota_enabled)
-        self.ui.quota_size.set_text(str(self.options.quota_size))
-
-        self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
-        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
-
-        self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
-        self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
-        self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
-        self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
-        self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
-
-        if self.options.icon == "Light":
-            self.ui.icon.set_active(0)
-        elif self.options.icon == "Dark":
-            self.ui.icon.set_active(1)
-        elif self.options.icon == "Current":
-            self.ui.icon.set_active(2)
-        elif self.options.icon == "None":
-            self.ui.icon.set_active(4)
-        else:
-            self.ui.icon.set_active(3)
-            self.ui.icon_chooser.set_filename(self.options.icon)
-
-        if self.options.favorites_operations == [["/", "Copy"]]:
-            self.ui.favorites_operations.set_active(0)
-        elif self.options.favorites_operations == [["/", "Move"]]:
-            self.ui.favorites_operations.set_active(1)
-        elif self.options.favorites_operations == [["/", "Both"]]:
-            self.ui.favorites_operations.set_active(2)
-        else:
-            self.ui.favorites_operations.set_active(3)
-
-        self.favorites_operations = self.options.favorites_operations
-
-        self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
-
-        self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
-        self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
-
-        self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
-        self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
-        c = self.options.desired_color
-        if c:
-            self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-
-        self.ui.min_size_enabled.set_active(self.options.min_size_enabled)
-        min_sizes = [50, 80, 100]
-        index = 0
-        while min_sizes[index] < self.options.min_size and index < len(min_sizes) - 1:
-            index += 1
-        self.ui.min_size.set_active(index)
-        self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
-        self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
-        self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
-        self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
-        self.ui.min_rating.set_active(self.options.min_rating - 1)
-        self.ui.clock_enabled.set_active(self.options.clock_enabled)
-        self.ui.clock_font.set_font_name(self.options.clock_font)
-        self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
-
-        self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
-        self.ui.quotes_font.set_font_name(self.options.quotes_font)
-        c = self.options.quotes_text_color
-        self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-        c = self.options.quotes_bg_color
-        self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-        self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
-        self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
-        self.ui.quotes_tags.set_text(self.options.quotes_tags)
-        self.ui.quotes_authors.set_text(self.options.quotes_authors)
-        self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
-        self.set_quotes_change_interval(self.options.quotes_change_interval)
-        self.ui.quotes_width.set_value(self.options.quotes_width)
-        self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
-        self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
-
-        self.ui.sources.get_model().clear()
-        for s in self.options.sources:
-            self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
-
-        if not hasattr(self, "enabled_toggled_handler_id"):
-            self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
-                    "toggled", self.source_enabled_toggled, self.ui.sources.get_model())
-        #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
-
-        if hasattr(self, "filter_checkboxes"):
-            for cb in self.filter_checkboxes:
-                self.ui.filters_grid.remove(cb)
-                cb.destroy()
-        self.filter_checkboxes = []
-        for i, f in enumerate(self.options.filters):
-            cb = Gtk.CheckButton(f[1])
-            cb.connect("toggled", self.delayed_apply)
-            cb.set_visible(True)
-            cb.set_active(f[0])
-            cb.set_margin_right(30)
-            self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
-            self.filter_checkboxes.append(cb)
-
         try:
-            with open(get_data_file("ui/tips.txt")) as f:
-                self.ui.tips_buffer.set_text(f.read())
-        except Exception:
-            logger.warning("Missing ui/tips.txt file")
-        try:
-            with open(get_data_file("ui/changes.txt")) as f:
-                self.ui.changes_buffer.set_text(f.read())
-        except Exception:
-            logger.warning("Missing ui/changes.txt file")
+            logger.info("Reloading preferences dialog")
 
-        self.on_change_enabled_toggled()
-        self.on_download_enabled_toggled()
-        self.on_sources_selection_changed()
-        self.on_desired_color_enabled_toggled()
-        self.on_min_size_enabled_toggled()
-        self.on_lightness_enabled_toggled()
-        self.on_min_rating_enabled_toggled()
-        self.on_facebook_enabled_toggled()
-        self.on_quotes_change_enabled_toggled()
-        self.on_icon_changed()
-        self.on_favorites_operations_changed()
-        self.update_clipboard_state()
+            self.loading = True
 
-        self.build_add_button_menu()
+            self.options = Options()
+            self.options.read()
 
-        self.dialog = None
+            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
+
+            self.ui.change_enabled.set_active(self.options.change_enabled)
+            self.set_change_interval(self.options.change_interval)
+            self.ui.change_on_start.set_active(self.options.change_on_start)
+
+            self.ui.download_enabled.set_active(self.options.download_enabled)
+            self.set_download_interval(self.options.download_interval)
+
+            self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+            self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
+
+            self.ui.quota_enabled.set_active(self.options.quota_enabled)
+            self.ui.quota_size.set_text(str(self.options.quota_size))
+
+            self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+            self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+
+            self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+            self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
+            self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
+            self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
+            self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
+
+            if self.options.icon == "Light":
+                self.ui.icon.set_active(0)
+            elif self.options.icon == "Dark":
+                self.ui.icon.set_active(1)
+            elif self.options.icon == "Current":
+                self.ui.icon.set_active(2)
+            elif self.options.icon == "None":
+                self.ui.icon.set_active(4)
+            else:
+                self.ui.icon.set_active(3)
+                self.ui.icon_chooser.set_filename(self.options.icon)
+
+            if self.options.favorites_operations == [["/", "Copy"]]:
+                self.ui.favorites_operations.set_active(0)
+            elif self.options.favorites_operations == [["/", "Move"]]:
+                self.ui.favorites_operations.set_active(1)
+            elif self.options.favorites_operations == [["/", "Both"]]:
+                self.ui.favorites_operations.set_active(2)
+            else:
+                self.ui.favorites_operations.set_active(3)
+
+            self.favorites_operations = self.options.favorites_operations
+
+            self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
+
+            self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
+            self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
+
+            self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
+            self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
+            c = self.options.desired_color
+            if c:
+                self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+
+            self.ui.min_size_enabled.set_active(self.options.min_size_enabled)
+            min_sizes = [50, 80, 100]
+            index = 0
+            while min_sizes[index] < self.options.min_size and index < len(min_sizes) - 1:
+                index += 1
+            self.ui.min_size.set_active(index)
+            self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
+            self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
+            self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
+            self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
+            self.ui.min_rating.set_active(self.options.min_rating - 1)
+            self.ui.clock_enabled.set_active(self.options.clock_enabled)
+            self.ui.clock_font.set_font_name(self.options.clock_font)
+            self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
+
+            self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
+            self.ui.quotes_font.set_font_name(self.options.quotes_font)
+            c = self.options.quotes_text_color
+            self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+            c = self.options.quotes_bg_color
+            self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+            self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
+            self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
+            self.ui.quotes_tags.set_text(self.options.quotes_tags)
+            self.ui.quotes_authors.set_text(self.options.quotes_authors)
+            self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
+            self.set_quotes_change_interval(self.options.quotes_change_interval)
+            self.ui.quotes_width.set_value(self.options.quotes_width)
+            self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
+            self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
+
+            self.ui.sources.get_model().clear()
+            for s in self.options.sources:
+                self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
+
+            if not hasattr(self, "enabled_toggled_handler_id"):
+                self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
+                        "toggled", self.source_enabled_toggled, self.ui.sources.get_model())
+            #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
+
+            if hasattr(self, "filter_checkboxes"):
+                for cb in self.filter_checkboxes:
+                    self.ui.filters_grid.remove(cb)
+                    cb.destroy()
+            self.filter_checkboxes = []
+            for i, f in enumerate(self.options.filters):
+                cb = Gtk.CheckButton(f[1])
+                cb.connect("toggled", self.delayed_apply)
+                cb.set_visible(True)
+                cb.set_active(f[0])
+                cb.set_margin_right(30)
+                self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
+                self.filter_checkboxes.append(cb)
+
+            try:
+                with open(get_data_file("ui/tips.txt")) as f:
+                    self.ui.tips_buffer.set_text(f.read())
+            except Exception:
+                logger.warning("Missing ui/tips.txt file")
+            try:
+                with open(get_data_file("ui/changes.txt")) as f:
+                    self.ui.changes_buffer.set_text(f.read())
+            except Exception:
+                logger.warning("Missing ui/changes.txt file")
+
+            self.on_change_enabled_toggled()
+            self.on_download_enabled_toggled()
+            self.on_sources_selection_changed()
+            self.on_desired_color_enabled_toggled()
+            self.on_min_size_enabled_toggled()
+            self.on_lightness_enabled_toggled()
+            self.on_min_rating_enabled_toggled()
+            self.on_facebook_enabled_toggled()
+            self.on_quotes_change_enabled_toggled()
+            self.on_icon_changed()
+            self.on_favorites_operations_changed()
+            self.update_clipboard_state()
+
+            self.build_add_button_menu()
+
+            self.dialog = None
+        finally:
+            self.loading = False
 
     def on_add_button_clicked(self, widget=None):
         def position(x, y):
@@ -608,11 +614,143 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.close()
 
     def on_save_clicked(self, widget):
+        self.close()
+
+    def delayed_apply(self, widget=None, *arg):
+        """Perform a throttled apply. All the unneeded arguments are there because this mehotd is used as the
+        event handler for many different types of signals and they pass different numbers of arguments"""
+
+        if not self.loading:
+            if hasattr(self, "apply_timer") and self.apply_timer:
+                self.apply_timer.cancel()
+                self.apply_timer = None
+
+            self.apply_timer = threading.Timer(0.3, self.apply)
+            self.apply_timer.start()
+
+    def apply(self):
         try:
-            self.apply()
-            self.close()
+            logger.info("Applying preferences")
+
+            self.options = Options()
+            self.options.read()
+
+            self.options.change_enabled = self.ui.change_enabled.get_active()
+            self.options.change_on_start = self.ui.change_on_start.get_active()
+            self.options.change_interval = self.get_change_interval()
+
+            self.options.download_enabled = self.ui.download_enabled.get_active()
+            self.options.download_interval = self.get_download_interval()
+
+            self.options.quota_enabled = self.ui.quota_enabled.get_active()
+            try:
+                self.options.quota_size = int(self.ui.quota_size.get_text())
+                if self.options.quota_size < 50:
+                    self.options.quota_size = 50
+            except Exception:
+                logger.exception("Could not understand quota size")
+
+            if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
+                self.options.download_folder = self.ui.download_folder_chooser.get_filename()
+            if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
+                self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            self.options.favorites_operations = self.favorites_operations
+
+            self.options.sources = []
+            for r in self.ui.sources.get_model():
+                self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+
+            if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
+                self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
+            self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
+            self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
+            buf = self.ui.clipboard_hosts.get_buffer()
+            self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
+
+            if self.ui.icon.get_active() == 0:
+                self.options.icon = "Light"
+            elif self.ui.icon.get_active() == 1:
+                self.options.icon = "Dark"
+            elif self.ui.icon.get_active() == 2:
+                self.options.icon = "Current"
+            elif self.ui.icon.get_active() == 4:
+                self.options.icon = "None"
+            elif self.ui.icon.get_active() == 3:
+                file = self.ui.icon_chooser.get_filename()
+                if file and os.access(file, os.R_OK):
+                    self.options.icon = file
+                else:
+                    self.options.icon = "Light"
+
+            if self.ui.favorites_operations.get_active() == 0:
+                self.options.favorites_operations = [["/", "Copy"]]
+            elif self.ui.favorites_operations.get_active() == 1:
+                self.options.favorites_operations = [["/", "Move"]]
+            elif self.ui.favorites_operations.get_active() == 2:
+                self.options.favorites_operations = [["/", "Both"]]
+            elif self.ui.favorites_operations.get_active() == 3:
+                # will be set in the favops editor dialog
+                pass
+
+            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
+
+            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
+            self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
+
+            self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
+            c = self.ui.desired_color.get_color()
+            self.options.desired_color = (c.red // 256, c.green // 256, c.blue // 256)
+
+            self.options.min_size_enabled = self.ui.min_size_enabled.get_active()
+            try:
+                self.options.min_size = int(self.ui.min_size.get_active_text())
+            except Exception:
+                pass
+
+            self.options.use_landscape_enabled = self.ui.landscape_enabled.get_active()
+
+            self.options.lightness_enabled = self.ui.lightness_enabled.get_active()
+            self.options.lightness_mode = \
+                Options.LightnessMode.DARK if self.ui.lightness.get_active() == 0 else Options.LightnessMode.LIGHT
+
+            self.options.min_rating_enabled = self.ui.min_rating_enabled.get_active()
+            try:
+                self.options.min_rating = int(self.ui.min_rating.get_active_text())
+            except Exception:
+                pass
+
+            self.options.clock_enabled = self.ui.clock_enabled.get_active()
+            self.options.clock_font = self.ui.clock_font.get_font_name()
+            self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
+
+            self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
+            self.options.quotes_font = self.ui.quotes_font.get_font_name()
+            c = self.ui.quotes_text_color.get_color()
+            self.options.quotes_text_color = (c.red // 256, c.green // 256, c.blue // 256)
+            c = self.ui.quotes_bg_color.get_color()
+            self.options.quotes_bg_color = (c.red // 256, c.green // 256, c.blue // 256)
+            self.options.quotes_bg_opacity = max(0, min(100, int(self.ui.quotes_bg_opacity.get_value())))
+            self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
+            self.options.quotes_tags = self.ui.quotes_tags.get_text()
+            self.options.quotes_authors = self.ui.quotes_authors.get_text()
+            self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
+            self.options.quotes_change_interval = self.get_quotes_change_interval()
+            self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
+            self.options.quotes_hpos = max(0, min(100, int(self.ui.quotes_hpos.get_value())))
+            self.options.quotes_vpos = max(0, min(100, int(self.ui.quotes_vpos.get_value())))
+
+
+            enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
+            for f in self.options.filters:
+                f[0] = f[1].lower() in enabled_filters
+
+            self.options.write()
+
+            self.parent.reload_config()
+
+            self.update_autostart()
         except Exception:
-            logger.exception("Error while saving")
+            logger.exception("Error while applying preferences")
             dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
                 Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
                 "An error occurred while saving preferences.\n"
@@ -620,137 +758,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             dialog.set_title("Oops")
             dialog.run()
             dialog.destroy()
-
-    def delayed_apply(self, widget=None, *arg):
-        """Perform a throttled apply. All the unneeded arguments are there because this mehotd is used as the
-        event handler for many different types of signals and they pass different numbers of arguments"""
-        if hasattr(self, "apply_timer") and self.apply_timer:
-            self.apply_timer.cancel()
-            self.apply_timer = None
-
-        self.apply_timer = threading.Timer(0.3, self.apply)
-        self.apply_timer.start()
-
-    def apply(self):
-        logger.info("Applying preferences")
-
-        self.options = Options()
-        self.options.read()
-
-        self.options.change_enabled = self.ui.change_enabled.get_active()
-        self.options.change_on_start = self.ui.change_on_start.get_active()
-        self.options.change_interval = self.get_change_interval()
-
-        self.options.download_enabled = self.ui.download_enabled.get_active()
-        self.options.download_interval = self.get_download_interval()
-
-        self.options.quota_enabled = self.ui.quota_enabled.get_active()
-        try:
-            self.options.quota_size = int(self.ui.quota_size.get_text())
-            if self.options.quota_size < 50:
-                self.options.quota_size = 50
-        except Exception:
-            logger.exception("Could not understand quota size")
-
-        if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
-            self.options.download_folder = self.ui.download_folder_chooser.get_filename()
-        if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
-            self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
-        self.options.favorites_operations = self.favorites_operations
-
-        self.options.sources = []
-        for r in self.ui.sources.get_model():
-            self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
-
-        if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
-            self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
-        self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
-        self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
-        buf = self.ui.clipboard_hosts.get_buffer()
-        self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
-
-        if self.ui.icon.get_active() == 0:
-            self.options.icon = "Light"
-        elif self.ui.icon.get_active() == 1:
-            self.options.icon = "Dark"
-        elif self.ui.icon.get_active() == 2:
-            self.options.icon = "Current"
-        elif self.ui.icon.get_active() == 4:
-            self.options.icon = "None"
-        elif self.ui.icon.get_active() == 3:
-            file = self.ui.icon_chooser.get_filename()
-            if file and os.access(file, os.R_OK):
-                self.options.icon = file
-            else:
-                self.options.icon = "Light"
-
-        if self.ui.favorites_operations.get_active() == 0:
-            self.options.favorites_operations = [["/", "Copy"]]
-        elif self.ui.favorites_operations.get_active() == 1:
-            self.options.favorites_operations = [["/", "Move"]]
-        elif self.ui.favorites_operations.get_active() == 2:
-            self.options.favorites_operations = [["/", "Both"]]
-        elif self.ui.favorites_operations.get_active() == 3:
-            # will be set in the favops editor dialog
-            pass
-
-        self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
-
-        self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
-        self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
-
-        self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
-        c = self.ui.desired_color.get_color()
-        self.options.desired_color = (c.red // 256, c.green // 256, c.blue // 256)
-
-        self.options.min_size_enabled = self.ui.min_size_enabled.get_active()
-        try:
-            self.options.min_size = int(self.ui.min_size.get_active_text())
-        except Exception:
-            pass
-
-        self.options.use_landscape_enabled = self.ui.landscape_enabled.get_active()
-
-        self.options.lightness_enabled = self.ui.lightness_enabled.get_active()
-        self.options.lightness_mode = \
-            Options.LightnessMode.DARK if self.ui.lightness.get_active() == 0 else Options.LightnessMode.LIGHT
-
-        self.options.min_rating_enabled = self.ui.min_rating_enabled.get_active()
-        try:
-            self.options.min_rating = int(self.ui.min_rating.get_active_text())
-        except Exception:
-            pass
-
-        self.options.clock_enabled = self.ui.clock_enabled.get_active()
-        self.options.clock_font = self.ui.clock_font.get_font_name()
-        self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
-
-        self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
-        self.options.quotes_font = self.ui.quotes_font.get_font_name()
-        c = self.ui.quotes_text_color.get_color()
-        self.options.quotes_text_color = (c.red // 256, c.green // 256, c.blue // 256)
-        c = self.ui.quotes_bg_color.get_color()
-        self.options.quotes_bg_color = (c.red // 256, c.green // 256, c.blue // 256)
-        self.options.quotes_bg_opacity = max(0, min(100, int(self.ui.quotes_bg_opacity.get_value())))
-        self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
-        self.options.quotes_tags = self.ui.quotes_tags.get_text()
-        self.options.quotes_authors = self.ui.quotes_authors.get_text()
-        self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
-        self.options.quotes_change_interval = self.get_quotes_change_interval()
-        self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
-        self.options.quotes_hpos = max(0, min(100, int(self.ui.quotes_hpos.get_value())))
-        self.options.quotes_vpos = max(0, min(100, int(self.ui.quotes_vpos.get_value())))
-
-
-        enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
-        for f in self.options.filters:
-            f[0] = f[1].lower() in enabled_filters
-
-        self.options.write()
-
-        self.parent.reload_config()
-
-        self.update_autostart()
 
     def update_autostart(self):
         try:
