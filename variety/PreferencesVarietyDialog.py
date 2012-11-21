@@ -20,7 +20,7 @@
 # data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio, Gtk, Gdk, GdkPixbuf # pylint: disable=E0611
+from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
 
 import threading
 from variety.Util import Util
@@ -228,7 +228,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.dialog = None
         finally:
-            self.loading = False
+            def _finish_loading():
+                self.loading = False
+            GObject.timeout_add(500, _finish_loading)
 
     def on_add_button_clicked(self, widget=None):
         def position(x, y):
@@ -872,7 +874,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         else:
             self.ui.error_downloaded.set_label("")
 
-        if self.ui.quota_enabled.get_active():
+        if not self.loading and self.ui.quota_enabled.get_active():
             self.ui.quota_enabled.set_active(False)
             self.parent.show_notification("Limit disabled",
                                           "Changing the download folder automatically turns off the size limit "

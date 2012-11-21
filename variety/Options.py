@@ -15,6 +15,7 @@
 ### END LICENSE
 
 import os
+import hashlib
 from configobj import ConfigObj
 from configobj import DuplicateError
 from variety.Util import Util
@@ -27,6 +28,8 @@ logger = logging.getLogger('variety')
 TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 
 class Options:
+    OUTDATED_HASHES = {'clock_filter': ['dca6bd2dfa2b8c4e2db8801e39208f7f']}
+
     class SourceType:
         IMAGE = 1
         FOLDER = 2
@@ -70,6 +73,7 @@ class Options:
 
         try:
             config = self.read_config()
+            self.fix_outdated(config)
 
             try:
                 self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
@@ -343,6 +347,15 @@ class Options:
             self.parse_autofilters()
         except Exception:
             logger.exception("Could not read configuration:")
+
+    def fix_outdated(self, config):
+        for key, outdated_hashes in Options.OUTDATED_HASHES.items():
+            if key in config:
+                current_hash = hashlib.md5(config[key]).hexdigest()
+                if current_hash in outdated_hashes:
+                    # entry is outdated: delete it and use the default
+                    logger.warning("Option " + key + " has an outdated value, using the new default")
+                    del config[key]
 
     def parse_autosources(self):
         try:
