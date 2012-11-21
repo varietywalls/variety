@@ -225,7 +225,7 @@ class QuotesEngine:
         authors = options.quotes_authors.split(",")
         for author in authors:
             if author.strip():
-                url = "http://www.quotesdaddy.com/feed/author/" + urllib.quote_plus(author)
+                url = "http://www.quotesdaddy.com/feed/author/" + urllib.quote_plus(author.strip())
                 if not url in skip_urls:
                     urls.append(url)
 

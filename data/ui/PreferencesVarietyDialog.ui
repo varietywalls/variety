@@ -37,6 +37,21 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="quotes_width_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -536,8 +551,8 @@
                                 <property name="action">select-folder</property>
                                 <property name="show_hidden">True</property>
                                 <property name="title" translatable="yes">Select Download folder</property>
-                                <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
                                 <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
+                                <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1169,7 +1184,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box28">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <child>
                                   <object class="GtkLabel" id="label54">
@@ -1245,7 +1260,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box29">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <child>
                                   <object class="GtkLabel" id="label51">
                                     <property name="visible">True</property>
@@ -1348,7 +1363,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="xalign">0</property>
@@ -1387,7 +1402,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkBox" id="box31">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_left">12</property>
+                            <property name="margin_left">30</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="box32">
@@ -1629,9 +1644,9 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_right">20</property>
-                                <property name="margin_top">7</property>
+                                <property name="margin_top">10</property>
                                 <property name="label" translatable="yes">Show only these tags and authors (or leave empty for completely random quotes):</property>
                                 <property name="wrap">True</property>
                               </object>
@@ -1645,24 +1660,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkGrid" id="grid1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_right">30</property>
                                 <property name="margin_top">10</property>
-                                <child>
-                                  <object class="GtkLabel" id="label39">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Authors: </property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
+                                <property name="column_spacing">5</property>
                                 <child>
                                   <object class="GtkEntry" id="quotes_authors">
                                     <property name="visible">True</property>
@@ -1674,38 +1675,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label40">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="margin_bottom">10</property>
-                                    <property name="label" translatable="yes">Use a comma separated list of authors. Example: Albert Einstein, Winston Churchill</property>
-                                    <property name="use_markup">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="top_attach">3</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label45">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Tags:</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
+                                    <property name="top_attach">1</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
@@ -1727,41 +1697,63 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                   </packing>
                                 </child>
                                 <child>
+                                  <object class="GtkLabel" id="label45">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Tags: </property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                    <property name="width">1</property>
+                                    <property name="height">1</property>
+                                  </packing>
+                                </child>
+                                <child>
                                   <object class="GtkLabel" id="label46">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
                                     <property name="margin_bottom">10</property>
-                                    <property name="label" translatable="yes">Use a comma separated list of tags. Example: funny, inspirational</property>
+                                    <property name="label" translatable="yes">Example: funny, inspirational</property>
                                     <property name="use_markup">True</property>
                                   </object>
                                   <packing>
-                                    <property name="left_attach">1</property>
+                                    <property name="left_attach">2</property>
+                                    <property name="top_attach">0</property>
+                                    <property name="width">1</property>
+                                    <property name="height">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label40">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="margin_bottom">10</property>
+                                    <property name="label" translatable="yes">Example: Albert Einstein, Voltaire</property>
+                                    <property name="use_markup">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">2</property>
                                     <property name="top_attach">1</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label48">
+                                  <object class="GtkLabel" id="label39">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Authors: </property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
                                     <property name="top_attach">1</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label49">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">3</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
@@ -1801,6 +1793,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="can_focus">False</property>
                             <property name="margin_left">30</property>
                             <property name="margin_right">10</property>
+                            <property name="margin_top">5</property>
                             <property name="hexpand">True</property>
                             <child>
                               <object class="GtkCheckButton" id="quotes_change_enabled">
@@ -1950,7 +1943,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box24">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <child>
                                   <object class="GtkLabel" id="label47">
@@ -1993,10 +1986,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox" id="box27">
+                              <object class="GtkBox" id="box11">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <child>
                                   <object class="GtkLabel" id="label29">
                                     <property name="visible">True</property>
@@ -2030,9 +2023,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
-                                <child>
-                                  <placeholder/>
-                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2045,7 +2035,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
                                 <property name="margin_top">7</property>
                                 <property name="label" translatable="yes">To further configure the clock's appearance edit the clock_filter property in Variety's settings file (~/.config/variety/variety.conf). Use the comments in ~/.config/variety/variety_latest_default.conf as a guide.</property>
                                 <property name="justify">fill</property>
@@ -3292,21 +3283,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="GtkSizeGroup" id="sizegroup_customize_combos">
     <widgets>
       <widget name="icon"/>
@@ -3355,14 +3331,7 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <widget name="change_interval_text"/>
       <widget name="download_interval_text"/>
       <widget name="quota_size"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup_quote_labels">
-    <widgets>
-      <widget name="label39"/>
-      <widget name="label45"/>
-      <widget name="label47"/>
-      <widget name="label29"/>
+      <widget name="quotes_change_interval_text"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_quotes_appearance">
@@ -3374,6 +3343,8 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <widget name="label44"/>
       <widget name="label57"/>
       <widget name="label61"/>
+      <widget name="label47"/>
+      <widget name="label29"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_quotes_placement_labels">

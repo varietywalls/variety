@@ -228,9 +228,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.dialog = None
         finally:
+            # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
             def _finish_loading():
                 self.loading = False
-            GObject.timeout_add(500, _finish_loading)
+            def _idle_finish_loading():
+                GObject.idle_add(_finish_loading)
+            timer = threading.Timer(1, _idle_finish_loading)
+            timer.start()
 
     def on_add_button_clicked(self, widget=None):
         def position(x, y):
@@ -612,10 +616,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.hide()
         self.on_destroy()
 
-    def on_cancel_clicked(self, widget):
-        self.close()
-
     def on_save_clicked(self, widget):
+        self.delayed_apply()
         self.close()
 
     def delayed_apply(self, widget=None, *arg):
