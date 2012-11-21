@@ -190,7 +190,7 @@ class QuotesEngine:
                     skip.add(url)
             except Exception:
                 logger.exception("Could not fetch quote")
-                if time.time() - self.last_error_notification_time > 3600:
+                if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
                     self.last_error_notification_time = time.time()
                     self.parent.show_notification("Could not fetch quotes",
                                                   "QuotesDaddy service seems to be down, but we will continue trying")

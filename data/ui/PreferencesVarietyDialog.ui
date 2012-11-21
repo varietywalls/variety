@@ -4,7 +4,7 @@
   <!-- interface-requires preferences_variety_dialog 1.0 -->
   <object class="GtkTextBuffer" id="changes_buffer"/>
   <object class="GtkTextBuffer" id="clipboard_hosts_buffer">
-    <signal name="changed" handler="delayed_apply" swapped="no"/>
+    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
   </object>
   <object class="GtkFileFilter" id="filter_images">
     <mime-types>
@@ -150,7 +150,8 @@
                             <property name="invisible_char">•</property>
                             <property name="width_chars">4</property>
                             <property name="invisible_char_set">True</property>
-                            <signal name="changed" handler="delayed_apply" swapped="no"/>
+                            <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                            <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -423,9 +424,6 @@
                         <property name="position">1</property>
                       </packing>
                     </child>
-                    <child>
-                      <placeholder/>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -484,7 +482,8 @@
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">4</property>
                                 <property name="invisible_char_set">True</property>
-                                <signal name="changed" handler="delayed_apply" swapped="no"/>
+                                <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -538,7 +537,7 @@
                                 <property name="show_hidden">True</property>
                                 <property name="title" translatable="yes">Select Download folder</property>
                                 <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
-                                <signal name="file-set" handler="delayed_apply" swapped="no"/>
+                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -605,6 +604,7 @@
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">6</property>
                                 <property name="invisible_char_set">True</property>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -694,7 +694,7 @@
                                 <property name="show_hidden">True</property>
                                 <property name="title" translatable="yes">Select Favorites folder</property>
                                 <signal name="selection-changed" handler="on_favorites_changed" swapped="no"/>
-                                <signal name="file-set" handler="delayed_apply" swapped="no"/>
+                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -814,7 +814,7 @@
                             <property name="show_hidden">True</property>
                             <property name="title" translatable="yes">Select Fetch folder</property>
                             <signal name="selection-changed" handler="on_fetched_changed" swapped="no"/>
-                            <signal name="file-set" handler="delayed_apply" swapped="no"/>
+                            <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -980,6 +980,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="margin_bottom">10</property>
                             <property name="vexpand">True</property>
                             <property name="buffer">clipboard_hosts_buffer</property>
+                            <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -1631,7 +1632,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="margin_left">12</property>
                                 <property name="margin_right">20</property>
                                 <property name="margin_top">7</property>
-                                <property name="label" translatable="yes">Limit to these tags and authors (or leave empty for completely random quotes):</property>
+                                <property name="label" translatable="yes">Show only these tags and authors (or leave empty for completely random quotes):</property>
                                 <property name="wrap">True</property>
                               </object>
                               <packing>
@@ -1669,7 +1670,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="hexpand">True</property>
                                     <property name="invisible_char">•</property>
                                     <property name="invisible_char_set">True</property>
-                                    <signal name="changed" handler="delayed_apply" swapped="no"/>
+                                    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
@@ -1716,7 +1717,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="hexpand">True</property>
                                     <property name="invisible_char">•</property>
                                     <property name="invisible_char_set">True</property>
-                                    <signal name="changed" handler="delayed_apply" swapped="no"/>
+                                    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
@@ -1830,7 +1831,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">4</property>
                                 <property name="invisible_char_set">True</property>
-                                <signal name="changed" handler="delayed_apply" swapped="no"/>
+                                <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1871,7 +1873,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkLabel" id="label43">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Rotation schedule</property>
+                            <property name="label" translatable="yes">Regular change</property>
                           </object>
                         </child>
                       </object>
@@ -2027,6 +2029,9 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
+                                </child>
+                                <child>
+                                  <placeholder/>
                                 </child>
                               </object>
                               <packing>
@@ -2601,7 +2606,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="orientation">vertical</property>
                             <property name="filter">filter_images</property>
                             <property name="title" translatable="yes">Select an icon</property>
-                            <signal name="file-set" handler="delayed_apply" swapped="no"/>
+                            <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3072,7 +3077,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="halign">start</property>
                     <property name="margin_left">15</property>
                     <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Donate</property>
+                    <property name="label" translatable="yes">Donate to Variety</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>

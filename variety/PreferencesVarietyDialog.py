@@ -617,7 +617,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.close()
 
     def delayed_apply(self, widget=None, *arg):
-        """Perform a throttled apply. All the unneeded arguments are there because this mehotd is used as the
+        self.delayed_apply_with_interval(0.1)
+
+    def delayed_apply_slow(self, widget=None, *arg):
+        self.delayed_apply_with_interval(1)
+
+    def delayed_apply_with_interval(self, interval):
+        """Perform a throttled apply. All the unneeded arguments are there because this method is used as the
         event handler for many different types of signals and they pass different numbers of arguments"""
 
         if not self.loading:
@@ -625,7 +631,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.apply_timer.cancel()
                 self.apply_timer = None
 
-            self.apply_timer = threading.Timer(0.1, self.apply)
+            self.apply_timer = threading.Timer(interval, self.apply)
             self.apply_timer.start()
 
     def apply(self):
@@ -865,6 +871,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.error_downloaded.set_label(_("No write permissions"))
         else:
             self.ui.error_downloaded.set_label("")
+
+        if self.ui.quota_enabled.get_active():
+            self.ui.quota_enabled.set_active(False)
+            self.parent.show_notification("Limit disabled",
+                                          "Changing the download folder automatically turns off the size limit "
+                                          "to prevent from accidental data loss")
 
     def on_favorites_changed(self, widget=None):
         if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
