@@ -756,18 +756,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.write()
 
+            if not self.parent.running:
+                return
+
             self.parent.reload_config()
 
             self.update_autostart()
         except Exception:
-            logger.exception("Error while applying preferences")
-            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
-                "An error occurred while saving preferences.\n"
-                "Please run from a terminal with the -v flag and try again.")
-            dialog.set_title("Oops")
-            dialog.run()
-            dialog.destroy()
+            if self.parent.running:
+                logger.exception("Error while applying preferences")
+                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                    Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+                    "An error occurred while saving preferences.\n"
+                    "Please run from a terminal with the -v flag and try again.")
+                dialog.set_title("Oops")
+                dialog.run()
+                dialog.destroy()
 
     def update_autostart(self):
         try:

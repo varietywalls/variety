@@ -1334,6 +1334,8 @@ class VarietyWindow(Gtk.Window):
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
+            self.running = False
+
             for d in self.dialogs + [self.preferences_dialog, self.about]:
                 try:
                     if d:
@@ -1342,7 +1344,6 @@ class VarietyWindow(Gtk.Window):
                     logger.exception("Could not destroy dialog")
                     pass
 
-            self.running = False
             for e in self.events:
                 e.set()
 
@@ -1791,19 +1792,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             caption = self.source_name + ", via Variety Wallpaper Changer"
         logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
-        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
-        if not os.path.exists(first_run_file):
-            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-                self.facebook_dialog.present()
-                return
-            else:
-                self.facebook_dialog = FacebookFirstRunDialog()
-                self.dialogs.append(self.facebook_dialog)
-                self.facebook_dialog.run()
-                if not self.running:
-                    return
-                with open(first_run_file, "w") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        if self.facebook_firstrun():
+            return
 
         if hasattr(self, "facebook_dialog") and self.facebook_dialog:
             self.facebook_dialog.destroy()
@@ -1849,6 +1839,52 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
+
+    def publish_quote_on_facebook(self, widget):
+        if not self.quote:
+            logger.warning("publish_quote_on_facebook called with no current quote")
+            return
+
+        if self.facebook_firstrun():
+            return
+
+        if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+            self.facebook_dialog.destroy()
+            try:
+                self.dialogs.remove(self.facebook_dialog)
+            except Exception:
+                pass
+
+        self.facebook_dialog = None
+
+        def do_publish():
+            fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
+            def on_success(fb, action, data):
+                self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"))
+            def on_failure(fb, action, data):
+                self.show_notification(_("Could not publish"), str(data))
+
+            text = (self.quote["quote"] + "\n\n" + self.quote["author"]).encode('utf8')
+            fb.publish(message=text, caption="Via Variety Wallpaper Changer",
+                on_success=on_success, on_failure=on_failure)
+
+        GObject.idle_add(do_publish)
+
+    def facebook_firstrun(self):
+        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
+        if not os.path.exists(first_run_file):
+            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+                self.facebook_dialog.present()
+                return True
+            else:
+                self.facebook_dialog = FacebookFirstRunDialog()
+                self.dialogs.append(self.facebook_dialog)
+                self.facebook_dialog.run()
+                if not self.running:
+                    return True
+                with open(first_run_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        return False
 
     def prev_quote(self, widget=None):
         if self.quotes_engine and self.options.quotes_enabled:
