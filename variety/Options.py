@@ -15,6 +15,7 @@
 ### END LICENSE
 
 import os
+import hashlib
 from configobj import ConfigObj
 from configobj import DuplicateError
 from variety.Util import Util
@@ -27,6 +28,8 @@ logger = logging.getLogger('variety')
 TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 
 class Options:
+    OUTDATED_HASHES = {'clock_filter': ['dca6bd2dfa2b8c4e2db8801e39208f7f']}
+
     class SourceType:
         IMAGE = 1
         FOLDER = 2
@@ -70,6 +73,7 @@ class Options:
 
         try:
             config = self.read_config()
+            needs_writing = self.fix_outdated(config)
 
             try:
                 self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
@@ -341,8 +345,25 @@ class Options:
                         logger.exception("Cannot parse filter: " + v)
 
             self.parse_autofilters()
+
+            if needs_writing:
+                logger.info("Some outdated settings were updated, writing the changes")
+                self.write()
+
         except Exception:
             logger.exception("Could not read configuration:")
+
+    def fix_outdated(self, config):
+        changed = False
+        for key, outdated_hashes in Options.OUTDATED_HASHES.items():
+            if key in config:
+                current_hash = hashlib.md5(config[key]).hexdigest()
+                if current_hash in outdated_hashes:
+                    # entry is outdated: delete it and use the default
+                    logger.warning("Option " + key + " has an outdated value, using the new default")
+                    changed = True
+                    del config[key]
+        return changed
 
     def parse_autosources(self):
         try:
@@ -436,8 +457,8 @@ class Options:
         self.facebook_message = ""
 
         self.clock_enabled = False
-        self.clock_font = "Bitstream Charter 80"
-        self.clock_date_font = "Bitstream Charter 30"
+        self.clock_font = "Ubuntu Condensed, 70"
+        self.clock_date_font = "Ubuntu Condensed, 30"
         self.clock_filter = "-density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
 
         self.quotes_enabled = False

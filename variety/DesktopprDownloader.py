@@ -39,6 +39,7 @@ class DesktopprDownloader(Downloader.Downloader):
             logger.info("Non-safe image returned by Desktoppr, skipping")
             return None
 
+        # origin_url = response["response"]["url"]
         image_url = response["response"]["image"]["url"]
 
         return self.save_locally(image_url, image_url)

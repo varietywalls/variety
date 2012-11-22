@@ -182,6 +182,11 @@ class Indicator:
         self.google_quote_author.connect("activate", window.google_quote_author)
         self.quotes_menu.append(self.google_quote_author)
 
+        self.quote_fb = Gtk.MenuItem(_("Share on Facebook"))
+        self.quote_fb.set_use_underline(True)
+        self.quote_fb.connect("activate", window.publish_quote_on_facebook)
+        self.quotes_menu.append(self.quote_fb)
+
         self.quotes = Gtk.MenuItem(_("_Quotes"))
         self.quotes.set_use_underline(True)
         self.quotes.set_submenu(self.quotes_menu)

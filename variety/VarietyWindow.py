@@ -253,38 +253,9 @@ class VarietyWindow(Gtk.Window):
 
     def log_options(self):
         logger.info("Loaded options:")
-        logger.info("Change on start: " + str(self.options.change_on_start))
-        logger.info("Change enabled: " + str(self.options.change_enabled))
-        logger.info("Change interval: " + str(self.options.change_interval))
-        logger.info("Download enabled: " + str(self.options.download_enabled))
-        logger.info("Download interval: " + str(self.options.download_interval))
-        logger.info("Download folder: " + self.options.download_folder)
-        logger.info("Quota enabled: " + str(self.options.quota_enabled))
-        logger.info("Quota size: " + str(self.options.quota_size))
-        logger.info("Favorites folder: " + self.options.favorites_folder)
-        logger.info("Favorites operations: " + str(self.options.favorites_operations))
-        logger.info("Fetched folder: " + self.options.fetched_folder)
-        logger.info("Clipboard enabled: " + str(self.options.clipboard_enabled))
-        logger.info("Clipboard use whitelist: " + str(self.options.clipboard_use_whitelist))
-        logger.info("Clipboard hosts: " + str(self.options.clipboard_hosts))
-        logger.info("Color enabled: " + str(self.options.desired_color_enabled))
-        logger.info("Color: " + (str(self.options.desired_color) if self.options.desired_color else "None"))
-        logger.info("Min size enabled: " + str(self.options.min_size_enabled))
-        logger.info("Min size: " + str(self.options.min_size))
-        logger.info("Min width, height: %d %d" % (self.min_width, self.min_height))
-        logger.info("Use landscape enabled: " + str(self.options.use_landscape_enabled))
-        logger.info("Lightness enabled: " + str(self.options.lightness_enabled))
-        logger.info("Lightness mode: " + str(self.options.lightness_mode))
-        logger.info("Min rating enabled: " + str(self.options.min_rating_enabled))
-        logger.info("Min rating: " + str(self.options.min_rating))
-        logger.info("Show rating enabled: " + str(self.options.show_rating_enabled))
-        logger.info("Facebook enabled: " + str(self.options.facebook_enabled))
-        logger.info("Facebook show dialog: " + str(self.options.facebook_show_dialog))
-        logger.info("Images: " + str(self.individual_images))
-        logger.info("Folders: " + str(self.folders))
-        logger.info("All sources: " + str(self.options.sources))
-        logger.info("Total downloaders: " + str(len(self.downloaders)))
-        logger.info("Filters: " + str(self.filters))
+        for k, v in sorted(self.options.__dict__.items()):
+            logger.info("%s = %s" % (k, v))
+#        pprint(self.options.__dict__, indent=0)
 
     def reload_config(self):
         self.previous_options = self.options
@@ -362,13 +333,19 @@ class VarietyWindow(Gtk.Window):
             self.quotes_engine = QuotesEngine(self)
             self.quotes_engine.start()
         if self.quotes_engine:
-            self.quotes_engine.on_options_updated()
+            clear_prepared = self.previous_options is None or \
+                self.options.quotes_tags != self.previous_options.quotes_tags or \
+                self.options.quotes_authors != self.previous_options.quotes_authors
+            self.quotes_engine.on_options_updated(clear_prepared=clear_prepared)
 
         def _update_indicator():
             self.update_indicator(auto_changed=False)
         GObject.idle_add(_update_indicator)
 
-        threading.Timer(0.1, self.refresh_wallpaper).start()
+        if self.previous_options is None or self.options.filters != self.previous_options.filters:
+            threading.Timer(0.1, self.refresh_wallpaper).start()
+        else:
+            threading.Timer(0.1, self.refresh_texts).start()
 
         if self.events:
             for e in self.events:
@@ -683,15 +660,27 @@ class VarietyWindow(Gtk.Window):
             self.prepare_event.clear()
 
     def download_thread(self):
+        last_dl_time = time.time()
         while self.running:
             try:
-                self.dl_event.wait(self.options.download_interval)
-                self.dl_event.clear()
+                while not self.options.download_enabled or \
+                      (time.time() - last_dl_time) < self.options.download_interval:
+                    if not self.running:
+                        return
+                    now = time.time()
+                    wait_more = self.options.download_interval - max(0, (now - last_dl_time))
+                    if self.options.download_enabled:
+                        self.dl_event.wait(max(0, wait_more))
+                    else:
+                        self.dl_event.wait()
+                    self.dl_event.clear()
+
                 if not self.running:
                     return
                 if not self.options.download_enabled:
                     continue
 
+                last_dl_time = time.time()
                 if self.downloaders:
                     self.purge_downloaded()
 
@@ -985,14 +974,14 @@ class VarietyWindow(Gtk.Window):
         self.auto_changed = widget is None
         if self.position > 0 and not bypass_history:
             if self.quotes_engine and self.options.quotes_enabled:
-                self.quote = self.quotes_engine.next_quote(bypass_history)
+                self.quote = self.quotes_engine.next_quote()
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
         else:
-            if self.quotes_engine and self.options.quotes_enabled:
-                self.quote = self.quotes_engine.next_quote(bypass_history)
             if bypass_history:
                 self.position = 0
+                if self.quotes_engine and self.options.quotes_enabled:
+                    self.quotes_engine.bypass_history()
             self.change_wallpaper()
 
     def move_to_history_position(self, position):
@@ -1046,6 +1035,7 @@ class VarietyWindow(Gtk.Window):
 
             if self.quotes_engine and self.options.quotes_enabled:
                 self.quote = self.quotes_engine.change_quote()
+
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")
@@ -1346,6 +1336,8 @@ class VarietyWindow(Gtk.Window):
     def on_quit(self, widget=None):
         logger.info("Quitting")
         if self.running:
+            self.running = False
+
             for d in self.dialogs + [self.preferences_dialog, self.about]:
                 try:
                     if d:
@@ -1354,7 +1346,6 @@ class VarietyWindow(Gtk.Window):
                     logger.exception("Could not destroy dialog")
                     pass
 
-            self.running = False
             for e in self.events:
                 e.set()
 
@@ -1803,19 +1794,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             caption = self.source_name + ", via Variety Wallpaper Changer"
         logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
-        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
-        if not os.path.exists(first_run_file):
-            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-                self.facebook_dialog.present()
-                return
-            else:
-                self.facebook_dialog = FacebookFirstRunDialog()
-                self.dialogs.append(self.facebook_dialog)
-                self.facebook_dialog.run()
-                if not self.running:
-                    return
-                with open(first_run_file, "w") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        if self.facebook_firstrun():
+            return
 
         if hasattr(self, "facebook_dialog") and self.facebook_dialog:
             self.facebook_dialog.destroy()
@@ -1861,6 +1841,52 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
+
+    def publish_quote_on_facebook(self, widget):
+        if not self.quote:
+            logger.warning("publish_quote_on_facebook called with no current quote")
+            return
+
+        if self.facebook_firstrun():
+            return
+
+        if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+            self.facebook_dialog.destroy()
+            try:
+                self.dialogs.remove(self.facebook_dialog)
+            except Exception:
+                pass
+
+        self.facebook_dialog = None
+
+        def do_publish():
+            fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
+            def on_success(fb, action, data):
+                self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"))
+            def on_failure(fb, action, data):
+                self.show_notification(_("Could not publish"), str(data))
+
+            text = (self.quote["quote"] + "\n\n" + self.quote["author"]).encode('utf8')
+            fb.publish(message=text, caption="Via Variety Wallpaper Changer",
+                on_success=on_success, on_failure=on_failure)
+
+        GObject.idle_add(do_publish)
+
+    def facebook_firstrun(self):
+        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
+        if not os.path.exists(first_run_file):
+            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+                self.facebook_dialog.present()
+                return True
+            else:
+                self.facebook_dialog = FacebookFirstRunDialog()
+                self.dialogs.append(self.facebook_dialog)
+                self.facebook_dialog.run()
+                if not self.running:
+                    return True
+                with open(first_run_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        return False
 
     def prev_quote(self, widget=None):
         if self.quotes_engine and self.options.quotes_enabled:

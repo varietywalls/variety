@@ -20,7 +20,7 @@
 # data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
-from gi.repository import Gio, Gtk, Gdk, GdkPixbuf # pylint: disable=E0611
+from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
 
 import threading
 from variety.Util import Util
@@ -76,152 +76,165 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.tips_scrolled_window.set_size_request(0, 0)
 
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
+        self.loading = False
         self.reload()
 
     def reload(self):
-        logger.info("Reloading preferences dialog")
-
-        self.options = Options()
-        self.options.read()
-
-        self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
-
-        self.ui.change_enabled.set_active(self.options.change_enabled)
-        self.set_change_interval(self.options.change_interval)
-        self.ui.change_on_start.set_active(self.options.change_on_start)
-
-        self.ui.download_enabled.set_active(self.options.download_enabled)
-        self.set_download_interval(self.options.download_interval)
-
-        self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
-        self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
-
-        self.ui.quota_enabled.set_active(self.options.quota_enabled)
-        self.ui.quota_size.set_text(str(self.options.quota_size))
-
-        self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
-        self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
-
-        self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
-        self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
-        self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
-        self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
-        self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
-
-        if self.options.icon == "Light":
-            self.ui.icon.set_active(0)
-        elif self.options.icon == "Dark":
-            self.ui.icon.set_active(1)
-        elif self.options.icon == "Current":
-            self.ui.icon.set_active(2)
-        elif self.options.icon == "None":
-            self.ui.icon.set_active(4)
-        else:
-            self.ui.icon.set_active(3)
-            self.ui.icon_chooser.set_filename(self.options.icon)
-
-        if self.options.favorites_operations == [["/", "Copy"]]:
-            self.ui.favorites_operations.set_active(0)
-        elif self.options.favorites_operations == [["/", "Move"]]:
-            self.ui.favorites_operations.set_active(1)
-        elif self.options.favorites_operations == [["/", "Both"]]:
-            self.ui.favorites_operations.set_active(2)
-        else:
-            self.ui.favorites_operations.set_active(3)
-
-        self.favorites_operations = self.options.favorites_operations
-
-        self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
-
-        self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
-        self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
-
-        self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
-        self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
-        c = self.options.desired_color
-        if c:
-            self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-
-        self.ui.min_size_enabled.set_active(self.options.min_size_enabled)
-        min_sizes = [50, 80, 100]
-        index = 0
-        while min_sizes[index] < self.options.min_size and index < len(min_sizes) - 1:
-            index += 1
-        self.ui.min_size.set_active(index)
-        self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
-        self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
-        self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
-        self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
-        self.ui.min_rating.set_active(self.options.min_rating - 1)
-        self.ui.clock_enabled.set_active(self.options.clock_enabled)
-        self.ui.clock_font.set_font_name(self.options.clock_font)
-        self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
-
-        self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
-        self.ui.quotes_font.set_font_name(self.options.quotes_font)
-        c = self.options.quotes_text_color
-        self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-        c = self.options.quotes_bg_color
-        self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
-        self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
-        self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
-        self.ui.quotes_tags.set_text(self.options.quotes_tags)
-        self.ui.quotes_authors.set_text(self.options.quotes_authors)
-        self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
-        self.set_quotes_change_interval(self.options.quotes_change_interval)
-        self.ui.quotes_width.set_value(self.options.quotes_width)
-        self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
-        self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
-
-        self.ui.sources.get_model().clear()
-        for s in self.options.sources:
-            self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
-
-        if not hasattr(self, "enabled_toggled_handler_id"):
-            self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
-                    "toggled", self.source_enabled_toggled, self.ui.sources.get_model())
-        #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
-
-        if hasattr(self, "filter_checkboxes"):
-            for cb in self.filter_checkboxes:
-                self.ui.filters_grid.remove(cb)
-                cb.destroy()
-        self.filter_checkboxes = []
-        for i, f in enumerate(self.options.filters):
-            cb = Gtk.CheckButton(f[1])
-            cb.set_visible(True)
-            cb.set_active(f[0])
-            cb.set_margin_right(30)
-            self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
-            self.filter_checkboxes.append(cb)
-
         try:
-            with open(get_data_file("ui/tips.txt")) as f:
-                self.ui.tips_buffer.set_text(f.read())
-        except Exception:
-            logger.warning("Missing ui/tips.txt file")
-        try:
-            with open(get_data_file("ui/changes.txt")) as f:
-                self.ui.changes_buffer.set_text(f.read())
-        except Exception:
-            logger.warning("Missing ui/changes.txt file")
+            logger.info("Reloading preferences dialog")
 
-        self.on_change_enabled_toggled()
-        self.on_download_enabled_toggled()
-        self.on_sources_selection_changed()
-        self.on_desired_color_enabled_toggled()
-        self.on_min_size_enabled_toggled()
-        self.on_lightness_enabled_toggled()
-        self.on_min_rating_enabled_toggled()
-        self.on_facebook_enabled_toggled()
-        self.on_quotes_change_enabled_toggled()
-        self.on_icon_changed()
-        self.on_favorites_operations_changed()
-        self.update_clipboard_state()
+            self.loading = True
 
-        self.build_add_button_menu()
+            self.options = Options()
+            self.options.read()
 
-        self.dialog = None
+            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
+
+            self.ui.change_enabled.set_active(self.options.change_enabled)
+            self.set_change_interval(self.options.change_interval)
+            self.ui.change_on_start.set_active(self.options.change_on_start)
+
+            self.ui.download_enabled.set_active(self.options.download_enabled)
+            self.set_download_interval(self.options.download_interval)
+
+            self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+            self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
+
+            self.ui.quota_enabled.set_active(self.options.quota_enabled)
+            self.ui.quota_size.set_text(str(self.options.quota_size))
+
+            self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+            self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
+
+            self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+            self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
+            self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
+            self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
+            self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
+
+            if self.options.icon == "Light":
+                self.ui.icon.set_active(0)
+            elif self.options.icon == "Dark":
+                self.ui.icon.set_active(1)
+            elif self.options.icon == "Current":
+                self.ui.icon.set_active(2)
+            elif self.options.icon == "None":
+                self.ui.icon.set_active(4)
+            else:
+                self.ui.icon.set_active(3)
+                self.ui.icon_chooser.set_filename(self.options.icon)
+
+            if self.options.favorites_operations == [["/", "Copy"]]:
+                self.ui.favorites_operations.set_active(0)
+            elif self.options.favorites_operations == [["/", "Move"]]:
+                self.ui.favorites_operations.set_active(1)
+            elif self.options.favorites_operations == [["/", "Both"]]:
+                self.ui.favorites_operations.set_active(2)
+            else:
+                self.ui.favorites_operations.set_active(3)
+
+            self.favorites_operations = self.options.favorites_operations
+
+            self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
+
+            self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
+            self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
+
+            self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
+            self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
+            c = self.options.desired_color
+            if c:
+                self.ui.desired_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+
+            self.ui.min_size_enabled.set_active(self.options.min_size_enabled)
+            min_sizes = [50, 80, 100]
+            index = 0
+            while min_sizes[index] < self.options.min_size and index < len(min_sizes) - 1:
+                index += 1
+            self.ui.min_size.set_active(index)
+            self.ui.landscape_enabled.set_active(self.options.use_landscape_enabled)
+            self.ui.lightness_enabled.set_active(self.options.lightness_enabled)
+            self.ui.lightness.set_active(0 if self.options.lightness_mode == Options.LightnessMode.DARK else 1)
+            self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
+            self.ui.min_rating.set_active(self.options.min_rating - 1)
+            self.ui.clock_enabled.set_active(self.options.clock_enabled)
+            self.ui.clock_font.set_font_name(self.options.clock_font)
+            self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
+
+            self.ui.quotes_enabled.set_active(self.options.quotes_enabled)
+            self.ui.quotes_font.set_font_name(self.options.quotes_font)
+            c = self.options.quotes_text_color
+            self.ui.quotes_text_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+            c = self.options.quotes_bg_color
+            self.ui.quotes_bg_color.set_color(Gdk.Color(red = c[0] * 256, green = c[1] * 256, blue = c[2] * 256))
+            self.ui.quotes_bg_opacity.set_value(self.options.quotes_bg_opacity)
+            self.ui.quotes_text_shadow.set_active(self.options.quotes_text_shadow)
+            self.ui.quotes_tags.set_text(self.options.quotes_tags)
+            self.ui.quotes_authors.set_text(self.options.quotes_authors)
+            self.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
+            self.set_quotes_change_interval(self.options.quotes_change_interval)
+            self.ui.quotes_width.set_value(self.options.quotes_width)
+            self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
+            self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
+
+            self.ui.sources.get_model().clear()
+            for s in self.options.sources:
+                self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
+
+            if not hasattr(self, "enabled_toggled_handler_id"):
+                self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
+                        "toggled", self.source_enabled_toggled, self.ui.sources.get_model())
+            #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
+
+            if hasattr(self, "filter_checkboxes"):
+                for cb in self.filter_checkboxes:
+                    self.ui.filters_grid.remove(cb)
+                    cb.destroy()
+            self.filter_checkboxes = []
+            for i, f in enumerate(self.options.filters):
+                cb = Gtk.CheckButton(f[1])
+                cb.connect("toggled", self.delayed_apply)
+                cb.set_visible(True)
+                cb.set_active(f[0])
+                cb.set_margin_right(30)
+                self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
+                self.filter_checkboxes.append(cb)
+
+            try:
+                with open(get_data_file("ui/tips.txt")) as f:
+                    self.ui.tips_buffer.set_text(f.read())
+            except Exception:
+                logger.warning("Missing ui/tips.txt file")
+            try:
+                with open(get_data_file("ui/changes.txt")) as f:
+                    self.ui.changes_buffer.set_text(f.read())
+            except Exception:
+                logger.warning("Missing ui/changes.txt file")
+
+            self.on_change_enabled_toggled()
+            self.on_download_enabled_toggled()
+            self.on_sources_selection_changed()
+            self.on_desired_color_enabled_toggled()
+            self.on_min_size_enabled_toggled()
+            self.on_lightness_enabled_toggled()
+            self.on_min_rating_enabled_toggled()
+            self.on_facebook_enabled_toggled()
+            self.on_quotes_change_enabled_toggled()
+            self.on_icon_changed()
+            self.on_favorites_operations_changed()
+            self.update_clipboard_state()
+
+            self.build_add_button_menu()
+
+            self.dialog = None
+        finally:
+            # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
+            def _finish_loading():
+                self.loading = False
+            def _idle_finish_loading():
+                GObject.idle_add(_finish_loading)
+            timer = threading.Timer(1, _idle_finish_loading)
+            timer.start()
 
     def on_add_button_clicked(self, widget=None):
         def position(x, y):
@@ -603,11 +616,32 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.hide()
         self.on_destroy()
 
-    def on_cancel_clicked(self, widget):
+    def on_save_clicked(self, widget):
+        self.delayed_apply()
         self.close()
 
-    def on_save_clicked(self, widget):
+    def delayed_apply(self, widget=None, *arg):
+        self.delayed_apply_with_interval(0.1)
+
+    def delayed_apply_slow(self, widget=None, *arg):
+        self.delayed_apply_with_interval(1)
+
+    def delayed_apply_with_interval(self, interval):
+        """Perform a throttled apply. All the unneeded arguments are there because this method is used as the
+        event handler for many different types of signals and they pass different numbers of arguments"""
+
+        if not self.loading:
+            if hasattr(self, "apply_timer") and self.apply_timer:
+                self.apply_timer.cancel()
+                self.apply_timer = None
+
+            self.apply_timer = threading.Timer(interval, self.apply)
+            self.apply_timer.start()
+
+    def apply(self):
         try:
+            logger.info("Applying preferences")
+
             self.options = Options()
             self.options.read()
 
@@ -721,20 +755,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 f[0] = f[1].lower() in enabled_filters
 
             self.options.write()
+
+            if not self.parent.running:
+                return
+
             self.parent.reload_config()
 
             self.update_autostart()
-
-            self.close()
         except Exception:
-            logger.exception("Error while saving")
-            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
-                "An error occurred while saving preferences.\n"
-                "Please run from a terminal with the -v flag and try again.")
-            dialog.set_title("Oops")
-            dialog.run()
-            dialog.destroy()
+            if self.parent.running:
+                logger.exception("Error while applying preferences")
+                dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
+                    Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+                    "An error occurred while saving preferences.\n"
+                    "Please run from a terminal with the -v flag and try again.")
+                dialog.set_title("Oops")
+                dialog.run()
+                dialog.destroy()
 
     def update_autostart(self):
         try:
@@ -843,6 +880,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         else:
             self.ui.error_downloaded.set_label("")
 
+        if not self.loading and self.ui.quota_enabled.get_active():
+            self.ui.quota_enabled.set_active(False)
+            self.parent.show_notification("Limit disabled",
+                                          "Changing the download folder automatically turns off the size limit "
+                                          "to prevent from accidental data loss")
+
     def on_favorites_changed(self, widget=None):
         if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
             self.ui.error_favorites.set_label(_("No write permissions"))
@@ -868,6 +911,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if self.dialog.run() == Gtk.ResponseType.OK:
             text = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)
             self.favorites_operations = list([x.strip().split(':') for x in text.split('\n') if x])
+            self.delayed_apply()
         self.dialog.destroy()
         self.dialog = None
 

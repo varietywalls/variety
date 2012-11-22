@@ -3,6 +3,9 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires preferences_variety_dialog 1.0 -->
   <object class="GtkTextBuffer" id="changes_buffer"/>
+  <object class="GtkTextBuffer" id="clipboard_hosts_buffer">
+    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+  </object>
   <object class="GtkFileFilter" id="filter_images">
     <mime-types>
       <mime-type>image/*</mime-type>
@@ -49,11 +52,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -68,7 +66,6 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
         <child>
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
@@ -119,6 +116,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -144,6 +142,7 @@
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_change_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -161,6 +160,8 @@
                             <property name="invisible_char">•</property>
                             <property name="width_chars">4</property>
                             <property name="invisible_char_set">True</property>
+                            <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                            <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -177,6 +178,7 @@
                             <property name="tooltip_text" translatable="yes">Minimum interval is 5 seconds</property>
                             <property name="model">liststore1</property>
                             <property name="active">0</property>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                             <child>
                               <object class="GtkCellRendererText" id="cellrenderertext1"/>
                               <attributes>
@@ -210,6 +212,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -431,9 +434,6 @@
                         <property name="position">1</property>
                       </packing>
                     </child>
-                    <child>
-                      <placeholder/>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -474,6 +474,7 @@
                                 <property name="yalign">0.49000000953674316</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="on_download_enabled_toggled" swapped="no"/>
+                                <signal name="toggled" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -491,6 +492,8 @@
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">4</property>
                                 <property name="invisible_char_set">True</property>
+                                <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -507,6 +510,7 @@
                                 <property name="tooltip_text" translatable="yes">Minimum interval is 30 seconds</property>
                                 <property name="model">liststore1</property>
                                 <property name="active">0</property>
+                                <signal name="changed" handler="delayed_apply" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
@@ -542,6 +546,7 @@
                                 <property name="action">select-folder</property>
                                 <property name="show_hidden">True</property>
                                 <property name="title" translatable="yes">Select Download folder</property>
+                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                                 <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
                               </object>
                               <packing>
@@ -591,6 +596,7 @@
                                 <property name="yalign">0.49000000953674316</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="on_quota_enabled_toggled" swapped="no"/>
+                                <signal name="toggled" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -608,6 +614,8 @@
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">6</property>
                                 <property name="invisible_char_set">True</property>
+                                <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -697,6 +705,7 @@
                                 <property name="show_hidden">True</property>
                                 <property name="title" translatable="yes">Select Favorites folder</property>
                                 <signal name="selection-changed" handler="on_favorites_changed" swapped="no"/>
+                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -816,6 +825,7 @@
                             <property name="show_hidden">True</property>
                             <property name="title" translatable="yes">Select Fetch folder</property>
                             <signal name="selection-changed" handler="on_fetched_changed" swapped="no"/>
+                            <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -931,6 +941,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="update_clipboard_state" swapped="no"/>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -953,6 +964,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="update_clipboard_state" swapped="no"/>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -978,6 +990,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="margin_top">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="vexpand">True</property>
+                            <property name="buffer">clipboard_hosts_buffer</property>
+                            <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -1040,7 +1054,22 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="margin_left">10</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="label2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">20</property>
+                        <property name="margin_right">20</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">Randomly apply these filters to the displayed wallpapers (thanks to the wonderful ImageMagick):</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
                       <object class="GtkGrid" id="filters_grid">
@@ -1128,6 +1157,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1150,7 +1180,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box28">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <child>
                                   <object class="GtkLabel" id="label54">
@@ -1172,6 +1202,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
+                                    <signal name="color-set" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1206,6 +1237,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <property name="font_name">Bitstream Charter 30</property>
+                                    <signal name="font-set" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1224,7 +1256,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box29">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <child>
                                   <object class="GtkLabel" id="label51">
                                     <property name="visible">True</property>
@@ -1246,6 +1278,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
+                                    <signal name="color-set" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1290,6 +1323,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="draw_value">False</property>
+                                    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1325,11 +1359,12 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1363,7 +1398,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkBox" id="box31">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_left">12</property>
+                            <property name="margin_left">30</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="box32">
@@ -1407,6 +1442,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="draw_value">False</property>
+                                    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1475,6 +1511,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="draw_value">False</property>
+                                    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1543,6 +1580,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="draw_value">False</property>
+                                    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1602,10 +1640,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_right">20</property>
-                                <property name="margin_top">7</property>
-                                <property name="label" translatable="yes">Limit to these tags and authors (or leave empty for completely random quotes):</property>
+                                <property name="margin_top">10</property>
+                                <property name="label" translatable="yes">Show only these tags and authors. Leave empty to use QuotesDaddy's Quote of the Day feed:</property>
                                 <property name="wrap">True</property>
                               </object>
                               <packing>
@@ -1618,24 +1656,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkGrid" id="grid1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_right">30</property>
                                 <property name="margin_top">10</property>
-                                <child>
-                                  <object class="GtkLabel" id="label39">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Authors: </property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
+                                <property name="column_spacing">5</property>
                                 <child>
                                   <object class="GtkEntry" id="quotes_authors">
                                     <property name="visible">True</property>
@@ -1643,41 +1667,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="hexpand">True</property>
                                     <property name="invisible_char">•</property>
                                     <property name="invisible_char_set">True</property>
+                                    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label40">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="margin_bottom">10</property>
-                                    <property name="label" translatable="yes">Use a comma separated list of authors. Example: Albert Einstein, Winston Churchill</property>
-                                    <property name="use_markup">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="top_attach">3</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label45">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Tags:</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
+                                    <property name="top_attach">1</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
@@ -1689,9 +1683,25 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="hexpand">True</property>
                                     <property name="invisible_char">•</property>
                                     <property name="invisible_char_set">True</property>
+                                    <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                    <property name="width">1</property>
+                                    <property name="height">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label45">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Tags: </property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
                                     <property name="top_attach">0</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
@@ -1702,37 +1712,42 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="margin_bottom">10</property>
-                                    <property name="label" translatable="yes">Use a comma separated list of tags. Example: funny, inspirational</property>
+                                    <property name="label" translatable="yes">Example: funny, inspirational</property>
                                     <property name="use_markup">True</property>
                                   </object>
                                   <packing>
-                                    <property name="left_attach">1</property>
+                                    <property name="left_attach">2</property>
+                                    <property name="top_attach">0</property>
+                                    <property name="width">1</property>
+                                    <property name="height">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label40">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="label" translatable="yes">Example: Albert Einstein, Voltaire</property>
+                                    <property name="use_markup">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">2</property>
                                     <property name="top_attach">1</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label48">
+                                  <object class="GtkLabel" id="label39">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Authors: </property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
                                     <property name="top_attach">1</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label49">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">3</property>
                                     <property name="width">1</property>
                                     <property name="height">1</property>
                                   </packing>
@@ -1772,6 +1787,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="can_focus">False</property>
                             <property name="margin_left">30</property>
                             <property name="margin_right">10</property>
+                            <property name="margin_top">5</property>
                             <property name="hexpand">True</property>
                             <child>
                               <object class="GtkCheckButton" id="quotes_change_enabled">
@@ -1784,6 +1800,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="on_quotes_change_enabled_toggled" swapped="no"/>
+                                <signal name="toggled" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1796,11 +1813,13 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Minimum interval is 5 seconds</property>
-                                <property name="tooltip_text" translatable="yes">Minimum interval is 5 seconds</property>
+                                <property name="tooltip_markup" translatable="yes">Minimum interval is 10 seconds</property>
+                                <property name="tooltip_text" translatable="yes">Minimum interval is 10 seconds</property>
                                 <property name="invisible_char">•</property>
                                 <property name="width_chars">4</property>
                                 <property name="invisible_char_set">True</property>
+                                <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
+                                <signal name="focus-out-event" handler="delayed_apply" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1813,10 +1832,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="has_tooltip">True</property>
-                                <property name="tooltip_markup" translatable="yes">Minimum interval is 5 seconds</property>
-                                <property name="tooltip_text" translatable="yes">Minimum interval is 5 seconds</property>
+                                <property name="tooltip_markup" translatable="yes">Minimum interval is 10 seconds</property>
+                                <property name="tooltip_text" translatable="yes">Minimum interval is 10 seconds</property>
                                 <property name="model">liststore1</property>
                                 <property name="active">0</property>
+                                <signal name="changed" handler="delayed_apply" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext5"/>
                                   <attributes>
@@ -1840,7 +1860,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkLabel" id="label43">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Rotation schedule</property>
+                            <property name="label" translatable="yes">Regular change</property>
                           </object>
                         </child>
                       </object>
@@ -1894,6 +1914,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1916,7 +1937,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <object class="GtkBox" id="box24">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_top">5</property>
                                 <child>
                                   <object class="GtkLabel" id="label47">
@@ -1943,6 +1964,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <property name="font_name">Bitstream Charter 80</property>
+                                    <signal name="font-set" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1958,10 +1980,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox" id="box27">
+                              <object class="GtkBox" id="box11">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
                                 <child>
                                   <object class="GtkLabel" id="label29">
                                     <property name="visible">True</property>
@@ -1987,6 +2009,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <property name="font_name">Bitstream Charter 30</property>
+                                    <signal name="font-set" handler="delayed_apply" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -2006,9 +2029,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="margin_left">12</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
                                 <property name="margin_top">7</property>
-                                <property name="label" translatable="yes">To further configure the clock's appearance edit the clock_filter property in Variety's settings file (~/.config/variety/variety.conf). Use the comments in ~/.config/variety/variety_latest_default.conf as a guide.</property>
+                                <property name="label" translatable="yes">These don't work? &lt;a href="https://answers.launchpad.net/variety/+faq/2138"&gt;Read here&lt;/a&gt;. How to further configure the clock? &lt;a href="http://peterlevi.com/variety/2012/11/configuring-the-clock/"&gt;Read here&lt;/a&gt;.</property>
+                                <property name="use_markup">True</property>
                                 <property name="justify">fill</property>
                                 <property name="wrap">True</property>
                               </object>
@@ -2116,6 +2141,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2140,6 +2166,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_min_size_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2159,6 +2186,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <item translatable="yes">80</item>
                               <item translatable="yes">100</item>
                             </items>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2233,6 +2261,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_lightness_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2251,6 +2280,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <item translatable="yes">Dark</item>
                               <item translatable="yes">Light</item>
                             </items>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2282,6 +2312,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_desired_color_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2296,6 +2327,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="use_action_appearance">False</property>
+                            <signal name="color-set" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2376,6 +2408,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_min_rating_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2396,6 +2429,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <item translatable="yes">4</item>
                               <item translatable="yes">5</item>
                             </items>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2423,6 +2457,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2541,6 +2576,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <item translatable="yes">None</item>
                             </items>
                             <signal name="changed" handler="on_icon_changed" swapped="no"/>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2556,6 +2592,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="orientation">vertical</property>
                             <property name="filter">filter_images</property>
                             <property name="title" translatable="yes">Select an icon</property>
+                            <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2655,6 +2692,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <item translatable="yes">Depends on folder...</item>
                             </items>
                             <signal name="changed" handler="on_favorites_operations_changed" swapped="no"/>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2673,6 +2711,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="margin_right">30</property>
                             <property name="use_action_appearance">False</property>
                             <signal name="clicked" handler="on_edit_favorites_operations_clicked" swapped="no"/>
+                            <signal name="clicked" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2741,6 +2780,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_facebook_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2759,6 +2799,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3022,7 +3063,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="halign">start</property>
                     <property name="margin_left">15</property>
                     <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Donate</property>
+                    <property name="label" translatable="yes">Donate to Variety</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -3198,36 +3239,16 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
             <property name="position">0</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="height_request">50</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">30</property>
+            <property name="margin_right">5</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="cancel">
-                <property name="label" translatable="yes">Cancel</property>
-                <property name="use_action_appearance">False</property>
-                <property name="height_request">35</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_cancel_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="save">
-                <property name="label">gtk-save</property>
+                <property name="label">gtk-close</property>
                 <property name="use_action_appearance">False</property>
                 <property name="height_request">35</property>
                 <property name="visible">True</property>
@@ -3254,9 +3275,13 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">cancel</action-widget>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_customize_combos">
     <widgets>
@@ -3306,14 +3331,7 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <widget name="change_interval_text"/>
       <widget name="download_interval_text"/>
       <widget name="quota_size"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup_quote_labels">
-    <widgets>
-      <widget name="label39"/>
-      <widget name="label45"/>
-      <widget name="label47"/>
-      <widget name="label29"/>
+      <widget name="quotes_change_interval_text"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_quotes_appearance">
@@ -3325,6 +3343,8 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <widget name="label44"/>
       <widget name="label57"/>
       <widget name="label61"/>
+      <widget name="label47"/>
+      <widget name="label29"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_quotes_placement_labels">
@@ -3343,6 +3363,7 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <!-- column-name location -->
       <column type="gchararray"/>
     </columns>
+    <signal name="row-changed" handler="delayed_apply" swapped="no"/>
   </object>
   <object class="GtkTextBuffer" id="tips_buffer"/>
 </interface>
