@@ -974,14 +974,14 @@ class VarietyWindow(Gtk.Window):
         self.auto_changed = widget is None
         if self.position > 0 and not bypass_history:
             if self.quotes_engine and self.options.quotes_enabled:
-                self.quote = self.quotes_engine.next_quote(bypass_history)
+                self.quote = self.quotes_engine.next_quote()
             self.position -= 1
             self.set_wp_throttled(self.used[self.position])
         else:
-            if self.quotes_engine and self.options.quotes_enabled:
-                self.quote = self.quotes_engine.next_quote(bypass_history)
             if bypass_history:
                 self.position = 0
+                if self.quotes_engine and self.options.quotes_enabled:
+                    self.quotes_engine.bypass_history()
             self.change_wallpaper()
 
     def move_to_history_position(self, position):
@@ -1035,6 +1035,7 @@ class VarietyWindow(Gtk.Window):
 
             if self.quotes_engine and self.options.quotes_enabled:
                 self.quote = self.quotes_engine.change_quote()
+
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")

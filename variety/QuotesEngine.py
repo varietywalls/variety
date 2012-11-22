@@ -68,41 +68,59 @@ class QuotesEngine:
         return self.position < len(self.used) - 1
 
     def prev_quote(self):
-        if self.position >= len(self.used) - 1:
-            return self.quote
+        self.last_change_time = time.time()
+        self.position += 1
+        if self.position >= len(self.used):
+            if self.used:
+                self.quote = self.choose_some_quote()
+            self.used.append(self.quote)
         else:
-            self.last_change_time = time.time()
-            self.position += 1
             self.quote = self.used[self.position]
-            return self.quote
+        return self.quote
+
+    def bypass_history(self):
+        self.position = 0
 
     def next_quote(self, bypass_history=False):
         self.last_change_time = time.time()
         if self.position > 0 and not bypass_history:
             self.position -= 1
-            self.quote = self.used[self.position]
+            if self.position < len(self.used) - 1:
+                self.quote = self.used[self.position]
             return self.quote
         else:
             if bypass_history:
-                self.position = 0
+                self.bypass_history()
             return self.change_quote()
+
+    def choose_some_quote(self):
+        with self.prepared_lock:
+            if [x for x in self.prepared if x != self.quote]:
+                self.quote = random.choice([x for x in self.prepared if x != self.quote])
+            elif [x for x in self.used if x != self.quote]:
+                self.quote = random.choice([x for x in self.used if x != self.quote])
+            elif self.prepared:
+                self.quote = random.choice(self.prepared)
+            elif self.used:
+                self.quote = random.choice(self.used)
+
+            if self.quote in self.prepared:
+                self.prepared.remove(self.quote)
+                self.prepare_event.set()
+
+            return self.quote
 
     def change_quote(self):
         self.last_change_time = time.time()
 
-        with self.prepared_lock:
-            if self.prepared:
-                self.quote = self.prepared[0]
-                self.prepared = self.prepared[1:]
-                self.prepare_event.set()
-            elif self.used:
-                self.quote = random.choice(self.used)
+        self.choose_some_quote()
 
-            self.used = self.used[self.position:]
-            self.position = 0
+        self.used = self.used[self.position:]
+        self.position = 0
+        if self.quote:
             self.used.insert(0, self.quote)
-            if len(self.used) > 200:
-                self.used = self.used[:200]
+        if len(self.used) > 200:
+            self.used = self.used[:200]
 
         return self.quote
 
