@@ -37,6 +37,21 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -1628,7 +1643,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">20</property>
                                 <property name="margin_top">10</property>
-                                <property name="label" translatable="yes">Show only these tags and authors (or leave empty for completely random quotes):</property>
+                                <property name="label" translatable="yes">Show only these tags and authors. Leave empty to use QuotesDaddy's Quote of the Day feed:</property>
                                 <property name="wrap">True</property>
                               </object>
                               <packing>
@@ -1697,7 +1712,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="margin_bottom">10</property>
                                     <property name="label" translatable="yes">Example: funny, inspirational</property>
                                     <property name="use_markup">True</property>
                                   </object>
@@ -1713,7 +1727,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="margin_bottom">10</property>
                                     <property name="label" translatable="yes">Example: Albert Einstein, Voltaire</property>
                                     <property name="use_markup">True</property>
                                   </object>
@@ -2019,7 +2032,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">30</property>
                                 <property name="margin_top">7</property>
-                                <property name="label" translatable="yes">To further configure the clock's appearance edit the clock_filter property in Variety's settings file (~/.config/variety/variety.conf). Use the comments in ~/.config/variety/variety_latest_default.conf as a guide.</property>
+                                <property name="label" translatable="yes">These don't work? &lt;a href="https://answers.launchpad.net/variety/+faq/2138"&gt;Read here&lt;/a&gt;. How to further configure the clock? &lt;a href="http://peterlevi.com/variety/2012/11/configuring-the-clock/"&gt;Read here&lt;/a&gt;.</property>
+                                <property name="use_markup">True</property>
                                 <property name="justify">fill</property>
                                 <property name="wrap">True</property>
                               </object>
@@ -3263,21 +3277,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_width_adjustment">
     <property name="upper">100</property>

@@ -73,7 +73,7 @@ class Options:
 
         try:
             config = self.read_config()
-            self.fix_outdated(config)
+            needs_writing = self.fix_outdated(config)
 
             try:
                 self.change_enabled = config["change_enabled"].lower() in TRUTH_VALUES
@@ -345,17 +345,25 @@ class Options:
                         logger.exception("Cannot parse filter: " + v)
 
             self.parse_autofilters()
+
+            if needs_writing:
+                logger.info("Some outdated settings were updated, writing the changes")
+                self.write()
+
         except Exception:
             logger.exception("Could not read configuration:")
 
     def fix_outdated(self, config):
+        changed = False
         for key, outdated_hashes in Options.OUTDATED_HASHES.items():
             if key in config:
                 current_hash = hashlib.md5(config[key]).hexdigest()
                 if current_hash in outdated_hashes:
                     # entry is outdated: delete it and use the default
                     logger.warning("Option " + key + " has an outdated value, using the new default")
+                    changed = True
                     del config[key]
+        return changed
 
     def parse_autosources(self):
         try:

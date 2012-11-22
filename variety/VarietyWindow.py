@@ -37,7 +37,6 @@ import time
 import logging
 import random
 import re
-from pprint import pprint
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -254,7 +253,9 @@ class VarietyWindow(Gtk.Window):
 
     def log_options(self):
         logger.info("Loaded options:")
-        pprint(self.options.__dict__)
+        for k, v in sorted(self.options.__dict__.items()):
+            logger.info("%s = %s" % (k, v))
+#        pprint(self.options.__dict__, indent=0)
 
     def reload_config(self):
         self.previous_options = self.options
