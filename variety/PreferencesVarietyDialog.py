@@ -551,7 +551,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
                     folders.append(folder)
 
-            if image_count > 0:
+            if image_count > -1:
                 folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                 random.shuffle(folder_images)
                 to_show = images + folder_images[:200]
@@ -562,7 +562,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         pass
                     to_show.insert(0, self.focused_image)
                     self.focused_image = None
-                self.parent.thumbs_manager.show(to_show, gdk_thread=False, screen=self.get_screen())
+                self.parent.thumbs_manager.show(to_show, gdk_thread=False, screen=self.get_screen(), folders=folders)
         except Exception:
             logger.exception("Could not create thumbs window:")
 

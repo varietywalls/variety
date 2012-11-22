@@ -306,3 +306,7 @@ class Util:
         size = gtk_font_name[gtk_font_name.rindex(' '):].strip()
         rest = gtk_font_name.replace(family, '').strip().replace(' ', ':')
         return family + ":" + rest, size
+
+    @staticmethod
+    def file_in(file, folder):
+        return os.path.normpath(file).startswith(os.path.normpath(folder))

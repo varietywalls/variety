@@ -132,6 +132,7 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
+        GObject.idle_add(self.create_preferences_dialog)
 
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
@@ -652,6 +653,9 @@ class VarietyWindow(Gtk.Window):
                         self.prepared = list(set(self.prepared))
                         random.shuffle(self.prepared)
 
+                    if len(images) < 3 and self.has_real_downloaders():
+                        self.trigger_download()
+
                     logger.info("after search prepared buffer contains %s images" % len(self.prepared))
             except Exception:
                 logger.exception("Error in prepare thread:")
@@ -659,16 +663,19 @@ class VarietyWindow(Gtk.Window):
             self.prepare_event.wait()
             self.prepare_event.clear()
 
+    def has_real_downloaders(self):
+        return sum(1 for d in self.downloaders if not d.is_refresher) > 0
+
     def download_thread(self):
-        last_dl_time = time.time()
+        self.last_dl_time = time.time()
         while self.running:
             try:
                 while not self.options.download_enabled or \
-                      (time.time() - last_dl_time) < self.options.download_interval:
+                      (time.time() - self.last_dl_time) < self.options.download_interval:
                     if not self.running:
                         return
                     now = time.time()
-                    wait_more = self.options.download_interval - max(0, (now - last_dl_time))
+                    wait_more = self.options.download_interval - max(0, (now - self.last_dl_time))
                     if self.options.download_enabled:
                         self.dl_event.wait(max(0, wait_more))
                     else:
@@ -680,7 +687,7 @@ class VarietyWindow(Gtk.Window):
                 if not self.options.download_enabled:
                     continue
 
-                last_dl_time = time.time()
+                self.last_dl_time = time.time()
                 if self.downloaders:
                     self.purge_downloaded()
 
@@ -695,6 +702,12 @@ class VarietyWindow(Gtk.Window):
 
             except Exception:
                 logger.exception("Could not download wallpaper:")
+
+    def trigger_download(self):
+        if self.downloaders:
+            logger.info("Triggering one download")
+            self.last_dl_time = 0
+            self.dl_event.set()
 
     def prepare_earth_downloader(self):
         dl = EarthDownloader(self)
@@ -1028,9 +1041,11 @@ class VarietyWindow(Gtk.Window):
             if not img:
                 logger.info("No images found")
                 if not self.auto_changed:
-                    self.show_notification(
-                        _("No more wallpapers"),
-                        _("Please add more image sources or wait for some downloads"))
+                    if self.has_real_downloaders():
+                        msg = _("Please add more image sources or wait for some downloads")
+                    else:
+                        msg = _("Please add more image sources")
+                    self.show_notification(_("No more wallpapers"), msg)
                 return
 
             if self.quotes_engine and self.options.quotes_enabled:
@@ -1075,7 +1090,11 @@ class VarietyWindow(Gtk.Window):
         def _update_indicator():
             self.update_indicator(auto_changed=False)
         GObject.idle_add(_update_indicator)
-        if self.thumbs_manager.is_showing("downloads"):
+
+        should_show = self.thumbs_manager.is_showing("downloads") or (self.thumbs_manager.get_folders() is not None \
+          and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)) > 0)
+
+        if should_show:
             def _add(): self.thumbs_manager.add_image(added_image, gdk_thread=False)
             add_timer = threading.Timer(0, _add)
             add_timer.start()

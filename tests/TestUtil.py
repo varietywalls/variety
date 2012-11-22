@@ -70,5 +70,10 @@ class TestUtil(unittest.TestCase):
         self.assertEquals(
             ("Bitstream Charter:Bold:Italic:10", '10'), Util.gtk_to_fcmatch_font("Bitstream Charter Bold Italic 10"))
 
+    def test_file_in(self):
+        self.assertTrue(Util.file_in("/a/b/a.txt", "/a/"))
+        self.assertTrue(Util.file_in("/a/b/a.txt", "/a/b/"))
+        self.assertFalse(Util.file_in("/a/b/a.txt", "/c/"))
+
 if __name__ == '__main__':
     unittest.main()
