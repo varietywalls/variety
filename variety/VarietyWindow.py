@@ -96,6 +96,7 @@ class VarietyWindow(Gtk.Window):
         self.create_downloaders_cache()
 
         self.prepared = []
+        self.prepared_cleared = False
         self.prepared_lock = threading.Lock()
         self.prepared_from_downloads = []
 
@@ -132,6 +133,7 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
+
         GObject.idle_add(self.create_preferences_dialog)
 
     def on_mnu_about_activate(self, widget, data=None):
@@ -324,9 +326,15 @@ class VarietyWindow(Gtk.Window):
         self.log_options()
 
         # clean prepared - they are outdated
-        with self.prepared_lock:
-            self.prepared = []
-        self.image_count = -1
+        if self.should_clear_prepared():
+            self.filters_warning_shown = False
+            logger.info("Clearing prepared queue")
+            with self.prepared_lock:
+                self.prepared_cleared = True
+                self.prepared = []
+            self.image_count = -1
+        else:
+            logger.info("No need to clear prepared queue")
 
         self.start_clock_thread()
 
@@ -352,11 +360,32 @@ class VarietyWindow(Gtk.Window):
             for e in self.events:
                 e.set()
 
+    def should_clear_prepared(self):
+        return self.previous_options and (
+               [s for s in self.previous_options.sources if s[0]] != [s for s in self.options.sources if s[0]] or \
+               self.filtering_options_changed())
+
+    def filtering_options_changed(self):
+        if not self.previous_options:
+            return False
+        if self.size_options_changed():
+            return True
+        if self.previous_options.desired_color_enabled != self.options.desired_color_enabled or \
+            self.previous_options.desired_color != self.options.desired_color:
+            return True
+        if self.previous_options.lightness_enabled != self.options.lightness_enabled or \
+            self.previous_options.lightness_mode != self.options.lightness_mode:
+            return True
+        if self.previous_options.min_rating_enabled != self.options.min_rating_enabled or \
+            self.previous_options.min_rating != self.options.min_rating:
+            return True
+        return False
+
     def size_options_changed(self):
         return self.previous_options and (
-            self.previous_options.min_size_enabled != self.options.min_size_enabled or\
-            self.previous_options.min_size != self.options.min_size or\
-            self.options.use_landscape_enabled != self.options.use_landscape_enabled)
+            self.previous_options.min_size_enabled != self.options.min_size_enabled or \
+            self.previous_options.min_size != self.options.min_size or \
+            self.previous_options.use_landscape_enabled != self.options.use_landscape_enabled)
 
     def create_downloaders_cache(self):
         self.downloaders_cache = {}
@@ -617,46 +646,63 @@ class VarietyWindow(Gtk.Window):
             except Exception:
                 logger.exception("Exception in clock_thread")
 
+    def find_images(self):
+        images = self.select_random_images(100)
+
+        found = set()
+        for fuzziness in xrange(0, 5):
+            if len(found) > 10 or len(found) >= len(images):
+                break
+            for img in images:
+                if not self.running:
+                    return
+                if self.prepared_cleared:
+                    self.prepared_cleared = False
+                    return
+                try:
+                    if not img in found and self.image_ok(img, fuzziness):
+                        #print "OK at fz %d: %s" % (fuzziness, img)
+                        found.add(img)
+                        if len(self.prepared) < 3:
+                            with self.prepared_lock:
+                                self.prepared.append(img)
+                except Exception:
+                    logger.exception("Excepion while testing image_ok on file " + img)
+
+        with self.prepared_lock:
+            if self.prepared_cleared:
+                self.prepared_cleared = False
+                return
+            self.prepared.extend(found)
+            if not self.prepared and images:
+                logger.info("Prepared buffer still empty after search, appending some non-ok image")
+                self.prepared.append(images[random.randint(0, len(images) - 1)])
+
+            # remove duplicates
+            self.prepared = list(set(self.prepared))
+            random.shuffle(self.prepared)
+
+        if len(images) < 3 and self.has_real_downloaders():
+            self.trigger_download()
+
+        if len(found) <= 5 and len(images) >= max(20, 10 * len(found)) and found.issubset(set(self.used[:10])):
+            logger.warning("Too few images found: %d out of %d" % (len(found), len(images)))
+            if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
+                self.filters_warning_shown = True
+                self.show_notification("Not enough images",
+                    "Variety is finding too few images that match your image filtering criteria")
+
     def prepare_thread(self):
-        logger.info("prepare thread running")
+        logger.info("Prepare thread running")
         while self.running:
             try:
-                logger.info("prepared buffer contains %s images" % len(self.prepared))
-
+                logger.info("Prepared buffer contains %s images" % len(self.prepared))
                 if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 2):
-                    logger.info("preparing some images")
-                    images = self.select_random_images(100)
-
-                    found = set()
-                    for fuzziness in xrange(0, 5):
-                        if len(found) > 10 or len(found) >= len(images):
-                            break
-                        for img in images:
-                            try:
-                                if self.image_ok(img, fuzziness):
-                                    if not img in found:
-                                        found.add(img)
-                                        if self.options.desired_color_enabled or self.options.use_landscape_enabled or\
-                                           self.options.min_size_enabled or self.options.lightness_enabled or\
-                                           self.options.min_rating_enabled:
-                                            logger.debug("ok at fuzziness %s: %s" % (str(fuzziness), img))
-                            except Exception:
-                                logger.exception("Excepion while testing image_ok on file " + img)
-
-                    with self.prepared_lock:
-                        self.prepared.extend(found)
-                        if not self.prepared and images:
-                            logger.info("Prepared buffer still empty after search, appending some non-ok image")
-                            self.prepared.append(images[random.randint(0, len(images) - 1)])
-
-                        # remove duplicates
-                        self.prepared = list(set(self.prepared))
-                        random.shuffle(self.prepared)
-
-                    if len(images) < 3 and self.has_real_downloaders():
-                        self.trigger_download()
-
-                    logger.info("after search prepared buffer contains %s images" % len(self.prepared))
+                    logger.info("Preparing some images")
+                    self.find_images()
+                    if not self.running:
+                        return
+                    logger.info("After search prepared buffer contains %s images" % len(self.prepared))
             except Exception:
                 logger.exception("Error in prepare thread:")
 
@@ -1034,7 +1080,8 @@ class VarietyWindow(Gtk.Window):
 
             if not img:
                 logger.info("No images yet in prepared buffer, using some random image")
-                rnd_images = self.select_random_images(10)
+                self.prepare_event.set()
+                rnd_images = self.select_random_images(3)
                 rnd_images = [f for f in rnd_images if f != self.current or self.is_current_refreshable()]
                 img = rnd_images[0] if rnd_images else None
 
@@ -1103,12 +1150,13 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
         self.prepare_event.set()
+        self.update_indicator(auto_changed=False)
 
     def image_ok(self, img, fuzziness):
         try:
             if self.options.min_rating_enabled:
                 rating = Util.get_rating(img)
-                if rating is None or rating <= 0 or rating < self.options.min_rating - fuzziness:
+                if rating is None or rating <= 0 or rating < self.options.min_rating:
                     return False
 
             if not self.options.desired_color_enabled and not self.options.lightness_enabled:
@@ -1424,6 +1472,9 @@ class VarietyWindow(Gtk.Window):
             self.options.change_enabled = not self.options.change_enabled
         else:
             self.options.change_enabled = change_enabled
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.change_enabled.set_active(self.options.change_enabled)
 
         self.options.write()
         self.update_indicator(auto_changed=False)
@@ -1885,7 +1936,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             def on_failure(fb, action, data):
                 self.show_notification(_("Could not publish"), str(data))
 
-            text = (self.quote["quote"] + "\n\n" + self.quote["author"]).encode('utf8')
+            text = (self.quote["quote"] + " - " + self.quote["author"]).encode('utf8')
             fb.publish(message=text, caption="Via Variety Wallpaper Changer",
                 on_success=on_success, on_failure=on_failure)
 
@@ -1931,6 +1982,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.options.quotes_change_enabled = not self.options.quotes_change_enabled
         else:
             self.options.quotes_change_enabled = change_enabled
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.quotes_change_enabled.set_active(self.options.quotes_change_enabled)
 
         self.options.write()
         self.update_indicator(auto_changed=False)

@@ -621,15 +621,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.close()
 
     def delayed_apply(self, widget=None, *arg):
-        self.delayed_apply_with_interval(0.1)
+        if not self.loading:
+            self.delayed_apply_with_interval(0.1)
 
     def delayed_apply_slow(self, widget=None, *arg):
-        self.delayed_apply_with_interval(1)
+        if not self.loading:
+            self.delayed_apply_with_interval(1)
 
     def delayed_apply_with_interval(self, interval):
-        """Perform a throttled apply. All the unneeded arguments are there because this method is used as the
-        event handler for many different types of signals and they pass different numbers of arguments"""
-
         if not self.loading:
             if hasattr(self, "apply_timer") and self.apply_timer:
                 self.apply_timer.cancel()
