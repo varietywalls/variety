@@ -689,8 +689,9 @@ class VarietyWindow(Gtk.Window):
             logger.warning("Too few images found: %d out of %d" % (len(found), len(images)))
             if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
                 self.filters_warning_shown = True
-                self.show_notification("Not enough images",
-                    "Variety is finding too few images that match your image filtering criteria")
+                self.show_notification(
+                    _("Filtering too strict?"),
+                    _("Variety is finding too few images that match your image filtering criteria"))
 
     def prepare_thread(self):
         logger.info("Prepare thread running")
