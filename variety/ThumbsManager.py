@@ -303,9 +303,7 @@ class ThumbsManager():
         self.thumbs_window.set_title(title)
         self.thumbs_window.connect("clicked", self.on_click)
         def _on_close(window, event):
-            self.thumbs_window.destroy()
-            self.thumbs_window = None
-            self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
+            self.hide(gdk_thread=True, force=True)
         self.thumbs_window.connect("delete-event", _on_close)
 
         self.mark_active(self.active_file, self.active_position)
@@ -349,8 +347,15 @@ class ThumbsManager():
 
 
     def hide(self, gdk_thread=False, force=True):
-        if force: self.pinned = False
+        if force:
+            self.pinned = False
+
         if self.thumbs_window and not self.pinned:
+            self.type = None
+            self.images = None
+            self.screen = None
+            self.folders = None
+
             try:
                 if not gdk_thread:
                     Gdk.threads_enter()
@@ -378,7 +383,7 @@ class ThumbsManager():
             self.thumbs_window.add_image(file, gdk_thread, at_front=True)
 
     def is_showing(self, type):
-        return self.thumbs_window is not None and self.type == type
+        return self.type == type
 
     def get_folders(self):
         return self.folders

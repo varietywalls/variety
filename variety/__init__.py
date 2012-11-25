@@ -48,7 +48,7 @@ class VarietyService(dbus.service.Object):
 
 VARIETY_WINDOW = None
 
-def sigint_handler(a, b):
+def sigint_handler(*args):
     print _("CTRL-C pressed, quitting...")
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
@@ -58,6 +58,8 @@ def sigint_handler(a, b):
 def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
+    signal.signal(signal.SIGTERM, sigint_handler)
+    signal.signal(signal.SIGQUIT, sigint_handler)
 
     arguments = sys.argv[1:]
     # validate arguments and set up logging

@@ -18,10 +18,11 @@ Depends: ${misc:Depends},
  python-pycurl,
  gir1.2-gtk-3.0,
  python-dbus,
+ gir1.2-pango-1.0,
  gir1.2-glib-2.0,
  python-imaging,
+ python-cairo,
  gir1.2-gdkpixbuf-2.0,
- gir1.2-launchpad-integration-3.0,
  python-bs4,
  gir1.2-webkit-3.0,
  gir1.2-appindicator3-0.1,
@@ -40,8 +41,9 @@ Description: An automatic wallpaper changer, downloader and manager
  from local folders, several different online sources can be used to
  fetch wallpapers according to user-specified criteria - Flickr,
  Wallbase.cc, Wallpapers.net, NASA Astronomy Picture of the Day,
- Desktoppr.co. Variety can also automatically apply various fancy filters
- to the displayed images - heavy blurring, oil painting, charcoal
+ Desktoppr.co. Media RSS feeds from Picasa, deviantART or any other place
+ are also supported.Variety can also automatically apply various fancy
+ filters to the displayed images - heavy blurring, oil painting, charcoal
  painting, etc. - so that your desktop is always fresh and unique. Heavy
  blurring for example is a great way to get abstract-looking and
  unobtrusive, yet colorful wallpapers, similar in spirit to the default

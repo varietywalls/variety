@@ -872,6 +872,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 pass
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
+        self.parent.trigger_download()
 
     def on_downloaded_changed(self, widget=None):
         if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):

@@ -37,6 +37,26 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -330,7 +350,7 @@
                             <property name="layout_style">start</property>
                             <child>
                               <object class="GtkButton" id="add_button">
-                                <property name="label" translatable="yes">Add...</property>
+                                <property name="label" translatable="yes">_Add...</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="width_request">100</property>
                                 <property name="visible">True</property>
@@ -339,6 +359,7 @@
                                 <property name="tooltip_markup" translatable="yes">Add images, folders or online image sources</property>
                                 <property name="tooltip_text" translatable="yes">Add images, folders or online image sources</property>
                                 <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_add_button_clicked" swapped="no"/>
                               </object>
                               <packing>
@@ -349,7 +370,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="edit_source">
-                                <property name="label" translatable="yes">Edit...</property>
+                                <property name="label" translatable="yes">_Edit...</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -357,6 +378,7 @@
                                 <property name="tooltip_markup" translatable="yes">Edit the selected source</property>
                                 <property name="tooltip_text" translatable="yes">Edit the selected source</property>
                                 <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_edit_source_clicked" swapped="no"/>
                               </object>
                               <packing>
@@ -367,7 +389,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="remove_sources">
-                                <property name="label" translatable="yes">Remove</property>
+                                <property name="label" translatable="yes">_Remove</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -376,6 +398,7 @@
                                 <property name="tooltip_markup" translatable="yes">Remove selected image sources</property>
                                 <property name="tooltip_text" translatable="yes">Remove selected image sources</property>
                                 <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_remove_sources_clicked" swapped="no"/>
                               </object>
                               <packing>
@@ -386,7 +409,7 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="use_button">
-                                <property name="label" translatable="yes">Use</property>
+                                <property name="label" translatable="yes">_Use</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -394,6 +417,7 @@
                                 <property name="tooltip_markup" translatable="yes">Enable the selected sources and disable all others</property>
                                 <property name="tooltip_text" translatable="yes">Enable the selected sources and disable all others</property>
                                 <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_use_clicked" swapped="no"/>
                               </object>
                               <packing>
@@ -3280,26 +3304,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_customize_combos">
     <widgets>
