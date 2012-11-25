@@ -944,6 +944,7 @@ class VarietyWindow(Gtk.Window):
                         quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
                         QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
                         to_set = quote_outfile
+                        self.write_filtered_wallpaper_origin(filename)
 
                 if self.options.clock_enabled:
                     cmd = self.build_imagemagick_clock_cmd(to_set)

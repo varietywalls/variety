@@ -49,7 +49,7 @@ class VarietyService(dbus.service.Object):
 VARIETY_WINDOW = None
 
 def sigint_handler(*args):
-    print _("CTRL-C pressed, quitting...")
+    print _("Terminating signal received, quitting...")
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
         VARIETY_WINDOW.on_quit()
