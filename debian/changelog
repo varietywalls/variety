@@ -1,3 +1,50 @@
+variety (0.4.12) precise; urgency=low
+
+  * Updated tips and changes txt
+  * Bugfix: Save original wallpaper name when quotes are applied
+  * Bugfix: a download was forcing the thumbs window to reshow when
+    already hidden
+  * Minor fix
+  * Improvements related to image preparing; Minor bug-fixes
+  * Trigger a download when too few images found; Livelier thumbs when
+    showing folders, not only history and downloads (new downloads are
+    auto-shown)
+  * Merged in variety-instant-preferences
+  * Fix: removed class Window was still referred at one place
+  * Replaced some unnecessary timers with calls to GObject.timeout_add
+  * Reordered prefs tabs. Command-line way to set options
+  * Added UI preferences tab
+  * Removed unneeded files
+  * Stripping VarietyWindow from Quickly's boilerplate; Separate
+    WelcomeDialog
+  * Quotes: fix image scaling
+  * Merged in lp:~peterlevi/variety/variety-quotes
+  * Unity qucklist added, initial version; Show Preferences if run again
+    with no parameters - better launcher button behaviour
+  * Commandline options to hide/show/toggle visibility of indicator icon
+    and to show preferences
+  * Added Rating option to main menu - optional (off by default)
+  * Added funtionality to set image ratings
+  * Filtering by rating added; Preparations for adding simple
+    functionality to rate images
+  * Ensure wallpaper is changed even if the current background is a
+    solid color in Gnome/Unity
+  * Minor fixes
+  * Commandline options for toggling History and Recent downloads
+  * Updated icons 14x14 and 16x16
+  * Thumbs: back to showing 200 instead of 100
+  * When appindicator is not present fallback gracefully to a GTK
+    StatusIcon
+  * Minor fix
+  * Made strings translatable
+  * Updated chnages.txt; Fixed unnecessary heavy preparing of images
+    during purge_download_folder
+  * Better prioritizong of new downloads to give equal exposure to
+    refreshers and normal downloading sources
+  * Added a Donate page and link in preferences
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 27 Nov 2012 00:08:57 +0200
+
 variety (0.4.11ubuntu1) precise; urgency=low
 
   * 
