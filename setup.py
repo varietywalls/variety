@@ -88,7 +88,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='variety',
-    version='0.4.11',
+    version='0.4.12',
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
@@ -111,6 +111,6 @@ DistUtilsExtra.auto.setup(
 "desktop is always fresh and unique. Heavy blurring for example is a great way to "
 "get abstract-looking and unobtrusive, yet colorful wallpapers, similar in spirit "
 "to the default one in Ubuntu. ",
-    url='http://peterlevi.com/variety',
+    url='https://launchpad.net/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )
