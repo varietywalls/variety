@@ -844,14 +844,16 @@ class VarietyWindow(Gtk.Window):
         if not self.filters:
             return None
 
+        filter = random.choice(self.filters).strip()
+        if not filter:
+            return None
+
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
         cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        filter = self.filters[random.randint(0, len(self.filters) - 1)]
-        if filter.strip():
-            logger.info("Applying filter: " + filter)
-            cmd += filter + ' '
+        logger.info("Applying filter: " + filter)
+        cmd += filter + ' '
 
         cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-filter.jpg") + '"'
         logger.info("ImageMagick filter cmd: " + cmd)
@@ -929,13 +931,14 @@ class VarietyWindow(Gtk.Window):
                     or not hasattr(self, "post_filter_filename"):
                         self.post_filter_filename = to_set
                         cmd = self.build_imagemagick_filter_cmd(filename)
-                        result = os.system(cmd)
-                        if result == 0: #success
-                            to_set = os.path.join(self.config_folder, "wallpaper-filter.jpg")
-                            self.post_filter_filename = to_set
-                            self.write_filtered_wallpaper_origin(filename)
-                        else:
-                            logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
+                        if cmd:
+                            result = os.system(cmd)
+                            if result == 0: #success
+                                to_set = os.path.join(self.config_folder, "wallpaper-filter.jpg")
+                                self.post_filter_filename = to_set
+                                self.write_filtered_wallpaper_origin(filename)
+                            else:
+                                logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
                     else:
                         to_set = self.post_filter_filename
 

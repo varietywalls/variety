@@ -25,7 +25,7 @@ import pyexiv2
 import urllib
 import urllib2
 from DominantColors import DominantColors
-from gi.repository import Gdk, Pango
+from gi.repository import Gdk, Pango, GdkPixbuf
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -213,8 +213,12 @@ class Util:
 
     @staticmethod
     def get_size(image):
-        d = DominantColors(image)
-        return d.get_width(), d.get_height()
+        try:
+            d = DominantColors(image)
+            return d.get_width(), d.get_height()
+        except Exception:
+            p = GdkPixbuf.Pixbuf.new_from_file(image)
+            return p.get_width(), p.get_height()
 
     @staticmethod
     def find_unique_name(filename):
