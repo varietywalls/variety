@@ -139,19 +139,22 @@ class ThumbsManager():
 
         trash_item = Gtk.MenuItem(_("Delete to _Trash"))
         trash_item.set_use_underline(True)
-        def _trash(widget): self.parent.move_to_trash(widget, file)
+        def _trash(widget):
+            self.parent.move_to_trash(widget, file)
         trash_item.connect("activate", _trash)
         menu.append(trash_item)
 
         focus = Gtk.MenuItem(_("Display Source"))
         focus.set_sensitive(self.parent.get_source(file) is not None)
-        def _focus(widget): self.parent.focus_in_preferences(widget, file)
+        def _focus(widget):
+            self.parent.focus_in_preferences(widget, file)
         focus.connect("activate", _focus)
         menu.append(focus)
 
         menu.append(Gtk.SeparatorMenuItem.new())
 
-        def close(widget): self.hide(gdk_thread=True, force=True)
+        def close(widget):
+            self.hide(gdk_thread=True, force=True)
         close_item = Gtk.MenuItem(_("Close"))
         close_item.connect("activate", close)
         menu.append(close_item)
@@ -209,9 +212,9 @@ class ThumbsManager():
         return rating_menu
 
     def repaint(self):
-        self.hide(gdk_thread=True)
+        self.hide(gdk_thread=True, keep_settings=True)
         if self.images:
-            self.show(self.images, gdk_thread=True, screen=self.screen, type=self.type)
+            self.show(self.images, gdk_thread=True, screen=self.screen, type=self.type, folders=self.folders)
 
     def set_position(self, position):
         logger.info("Setting thumbs position " + str(position))
@@ -346,15 +349,16 @@ class ThumbsManager():
             logger.exception("Could not save ui.conf")
 
 
-    def hide(self, gdk_thread=False, force=True):
+    def hide(self, gdk_thread=False, force=True, keep_settings=False):
         if force:
             self.pinned = False
 
         if self.thumbs_window and not self.pinned:
-            self.type = None
-            self.images = None
-            self.screen = None
-            self.folders = None
+            if not keep_settings:
+                self.type = None
+                self.images = None
+                self.screen = None
+                self.folders = None
 
             try:
                 if not gdk_thread:
