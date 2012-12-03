@@ -99,6 +99,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
             self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
+            self.update_real_download_folder()
 
             self.ui.quota_enabled.set_active(self.options.quota_enabled)
             self.ui.quota_size.set_text(str(self.options.quota_size))
@@ -847,7 +848,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_quota_enabled_toggled(self, widget = None):
         active = self.ui.download_enabled.get_active() and self.ui.quota_enabled.get_active()
         self.ui.quota_size.set_sensitive(active)
-        self.ui.quota_label.set_sensitive(active)
 
     def on_desired_color_enabled_toggled(self, widget = None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
@@ -882,9 +882,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         if not self.loading and self.ui.quota_enabled.get_active():
             self.ui.quota_enabled.set_active(False)
-            self.parent.show_notification("Limit disabled",
-                                          "Changing the download folder automatically turns off the size limit "
-                                          "to prevent from accidental data loss")
+            self.parent.show_notification(
+                _("Limit disabled"),
+                _("Changing the download folder automatically turns off the size limit to prevent from accidental data loss"),
+                important=True)
+
+    def update_real_download_folder(self):
+        if not Util.same_file_paths(self.parent.options.download_folder, self.parent.real_download_folder):
+            self.ui.real_download_folder.set_visible(True)
+        self.ui.real_download_folder.set_text(_("Actual download folder: %s ") % self.parent.real_download_folder)
 
     def on_favorites_changed(self, widget=None):
         if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):

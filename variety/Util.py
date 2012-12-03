@@ -314,3 +314,7 @@ class Util:
     @staticmethod
     def file_in(file, folder):
         return os.path.normpath(file).startswith(os.path.normpath(folder))
+
+    @staticmethod
+    def same_file_paths(f1, f2):
+        return os.path.normpath(f1) == os.path.normpath(f2)

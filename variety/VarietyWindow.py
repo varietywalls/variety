@@ -260,6 +260,15 @@ class VarietyWindow(Gtk.Window):
             logger.info("%s = %s" % (k, v))
 #        pprint(self.options.__dict__, indent=0)
 
+    def get_real_download_folder(self):
+        subfolder = "Downloaded by Variety"
+        if Util.file_in(self.options.download_folder, self.config_folder):
+            return self.options.download_folder
+        elif self.options.download_folder.endswith("/%s" % subfolder) or self.options.download_folder.endswith("/%s/" % subfolder):
+            return self.options.download_folder
+        else:
+            return os.path.join(self.options.download_folder, subfolder)
+
     def reload_config(self):
         self.previous_options = self.options
 
@@ -268,7 +277,11 @@ class VarietyWindow(Gtk.Window):
 
         GObject.idle_add(self.update_indicator_icon)
 
-        Util.makedirs(self.options.download_folder)
+        self.real_download_folder = self.get_real_download_folder()
+        if self.preferences_dialog:
+            GObject.idle_add(self.preferences_dialog.update_real_download_folder)
+
+        Util.makedirs(self.real_download_folder)
         Util.makedirs(self.options.favorites_folder)
         Util.makedirs(self.options.fetched_folder)
 
@@ -785,15 +798,15 @@ class VarietyWindow(Gtk.Window):
             return
 
         if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
-            self.download_folder_size = self.get_folder_size(self.options.download_folder)
+            self.download_folder_size = self.get_folder_size(self.real_download_folder)
             logger.info("Refreshed download folder size: %d mb", self.download_folder_size / (1024.0 * 1024.0))
 
         mb_quota = self.options.quota_size * 1024 * 1024
         if self.download_folder_size > 0.95 * mb_quota:
-            logger.info("Purging oldest files from download folder, current size: %d mb" %
-                        int(self.download_folder_size / (1024.0 * 1024.0)))
+            logger.info("Purging oldest files from download folder %s, current size: %d mb" %
+                        (self.real_download_folder, int(self.download_folder_size / (1024.0 * 1024.0))))
             files = []
-            for dirpath, dirnames, filenames in os.walk(self.options.download_folder):
+            for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
                 for f in filenames:
                     if Util.is_image(f):
                         fp = os.path.join(dirpath, f)
@@ -1056,15 +1069,22 @@ class VarietyWindow(Gtk.Window):
         else:
             logger.warning("Invalid position passed to move_to_history_position, %d, used len is %d" % (position, len(self.used)))
 
-    def show_notification(self, title, message="", icon=None):
+    def show_notification(self, title, message="", icon=None, important=False):
         if not icon:
             icon = varietyconfig.get_data_file("media", "variety.svg")
-        try:
-            self.notification.update(title, message, icon)
-        except AttributeError:
-            self.notification = Notify.Notification.new(title, message, icon)
-        self.notification.set_urgency(Notify.Urgency.LOW)
-        self.notification.show()
+
+        if not important:
+            try:
+                self.notification.update(title, message, icon)
+            except AttributeError:
+                self.notification = Notify.Notification.new(title, message, icon)
+            self.notification.set_urgency(Notify.Urgency.LOW)
+            self.notification.show()
+        else:
+            # use a separate notification that will not be updated with a non-important message
+            notification = Notify.Notification.new(title, message, icon)
+            notification.set_urgency(Notify.Urgency.NORMAL)
+            notification.show()
 
     def change_wallpaper(self, widget=None):
         try:
@@ -1143,11 +1163,13 @@ class VarietyWindow(Gtk.Window):
             self.update_indicator(auto_changed=False)
         GObject.idle_add(_update_indicator)
 
-        should_show = self.thumbs_manager.is_showing("downloads") or (self.thumbs_manager.get_folders() is not None \
-          and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)) > 0)
+        should_show = self.thumbs_manager.is_showing("downloads") or (
+            self.thumbs_manager.get_folders() is not None \
+                and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)) > 0)
 
         if should_show:
-            def _add(): self.thumbs_manager.add_image(added_image, gdk_thread=False)
+            def _add():
+                self.thumbs_manager.add_image(added_image, gdk_thread=False)
             add_timer = threading.Timer(0, _add)
             add_timer.start()
 
@@ -1391,7 +1413,7 @@ class VarietyWindow(Gtk.Window):
             folder = pair[0]
             folder_lower = folder.lower().strip()
             if folder_lower == "downloaded":
-                folder = self.options.download_folder
+                folder = self.real_download_folder
             elif folder_lower == "fetched":
                 folder = self.options.fetched_folder
             elif folder_lower == "others":

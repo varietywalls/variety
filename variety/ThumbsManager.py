@@ -353,13 +353,16 @@ class ThumbsManager():
         if force:
             self.pinned = False
 
-        if self.thumbs_window and not self.pinned:
-            if not keep_settings:
-                self.type = None
-                self.images = None
-                self.screen = None
-                self.folders = None
+        if self.pinned:
+            return
 
+        if not keep_settings:
+            self.type = None
+            self.images = None
+            self.screen = None
+            self.folders = None
+
+        if self.thumbs_window:
             try:
                 if not gdk_thread:
                     Gdk.threads_enter()
