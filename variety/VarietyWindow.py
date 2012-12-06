@@ -262,12 +262,29 @@ class VarietyWindow(Gtk.Window):
 
     def get_real_download_folder(self):
         subfolder = "Downloaded by Variety"
-        if Util.file_in(self.options.download_folder, self.config_folder):
-            return self.options.download_folder
-        elif self.options.download_folder.endswith("/%s" % subfolder) or self.options.download_folder.endswith("/%s/" % subfolder):
-            return self.options.download_folder
+        dl = self.options.download_folder
+
+        # If chosen folder is within Variety's config folder, or folder's name is "Downloaded by Variety",
+        # or folder is empty or it has already been used as a download folder, then use it:
+        if Util.file_in(dl, self.config_folder) or \
+            dl.endswith("/%s" % subfolder) or dl.endswith("/%s/" % subfolder) or \
+           not os.listdir(dl) or \
+           os.path.exists(os.path.join(dl, ".variety_downloads")):
+            return dl
         else:
-            return os.path.join(self.options.download_folder, subfolder)
+            # Else, use a subfolder inside it
+            return os.path.join(dl, subfolder)
+
+    def prepare_download_folder(self):
+        self.real_download_folder = self.get_real_download_folder()
+        if self.preferences_dialog:
+            GObject.idle_add(self.preferences_dialog.update_real_download_folder)
+
+        Util.makedirs(self.real_download_folder)
+        dl_folder_file = os.path.join(self.real_download_folder, ".variety_downloads")
+        if not os.path.exists(dl_folder_file):
+            with open(dl_folder_file, "w") as f:
+                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
     def reload_config(self):
         self.previous_options = self.options
@@ -277,11 +294,8 @@ class VarietyWindow(Gtk.Window):
 
         GObject.idle_add(self.update_indicator_icon)
 
-        self.real_download_folder = self.get_real_download_folder()
-        if self.preferences_dialog:
-            GObject.idle_add(self.preferences_dialog.update_real_download_folder)
+        self.prepare_download_folder()
 
-        Util.makedirs(self.real_download_folder)
         Util.makedirs(self.options.favorites_folder)
         Util.makedirs(self.options.fetched_folder)
 
@@ -1461,9 +1475,8 @@ class VarietyWindow(Gtk.Window):
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")
         if not os.path.exists(fr_file):
-            f = open(fr_file, "w")
-            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-            f.close()
+            with open(fr_file, "w") as f:
+                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             self.show_welcome_dialog()
 
     def show_welcome_dialog(self):
