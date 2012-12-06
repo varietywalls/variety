@@ -2289,8 +2289,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="entry_text_column">0</property>
                             <property name="id_column">1</property>
                             <items>
-                              <item translatable="yes">Dark</item>
-                              <item translatable="yes">Light</item>
+                              <item translatable="yes" context="&quot;Are dark or light&quot; option">Dark</item>
+                              <item translatable="yes" context="&quot;Are dark or light&quot; option">Light</item>
                             </items>
                             <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
@@ -2599,11 +2599,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="entry_text_column">0</property>
                             <property name="id_column">1</property>
                             <items>
-                              <item translatable="yes">Light</item>
-                              <item translatable="yes">Dark</item>
+                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Light</item>
+                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Dark</item>
                               <item translatable="yes">Use current wallpaper</item>
-                              <item translatable="yes">Custom image...</item>
-                              <item translatable="yes">None</item>
+                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Custom image...</item>
+                              <item translatable="yes" context="&quot;Indicator icon&quot; option">None</item>
                             </items>
                             <signal name="changed" handler="on_icon_changed" swapped="no"/>
                             <signal name="changed" handler="delayed_apply" swapped="no"/>

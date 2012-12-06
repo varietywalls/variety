@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_flickr_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_flickr_dialog 1.0 -->
   <object class="AddFlickrDialog" id="add_flickr_dialog">
     <property name="width_request">650</property>
     <property name="can_focus">False</property>
@@ -95,9 +95,10 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="margin_left">10</property>
+                <property name="margin_left">15</property>
                 <property name="label" translatable="yes">Please specify the &lt;a href="http://flickr.com"&gt;Flickr&lt;/a&gt; search criteria. Photos that match all of the chosen criteria will be downloaded. Leave unneeded criteria empty.</property>
                 <property name="use_markup">True</property>
+                <property name="justify">fill</property>
                 <property name="wrap">True</property>
               </object>
               <packing>

@@ -249,12 +249,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu = Gtk.Menu()
 
         items = [
-            ("Images", self.on_add_images_clicked),
-            ("Folders", self.on_add_folders_clicked),
-            ("Flickr", self.on_add_flickr_clicked),
-            ("Wallbase.cc", self.on_add_wallbase_clicked),
-            ("Wallpapers.net", self.on_add_wn_clicked),
-            ("Media RSS", self.on_add_mediarss_clicked),
+            (_("Images"), self.on_add_images_clicked),
+            (_("Folders"), self.on_add_folders_clicked),
+            (_("Flickr"), self.on_add_flickr_clicked),
+            (_("Wallbase.cc"), self.on_add_wallbase_clicked),
+            (_("Wallpapers.net"), self.on_add_wn_clicked),
+            (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
 
         for x in items:
