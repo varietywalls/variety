@@ -98,17 +98,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.set_download_interval(self.options.download_interval)
 
             self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
-            self.ui.download_folder_chooser.set_current_folder(os.path.expanduser(self.options.download_folder))
             self.update_real_download_folder()
 
             self.ui.quota_enabled.set_active(self.options.quota_enabled)
             self.ui.quota_size.set_text(str(self.options.quota_size))
 
             self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
-            self.ui.favorites_folder_chooser.set_current_folder(os.path.expanduser(self.options.favorites_folder))
 
             self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
-            self.ui.fetched_folder_chooser.set_current_folder(os.path.expanduser(self.options.fetched_folder))
             self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
             self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
             self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
@@ -615,6 +612,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def close(self):
         self.hide()
+        self.parent.trigger_download()
         self.on_destroy()
 
     def on_save_clicked(self, widget):
@@ -872,7 +870,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 pass
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
-        self.parent.trigger_download()
 
     def on_downloaded_changed(self, widget=None):
         if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):

@@ -318,3 +318,14 @@ class Util:
     @staticmethod
     def same_file_paths(f1, f2):
         return os.path.normpath(f1) == os.path.normpath(f2)
+
+    @staticmethod
+    def compare_versions(v1, v2):
+        def _score(v):
+            a = map(int, v.split('.'))
+            while len(a) < 3:
+                a.append(0)
+            return a[0] * 10**6 + a[1] * 10**3 + a[2]
+        s1 = _score(v1)
+        s2 = _score(v2)
+        return -1 if s1 < s2 else (0 if s1 == s2 else 1)

@@ -63,12 +63,13 @@ from variety.QuoteWriter import QuoteWriter
 from variety import indicator
 
 
+CURRENT_VERSION = "0.4.13"
+DL_FOLDER_FILE = ".variety_download_folder"
+
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     MAX_FILES = 10000
-    SCHEMA = 'org.gnome.desktop.background'
-    KEY = 'picture-uri'
 
     def __init__(self):
         pass
@@ -81,7 +82,7 @@ class VarietyWindow(Gtk.Window):
 
         self.ind = None
 
-        self.gsettings = Gio.Settings.new(self.SCHEMA)
+        self.gsettings = Gio.Settings.new('org.gnome.desktop.background')
 
         self.thumbs_manager = ThumbsManager(self)
 
@@ -114,7 +115,7 @@ class VarietyWindow(Gtk.Window):
         self.load_banned()
         self.load_history()
         self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
-        self.reload_config()
+        self.reload_config(initial_run=True)
         self.load_last_change_time()
 
         self.image_count = -1
@@ -265,14 +266,14 @@ class VarietyWindow(Gtk.Window):
         dl = self.options.download_folder
 
         # If chosen folder is within Variety's config folder, or folder's name is "Downloaded by Variety",
-        # or folder is empty or it has already been used as a download folder, then use it:
+        # or folder is missing or it is empty or it has already been used as a download folder, then use it:
         if Util.file_in(dl, self.config_folder) or \
-            dl.endswith("/%s" % subfolder) or dl.endswith("/%s/" % subfolder) or \
-           not os.listdir(dl) or \
-           os.path.exists(os.path.join(dl, ".variety_downloads")):
+                dl.endswith("/%s" % subfolder) or dl.endswith("/%s/" % subfolder) or \
+                not os.path.exists(dl) or not os.listdir(dl) or \
+                os.path.exists(os.path.join(dl, DL_FOLDER_FILE)):
             return dl
         else:
-            # Else, use a subfolder inside it
+            # In all other cases (i.e. it is an existing user folder with files in it), use a subfolder inside it
             return os.path.join(dl, subfolder)
 
     def prepare_download_folder(self):
@@ -281,16 +282,19 @@ class VarietyWindow(Gtk.Window):
             GObject.idle_add(self.preferences_dialog.update_real_download_folder)
 
         Util.makedirs(self.real_download_folder)
-        dl_folder_file = os.path.join(self.real_download_folder, ".variety_downloads")
+        dl_folder_file = os.path.join(self.real_download_folder, DL_FOLDER_FILE)
         if not os.path.exists(dl_folder_file):
             with open(dl_folder_file, "w") as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-    def reload_config(self):
+    def reload_config(self, initial_run=False):
         self.previous_options = self.options
 
         self.options = Options()
         self.options.read()
+
+        if initial_run:
+            self.perform_upgrade_after_loading_options()
 
         GObject.idle_add(self.update_indicator_icon)
 
@@ -1479,6 +1483,29 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             self.show_welcome_dialog()
 
+    def perform_upgrade_after_loading_options(self):
+        try:
+            with open(os.path.join(self.config_folder, ".version")) as f:
+                last_version = f.read().strip()
+        except Exception:
+            last_version = "0.4.12"
+
+        logger.info("Last run version was %s or earlier, current version is %s" % (last_version, CURRENT_VERSION))
+        if Util.compare_versions(last_version, "0.4.13") < 0:
+            logger.info("Performing upgrade to 0.4.13 - writing %s to current download folder %s" %
+                        (DL_FOLDER_FILE, self.options.download_folder))
+            # mark the current download folder as a valid download folder
+            Util.makedirs(self.options.download_folder)
+            dl_folder_file = os.path.join(self.options.download_folder, DL_FOLDER_FILE)
+            if not os.path.exists(dl_folder_file):
+                with open(dl_folder_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
+        if Util.compare_versions(last_version, CURRENT_VERSION) < 0:
+            logger.info("Writing current version %s to .version" % CURRENT_VERSION)
+            with open(os.path.join(self.config_folder, ".version"), "w") as f:
+                f.write(CURRENT_VERSION)
+
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
         if os.environ.get('KDE_FULL_SESSION') == 'true':
@@ -1775,7 +1802,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 logger.warning("get_wallpaper script is missing or not executable: " + script)
 
             if not file:
-                file = self.gsettings.get_string(self.KEY)
+                file = self.gsettings.get_string('picture-uri')
 
             if not file:
                 return None
@@ -1801,9 +1828,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 logger.exception("Exception when calling set_wallpaper script")
         else:
             logger.warning("set_wallpaper script is missing or not executable: " + script)
-
-        self.gsettings.set_string(self.KEY, "file://" + wallpaper)
-        self.gsettings.apply()
+            self.gsettings.set_string('picture-uri', "file://" + wallpaper)
+            self.gsettings.apply()
 
     def show_hide_history(self, widget=None):
         if self.thumbs_manager.is_showing("history"):

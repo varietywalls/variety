@@ -75,5 +75,18 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.file_in("/a/b/a.txt", "/a/b/"))
         self.assertFalse(Util.file_in("/a/b/a.txt", "/c/"))
 
+    def test_same_file_paths(self):
+        self.assertTrue(Util.same_file_paths("/a/../b/c", "/b/c"))
+        self.assertFalse(Util.same_file_paths("/a/../b/c", "/a/./b/c"))
+
+    def test_compare_versions(self):
+        self.assertEquals(-1, Util.compare_versions("0.4.10", "0.4.11"))
+        self.assertEquals(-1, Util.compare_versions("0.4.10", "0.5"))
+        self.assertEquals(-1, Util.compare_versions("0.4.10", "1"))
+        self.assertEquals(0, Util.compare_versions("0.4.10", "0.4.10"))
+        self.assertEquals(1, Util.compare_versions("0.4.10", "0.4.8"))
+        self.assertEquals(1, Util.compare_versions("0.4.10", "0.4"))
+        self.assertEquals(1, Util.compare_versions("0.4.10", "0"))
+
 if __name__ == '__main__':
     unittest.main()
