@@ -150,7 +150,7 @@
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">15</property>
+                <property name="margin_left">10</property>
                 <property name="margin_right">10</property>
                 <property name="label" translatable="yes">Please enter one entry per line, each entry in the form &lt;Folder&gt;:&lt;Copy, Move or Both&gt;, where Folder can be Downloaded, Fetched, Others or a specific folder path.
 Order is important. When an image is shown, the first folder in this list which contains the image will determine which operations will be shown in Variety's menu. 'Others' matches any file and should be last in the list.

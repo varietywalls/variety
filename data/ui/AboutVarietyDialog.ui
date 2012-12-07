@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires about_variety_dialog 1.0 -->
   <object class="AboutVarietyDialog" id="about_variety_dialog">
-    <property translatable="yes" name="copyright"/><property name="can_focus">False</property>
+    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">About Variety</property>
     <property name="icon">../media/variety128.png</property>

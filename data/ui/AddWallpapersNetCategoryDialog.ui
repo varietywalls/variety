@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddWallpapersNetCategoryDialog" id="add_wallpapers_net_category_dialog">
     <property name="width_request">500</property>
     <property name="can_focus">False</property>
@@ -43,7 +43,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
-            <property name="margin_left">1</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">5</property>
             <property name="vexpand">True</property>
             <property name="label" translatable="yes">Please visit &lt;a href="http://wallpapers.net"&gt;wallpapers.net&lt;/a&gt; and choose a category with wallpapers you would like to see on your desktop, then paste its URL below. A category is  anything on the site that has one or more pages with wallpapers on them. Here are some examples:
 
@@ -53,6 +54,7 @@ Color Green: &lt;a href="http://wallpapers.net/colors/66CC00/"&gt;http://wallpap
 Specific resolution: &lt;a href="http://wallpapers.net/1920x1200_wide-wallpapers-r.html"&gt;http://wallpapers.net/1920x1200_wide-wallpapers-r.html&lt;/a&gt;
 </property>
             <property name="use_markup">True</property>
+            <property name="justify">fill</property>
             <property name="wrap">True</property>
           </object>
           <packing>
