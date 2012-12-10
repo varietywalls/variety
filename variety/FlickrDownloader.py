@@ -16,8 +16,8 @@
 
 import urllib
 import random
-import json
 import logging
+import time
 from variety import Downloader
 from variety.Util import Util
 
@@ -26,12 +26,44 @@ logger = logging.getLogger('variety')
 random.seed()
 
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
+SETTINGS_URL = "http://bit.ly/variety_flickr_settings"
 
 class FlickrDownloader(Downloader.Downloader):
+    min_download_interval = None
+    min_fill_queue_interval = None
+    last_download_time = 0
+
     def __init__(self, parent, location):
         super(FlickrDownloader, self).__init__(parent, "Flickr", location)
         self.parse_location()
         self.queue = []
+        self.last_fill_time = 0
+
+    @classmethod
+    def load_online_settings(cls):
+        if FlickrDownloader.min_download_interval is not None:
+            return
+
+        FlickrDownloader.min_download_interval = 60
+        FlickrDownloader.min_fill_queue_interval = 600
+
+        try:
+            logger.info("Flickr downloader: fetching online settings")
+            settings = Util.fetch_json(SETTINGS_URL)
+            logger.info("Flickr downloader: %s" % str(settings))
+        except Exception:
+            logger.exception("Could not obtain Flickr online settings, using defaults")
+            return
+
+        try:
+            FlickrDownloader.min_download_interval = int(settings["min_download_interval"])
+        except Exception:
+            logger.exception("Bad or missing min_download_interval")
+
+        try:
+            FlickrDownloader.min_fill_queue_interval = int(settings["min_fill_queue_interval"])
+        except Exception:
+            logger.exception("Bad or missing min_fill_queue_interval")
 
     def convert_to_filename(self, url):
         return "flickr_" + super(FlickrDownloader, self).convert_to_filename(url)
@@ -54,9 +86,7 @@ class FlickrDownloader(Downloader.Downloader):
     @staticmethod
     def fetch(call):
         logger.info("Making flickr API call: " + call)
-        content = Util.fetch(call)
-        resp = json.loads(content)
-        return resp
+        return Util.fetch_json(call)
 
     @staticmethod
     def obtain_userid(url):
@@ -121,20 +151,36 @@ class FlickrDownloader(Downloader.Downloader):
         return int(resp["photos"]["total"])
 
     def download_one(self):
+        FlickrDownloader.load_online_settings()
+
+        if time.time() - FlickrDownloader.last_download_time < FlickrDownloader.min_download_interval:
+            logger.info("Minimal interval between Flickr downloads is %d, skip this attempt" %
+                        FlickrDownloader.min_download_interval)
+            return None
+
         logger.info("Downloading an image from Flickr, " + self.location)
         logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
+            if time.time() - self.last_fill_time < FlickrDownloader.min_fill_queue_interval:
+                logger.info("Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
+                            FlickrDownloader.min_fill_queue_interval)
+                return None
+
             self.fill_queue()
+
         if not self.queue:
             logger.info("Flickr queue empty after fill - too restrictive search parameters or image size preference?")
             return None
 
+        FlickrDownloader.last_download_time = time.time()
         urls = self.queue.pop()
         logger.info("Photo URL: " + urls[0])
         return self.save_locally(urls[0], urls[1])
 
     def fill_queue(self):
+        self.last_fill_time = time.time()
+
         logger.info("Filling Flickr download queue: " + self.location)
 
         call = "http://api.flickr.com/services/rest/?method=flickr.photos.search" \

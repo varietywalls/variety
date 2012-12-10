@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import bs4
+import json
 
 import os
 import random
@@ -243,6 +244,10 @@ class Util:
     @staticmethod
     def fetch(url, data=None):
         return Util.urlopen(url, data).read()
+
+    @staticmethod
+    def fetch_json(url, data=None):
+        return json.loads(Util.fetch(url, data))
 
     @staticmethod
     def html_soup(url, data=None):
