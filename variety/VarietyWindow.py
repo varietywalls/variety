@@ -63,7 +63,6 @@ from variety.QuoteWriter import QuoteWriter
 from variety import indicator
 
 
-CURRENT_VERSION = "0.4.13"
 DL_FOLDER_FILE = ".variety_download_folder"
 
 class VarietyWindow(Gtk.Window):
@@ -1483,14 +1482,27 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             self.show_welcome_dialog()
 
-    def perform_upgrade_after_loading_options(self):
-        try:
-            with open(os.path.join(self.config_folder, ".version")) as f:
-                last_version = f.read().strip()
-        except Exception:
-            last_version = "0.4.12"
+    def write_current_version(self):
+        current_version = varietyconfig.get_version()
+        logger.info("Writing current version %s to .version" % current_version)
+        with open(os.path.join(self.config_folder, ".version"), "w") as f:
+            f.write(current_version)
 
-        logger.info("Last run version was %s or earlier, current version is %s" % (last_version, CURRENT_VERSION))
+    def perform_upgrade_after_loading_options(self):
+        current_version = varietyconfig.get_version()
+
+        if not os.path.exists(os.path.join(self.config_folder, ".firstrun")):
+            # running for the first time
+            last_version = current_version
+            self.write_current_version()
+        else:
+            try:
+                with open(os.path.join(self.config_folder, ".version")) as f:
+                        last_version = f.read().strip()
+            except Exception:
+                last_version = "0.4.12" # this is the last release that did not have the .version file
+
+        logger.info("Last run version was %s or earlier, current version is %s" % (last_version, current_version))
         if Util.compare_versions(last_version, "0.4.13") < 0:
             logger.info("Performing upgrade to 0.4.13 - writing %s to current download folder %s" %
                         (DL_FOLDER_FILE, self.options.download_folder))
@@ -1501,10 +1513,8 @@ class VarietyWindow(Gtk.Window):
                 with open(dl_folder_file, "w") as f:
                     f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-        if Util.compare_versions(last_version, CURRENT_VERSION) < 0:
-            logger.info("Writing current version %s to .version" % CURRENT_VERSION)
-            with open(os.path.join(self.config_folder, ".version"), "w") as f:
-                f.write(CURRENT_VERSION)
+        if Util.compare_versions(last_version, current_version) < 0:
+            self.write_current_version()
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
