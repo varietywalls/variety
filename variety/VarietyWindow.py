@@ -362,6 +362,7 @@ class VarietyWindow(Gtk.Window):
             with self.prepared_lock:
                 self.prepared_cleared = True
                 self.prepared = []
+                self.prepare_event.set()
             self.image_count = -1
         else:
             logger.info("No need to clear prepared queue")
@@ -677,6 +678,7 @@ class VarietyWindow(Gtk.Window):
                 logger.exception("Exception in clock_thread")
 
     def find_images(self):
+        self.prepared_cleared = False
         images = self.select_random_images(100)
 
         found = set()
@@ -687,8 +689,10 @@ class VarietyWindow(Gtk.Window):
                 if not self.running:
                     return
                 if self.prepared_cleared:
-                    self.prepared_cleared = False
+                    # restart the search
+                    self.find_images()
                     return
+
                 try:
                     if not img in found and self.image_ok(img, fuzziness):
                         #print "OK at fz %d: %s" % (fuzziness, img)
@@ -701,8 +705,10 @@ class VarietyWindow(Gtk.Window):
 
         with self.prepared_lock:
             if self.prepared_cleared:
-                self.prepared_cleared = False
+                # restart the search
+                self.find_images()
                 return
+
             self.prepared.extend(found)
             if not self.prepared and images:
                 logger.info("Prepared buffer still empty after search, appending some non-ok image")
