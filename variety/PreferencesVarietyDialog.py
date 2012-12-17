@@ -21,6 +21,7 @@
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
 from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+import shutil
 
 import threading
 from variety.Util import Util
@@ -268,6 +269,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.add_menu.popup(None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time())
 
+    def on_remove_sources_clicked(self, widget=None):
+        def position(x, y):
+            button_alloc = self.ui.remove_sources.get_allocation()
+            window_pos = self.ui.remove_sources.get_window().get_position()
+            return button_alloc.x + window_pos[0], button_alloc.y + button_alloc.height + window_pos[1], True
+
+        self.build_remove_button_menu().popup(None, self.ui.remove_sources, position, None, 0, Gtk.get_current_event_time())
+
     def build_add_button_menu(self):
         self.add_menu = Gtk.Menu()
 
@@ -287,6 +296,27 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.add_menu.append(item)
 
         self.add_menu.show_all()
+
+    def build_remove_button_menu(self):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        has_downloaders = any(Options.str_to_type(model[row][1]) in Options.SourceType.dl_types for row in rows)
+
+        remove_menu = Gtk.Menu()
+        item1 = Gtk.MenuItem()
+        item1.set_label(_("Remove the sources, keep the files"))
+        item1.connect("activate", self.remove_sources)
+        remove_menu.append(item1)
+
+        item2 = Gtk.MenuItem()
+        def _remove_with_files(widget=None):
+            self.remove_sources(delete_files=True)
+        item2.set_label(_("Remove the sources and delete the downloaded files"))
+        item2.connect("activate", _remove_with_files)
+        item2.set_sensitive(has_downloaders)
+        remove_menu.append(item2)
+
+        remove_menu.show_all()
+        return remove_menu
 
     def source_enabled_toggled(self, widget, path, model):
         row = model[path]
@@ -453,8 +483,20 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.sources.scroll_to_cell(i, None, False, 0, 0)
                 return
 
-    def on_remove_sources_clicked(self, widget=None):
+    def remove_sources(self, widget=None, delete_files = False):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
+
+        if delete_files:
+            for row in rows:
+                type = Options.str_to_type(model[row][1])
+                if type in Options.SourceType.dl_types and type not in UNREMOVEABLE_TYPES:
+                    folder = self.parent.get_folder_of_source(self.model_row_to_source(model[row]))
+                    if Util.file_in(folder, self.parent.real_download_folder):
+                        try:
+                            shutil.rmtree(folder)
+                        except Exception:
+                            logger.exception("Could not remove download folder contents " + folder)
+
         # store the treeiters from paths
         iters = []
         for row in rows:
@@ -551,6 +593,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.remove_sources.set_sensitive(len(rows) > 0)
 
+    def model_row_to_source(self, row):
+        return [row[0], Options.str_to_type(row[1]), row[2]]
+
     def show_thumbs(self, sources):
         try:
             if not sources:
@@ -571,7 +616,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     image_count += 1
                     images.append(source[2])
                 else:
-                    folder = self.parent.get_folder_of_source([source[0], Options.str_to_type(source[1]), source[2]])
+                    folder = self.parent.get_folder_of_source(self.model_row_to_source(source))
                     image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
                     folders.append(folder)
 

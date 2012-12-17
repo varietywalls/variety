@@ -379,10 +379,13 @@ class ThumbsWindow(Gtk.Window):
             y = self.mouse_position[1]
 
             Gdk.threads_enter()
-            if self.is_horizontal() and y > 0:
-                self.autoscroll_step(self.scroll.get_hadjustment(), self.scroll.get_min_content_width(), x)
-            elif not self.is_horizontal() and x > 0:
-                self.autoscroll_step(self.scroll.get_vadjustment(), self.scroll.get_min_content_height(), y)
+            try:
+                if self.is_horizontal() and y > 0:
+                    self.autoscroll_step(self.scroll.get_hadjustment(), self.scroll.get_min_content_width(), x)
+                elif not self.is_horizontal() and x > 0:
+                    self.autoscroll_step(self.scroll.get_vadjustment(), self.scroll.get_min_content_height(), y)
+            except Exception:
+                pass
 
             Gdk.threads_leave()
 
