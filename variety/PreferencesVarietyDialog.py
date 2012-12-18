@@ -308,14 +308,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         remove_menu = Gtk.Menu()
         item1 = Gtk.MenuItem()
-        item1.set_label(_("Remove the source, keep the files"))
+        item1.set_label(_("Remove the source, keep the files") if len(rows) == 1 else
+            _("Remove the sources, keep the files"))
         item1.connect("activate", self.remove_sources)
         remove_menu.append(item1)
 
         item2 = Gtk.MenuItem()
         def _remove_with_files(widget=None):
             self.remove_sources(delete_files=True)
-        item2.set_label(_("Remove the source and delete the downloaded files"))
+        item2.set_label(_("Remove the source and delete the downloaded files") if len(rows) == 1 else
+            _("Remove the sources and delete the downloaded files"))
         item2.connect("activate", _remove_with_files)
         item2.set_sensitive(has_downloaders)
         remove_menu.append(item2)
