@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_flickr_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddFlickrDialog" id="add_flickr_dialog">
     <property name="width_request">650</property>
     <property name="can_focus">False</property>
@@ -45,6 +45,8 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
@@ -133,6 +135,7 @@
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                     <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
@@ -179,6 +182,7 @@ Example: yellow,car</property>
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                     <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
@@ -225,6 +229,7 @@ Example: &lt;a href="http://www.flickr.com/photos/peter-levi/"&gt;http://www.fli
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                     <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
@@ -270,6 +275,7 @@ Example: &lt;a href="http://www.flickr.com/groups/wallpapers/"&gt;http://www.fli
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                     <property name="invisible_char_set">True</property>
                   </object>
                   <packing>

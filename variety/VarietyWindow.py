@@ -1101,7 +1101,6 @@ class VarietyWindow(Gtk.Window):
                 self.position = 0
                 if self.quotes_engine and self.options.quotes_enabled:
                     self.quotes_engine.bypass_history()
-            print "XXXXXXXXXXXXXX"
             self.change_wallpaper()
 
     def move_to_history_position(self, position):
@@ -1166,7 +1165,6 @@ class VarietyWindow(Gtk.Window):
             if self.quotes_engine and self.options.quotes_enabled:
                 self.quote = self.quotes_engine.change_quote()
 
-            print "YYYYYYYYYYYYY", img
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")

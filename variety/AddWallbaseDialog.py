@@ -191,6 +191,7 @@ class AddWallbaseDialog(Gtk.Dialog):
 
         if len(self.error) > 0:
             self.ui.error.set_label(self.error)
+            self.ui.query.grab_focus()
         else:
             if len(search):
                 self.parent.on_wallbase_dialog_okay(search, self.edited_row)

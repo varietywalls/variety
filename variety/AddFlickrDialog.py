@@ -146,6 +146,10 @@ class AddFlickrDialog(Gtk.Dialog):
 
         if len(self.error) > 0:
             self.ui.error.set_label(self.error)
+            for entry in (self.ui.text, self.ui.tags, self.ui.user_url, self.ui.group_url):
+                if entry.get_text().strip():
+                    entry.grab_focus()
+                    break
         else:
             if len(search):
                 self.parent.on_flickr_dialog_okay(search, self.edited_row)

@@ -86,6 +86,7 @@ class AddMediaRssDialog(Gtk.Dialog):
             self.ui.url.set_sensitive(True)
             self.ui.message.set_visible(False)
             self.ui.spinner.set_visible(False)
+            self.ui.url.grab_focus()
         else:
             self.parent.on_mediarss_dialog_okay(url, self.edited_row)
             self.destroy()
