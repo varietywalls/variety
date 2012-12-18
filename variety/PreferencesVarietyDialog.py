@@ -299,18 +299,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def build_remove_button_menu(self):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
-        has_downloaders = any(Options.str_to_type(model[row][1]) in Options.SourceType.dl_types for row in rows)
+
+        has_downloaders = False
+        for row in rows:
+            type = Options.str_to_type(model[row][1])
+            if type in Options.SourceType.dl_types and type not in UNREMOVEABLE_TYPES:
+                has_downloaders = True
 
         remove_menu = Gtk.Menu()
         item1 = Gtk.MenuItem()
-        item1.set_label(_("Remove the sources, keep the files"))
+        item1.set_label(_("Remove the source, keep the files"))
         item1.connect("activate", self.remove_sources)
         remove_menu.append(item1)
 
         item2 = Gtk.MenuItem()
         def _remove_with_files(widget=None):
             self.remove_sources(delete_files=True)
-        item2.set_label(_("Remove the sources and delete the downloaded files"))
+        item2.set_label(_("Remove the source and delete the downloaded files"))
         item2.connect("activate", _remove_with_files)
         item2.set_sensitive(has_downloaders)
         remove_menu.append(item2)
@@ -490,12 +495,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             for row in rows:
                 type = Options.str_to_type(model[row][1])
                 if type in Options.SourceType.dl_types and type not in UNREMOVEABLE_TYPES:
-                    folder = self.parent.get_folder_of_source(self.model_row_to_source(model[row]))
-                    if Util.file_in(folder, self.parent.real_download_folder):
-                        try:
-                            shutil.rmtree(folder)
-                        except Exception:
-                            logger.exception("Could not remove download folder contents " + folder)
+                    source = self.model_row_to_source(model[row])
+                    self.parent.delete_files_of_source(source)
 
         # store the treeiters from paths
         iters = []

@@ -458,6 +458,25 @@ class VarietyWindow(Gtk.Window):
             dlr.update_download_folder()
             return dlr.target_folder
 
+    def delete_files_of_source(self, source):
+        folder = self.get_folder_of_source(source)
+        if Util.file_in(folder, self.real_download_folder):
+            self.remove_folder_from_queues(folder)
+            should_repaint = \
+                self.thumbs_manager.is_showing("history") or self.thumbs_manager.is_showing("downloads") or (
+                self.thumbs_manager.get_folders() is not None and folder in self.thumbs_manager.get_folders())
+
+            if should_repaint:
+                self.thumbs_manager.repaint()
+            try:
+                logger.info("Deleting recursively folder " + folder)
+                shutil.rmtree(folder)
+            except Exception:
+                logger.exception("Could not delete download folder contents " + folder)
+            if Util.file_in(self.current, folder):
+                change_timer = threading.Timer(1, self.next_wallpaper)
+                change_timer.start()
+
     def load_banned(self):
         self.banned = set()
         try:
@@ -1082,6 +1101,7 @@ class VarietyWindow(Gtk.Window):
                 self.position = 0
                 if self.quotes_engine and self.options.quotes_enabled:
                     self.quotes_engine.bypass_history()
+            print "XXXXXXXXXXXXXX"
             self.change_wallpaper()
 
     def move_to_history_position(self, position):
@@ -1146,6 +1166,7 @@ class VarietyWindow(Gtk.Window):
             if self.quotes_engine and self.options.quotes_enabled:
                 self.quote = self.quotes_engine.change_quote()
 
+            print "YYYYYYYYYYYYY", img
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
             logger.exception("Could not change wallpaper")
@@ -1386,10 +1407,18 @@ class VarietyWindow(Gtk.Window):
             logger.exception("Could not ban URL")
 
     def remove_from_queues(self, file):
+        self.position = max(0, self.position - sum(1 for f in self.used[:self.position] if f == file))
         self.used = [f for f in self.used if f != file]
         self.downloaded = [f for f in self.downloaded if f != file]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
+
+    def remove_folder_from_queues(self, folder):
+        self.position = max(0, self.position - sum(1 for f in self.used[:self.position] if Util.file_in(f, folder)))
+        self.used = [f for f in self.used if not Util.file_in(f, folder)]
+        self.downloaded = [f for f in self.downloaded if not Util.file_in(f, folder)]
+        with self.prepared_lock:
+            self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
     def copy_to_favorites(self, widget=None, file=None):
         try:
