@@ -82,3 +82,29 @@ class Downloader(object):
 
         logger.info("Download complete")
         return local_filename
+
+    def parse_server_options(self, key, default_min_download_interval, default_min_fill_queue_interval):
+        min_download_interval = default_min_download_interval
+        min_fill_queue_interval = default_min_fill_queue_interval
+
+        try:
+            logger.info("%s: parsing serverside options" % self.name)
+            options = self.parent.server_options[key]
+            logger.info("%s serverside options: %s" % (self.name, str(options)))
+        except Exception:
+            logger.exception("Could not parse %s serverside options, using defaults %d, %d" % (
+                self.name, min_download_interval, min_fill_queue_interval))
+            return min_download_interval, min_fill_queue_interval
+
+        try:
+            min_download_interval = int(options["min_download_interval"])
+        except Exception:
+            logger.exception("Bad or missing min_download_interval")
+
+        try:
+            min_fill_queue_interval = int(options["min_fill_queue_interval"])
+        except Exception:
+            logger.exception("Bad or missing min_fill_queue_interval")
+
+        return min_download_interval, min_fill_queue_interval
+

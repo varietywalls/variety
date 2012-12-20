@@ -68,6 +68,7 @@ DL_FOLDER_FILE = ".variety_download_folder"
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
+    SERVERSIDE_OPTIONS_URL = "http://bit.ly/variety_serverside_options"
     MAX_FILES = 10000
 
     def __init__(self):
@@ -111,6 +112,7 @@ class VarietyWindow(Gtk.Window):
 
         # load config
         self.options = None
+        self.server_options = {}
         self.load_banned()
         self.load_history()
         self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
@@ -512,6 +514,10 @@ class VarietyWindow(Gtk.Window):
 
         self.events.extend([self.change_event, self.prepare_event, self.dl_event])
 
+        server_options_thread = threading.Thread(target=self.server_options_thread)
+        server_options_thread.daemon = True
+        server_options_thread.start()
+
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
@@ -764,6 +770,25 @@ class VarietyWindow(Gtk.Window):
 
             self.prepare_event.wait()
             self.prepare_event.clear()
+
+    def server_options_thread(self):
+        attempts = 0
+        while self.running:
+            try:
+                attempts += 1
+                logger.info("Fetching server options")
+                self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+                logger.info("Fetched server options: %s" % str(self.server_options))
+                if self.preferences_dialog:
+                    self.preferences_dialog.update_status_message()
+            except Exception:
+                logger.exception("Could not fetch Variety serverside options")
+                if attempts < 5:
+                    # the first several attempts may easily fail if Variety is run on startup, try again soon:
+                    time.sleep(30)
+                    continue
+
+            time.sleep(3600 * 24) # Update once daily
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher) > 0

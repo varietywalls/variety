@@ -21,7 +21,6 @@
 # See http://developer.gnome.org/gio/stable/GSettings.html for more info.
 
 from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
-import shutil
 
 import threading
 from variety.Util import Util
@@ -64,8 +63,6 @@ EDITABLE_TYPES = [
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
 
-    STATUS_MESSAGE_URL = "http://bit.ly/variety_status_message"
-
     def finish_initializing(self, builder, parent): # pylint: disable=E1002
         """Set up the preferences dialog"""
         super(PreferencesVarietyDialog, self).finish_initializing(builder, parent)
@@ -83,28 +80,27 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.loading = False
         self.reload()
 
-        msg_timer = threading.Timer(30, self.fetch_status_message)
-        msg_timer.daemon = True
-        msg_timer.start()
+    def update_status_message(self):
+        msg = ""
+        if self.parent.server_options:
+            try:
+                msg_dict = self.parent.server_options.get("status_message", {})
+                ver = varietyconfig.get_version()
+                if ver in msg_dict:
+                    msg = msg_dict[ver].strip()
+                elif "*" in msg_dict:
+                    msg = msg_dict["*"].strip()
+            except Exception:
+                logger.exception("Could not parse status message")
 
-    def fetch_status_message(self):
-        try:
-            msg_dict = Util.fetch_json(PreferencesVarietyDialog.STATUS_MESSAGE_URL)
-            msg = ""
-            ver = varietyconfig.get_version()
-            if ver in msg_dict:
-                msg = msg_dict[ver].strip()
-            elif "*" in msg_dict:
-                msg = msg_dict["*"].strip()
+        logger.info("Showing status message: %s" % msg)
+        self.set_status_message(msg)
 
-            if msg:
-                logger.info("Fetched online message: %s" % msg)
-                def _update_ui():
-                    self.ui.status_message.set_visible(True)
-                    self.ui.status_message.set_markup(msg)
-                GObject.idle_add(_update_ui)
-        except Exception:
-            logger.exception("Could not fetch Variety online message")
+    def set_status_message(self, msg):
+        def _update_ui():
+            self.ui.status_message.set_visible(msg)
+            self.ui.status_message.set_markup(msg)
+        GObject.idle_add(_update_ui)
 
     def reload(self):
         try:
@@ -251,6 +247,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.build_add_button_menu()
 
+            self.update_status_message()
             self.dialog = None
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:

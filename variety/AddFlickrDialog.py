@@ -135,7 +135,7 @@ class AddFlickrDialog(Gtk.Dialog):
         if not len(self.error) and len(search) > 0:
             self.show_spinner()
             if FlickrDownloader.count_search_results(search) <= 0:
-                self.error = "No images found"
+                self.error = _("No images found")
 
         Gdk.threads_enter()
 

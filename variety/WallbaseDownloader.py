@@ -20,6 +20,7 @@ from bs4 import BeautifulSoup
 import random
 
 import logging
+import time
 from variety import Downloader
 from variety.Util import Util
 
@@ -28,11 +29,14 @@ logger = logging.getLogger('variety')
 random.seed()
 
 class WallbaseDownloader(Downloader.Downloader):
+    last_download_time = 0
+
     def __init__(self, parent, location):
         super(WallbaseDownloader, self).__init__(parent, "Wallbase.cc", location)
         self.parse_location()
         self.type = self.params["type"]
         self.prefer_favs = "order" in self.params and self.params["order"] == "favs"
+        self.last_fill_time = 0
         self.queue = []
 
     def convert_to_filename(self, url):
@@ -97,14 +101,28 @@ class WallbaseDownloader(Downloader.Downloader):
             return False
 
     def download_one(self):
+        min_download_interval, min_fill_queue_interval = self.parse_server_options("wallbase", 0, 0)
+
+        if time.time() - WallbaseDownloader.last_download_time < min_download_interval:
+            logger.info("Minimal interval between Wallbase downloads is %d, skip this attempt" % min_download_interval)
+            return None
+
         logger.info("Downloading an image from Wallbase.cc, " + self.location)
         logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
+            if time.time() - self.last_fill_time < min_fill_queue_interval:
+                logger.info("Wallbase queue empty, but minimal interval between fill attempts is %d, will try again later" %
+                            min_fill_queue_interval)
+                return None
+
             self.fill_queue()
+
         if not self.queue:
             logger.info("Wallbase queue still empty after fill request")
             return None
+
+        WallbaseDownloader.last_download_time = time.time()
 
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
@@ -118,6 +136,8 @@ class WallbaseDownloader(Downloader.Downloader):
         return self.save_locally(wallpaper_url, src_url)
 
     def fill_queue(self):
+        self.last_fill_time = time.time()
+
         logger.info("Filling wallbase queue: " + self.location)
         s = self.search()
 
