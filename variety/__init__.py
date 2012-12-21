@@ -16,6 +16,7 @@
 
 import gettext
 from gettext import gettext as _
+import os
 import sys
 
 DBUS_KEY = 'com.peterlevi.Variety'
@@ -60,6 +61,8 @@ def main():
     signal.signal(signal.SIGINT, sigint_handler)
     signal.signal(signal.SIGTERM, sigint_handler)
     signal.signal(signal.SIGQUIT, sigint_handler)
+
+    Util.makedirs(os.path.expanduser("~/.config/variety/"))
 
     arguments = sys.argv[1:]
     # validate arguments and set up logging
