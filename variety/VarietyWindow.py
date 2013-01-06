@@ -115,7 +115,10 @@ class VarietyWindow(Gtk.Window):
         self.server_options = {}
         self.load_banned()
         self.load_history()
-        self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
+
+        if self.position < len(self.used):
+            self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
+
         self.reload_config(initial_run=True)
         self.load_last_change_time()
 
@@ -913,7 +916,7 @@ class VarietyWindow(Gtk.Window):
         CLOCK_ONLY = 3
 
     def set_wp_throttled(self, filename, delay=0.3, refresh_level=RefreshLevel.ALL):
-        self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
+        self.thumbs_manager.mark_active(file=filename, position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
         def _do_set_wp(): self.do_set_wp(filename, refresh_level)
@@ -1838,12 +1841,16 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
 
-                            if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
-                                at_front = self.position == 0
+                            try:
+                                if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
+                                    at_front = self.position == 0
+                                    self.used.insert(self.position, file)
+                                    self.position += 1
+                                    self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
+                                    self.refresh_thumbs_history(file, at_front)
+                            except IndexError:
                                 self.used.insert(self.position, file)
                                 self.position += 1
-                                self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
-                                self.refresh_thumbs_history(file, at_front)
 
             except Exception:
                 logger.exception("Exception in process_urls")
