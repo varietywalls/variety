@@ -73,6 +73,7 @@ class Options:
 
         try:
             config = self.read_config()
+            self.config = config
             needs_writing = self.fix_outdated(config)
 
             try:
@@ -324,6 +325,11 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.reporting_enabled = config["facebook_show_dialog"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -497,12 +503,15 @@ class Options:
             [False, "Pixellate", "-scale 3% -scale 3333%"]
         ]
 
-    def write(self):
-        try:
-            config = ConfigObj(self.configfile)
-        except Exception:
-            config = ConfigObj()
-            config.filename = self.configfile
+    def write(self, reread_first=True, outfile=None):
+        if reread_first:
+            try:
+                config = ConfigObj(self.configfile)
+            except Exception:
+                config = ConfigObj()
+                config.filename = self.configfile
+        else:
+            config = self.config
 
         try:
             config["change_enabled"] = str(self.change_enabled)
@@ -568,7 +577,7 @@ class Options:
             for i, f in enumerate(self.filters):
                 config["filters"]["filter" + str(i + 1)] = str(f[0]) + "|" + f[1] + "|" + f[2]
 
-            config.write()
+            config.write(outfile)
 
         except Exception:
             logger.exception("Could not write configuration:")

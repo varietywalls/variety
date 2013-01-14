@@ -18,9 +18,9 @@ import gettext
 from gettext import gettext as _
 import subprocess
 import urllib
+from variety.Stats import Stats
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
-from variety_lib.varietyconfig import get_version
 
 gettext.textdomain('variety')
 
@@ -1627,7 +1627,7 @@ Passing local files will add them to Variety's queue.
 Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
 
 To set a specific wallpaper: %prog /some/local/image.jpg --next""")
-        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % get_version(), report_errors=report_errors)
+        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % varietyconfig.get_version(), report_errors=report_errors)
 
         parser.add_option(
             "-v", "--verbose", action="count", dest="verbose",
