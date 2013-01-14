@@ -326,7 +326,7 @@ class Options:
                 pass
 
             try:
-                self.reporting_enabled = config["facebook_show_dialog"].lower() in TRUTH_VALUES
+                self.reporting_enabled = config["reporting_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
 
@@ -481,6 +481,8 @@ class Options:
         self.quotes_hpos = 100
         self.quotes_vpos = 40
 
+        self.reporting_enabled = False
+
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
@@ -568,6 +570,8 @@ class Options:
             config["quotes_width"] = str(self.quotes_width)
             config["quotes_hpos"] = str(self.quotes_hpos)
             config["quotes_vpos"] = str(self.quotes_vpos)
+
+            config["reporting_enabled"] = str(self.reporting_enabled)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
