@@ -775,6 +775,7 @@ class VarietyWindow(Gtk.Window):
             self.prepare_event.clear()
 
     def server_options_thread(self):
+        time.sleep(20)
         attempts = 0
         while self.running:
             try:

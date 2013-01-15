@@ -156,6 +156,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.favorites_operations = self.options.favorites_operations
 
+            self.ui.reporting_enabled.set_active(self.options.reporting_enabled)
+
             self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
 
             self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
@@ -770,6 +772,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             elif self.ui.favorites_operations.get_active() == 3:
                 # will be set in the favops editor dialog
                 pass
+
+            self.options.reporting_enabled = self.ui.reporting_enabled.get_active()
 
             self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
 
