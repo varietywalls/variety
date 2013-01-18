@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-19 00:09+0200\n"
+"POT-Creation-Date: 2013-01-19 01:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1293,14 +1293,12 @@ msgid "Are dark or light:"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:94
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
-msgctxt ""
+msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:95
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
-msgctxt ""
+msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr ""
 
@@ -1367,17 +1365,28 @@ msgstr ""
 msgid "Indicator icon:"
 msgstr ""
 
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+msgctxt "Icon option"
+msgid "Light"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+msgctxt "Icon option"
+msgid "Dark"
+msgstr ""
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:113
+msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:114
-msgctxt ""
+msgctxt "Icon option"
 msgid "Custom image..."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:115
-msgctxt ""
+msgctxt "Icon option"
 msgid "None"
 msgstr ""
 
