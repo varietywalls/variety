@@ -37,16 +37,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -2298,8 +2288,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="entry_text_column">0</property>
                             <property name="id_column">1</property>
                             <items>
-                              <item translatable="yes" context="&quot;Are dark or light&quot; option">Dark</item>
-                              <item translatable="yes" context="&quot;Are dark or light&quot; option">Light</item>
+                              <item translatable="yes" comments="Color option - images that are dark or light" context="Color option - images that are dark or light">Dark</item>
+                              <item translatable="yes" comments="Color option - images that are dark or light" context="Color option - images that are dark or light">Light</item>
                             </items>
                             <signal name="changed" handler="delayed_apply" swapped="no"/>
                           </object>
@@ -2608,11 +2598,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="entry_text_column">0</property>
                             <property name="id_column">1</property>
                             <items>
-                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Light</item>
-                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Dark</item>
-                              <item translatable="yes">Use current wallpaper</item>
-                              <item translatable="yes" context="&quot;Indicator icon&quot; option">Custom image...</item>
-                              <item translatable="yes" context="&quot;Indicator icon&quot; option">None</item>
+                              <item translatable="yes" comments="Icon option" context="Icon option">Light</item>
+                              <item translatable="yes" comments="Icon option" context="Icon option">Dark</item>
+                              <item translatable="yes" context="Icon option">Use current wallpaper</item>
+                              <item translatable="yes" context="Icon option">Custom image...</item>
+                              <item translatable="yes" context="Icon option">None</item>
                             </items>
                             <signal name="changed" handler="on_icon_changed" swapped="no"/>
                             <signal name="changed" handler="delayed_apply" swapped="no"/>
@@ -3418,6 +3408,16 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>

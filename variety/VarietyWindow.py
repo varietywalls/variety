@@ -89,6 +89,7 @@ class VarietyWindow(Gtk.Window):
         self.quotes_engine = None
         self.quote = None
         self.clock_thread = None
+        self.reporting_thread = None
 
         self.prepare_config_folder()
 
@@ -373,6 +374,7 @@ class VarietyWindow(Gtk.Window):
             logger.info("No need to clear prepared queue")
 
         self.start_clock_thread()
+        self.start_reporting_thread()
 
         if self.options.quotes_enabled and not self.quotes_engine:
             self.quotes_engine = QuotesEngine(self)
@@ -498,6 +500,12 @@ class VarietyWindow(Gtk.Window):
             self.clock_thread = threading.Thread(target=self.clock_thread_method)
             self.clock_thread.daemon = True
             self.clock_thread.start()
+
+    def start_reporting_thread(self):
+        if not self.reporting_thread and self.options.reporting_enabled:
+            self.reporting_thread = threading.Thread(target=self.reporting_thread_method)
+            self.reporting_thread.daemon = True
+            self.reporting_thread.start()
 
     def start_threads(self):
         self.change_event = threading.Event()
@@ -793,6 +801,45 @@ class VarietyWindow(Gtk.Window):
                     continue
 
             time.sleep(3600 * 24) # Update once daily
+
+    def reporting_thread_method(self):
+        time.sleep(20)
+        attempts = 0
+        while self.running:
+            try:
+                attempts += 1
+                if self.options.reporting_enabled:
+                    self.report_stats()
+            except Exception:
+                logger.exception("Could not report stats")
+                if attempts < 3:
+                    # the first several attempts may easily fail if Variety is run on startup, try again soon:
+                    time.sleep(30)
+                    continue
+
+            time.sleep(3600 * 24) # Report once daily
+
+    def report_stats(self):
+        logger.info("Reporting stats anonymously")
+
+        try:
+            with open(os.path.join(self.config_folder, ".statsid")) as f:
+                statsid = f.read().strip()
+        except Exception:
+            statsid = None
+
+        if not statsid or not re.match(r"^([a-f]|\d)+$", statsid):
+            statsid = Util.md5(str(time.time()) + str(random.random()))
+            with open(os.path.join(self.config_folder, ".statsid"), "w") as f:
+                f.write(statsid)
+
+        try:
+            data = urllib.urlencode({"report": Stats.get_stats(self)})
+            res = Util.fetch_json("http://peterlevi.com/varietyapi/0.1/report_stats/%s" % statsid, data=data)
+            if res["result"] == "ok":
+                logger.info("Stats reported OK")
+        except Exception:
+            raise
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher) > 0

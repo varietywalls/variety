@@ -25,6 +25,7 @@ import time
 import pyexiv2
 import urllib
 import urllib2
+import hashlib
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 
@@ -334,3 +335,7 @@ class Util:
         s1 = _score(v1)
         s2 = _score(v2)
         return -1 if s1 < s2 else (0 if s1 == s2 else 1)
+
+    @staticmethod
+    def md5(s):
+        return hashlib.md5(s).hexdigest()
