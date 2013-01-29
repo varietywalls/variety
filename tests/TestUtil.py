@@ -88,5 +88,11 @@ class TestUtil(unittest.TestCase):
         self.assertEquals(1, Util.compare_versions("0.4.10", "0.4"))
         self.assertEquals(1, Util.compare_versions("0.4.10", "0"))
 
+    def test_md5(self):
+        self.assertEquals("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
+
+    def test_md5file(self):
+        self.assertEquals("a32377b309e3230f3c89c455ef1bdf0b", Util.md5file("test.jpg"))
+
 if __name__ == '__main__':
     unittest.main()

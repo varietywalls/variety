@@ -217,7 +217,7 @@ class VarietyWindow(Gtk.Window):
         pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
         if not os.path.exists(pencil_tile_filename):
             def _generate_pencil_tile():
-                logger.info("Missing pencil_tile.png file, generating it" +
+                logger.info("Missing pencil_tile.png file, generating it " +
                             varietyconfig.get_data_file("media", "pencil_tile.png"))
                 try:
                     os.system(
@@ -228,9 +228,20 @@ class VarietyWindow(Gtk.Window):
             threading.Timer(0, _generate_pencil_tile).start()
 
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
-        if not os.path.exists(self.scripts_folder):
-            logger.info("Missing scripts dir, copying it from " + varietyconfig.get_data_file("scripts"))
-            shutil.copytree(varietyconfig.get_data_file("scripts"), self.scripts_folder)
+        Util.makedirs(self.scripts_folder)
+
+        set_wallpaper_file = os.path.join(self.scripts_folder, "set_wallpaper")
+        if not os.path.exists(set_wallpaper_file) or \
+           Util.md5file(set_wallpaper_file) in ("b8ff9cb65e3bb7375c4e2a6e9611c7f8"):
+            logger.info("Missing or outdated set_wallpaper file, copying it from " +
+                        varietyconfig.get_data_file("scripts", "set_wallpaper"))
+            shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
+
+        get_wallpaper_file = os.path.join(self.scripts_folder, "get_wallpaper")
+        if not os.path.exists(get_wallpaper_file):
+            logger.info("Missing get_wallpaper file, copying it from " +
+                        varietyconfig.get_data_file("scripts", "get_wallpaper"))
+            shutil.copy(varietyconfig.get_data_file("scripts", "get_wallpaper"), self.scripts_folder)
 
         # make all scripts executable:
         for f in os.listdir(self.scripts_folder):
@@ -835,7 +846,7 @@ class VarietyWindow(Gtk.Window):
 
         try:
             data = urllib.urlencode({"report": Stats.get_stats(self)})
-            res = Util.fetch_json("http://peterlevi.com/varietyapi/0.1/report_stats/%s" % statsid, data=data)
+            res = Util.fetch_json("http://varietyapi.peterlevi.com/0.1/report_stats/%s" % statsid, data=data)
             if res["result"] == "ok":
                 logger.info("Stats reported OK")
         except Exception:

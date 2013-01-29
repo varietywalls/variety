@@ -339,3 +339,8 @@ class Util:
     @staticmethod
     def md5(s):
         return hashlib.md5(s).hexdigest()
+
+    @staticmethod
+    def md5file(file):
+        with open(file) as f:
+            return Util.md5(f.read())
