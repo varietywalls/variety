@@ -71,6 +71,14 @@ class VarietyWindow(Gtk.Window):
     SERVERSIDE_OPTIONS_URL = "http://bit.ly/variety_serverside_options"
     MAX_FILES = 10000
 
+    OUTDATED_SET_WP_SCRIPTS = {
+        "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
+        "3729d3e1f57aa1159988ba2c8f929389",
+        "feafa658d9686ecfabdbcf236c32fd0f",
+        "83d8ebeec3676474bdd90c55417e8640",
+        "1562cb289319aa39ac1b37a8ee4c0103"
+    }
+
     def __init__(self):
         pass
 
@@ -197,7 +205,6 @@ class VarietyWindow(Gtk.Window):
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
-
         Util.makedirs(self.config_folder)
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
@@ -213,6 +220,24 @@ class VarietyWindow(Gtk.Window):
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
 
+        self.scripts_folder = os.path.join(self.config_folder, "scripts")
+        Util.makedirs(self.scripts_folder)
+
+        if not os.path.exists(os.path.join(self.scripts_folder, "set_wallpaper")):
+            logger.info("Missing set_wallpaper file, copying it from " +
+                        varietyconfig.get_data_file("scripts", "set_wallpaper"))
+            shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
+
+        if not os.path.exists(os.path.join(self.scripts_folder, "get_wallpaper")):
+            logger.info("Missing get_wallpaper file, copying it from " +
+                        varietyconfig.get_data_file("scripts", "get_wallpaper"))
+            shutil.copy(varietyconfig.get_data_file("scripts", "get_wallpaper"), self.scripts_folder)
+
+        # make all scripts executable:
+        for f in os.listdir(self.scripts_folder):
+            path = os.path.join(self.scripts_folder, f)
+            os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+
         # TODO: Sort of hacky to have filter-related code here, they should be more isolated
         pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
         if not os.path.exists(pencil_tile_filename):
@@ -226,27 +251,6 @@ class VarietyWindow(Gtk.Window):
                 except Exception:
                     logger.exception("Could not generate pencil_tile.gif")
             threading.Timer(0, _generate_pencil_tile).start()
-
-        self.scripts_folder = os.path.join(self.config_folder, "scripts")
-        Util.makedirs(self.scripts_folder)
-
-        set_wallpaper_file = os.path.join(self.scripts_folder, "set_wallpaper")
-        if not os.path.exists(set_wallpaper_file) or \
-           Util.md5file(set_wallpaper_file) in ("b8ff9cb65e3bb7375c4e2a6e9611c7f8"):
-            logger.info("Missing or outdated set_wallpaper file, copying it from " +
-                        varietyconfig.get_data_file("scripts", "set_wallpaper"))
-            shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
-
-        get_wallpaper_file = os.path.join(self.scripts_folder, "get_wallpaper")
-        if not os.path.exists(get_wallpaper_file):
-            logger.info("Missing get_wallpaper file, copying it from " +
-                        varietyconfig.get_data_file("scripts", "get_wallpaper"))
-            shutil.copy(varietyconfig.get_data_file("scripts", "get_wallpaper"), self.scripts_folder)
-
-        # make all scripts executable:
-        for f in os.listdir(self.scripts_folder):
-            path = os.path.join(self.scripts_folder, f)
-            os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
 
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):
@@ -1623,9 +1627,18 @@ class VarietyWindow(Gtk.Window):
                 last_version = "0.4.12" # this is the last release that did not have the .version file
 
         logger.info("Last run version was %s or earlier, current version is %s" % (last_version, current_version))
+
         if Util.compare_versions(last_version, "0.4.13") < 0:
-            logger.info("Performing upgrade to 0.4.13 - writing %s to current download folder %s" %
-                        (DL_FOLDER_FILE, self.options.download_folder))
+            logger.info("Performing upgrade to 0.4.13")
+
+            set_wallpaper_file = os.path.join(self.scripts_folder, "set_wallpaper")
+            if not os.path.exists(set_wallpaper_file) or\
+               Util.md5file(set_wallpaper_file) in VarietyWindow.OUTDATED_SET_WP_SCRIPTS:
+                logger.info("Outdated set_wallpaper file, copying it from " +
+                            varietyconfig.get_data_file("scripts", "set_wallpaper"))
+                shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
+
+            logger.info("Writing %s to current download folder %s" % (DL_FOLDER_FILE, self.options.download_folder))
             # mark the current download folder as a valid download folder
             Util.makedirs(self.options.download_folder)
             dl_folder_file = os.path.join(self.options.download_folder, DL_FOLDER_FILE)
