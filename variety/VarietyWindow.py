@@ -20,7 +20,6 @@ import subprocess
 import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
-from variety_lib.varietyconfig import get_version
 
 gettext.textdomain('variety')
 
@@ -583,57 +582,59 @@ class VarietyWindow(Gtk.Window):
 
             deleteable = os.access(file, os.W_OK) and not self.is_current_refreshable()
             favs_op = self.determine_favorites_operation(file)
+            image_source = self.get_source(file)
 
             if not is_gtk_thread:
                 Gdk.threads_enter()
 
-            rating_menu = None
-            if deleteable and self.options.show_rating_enabled:
-                rating_menu = ThumbsManager.create_rating_menu(file, self)
+            try:
+                rating_menu = None
+                if deleteable and self.options.show_rating_enabled:
+                    rating_menu = ThumbsManager.create_rating_menu(file, self)
 
-            for i in xrange(10):
-                self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
-                self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
+                for i in xrange(5):    # if only done once, the menu is not always updated for some reason
+                    self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
+                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
 
-                self.ind.focus.set_sensitive(self.get_source(file) is not None)
+                    self.ind.focus.set_sensitive(image_source is not None)
 
-                # delay enabling Trash if auto_changed
-                self.ind.trash.set_sensitive(deleteable and not auto_changed)
+                    # delay enabling Trash if auto_changed
+                    self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
-                self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
+                    self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
-                self.ind.show_origin.set_label(label)
-                self.ind.show_origin.set_sensitive(True)
+                    self.ind.show_origin.set_label(label)
+                    self.ind.show_origin.set_sensitive(True)
 
-                self.ind.rating_separator.set_visible(self.options.show_rating_enabled)
-                self.ind.rating.set_visible(self.options.show_rating_enabled)
-                self.ind.rating.set_sensitive(rating_menu is not None)
-                if rating_menu:
-                    self.ind.rating.set_submenu(rating_menu)
+                    self.ind.rating_separator.set_visible(self.options.show_rating_enabled)
+                    self.ind.rating.set_visible(self.options.show_rating_enabled)
+                    self.ind.rating.set_sensitive(rating_menu is not None)
+                    if rating_menu:
+                        self.ind.rating.set_submenu(rating_menu)
 
-                self.ind.history.handler_block(self.ind.history_handler_id)
-                self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
-                self.ind.history.handler_unblock(self.ind.history_handler_id)
+                    self.ind.history.handler_block(self.ind.history_handler_id)
+                    self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
+                    self.ind.history.handler_unblock(self.ind.history_handler_id)
 
-                self.ind.downloads.set_visible(self.options.download_enabled)
-                self.ind.downloads.set_sensitive(len(self.downloaded) > 0)
-                self.ind.downloads.handler_block(self.ind.downloads_handler_id)
-                self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
-                self.ind.downloads.handler_unblock(self.ind.downloads_handler_id)
+                    self.ind.downloads.set_visible(self.options.download_enabled)
+                    self.ind.downloads.set_sensitive(len(self.downloaded) > 0)
+                    self.ind.downloads.handler_block(self.ind.downloads_handler_id)
+                    self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
+                    self.ind.downloads.handler_unblock(self.ind.downloads_handler_id)
 
-                self.ind.publish_fb.set_visible(self.options.facebook_enabled)
-                self.ind.publish_fb.set_sensitive(self.url is not None)
+                    self.ind.publish_fb.set_visible(self.options.facebook_enabled)
+                    self.ind.publish_fb.set_sensitive(self.url is not None)
 
-                self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
+                    self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
-                self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
-                if self.quotes_engine:
-                    self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
-                self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
-                self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
-
-            if not is_gtk_thread:
-                Gdk.threads_leave()
+                    self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                    if self.quotes_engine:
+                        self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
+                    self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
+                    self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
+            finally:
+                if not is_gtk_thread:
+                    Gdk.threads_leave()
 
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
             if auto_changed:
@@ -920,7 +921,8 @@ class VarietyWindow(Gtk.Window):
         self.thumbs_manager.mark_active(file=filename, position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
-        def _do_set_wp(): self.do_set_wp(filename, refresh_level)
+        def _do_set_wp():
+            self.do_set_wp(filename, refresh_level)
         self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
@@ -1628,7 +1630,7 @@ Passing local files will add them to Variety's queue.
 Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
 
 To set a specific wallpaper: %prog /some/local/image.jpg --next""")
-        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % get_version(), report_errors=report_errors)
+        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % varietyconfig.get_version(), report_errors=report_errors)
 
         parser.add_option(
             "-v", "--verbose", action="count", dest="verbose",
