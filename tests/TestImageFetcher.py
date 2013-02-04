@@ -30,11 +30,14 @@ class TestImageFetcher(unittest.TestCase):
         self.assertEqual(None, ImageFetcher.extract_filename_from_content_disposition('attachment; a=b'))
 
     def test_url_ok(self):
-        self.assertTrue(ImageFetcher.url_ok("http://www.wallbase.cc/x/y/z", ["flickr.com", "wallbase.cc"]))
-        self.assertTrue(ImageFetcher.url_ok("https://www.flickr.com/a", ["flickr.com", "wallbase.cc"]))
-        self.assertFalse(ImageFetcher.url_ok("some garbage", ["flickr.com", "wallbase.cc"]))
-        self.assertFalse(ImageFetcher.url_ok("http://cnn.com/x/y", ["flickr.com", "wallbase.cc"]))
-        self.assertFalse(ImageFetcher.url_ok("http://somehost.com/x/y", ["","flickr.com", "wallbase.cc"]))
+        self.assertFalse(ImageFetcher.url_ok("some garbage", False, ["flickr.com", "wallbase.cc"]))
+        self.assertFalse(ImageFetcher.url_ok("some garbage", True, ["flickr.com", "wallbase.cc"]))
+        self.assertFalse(ImageFetcher.url_ok("http://www.host.com/x/y/z", False, ["flickr.com"]))
+        self.assertFalse(ImageFetcher.url_ok("http://cnn.com/x/y", True, ["flickr.com", "wallbase.cc"]))
+        self.assertFalse(ImageFetcher.url_ok("http://somehost.com/x/y", True, ["","flickr.com", "wallbase.cc"]))
+        self.assertTrue(ImageFetcher.url_ok("http://www.host.com/x/y/z.jpg", False, ["flickr.com"]))
+        self.assertTrue(ImageFetcher.url_ok("http://www.wallbase.cc/x/y/z", True, ["flickr.com", "wallbase.cc"]))
+        self.assertTrue(ImageFetcher.url_ok("https://www.flickr.com/a", True, ["flickr.com", "wallbase.cc"]))
 
 if __name__ == '__main__':
     unittest.main()

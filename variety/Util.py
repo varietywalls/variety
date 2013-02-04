@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import bs4
+import hashlib
 import json
 
 import os
@@ -334,3 +335,12 @@ class Util:
         s1 = _score(v1)
         s2 = _score(v2)
         return -1 if s1 < s2 else (0 if s1 == s2 else 1)
+
+    @staticmethod
+    def md5(s):
+        return hashlib.md5(s).hexdigest()
+
+    @staticmethod
+    def md5file(file):
+        with open(file) as f:
+            return Util.md5(f.read())
