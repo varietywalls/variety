@@ -162,7 +162,7 @@ class FacebookHelper:
 
     def publish(self, message=None, link=None, picture=None, caption=None, description=None,
                 on_success=None, on_failure=None, attempts=0):
-        def republish(action, token):
+        def republish(action=None, token=None):
             self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
                          on_success=on_success, on_failure=on_failure, attempts=attempts + 1)
 
@@ -198,13 +198,20 @@ class FacebookHelper:
         logger.info("Response: %s" % content)
 
         if "error" in response:
-            code = response["error"]["code"]
+            logger.warning("Could not publish to Facebook, error message %s" % response["error"]["message"])
+            code = response["error"].get("code", -1)
             if attempts < 2 and code in [190, 200]: # 190 is invalid token, 200 means no permission to publish
                 logger.info("Code %d, trying to reauthorize" % code)
                 self.authorize(on_success=republish, on_failure=on_failure)
                 return
             else:
-                on_failure(self, "publish", response["error"]["message"])
+                # Facebook would sometimes return an error on the first try, but succeed on the next,
+                # so retry a couple of times
+                if attempts < 3:
+                    logger.info("Retrying to publish")
+                    republish()
+                else:
+                    on_failure(self, "publish", "Facebook message:\n%s" % response["error"]["message"])
         else:
             if on_success:
                 on_success(self, "publish", content)
