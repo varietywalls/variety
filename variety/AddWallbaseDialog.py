@@ -128,13 +128,15 @@ class AddWallbaseDialog(Gtk.Dialog):
         self.ui.order_favs.set_active(True)
 
     def show_spinner(self):
-        Gdk.threads_enter()
-        self.ui.buttonbox.set_sensitive(False)
-        self.ui.message.set_visible(True)
-        self.ui.spinner.set_visible(True)
-        self.ui.spinner.start()
-        self.ui.error.set_label("")
-        Gdk.threads_leave()
+        try:
+            Gdk.threads_enter()
+            self.ui.buttonbox.set_sensitive(False)
+            self.ui.message.set_visible(True)
+            self.ui.spinner.set_visible(True)
+            self.ui.spinner.start()
+            self.ui.error.set_label("")
+        finally:
+            Gdk.threads_leave()
 
     def ok_thread(self):
         search = ""
@@ -143,9 +145,11 @@ class AddWallbaseDialog(Gtk.Dialog):
             search += "type:text;"
             query = self.ui.query.get_text().strip()
             if not len(query):
-                Gdk.threads_enter()
-                self.ui.query_error.set_visible(True)
-                Gdk.threads_leave()
+                try:
+                    Gdk.threads_enter()
+                    self.ui.query_error.set_visible(True)
+                finally:
+                    Gdk.threads_leave()
                 return
             search += "query:" + urllib.quote_plus(query) + ";"
 
@@ -182,22 +186,24 @@ class AddWallbaseDialog(Gtk.Dialog):
         if not WallbaseDownloader.validate(search):
             self.error = _("No images found")
 
-        Gdk.threads_enter()
+        try:
+            Gdk.threads_enter()
 
-        self.ui.buttonbox.set_sensitive(True)
-        self.ui.spinner.stop()
-        self.ui.spinner.set_visible(False)
-        self.ui.message.set_visible(False)
+            self.ui.buttonbox.set_sensitive(True)
+            self.ui.spinner.stop()
+            self.ui.spinner.set_visible(False)
+            self.ui.message.set_visible(False)
 
-        if len(self.error) > 0:
-            self.ui.error.set_label(self.error)
-            self.ui.query.grab_focus()
-        else:
-            if len(search):
-                self.parent.on_wallbase_dialog_okay(search, self.edited_row)
-            self.destroy()
+            if len(self.error) > 0:
+                self.ui.error.set_label(self.error)
+                self.ui.query.grab_focus()
+            else:
+                if len(search):
+                    self.parent.on_wallbase_dialog_okay(search, self.edited_row)
+                self.destroy()
 
-        Gdk.threads_leave()
+        finally:
+            Gdk.threads_leave()
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.

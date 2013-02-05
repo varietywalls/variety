@@ -66,31 +66,35 @@ class AddMediaRssDialog(Gtk.Dialog):
             threading.Timer(0.1, self.ok_thread).start()
 
     def ok_thread(self):
-        Gdk.threads_enter()
-        self.ui.message.set_visible(True)
-        self.ui.url.set_sensitive(False)
-        self.ui.spinner.set_visible(True)
-        self.ui.spinner.start()
-        self.ui.error.set_label("")
-        Gdk.threads_leave()
+        try:
+            Gdk.threads_enter()
+            self.ui.message.set_visible(True)
+            self.ui.url.set_sensitive(False)
+            self.ui.spinner.set_visible(True)
+            self.ui.spinner.start()
+            self.ui.error.set_label("")
+        finally:
+            Gdk.threads_leave()
 
         url = self.ui.url.get_text().strip()
         if not url.startswith("http://") and not url.startswith("https://"):
             url = "http://" + url
         valid = MediaRssDownloader.validate(url)
 
-        Gdk.threads_enter()
-        if not valid:
-            self.ui.error.set_label(_("This does not seem to be a valid Media RSS feed URL or there is no content there."))
-            self.ui.spinner.stop()
-            self.ui.url.set_sensitive(True)
-            self.ui.message.set_visible(False)
-            self.ui.spinner.set_visible(False)
-            self.ui.url.grab_focus()
-        else:
-            self.parent.on_mediarss_dialog_okay(url, self.edited_row)
-            self.destroy()
-        Gdk.threads_leave()
+        try:
+            Gdk.threads_enter()
+            if not valid:
+                self.ui.error.set_label(_("This does not seem to be a valid Media RSS feed URL or there is no content there."))
+                self.ui.spinner.stop()
+                self.ui.url.set_sensitive(True)
+                self.ui.message.set_visible(False)
+                self.ui.spinner.set_visible(False)
+                self.ui.url.grab_focus()
+            else:
+                self.parent.on_mediarss_dialog_okay(url, self.edited_row)
+                self.destroy()
+        finally:
+            Gdk.threads_leave()
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.

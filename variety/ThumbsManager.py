@@ -364,13 +364,15 @@ class ThumbsManager():
 
         if self.thumbs_window:
             try:
-                if not gdk_thread:
-                    Gdk.threads_enter()
-                self.thumbs_window.destroy()
-                self.thumbs_window = None
-                self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
-                if not gdk_thread:
-                    Gdk.threads_leave()
+                try:
+                    if not gdk_thread:
+                        Gdk.threads_enter()
+                    self.thumbs_window.destroy()
+                    self.thumbs_window = None
+                    self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
+                finally:
+                    if not gdk_thread:
+                        Gdk.threads_leave()
             except Exception:
                 pass
 

@@ -654,7 +654,7 @@ class VarietyWindow(Gtk.Window):
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
             if auto_changed:
                 def update_file_operations():
-                    for i in xrange(10):
+                    for i in xrange(5):
                         self.ind.trash.set_sensitive(deleteable)
                         self.ind.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
                         self.ind.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
