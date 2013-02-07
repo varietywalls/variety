@@ -381,6 +381,7 @@ class VarietyWindow(Gtk.Window):
             with self.prepared_lock:
                 self.prepared_cleared = True
                 self.prepared = []
+                self.prepared_from_downloads = []
                 self.prepare_event.set()
             self.image_count = -1
         else:
@@ -730,18 +731,15 @@ class VarietyWindow(Gtk.Window):
             if len(found) > 10 or len(found) >= len(images):
                 break
             for img in images:
-                if not self.running:
-                    return
-                if self.prepared_cleared:
-                    # restart the search
-                    self.find_images()
+                if not self.running or self.prepared_cleared:
+                    # abandon this search
                     return
 
                 try:
                     if not img in found and self.image_ok(img, fuzziness):
                         #print "OK at fz %d: %s" % (fuzziness, img)
                         found.add(img)
-                        if len(self.prepared) < 3:
+                        if len(self.prepared) < 3 and not self.prepared_cleared:
                             with self.prepared_lock:
                                 self.prepared.append(img)
                 except Exception:
@@ -749,8 +747,7 @@ class VarietyWindow(Gtk.Window):
 
         with self.prepared_lock:
             if self.prepared_cleared:
-                # restart the search
-                self.find_images()
+                # abandon this search
                 return
 
             self.prepared.extend(found)
