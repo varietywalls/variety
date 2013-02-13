@@ -99,8 +99,8 @@ class Options:
 
             try:
                 self.download_interval = int(config["download_interval"])
-                if self.download_interval < 30:
-                    self.download_interval = 30
+                if self.download_interval < 60:
+                    self.download_interval = 60
             except Exception:
                 pass
 

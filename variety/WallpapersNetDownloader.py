@@ -18,6 +18,7 @@ import random
 import re
 
 import logging
+import time
 from variety import Downloader
 from variety.Util import Util
 
@@ -26,9 +27,12 @@ logger = logging.getLogger('variety')
 random.seed()
 
 class WallpapersNetDownloader(Downloader.Downloader):
+    last_download_time = 0
+
     def __init__(self, parent, category_url):
         super(WallpapersNetDownloader, self).__init__(parent, "Wallpapers.net", category_url)
         self.host = "http://wallpapers.net"
+        self.last_fill_time = 0
         self.queue = []
 
     @staticmethod
@@ -48,14 +52,29 @@ class WallpapersNetDownloader(Downloader.Downloader):
             return False
 
     def download_one(self):
+        min_download_interval, min_fill_queue_interval = self.parse_server_options("wallpapers.net", 0, 0)
+
+        if time.time() - WallpapersNetDownloader.last_download_time < min_download_interval:
+            logger.info("Minimal interval between Wallpapers.net downloads is %d, skip this attempt" %
+                        min_download_interval)
+            return None
+
         logger.info("Downloading an image from Wallpapers.net, " + self.location)
         logger.info("Queue size: %d" % len(self.queue))
 
         if not self.queue:
+            if time.time() - self.last_fill_time < min_fill_queue_interval:
+                logger.info("Wallpapers.net queue empty, but minimal interval between fill attempts is %d, "
+                            "will try again later" % min_fill_queue_interval)
+                return None
+
             self.fill_queue()
+
         if not self.queue:
             logger.info("WN Queue still empty after fill request - probably wrong URL?")
             return None
+
+        WallpapersNetDownloader.last_download_time = time.time()
 
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
@@ -71,6 +90,8 @@ class WallpapersNetDownloader(Downloader.Downloader):
         return self.save_locally(wallpaper_url, src_url)
 
     def fill_queue(self):
+        self.last_fill_time = time.time()
+
         logger.info("Category URL: " + self.location)
         s = Util.html_soup(self.location)
         mp = 0

@@ -351,10 +351,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     _("Using the World Sunlight Map requires both downloading and changing "
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
 
-    def set_time(self, interval, text, time_unit):
+    def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:
             interval = 5
-        times = [1, 60, 60 * 60, 24 * 60 * 60]
         x = len(times) - 1
         while times[x] > interval:
             x -= 1
@@ -366,7 +365,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.set_time(seconds, self.ui.change_interval_text, self.ui.change_interval_time_unit)
 
     def set_download_interval(self, seconds):
-        self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit)
+        self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit,
+                      times=(60, 60 * 60, 24 * 60 * 60))
 
     def set_quotes_change_interval(self, seconds):
         self.set_time(seconds, self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit)
@@ -392,7 +392,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def get_download_interval(self):
         return self.read_time(
-            self.ui.download_interval_text, self.ui.download_interval_time_unit, 30, self.options.download_interval)
+            self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
 
     def get_quotes_change_interval(self):
         return self.read_time(

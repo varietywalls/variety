@@ -112,8 +112,8 @@ class WallbaseDownloader(Downloader.Downloader):
 
         if not self.queue:
             if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info("Wallbase queue empty, but minimal interval between fill attempts is %d, will try again later" %
-                            min_fill_queue_interval)
+                logger.info("Wallbase queue empty, but minimal interval between fill attempts is %d, "
+                            "will try again later" % min_fill_queue_interval)
                 return None
 
             self.fill_queue()

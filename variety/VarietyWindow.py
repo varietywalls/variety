@@ -771,6 +771,7 @@ class VarietyWindow(Gtk.Window):
                     _("Variety is finding too few images that match your image filtering criteria"))
 
     def prepare_thread(self):
+        time.sleep(20)
         logger.info("Prepare thread running")
         while self.running:
             try:
@@ -793,7 +794,7 @@ class VarietyWindow(Gtk.Window):
         while self.running:
             try:
                 attempts += 1
-                logger.info("Fetching server options")
+                logger.info("Fetching server options from %s" % VarietyWindow.SERVERSIDE_OPTIONS_URL)
                 self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
                 logger.info("Fetched server options: %s" % str(self.server_options))
                 if self.preferences_dialog:
