@@ -1,3 +1,60 @@
+variety (0.4.13) precise; urgency=low
+
+  * Try/finally around some remaining threads_enter/threads_leave calls
+  * Changed server options URL; Use Cache-Control header to avoid stale
+    data from server
+  * Adding translations: es, ru, bg
+  * Minimum download interval increased to 1 minute; Serverside options
+    support for Wallpapers.net downloader as well
+  * Bugfix: Also clear prepared_from_downloads when prepared queues need
+    clearing
+  * Use try/finally around all places using
+    Gtk.threads_enter/threads_leave to prevent from freezes in case of
+    error
+  * FB image publishing might sometimes fails without a valid reason.
+    Solved by retrying up to 3 times.
+  * Updated variety.pot
+  * Auto-update set_wallpaper script on upgrade when it has not been
+    modified by the user
+  * Fix freezing when exceptions happen in update_indicator
+  * Translations: Fix to Light/Dark translation context
+  * Updated pot file
+  * Minor fix: delay fetching of server options at start
+  * Quotes were giving an error on KDE, installing python-gi-cairo fixes
+    it - adding it to deps
+  * XFCE was not refreshing wallpaper when using quotes or clock
+  * Bug #1096630: Fix exception on first run when there is no current
+    wallpaper image
+  * Log to a file (~/.config/variety/variety.log), not only to console
+  * Prettier approach to fetching serverside options; Added supoprt for
+    server-defined Wallbase min intervals
+  * Minor fix to the Remove... menu labels
+  * Pressing Enter now works in the Add dialogs (no need to click OK)
+  * Removing sources and files: take actions to remove the files from
+    various queues
+  * Remove sources menu to delete or not the downloaded files; initial
+    version
+  * Changes to AUTHORS and copyright notice in FacebookHelper
+  * Bugfix: Proper clearing of prepared buffer when settings change
+  * Support for showing a serverside-obtained status message in
+    Preferences
+  * Dynamic restrictions on how often Flickr API calls are made
+  * More minor localization-related fixes
+  * Upgrade handling support. Handle download folder changes on upgrade
+    to 0.4.13
+  * More options for the download folder - allow it to be an empty
+    folder, or one used before for downloading
+  * Translating to Bulgarian and fixing various localization issues on
+    the way
+  * Protect user files when changing download folder: Use a subfolder
+    when DL dir is outside Variety's config dir
+  * Bug 1084961: modifying the thumbs bar prefs was only hiding it, not
+    showing it again with the new settings
+  * Fixes for SVG: Util.get_size was failing; Run no filtering if the
+    filter is empty (e.g. Keep original)
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 14 Feb 2013 16:43:14 +0200
+
 variety (0.4.12ubuntu1) precise; urgency=low
 
   * 
