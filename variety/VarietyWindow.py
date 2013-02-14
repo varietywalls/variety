@@ -67,7 +67,7 @@ DL_FOLDER_FILE = ".variety_download_folder"
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "http://bit.ly/variety_serverside_options"
+    SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
     MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {

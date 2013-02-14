@@ -239,7 +239,8 @@ class Util:
     @staticmethod
     def urlopen(url, data=None):
         request = urllib2.Request(url)
-        request.add_header('User-agent', USER_AGENT)
+        request.add_header('User-Agent', USER_AGENT)
+        request.add_header('Cache-Control', 'max-age=0')
         return urllib2.urlopen(request, data=data, timeout=20)
 
     @staticmethod
