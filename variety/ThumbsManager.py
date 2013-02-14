@@ -272,12 +272,14 @@ class ThumbsManager():
 
             try:
                 if self.thumbs_window:
-                    if not gdk_thread:
-                        Gdk.threads_enter()
-                    self.thumbs_window.destroy()
-                    self.thumbs_window = None
-                    if not gdk_thread:
-                        Gdk.threads_leave()
+                    try:
+                        if not gdk_thread:
+                            Gdk.threads_enter()
+                        self.thumbs_window.destroy()
+                        self.thumbs_window = None
+                    finally:
+                        if not gdk_thread:
+                            Gdk.threads_leave()
 
                 if len(self.images) > 0:
                     self.initialize_thumbs_window(gdk_thread=gdk_thread)
@@ -285,35 +287,37 @@ class ThumbsManager():
                 logger.exception("Could not create thumbs window:")
 
     def initialize_thumbs_window(self, gdk_thread=False):
-        if not gdk_thread:
-            Gdk.threads_enter()
-        options = self.load_options()
-        self.thumbs_window = ThumbsWindow(
-            screen=self.screen, position=options.position, breadth=options.breadth)
         try:
-            icon = varietyconfig.get_data_file("media", "variety.svg")
-            self.thumbs_window.set_icon_from_file(icon)
-        except Exception:
-            logger.exception("Could not set thumbs window icon")
+            if not gdk_thread:
+                Gdk.threads_enter()
+            options = self.load_options()
+            self.thumbs_window = ThumbsWindow(
+                screen=self.screen, position=options.position, breadth=options.breadth)
+            try:
+                icon = varietyconfig.get_data_file("media", "variety.svg")
+                self.thumbs_window.set_icon_from_file(icon)
+            except Exception:
+                logger.exception("Could not set thumbs window icon")
 
-        if self.type == "history":
-            title = _("Variety History")
-        elif self.type == "downloads":
-            title = _("Variety Recent Downloads")
-        else:
-            title = _("Variety Images")
+            if self.type == "history":
+                title = _("Variety History")
+            elif self.type == "downloads":
+                title = _("Variety Recent Downloads")
+            else:
+                title = _("Variety Images")
 
-        self.thumbs_window.set_title(title)
-        self.thumbs_window.connect("clicked", self.on_click)
-        def _on_close(window, event):
-            self.hide(gdk_thread=True, force=True)
-        self.thumbs_window.connect("delete-event", _on_close)
+            self.thumbs_window.set_title(title)
+            self.thumbs_window.connect("clicked", self.on_click)
+            def _on_close(window, event):
+                self.hide(gdk_thread=True, force=True)
+            self.thumbs_window.connect("delete-event", _on_close)
 
-        self.mark_active(self.active_file, self.active_position)
+            self.mark_active(self.active_file, self.active_position)
 
-        self.thumbs_window.start(self.images)
-        if not gdk_thread:
-            Gdk.threads_leave()
+            self.thumbs_window.start(self.images)
+        finally:
+            if not gdk_thread:
+                Gdk.threads_leave()
 
     def load_options(self):
         options = ThumbsManager.Options()

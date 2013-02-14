@@ -134,28 +134,32 @@ class ThumbsWindow(Gtk.Window):
 
             for i, file in enumerate(self.images):
                 if not self.running:
-                    Gdk.threads_enter()
-                    self.destroy()
-                    Gdk.threads_leave()
+                    try:
+                        Gdk.threads_enter()
+                        self.destroy()
+                    finally:
+                        Gdk.threads_leave()
                     return
 
                 if not shown:
-                    Gdk.threads_enter()
-                    self.set_default_size(10, 10)
-                    logger.debug("Showing thumb window %s, %d" % (str(self), time.time()))
-                    self.show_all()
-                    if self.position == ThumbsWindow.BOTTOM:
-                        self.move(self.screen_width // 2, self.screen_height - self.breadth)
-                    elif self.position == ThumbsWindow.TOP:
-                        self.move(self.screen_width // 2, 0)
-                    elif self.position == ThumbsWindow.LEFT:
-                        self.move(0, self.screen_height // 2)
-                    elif self.position == ThumbsWindow.RIGHT:
-                        self.move(self.screen_width - self.screen_height, self.screen_height // 2)
-                    else:
-                        raise Exception("Unsupported thumbs position: " + str(self.position))
-                    shown = True
-                    Gdk.threads_leave()
+                    try:
+                        Gdk.threads_enter()
+                        self.set_default_size(10, 10)
+                        logger.debug("Showing thumb window %s, %d" % (str(self), time.time()))
+                        self.show_all()
+                        if self.position == ThumbsWindow.BOTTOM:
+                            self.move(self.screen_width // 2, self.screen_height - self.breadth)
+                        elif self.position == ThumbsWindow.TOP:
+                            self.move(self.screen_width // 2, 0)
+                        elif self.position == ThumbsWindow.LEFT:
+                            self.move(0, self.screen_height // 2)
+                        elif self.position == ThumbsWindow.RIGHT:
+                            self.move(self.screen_width - self.screen_height, self.screen_height // 2)
+                        else:
+                            raise Exception("Unsupported thumbs position: " + str(self.position))
+                        shown = True
+                    finally:
+                        Gdk.threads_leave()
 
                 self.add_image(file, gdk_thread=False, at_front=False)
 
@@ -166,7 +170,6 @@ class ThumbsWindow(Gtk.Window):
                 self.image_count = i
 
         except Exception:
-            Gdk.threads_leave()
             logger.exception("Error while creating thumbs:")
 
     def add_image(self, file, gdk_thread=False, at_front=False):
@@ -179,63 +182,65 @@ class ThumbsWindow(Gtk.Window):
             logger.warning("Could not create thumbnail for file %s. File may be missing or invalid." % file)
             return
 
-        if not gdk_thread:
-            Gdk.threads_enter()
+        try:
+            if not gdk_thread:
+                Gdk.threads_enter()
 
-        image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
+            image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
 
-        thumb = Gtk.Image()
-        thumb.set_from_pixbuf(pixbuf)
-        thumb.set_visible(True)
+            thumb = Gtk.Image()
+            thumb.set_from_pixbuf(pixbuf)
+            thumb.set_visible(True)
 
-        overlay = Gtk.Overlay()
-        overlay.add(thumb)
-        overlay.set_visible(True)
+            overlay = Gtk.Overlay()
+            overlay.add(thumb)
+            overlay.set_visible(True)
 
-        eventbox = Gtk.EventBox()
-        eventbox.set_visible(True)
-        def click(widget, event, file=file):
-            self.emit("clicked", file, widget, event)
-        eventbox.connect("button-release-event", click)
-        eventbox.add(overlay)
+            eventbox = Gtk.EventBox()
+            eventbox.set_visible(True)
+            def click(widget, event, file=file):
+                self.emit("clicked", file, widget, event)
+            eventbox.connect("button-release-event", click)
+            eventbox.add(overlay)
 
-        image_info = {"file": file,
-                      "eventbox": eventbox,
-                      "thumb": thumb,
-                      "size": image_size,
-                      "overlay": overlay}
-        if at_front:
-            image_info["start"] = 0
-            for info in self.all:
-                info["start"] += image_size
-            self.all.insert(0, image_info)
-            position = 0
-        else:
-            image_info["start"] = self.total_width
-            self.all.append(image_info)
-            position = len(self.all) - 1
+            image_info = {"file": file,
+                          "eventbox": eventbox,
+                          "thumb": thumb,
+                          "size": image_size,
+                          "overlay": overlay}
+            if at_front:
+                image_info["start"] = 0
+                for info in self.all:
+                    info["start"] += image_size
+                self.all.insert(0, image_info)
+                position = 0
+            else:
+                image_info["start"] = self.total_width
+                self.all.append(image_info)
+                position = len(self.all) - 1
 
-        self.total_width += image_size
+            self.total_width += image_size
 
-        adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
-        scrollbar_at_start = not adj or adj.get_value() <= adj.get_lower() + 20
-
-        self.box.pack_start(eventbox, False, False, 0)
-
-        if at_front:
-            self.box.reorder_child(eventbox, 0)
-            # get adj again - we just added at front, scrollbar might have appeared
             adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
-            if adj:
-                if scrollbar_at_start:
-                    adj.set_value(adj.get_lower())
-                else:
-                    adj.set_value(adj.get_value() + image_size)
+            scrollbar_at_start = not adj or adj.get_value() <= adj.get_lower() + 20
 
-        self.update_size()
+            self.box.pack_start(eventbox, False, False, 0)
 
-        if not gdk_thread:
-            Gdk.threads_leave()
+            if at_front:
+                self.box.reorder_child(eventbox, 0)
+                # get adj again - we just added at front, scrollbar might have appeared
+                adj = self.scroll.get_hadjustment() if self.is_horizontal() else self.scroll.get_vadjustment()
+                if adj:
+                    if scrollbar_at_start:
+                        adj.set_value(adj.get_lower())
+                    else:
+                        adj.set_value(adj.get_value() + image_size)
+
+            self.update_size()
+
+        finally:
+            if not gdk_thread:
+                Gdk.threads_leave()
 
         if file == self.active_file or position == self.active_position:
             self.mark_active(self.active_file, self.active_position)
@@ -257,23 +262,25 @@ class ThumbsWindow(Gtk.Window):
 
     # TODO this method is buggy when width < screen and scrollbar not shown - a blank space remains
     def remove_image(self, image, gdk_thread=True):
-        if not gdk_thread:
-            Gdk.threads_enter()
+        try:
+            if not gdk_thread:
+                Gdk.threads_enter()
 
-        for info in self.all:
-            if info["file"] == image:
-                eventbox = info["eventbox"]
-                thumb = info["thumb"]
-                self.box.remove(eventbox)
-                eventbox.destroy()
-                thumb.destroy()
-                self.total_width -= info["size"]
-                self.update_size()
+            for info in self.all:
+                if info["file"] == image:
+                    eventbox = info["eventbox"]
+                    thumb = info["thumb"]
+                    self.box.remove(eventbox)
+                    eventbox.destroy()
+                    thumb.destroy()
+                    self.total_width -= info["size"]
+                    self.update_size()
 
-        self.all = [info for info in self.all if info["file"] != image]
+            self.all = [info for info in self.all if info["file"] != image]
 
-        if not gdk_thread:
-            Gdk.threads_leave()
+        finally:
+            if not gdk_thread:
+                Gdk.threads_leave()
 
     def mark_active(self, file=None, position=None):
         def _mark():
@@ -378,16 +385,16 @@ class ThumbsWindow(Gtk.Window):
             x = self.mouse_position[0]
             y = self.mouse_position[1]
 
-            Gdk.threads_enter()
             try:
+                Gdk.threads_enter()
                 if self.is_horizontal() and y > 0:
                     self.autoscroll_step(self.scroll.get_hadjustment(), self.scroll.get_min_content_width(), x)
                 elif not self.is_horizontal() and x > 0:
                     self.autoscroll_step(self.scroll.get_vadjustment(), self.scroll.get_min_content_height(), y)
             except Exception:
                 pass
-
-            Gdk.threads_leave()
+            finally:
+                Gdk.threads_leave()
 
             last_update = time.time()
 
