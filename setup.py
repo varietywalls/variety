@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
-# Peter Levi <peterlevi@peterlevi.com>
+# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -88,7 +88,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='variety',
-    version='0.4.12',
+    version='0.4.13',
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
