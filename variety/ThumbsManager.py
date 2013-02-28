@@ -362,7 +362,7 @@ class ThumbsManager():
 
         if not keep_settings:
             self.type = None
-            self.images = None
+            self.images = []
             self.screen = None
             self.folders = None
 
