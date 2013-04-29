@@ -28,6 +28,7 @@ import urllib
 import urllib2
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
+import inspect
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -36,7 +37,35 @@ USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Ge
 random.seed()
 logger = logging.getLogger('variety')
 
+class LogMethodCalls(object):
+    def __init__(self, func, level):
+        self.level = level
+        self.func = func
+
+    def __get__(self, obj, cls=None):
+        def logcall(*func_args, **func_kwargs):
+            logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.func_name +
+                         '(' + ', '.join(map(str, func_args)) +
+                         ((', %s' % func_kwargs) if func_kwargs else '') + ')')
+            if inspect.isfunction(self.func) or inspect.isclass(self.func.im_self):
+                ret = self.func(*func_args, **func_kwargs)
+            else:
+                ret = self.func(obj, *func_args, **func_kwargs)
+            return ret
+        for attr in "__module__", "__name__", "__doc__":
+            setattr(logcall, attr, getattr(self.func, attr))
+        return logcall
+
+
 class Util:
+    @staticmethod
+    def log_all(cls, level=logging.DEBUG):
+        if logger.isEnabledFor(level):
+            for name, meth in inspect.getmembers(cls):
+                if inspect.ismethod(meth) or inspect.isfunction(meth):
+                    setattr(cls, name, LogMethodCalls(meth, level))
+        return cls
+
     @staticmethod
     def get_local_name(url):
         filename = url[url.rindex('/') + 1:]

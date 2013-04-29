@@ -28,6 +28,8 @@ gettext.textdomain('variety')
 from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 
 from variety import VarietyWindow
+from variety import ThumbsManager
+from variety import ThumbsWindow
 from variety.Util import Util
 
 from variety_lib import set_up_logging, get_version
@@ -68,6 +70,12 @@ def main():
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
     set_up_logging(options)
+
+    if options.verbose > 2:
+        Util.log_all(VarietyWindow.VarietyWindow)
+    if options.verbose > 3:
+        Util.log_all(ThumbsManager.ThumbsManager)
+        Util.log_all(ThumbsWindow.ThumbsWindow)
 
     # ensure singleton
     if dbus.SessionBus().request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
