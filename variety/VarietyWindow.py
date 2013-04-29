@@ -1060,7 +1060,7 @@ class VarietyWindow(Gtk.Window):
 
                 self.update_indicator(filename, is_gtk_thread=False)
 
-                self.set_desktop_wallpaper(to_set)
+                self.set_desktop_wallpaper(to_set, filename)
                 self.current = filename
 
                 if self.options.icon == "Current":
@@ -1920,13 +1920,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             logger.exception("Could not get current wallpaper")
             return None
 
-    def set_desktop_wallpaper(self, wallpaper):
+    def set_desktop_wallpaper(self, wallpaper, original_file):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
         if os.access(script, os.X_OK):
             auto = "auto" if self.auto_changed else "manual"
-            logger.debug("Running set_wallpaper script with parameters: %s, %s" % (wallpaper, auto))
+            logger.debug("Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
-                subprocess.check_call([script, wallpaper, auto])
+                subprocess.check_call([script, wallpaper, auto, original_file])
                 return
             except subprocess.CalledProcessError:
                 logger.exception("Exception when calling set_wallpaper script")

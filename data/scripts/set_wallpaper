@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # This script is run by Variety when a new wallpaper is set.
-# The first passed parameter (accessed with $1) is the absolute path to the wallpaper.
+# The first passed parameter (accessed with $1) is the absolute path to the wallpaper image to be set as wallpaper
+# (after effects, clock, etc. are applied).
 # The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change)
+# The third passed parameter ($3) is the absolute path to the original wallpaper image (before effects, clock, etc.)
 # and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
 # You can use bash, python or whatever suits you for the script.
 # Here you can put custom commands for setting the wallpaper on your specifc desktop environment
@@ -39,6 +41,6 @@ mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$1" 2> /d
 # Gnome 2
 gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$1" 2> /dev/null
 
-# Show a notification on wallpaper change (only when the change is automatic)
-# name=$(echo "$1" | sed 's/\//\n/g'| tail -n 1)
+# Show a notification on wallpaper change (only when the change is automatic). Display the original filename, but the post-effects image.
+# name=$(echo "$3" | sed 's/\//\n/g'| tail -n 1)
 # if [ "$2" == "auto" ]; then notify-send --icon "$1" "Wallpaper changed" "$name" ; fi
