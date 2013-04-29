@@ -1015,6 +1015,7 @@ class VarietyWindow(Gtk.Window):
             pass
 
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
+        logger.info("Calling do_set_wp with " + str(filename))
         with self.do_set_wp_lock:
             self.set_wp_timer = None
 
@@ -1214,6 +1215,7 @@ class VarietyWindow(Gtk.Window):
             logger.exception("Could not change wallpaper")
 
     def set_wallpaper(self, img, throttle=True, auto_changed=False):
+        logger.info("Calling set_wallpaper with " + str(img))
         if img == self.current and not self.is_current_refreshable():
             return
         if os.access(img, os.R_OK):
@@ -1232,6 +1234,8 @@ class VarietyWindow(Gtk.Window):
                 self.set_wp_throttled(img)
             else:
                 self.set_wp_throttled(img, 0)
+        else:
+            logger.warning("set_wallpaper called with unaccessible image " + str(img))
 
     def refresh_thumbs_history(self, added_image, at_front=False):
         if self.thumbs_manager.is_showing("history"):
