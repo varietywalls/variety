@@ -89,7 +89,10 @@ class VarietyWindow(Gtk.Window):
 
         self.ind = None
 
-        self.gsettings = Gio.Settings.new('org.gnome.desktop.background')
+        if Gio.SettingsSchemaSource.get_default().lookup("org.gnome.desktop.background", True):
+            self.gsettings = Gio.Settings.new('org.gnome.desktop.background')
+        else:
+            self.gsettings = None
 
         self.thumbs_manager = ThumbsManager(self)
 
@@ -1908,7 +1911,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             else:
                 logger.warning("get_wallpaper script is missing or not executable: " + script)
 
-            if not file:
+            if not file and self.gsettings:
                 file = self.gsettings.get_string('picture-uri')
 
             if not file:
@@ -1934,9 +1937,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             except subprocess.CalledProcessError:
                 logger.exception("Exception when calling set_wallpaper script")
         else:
-            logger.warning("set_wallpaper script is missing or not executable: " + script)
-            self.gsettings.set_string('picture-uri', "file://" + wallpaper)
-            self.gsettings.apply()
+            logger.error("set_wallpaper script is missing or not executable: " + script)
+            if self.gsettings:
+                self.gsettings.set_string('picture-uri', "file://" + wallpaper)
+                self.gsettings.apply()
 
     def show_hide_history(self, widget=None):
         if self.thumbs_manager.is_showing("history"):
