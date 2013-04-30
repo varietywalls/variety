@@ -342,7 +342,7 @@ class Options:
                     try:
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
-                        logger.exception("Cannot parse filter: " + v)
+                        logger.exception("Cannot parse filter: " + str(v))
 
             self.parse_autofilters()
 

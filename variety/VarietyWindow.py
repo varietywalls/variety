@@ -955,6 +955,9 @@ class VarietyWindow(Gtk.Window):
         cmd += filter + ' '
 
         cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-filter.jpg") + '"'
+        cmd = cmd.replace("%FILEPATH%", filename)
+        cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
+
         logger.info("ImageMagick filter cmd: " + cmd)
         return cmd
 
