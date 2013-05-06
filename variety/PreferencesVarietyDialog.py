@@ -851,7 +851,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 "Icon=%s\n"
                 "Exec=%s\n"
                 "Terminal=false\n"
-                "Type=Application\n")
+                "Type=Application\n"
+                "X-GNOME-Autostart-Delay=20\n"
+            )
 
             file = os.path.expanduser("~/.config/autostart/variety.desktop")
 
