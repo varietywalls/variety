@@ -18,7 +18,11 @@ elif [ "$desktop" == "xubuntu" ]; then
 elif [ "$desktop" == "Lubuntu" ]; then
         grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
 
-# MATE
+# MATE after 1.6
+elif [ "$desktop" == "mate" ]; then
+        gsettings get org.mate.background picture-filename
+
+# MATE before 1.6
 elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
         mateconftool-2 --get /desktop/mate/background/picture_filename
 

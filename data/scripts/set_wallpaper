@@ -35,7 +35,10 @@ pcmanfm --set-wallpaper "$1" 2> /dev/null
 # Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
 # feh --bg-scale "$1" 2> /dev/null
 
-# Mate
+# MATE after 1.6
+gsettings set org.mate.background picture-filename "$1" 2> /dev/null
+
+# MATE before 1.6
 mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$1" 2> /dev/null
 
 # Gnome 2
