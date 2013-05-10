@@ -1932,10 +1932,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             auto = "auto" if self.auto_changed else "manual"
             logger.debug("Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
-                subprocess.check_call([script, wallpaper, auto, original_file])
-                return
-            except subprocess.CalledProcessError:
-                logger.exception("Exception when calling set_wallpaper script")
+                subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])
+            except subprocess.CalledProcessError, e:
+                if e.returncode == 124:
+                    logger.error("Timeout while running set_wallpaper script, killed")
+                logger.exception("Exception when calling set_wallpaper script: %d" % e.returncode)
         else:
             logger.error("set_wallpaper script is missing or not executable: " + script)
             if self.gsettings:
