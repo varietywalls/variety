@@ -4,7 +4,7 @@
 # Its purpose is to print out the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
 # You need to edit this if you use something other than Gnome 3 or Unity for a desktop environment
 
-desktop=`env | grep DESKTOP_SESSION= | tail -c +17`
+desktop=$DESKTOP_SESSION
 
 # Gnome 3, Unity:
 if [ "$desktop" == "ubuntu" ]; then

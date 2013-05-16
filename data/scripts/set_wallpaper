@@ -1,15 +1,23 @@
 #!/bin/bash
-
+#
 # This script is run by Variety when a new wallpaper is set.
-# The first passed parameter (accessed with $1) is the absolute path to the wallpaper image to be set as wallpaper
-# (after effects, clock, etc. are applied).
-# The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change)
-# The third passed parameter ($3) is the absolute path to the original wallpaper image (before effects, clock, etc.)
-# and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
 # You can use bash, python or whatever suits you for the script.
 # Here you can put custom commands for setting the wallpaper on your specific desktop environment
 # or run commands like notify-send to notify you of the change, or you can
 # run commands that would theme your browser, login screen or whatever you desire.
+#
+# The first passed parameter (accessed with $1) is the absolute path to the wallpaper image to be set as wallpaper
+# (after effects, clock, etc. are applied).
+#
+# The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change)
+#
+# The third passed parameter ($3) is the absolute path to the original wallpaper image (before effects, clock, etc.)
+# and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
+#
+# The fourth passed parameter ($4) is copy or nocopy. "copy" instructs this script to copy the wallpaper image to some
+# world-readable directory (e.g. ~/Pictures), chmod it so everyone can read it and use the copy for the wallpaper.
+# This makes the wallpaper image usable by LightDM.
+
 
 # KDE - User will have to manually choose ~/.config/variety/wallpaper-kde.jpg as a wallpaper.
 # Afterwards, with the command below, Variety will just overwrite the file when changing the wallpaper
@@ -19,31 +27,44 @@ if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
     exit 0
 fi
 
+
+WP=$1
+
+if [ "$4" == "copy" ]; then
+    test -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs && source ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
+    # For LightDM use a target folder where you can copy to and everyone can read from
+    TARGET_FOLDER=${XDG_PICTURES_DIR:-$HOME/Pictures}
+    WP=$TARGET_FOLDER/variety-wallpaper.jpg
+    cp "$1" "$WP"
+    chmod a+r "$WP"
+fi
+
 # Gnome 3, Unity
-gsettings set org.gnome.desktop.background picture-uri "file://$1" 2> /dev/null
+gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
+gsettings set com.canonical.unity-greeter background "$WP"
 if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" ]; then
     gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
 
 # XFCE
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "" 2> /dev/null
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$1" 2> /dev/null
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$WP" 2> /dev/null
 
 # LXDE/PCmanFM
-pcmanfm --set-wallpaper "$1" 2> /dev/null
+pcmanfm --set-wallpaper "$WP" 2> /dev/null
 
 # Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
-# feh --bg-scale "$1" 2> /dev/null
+# feh --bg-scale "$WP" 2> /dev/null
 
 # MATE after 1.6
-gsettings set org.mate.background picture-filename "$1" 2> /dev/null
+gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 
 # MATE before 1.6
-mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$1" 2> /dev/null
+mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /dev/null
 
 # Gnome 2
-gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$1" 2> /dev/null
+gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /dev/null
 
 # Show a notification on wallpaper change (only when the change is automatic). Display the original filename, but the post-effects image.
 # name=$(echo "$3" | sed 's/\//\n/g'| tail -n 1)
-# if [ "$2" == "auto" ]; then notify-send --icon "$1" "Wallpaper changed" "$name" ; fi
+# if [ "$2" == "auto" ]; then notify-send --icon "$WP" "Wallpaper changed" "$name" ; fi

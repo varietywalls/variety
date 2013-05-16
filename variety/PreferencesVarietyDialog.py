@@ -161,6 +161,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
+            self.ui.lightdm_support_enabled.set_active(self.options.lightdm_support_enabled)
+
             self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
             self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
             c = self.options.desired_color
@@ -775,6 +777,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
+
+            self.options.lightdm_support_enabled = self.ui.lightdm_support_enabled.get_active()
 
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()

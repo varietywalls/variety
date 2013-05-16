@@ -1018,7 +1018,7 @@ class VarietyWindow(Gtk.Window):
             with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
                 f.write(filename)
         except Exception:
-            pass
+            logger.exception("Cannot write wallpaper.jpg.txt")
 
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
         logger.info("Calling do_set_wp with " + str(filename))
@@ -1030,6 +1030,7 @@ class VarietyWindow(Gtk.Window):
                     logger.info("Missing file or bad permissions, will not use it: " + filename)
                     return
 
+                self.write_filtered_wallpaper_origin(filename)
                 to_set = filename
 
                 if self.filters:
@@ -1042,7 +1043,6 @@ class VarietyWindow(Gtk.Window):
                             if result == 0: #success
                                 to_set = os.path.join(self.config_folder, "wallpaper-filter.jpg")
                                 self.post_filter_filename = to_set
-                                self.write_filtered_wallpaper_origin(filename)
                             else:
                                 logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
                     else:
@@ -1053,14 +1053,12 @@ class VarietyWindow(Gtk.Window):
                         quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
                         QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
                         to_set = quote_outfile
-                        self.write_filtered_wallpaper_origin(filename)
 
                 if self.options.clock_enabled:
                     cmd = self.build_imagemagick_clock_cmd(to_set)
                     result = os.system(cmd)
                     if result == 0: #success
                         to_set = os.path.join(self.config_folder, "wallpaper-clock.jpg")
-                        self.write_filtered_wallpaper_origin(filename)
                     else:
                         logger.warning("Could not execute clock convert command - missing ImageMagick or bad filter defined?")
 
@@ -1409,7 +1407,7 @@ class VarietyWindow(Gtk.Window):
                         #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
                         return True
                     except Exception:
-                        pass
+                        logger.exception("Cannot unlink " + file)
                 else:
                     return True
 
@@ -1542,7 +1540,6 @@ class VarietyWindow(Gtk.Window):
                         d.destroy()
                 except Exception:
                     logger.exception("Could not destroy dialog")
-                    pass
 
             for e in self.events:
                 e.set()
@@ -1552,7 +1549,6 @@ class VarietyWindow(Gtk.Window):
                     self.quotes_engine.quit()
             except Exception:
                 logger.exception("Could not stop quotes engine")
-                pass
 
             if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
@@ -1930,9 +1926,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         script = os.path.join(self.scripts_folder, "set_wallpaper")
         if os.access(script, os.X_OK):
             auto = "auto" if self.auto_changed else "manual"
-            logger.debug("Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
+            copy = "copy" if self.options.lightdm_support_enabled else "nocopy"
+            logger.debug("Running set_wallpaper script with parameters: %s, %s, %s, %s" %
+                         (wallpaper, auto, original_file, copy))
             try:
-                subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])
+                subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file, copy])
             except subprocess.CalledProcessError, e:
                 if e.returncode == 124:
                     logger.error("Timeout while running set_wallpaper script, killed")
@@ -2017,12 +2015,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         current = self.get_desktop_wallpaper()
         if current:
-            if os.path.normpath(os.path.dirname(current)) == os.path.normpath(self.config_folder):
+            if os.path.normpath(os.path.dirname(current)) == os.path.normpath(self.config_folder) or \
+               os.path.basename(current) == "variety-wallpaper.jpg":
+
                 try:
                     with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
                         current = f.read().strip()
                 except Exception:
-                    pass
+                    logger.exception("Cannot read wallpaper.jpg.txt")
 
         self.current = current
         if self.current and (self.position >= len(self.used) or current != self.used[self.position]):

@@ -230,6 +230,11 @@ class Options:
                 pass
 
             try:
+                self.lightdm_support_enabled = config["lightdm_support_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.clock_enabled = config["clock_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -456,6 +461,8 @@ class Options:
         self.facebook_show_dialog = True
         self.facebook_message = ""
 
+        self.lightdm_support_enabled = False
+
         self.clock_enabled = False
         self.clock_font = "Ubuntu Condensed, 70"
         self.clock_date_font = "Ubuntu Condensed, 30"
@@ -540,6 +547,8 @@ class Options:
             config["facebook_enabled"] = str(self.facebook_enabled)
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)
+
+            config["lightdm_support_enabled"] = str(self.lightdm_support_enabled)
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = str(self.clock_filter)
