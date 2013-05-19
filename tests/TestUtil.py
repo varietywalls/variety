@@ -94,5 +94,10 @@ class TestUtil(unittest.TestCase):
     def test_md5file(self):
         self.assertEquals("a32377b309e3230f3c89c455ef1bdf0b", Util.md5file("test.jpg"))
 
+    def test_collapseuser(self):
+        self.assertEquals("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))
+        self.assertEquals("/home/peteraaa/.config/variety", Util.collapseuser("/home/peteraaa/.config/variety"))
+        self.assertEquals("/media/.config/variety", Util.collapseuser("/media/.config/variety"))
+
 if __name__ == '__main__':
     unittest.main()

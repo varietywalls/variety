@@ -16,7 +16,7 @@
 import bs4
 import hashlib
 import json
-
+import re
 import os
 import random
 import logging
@@ -354,6 +354,11 @@ class Util:
     @staticmethod
     def same_file_paths(f1, f2):
         return os.path.normpath(f1) == os.path.normpath(f2)
+
+    @staticmethod
+    def collapseuser(path):
+        home = os.path.expanduser('~') + '/'
+        return re.sub('^' + home, '~/', path)
 
     @staticmethod
     def compare_versions(v1, v2):

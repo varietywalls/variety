@@ -518,15 +518,15 @@ class Options:
 
             config["download_enabled"] = str(self.download_enabled)
             config["download_interval"] = str(self.download_interval)
-            config["download_folder"] = self.download_folder
+            config["download_folder"] = Util.collapseuser(self.download_folder)
 
             config["quota_enabled"] = str(self.quota_enabled)
             config["quota_size"] = str(self.quota_size)
 
-            config["favorites_folder"] = self.favorites_folder
+            config["favorites_folder"] = Util.collapseuser(self.favorites_folder)
             config["favorites_operations"] = ';'.join(':'.join(x) for x in self.favorites_operations)
 
-            config["fetched_folder"] = self.fetched_folder
+            config["fetched_folder"] = Util.collapseuser(self.fetched_folder)
             config["clipboard_enabled"] = self.clipboard_enabled
             config["clipboard_use_whitelist"] = self.clipboard_use_whitelist
             config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
