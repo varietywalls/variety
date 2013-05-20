@@ -31,10 +31,15 @@ fi
 WP=$1
 
 if [ "$4" == "copy" ]; then
+    # For LightDM to show the wallpaper use a target folder where you can copy to and everyone can read from.
+    # The default is ~/Pictures
+
     test -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs && source ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
-    # For LightDM use a target folder where you can copy to and everyone can read from
     TARGET_FOLDER=${XDG_PICTURES_DIR:-$HOME/Pictures}
-    WP=$TARGET_FOLDER/variety-wallpaper.jpg
+
+    # Please DO NOT edit the wallpaper filename, the Python code relies on it
+    WP=$TARGET_FOLDER/variety-copied-wallpaper-$RANDOM$RANDOM.jpg
+    rm -f $TARGET_FOLDER/variety-copied-wallpaper-*.jpg
     cp "$1" "$WP"
     chmod a+r "$WP"
 fi

@@ -125,6 +125,7 @@ class VarietyWindow(Gtk.Window):
         self.server_options = {}
         self.load_banned()
         self.load_history()
+        self.post_filter_filename = None
 
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
@@ -238,6 +239,9 @@ class VarietyWindow(Gtk.Window):
         for f in os.listdir(self.scripts_folder):
             path = os.path.join(self.scripts_folder, f)
             os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+
+        self.wallpaper_folder = os.path.join(self.config_folder, "wallpaper")
+        Util.makedirs(self.wallpaper_folder)
 
         # TODO: Sort of hacky to have filter-related code here, they should be more isolated
         pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
@@ -942,7 +946,7 @@ class VarietyWindow(Gtk.Window):
         self.set_wp_timer = threading.Timer(delay, _do_set_wp)
         self.set_wp_timer.start()
 
-    def build_imagemagick_filter_cmd(self, filename):
+    def build_imagemagick_filter_cmd(self, filename, target_file):
         if not self.filters:
             return None
 
@@ -957,14 +961,14 @@ class VarietyWindow(Gtk.Window):
         logger.info("Applying filter: " + filter)
         cmd += filter + ' '
 
-        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-filter.jpg") + '"'
+        cmd = cmd + ' "' + target_file + '"'
         cmd = cmd.replace("%FILEPATH%", filename)
         cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
 
         logger.info("ImageMagick filter cmd: " + cmd)
         return cmd
 
-    def build_imagemagick_clock_cmd(self, filename):
+    def build_imagemagick_clock_cmd(self, filename, target_file):
         if not self.options.clock_enabled:
             return None
 
@@ -983,7 +987,7 @@ class VarietyWindow(Gtk.Window):
             logger.info("Applying clock filter: " + clock_filter)
             cmd += clock_filter + ' '
 
-        cmd = cmd + ' "' + os.path.join(self.config_folder, "wallpaper-clock.jpg") + '"'
+        cmd = cmd + ' "' + target_file + '"'
         logger.info("ImageMagick clock cmd: " + cmd)
         return cmd
 
@@ -1015,7 +1019,7 @@ class VarietyWindow(Gtk.Window):
 
     def write_filtered_wallpaper_origin(self, filename):
         try:
-            with open(os.path.join(self.config_folder, "wallpaper.jpg.txt"), "w") as f:
+            with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w") as f:
                 f.write(filename)
         except Exception:
             logger.exception("Cannot write wallpaper.jpg.txt")
@@ -1034,14 +1038,17 @@ class VarietyWindow(Gtk.Window):
                 to_set = filename
 
                 if self.filters:
+                    # don't run the filter command when the refresh level is clock or quotes only,
+                    # use the previous filtered image otherwise
                     if refresh_level in [VarietyWindow.RefreshLevel.ALL, VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS] \
-                    or not hasattr(self, "post_filter_filename"):
+                    or not self.post_filter_filename:
                         self.post_filter_filename = to_set
-                        cmd = self.build_imagemagick_filter_cmd(filename)
+                        target_file = os.path.join(self.wallpaper_folder, "wallpaper-filter-%s.jpg" % Util.random_hash())
+                        cmd = self.build_imagemagick_filter_cmd(filename, target_file)
                         if cmd:
                             result = os.system(cmd)
                             if result == 0: #success
-                                to_set = os.path.join(self.config_folder, "wallpaper-filter.jpg")
+                                to_set = target_file
                                 self.post_filter_filename = to_set
                             else:
                                 logger.warning("Could not execute filter convert command - missing ImageMagick or bad filter defined?")
@@ -1050,15 +1057,16 @@ class VarietyWindow(Gtk.Window):
 
                 if self.options.quotes_enabled:
                     if self.quote:
-                        quote_outfile = os.path.join(self.config_folder, "wallpaper-quote.jpg")
+                        quote_outfile = os.path.join(self.wallpaper_folder, "wallpaper-quote-%s.jpg" % Util.random_hash())
                         QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
                         to_set = quote_outfile
 
                 if self.options.clock_enabled:
-                    cmd = self.build_imagemagick_clock_cmd(to_set)
+                    target_file = os.path.join(self.wallpaper_folder, "wallpaper-clock-%s.jpg" % Util.random_hash())
+                    cmd = self.build_imagemagick_clock_cmd(to_set, target_file)
                     result = os.system(cmd)
                     if result == 0: #success
-                        to_set = os.path.join(self.config_folder, "wallpaper-clock.jpg")
+                        to_set = target_file
                     else:
                         logger.warning("Could not execute clock convert command - missing ImageMagick or bad filter defined?")
 
@@ -1923,6 +1931,16 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             return None
 
     def set_desktop_wallpaper(self, wallpaper, original_file):
+        try:
+            for name in os.listdir(self.wallpaper_folder):
+                file = os.path.join(self.wallpaper_folder, name)
+                if file != wallpaper and file != self.post_filter_filename and \
+                   name.startswith("wallpaper-") and name.endswith(".jpg"):
+                    logger.debug("Removing old wallpaper %s" % file)
+                    os.unlink(file)
+        except Exception:
+            logger.exception("Cannot remove all old wallpaper files from %s:" % self.wallpaper_folder)
+
         script = os.path.join(self.scripts_folder, "set_wallpaper")
         if os.access(script, os.X_OK):
             auto = "auto" if self.auto_changed else "manual"
@@ -2015,11 +2033,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         current = self.get_desktop_wallpaper()
         if current:
-            if os.path.normpath(os.path.dirname(current)) == os.path.normpath(self.config_folder) or \
-               os.path.basename(current) == "variety-wallpaper.jpg":
+            if os.path.normpath(os.path.dirname(current)) == os.path.normpath(self.wallpaper_folder) or \
+               os.path.basename(current).startswith("variety-copied-wallpaper-"):
 
                 try:
-                    with open(os.path.join(self.config_folder, "wallpaper.jpg.txt")) as f:
+                    with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt")) as f:
                         current = f.read().strip()
                 except Exception:
                     logger.exception("Cannot read wallpaper.jpg.txt")

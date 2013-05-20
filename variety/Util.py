@@ -379,3 +379,11 @@ class Util:
     def md5file(file):
         with open(file) as f:
             return Util.md5(f.read())
+
+    @staticmethod
+    def random_hash():
+        try:
+            return os.urandom(16).encode('hex')
+        except Exception:
+            return ''.join(random.choice(string.hexdigits) for n in xrange(32))
+

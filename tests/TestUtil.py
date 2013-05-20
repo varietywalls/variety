@@ -99,5 +99,12 @@ class TestUtil(unittest.TestCase):
         self.assertEquals("/home/peteraaa/.config/variety", Util.collapseuser("/home/peteraaa/.config/variety"))
         self.assertEquals("/media/.config/variety", Util.collapseuser("/media/.config/variety"))
 
+    def test_random_hash(self):
+        s = set(Util.random_hash() for i in xrange(100))
+        self.assertEquals(100, len(s))
+        for x in s:
+            self.assertEquals(32, len(x))
+
+
 if __name__ == '__main__':
     unittest.main()
