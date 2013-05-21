@@ -32,7 +32,8 @@ Depends: ${misc:Depends},
  python-configobj,
  python-imaging,
  python-lxml,
- python-gi-cairo
+ python-gi-cairo,
+ trash-cli
 Description: An automatic wallpaper changer, downloader and manager
  Variety changes the desktop wallpaper on a regular basis, using user-
  specified or automatically downloaded images. Variety sits conveniently

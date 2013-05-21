@@ -1436,23 +1436,30 @@ class VarietyWindow(Gtk.Window):
         try:
             if not file:
                 file = self.current
-            url = self.url
+            if self.url:
+                self.ban_url(self.url)
+
             if not os.access(file, os.W_OK):
                 self.show_notification(
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
-                os.system('gvfs-trash "%s"' % file)
+                command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
+                logger.info("Running trash command %s" % command)
+                result = os.system(command)
+                if result == 0:
+                    if self.current == file:
+                        self.next_wallpaper(widget)
 
-                if self.current == file:
-                    self.next_wallpaper(widget)
+                    self.remove_from_queues(file)
+                    self.prepare_event.set()
 
-                self.remove_from_queues(file)
-                self.prepare_event.set()
-                if url:
-                    self.ban_url(url)
-
-                self.thumbs_manager.remove_image(file)
+                    self.thumbs_manager.remove_image(file)
+                else:
+                    logger.error("Trash resulted in error code %d" % result)
+                    self.show_notification(
+                        _("Cannot delete"),
+                        _("Probably there is no utility for moving to Trash?\nPlease install trash-cli or gvfs-bin or konquerer."))
         except Exception:
             logger.exception("Exception in move_to_trash")
 
