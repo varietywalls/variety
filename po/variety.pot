@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-22 00:51+0300\n"
+"POT-Creation-Date: 2013-05-22 11:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,122 +17,122 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../variety/PreferencesVarietyDialog.py:283
-#: ../variety/PreferencesVarietyDialog.py:427
+#: ../variety/PreferencesVarietyDialog.py:279
+#: ../variety/PreferencesVarietyDialog.py:423
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:284
+#: ../variety/PreferencesVarietyDialog.py:280
 msgid "Folders"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:285
+#: ../variety/PreferencesVarietyDialog.py:281
 #: ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:286
+#: ../variety/PreferencesVarietyDialog.py:282
 #: ../data/ui/AddWallbaseDialog.ui.h:2
 msgid "Wallbase.cc"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:287
+#: ../variety/PreferencesVarietyDialog.py:283
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
 msgid "Wallpapers.net"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:288
+#: ../variety/PreferencesVarietyDialog.py:284
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:310
+#: ../variety/PreferencesVarietyDialog.py:306
 msgid "Remove the source, keep the files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:311
+#: ../variety/PreferencesVarietyDialog.py:307
 msgid "Remove the sources, keep the files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:318
+#: ../variety/PreferencesVarietyDialog.py:314
 msgid "Remove the source and delete the downloaded files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:319
+#: ../variety/PreferencesVarietyDialog.py:315
 msgid "Remove the sources and delete the downloaded files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:352
+#: ../variety/PreferencesVarietyDialog.py:348
 msgid "World Sunlight Map enabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:353
+#: ../variety/PreferencesVarietyDialog.py:349
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:420
+#: ../variety/PreferencesVarietyDialog.py:416
 msgid "Add Images"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:421
-#: ../variety/PreferencesVarietyDialog.py:445
+#: ../variety/PreferencesVarietyDialog.py:417
+#: ../variety/PreferencesVarietyDialog.py:441
 msgid "Cancel"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:421
-#: ../variety/PreferencesVarietyDialog.py:445
+#: ../variety/PreferencesVarietyDialog.py:417
+#: ../variety/PreferencesVarietyDialog.py:441
 msgid "Add"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:443
+#: ../variety/PreferencesVarietyDialog.py:439
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:569
-#: ../variety/PreferencesVarietyDialog.py:582
+#: ../variety/PreferencesVarietyDialog.py:565
+#: ../variety/PreferencesVarietyDialog.py:578
 #: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Edit..."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:576
+#: ../variety/PreferencesVarietyDialog.py:572
 msgid "View Image"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:579
+#: ../variety/PreferencesVarietyDialog.py:575
 msgid "Open Folder"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:899
+#: ../variety/PreferencesVarietyDialog.py:895
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:901
+#: ../variety/PreferencesVarietyDialog.py:897
 msgid "Oops"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:953
-#: ../variety/PreferencesVarietyDialog.py:971
-#: ../variety/PreferencesVarietyDialog.py:977
+#: ../variety/PreferencesVarietyDialog.py:949
+#: ../variety/PreferencesVarietyDialog.py:967
+#: ../variety/PreferencesVarietyDialog.py:973
 msgid "No write permissions"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:960
+#: ../variety/PreferencesVarietyDialog.py:956
 msgid "Limit disabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:961
+#: ../variety/PreferencesVarietyDialog.py:957
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:967
+#: ../variety/PreferencesVarietyDialog.py:963
 #, python-format
 msgid "Actual download folder: %s "
 msgstr ""
@@ -690,39 +690,6 @@ msgstr ""
 
 #: ../variety/ThumbsManager.py:307
 msgid "Variety Images"
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:1
-msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:2
-msgid "About Variety"
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:3
-msgid "An automatic wallpaper changer, downloader and manager."
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:4
-msgid "http://peterlevi.com/variety"
-msgstr ""
-
-#: ../data/ui/AboutVarietyDialog.ui.h:5
-msgid ""
-"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
-"# This program is free software: you can redistribute it and/or modify it \n"
-"# under the terms of the GNU General Public License version 3, as "
-"published \n"
-"# by the Free Software Foundation.\n"
-"# \n"
-"# This program is distributed in the hope that it will be useful, but \n"
-"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
-"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
-"# PURPOSE.  See the GNU General Public License for more details.\n"
-"# \n"
-"# You should have received a copy of the GNU General Public License along \n"
-"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
 #: ../variety.desktop.in.h:1
@@ -1540,4 +1507,37 @@ msgstr ""
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:1
+msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:2
+msgid "About Variety"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:3
+msgid "An automatic wallpaper changer, downloader and manager."
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:4
+msgid "http://peterlevi.com/variety"
+msgstr ""
+
+#: ../data/ui/AboutVarietyDialog.ui.h:5
+msgid ""
+"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
+"# This program is free software: you can redistribute it and/or modify it \n"
+"# under the terms of the GNU General Public License version 3, as "
+"published \n"
+"# by the Free Software Foundation.\n"
+"# \n"
+"# This program is distributed in the hope that it will be useful, but \n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"# \n"
+"# You should have received a copy of the GNU General Public License along \n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""

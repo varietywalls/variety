@@ -14,11 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-# This is your preferences dialog.
-#
-# Define your preferences in
-# data/glib-2.0/schemas/net.launchpad.variety.gschema.xml
-# See http://developer.gnome.org/gio/stable/GSettings.html for more info.
+# This is the preferences dialog.
 
 from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
 
