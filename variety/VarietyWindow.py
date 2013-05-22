@@ -75,7 +75,12 @@ class VarietyWindow(Gtk.Window):
         "3729d3e1f57aa1159988ba2c8f929389",
         "feafa658d9686ecfabdbcf236c32fd0f",
         "83d8ebeec3676474bdd90c55417e8640",
-        "1562cb289319aa39ac1b37a8ee4c0103"
+        "1562cb289319aa39ac1b37a8ee4c0103",
+        "6c54123e87e98b15d87f0341d3e36fc5"
+    }
+
+    OUTDATED_GET_WP_SCRIPTS = {
+        "d8df22bf24baa87d5231e31027e79ee5"
     }
 
     def __init__(self):
@@ -101,6 +106,7 @@ class VarietyWindow(Gtk.Window):
         self.clock_thread = None
 
         self.prepare_config_folder()
+        self.perform_upgrade()
 
         self.events = []
 
@@ -130,7 +136,7 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
-        self.reload_config(initial_run=True)
+        self.reload_config()
         self.load_last_change_time()
 
         self.image_count = -1
@@ -312,14 +318,11 @@ class VarietyWindow(Gtk.Window):
             with open(dl_folder_file, "w") as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-    def reload_config(self, initial_run=False):
+    def reload_config(self):
         self.previous_options = self.options
 
         self.options = Options()
         self.options.read()
-
-        if initial_run:
-            self.perform_upgrade_after_loading_options()
 
         GObject.idle_add(self.update_indicator_icon)
 
@@ -1586,42 +1589,76 @@ class VarietyWindow(Gtk.Window):
         with open(os.path.join(self.config_folder, ".version"), "w") as f:
             f.write(current_version)
 
-    def perform_upgrade_after_loading_options(self):
-        current_version = varietyconfig.get_version()
+    def perform_upgrade(self):
+        try:
+            current_version = varietyconfig.get_version()
 
-        if not os.path.exists(os.path.join(self.config_folder, ".firstrun")):
-            # running for the first time
-            last_version = current_version
-            self.write_current_version()
-        else:
-            try:
-                with open(os.path.join(self.config_folder, ".version")) as f:
-                        last_version = f.read().strip()
-            except Exception:
-                last_version = "0.4.12" # this is the last release that did not have the .version file
+            if not os.path.exists(os.path.join(self.config_folder, ".firstrun")):
+                # running for the first time
+                last_version = current_version
+                self.write_current_version()
+            else:
+                try:
+                    with open(os.path.join(self.config_folder, ".version")) as f:
+                            last_version = f.read().strip()
+                except Exception:
+                    last_version = "0.4.12" # this is the last release that did not have the .version file
 
-        logger.info("Last run version was %s or earlier, current version is %s" % (last_version, current_version))
+            logger.info("Last run version was %s or earlier, current version is %s" % (last_version, current_version))
 
-        if Util.compare_versions(last_version, "0.4.13") < 0:
-            logger.info("Performing upgrade to 0.4.13")
+            if Util.compare_versions(last_version, "0.4.13") < 0:
+                logger.info("Performing upgrade to 0.4.13")
+                try:
+                    # mark the current download folder as a valid download folder
+                    options = Options()
+                    options.read()
+                    logger.info("Writing %s to current download folder %s" % (DL_FOLDER_FILE, options.download_folder))
+                    Util.makedirs(options.download_folder)
+                    dl_folder_file = os.path.join(options.download_folder, DL_FOLDER_FILE)
+                    if not os.path.exists(dl_folder_file):
+                        with open(dl_folder_file, "w") as f:
+                            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+                except Exception:
+                    logger.exception("Could not create %s in download folder" % DL_FOLDER_FILE)
 
-            set_wallpaper_file = os.path.join(self.scripts_folder, "set_wallpaper")
-            if not os.path.exists(set_wallpaper_file) or\
-               Util.md5file(set_wallpaper_file) in VarietyWindow.OUTDATED_SET_WP_SCRIPTS:
-                logger.info("Outdated set_wallpaper file, copying it from " +
-                            varietyconfig.get_data_file("scripts", "set_wallpaper"))
-                shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
+            if Util.compare_versions(last_version, "0.4.14") < 0:
+                logger.info("Performing upgrade to 0.4.14")
 
-            logger.info("Writing %s to current download folder %s" % (DL_FOLDER_FILE, self.options.download_folder))
-            # mark the current download folder as a valid download folder
-            Util.makedirs(self.options.download_folder)
-            dl_folder_file = os.path.join(self.options.download_folder, DL_FOLDER_FILE)
-            if not os.path.exists(dl_folder_file):
-                with open(dl_folder_file, "w") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+                def upgrade_script(script, outdated_md5):
+                    try:
+                        script_file = os.path.join(self.scripts_folder, script)
+                        if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
+                            logger.info("Outdated %s file, copying it from %s" %
+                                        (script, varietyconfig.get_data_file("scripts", script)))
+                            shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
+                    except Exception:
+                        logger.exception("Could not upgrade script " + script)
 
-        if Util.compare_versions(last_version, current_version) < 0:
-            self.write_current_version()
+                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
+                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
+
+                # Current wallpaper is now stored in wallpaper subfolder, remove old artefacts:
+                walltxt = os.path.join(self.config_folder, "wallpaper.jpg.txt")
+                if os.path.exists(walltxt):
+                    try:
+                        logger.info("Moving %s to %s" % (walltxt, self.wallpaper_folder))
+                        shutil.move(walltxt, self.wallpaper_folder)
+                    except Exception:
+                        logger.exception("Could not move wallpaper.jpg.txt")
+
+                for suffix in ("filter", "clock", "quote"):
+                    file = os.path.join(self.config_folder, "wallpaper-%s.jpg" % suffix)
+                    try:
+                        if os.path.exists(file):
+                            logger.info("Deleting unneeded file " + file)
+                            os.unlink(file)
+                    except Exception:
+                        logger.warning("Could not delete %s, no worries" % file)
+
+            if Util.compare_versions(last_version, current_version) < 0:
+                self.write_current_version()
+        except Exception:
+            logger.exception("Error during version upgrade. Continuing.")
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
