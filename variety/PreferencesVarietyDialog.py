@@ -56,6 +56,60 @@ EDITABLE_TYPES = [
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS]
 
+class FolderChooser:
+    def __init__(self, parent, button, on_change=None):
+        self.parent = parent
+        self.button = button
+        self.on_change = on_change
+        self.folder = None
+        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
+        self.label = Gtk.Label()
+        self.image = Gtk.Image()
+        self.image.set_margin_right(5)
+        self.image.set_from_icon_name("folder", Gtk.IconSize.BUTTON)
+        self.box.add(self.image)
+        self.box.add(self.label)
+        self.button.add(self.box)
+        self.button.show_all()
+        self.button.connect("clicked", self._browse)
+
+    def get_folder(self):
+        return self.folder
+
+    def set_folder(self, folder):
+        self.folder = os.path.normpath(folder)
+        self.label.set_text(Util.collapseuser(self.folder))
+#        self.button.set_label(os.path.basename(self.folder) or '/')
+        self.button.set_tooltip_text(self.folder)
+
+    def _browse(self, widget=None):
+        chooser = Gtk.FileChooserDialog(_("Choose a folder"),
+                                        parent=self.parent, action=Gtk.FileChooserAction.SELECT_FOLDER,
+                                        buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("OK"), Gtk.ResponseType.OK])
+        self.parent.dialog = chooser
+        chooser.set_filename(self.folder)
+        chooser.set_select_multiple(False)
+        chooser.set_local_only(False)
+        response = chooser.run()
+
+        if response == Gtk.ResponseType.OK:
+            if os.path.isdir(chooser.get_filename()) and os.access(chooser.get_filename(), os.W_OK):
+                self.set_folder(chooser.get_filename())
+                if self.on_change:
+                    self.on_change()
+                self.parent.delayed_apply()
+            else:
+                dialog = Gtk.MessageDialog(
+                    self, 0, Gtk.MessageType.ERROR,
+                    Gtk.ButtonsType.OK, _("Please choose a folder you have permissions to write to"))
+                self.parent.dialog = dialog
+                dialog.run()
+                GObject.idle_add(self._browse)
+
+        self.parent.dialog = None
+        chooser.destroy()
+
+
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
 
@@ -74,6 +128,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.loading = False
+
+        self.dl_chooser = FolderChooser(self, self.ui.download_folder_chooser, self.on_downloaded_changed)
         self.reload()
 
     def update_status_message(self):
@@ -116,7 +172,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.download_enabled.set_active(self.options.download_enabled)
             self.set_download_interval(self.options.download_interval)
 
-            self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+            self.dl_chooser.set_folder(os.path.expanduser(self.options.download_folder))
             self.update_real_download_folder()
 
             self.ui.quota_enabled.set_active(self.options.quota_enabled)
@@ -727,8 +783,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 logger.exception("Could not understand quota size")
 
-            if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
-                self.options.download_folder = self.ui.download_folder_chooser.get_filename()
+            self.options.download_folder = self.dl_chooser.get_folder()
             if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
                 self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
             self.options.favorites_operations = self.favorites_operations
@@ -945,7 +1000,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
 
     def on_downloaded_changed(self, widget=None):
-        if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
+        if not os.access(self.dl_chooser.get_folder(), os.W_OK):
             self.ui.error_downloaded.set_label(_("No write permissions"))
         else:
             self.ui.error_downloaded.set_label("")
