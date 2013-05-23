@@ -100,11 +100,14 @@ class FolderChooser:
                 self.parent.delayed_apply()
             else:
                 dialog = Gtk.MessageDialog(
-                    self, 0, Gtk.MessageType.ERROR,
+                    self.parent, 0, Gtk.MessageType.ERROR,
                     Gtk.ButtonsType.OK, _("Please choose a folder you have permissions to write to"))
                 self.parent.dialog = dialog
+                chooser.destroy()
                 dialog.run()
+                dialog.destroy()
                 GObject.idle_add(self._browse)
+                return
 
         self.parent.dialog = None
         chooser.destroy()
