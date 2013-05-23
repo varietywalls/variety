@@ -22,7 +22,7 @@ import threading
 from variety.Util import Util
 from variety_lib import varietyconfig
 from variety_lib.varietyconfig import get_data_file
-
+from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 from variety.AddFlickrDialog import AddFlickrDialog
@@ -56,62 +56,6 @@ EDITABLE_TYPES = [
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS]
 
-class FolderChooser:
-    def __init__(self, parent, button, on_change=None):
-        self.parent = parent
-        self.button = button
-        self.on_change = on_change
-        self.folder = None
-        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-        self.label = Gtk.Label()
-        self.image = Gtk.Image()
-        self.image.set_margin_right(5)
-        self.image.set_from_icon_name("folder", Gtk.IconSize.BUTTON)
-        self.box.add(self.image)
-        self.box.add(self.label)
-        self.button.add(self.box)
-        self.button.show_all()
-        self.button.connect("clicked", self._browse)
-
-    def get_folder(self):
-        return self.folder
-
-    def set_folder(self, folder):
-        self.folder = os.path.normpath(folder)
-        self.label.set_text(Util.collapseuser(self.folder))
-#        self.button.set_label(os.path.basename(self.folder) or '/')
-        self.button.set_tooltip_text(self.folder)
-
-    def _browse(self, widget=None):
-        chooser = Gtk.FileChooserDialog(_("Choose a folder"),
-                                        parent=self.parent, action=Gtk.FileChooserAction.SELECT_FOLDER,
-                                        buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("OK"), Gtk.ResponseType.OK])
-        self.parent.dialog = chooser
-        chooser.set_filename(self.folder)
-        chooser.set_select_multiple(False)
-        chooser.set_local_only(False)
-        response = chooser.run()
-
-        if response == Gtk.ResponseType.OK:
-            if os.path.isdir(chooser.get_filename()) and os.access(chooser.get_filename(), os.W_OK):
-                self.set_folder(chooser.get_filename())
-                if self.on_change:
-                    self.on_change()
-                self.parent.delayed_apply()
-            else:
-                dialog = Gtk.MessageDialog(
-                    self.parent, 0, Gtk.MessageType.ERROR,
-                    Gtk.ButtonsType.OK, _("Please choose a folder you have permissions to write to"))
-                self.parent.dialog = dialog
-                chooser.destroy()
-                dialog.run()
-                dialog.destroy()
-                GObject.idle_add(self._browse)
-                return
-
-        self.parent.dialog = None
-        chooser.destroy()
-
 
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
@@ -132,7 +76,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.loading = False
 
-        self.dl_chooser = FolderChooser(self, self.ui.download_folder_chooser, self.on_downloaded_changed)
+        self.dl_chooser = FolderChooser(self.ui.download_folder_chooser, self.on_downloaded_changed)
+        self.fav_chooser = FolderChooser(self.ui.favorites_folder_chooser, self.on_favorites_changed)
+        self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
         self.reload()
 
     def update_status_message(self):
@@ -181,9 +127,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.quota_enabled.set_active(self.options.quota_enabled)
             self.ui.quota_size.set_text(str(self.options.quota_size))
 
-            self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+            self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
 
-            self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+            self.fetched_chooser.set_folder(os.path.expanduser(self.options.fetched_folder))
             self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
             self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
             self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
@@ -739,6 +685,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def close(self):
+        self.ui.error_downloaded.set_label("")
+        self.ui.error_favorites.set_label("")
+        self.ui.error_fetched.set_label("")
+
         self.hide()
         self.parent.trigger_download()
         self.on_destroy()
@@ -786,17 +736,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 logger.exception("Could not understand quota size")
 
-            self.options.download_folder = self.dl_chooser.get_folder()
-            if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
-                self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            if os.access(self.dl_chooser.get_folder(), os.W_OK):
+                self.options.download_folder = self.dl_chooser.get_folder()
+            if os.access(self.fav_chooser.get_folder(), os.W_OK):
+                self.options.favorites_folder = self.fav_chooser.get_folder()
             self.options.favorites_operations = self.favorites_operations
 
             self.options.sources = []
             for r in self.ui.sources.get_model():
                 self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
 
-            if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
-                self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
+            if os.access(self.fetched_chooser.get_folder(), os.W_OK):
+                self.options.fetched_folder = self.fetched_chooser.get_folder()
             self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
             self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
             buf = self.ui.clipboard_hosts.get_buffer()
@@ -1000,9 +951,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog.destroy()
             except Exception:
                 pass
+        for chooser in (self.dl_chooser, self.fav_chooser, self.fetched_chooser):
+            try:
+                chooser.destroy()
+            except Exception:
+                pass
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
 
     def on_downloaded_changed(self, widget=None):
+        self.delayed_apply()
+
         if not os.access(self.dl_chooser.get_folder(), os.W_OK):
             self.ui.error_downloaded.set_label(_("No write permissions"))
         else:
@@ -1021,13 +979,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.real_download_folder.set_text(_("Actual download folder: %s ") % self.parent.real_download_folder)
 
     def on_favorites_changed(self, widget=None):
-        if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
+        self.delayed_apply()
+        if not os.access(self.fav_chooser.get_folder(), os.W_OK):
             self.ui.error_favorites.set_label(_("No write permissions"))
         else:
             self.ui.error_favorites.set_label("")
 
+
     def on_fetched_changed(self, widget=None):
-        if not os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
+        self.delayed_apply()
+        if not os.access(self.fetched_chooser.get_folder(), os.W_OK):
             self.ui.error_fetched.set_label(_("No write permissions"))
         else:
             self.ui.error_fetched.set_label("")

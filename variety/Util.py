@@ -29,6 +29,7 @@ import urllib2
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
+import subprocess
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -387,3 +388,10 @@ class Util:
         except Exception:
             return ''.join(random.choice(string.hexdigits) for n in xrange(32))
 
+    @staticmethod
+    def get_folder_icon_name(path):
+        try:
+            output = subprocess.check_output('gvfs-info -a standard::icon "%s"' % path, shell=True)
+            return output.split('\n')[1].strip().split(' ')[1].split(',')[0]
+        except Exception:
+            return "folder"
