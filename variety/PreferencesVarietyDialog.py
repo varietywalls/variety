@@ -22,7 +22,7 @@ import threading
 from variety.Util import Util
 from variety_lib import varietyconfig
 from variety_lib.varietyconfig import get_data_file
-
+from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 from variety.AddFlickrDialog import AddFlickrDialog
@@ -56,6 +56,7 @@ EDITABLE_TYPES = [
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS]
 
+
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
 
@@ -74,6 +75,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.loading = False
+
+        self.dl_chooser = FolderChooser(self.ui.download_folder_chooser, self.on_downloaded_changed)
+        self.fav_chooser = FolderChooser(self.ui.favorites_folder_chooser, self.on_favorites_changed)
+        self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
         self.reload()
 
     def update_status_message(self):
@@ -116,15 +121,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.download_enabled.set_active(self.options.download_enabled)
             self.set_download_interval(self.options.download_interval)
 
-            self.ui.download_folder_chooser.set_filename(os.path.expanduser(self.options.download_folder))
+            self.dl_chooser.set_folder(os.path.expanduser(self.options.download_folder))
             self.update_real_download_folder()
 
             self.ui.quota_enabled.set_active(self.options.quota_enabled)
             self.ui.quota_size.set_text(str(self.options.quota_size))
 
-            self.ui.favorites_folder_chooser.set_filename(os.path.expanduser(self.options.favorites_folder))
+            self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
 
-            self.ui.fetched_folder_chooser.set_filename(os.path.expanduser(self.options.fetched_folder))
+            self.fetched_chooser.set_folder(os.path.expanduser(self.options.fetched_folder))
             self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
             self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
             self.ui.clipboard_hosts.get_buffer().set_text('\n'.join(self.options.clipboard_hosts))
@@ -680,6 +685,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def close(self):
+        self.ui.error_downloaded.set_label("")
+        self.ui.error_favorites.set_label("")
+        self.ui.error_fetched.set_label("")
+
         self.hide()
         self.parent.trigger_download()
         self.on_destroy()
@@ -727,18 +736,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 logger.exception("Could not understand quota size")
 
-            if os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
-                self.options.download_folder = self.ui.download_folder_chooser.get_filename()
-            if os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
-                self.options.favorites_folder = self.ui.favorites_folder_chooser.get_filename()
+            if os.access(self.dl_chooser.get_folder(), os.W_OK):
+                self.options.download_folder = self.dl_chooser.get_folder()
+            if os.access(self.fav_chooser.get_folder(), os.W_OK):
+                self.options.favorites_folder = self.fav_chooser.get_folder()
             self.options.favorites_operations = self.favorites_operations
 
             self.options.sources = []
             for r in self.ui.sources.get_model():
                 self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
 
-            if os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
-                self.options.fetched_folder = self.ui.fetched_folder_chooser.get_filename()
+            if os.access(self.fetched_chooser.get_folder(), os.W_OK):
+                self.options.fetched_folder = self.fetched_chooser.get_folder()
             self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
             self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
             buf = self.ui.clipboard_hosts.get_buffer()
@@ -942,10 +951,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog.destroy()
             except Exception:
                 pass
+        for chooser in (self.dl_chooser, self.fav_chooser, self.fetched_chooser):
+            try:
+                chooser.destroy()
+            except Exception:
+                pass
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
 
     def on_downloaded_changed(self, widget=None):
-        if not os.access(self.ui.download_folder_chooser.get_filename(), os.W_OK):
+        self.delayed_apply()
+
+        if not os.access(self.dl_chooser.get_folder(), os.W_OK):
             self.ui.error_downloaded.set_label(_("No write permissions"))
         else:
             self.ui.error_downloaded.set_label("")
@@ -963,13 +979,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.real_download_folder.set_text(_("Actual download folder: %s ") % self.parent.real_download_folder)
 
     def on_favorites_changed(self, widget=None):
-        if not os.access(self.ui.favorites_folder_chooser.get_filename(), os.W_OK):
+        self.delayed_apply()
+        if not os.access(self.fav_chooser.get_folder(), os.W_OK):
             self.ui.error_favorites.set_label(_("No write permissions"))
         else:
             self.ui.error_favorites.set_label("")
 
+
     def on_fetched_changed(self, widget=None):
-        if not os.access(self.ui.fetched_folder_chooser.get_filename(), os.W_OK):
+        self.delayed_apply()
+        if not os.access(self.fetched_chooser.get_folder(), os.W_OK):
             self.ui.error_fetched.set_label(_("No write permissions"))
         else:
             self.ui.error_fetched.set_label("")

@@ -29,6 +29,7 @@ import urllib2
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
+import subprocess
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
 
@@ -387,3 +388,13 @@ class Util:
         except Exception:
             return ''.join(random.choice(string.hexdigits) for n in xrange(32))
 
+    @staticmethod
+    def get_file_icon_name(path):
+        try:
+            from gi.repository import Gio
+            f = Gio.File.new_for_path(path)
+            query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
+            return query_info.get_attribute_object("standard::icon").get_names()[0]
+        except Exception:
+            logger.exception("Exception while obtaining folder icon for %s:" % path)
+            return "folder"

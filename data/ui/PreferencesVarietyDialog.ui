@@ -59,11 +59,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -558,16 +553,16 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFileChooserButton" id="download_folder_chooser">
+                              <object class="GtkButton" id="download_folder_chooser">
+                                <property name="label">Label</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="height_request">30</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="orientation">vertical</property>
-                                <property name="action">select-folder</property>
-                                <property name="show_hidden">True</property>
-                                <property name="title" translatable="yes">Select Download folder</property>
-                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
-                                <signal name="selection-changed" handler="on_downloaded_changed" swapped="no"/>
+                                <property name="use_action_appearance">False</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -740,16 +735,16 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFileChooserButton" id="favorites_folder_chooser">
+                              <object class="GtkButton" id="favorites_folder_chooser">
+                                <property name="label">Label</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="height_request">30</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="orientation">vertical</property>
-                                <property name="action">select-folder</property>
-                                <property name="show_hidden">True</property>
-                                <property name="title" translatable="yes">Select Favorites folder</property>
-                                <signal name="selection-changed" handler="on_favorites_changed" swapped="no"/>
-                                <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
+                                <property name="use_action_appearance">False</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -856,17 +851,16 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFileChooserButton" id="fetched_folder_chooser">
+                          <object class="GtkButton" id="fetched_folder_chooser">
+                            <property name="label">Label</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="height_request">30</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_right">10</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
                             <property name="hexpand">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="action">select-folder</property>
-                            <property name="show_hidden">True</property>
-                            <property name="title" translatable="yes">Select Fetch folder</property>
-                            <signal name="selection-changed" handler="on_fetched_changed" swapped="no"/>
-                            <signal name="selection-changed" handler="delayed_apply" swapped="no"/>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3439,6 +3433,11 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>
