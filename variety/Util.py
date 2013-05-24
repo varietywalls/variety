@@ -389,9 +389,12 @@ class Util:
             return ''.join(random.choice(string.hexdigits) for n in xrange(32))
 
     @staticmethod
-    def get_folder_icon_name(path):
+    def get_file_icon_name(path):
         try:
-            output = subprocess.check_output('gvfs-info -a standard::icon "%s"' % path, shell=True)
-            return output.split('\n')[1].strip().split(' ')[1].split(',')[0]
+            from gi.repository import Gio
+            f = Gio.File.new_for_path(path)
+            query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
+            return query_info.get_attribute_object("standard::icon").get_names()[0]
         except Exception:
+            logger.exception("Exception while obtaining folder icon for %s:" % path)
             return "folder"

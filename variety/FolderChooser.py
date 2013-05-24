@@ -50,7 +50,7 @@ class FolderChooser:
 
     def set_folder(self, folder):
         self.folder = os.path.normpath(folder)
-        self.image.set_from_icon_name(Util.get_folder_icon_name(self.folder), Gtk.IconSize.MENU)
+        self.image.set_from_icon_name(Util.get_file_icon_name(self.folder), Gtk.IconSize.MENU)
         self.label.set_text(Util.collapseuser(self.folder))
         self.button.set_tooltip_text(self.folder)
 
