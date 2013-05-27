@@ -59,6 +59,11 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -2936,7 +2941,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="halign">start</property>
                             <property name="margin_right">20</property>
                             <property name="margin_top">7</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show it on the login screen, LightDM needs to have read permissions over the wallpaper image. If you check this option, when setting a wallpaper, Variety will copy the image to your Pictures folder and change its permissions to make it readable by all. Please use with care if your computer is used by other users or if your image folders contain sensitive data.</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show it on the login screen, LightDM needs to have read permissions over the wallpaper image. If you check this option, when setting a wallpaper, Variety will copy the image to your Pictures folder and change the file's permissions to make it readable by all. Please use with care if your computer is used by other users or if your image folders contain sensitive data.</property>
                             <property name="use_markup">True</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
@@ -3433,11 +3438,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>

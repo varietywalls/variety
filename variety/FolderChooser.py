@@ -31,6 +31,7 @@ class FolderChooser:
         self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
         self.label = Gtk.Label()
         self.image = Gtk.Image()
+        self.image.set_margin_left(2)
         self.image.set_margin_right(5)
         self.image.set_from_icon_name("folder", Gtk.IconSize.MENU)
         self.box.add(self.image)
@@ -51,7 +52,7 @@ class FolderChooser:
     def set_folder(self, folder):
         self.folder = os.path.normpath(folder)
         self.image.set_from_icon_name(Util.get_file_icon_name(self.folder), Gtk.IconSize.MENU)
-        self.label.set_text(Util.collapseuser(self.folder))
+        self.label.set_text(os.path.basename(self.folder))
         self.button.set_tooltip_text(self.folder)
 
     def browse(self, widget=None):
