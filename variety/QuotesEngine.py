@@ -14,13 +14,9 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from bs4 import BeautifulSoup
 import random
-import urllib
 import time
-from variety.Util import Util
-from variety.plugit.IQuotePlugin import IQuotePlugin
-from variety_lib.varietyconfig import get_data_path
+from variety.plugit.IQuoteSource import IQuoteSource
 
 import logging
 import threading
@@ -188,72 +184,30 @@ class QuotesEngine:
 
 
     def download_one_quote(self):
-        plugins = self.parent.plugit.get_plugins(IQuotePlugin)
-        return random.choice(plugins)[0].get_quote()
+        plugins = self.parent.plugit.get_plugins(IQuoteSource)
 
-        skip = set()
+        skip = []
         while self.running and self.parent.options.quotes_enabled:
-            url = QuotesEngine.choose_random_feed_url(self.parent.options, skip)
-            if not url:
-                logger.warning("Could not fetch any quotes")
-                return None
+            active = [p for p in plugins if p not in skip]
 
-            try:
-                xml = Util.fetch(url)
-
-                try:
-                    quote = QuotesEngine.extract_quote(xml)
-                    if not quote:
-                        logger.warning("Could not find quotes for URL " + url)
-                        skip.add(url)
-                    elif len(quote["quote"]) < 250:
-                        return quote
-                except Exception:
-                    logger.exception("Could not extract quote")
-                    skip.add(url)
-            except Exception:
-                logger.exception("Could not fetch quote")
+            if not active:
                 if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
                     self.last_error_notification_time = time.time()
                     self.parent.show_notification("Could not fetch quotes",
-                                                  "QuotesDaddy service seems to be down, but we will continue trying")
-                skip.add(url)
+                        "All quotes services seems to be down, but we will continue trying")
+                return None
+
+            plugin = random.choice(active)
+            try:
+                quote = plugin["plugin"].get_quote()
+                if not quote:
+                    skip.append(plugin)
+                elif len(quote["quote"]) < 250:
+                    return quote
+            except Exception:
+                logger.exception("Exception in quote plugin")
+                skip.append(plugin)
 
             time.sleep(2)
+
         return None
-
-    @staticmethod
-    def extract_quote(xml):
-        bs = BeautifulSoup(xml, "xml")
-        item = bs.find("item")
-        if not item:
-            return None
-        link = item.find("link").contents[0].strip()
-        s = item.find("description").contents[0]
-        author = s[s.rindex('- ') + 1:].strip()
-        quote = s[:s.rindex('- ')].strip().replace('"', '').replace('<br>', '\n').replace('<br/>', '\n').strip()
-        quote = u"\u201C%s\u201D" % quote
-        return {"quote": quote, "author": author, "link": link}
-
-    @staticmethod
-    def choose_random_feed_url(options, skip_urls=set()):
-        urls = []
-        tags = options.quotes_tags.split(",")
-        for tag in tags:
-            if tag.strip():
-                url = "http://www.quotesdaddy.com/feed/tagged/" + urllib.quote_plus(tag.strip())
-                if not url in skip_urls:
-                    urls.append(url)
-
-        authors = options.quotes_authors.split(",")
-        for author in authors:
-            if author.strip():
-                url = "http://www.quotesdaddy.com/feed/author/" + urllib.quote_plus(author.strip())
-                if not url in skip_urls:
-                    urls.append(url)
-
-        if not urls:
-            urls.append("http://www.quotesdaddy.com/feed")
-
-        return random.choice(urls)
-

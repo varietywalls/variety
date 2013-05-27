@@ -138,6 +138,7 @@ class VarietyWindow(Gtk.Window):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
         self.plugit = Plugit([os.path.join(varietyconfig.get_data_path(), "plugins")])
+        setattr(self.plugit, "parent", self)
         self.plugit.load()
 
         self.reload_config()

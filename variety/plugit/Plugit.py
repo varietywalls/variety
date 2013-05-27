@@ -37,9 +37,10 @@ class Plugit:
     def load(self):
         self.plugins = []
         for cls in self.walk_plugin_classes():
-            plugin = cls()
             try:
+                plugin = cls()
                 info = plugin.get_info()
+                plugin.plugit = self
             except Exception:
                 logger.exception("Could not get info for plugin %s" % str(cls))
                 continue
@@ -47,4 +48,5 @@ class Plugit:
             self.plugins.append((plugin, cls, info))
 
     def get_plugins(self, type=None):
-        return [(plugin, cls, info) for (plugin, cls, info) in self.plugins if not type or issubclass(cls, type)]
+        return [{"plugin": plugin, "class": cls, "info": info} for
+            (plugin, cls, info) in self.plugins if not type or issubclass(cls, type)]

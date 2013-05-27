@@ -17,6 +17,7 @@ class IPlugin(object):
         """
        Set the basic variables.
        """
+        self.plugit = None
         self.is_activated = False
 
     def activate(self):
