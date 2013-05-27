@@ -19,6 +19,8 @@ import random
 import urllib
 import time
 from variety.Util import Util
+from variety.plugit.IQuotePlugin import IQuotePlugin
+from variety_lib.varietyconfig import get_data_path
 
 import logging
 import threading
@@ -186,6 +188,9 @@ class QuotesEngine:
 
 
     def download_one_quote(self):
+        plugins = self.parent.plugit.get_plugins(IQuotePlugin)
+        return random.choice(plugins)[0].get_quote()
+
         skip = set()
         while self.running and self.parent.options.quotes_enabled:
             url = QuotesEngine.choose_random_feed_url(self.parent.options, skip)

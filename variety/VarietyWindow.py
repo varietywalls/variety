@@ -20,6 +20,7 @@ import subprocess
 import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
+from variety.plugit.Plugit import Plugit
 
 gettext.textdomain('variety')
 
@@ -135,6 +136,9 @@ class VarietyWindow(Gtk.Window):
 
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
+
+        self.plugit = Plugit([os.path.join(varietyconfig.get_data_path(), "plugins")])
+        self.plugit.load()
 
         self.reload_config()
         self.load_last_change_time()
