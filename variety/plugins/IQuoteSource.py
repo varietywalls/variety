@@ -1,8 +1,11 @@
-from IPlugin import IPlugin
+from jumble.IPlugin import IPlugin
 
 class IQuoteSource(IPlugin):
-    def get_quote(self):
-        """Return some random quote"""
+    def supports_keywords(self):
+        return False
+
+    def get_quote(self, keywords=None):
+        """Return some quote"""
         return {
             "quote": "Quote",
             "author": "Author",

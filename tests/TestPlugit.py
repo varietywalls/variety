@@ -18,9 +18,8 @@
 import sys
 import os.path
 import unittest
-from variety.plugit.Plugit import Plugit
-from variety.plugit.IPlugin import IPlugin
-from variety.plugit.IQuotePlugin import IQuoteSource
+from variety.jumble import Jumble, IPlugin
+from variety.plugins.IQuoteSource import IQuoteSource
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -31,9 +30,9 @@ class P2(IQuoteSource):
     pass
 
 
-class TestPlugit(unittest.TestCase):
+class TestJumble(unittest.TestCase):
     def test_load(self):
-        p = Plugit(".")
+        p = Jumble(".")
         p.load()
         print p.get_plugins()
         self.assertEqual(2, len(p.get_plugins()))

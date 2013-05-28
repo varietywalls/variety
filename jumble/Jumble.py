@@ -6,7 +6,7 @@ from IPlugin import IPlugin
 
 logger = logging.getLogger("variety")
 
-class Plugit:
+class Jumble:
     def __init__(self, folders):
         self.folders = folders
 
@@ -38,11 +38,11 @@ class Plugit:
         self.plugins = []
         for cls in self.walk_plugin_classes():
             try:
+                info = cls.get_info()
                 plugin = cls()
-                info = plugin.get_info()
-                plugin.plugit = self
+                plugin.jumble = self
             except Exception:
-                logger.exception("Could not get info for plugin %s" % str(cls))
+                logger.exception("Could not get info for cadidate plugin class %s" % str(cls))
                 continue
 
             self.plugins.append((plugin, cls, info))

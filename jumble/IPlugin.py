@@ -1,7 +1,7 @@
 class IPlugin(object):
     """
-  The most simple interface to be inherited when creating a plugin.
-  """
+    The most simple interface to be inherited when creating a plugin.
+    """
     @classmethod
     def get_info(cls):
         return {}
@@ -17,7 +17,7 @@ class IPlugin(object):
         """
        Set the basic variables.
        """
-        self.plugit = None
+        self.jumble = None
         self.is_activated = False
 
     def activate(self):

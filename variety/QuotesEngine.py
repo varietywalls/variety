@@ -16,12 +16,16 @@
 
 import random
 import time
-from variety.plugit.IQuoteSource import IQuoteSource
+from variety.plugins.IQuoteSource import IQuoteSource
 
 import logging
 import threading
 
 logger = logging.getLogger('variety')
+
+import gettext
+from gettext import gettext as _
+gettext.textdomain('variety')
 
 class QuotesEngine:
     def __init__(self, parent = None):
@@ -184,7 +188,16 @@ class QuotesEngine:
 
 
     def download_one_quote(self):
-        plugins = self.parent.plugit.get_plugins(IQuoteSource)
+        keywords = None
+        if self.parent.options.quotes_tags.strip():
+            keywords = self.parent.options.quotes_tags.split(",")
+
+        plugins = self.parent.jumble.get_plugins(IQuoteSource)
+        plugins = [p for p in plugins if (not keywords or p["plugin"].supports_keywords())]
+        if not plugins:
+            self.parent.show_notification(_("No suitable quote plugins"),
+                                          _("You have no quote plugins which support searching by keyword"))
+            raise Exception("No quote plugins")
 
         skip = []
         while self.running and self.parent.options.quotes_enabled:
@@ -193,8 +206,9 @@ class QuotesEngine:
             if not active:
                 if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
                     self.last_error_notification_time = time.time()
-                    self.parent.show_notification("Could not fetch quotes",
-                        "All quotes services seems to be down, but we will continue trying")
+                    self.parent.show_notification(
+                        _("Could not fetch quotes"),
+                        _("Quotes services seems to be down, but we will continue trying"))
                 return None
 
             plugin = random.choice(active)

@@ -20,7 +20,7 @@ import subprocess
 import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
-from variety.plugit.Plugit import Plugit
+from jumble.Jumble import Jumble
 
 gettext.textdomain('variety')
 
@@ -137,18 +137,18 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
-        self.plugit = Plugit([os.path.join(varietyconfig.get_data_path(), "plugins")])
-        setattr(self.plugit, "parent", self)
-        self.plugit.load()
-
-        self.reload_config()
-        self.load_last_change_time()
+        self.jumble = Jumble([os.path.join(varietyconfig.get_data_path(), "plugins")])
+        setattr(self.jumble, "parent", self)
+        self.jumble.load()
 
         self.image_count = -1
         self.image_colors_cache = {}
 
         self.wheel_timer = None
         self.set_wp_timer = None
+
+        self.reload_config()
+        self.load_last_change_time()
 
         self.update_indicator(auto_changed=False)
 
@@ -658,7 +658,16 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
-                    self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                    if self.options.quotes_enabled and self.quote is not None:
+                        self.ind.quotes.set_visible(True)
+                        if "sourceName" in self.quote and "link" in self.quote:
+                            self.ind.view_quote.set_visible(True)
+                            self.ind.view_quote.set_label(_("View at %s") % self.quote["sourceName"])
+                        else:
+                            self.ind.view_quote.set_visible(False)
+                    else:
+                        self.ind.quotes.set_visible(False)
+
                     if self.quotes_engine:
                         self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
                     self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
