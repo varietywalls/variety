@@ -4,6 +4,7 @@ from variety.plugins.IQuoteSource import IQuoteSource
 class DummyQuoteSource(IQuoteSource):
     @classmethod
     def get_info(cls):
+        raise Exception('disabled')
         return {
             "name": "Dummy Quote Source"
         }

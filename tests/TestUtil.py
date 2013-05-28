@@ -105,6 +105,12 @@ class TestUtil(unittest.TestCase):
         for x in s:
             self.assertEquals(32, len(x))
 
+    def test_safe_map(self):
+        def f(i):
+            if i <= 10: raise Exception
+            return i
+        self.assertEquals([20,30], list(Util.safe_map(f, [1,5,20,10,30,4])))
+
 
 if __name__ == '__main__':
     unittest.main()

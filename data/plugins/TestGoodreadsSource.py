@@ -18,23 +18,14 @@
 import sys
 import os.path
 import unittest
-from variety.jumble import Jumble, IPlugin
-from variety.plugins.IQuoteSource import IQuoteSource
+from jumble.Jumble import Jumble
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-class P1(IPlugin):
-    pass
-
-class P2(IQuoteSource):
-    pass
-
-
-class TestJumble(unittest.TestCase):
-    def test_load(self):
+class TestGoodreadsSource(unittest.TestCase):
+    def test_get_quote(self):
         p = Jumble(".")
         p.load()
-        print p.get_plugins()
-        self.assertEqual(2, len(p.get_plugins()))
-        self.assertEqual(2, len(p.get_plugins(IPlugin)))
-        self.assertEqual(1, len(p.get_plugins(IQuoteSource)))
+        source = p.get_plugin("Goodreads quotes")
+        q = source["plugin"].get_quote()
+        self.assertEqual("Goodreads", q["sourceName"])

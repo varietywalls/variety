@@ -45,8 +45,11 @@ class Jumble:
                 logger.exception("Could not get info for cadidate plugin class %s" % str(cls))
                 continue
 
-            self.plugins.append((plugin, cls, info))
+            self.plugins.append({"plugin": plugin, "class": cls, "info": info})
 
     def get_plugins(self, type=None):
-        return [{"plugin": plugin, "class": cls, "info": info} for
-            (plugin, cls, info) in self.plugins if not type or issubclass(cls, type)]
+        return [p for p in self.plugins if not type or issubclass(p["class"], type)]
+
+    def get_plugin(self, name, type=None):
+        l = [p for p in self.get_plugins(type) if "name" in p["info"] and p["info"]["name"] == name]
+        return l[0] if l else None

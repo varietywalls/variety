@@ -213,7 +213,7 @@ class QuotesEngine:
 
             plugin = random.choice(active)
             try:
-                quote = plugin["plugin"].get_quote()
+                quote = plugin["plugin"].get_quote(keywords)
                 if not quote:
                     skip.append(plugin)
                 elif len(quote["quote"]) < 250:

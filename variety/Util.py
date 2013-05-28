@@ -398,3 +398,11 @@ class Util:
         except Exception:
             logger.exception("Exception while obtaining folder icon for %s:" % path)
             return "folder"
+
+    @staticmethod
+    def safe_map(f, l):
+        for element in l:
+            try:
+                yield f(element)
+            except Exception:
+                continue
