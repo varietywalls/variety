@@ -1,5 +1,7 @@
+# coding=utf-8
 import random
 import re
+from httplib2 import iri2uri
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 
@@ -18,12 +20,18 @@ KEYWORDS = [
     'passion', 'spiritual', 'soul', 'loss', 'grief', 'language', 'psychology', 'friends', 'paranormal-romance',
     'learning', 'imagination', 'world', 'magic', 'sadness', 'feminism', 'depression']
 
-# TODO cache all quotes from a page, keyed by keyword to reduce bandwidth usage
 class GoodreadsSource(IQuoteSource):
+    def __init__(self):
+        super(IQuoteSource, self).__init__()
+        self.cache = {}
+
     @classmethod
     def get_info(cls):
         return {
-            "name": "Goodreads quotes"
+            "name": "Quotes from Goodreads",
+            "description": "Fetches quotes from Goodreads.com",
+            "author": "Peter Levi",
+            "version": "0.1"
         }
 
     def supports_keywords(self):
@@ -31,25 +39,42 @@ class GoodreadsSource(IQuoteSource):
 
     def get_quote(self, keywords=None):
         keyword = random.choice(keywords or KEYWORDS)
-        url = "http://www.goodreads.com/quotes/search?q=%s" % keyword
-        try:
+        logger.info("Fetching quotes from Goodreads for keyword=%s" % keyword)
+
+        if not keyword in self.cache:
+            url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s".encode("utf-8") % keyword)
             soup = Util.html_soup(url)
-            page_links = Util.safe_map(int,
-                [pagelink.contents[0] for pagelink in soup.find_all(href=re.compile('quotes/search.*page='))])
+            page_links = list(Util.safe_map(int,
+                [pagelink.contents[0] for pagelink in soup.find_all(href=re.compile('quotes/search.*page='))]))
             if page_links:
                 page = random.randint(1, max(page_links))
-                url = "http://www.goodreads.com/quotes/search?q=%s&page=%d" % (keyword, page)
+                url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d".encode("utf-8") % (keyword, page))
                 soup = Util.html_soup(url)
-            print url
-            div = random.choice(soup.find_all('div', 'quoteText'))
-            quote = div.contents[0].strip()
-            author = div.find('a').contents[0]
-            link = "http://www.goodreads.com" + div.find('a')["href"]
-            if div.find('i'):
-                author = author + ', ' + div.find('i').find('a').contents[0]
+            logger.info("Used Goodreads url %s" % url)
+            for div in soup.find_all('div', 'quoteText'):
+                logger.debug("Parsing quote for div\n%s" % div)
+                try:
+                    quote_text = u""
+                    first_a = div.find('a')
+                    for elem in div.contents:
+                        if elem == first_a:
+                            break
+                        else:
+                            quote_text += unicode(elem)
+                    quote_text = quote_text.replace(u'<br>', '\n').replace(u'<br/>', '\n').replace(u'―', '').strip()
 
-            print str({"quote": quote, "author": author, "sourceName": "Goodreads", "link": link})
-            return {"quote": quote, "author": author, "sourceName": "Goodreads", "link": link}
-        except Exception:
-            logger.exception("Could not fetch or extract quote")
-            return None
+                    author = first_a.contents[0]
+                    link = "http://www.goodreads.com" + div.find('a')["href"]
+                    if div.find('i'):
+                        author = author + ', ' + div.find('i').find('a').contents[0]
+                    self.cache.setdefault(keyword, {})[quote_text] = \
+                        {"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link}
+                except Exception:
+                    logger.exception("Could not extract Goodreads quote")
+
+        quote = random.choice(self.cache[keyword].values())
+        del self.cache[keyword][quote["quote"]]
+        if not self.cache[keyword]:
+            del self.cache[keyword]
+
+        return quote

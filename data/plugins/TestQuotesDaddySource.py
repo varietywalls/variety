@@ -26,6 +26,6 @@ class TestQuotesDaddySource(unittest.TestCase):
     def test_get_quote(self):
         p = Jumble(".")
         p.load()
-        source = p.get_plugin("QuotesDaddy quotes")
+        source = p.get_plugins(typename="QuotesDaddySource")[0]
         q = source["plugin"].get_quote()
         self.assertEqual("QuotesDaddy", q["sourceName"])

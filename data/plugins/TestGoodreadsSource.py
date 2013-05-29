@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
 import sys
 import os.path
 import unittest
@@ -26,6 +25,6 @@ class TestGoodreadsSource(unittest.TestCase):
     def test_get_quote(self):
         p = Jumble(".")
         p.load()
-        source = p.get_plugin("Goodreads quotes")
-        q = source["plugin"].get_quote()
+        source = p.get_plugins(typename="GoodreadsSource")[0]
+        q = source["plugin"].get_quote([u"Вежинов".encode("utf-8")])
         self.assertEqual("Goodreads", q["sourceName"])

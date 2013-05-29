@@ -47,9 +47,9 @@ class Jumble:
 
             self.plugins.append({"plugin": plugin, "class": cls, "info": info})
 
-    def get_plugins(self, type=None):
-        return [p for p in self.plugins if not type or issubclass(p["class"], type)]
+    def get_plugins(self, type=None, typename=None, name=None):
+        return [p for p in self.plugins if
+                (not type or issubclass(p["class"], type)) and
+                (not typename or p["class"].__name__ == typename) and
+                (not name or p["info"].name == name)]
 
-    def get_plugin(self, name, type=None):
-        l = [p for p in self.get_plugins(type) if "name" in p["info"] and p["info"]["name"] == name]
-        return l[0] if l else None
