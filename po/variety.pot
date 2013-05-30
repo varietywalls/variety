@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-27 10:22+0300\n"
+"POT-Creation-Date: 2013-05-30 13:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgid "Add Images"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:422
-#: ../variety/PreferencesVarietyDialog.py:446 ../variety/FolderChooser.py:63
+#: ../variety/PreferencesVarietyDialog.py:446 ../variety/FolderChooser.py:62
 msgid "Cancel"
 msgstr ""
 
@@ -615,11 +615,11 @@ msgid ""
 "wallpaper."
 msgstr ""
 
-#: ../variety/FolderChooser.py:62
+#: ../variety/FolderChooser.py:61
 msgid "Choose a folder"
 msgstr ""
 
-#: ../variety/FolderChooser.py:63
+#: ../variety/FolderChooser.py:62
 msgid "OK"
 msgstr ""
 
@@ -1416,9 +1416,9 @@ msgid ""
 "<b>Privacy warning:</b> To show it on the login screen, LightDM needs to "
 "have read permissions over the wallpaper image. If you check this option, "
 "when setting a wallpaper, Variety will copy the image to your Pictures "
-"folder and change its permissions to make it readable by all. Please use "
-"with care if your computer is used by other users or if your image folders "
-"contain sensitive data."
+"folder and change the file's permissions to make it readable by all. Please "
+"use with care if your computer is used by other users or if your image "
+"folders contain sensitive data."
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:128
