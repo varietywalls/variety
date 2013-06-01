@@ -94,9 +94,11 @@ class Util:
     @staticmethod
     def makedirs(path):
         try:
-            os.makedirs(path)
+            if not os.path.isdir(path):
+                logger.info("Creating folder %s" % path)
+                os.makedirs(path)
         except OSError:
-            pass
+            logger.exception("Could not makedirs for %s" % path)
 
     @staticmethod
     def is_image(filename):
@@ -392,7 +394,7 @@ class Util:
     def get_file_icon_name(path):
         try:
             from gi.repository import Gio
-            f = Gio.File.new_for_path(path)
+            f = Gio.File.new_for_path(os.path.normpath(os.path.expanduser(path)))
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
             return query_info.get_attribute_object("standard::icon").get_names()[0]
         except Exception:

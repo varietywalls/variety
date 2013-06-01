@@ -105,6 +105,11 @@ class TestUtil(unittest.TestCase):
         for x in s:
             self.assertEquals(32, len(x))
 
+    def test_get_file_icon_name(self):
+        self.assertEquals("folder", Util.get_file_icon_name("/xxx/yyy/zzz")) # nonexistent
+        self.assertEquals("user-home", Util.get_file_icon_name("~"))
+        self.assertEquals("folder-pictures", Util.get_file_icon_name("~/Pictures"))
+
 
 if __name__ == '__main__':
     unittest.main()
