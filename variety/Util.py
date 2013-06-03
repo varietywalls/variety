@@ -400,3 +400,20 @@ class Util:
         except Exception:
             logger.exception("Exception while obtaining folder icon for %s:" % path)
             return "folder"
+
+    @staticmethod
+    def is_home_encrypted():
+        return os.path.isdir(os.path.expanduser("~").replace('/home/', '/home/.ecryptfs/'))
+
+    @staticmethod
+    def get_xdg_pictures_folder():
+        try:
+            return subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0]
+        except Exception:
+            logger.exception("Could not get path to Pictures folder")
+            return os.path.expanduser('~/Pictures')
+
+    @staticmethod
+    def superuser_exec(*command_args):
+        logger.warning("Executing as superuser: %s" % str(command_args))
+        subprocess.check_call(["pkexec"] + list(command_args))

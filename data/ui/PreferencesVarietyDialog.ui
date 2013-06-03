@@ -59,18 +59,8 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
-    <property name="width_request">700</property>
+    <property name="width_request">750</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Variety Preferences</property>
     <property name="window_position">center</property>
@@ -2603,12 +2593,12 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <object class="GtkBox" id="box40">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">30</property>
                         <child>
                           <object class="GtkLabel" id="label71">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="margin_left">30</property>
                             <property name="margin_right">10</property>
                             <property name="margin_top">5</property>
                             <property name="xalign">0</property>
@@ -2720,12 +2710,12 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       <object class="GtkBox" id="box38">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_left">30</property>
                         <child>
                           <object class="GtkLabel" id="label70">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="margin_left">30</property>
                             <property name="margin_right">10</property>
                             <property name="margin_top">5</property>
                             <property name="xalign">0</property>
@@ -2912,11 +2902,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="can_focus">False</property>
                         <property name="valign">start</property>
                         <property name="margin_left">30</property>
-                        <property name="margin_right">10</property>
+                        <property name="margin_right">30</property>
                         <property name="hexpand">True</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="lightdm_support_enabled">
+                          <object class="GtkCheckButton" id="copyto_enabled">
                             <property name="label" translatable="yes">Make sure the wallpapers set by Variety will be used on the login screen</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
@@ -2927,6 +2917,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="on_copyto_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2939,9 +2931,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="margin_right">20</property>
                             <property name="margin_top">7</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show it on the login screen, LightDM needs to have read permissions over the wallpaper image. If you check this option, when setting a wallpaper, Variety will copy the image to your Pictures folder and change the file's permissions to make it readable by all. Please use with care if your computer is used by other users or if your image folders contain sensitive data.</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show your wallpaper LightDM needs read permissions over the image. With this option on, Variety will copy the wallpapers to a public folder and change their permissions to make them readable by all. By default, the folder is ~/Pictures if your home folder in not encrypted, and /usr/share/backgrounds if it is. Please use with care on multiuser systems.</property>
                             <property name="use_markup">True</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
@@ -2950,6 +2941,181 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="box13">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_top">5</property>
+                            <child>
+                              <object class="GtkLabel" id="label26">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Copy wallpaper image files to this folder: </property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="copyto_folder_chooser">
+                                <property name="label">Copy-to folder</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="height_request">30</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="use_action_appearance">False</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="copyto_use_default">
+                                <property name="label" translatable="yes">Reset to default</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="margin_left">5</property>
+                                <property name="use_action_appearance">False</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLinkButton" id="copyto_faq_link">
+                                <property name="label" translatable="yes">Still doesn't work?</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="halign">end</property>
+                                <property name="margin_left">20</property>
+                                <property name="margin_top">5</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="relief">none</property>
+                                <property name="uri">https://answers.launchpad.net/variety/+faq/2271</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="copyto_encrypted_note">
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_top">5</property>
+                            <property name="label" translatable="yes">It seems your home folder is encrypted, so using folders inside it will not work.</property>
+                            <attributes>
+                              <attribute name="foreground" value="#ffff00000000"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="copyto_permissions_box">
+                            <property name="can_focus">False</property>
+                            <property name="margin_top">5</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel" id="copyto_write_permissions_warning">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">You don't have write permissions for this folder.</property>
+                                <attributes>
+                                  <attribute name="foreground" value="#ffff00000000"/>
+                                </attributes>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="copyto_read_permissions_warning">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Permissions do not allow LightDM to read files from this folder.</property>
+                                <attributes>
+                                  <attribute name="foreground" value="#ffff00000000"/>
+                                </attributes>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label25">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Variety can adjust the permissions, but you will have to provide superuser privileges.</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">fill</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="copyto_fix_permissions">
+                                <property name="label">OK, adjust the permissions</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="halign">start</property>
+                                <property name="use_action_appearance">False</property>
+                                <signal name="clicked" handler="on_copyto_fix_permissions_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">4</property>
                           </packing>
                         </child>
                       </object>
@@ -3439,6 +3605,16 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -3459,6 +3635,7 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <widgets>
       <widget name="label71"/>
       <widget name="label70"/>
+      <widget name="label26"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_filtering_checkboxes">

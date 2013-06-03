@@ -17,6 +17,7 @@
 # This is the preferences dialog.
 
 from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+import stat
 
 import threading
 from variety.Util import Util
@@ -79,6 +80,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dl_chooser = FolderChooser(self.ui.download_folder_chooser, self.on_downloaded_changed)
         self.fav_chooser = FolderChooser(self.ui.favorites_folder_chooser, self.on_favorites_changed)
         self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
+        self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
         self.reload()
 
     def update_status_message(self):
@@ -162,7 +164,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
-            self.ui.lightdm_support_enabled.set_active(self.options.lightdm_support_enabled)
+            self.ui.copyto_enabled.set_active(self.options.copyto_enabled)
+            self.copyto_chooser.set_folder(self.parent.get_actual_copyto_folder())
 
             self.ui.desired_color_enabled.set_active(self.options.desired_color_enabled)
             self.ui.desired_color.set_color(Gdk.Color(red = 160 * 256, green = 160 * 256, blue = 160 * 256))
@@ -243,6 +246,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_lightness_enabled_toggled()
             self.on_min_rating_enabled_toggled()
             self.on_facebook_enabled_toggled()
+            self.on_copyto_enabled_toggled()
             self.on_quotes_change_enabled_toggled()
             self.on_icon_changed()
             self.on_favorites_operations_changed()
@@ -783,7 +787,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
-            self.options.lightdm_support_enabled = self.ui.lightdm_support_enabled.get_active()
+            self.options.copyto_enabled = self.ui.copyto_enabled.get_active()
+            copyto = os.path.normpath(self.copyto_chooser.get_folder())
+            if copyto == os.path.normpath(self.parent.get_actual_copyto_folder('Default')):
+                self.options.copyto_folder = 'Default'
+            else:
+                self.options.copyto_folder = copyto
 
             self.options.desired_color_enabled = self.ui.desired_color_enabled.get_active()
             c = self.ui.desired_color.get_color()
@@ -1015,3 +1024,47 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_favorites_operations_changed(self, widget=None):
         self.ui.edit_favorites_operations.set_visible(self.ui.favorites_operations.get_active() == 3)
+
+    def on_copyto_enabled_toggled(self, widget=None):
+        self.copyto_chooser.set_sensitive(self.ui.copyto_enabled.get_active())
+        self.ui.copyto_use_default.set_sensitive(self.ui.copyto_enabled.get_active())
+        self.on_copyto_changed()
+
+    def on_copyto_changed(self):
+        self.ui.copyto_faq_link.set_sensitive(self.ui.copyto_enabled.get_active())
+        if self.ui.copyto_enabled.get_active() and self.copyto_chooser.get_folder():
+            folder = self.copyto_chooser.get_folder()
+            self.ui.copyto_use_default.set_sensitive(folder != self.parent.get_actual_copyto_folder('Default'))
+            under_encrypted = Util.is_home_encrypted() and folder.startswith(os.path.expanduser('~') + '/')
+            self.ui.copyto_encrypted_note.set_visible(under_encrypted)
+            can_write = os.access(self.parent.get_actual_copyto_folder(folder), os.W_OK)
+            can_read = os.stat(folder).st_mode | stat.S_IROTH
+            self.ui.copyto_faq_link.set_visible(can_write and can_read and not under_encrypted)
+            self.ui.copyto_permissions_box.set_visible(not can_write or not can_read)
+            self.ui.copyto_write_permissions_warning.set_visible(not can_write)
+            self.ui.copyto_read_permissions_warning.set_visible(not can_read)
+        else:
+            self.ui.copyto_faq_link.set_visible(True)
+            self.ui.copyto_encrypted_note.set_visible(False)
+            self.ui.copyto_permissions_box.set_visible(False)
+        self.delayed_apply()
+
+    def on_copyto_use_default_clicked(self, widget=None):
+        self.copyto_chooser.set_folder(self.parent.get_actual_copyto_folder('Default'))
+        self.on_copyto_changed()
+
+    def on_copyto_fix_permissions_clicked(self, widget=None):
+        folder = self.copyto_chooser.get_folder()
+        can_write = os.access(self.parent.get_actual_copyto_folder(folder), os.W_OK)
+        can_read = os.stat(folder).st_mode | stat.S_IROTH
+        mode = 'a+'
+        if not can_read: mode += 'r'
+        if not can_write: mode += 'w'
+        try:
+            Util.superuser_exec("chmod", mode, folder)
+        except Exception:
+            logger.exception("Could not adjust copyto folder permissions")
+            self.parent.show_notification(
+                _("Could not adjust permissions"),
+                _('You may try manually running this command:\nsudo chmod %s "%s"') % (mode, folder))
+        self.on_copyto_changed()

@@ -110,6 +110,9 @@ class TestUtil(unittest.TestCase):
         self.assertEquals("user-home", Util.get_file_icon_name("~"))
         self.assertEquals("folder-pictures", Util.get_file_icon_name("~/Pictures"))
 
+    def test_get_xdg_pictures_folder(self):
+        self.assertEquals(os.path.expanduser('~/Pictures'), Util.get_xdg_pictures_folder())
+
 
 if __name__ == '__main__':
     unittest.main()

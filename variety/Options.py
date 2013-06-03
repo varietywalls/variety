@@ -230,7 +230,12 @@ class Options:
                 pass
 
             try:
-                self.lightdm_support_enabled = config["lightdm_support_enabled"].lower() in TRUTH_VALUES
+                self.copyto_enabled = config["copyto_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.copyto_folder = os.path.expanduser(config["copyto_folder"])
             except Exception:
                 pass
 
@@ -461,7 +466,8 @@ class Options:
         self.facebook_show_dialog = True
         self.facebook_message = ""
 
-        self.lightdm_support_enabled = False
+        self.copyto_enabled = False
+        self.copyto_folder = "Default"
 
         self.clock_enabled = False
         self.clock_font = "Ubuntu Condensed, 70"
@@ -548,7 +554,8 @@ class Options:
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)
 
-            config["lightdm_support_enabled"] = str(self.lightdm_support_enabled)
+            config["copyto_enabled"] = str(self.copyto_enabled)
+            config["copyto_folder"] = Util.collapseuser(str(self.copyto_folder))
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = str(self.clock_filter)

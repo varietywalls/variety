@@ -36,6 +36,7 @@ class FolderChooser:
         self.image.set_from_icon_name("folder", Gtk.IconSize.MENU)
         self.box.add(self.image)
         self.box.add(self.label)
+        self.box.set_margin_right(2)
         if self.button.get_child():
             self.button.get_child().destroy()
         self.button.add(self.box)
@@ -54,6 +55,9 @@ class FolderChooser:
         self.image.set_from_icon_name(Util.get_file_icon_name(self.folder), Gtk.IconSize.MENU)
         self.label.set_text(os.path.basename(self.folder))
         self.button.set_tooltip_text(self.folder)
+
+    def set_sensitive(self, sensitive):
+        self.button.set_sensitive(sensitive)
 
     def browse(self, widget=None):
         try:
