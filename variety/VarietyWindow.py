@@ -260,7 +260,7 @@ class VarietyWindow(Gtk.Window):
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
                         "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename)
                 except Exception:
-                    logger.exception("Could not generate pencil_tile.gif")
+                    logger.exception("Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
 
     def register_clipboard(self):
@@ -953,46 +953,47 @@ class VarietyWindow(Gtk.Window):
         if not self.filters:
             return None
 
-        filter = random.choice(self.filters).strip()
+        filter = random.choice(self.filters).strip().decode('utf-8')
         if not filter:
             return None
 
+        filename = filename.decode('utf-8')
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = u'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        logger.info("Applying filter: " + filter)
+        logger.info(u"Applying filter: " + filter)
         cmd += filter + ' '
 
-        cmd = cmd + ' "' + target_file + '"'
-        cmd = cmd.replace("%FILEPATH%", filename)
-        cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
+        cmd = cmd + u' "' + target_file + '"'
+        cmd = cmd.replace(u"%FILEPATH%", filename)
+        cmd = cmd.replace(u"%FILENAME%", os.path.basename(filename))
 
-        logger.info("ImageMagick filter cmd: " + cmd)
-        return cmd
+        logger.info(u"ImageMagick filter cmd: " + cmd)
+        return cmd.encode('utf-8')
 
     def build_imagemagick_clock_cmd(self, filename, target_file):
-        if not self.options.clock_enabled:
+        if not (self.options.clock_enabled and self.options.clock_filter.strip()):
             return None
 
+        filename = filename.decode('utf-8')
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = u'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        if self.options.clock_enabled and self.options.clock_filter.strip():
-            hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
-            clock_filter = self.options.clock_filter
-            clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
-            clock_filter = self.replace_clock_filter_fonts(clock_filter)
+        hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
+        clock_filter = self.options.clock_filter
+        clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
+        clock_filter = self.replace_clock_filter_fonts(clock_filter)
+        clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
 
-            clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
+        # Note: time.strftime does not support Unicode format, so we decode the clock_filter after the above conversions
+        clock_filter = clock_filter.decode('utf-8')
+        logger.info(u"Applying clock filter: " + clock_filter)
 
-            logger.info("Applying clock filter: " + clock_filter)
-            cmd += clock_filter + ' '
-
-        cmd = cmd + ' "' + target_file + '"'
-        logger.info("ImageMagick clock cmd: " + cmd)
-        return cmd
+        cmd += clock_filter + u' "' + target_file + '"'
+        logger.info(u"ImageMagick clock cmd: " + cmd)
+        return cmd.encode('utf-8')
 
     def replace_clock_filter_fonts(self, clock_filter):
         clock_font_name, clock_font_size = Util.gtk_to_fcmatch_font(self.options.clock_font)
@@ -1028,47 +1029,58 @@ class VarietyWindow(Gtk.Window):
             logger.exception("Cannot write wallpaper.jpg.txt")
 
     def apply_filters(self, to_set, refresh_level):
-        if self.filters:
-            # don't run the filter command when the refresh level is clock or quotes only,
-            # use the previous filtered image otherwise
-            if refresh_level in [VarietyWindow.RefreshLevel.ALL, VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS]\
-            or not self.post_filter_filename:
-                self.post_filter_filename = to_set
-                target_file = os.path.join(self.wallpaper_folder, "wallpaper-filter-%s.jpg" % Util.random_hash())
-                cmd = self.build_imagemagick_filter_cmd(to_set, target_file)
-                if cmd:
-                    result = os.system(cmd)
-                    if result == 0: #success
-                        to_set = target_file
-                        self.post_filter_filename = to_set
-                    else:
-                        logger.warning(
-                            "Could not execute filter convert command. " \
-                            "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
-            else:
-                to_set = self.post_filter_filename
-        return to_set
+        try:
+            if self.filters:
+                # don't run the filter command when the refresh level is clock or quotes only,
+                # use the previous filtered image otherwise
+                if refresh_level in [VarietyWindow.RefreshLevel.ALL, VarietyWindow.RefreshLevel.FILTERS_AND_TEXTS]\
+                or not self.post_filter_filename:
+                    self.post_filter_filename = to_set
+                    target_file = os.path.join(self.wallpaper_folder, "wallpaper-filter-%s.jpg" % Util.random_hash())
+                    cmd = self.build_imagemagick_filter_cmd(to_set, target_file)
+                    if cmd:
+                        result = os.system(cmd)
+                        if result == 0: #success
+                            to_set = target_file
+                            self.post_filter_filename = to_set
+                        else:
+                            logger.warning(
+                                "Could not execute filter convert command. " \
+                                "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
+                else:
+                    to_set = self.post_filter_filename
+            return to_set
+        except Exception:
+            logger.exception('Could not apply filters:')
+            return to_set
 
     def apply_quote(self, to_set):
-        if self.options.quotes_enabled:
-            if self.quote:
+        try:
+            if self.options.quotes_enabled and self.quote:
                 quote_outfile = os.path.join(self.wallpaper_folder, "wallpaper-quote-%s.jpg" % Util.random_hash())
                 QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
                 to_set = quote_outfile
-        return to_set
+            return to_set
+        except Exception:
+            logger.exception('Could not apply quote:')
+            return to_set
 
     def apply_clock(self, to_set):
-        if self.options.clock_enabled:
-            target_file = os.path.join(self.wallpaper_folder, "wallpaper-clock-%s.jpg" % Util.random_hash())
-            cmd = self.build_imagemagick_clock_cmd(to_set, target_file)
-            result = os.system(cmd)
-            if result == 0: #success
-                to_set = target_file
-            else:
-                logger.warning(
-                    "Could not execute clock convert command. " \
-                    "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
-        return to_set
+        try:
+            if self.options.clock_enabled:
+                target_file = os.path.join(self.wallpaper_folder, "wallpaper-clock-%s.jpg" % Util.random_hash())
+                cmd = self.build_imagemagick_clock_cmd(to_set, target_file)
+                result = os.system(cmd)
+                if result == 0: #success
+                    to_set = target_file
+                else:
+                    logger.warning(
+                        "Could not execute clock convert command. " \
+                        "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
+            return to_set
+        except Exception:
+            logger.exception('Could not apply clock:')
+            return to_set
 
     def apply_copyto_operation(self, to_set):
         if self.options.copyto_enabled:
