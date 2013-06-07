@@ -94,9 +94,11 @@ class Util:
     @staticmethod
     def makedirs(path):
         try:
-            os.makedirs(path)
+            if not os.path.isdir(path):
+                logger.info("Creating folder %s" % path)
+                os.makedirs(path)
         except OSError:
-            pass
+            logger.exception("Could not makedirs for %s" % path)
 
     @staticmethod
     def is_image(filename):
@@ -392,12 +394,29 @@ class Util:
     def get_file_icon_name(path):
         try:
             from gi.repository import Gio
-            f = Gio.File.new_for_path(path)
+            f = Gio.File.new_for_path(os.path.normpath(os.path.expanduser(path)))
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
             return query_info.get_attribute_object("standard::icon").get_names()[0]
         except Exception:
             logger.exception("Exception while obtaining folder icon for %s:" % path)
             return "folder"
+
+    @staticmethod
+    def is_home_encrypted():
+        return os.path.isdir(os.path.expanduser("~").replace('/home/', '/home/.ecryptfs/'))
+
+    @staticmethod
+    def get_xdg_pictures_folder():
+        try:
+            return subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0]
+        except Exception:
+            logger.exception("Could not get path to Pictures folder")
+            return os.path.expanduser('~/Pictures')
+
+    @staticmethod
+    def superuser_exec(*command_args):
+        logger.warning("Executing as superuser: %s" % str(command_args))
+        subprocess.check_call(["pkexec"] + list(command_args))
 
     @staticmethod
     def safe_map(f, l):

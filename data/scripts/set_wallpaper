@@ -13,35 +13,19 @@
 #
 # The third passed parameter ($3) is the absolute path to the original wallpaper image (before effects, clock, etc.)
 # and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
-#
-# The fourth passed parameter ($4) is copy or nocopy. "copy" instructs this script to copy the wallpaper image to some
-# world-readable directory (e.g. ~/Pictures), chmod it so everyone can read it and use the copy for the wallpaper.
-# This makes the wallpaper image usable by LightDM.
+
+
+# Here you may apply some additional custom operations on the wallpaper.
+# In the end put the path to the actual wallpaper image file in the WP variable
+WP=$1
 
 
 # KDE - User will have to manually choose ~/.config/variety/wallpaper-kde.jpg as a wallpaper.
 # Afterwards, with the command below, Variety will just overwrite the file when changing the wallpaper
 # and KDE will refresh it
 if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
-    cp "$1" ~/.config/variety/wallpaper-kde.jpg
+    cp "$WP" ~/.config/variety/wallpaper-kde.jpg
     exit 0
-fi
-
-
-WP=$1
-
-if [ "$4" == "copy" ]; then
-    # For LightDM to show the wallpaper use a target folder where you can copy to and everyone can read from.
-    # The default is ~/Pictures
-
-    test -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs && source ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
-    TARGET_FOLDER=${XDG_PICTURES_DIR:-$HOME/Pictures}
-
-    # Please DO NOT edit the wallpaper filename, the Python code relies on it
-    WP=$TARGET_FOLDER/variety-copied-wallpaper-$RANDOM$RANDOM.jpg
-    rm -f $TARGET_FOLDER/variety-copied-wallpaper-*.jpg
-    cp "$1" "$WP"
-    chmod a+r "$WP"
 fi
 
 # Gnome 3, Unity
