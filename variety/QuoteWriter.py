@@ -22,7 +22,7 @@ from variety.Util import Util
 class QuoteWriter:
 
     @staticmethod
-    def write_quote(quote, author, infile, outfile, options = None):
+    def write_quote(quote, author, infile, outfile, options=None):
         w, h = Util.get_scaled_size(infile)
         surface = QuoteWriter.load_cairo_surface(infile, w, h)
         QuoteWriter.write_quote_on_surface(surface, quote, author, options)
@@ -44,7 +44,7 @@ class QuoteWriter:
         image.save(filename, quality=100)
 
     @staticmethod
-    def write_quote_on_surface(surface, quote, author, options = None, margin = 30):
+    def write_quote_on_surface(surface, quote, author=None, options=None, margin=30):
         qcontext = cairo.Context(surface)
         acontext = cairo.Context(surface)
 
@@ -73,13 +73,15 @@ class QuoteWriter:
             width = sw
 
         alayout = PangoCairo.create_layout(acontext)
-        alayout.set_width(qwidth * Pango.SCALE)
-        alayout.set_alignment(Pango.Alignment.RIGHT)
-        alayout.set_wrap(Pango.WrapMode.WORD)
-        alayout.set_font_description(Pango.FontDescription(font))
-        alayout.set_text(author, -1)
+        aheight = 0
+        if author:
+            alayout.set_width(qwidth * Pango.SCALE)
+            alayout.set_alignment(Pango.Alignment.RIGHT)
+            alayout.set_wrap(Pango.WrapMode.WORD)
+            alayout.set_font_description(Pango.FontDescription(font))
+            alayout.set_text(author, -1)
 
-        aheight = alayout.get_pixel_size()[1]
+            aheight = alayout.get_pixel_size()[1]
 
         height = qheight + aheight + 2.5*margin
 

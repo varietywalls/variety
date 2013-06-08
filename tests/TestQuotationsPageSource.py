@@ -22,11 +22,29 @@ from jumble.Jumble import Jumble
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-class TestGoodreadsSource(unittest.TestCase):
+class TestQuotationsPageSource(unittest.TestCase):
+    def test_get_random(self):
+        p = Jumble(["../plugins"])
+        p.load()
+        source = p.get_plugins(typename="QuotationsPageSource")[0]
+        q = source["plugin"].get_random()
+        self.assertTrue(len(q) > 0)
+        self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
+
     def test_get_for_author(self):
         p = Jumble(["../plugins"])
         p.load()
-        source = p.get_plugins(typename="GoodreadsSource")[0]
-        q = source["plugin"].get_for_author(u"Вежинов")
+        source = p.get_plugins(typename="QuotationsPageSource")[0]
+        q = source["plugin"].get_for_author("einstein")
         self.assertTrue(len(q) > 0)
-        self.assertEqual("Goodreads", q[0]["sourceName"])
+        self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
+        self.assertEqual("Albert Einstein", q[0]["author"])
+
+    def test_get_for_keyword(self):
+        p = Jumble(["../plugins"])
+        p.load()
+        source = p.get_plugins(typename="QuotationsPageSource")[0]
+        q = source["plugin"].get_for_keyword("funny")
+        self.assertTrue(len(q) > 0)
+        self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
+        self.assertTrue(q[0]["quote"].lower().find('funny') >= 0)

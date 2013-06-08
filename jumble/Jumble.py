@@ -59,7 +59,7 @@ class Jumble:
                 plugin.path = os.path.realpath(path)
                 plugin.folder = os.path.dirname(plugin.path)
             except Exception:
-                logging.exception("Could not get info for cadidate plugin class %s" % str(cls))
+                logging.exception("Could not get info for candidate plugin class %s" % str(cls))
                 continue
 
             self.plugins.append({"plugin": plugin, "class": cls, "info": info})

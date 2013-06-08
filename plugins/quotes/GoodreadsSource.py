@@ -41,6 +41,7 @@ class GoodreadsSource(IQuoteSource):
 
     @classmethod
     def get_info(cls):
+        raise Exception
         return {
             "name": "Quotes from Goodreads",
             "description": "Fetches quotes from Goodreads.com",
