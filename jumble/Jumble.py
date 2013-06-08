@@ -1,10 +1,24 @@
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
+
 import os
 import imp
 import logging
 import inspect
 from IPlugin import IPlugin
-
-logger = logging.getLogger("variety")
 
 class Jumble:
     def __init__(self, folders):
@@ -19,30 +33,33 @@ class Jumble:
 
     def walk_modules(self):
         for location, f in self.walk_python_files():
+            path = os.path.join(location, f)
             name = os.path.splitext(f)[0]
             info = imp.find_module(name, [location])
             try:
-                yield imp.load_module(name, *info)
+                yield imp.load_module(name, *info), path
             except Exception:
-                logger.exception("Could not load plugin module %s" % os.path.join(location, f))
+                logging.exception("Could not load plugin module %s" % path)
                 continue
 
     def walk_plugin_classes(self):
-        for module in self.walk_modules():
+        for module, path in self.walk_modules():
             def is_plugin(cls):
                 return inspect.isclass(cls) and issubclass(cls, IPlugin) and cls.__module__ == module.__name__
             for name, cls in inspect.getmembers(module, is_plugin):
-                yield cls
+                yield cls, path
 
     def load(self):
         self.plugins = []
-        for cls in self.walk_plugin_classes():
+        for cls, path in self.walk_plugin_classes():
             try:
                 info = cls.get_info()
                 plugin = cls()
                 plugin.jumble = self
+                plugin.path = os.path.realpath(path)
+                plugin.folder = os.path.dirname(plugin.path)
             except Exception:
-                logger.exception("Could not get info for cadidate plugin class %s" % str(cls))
+                logging.exception("Could not get info for cadidate plugin class %s" % str(cls))
                 continue
 
             self.plugins.append({"plugin": plugin, "class": cls, "info": info})

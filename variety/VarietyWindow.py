@@ -137,7 +137,10 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
-        self.jumble = Jumble([os.path.join(varietyconfig.get_data_path(), "plugins")])
+        self.jumble = Jumble([os.path.join(os.path.dirname(__file__), "../plugins"),
+                              os.path.join(varietyconfig.get_data_path(), "plugins"),
+                              os.path.join(self.config_folder, "plugins")])
+
         setattr(self.jumble, "parent", self)
         self.jumble.load()
 
@@ -1951,6 +1954,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
             else:
                 self.ind.set_visible(True)
+
             if self.options.icon == "Current":
                 self.ind.set_icon(self.current)
             else:

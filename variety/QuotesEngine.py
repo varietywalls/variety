@@ -31,16 +31,8 @@ class QuotesEngine:
     def __init__(self, parent = None):
         self.parent = parent
         self.quote = None
-        self.prepared = []
-        self.used = []
-        self.position = 0
-        self.prepared_lock = threading.Lock()
-        self.prepare_event = threading.Event()
-        self.change_event = threading.Event()
         self.started = False
         self.running = False
-        self.last_change_time = time.time()
-        self.last_error_notification_time = 0
 
     def start(self):
         if self.started:
@@ -48,8 +40,21 @@ class QuotesEngine:
 
         if self.parent.options.quotes_enabled:
             logger.info("Starting QuotesEngine")
+
+            self.prepared = []
+            self.used = []
+            self.position = 0
+            self.prepared_lock = threading.Lock()
+            self.prepare_event = threading.Event()
+            self.change_event = threading.Event()
+
+            self.cache = {"random": {}, "keyword": {}, "author": {}}
+
             self.started = False
             self.running = True
+
+            self.last_change_time = time.time()
+            self.last_error_notification_time = 0
 
             prep_thread = threading.Thread(target=self.prepare_thread)
             prep_thread.daemon = True
@@ -167,7 +172,7 @@ class QuotesEngine:
             try:
                 while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
                     logger.info("Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
-                    quote = self.download_one_quote()
+                    quote = self.get_one_quote()
                     if quote:
                         with self.prepared_lock:
                             self.prepared.append(quote)
@@ -187,41 +192,64 @@ class QuotesEngine:
             self.prepare_event.clear()
 
 
-    def download_one_quote(self):
-        keywords = None
+    def get_one_quote(self):
+        keywords = []
         if self.parent.options.quotes_tags.strip():
-            keywords = self.parent.options.quotes_tags.split(",")
+            keywords = self.parent.options.quotes_tags.decode('utf-8').split(",")
+        authors = []
+        if self.parent.options.quotes_authors.strip():
+            authors = self.parent.options.quotes_authors.decode('utf-8').split(",")
 
-        plugins = self.parent.jumble.get_plugins(IQuoteSource)
-        plugins = [p for p in plugins if (not keywords or p["plugin"].supports_keywords())]
-        if not plugins:
-            self.parent.show_notification(_("No suitable quote plugins"),
-                                          _("You have no quote plugins which support searching by keyword"))
-            raise Exception("No quote plugins")
+        category, search = ("random", "")
+        if keywords or authors:
+            category, search = random.choice(map(lambda k: ("keyword", k), keywords) + map(lambda a: ("author", a), authors))
 
-        skip = []
-        while self.running and self.parent.options.quotes_enabled:
-            active = [p for p in plugins if p not in skip]
+        if not self.cache[category].setdefault(search, {}):
+            plugins = self.parent.jumble.get_plugins(IQuoteSource)
+            if not plugins:
+                self.parent.show_notification(_("No quote plugins"), _("There are no quote plugins installed"))
+                raise Exception("No quote plugins")
+            if keywords or authors:
+                plugins = [p for p in plugins if p["plugin"].supports_search()]
+                if not plugins:
+                    self.parent.show_notification(_("No suitable quote plugins"),
+                                                  _("You have no quote plugins which support searching by keywords and authors"))
+                    raise Exception("No quote plugins")
 
-            if not active:
-                if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
-                    self.last_error_notification_time = time.time()
-                    self.parent.show_notification(
-                        _("Could not fetch quotes"),
-                        _("Quotes services seems to be down, but we will continue trying"))
-                return None
+            while self.running and self.parent.options.quotes_enabled:
+                if not plugins:
+                    if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
+                        self.last_error_notification_time = time.time()
+                        self.parent.show_notification(
+                            _("Could not fetch quotes"),
+                            _("Quotes services seems to be down, but we will continue trying"))
+                    return None
 
-            plugin = random.choice(active)
-            try:
-                quote = plugin["plugin"].get_quote(keywords)
-                if not quote:
-                    skip.append(plugin)
-                elif len(quote["quote"]) < 250:
-                    return quote
-            except Exception:
-                logger.exception("Exception in quote plugin")
-                skip.append(plugin)
+                plugin = random.choice(plugins)
+                try:
+                    if category == "random":
+                        quotes = plugin["plugin"].get_random()
+                    elif category == "keyword":
+                        quotes = plugin["plugin"].get_for_keyword(search)
+                    elif category == "author":
+                        quotes = plugin["plugin"].get_for_author(search)
+                    else:
+                        raise RuntimeError("Unknown category")
 
-            time.sleep(2)
+                    for q in quotes:
+                        if len(q["quote"]) < 250:
+                            self.cache[category][search][q["quote"]] = q
+                    if self.cache[category][search]:
+                        break
+                except Exception:
+                    logger.exception("Exception in quote plugin")
+                    plugins.remove(plugin)
 
-        return None
+                time.sleep(2)
+
+        quote = random.choice(self.cache[category][search].values())
+        del self.cache[category][search][quote["quote"]]
+        if not self.cache[category][search]:
+            del self.cache[category][search]
+
+        return quote

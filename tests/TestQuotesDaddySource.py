@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+
 import sys
 import os.path
 import unittest
@@ -21,10 +22,10 @@ from jumble.Jumble import Jumble
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-class TestGoodreadsSource(unittest.TestCase):
+class TestQuotesDaddySource(unittest.TestCase):
     def test_get_quote(self):
-        p = Jumble(".")
+        p = Jumble(["../plugins1"])
         p.load()
-        source = p.get_plugins(typename="GoodreadsSource")[0]
-        q = source["plugin"].get_quote([u"Вежинов".encode("utf-8")])
-        self.assertEqual("Goodreads", q["sourceName"])
+        source = p.get_plugins(typename="QuotesDaddySource")[0]
+        q = source["plugin"].get_random()[0]
+        self.assertEqual("QuotesDaddy", q["sourceName"])

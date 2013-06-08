@@ -22,10 +22,10 @@ from jumble.Jumble import Jumble
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-class TestQuotesDaddySource(unittest.TestCase):
+class TestGoodreadsSource(unittest.TestCase):
     def test_get_quote(self):
-        p = Jumble(".")
+        p = Jumble(["../plugins"])
         p.load()
-        source = p.get_plugins(typename="QuotesDaddySource")[0]
-        q = source["plugin"].get_quote()
-        self.assertEqual("QuotesDaddy", q["sourceName"])
+        source = p.get_plugins(typename="GoodreadsSource")[0]
+        q = source["plugin"].get_for_author(u"Вежинов")[0]
+        self.assertEqual("Goodreads", q["sourceName"])
