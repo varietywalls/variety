@@ -77,7 +77,8 @@ class VarietyWindow(Gtk.Window):
         "feafa658d9686ecfabdbcf236c32fd0f",
         "83d8ebeec3676474bdd90c55417e8640",
         "1562cb289319aa39ac1b37a8ee4c0103",
-        "6c54123e87e98b15d87f0341d3e36fc5"
+        "6c54123e87e98b15d87f0341d3e36fc5",
+        "3f9fcc524bfee8fb146d1901613d3181"
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
@@ -1141,7 +1142,7 @@ class VarietyWindow(Gtk.Window):
 
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)
                 self.update_indicator(filename, is_gtk_thread=False)
-                self.set_desktop_wallpaper(to_set, filename)
+                self.set_desktop_wallpaper(to_set, filename, refresh_level)
                 self.current = filename
 
                 if self.options.icon == "Current":
@@ -2052,10 +2053,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         except Exception:
             logger.exception("Cannot remove all old wallpaper files from %s:" % folder)
 
-    def set_desktop_wallpaper(self, wallpaper, original_file):
+    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
         if os.access(script, os.X_OK):
-            auto = "auto" if self.auto_changed else "manual"
+            auto = "manual" if not self.auto_changed else \
+                ("auto" if refresh_level == VarietyWindow.RefreshLevel.ALL else "refresh")
             logger.debug("Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
                 subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])

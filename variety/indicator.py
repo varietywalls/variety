@@ -20,6 +20,8 @@ from gi.repository import Gtk # pylint: disable=E0611
 import os
 from variety.Util import Util
 
+THEME_ICON_NAME = "variety-indicator"
+
 try:
     from gi.repository import AppIndicator3 # pylint: disable=E0611
     use_appindicator = True
@@ -257,6 +259,15 @@ class Indicator:
                 self.status_icon.set_visible(False)
 
     def set_icon(self, icon):
+        if icon == "Light" and Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME):
+            if self.indicator:
+                logger.info("Showing indicator icon %s from GTK theme" % THEME_ICON_NAME)
+                self.indicator.set_icon(THEME_ICON_NAME)
+            if self.status_icon:
+                logger.info("Showing status icon %s from GTK theme" % THEME_ICON_NAME)
+                self.status_icon.set_from_icon_name(THEME_ICON_NAME)
+            return
+
         if icon == "Light":
             icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
         elif icon == "Dark":

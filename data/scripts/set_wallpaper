@@ -9,7 +9,8 @@
 # The first passed parameter (accessed with $1) is the absolute path to the wallpaper image to be set as wallpaper
 # (after effects, clock, etc. are applied).
 #
-# The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change)
+# The second passed parameter ($2) is "auto" when the wallpaper is changed automatically (i.e. regular change), "manual"
+# when the user has triggered the change or "refresh" when the change is triggered by a change in quotes, clock, etc.
 #
 # The third passed parameter ($3) is the absolute path to the original wallpaper image (before effects, clock, etc.)
 # and "manual" otherwise - e.g. when the user clicks Previous, Next or Trash.
@@ -52,7 +53,7 @@ gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /dev/null
 
 # Cinnamon after 1.8
-gsettings set org.cinnamon.background picture-uri “file://$WP″ 2> /dev/null
+gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
 
 # Gnome 2
 gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /dev/null
