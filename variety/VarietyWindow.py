@@ -1621,7 +1621,7 @@ class VarietyWindow(Gtk.Window):
             if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
                 self.options.quotes_enabled = False
-                GObject.idle_add(self.refresh_texts)
+                GObject.idle_add(lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS))
 
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
