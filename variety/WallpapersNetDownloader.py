@@ -102,7 +102,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
         if urls:
             for h in urls:
-                page = h[h.index("/page/") + 6:]
+                page = (re.search(r'/page/(\d+)', h)).group(1)
                 mp = max(mp, int(page))
 
             # special case the top wallpapers - limit to the best 200 pages
@@ -111,7 +111,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
             page = random.randint(0, mp)
             h = urls[0]
-            page_url = self.host + h[:h.index("/page/") + 6] + str(page)
+            page_url = self.host + re.sub(r'/page/\d+', '/page/%d' % page, h)
 
             logger.info("Page URL: " + page_url)
             s = Util.html_soup(page_url)

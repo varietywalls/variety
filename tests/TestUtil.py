@@ -30,6 +30,8 @@ class TestUtil(unittest.TestCase):
         self.assertEqual("im g.jpg", Util.get_local_name("http://example.com/a/im%20g.jpg?a=b#x"))
         self.assertEqual("im_g.jpg", Util.get_local_name("http://example.com/a/im%22g.jpg?a=b#x"))
 
+        self.assertTrue(len(Util.get_local_name("a" * 1000 + ".jpg")) < 255)
+
     def test_split(self):
         self.assertEqual(['a', 'b', 'c', 'd', 'e'], Util.split("a\nb,c ,,d\n   e"))
 

@@ -30,7 +30,11 @@ class Downloader(object):
         self.is_refresher = is_refresher
 
     def update_download_folder(self):
-        self.target_folder = os.path.join(self.parent.real_download_folder, self.convert_to_filename(self.location))
+        filename = self.convert_to_filename(self.location)
+        l = len(self.parent.real_download_folder)
+        if len(filename) + l > 160:
+            filename = filename[:(150 - l)] + Util.md5(filename)[:10]
+        self.target_folder = os.path.join(self.parent.real_download_folder, filename)
 
     def convert_to_filename(self, url):
         url = re.sub(r"http://", "", url)

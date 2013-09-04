@@ -69,7 +69,7 @@ class Util:
 
     @staticmethod
     def get_local_name(url):
-        filename = url[url.rindex('/') + 1:]
+        filename = url[url.rfind('/') + 1:]
         index = filename.find('?')
         if index > 0:
             filename = filename[:index]
@@ -82,6 +82,8 @@ class Util:
         valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
         filename = ''.join(c if c in valid_chars else '_' for c in filename)
 
+        if len(filename) > 200:
+            filename = filename[:190] + filename[-10:]
         return filename
 
     @staticmethod

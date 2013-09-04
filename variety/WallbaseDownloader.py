@@ -42,9 +42,16 @@ class WallbaseDownloader(Downloader.Downloader):
 
     def parse_location(self):
         if self.location.startswith(('http://', 'https://')):
+            # location is an URL, use it
             self.url = self.location
             return
 
+        elif 'type:' not in self.location:
+            # interpret location as keywords
+            self.url = "http://wallbase.cc/search?q=%s&section=wallpapers&order_mode=desc&order=favs&purity=100&board=213" % urllib.quote(self.location)
+            return
+
+        # else the lcoation is in the old format, parse it:
         s = self.location.split(';')
         params = {}
         for x in s:
@@ -139,14 +146,23 @@ class WallbaseDownloader(Downloader.Downloader):
         self.last_fill_time = time.time()
 
         logger.info("Filling wallbase queue: " + self.location)
-        s = self.search()
 
+        start_from = None
         not_random = not "order=random" in self.url
         if not_random:
-            start_from = random.randint(0, 200)
+            start_from = random.randint(0, 300 - 60)
             s = self.search(start_from=start_from)
+        else:
+            s = self.search()
 
-        for thumb in s.find_all('div', 'thumbnail'):
+        thumbs = s.find_all('div', 'thumbnail')
+
+        if start_from and not thumbs:  # oops, no results - probably too few matches, use the first page of results
+            logger.info("Nothing found when using start index %d, rerun with no start index" % start_from)
+            s = self.search()
+            thumbs = s.find_all('div', 'thumbnail')
+
+        for thumb in thumbs:
             try:
                 p = map(int, thumb.find('span', 'reso').contents[0].split('x'))
                 width = p[0]
