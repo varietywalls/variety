@@ -48,9 +48,6 @@ class GoodreadsSource(IQuoteSource):
             "version": "0.1"
         }
 
-    def deactivate(self):
-        super(GoodreadsSource, self).deactivate()
-
     def supports_search(self):
         return True
 
