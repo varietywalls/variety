@@ -45,7 +45,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
                 return False
 
             s = Util.html_soup(url)
-            walls = [wall.find("div", "thumb") for wall in s.findAll("li", "wall")]
+            walls = [wall.find("a") for wall in s.findAll("div", "wall")]
             return len(walls) > 0
         except Exception:
             logger.exception("Error while validating URL, proabably bad URL")
@@ -80,7 +80,9 @@ class WallpapersNetDownloader(Downloader.Downloader):
         logger.info("Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
-        img_url = self.host + s.find('a', text=re.compile("Original format"))['href']
+        resolution_links = s.find('div', 'resolutionsList').find_all('a')
+        max_res_link = max(resolution_links, key=lambda a: int(a['title'].split()[0]))
+        img_url = self.host + max_res_link['href']
         logger.info("Image page URL: " + img_url)
 
         s = Util.html_soup(img_url)
@@ -100,23 +102,23 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
         if urls:
             for h in urls:
-                page = h[h.index("/page/") + 6:]
+                page = (re.search(r'/page/(\d+)', h)).group(1)
                 mp = max(mp, int(page))
 
             # special case the top wallpapers - limit to the best 200 pages
-            if self.location.find("top_wallpapers"):
+            if "top_wallpapers" in self.location:
                 mp = min(mp, 200)
 
             page = random.randint(0, mp)
             h = urls[0]
-            page_url = self.host + h[:h.index("/page/") + 6] + str(page)
+            page_url = self.host + re.sub(r'/page/\d+', '/page/%d' % page, h)
 
             logger.info("Page URL: " + page_url)
             s = Util.html_soup(page_url)
         else:
             logger.info("Single page in category")
 
-        walls = [self.host + x.a['href'] for x in s.find_all('div', 'thumb')]
+        walls = [self.host + x.a['href'] for x in s.find_all('div', 'wall')]
         walls = [x for x in walls if x not in self.parent.banned]
 
         self.queue.extend(walls)

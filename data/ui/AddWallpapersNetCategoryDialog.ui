@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
   <object class="AddWallpapersNetCategoryDialog" id="add_wallpapers_net_category_dialog">
     <property name="width_request">500</property>
     <property name="can_focus">False</property>
@@ -49,8 +49,8 @@
             <property name="label" translatable="yes">Please visit &lt;a href="http://wallpapers.net"&gt;wallpapers.net&lt;/a&gt; and choose a category with wallpapers you would like to see on your desktop, then paste its URL below. A category is  anything on the site that has one or more pages with wallpapers on them. Here are some examples:
 
 Top wallpapers: &lt;a href="http://wallpapers.net/top_wallpapers.html"&gt;http://wallpapers.net/top_wallpapers.html&lt;/a&gt;
-Autumn: &lt;a href="http://wallpapers.net/autumn-desktop-wallpapers.html"&gt;http://wallpapers.net/autumn-desktop-wallpapers.html&lt;/a&gt;
-Color Green: &lt;a href="http://wallpapers.net/colors/66CC00/"&gt;http://wallpapers.net/colors/66CC00/&lt;/a&gt;
+Category 'autumn': &lt;a href="http://wallpapers.net/autumn-desktop-wallpapers.html"&gt;http://wallpapers.net/autumn-desktop-wallpapers.html&lt;/a&gt;
+Search for 'fog': &lt;a href="http://wallpapers.net/search.html?q=fog"&gt;http://wallpapers.net/search.html?q=fog&lt;/a&gt;
 Specific resolution: &lt;a href="http://wallpapers.net/1920x1200_wide-wallpapers-r.html"&gt;http://wallpapers.net/1920x1200_wide-wallpapers-r.html&lt;/a&gt;
 </property>
             <property name="use_markup">True</property>

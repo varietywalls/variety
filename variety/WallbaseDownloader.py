@@ -34,8 +34,6 @@ class WallbaseDownloader(Downloader.Downloader):
     def __init__(self, parent, location):
         super(WallbaseDownloader, self).__init__(parent, "Wallbase.cc", location)
         self.parse_location()
-        self.type = self.params["type"]
-        self.prefer_favs = "order" in self.params and self.params["order"] == "favs"
         self.last_fill_time = 0
         self.queue = []
 
@@ -43,58 +41,69 @@ class WallbaseDownloader(Downloader.Downloader):
         return "wallbase_" + super(WallbaseDownloader, self).convert_to_filename(url)
 
     def parse_location(self):
+        if self.location.startswith(('http://', 'https://')):
+            # location is an URL, use it
+            self.url = self.location
+            return
+
+        elif 'type:' not in self.location:
+            # interpret location as keywords
+            self.url = "http://wallbase.cc/search?q=%s&section=wallpapers&order_mode=desc&order=favs&purity=100&board=213" % urllib.quote(self.location)
+            return
+
+        # else the lcoation is in the old format, parse it:
         s = self.location.split(';')
-        self.params = {}
+        params = {}
         for x in s:
             if len(x) and x.find(':') > 0:
                 k, v = x.split(':')
-                self.params[k.lower()] = v
+                params[k.lower()] = v
 
-    def search(self, start_from = None, thpp = 60):
-        m = {"thpp": thpp}
+        prefer_favs = params.get("order") == "favs"
 
-        if self.parent and self.parent.options.min_size_enabled:
-            m["res_opt"] = "gteq"
-            m["res"] = "%dx%d" % (max(100, self.parent.min_width), max(100, self.parent.min_height))
+        m = {"thpp": 60}
 
-        if "nsfw" in self.params:
-            m["nsfw"] = self.params["nsfw"]
+        if "nsfw" in params:
+            m["purity"] = params["nsfw"]
 
-        if "board" in self.params:
-            m["board"] = self.params["board"]
+        if "board" in params:
+            m["board"] = params["board"]
 
-        if self.type == "text":
-            url = "http://wallbase.cc/search"
-            m["query"] = self.params["query"]
-        elif self.type == "color":
-            url = "http://wallbase.cc/search/color/" + self.params["color"]
+        self.url = "http://wallbase.cc/search"
+        if params["type"] == "text":
+            m["q"] = params["query"]
+        elif params["type"] == "color":
+            m["color"] = params["color"]
+
+        if prefer_favs:
+            m["order"] = "favs"
         else:
-            url = "http://wallbase.cc/search"
-
-        if start_from:
-            url += "/%d" % start_from
-
-        if self.prefer_favs:
-            m["orderby"] = "favs"
-        else:
-            m["orderby"] = "random"
+            m["order"] = "random"
 
         data = urllib.urlencode(m)
+        self.url = self.url + "?" + data
 
-        logger.info("Performing wallbase search: url=%s, data=%s" % (url, data))
+    def search(self, start_from=None):
+        url = self.url + ("&" if "?" in self.url else "?") + "thpp=60"
 
-        content = Util.fetch(url, data=data)
-        return BeautifulSoup(content)
+        if self.parent and self.parent.options.min_size_enabled and not "res=" in url:
+            url += "&res_opt=gteq&res=%dx%d" % (max(100, self.parent.min_width), max(100, self.parent.min_height))
+
+        if start_from:
+            url = url.replace('?', '/index/%d?' % start_from, 1)
+
+        logger.info("Performing wallbase search: url=%s" % url)
+        return Util.html_soup(url)
 
     @staticmethod
     def validate(location):
         logger.info("Validating Wallbase location " + location)
         try:
             s = WallbaseDownloader(None, location).search()
-            wall = s.find("div", "thumb")
+            wall = s.find("div", "thumbnail")
             if not wall:
                 return False
-            link = wall.find("a", "thlink")
+            link = wall.find("img", "file")
             return link is not None
         except Exception:
             logger.exception("Error while validating wallbase search")
@@ -128,9 +137,7 @@ class WallbaseDownloader(Downloader.Downloader):
         logger.info("Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
-        wall = str(s.find('div', id='bigwall'))
-        b64url = wall[wall.find("B('") + 3 : wall.find("')")]
-        src_url = base64.b64decode(b64url)
+        src_url = s.find('img', 'wall')['src']
         logger.info("Image src URL: " + src_url)
 
         return self.save_locally(wallpaper_url, src_url)
@@ -139,20 +146,25 @@ class WallbaseDownloader(Downloader.Downloader):
         self.last_fill_time = time.time()
 
         logger.info("Filling wallbase queue: " + self.location)
-        s = self.search()
 
-        limit = 10^9
-        if self.prefer_favs:
-            total_count = int(s.find("div", "imgshow").contents[0].replace(",", ""))
-            favs_count = int(self.params["favs_count"])
-            logger.info("Preferring the most liked %d images of total %d" % (favs_count, total_count))
-            limit = min(total_count, favs_count)
-            start_from = random.randint(0, max(0, limit - 60))
+        start_from = None
+        not_random = not "order=random" in self.url
+        if not_random:
+            start_from = random.randint(0, 300 - 60)
             s = self.search(start_from=start_from)
+        else:
+            s = self.search()
 
-        for thumb in s.find_all('div', 'thumb'):
+        thumbs = s.find_all('div', 'thumbnail')
+
+        if start_from and not thumbs:  # oops, no results - probably too few matches, use the first page of results
+            logger.info("Nothing found when using start index %d, rerun with no start index" % start_from)
+            s = self.search()
+            thumbs = s.find_all('div', 'thumbnail')
+
+        for thumb in thumbs:
             try:
-                p = map(int, thumb.find('span','res').contents[0].split('x'))
+                p = map(int, thumb.find('span', 'reso').contents[0].split('x'))
                 width = p[0]
                 height = p[1]
                 if self.parent and not self.parent.size_ok(width, height):
@@ -162,19 +174,16 @@ class WallbaseDownloader(Downloader.Downloader):
                 pass
 
             try:
-                link = thumb.find('a', 'thlink')["href"]
+                link = thumb.find('a', target='_blank')["href"]
                 if self.parent and link in self.parent.banned:
                     continue
                 self.queue.append(link)
             except Exception:
                 logger.debug("Missing link for thumbnail")
 
-        if self.prefer_favs and len(self.queue) > limit:
-            self.queue = self.queue[:limit]
-
         random.shuffle(self.queue)
 
-        if self.prefer_favs and len(self.queue) >= 20:
+        if not_random and len(self.queue) >= 20:
             self.queue = self.queue[:len(self.queue)//2]
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download

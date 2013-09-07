@@ -16,17 +16,30 @@
 
 import cairo
 from PIL import Image
-from gi.repository import Gdk, Pango, PangoCairo, GdkPixbuf
+from gi.repository import Gdk, Pango, PangoCairo, GdkPixbuf, GObject
 from variety.Util import Util
+import threading
 
 class QuoteWriter:
 
     @staticmethod
     def write_quote(quote, author, infile, outfile, options=None):
+        done_event = threading.Event()
         w, h = Util.get_scaled_size(infile)
-        surface = QuoteWriter.load_cairo_surface(infile, w, h)
-        QuoteWriter.write_quote_on_surface(surface, quote, author, options)
-        QuoteWriter.save_cairo_surface(surface, outfile)
+        exception = [None]
+        def go():
+            try:
+                surface = QuoteWriter.load_cairo_surface(infile, w, h)
+                QuoteWriter.write_quote_on_surface(surface, quote, author, options)
+                QuoteWriter.save_cairo_surface(surface, outfile)
+            except Exception, e:
+                exception[0] = e
+            finally:
+                done_event.set()
+        GObject.idle_add(go)
+        done_event.wait()
+        if exception[0]:
+            raise exception[0]
 
     @staticmethod
     def load_cairo_surface(filename, w, h):

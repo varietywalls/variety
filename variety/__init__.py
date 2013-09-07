@@ -18,12 +18,9 @@ import gettext
 from gettext import gettext as _
 import os
 import sys
-
-DBUS_KEY = 'com.peterlevi.Variety'
-
-DBUS_PATH = '/com/peterlevi/Variety'
-
-gettext.textdomain('variety')
+import signal
+import dbus, dbus.service, dbus.glib
+import logging
 
 from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 
@@ -31,12 +28,12 @@ from variety import VarietyWindow
 from variety import ThumbsManager
 from variety import ThumbsWindow
 from variety.Util import Util
+from variety_lib import set_up_logging
 
-from variety_lib import set_up_logging, get_version
+DBUS_KEY = 'com.peterlevi.Variety'
+DBUS_PATH = '/com/peterlevi/Variety'
 
-import signal
-
-import dbus, dbus.service, dbus.glib
+gettext.textdomain('variety')
 
 class VarietyService(dbus.service.Object):
     def __init__(self, variety_window):
@@ -51,11 +48,24 @@ class VarietyService(dbus.service.Object):
 
 VARIETY_WINDOW = None
 
+terminate = False
+
 def sigint_handler(*args):
+    global terminate
+    terminate = True
+
+def check_quit():
+    global terminate
+    if not terminate:
+        GObject.timeout_add(1000, check_quit)
+        return
+
+    logging.getLogger("variety").info("Terminating signal received, quitting...")
     print _("Terminating signal received, quitting...")
+
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
-        VARIETY_WINDOW.on_quit()
+        GObject.idle_add(VARIETY_WINDOW.on_quit)
     Util.start_force_exit_thread(10)
 
 def main():
@@ -96,8 +106,10 @@ def main():
 
     window.start(arguments)
 
+    GObject.timeout_add(2000, check_quit)
     GObject.threads_init()
     Gdk.threads_init()
     Gdk.threads_enter()
+
     Gtk.main()
     Gdk.threads_leave()

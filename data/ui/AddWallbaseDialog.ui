@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_wallbase_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddWallbaseDialog" id="add_wallbase_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -12,13 +12,15 @@
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">700</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkLabel" id="label3">
+          <object class="GtkLabel" id="heading">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
@@ -37,14 +39,18 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label4">
+          <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
-            <property name="margin_right">10</property>
-            <property name="margin_bottom">20</property>
-            <property name="label" translatable="yes">&lt;a href="http://wallbase.cc"&gt;Wallbase.cc&lt;/a&gt; provides a variety of image search options. Please specify your criteria below.</property>
+            <property name="label" translatable="yes">&lt;a href="http://wallbase.cc"&gt;Wallbase.cc&lt;/a&gt; provides a variety of image search options. Below you can specify keywords to search for, or visit &lt;a href="http://wallbase.cc"&gt;Wallbase.cc&lt;/a&gt;, setup your search criteria there, ensure you like the results, and paste the full Wallbase URL in the box.
+
+If you specify keywords, the most liked safe-for-work images that match any of the keywords will be used. 
+
+If you specify a Wallbase URL, please choose the sorting criteria carefully - Variety regularly requests images, but uses only images from the first several hundred returned. Random or Date will mean this image source will have a longer "lifetime" till it is exhausted. Favorites will provide better images and Relevance will provide closer matches when searching for phrases or colors.</property>
             <property name="use_markup">True</property>
+            <property name="justify">fill</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -53,295 +59,43 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label5">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="label" translatable="yes">Limit by keywords or color</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-            </attributes>
+            <property name="margin_top">40</property>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Enter keywords or paste URL here: </property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="query">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="invisible_char">•</property>
+                <property name="activates_default">True</property>
+                <property name="invisible_char_set">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="box3">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">15</property>
-            <property name="margin_right">5</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkRadioButton" id="radio_all">
-                <property name="label" translatable="yes">Use all images</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="xalign">0</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_radio_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="box4">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkRadioButton" id="radio_text">
-                    <property name="label" translatable="yes">Images with these keywords: </property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="xalign">0</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">radio_all</property>
-                    <signal name="toggled" handler="on_radio_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="query">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="has_focus">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="invisible_char">•</property>
-                    <property name="activates_default">True</property>
-                    <property name="invisible_char_set">True</property>
-                    <signal name="changed" handler="on_query_changed" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="query_error">
-                    <property name="can_focus">False</property>
-                    <property name="margin_left">5</property>
-                    <property name="label" translatable="yes">Please specify</property>
-                    <attributes>
-                      <attribute name="foreground" value="#ffff00000000"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="box5">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkRadioButton" id="radio_color">
-                    <property name="label" translatable="yes">Images containing this color: </property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="xalign">0</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">radio_all</property>
-                    <signal name="toggled" handler="on_radio_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkColorButton" id="color">
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
-                    <signal name="color-set" handler="on_color_set" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="label6">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="margin_top">20</property>
-            <property name="label" translatable="yes">Random or only favorites</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="box6">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">15</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkRadioButton" id="order_random">
-                <property name="label" translatable="yes">Use all matching images randomly</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="use_action_appearance">False</property>
-                <property name="xalign">0</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_radio_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="box1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkRadioButton" id="order_favs">
-                    <property name="label" translatable="yes">Prefer just the most liked </property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="xalign">0</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">order_random</property>
-                    <signal name="toggled" handler="on_radio_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBoxText" id="favs_count">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="active">0</property>
-                    <property name="entry_text_column">0</property>
-                    <property name="id_column">1</property>
-                    <items>
-                      <item translatable="yes">20</item>
-                      <item translatable="yes">100</item>
-                      <item translatable="yes">300</item>
-                      <item translatable="yes">1000</item>
-                      <item translatable="yes">10000</item>
-                    </items>
-                    <signal name="changed" handler="on_favs_count_changed" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes"> images</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="label7">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_top">20</property>
-            <property name="xalign">0</property>
-            <property name="label" translatable="yes">Ordinary images or manga</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">6</property>
           </packing>
         </child>
         <child internal-child="action_area">
@@ -389,65 +143,6 @@
             <property name="fill">True</property>
             <property name="pack_type">end</property>
             <property name="position">7</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkComboBoxText" id="manga">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="margin_left">15</property>
-            <property name="margin_right">5</property>
-            <property name="active">2</property>
-            <property name="entry_text_column">0</property>
-            <property name="id_column">1</property>
-            <items>
-              <item translatable="yes">Only ordinary images</item>
-              <item translatable="yes">Only anime and manga</item>
-              <item translatable="yes">Both</item>
-            </items>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">8</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="label2">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_top">20</property>
-            <property name="xalign">0</property>
-            <property name="label" translatable="yes">Safe-for-work or erotic</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">9</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkComboBoxText" id="sfw">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="margin_left">15</property>
-            <property name="margin_right">5</property>
-            <property name="active">0</property>
-            <property name="entry_text_column">0</property>
-            <property name="id_column">1</property>
-            <items>
-              <item translatable="yes">Only safe-for-work</item>
-              <item translatable="yes">Only slightly erotic or otherwise sketchy</item>
-              <item translatable="yes">Both</item>
-            </items>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">10</property>
           </packing>
         </child>
         <child>
