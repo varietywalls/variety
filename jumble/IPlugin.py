@@ -18,19 +18,28 @@ class IPlugin(object):
     """
     The most simple interface to be inherited when creating a plugin.
     """
+
     @classmethod
     def get_info(cls):
+        """
+        Returns the basic info about the plugin. Please make sure the name is unique among all Variety plugins
+        Format:
+        return {
+           "name": "Sample name",
+           "description": "Sample description",
+           "version": "1.0",
+           "author": "Author name",
+           "url": "Plugin URL"
+        }
+        """
         return {}
-#        return {
-#            "name": None,
-#            "description": None,
-#            "version": None,
-#            "author": None,
-#            "url": None
-#        }
 
     def __init__(self):
-        self.is_activated = False
+        """
+        All plugins must have a default constructor with no parameters.
+        Remember to call super.
+        """
+        self.is_active = False
 
         # These will be filled in by Jumble
         self.jumble = None
@@ -39,13 +48,20 @@ class IPlugin(object):
 
     def activate(self):
         """
-       Called at plugin activation.
-       """
-        self.is_activated = True
+        Called at plugin activation. Please do not allocate large portions of memory or resources before this is called.
+        Remember to call super first.
+        """
+        if self.is_active:
+            return
+        self.is_active = True
 
     def deactivate(self):
         """
-       Called when the plugin is disabled.
-       """
-        self.is_activated = False
+        Called when the plugin is disabled. Please free used memory and resources here.
+        Remember to call super first.
+        """
+        self.is_active = False
+
+    def is_active(self):
+        return self.is_active
 

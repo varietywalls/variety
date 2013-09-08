@@ -189,6 +189,14 @@ class Indicator:
         self.quote_fb.connect("activate", window.publish_quote_on_facebook)
         self.quotes_menu.append(self.quote_fb)
 
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.quotes_disable = Gtk.MenuItem(_("Turn off"))
+        self.quotes_disable.set_use_underline(True)
+        self.quotes_disable.connect("activate", window.disable_quotes)
+        self.quotes_menu.append(self.quotes_disable)
+
+
         self.quotes = Gtk.MenuItem(_("_Quotes"))
         self.quotes.set_use_underline(True)
         self.quotes.set_submenu(self.quotes_menu)

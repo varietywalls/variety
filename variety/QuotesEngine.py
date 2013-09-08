@@ -28,11 +28,15 @@ from gettext import gettext as _
 gettext.textdomain('variety')
 
 class QuotesEngine:
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         self.parent = parent
         self.quote = None
         self.started = False
         self.running = False
+
+    def stop(self):
+        self.running = False
+        self.started = False
 
     def start(self):
         if self.started:
@@ -131,7 +135,7 @@ class QuotesEngine:
 
         return self.quote
 
-    def on_options_updated(self, clear_prepared = True):
+    def on_options_updated(self, clear_prepared=True):
         if clear_prepared:
             with self.prepared_lock:
                 self.prepared = []
@@ -190,7 +194,6 @@ class QuotesEngine:
 
             self.prepare_event.wait()
             self.prepare_event.clear()
-
 
     def get_one_quote(self):
         keywords = []

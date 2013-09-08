@@ -408,9 +408,14 @@ class VarietyWindow(Gtk.Window):
 
         self.start_clock_thread()
 
-        if self.options.quotes_enabled and not self.quotes_engine:
-            self.quotes_engine = QuotesEngine(self)
+        if self.options.quotes_enabled:
+            if not self.quotes_engine:
+                self.quotes_engine = QuotesEngine(self)
             self.quotes_engine.start()
+        else:
+            if self.quotes_engine:
+                self.quotes_engine.stop()
+
         if self.quotes_engine:
             clear_prepared = self.previous_options is None or \
                 self.options.quotes_tags != self.previous_options.quotes_tags or \
@@ -2249,6 +2254,17 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 on_success=on_success, on_failure=on_failure)
 
         GObject.idle_add(do_publish)
+
+    def disable_quotes(self, widget=None):
+        self.options.quotes_enabled = False
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.quotes_enabled.set_active(False)
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
+        if self.quotes_engine:
+            self.quotes_engine.stop()
 
     def facebook_firstrun(self):
         first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
