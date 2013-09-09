@@ -28,7 +28,7 @@ class QuotationsPageSource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "Quotes from TheQuotationsPage.com",
+            "name": "TheQuotationsPage.com",
             "description": "Fetches quotes from TheQuotationsPage.com",
             "author": "Peter Levi",
             "version": "0.1"

@@ -21,6 +21,7 @@ import stat
 
 import threading
 from variety.Util import Util
+from variety.plugins.IQuoteSource import IQuoteSource
 from variety_lib import varietyconfig
 from variety_lib.varietyconfig import get_data_file
 from variety.FolderChooser import FolderChooser
@@ -224,8 +225,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 cb.set_visible(True)
                 cb.set_active(f[0])
                 cb.set_margin_right(30)
-                self.ui.filters_grid.attach(cb, i % 2, i // 2, 1, 1)
+                self.ui.filters_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.filter_checkboxes.append(cb)
+
+            if hasattr(self, "quotes_sources_checkboxes"):
+                for cb in self.quotes_sources_checkboxes:
+                    self.ui.quotes_sources_grid.remove(cb)
+                    cb.destroy()
+            self.quotes_sources_checkboxes = []
+            for i, f in enumerate(self.parent.jumble.get_plugins(IQuoteSource)):
+                cb = Gtk.CheckButton(f['info']['name'])
+                cb.connect("toggled", self.delayed_apply)
+                cb.set_visible(True)
+                cb.set_active(f['info']['name'] not in self.options.quotes_disabled_sources)
+                cb.set_margin_right(30)
+                self.ui.quotes_sources_grid.attach(cb, i % 4, i // 4, 1, 1)
+                self.quotes_sources_checkboxes.append(cb)
 
             try:
                 with open(get_data_file("ui/tips.txt")) as f:
@@ -835,6 +850,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
             self.options.quotes_hpos = max(0, min(100, int(self.ui.quotes_hpos.get_value())))
             self.options.quotes_vpos = max(0, min(100, int(self.ui.quotes_vpos.get_value())))
+
+            self.options.quotes_disabled_sources = [
+                cb.get_label() for cb in self.quotes_sources_checkboxes if not cb.get_active()]
 
 
             enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]

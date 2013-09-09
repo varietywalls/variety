@@ -42,7 +42,7 @@ class GoodreadsSource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "Quotes from Goodreads",
+            "name": "Goodreads",
             "description": "Fetches quotes from Goodreads.com",
             "author": "Peter Levi",
             "version": "0.1"

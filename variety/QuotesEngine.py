@@ -34,13 +34,25 @@ class QuotesEngine:
         self.started = False
         self.running = False
 
+    def update_plugins(self):
+        for p in self.parent.jumble.get_plugins(IQuoteSource):
+            if p["info"]["name"] in self.parent.options.quotes_disabled_sources:
+                p["plugin"].deactivate()
+            else:
+                p["plugin"].activate()
+
+        self.plugins = self.parent.jumble.get_plugins(IQuoteSource, active=True)
+
     def stop(self):
         self.running = False
         self.started = False
+        self.update_plugins()
 
     def start(self):
         if self.started:
             return
+
+        self.update_plugins()
 
         if self.parent.options.quotes_enabled:
             logger.info("Starting QuotesEngine")
@@ -137,8 +149,10 @@ class QuotesEngine:
 
     def on_options_updated(self, clear_prepared=True):
         if clear_prepared:
+            logger.info("Quotes: clearing prepared and updating plugins")
             with self.prepared_lock:
                 self.prepared = []
+            self.update_plugins()
         self.prepare_event.set()
         self.change_event.set()
 
@@ -208,12 +222,12 @@ class QuotesEngine:
             category, search = random.choice(map(lambda k: ("keyword", k), keywords) + map(lambda a: ("author", a), authors))
 
         if not self.cache[category].setdefault(search, {}):
-            plugins = self.parent.jumble.get_plugins(IQuoteSource)
+            plugins = self.plugins
             if not plugins:
                 self.parent.show_notification(_("No quote plugins"), _("There are no quote plugins installed"))
                 raise Exception("No quote plugins")
             if keywords or authors:
-                plugins = [p for p in plugins if p["plugin"].supports_search()]
+                plugins = [p for p in self.plugins if p["plugin"].supports_search()]
                 if not plugins:
                     self.parent.show_notification(_("No suitable quote plugins"),
                                                   _("You have no quote plugins which support searching by keywords and authors"))

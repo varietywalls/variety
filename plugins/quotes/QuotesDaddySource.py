@@ -23,9 +23,8 @@ logger = logging.getLogger("variety")
 class QuotesDaddySource(IQuoteSource):
     @classmethod
     def get_info(cls):
-        raise Exception
         return {
-            "name": "Quotes from QuotesDaddy",
+            "name": "QuotesDaddy daily feed",
             "description": "Fetches quotes from QuotesDaddy's daily quotes RSS feed",
             "author": "Peter Levi",
             "version": "0.1"

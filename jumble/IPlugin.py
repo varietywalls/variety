@@ -39,7 +39,7 @@ class IPlugin(object):
         All plugins must have a default constructor with no parameters.
         Remember to call super.
         """
-        self.is_active = False
+        self.active = False
 
         # These will be filled in by Jumble
         self.jumble = None
@@ -50,18 +50,22 @@ class IPlugin(object):
         """
         Called at plugin activation. Please do not allocate large portions of memory or resources before this is called.
         Remember to call super first.
+        This method can be called multiple times within a session.
+        It may be called when the plugin is already active - in this case it should simply return.
         """
-        if self.is_active:
+        if self.active:
             return
-        self.is_active = True
+        self.active = True
 
     def deactivate(self):
         """
         Called when the plugin is disabled. Please free used memory and resources here.
         Remember to call super first.
+        This method can be called multiple times within a session.
+        It may be called when the plugin is already inactive - in this case it should simply return.
         """
-        self.is_active = False
+        self.active = False
 
     def is_active(self):
-        return self.is_active
+        return self.active
 

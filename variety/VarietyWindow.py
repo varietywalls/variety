@@ -418,6 +418,7 @@ class VarietyWindow(Gtk.Window):
 
         if self.quotes_engine:
             clear_prepared = self.previous_options is None or \
+                self.options.quotes_disabled_sources != self.previous_options.quotes_disabled_sources or \
                 self.options.quotes_tags != self.previous_options.quotes_tags or \
                 self.options.quotes_authors != self.previous_options.quotes_authors
             self.quotes_engine.on_options_updated(clear_prepared=clear_prepared)

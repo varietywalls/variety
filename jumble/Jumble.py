@@ -19,7 +19,9 @@ import imp
 import logging
 import inspect
 from IPlugin import IPlugin
+
 logger = logging.getLogger('variety')
+
 
 class Jumble:
     def __init__(self, folders):
@@ -48,6 +50,7 @@ class Jumble:
         for module, path in self._walk_modules():
             def is_plugin(cls):
                 return inspect.isclass(cls) and issubclass(cls, IPlugin) and cls.__module__ == module.__name__
+
             for name, cls in inspect.getmembers(module, is_plugin):
                 yield cls, path
 
@@ -79,19 +82,21 @@ class Jumble:
                 logging.exception("Jumble: could not instantiate plugin class: %s" % str(cls))
                 continue
 
-    def get_plugins(self, clazz=None, typename=None, name=None, activated=None):
+    def get_plugins(self, clazz=None, typename=None, name=None, active=None):
         """
         Searches for plugins that match the given criteria. If no criteria are given, all loaded plugins are returned.
 
         :param clazz: parent plugin class; optional
         :param typename: plugin type name; optional
         :param name: plugin name, should match exactly; optional
-        :param activated: specifies whether the plugin should be activated, or deactivated; optional, by default both are returned
+        :param active: specifies whether the plugin should be currently active, or inactive; optional,
+        by default both are returned
         :return: all matching plugins, as hashes {"plugin": plugin, "class": plugin_class, "info": info}
         """
-        return [p for p in self.plugins if
-                (not clazz or issubclass(p["class"], clazz)) and
-                (not typename or p["class"].__name__ == typename) and
-                (not name or p["info"].name == name) and
-                (activated is None or p.is_active() == activated)]
+        return sorted([p for p in self.plugins if
+                       (not clazz or issubclass(p["class"], clazz)) and
+                       (not typename or p["class"].__name__ == typename) and
+                       (not name or p["info"]["name"] == name) and
+                       (active is None or p["plugin"].is_active() == active)],
+                      key=lambda p: p["info"]["name"])
 
