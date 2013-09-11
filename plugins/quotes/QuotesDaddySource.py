@@ -18,13 +18,15 @@ from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 
 import logging
+
 logger = logging.getLogger("variety")
+
 
 class QuotesDaddySource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "QuotesDaddy daily feed",
+            "name": "QuotesDaddy",
             "description": "Fetches quotes from QuotesDaddy's daily quotes RSS feed",
             "author": "Peter Levi",
             "version": "0.1"

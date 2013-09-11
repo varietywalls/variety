@@ -74,6 +74,7 @@ class Jumble:
             try:
                 plugin = cls()
                 logger.info("Jumble found plugin class: %s: %s" % (str(cls), str(info)))
+
                 plugin.jumble = self
                 plugin.path = os.path.realpath(path)
                 plugin.folder = os.path.dirname(plugin.path)

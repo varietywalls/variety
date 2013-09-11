@@ -21,6 +21,7 @@ from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 
 import logging
+
 logger = logging.getLogger("variety")
 
 KEYWORDS = [
@@ -34,6 +35,7 @@ KEYWORDS = [
     'power', 'humorous', 'future', 'food', 'heart', 'quotes', 'work', 'words', 'memory', 'leadership',
     'passion', 'spiritual', 'soul', 'loss', 'grief', 'language', 'psychology', 'friends', 'paranormal-romance',
     'learning', 'imagination', 'world', 'magic', 'sadness', 'feminism', 'depression']
+
 
 class GoodreadsSource(IQuoteSource):
     def __init__(self):
@@ -65,7 +67,8 @@ class GoodreadsSource(IQuoteSource):
         url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % keyword)
         soup = Util.html_soup(url)
         page_links = list(Util.safe_map(int,
-            [pagelink.contents[0] for pagelink in soup.find_all(href=re.compile('quotes/search.*page='))]))
+                                        [pagelink.contents[0] for pagelink in
+                                         soup.find_all(href=re.compile('quotes/search.*page='))]))
         if page_links:
             page = random.randint(1, max(page_links))
             url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d" % (keyword, page))

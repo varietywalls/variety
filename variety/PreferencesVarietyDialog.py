@@ -224,7 +224,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 cb.connect("toggled", self.delayed_apply)
                 cb.set_visible(True)
                 cb.set_active(f[0])
-                cb.set_margin_right(30)
+                cb.set_margin_right(20)
                 self.ui.filters_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.filter_checkboxes.append(cb)
 
@@ -233,12 +233,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     self.ui.quotes_sources_grid.remove(cb)
                     cb.destroy()
             self.quotes_sources_checkboxes = []
-            for i, f in enumerate(self.parent.jumble.get_plugins(IQuoteSource)):
-                cb = Gtk.CheckButton(f['info']['name'])
+            for i, p in enumerate(self.parent.jumble.get_plugins(IQuoteSource)):
+                cb = Gtk.CheckButton(p['info']['name'])
                 cb.connect("toggled", self.delayed_apply)
                 cb.set_visible(True)
-                cb.set_active(f['info']['name'] not in self.options.quotes_disabled_sources)
-                cb.set_margin_right(30)
+                cb.set_tooltip_text(p['info']['description'])
+                cb.set_active(p['info']['name'] not in self.options.quotes_disabled_sources)
+                cb.set_margin_right(20)
                 self.ui.quotes_sources_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.quotes_sources_checkboxes.append(cb)
 

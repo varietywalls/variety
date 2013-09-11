@@ -59,21 +59,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -1673,16 +1658,32 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkLabel" id="label48">
+                              <object class="GtkBox" id="box27">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="halign">start</property>
-                                <property name="margin_left">30</property>
-                                <property name="margin_right">20</property>
-                                <property name="margin_top">10</property>
-                                <property name="label" translatable="yes">Show quotes from these sources:</property>
-                                <property name="justify">fill</property>
-                                <property name="wrap">True</property>
+                                <property name="hexpand">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="label48">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="margin_left">30</property>
+                                    <property name="margin_right">20</property>
+                                    <property name="margin_top">10</property>
+                                    <property name="label" translatable="yes">Show quotes from these sources: </property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1716,16 +1717,18 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="status_message1">
+                              <object class="GtkLabel" id="label49">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="halign">end</property>
-                                <property name="margin_left">10</property>
+                                <property name="can_focus">True</property>
+                                <property name="halign">start</property>
+                                <property name="margin_left">30</property>
                                 <property name="margin_right">20</property>
-                                <property name="margin_top">2</property>
-                                <property name="margin_bottom">5</property>
-                                <property name="label">&lt;a href='http://peterlevi.com/variety/plugins/'&gt;Get more plugins&lt;/a&gt;</property>
+                                <property name="margin_top">3</property>
+                                <property name="margin_bottom">10</property>
+                                <property name="hexpand">True</property>
+                                <property name="label" translatable="yes">&lt;small&gt;&lt;a href='http://peterlevi.com/variety/plugins/'&gt;Get more&lt;/a&gt;&lt;/small&gt;</property>
                                 <property name="use_markup">True</property>
+                                <property name="justify">fill</property>
                                 <property name="wrap">True</property>
                               </object>
                               <packing>
@@ -1749,7 +1752,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                             <child>
@@ -1856,7 +1859,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
@@ -3674,6 +3677,21 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>

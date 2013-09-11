@@ -41,10 +41,11 @@ class IPlugin(object):
         """
         self.active = False
 
-        # These will be filled in by Jumble
+        # These will be filled in by Jumble.load() and available before the first activate() call
         self.jumble = None
-        self.path = None        # path to the plugin python file
-        self.folder = None      # folder where plugin is located (can be used for loading UI resources, etc.)
+        self.path = None # Path to the plugin python file
+        self.folder = None # Folder where plugin is located (can be used for loading UI resources, etc.).
+        # This folder may be read-only. A separate config folder convention should be used to store config files.
 
     def activate(self):
         """

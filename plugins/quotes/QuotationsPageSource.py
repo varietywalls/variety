@@ -22,7 +22,9 @@ from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 from httplib2 import iri2uri
 import logging
+
 logger = logging.getLogger("variety")
+
 
 class QuotationsPageSource(IQuoteSource):
     @classmethod
@@ -59,10 +61,12 @@ class QuotationsPageSource(IQuoteSource):
         return self.get_for_search_url("http://www.quotationspage.com/random.php3")
 
     def get_for_author(self, author):
-        return self.get_for_search_url(iri2uri((u"http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
+        return self.get_for_search_url(
+            iri2uri((u"http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
 
     def get_for_keyword(self, keyword):
-        return self.get_for_search_url(iri2uri((u"http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
+        return self.get_for_search_url(
+            iri2uri((u"http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
 
     def get_for_search_url(self, url):
         logger.info("Fetching quotes from Goodreads for search url=%s" % url)
@@ -79,9 +83,10 @@ class QuotationsPageSource(IQuoteSource):
         r = r'.*<dl>(.*)</dl>.*'
         if re.match(r, html, flags=re.M | re.S):
             html = re.sub(r, '<html><body>\\1</body></html>', html, flags=re.M | re.S)
-        # without this BeautifulSoup gets confused by some scripts
+            # without this BeautifulSoup gets confused by some scripts
 
         return self.get_from_html(html)
+
 
 if __name__ == "__main__":
     q = QuotationsPageSource()
