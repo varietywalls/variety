@@ -21,6 +21,7 @@ import re
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 from httplib2 import iri2uri
+from gettext import gettext as _
 import logging
 
 logger = logging.getLogger("variety")
@@ -31,7 +32,7 @@ class QuotationsPageSource(IQuoteSource):
     def get_info(cls):
         return {
             "name": "TheQuotationsPage.com",
-            "description": "Fetches quotes from TheQuotationsPage.com",
+            "description": _("Fetches quotes from TheQuotationsPage.com"),
             "author": "Peter Levi",
             "version": "0.1"
         }

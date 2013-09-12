@@ -19,6 +19,7 @@ import re
 from httplib2 import iri2uri
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
+from gettext import gettext as _
 
 import logging
 
@@ -45,7 +46,7 @@ class GoodreadsSource(IQuoteSource):
     def get_info(cls):
         return {
             "name": "Goodreads",
-            "description": "Fetches quotes from Goodreads.com",
+            "description": _("Fetches quotes from Goodreads.com"),
             "author": "Peter Levi",
             "version": "0.1"
         }

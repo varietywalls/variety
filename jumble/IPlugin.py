@@ -28,8 +28,8 @@ class IPlugin(object):
            "name": "Sample name",
            "description": "Sample description",
            "version": "1.0",
-           "author": "Author name",
-           "url": "Plugin URL"
+           "author": "Author name", # optional
+           "url": "Plugin URL"  # optional
         }
         """
         return {}

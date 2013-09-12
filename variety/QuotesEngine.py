@@ -38,10 +38,17 @@ class QuotesEngine:
 
     def update_plugins(self):
         for p in self.parent.jumble.get_plugins(IQuoteSource):
-            if p["info"]["name"] in self.parent.options.quotes_disabled_sources:
-                p["plugin"].deactivate()
+            name = p["info"]["name"]
+            if name in self.parent.options.quotes_disabled_sources:
+                try:
+                    p["plugin"].deactivate()
+                except Exception:
+                    logger.exception("Error deactivating %s" % name)
             else:
-                p["plugin"].activate()
+                try:
+                    p["plugin"].activate()
+                except Exception:
+                    logger.exception("Error activating %s" % name)
 
         self.plugins = self.parent.jumble.get_plugins(IQuoteSource, active=True)
 
@@ -199,7 +206,7 @@ class QuotesEngine:
                             self.parent.quote = self.change_quote()
                             self.parent.refresh_texts()
 
-                    time.sleep(1)
+                    time.sleep(2)
 
                 if not self.running:
                     return

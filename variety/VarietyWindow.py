@@ -140,7 +140,7 @@ class VarietyWindow(Gtk.Window):
 
         self.jumble = Jumble([os.path.join(os.path.dirname(__file__), "../plugins"),
                               os.path.join(varietyconfig.get_data_path(), "plugins"),
-                              os.path.join(self.config_folder, "plugins")])
+                              self.plugins_folder])
 
         setattr(self.jumble, "parent", self)
         self.jumble.load()
@@ -236,6 +236,9 @@ class VarietyWindow(Gtk.Window):
             logger.info("Missing ui.conf file, copying it from " +
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
+
+        self.plugins_folder = os.path.join(self.config_folder, "plugins")
+        Util.makedirs(self.plugins_folder)
 
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         Util.makedirs(self.scripts_folder)
@@ -670,6 +673,7 @@ class VarietyWindow(Gtk.Window):
 
                     if self.options.quotes_enabled and self.quote is not None:
                         self.ind.quotes.set_visible(True)
+                        self.ind.google_quote_author.set_visible(self.quote.get("author", None) is not None)
                         if "sourceName" in self.quote and "link" in self.quote:
                             self.ind.view_quote.set_visible(True)
                             self.ind.view_quote.set_label(_("View at %s") % self.quote["sourceName"])
@@ -1082,7 +1086,7 @@ class VarietyWindow(Gtk.Window):
         try:
             if self.options.quotes_enabled and self.quote:
                 quote_outfile = os.path.join(self.wallpaper_folder, "wallpaper-quote-%s.jpg" % Util.random_hash())
-                QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
+                QuoteWriter.write_quote(self.quote["quote"], self.quote.get("author", None), to_set, quote_outfile, self.options)
                 to_set = quote_outfile
             return to_set
         except Exception:
@@ -2317,13 +2321,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quotes_engine.on_options_updated(False)
 
     def view_quote(self, widget=None):
-        if self.quote and self.quote["link"]:
+        if self.quote and self.quote.get("link", None):
             os.system("xdg-open \"" + self.quote["link"] + "\"")
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
             os.system("xdg-open \"http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["quote"][1:-1].encode('utf8')) + "\"")
+                      urllib.quote_plus(self.quote["quote"].encode('utf8')) + "\"")
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:

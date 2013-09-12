@@ -16,6 +16,7 @@
 
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
+from gettext import gettext as _
 
 import logging
 
@@ -27,7 +28,8 @@ class QuotesDaddySource(IQuoteSource):
     def get_info(cls):
         return {
             "name": "QuotesDaddy",
-            "description": "Fetches quotes from QuotesDaddy's daily quotes RSS feed",
+            "description": _("Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
+                             "Does not support searching by tags or authors."),
             "author": "Peter Levi",
             "version": "0.1"
         }
