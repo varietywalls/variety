@@ -138,9 +138,7 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
-        self.jumble = Jumble([os.path.join(os.path.dirname(__file__), "../plugins"),
-                              os.path.join(varietyconfig.get_data_path(), "plugins"),
-                              self.plugins_folder])
+        self.jumble = Jumble([os.path.join(varietyconfig.get_data_path(), "plugins"), self.plugins_folder])
 
         setattr(self.jumble, "parent", self)
         self.jumble.load()
@@ -2254,7 +2252,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             def on_failure(fb, action, data):
                 self.show_notification(_("Could not publish"), str(data))
 
-            text = (self.quote["quote"] + " - " + self.quote["author"]).encode('utf8')
+            author = (" - " + self.quote["author"]) if self.quote.get("author", None) else ""
+            text = (self.quote["quote"] + author).encode('utf8')
             fb.publish(message=text, caption="Via Variety Wallpaper Changer",
                 on_success=on_success, on_failure=on_failure)
 

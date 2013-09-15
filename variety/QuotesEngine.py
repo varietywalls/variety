@@ -35,6 +35,7 @@ class QuotesEngine:
         self.quote = None
         self.started = False
         self.running = False
+        self.used = []
 
     def update_plugins(self):
         for p in self.parent.jumble.get_plugins(IQuoteSource):
@@ -66,7 +67,6 @@ class QuotesEngine:
         self.update_plugins()
 
         self.prepared = []
-        self.used = []
         self.position = 0
         self.prepared_lock = threading.Lock()
         self.prepare_event = threading.Event()
