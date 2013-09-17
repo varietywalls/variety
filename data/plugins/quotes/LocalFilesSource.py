@@ -48,6 +48,8 @@ class LocalFilesSource(IQuoteSource):
 
         super(LocalFilesSource, self).activate()
 
+        self.quotes = []
+
         # prefer files in the pluginconfig
         for f in os.listdir(self.get_config_folder()):
             if f.endswith(".txt"):
@@ -67,7 +69,7 @@ class LocalFilesSource(IQuoteSource):
             logger.info("Loading quotes file %s" % path)
             with open(path) as f:
                 s = f.read().decode('utf-8', errors='ignore')
-                for q in re.split(r'^\.$', s, flags=re.MULTILINE):
+                for q in re.split(r'(^\.$|^%$)', s, flags=re.MULTILINE):
                     try:
                         if q.strip():
                             parts = q.split('-- ')

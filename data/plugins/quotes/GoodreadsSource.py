@@ -55,27 +55,42 @@ class GoodreadsSource(IQuoteSource):
         return True
 
     def get_random(self):
-        return self.get_for_keyword(random.choice(KEYWORDS))
+        return self.get_for_keyword(random.choice(KEYWORDS))[:4]
 
     def get_for_author(self, author):
-        return self.get_for_keyword(author)
+        logger.info("Fetching quotes from Goodreads for author=%s" % author)
 
-    def get_for_keyword(self, keyword):
-        logger.info("Fetching quotes from Goodreads for keyword=%s" % keyword)
-
-        quotes = []
-
-        url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % keyword)
+        url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % author)
         soup = Util.html_soup(url)
         page_links = list(Util.safe_map(int,
                                         [pagelink.contents[0] for pagelink in
                                          soup.find_all(href=re.compile('quotes/search.*page='))]))
         if page_links:
             page = random.randint(1, max(page_links))
-            url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d" % (keyword, page))
+            url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d" % (author, page))
             soup = Util.html_soup(url)
 
+        return self.get_from_soup(url, soup)
+
+    def get_for_keyword(self, keyword):
+        logger.info("Fetching quotes from Goodreads for keyword=%s" % keyword)
+
+        url = iri2uri(u"http://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s" % keyword)
+        soup = Util.html_soup(url)
+        page_links = list(Util.safe_map(int,
+                                        [pagelink.contents[0] for pagelink in
+                                         soup.find_all(href=re.compile('quotes/tag.*page='))]))
+        if page_links:
+            page = random.randint(1, max(page_links))
+            url = iri2uri(u"http://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s&page=%d" % (keyword, page))
+            soup = Util.html_soup(url)
+
+        return self.get_from_soup(url, soup)
+
+    def get_from_soup(self, url, soup):
         logger.info("Used Goodreads url %s" % url)
+        quotes = []
+
         for div in soup.find_all('div', 'quoteText'):
             logger.debug("Parsing quote for div\n%s" % div)
             try:
@@ -88,12 +103,19 @@ class GoodreadsSource(IQuoteSource):
                         quote_text += unicode(elem)
                 quote_text = quote_text.replace(u'<br>', '\n').replace(u'<br/>', '\n').replace(u'―', '').strip()
 
-                author = first_a.contents[0]
-                link = "http://www.goodreads.com" + div.find('a')["href"]
-                if div.find('i'):
-                    author = author + ', ' + div.find('i').find('a').contents[0]
+                if first_a:
+                    author = first_a.contents[0]
+                    link = "http://www.goodreads.com" + div.find('a')["href"]
+                    if div.find('i'):
+                        author = author + ', ' + div.find('i').find('a').contents[0]
+                else:
+                    link = None
+                    author = re.match(r'(\n\s+)+((.*)$)', quote_text, re.MULTILINE)
                 quotes.append({"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link})
             except Exception:
                 logger.exception("Could not extract Goodreads quote")
+
+        if not quotes:
+            logger.warning("Goodreads: no quotes found at %s" % url)
 
         return quotes

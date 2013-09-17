@@ -279,7 +279,7 @@ class QuotesEngine:
                     continue
 
             if not cached:
-                logger.warning("No quotes for %s for plugin %s" % (search, plugin_name))
+                logger.warning("No quotes for '%s' for plugin %s" % (search, plugin_name))
                 plugins.remove(plugin)
                 continue
 

@@ -40,7 +40,7 @@ class QuotationsPageSource(IQuoteSource):
     def supports_search(self):
         return True
 
-    def get_from_html(self, html):
+    def get_from_html(self, url, html):
         quotes = []
         bs = bs4.BeautifulSoup(html)
         for item in bs.findAll('dt', 'quote'):
@@ -56,6 +56,10 @@ class QuotationsPageSource(IQuoteSource):
                 quotes.append({"quote": quote, "author": author, "sourceName": "TheQuotationsPage.com", "link": link})
             except Exception:
                 logger.warning("Could not get or parse quote: %s" % quote)
+
+        if not quotes:
+            logger.warning("QuotationsPage: no quotes found at %s" % url)
+
         return quotes
 
     def get_random(self):
@@ -86,7 +90,7 @@ class QuotationsPageSource(IQuoteSource):
             html = re.sub(r, '<html><body>\\1</body></html>', html, flags=re.M | re.S)
             # without this BeautifulSoup gets confused by some scripts
 
-        return self.get_from_html(html)
+        return self.get_from_html(url, html)
 
 
 if __name__ == "__main__":
