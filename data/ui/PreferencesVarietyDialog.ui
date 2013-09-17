@@ -1128,15 +1128,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <child>
                           <placeholder/>
                         </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1667,6 +1658,86 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
+                              <object class="GtkBox" id="box27">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="hexpand">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="label48">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="margin_left">30</property>
+                                    <property name="margin_right">20</property>
+                                    <property name="margin_top">10</property>
+                                    <property name="label" translatable="yes">Show quotes from these sources: </property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkGrid" id="quotes_sources_grid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">20</property>
+                                <property name="margin_top">5</property>
+                                <property name="orientation">vertical</property>
+                                <property name="column_spacing">20</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label49">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="halign">start</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">20</property>
+                                <property name="margin_top">3</property>
+                                <property name="margin_bottom">10</property>
+                                <property name="hexpand">True</property>
+                                <property name="label" translatable="yes">&lt;small&gt;&lt;a href='http://peterlevi.com/variety/plugins/'&gt;Get more&lt;/a&gt;&lt;/small&gt;</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">fill</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkLabel" id="label38">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -1674,14 +1745,14 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">20</property>
                                 <property name="margin_top">10</property>
-                                <property name="label" translatable="yes">Show only these tags and authors. Leave empty to use QuotesDaddy's Quote of the Day feed:</property>
+                                <property name="label" translatable="yes">Show only these tags and authors. Leave empty to show random quotes.</property>
                                 <property name="justify">fill</property>
                                 <property name="wrap">True</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">0</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                             <child>
@@ -1788,7 +1859,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
@@ -1797,7 +1868,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                           <object class="GtkLabel" id="label42">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Tags and authors</property>
+                            <property name="label" translatable="yes">Sources and filtering</property>
                           </object>
                         </child>
                       </object>

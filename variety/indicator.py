@@ -169,7 +169,7 @@ class Indicator:
         self.quote_clipboard.connect("activate", window.quote_copy_to_clipboard)
         self.quotes_menu.append(self.quote_clipboard)
 
-        self.view_quote = Gtk.MenuItem(_("View at QuotesDaddy"))
+        self.view_quote = Gtk.MenuItem()
         self.view_quote.set_use_underline(True)
         self.view_quote.connect("activate", window.view_quote)
         self.quotes_menu.append(self.view_quote)
@@ -188,6 +188,14 @@ class Indicator:
         self.quote_fb.set_use_underline(True)
         self.quote_fb.connect("activate", window.publish_quote_on_facebook)
         self.quotes_menu.append(self.quote_fb)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.quotes_disable = Gtk.MenuItem(_("Turn off"))
+        self.quotes_disable.set_use_underline(True)
+        self.quotes_disable.connect("activate", window.disable_quotes)
+        self.quotes_menu.append(self.quotes_disable)
+
 
         self.quotes = Gtk.MenuItem(_("_Quotes"))
         self.quotes.set_use_underline(True)

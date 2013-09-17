@@ -20,6 +20,7 @@ import subprocess
 import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
+from jumble.Jumble import Jumble
 
 gettext.textdomain('variety')
 
@@ -137,14 +138,19 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
-        self.reload_config()
-        self.load_last_change_time()
+        self.jumble = Jumble([os.path.join(varietyconfig.get_data_path(), "plugins"), self.plugins_folder])
+
+        setattr(self.jumble, "parent", self)
+        self.jumble.load()
 
         self.image_count = -1
         self.image_colors_cache = {}
 
         self.wheel_timer = None
         self.set_wp_timer = None
+
+        self.reload_config()
+        self.load_last_change_time()
 
         self.update_indicator(auto_changed=False)
 
@@ -228,6 +234,9 @@ class VarietyWindow(Gtk.Window):
             logger.info("Missing ui.conf file, copying it from " +
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
+
+        self.plugins_folder = os.path.join(self.config_folder, "plugins")
+        Util.makedirs(self.plugins_folder)
 
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         Util.makedirs(self.scripts_folder)
@@ -400,11 +409,17 @@ class VarietyWindow(Gtk.Window):
 
         self.start_clock_thread()
 
-        if self.options.quotes_enabled and not self.quotes_engine:
-            self.quotes_engine = QuotesEngine(self)
+        if self.options.quotes_enabled:
+            if not self.quotes_engine:
+                self.quotes_engine = QuotesEngine(self)
             self.quotes_engine.start()
+        else:
+            if self.quotes_engine:
+                self.quotes_engine.stop()
+
         if self.quotes_engine:
             clear_prepared = self.previous_options is None or \
+                self.options.quotes_disabled_sources != self.previous_options.quotes_disabled_sources or \
                 self.options.quotes_tags != self.previous_options.quotes_tags or \
                 self.options.quotes_authors != self.previous_options.quotes_authors
             self.quotes_engine.on_options_updated(clear_prepared=clear_prepared)
@@ -654,7 +669,17 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
 
-                    self.ind.quotes.set_visible(self.options.quotes_enabled and self.quote is not None)
+                    if self.options.quotes_enabled and self.quote is not None:
+                        self.ind.quotes.set_visible(True)
+                        self.ind.google_quote_author.set_visible(self.quote.get("author", None) is not None)
+                        if "sourceName" in self.quote and "link" in self.quote:
+                            self.ind.view_quote.set_visible(True)
+                            self.ind.view_quote.set_label(_("View at %s") % self.quote["sourceName"])
+                        else:
+                            self.ind.view_quote.set_visible(False)
+                    else:
+                        self.ind.quotes.set_visible(False)
+
                     if self.quotes_engine:
                         self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
                     self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
@@ -1059,7 +1084,7 @@ class VarietyWindow(Gtk.Window):
         try:
             if self.options.quotes_enabled and self.quote:
                 quote_outfile = os.path.join(self.wallpaper_folder, "wallpaper-quote-%s.jpg" % Util.random_hash())
-                QuoteWriter.write_quote(self.quote["quote"], self.quote["author"], to_set, quote_outfile, self.options)
+                QuoteWriter.write_quote(self.quote["quote"], self.quote.get("author", None), to_set, quote_outfile, self.options)
                 to_set = quote_outfile
             return to_set
         except Exception:
@@ -1938,6 +1963,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
             else:
                 self.ind.set_visible(True)
+
             if self.options.icon == "Current":
                 self.ind.set_icon(self.current)
             else:
@@ -2226,11 +2252,23 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             def on_failure(fb, action, data):
                 self.show_notification(_("Could not publish"), str(data))
 
-            text = (self.quote["quote"] + " - " + self.quote["author"]).encode('utf8')
+            author = (" - " + self.quote["author"]) if self.quote.get("author", None) else ""
+            text = (self.quote["quote"] + author).encode('utf8')
             fb.publish(message=text, caption="Via Variety Wallpaper Changer",
                 on_success=on_success, on_failure=on_failure)
 
         GObject.idle_add(do_publish)
+
+    def disable_quotes(self, widget=None):
+        self.options.quotes_enabled = False
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.quotes_enabled.set_active(False)
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
+        if self.quotes_engine:
+            self.quotes_engine.stop()
 
     def facebook_firstrun(self):
         first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
@@ -2282,13 +2320,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quotes_engine.on_options_updated(False)
 
     def view_quote(self, widget=None):
-        if self.quote and self.quote["link"]:
+        if self.quote and self.quote.get("link", None):
             os.system("xdg-open \"" + self.quote["link"] + "\"")
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
             os.system("xdg-open \"http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["quote"][1:-1].encode('utf8')) + "\"")
+                      urllib.quote_plus(self.quote["quote"].encode('utf8')) + "\"")
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:

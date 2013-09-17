@@ -14,48 +14,79 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from bs4 import BeautifulSoup
 import random
-import urllib
 import time
-from variety.Util import Util
+from variety.plugins.IQuoteSource import IQuoteSource
 
 import logging
 import threading
 
 logger = logging.getLogger('variety')
 
+import locale
+import gettext
+from gettext import gettext as _
+gettext.textdomain('variety')
+
+
 class QuotesEngine:
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         self.parent = parent
         self.quote = None
-        self.prepared = []
+        self.started = False
+        self.running = False
         self.used = []
+
+    def update_plugins(self):
+        for p in self.parent.jumble.get_plugins(IQuoteSource):
+            name = p["info"]["name"]
+            if name in self.parent.options.quotes_disabled_sources:
+                try:
+                    p["plugin"].deactivate()
+                except Exception:
+                    logger.exception("Error deactivating %s" % name)
+            else:
+                try:
+                    p["plugin"].activate()
+                except Exception:
+                    logger.exception("Error activating %s" % name)
+
+        self.plugins = self.parent.jumble.get_plugins(IQuoteSource, active=True)
+
+    def stop(self):
+        self.running = False
+        self.started = False
+        self.update_plugins()
+
+    def start(self):
+        if self.started or not self.parent.options.quotes_enabled:
+            return
+
+        logger.info("Starting QuotesEngine")
+
+        self.update_plugins()
+
+        self.prepared = []
         self.position = 0
         self.prepared_lock = threading.Lock()
         self.prepare_event = threading.Event()
         self.change_event = threading.Event()
+
+        self.cache = {}
+
         self.started = False
-        self.running = False
+        self.running = True
+
         self.last_change_time = time.time()
         self.last_error_notification_time = 0
 
-    def start(self):
-        if self.started:
-            return
+        prep_thread = threading.Thread(target=self.prepare_thread)
+        prep_thread.daemon = True
+        prep_thread.start()
 
-        if self.parent.options.quotes_enabled:
-            logger.info("Starting QuotesEngine")
-            self.started = False
-            self.running = True
-
-            prep_thread = threading.Thread(target=self.prepare_thread)
-            prep_thread.daemon = True
-            prep_thread.start()
-
-            change_thread = threading.Thread(target=self.regular_change_thread)
-            change_thread.daemon = True
-            change_thread.start()
+        change_thread = threading.Thread(target=self.regular_change_thread)
+        change_thread.daemon = True
+        change_thread.start()
 
     def quit(self):
         self.running = False
@@ -124,10 +155,12 @@ class QuotesEngine:
 
         return self.quote
 
-    def on_options_updated(self, clear_prepared = True):
+    def on_options_updated(self, clear_prepared=True):
         if clear_prepared:
+            logger.info("Quotes: clearing prepared and updating plugins")
             with self.prepared_lock:
                 self.prepared = []
+            self.update_plugins()
         self.prepare_event.set()
         self.change_event.set()
 
@@ -137,7 +170,7 @@ class QuotesEngine:
         while self.running:
             try:
                 while not self.parent.options.quotes_change_enabled or \
-                      (time.time() - self.last_change_time) < self.parent.options.quotes_change_interval:
+                                (time.time() - self.last_change_time) < self.parent.options.quotes_change_interval:
                     if not self.running:
                         return
                     now = time.time()
@@ -165,7 +198,7 @@ class QuotesEngine:
             try:
                 while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
                     logger.info("Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
-                    quote = self.download_one_quote()
+                    quote = self.get_one_quote()
                     if quote:
                         with self.prepared_lock:
                             self.prepared.append(quote)
@@ -184,71 +217,75 @@ class QuotesEngine:
             self.prepare_event.wait()
             self.prepare_event.clear()
 
+    def get_one_quote(self):
+        keywords = []
+        if self.parent.options.quotes_tags.strip():
+            keywords = self.parent.options.quotes_tags.decode('utf-8').split(",")
+        authors = []
+        if self.parent.options.quotes_authors.strip():
+            authors = self.parent.options.quotes_authors.decode('utf-8').split(",")
 
-    def download_one_quote(self):
-        skip = set()
+        category, search = ("random", "")
+        if keywords or authors:
+            category, search = random.choice(
+                map(lambda k: ("keyword", k), keywords) + map(lambda a: ("author", a), authors))
+
+        plugins = list(self.plugins)
+        if not plugins:
+            self.parent.show_notification(_("No quote plugins"), _("There are no quote plugins installed"))
+            raise Exception("No quote plugins")
+        if keywords or authors:
+            plugins = [p for p in self.plugins if p["plugin"].supports_search()]
+            if not plugins:
+                self.parent.show_notification(
+                    _("No suitable quote plugins"),
+                    _("You have no quote plugins which support searching by keywords and authors"))
+                raise Exception("No quote plugins")
+
         while self.running and self.parent.options.quotes_enabled:
-            url = QuotesEngine.choose_random_feed_url(self.parent.options, skip)
-            if not url:
-                logger.warning("Could not fetch any quotes")
+            if not plugins:
+                if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(
+                        self.used) < 5:
+                    self.last_error_notification_time = time.time()
+                    self.parent.show_notification(
+                        _("Could not fetch quotes"),
+                        _("Quotes services may be down, we will continue trying"))
                 return None
 
-            try:
-                xml = Util.fetch(url)
+            plugin = random.choice(plugins)
+            plugin_name = plugin["info"]["name"]
+            self.cache.setdefault(plugin_name, {"random": {}, "keyword": {}, "author": {}})
+            self.cache[plugin_name][category].setdefault(search, {})
+            cached = self.cache[plugin_name][category][search]
 
+            if not cached:
                 try:
-                    quote = QuotesEngine.extract_quote(xml)
-                    if not quote:
-                        logger.warning("Could not find quotes for URL " + url)
-                        skip.add(url)
-                    elif len(quote["quote"]) < 250:
-                        return quote
+                    if category == "random":
+                        quotes = plugin["plugin"].get_random()
+                    elif category == "keyword":
+                        quotes = plugin["plugin"].get_for_keyword(search)
+                    elif category == "author":
+                        quotes = plugin["plugin"].get_for_author(search)
+                    else:
+                        raise RuntimeError("Unknown category")
+
+                    for q in quotes:
+                        if len(q["quote"]) < 250:
+                            cached[q["quote"]] = q
+
                 except Exception:
-                    logger.exception("Could not extract quote")
-                    skip.add(url)
-            except Exception:
-                logger.exception("Could not fetch quote")
-                if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(self.used) < 5:
-                    self.last_error_notification_time = time.time()
-                    self.parent.show_notification("Could not fetch quotes",
-                                                  "QuotesDaddy service seems to be down, but we will continue trying")
-                skip.add(url)
+                    logger.exception("Exception in quote plugin")
+                    plugins.remove(plugin)
+                    continue
 
-            time.sleep(2)
-        return None
+            if not cached:
+                logger.warning("No quotes for %s for plugin %s" % (search, plugin_name))
+                plugins.remove(plugin)
+                continue
 
-    @staticmethod
-    def extract_quote(xml):
-        bs = BeautifulSoup(xml, "xml")
-        item = bs.find("item")
-        if not item:
-            return None
-        link = item.find("link").contents[0].strip()
-        s = item.find("description").contents[0]
-        author = s[s.rindex('- ') + 1:].strip()
-        quote = s[:s.rindex('- ')].strip().replace('"', '').replace('<br>', '\n').replace('<br/>', '\n').strip()
-        quote = u"\u201C%s\u201D" % quote
-        return {"quote": quote, "author": author, "link": link}
+            quote = random.choice(cached.values())
+            del cached[quote["quote"]]
+            if not cached:
+                del cached
 
-    @staticmethod
-    def choose_random_feed_url(options, skip_urls=set()):
-        urls = []
-        tags = options.quotes_tags.split(",")
-        for tag in tags:
-            if tag.strip():
-                url = "http://www.quotesdaddy.com/feed/tagged/" + urllib.quote_plus(tag.strip())
-                if not url in skip_urls:
-                    urls.append(url)
-
-        authors = options.quotes_authors.split(",")
-        for author in authors:
-            if author.strip():
-                url = "http://www.quotesdaddy.com/feed/author/" + urllib.quote_plus(author.strip())
-                if not url in skip_urls:
-                    urls.append(url)
-
-        if not urls:
-            urls.append("http://www.quotesdaddy.com/feed")
-
-        return random.choice(urls)
-
+            return quote

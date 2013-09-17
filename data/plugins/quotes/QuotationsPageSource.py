@@ -1,0 +1,96 @@
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
+
+import bs4
+import random
+import re
+
+from variety.Util import Util
+from variety.plugins.IQuoteSource import IQuoteSource
+from httplib2 import iri2uri
+from gettext import gettext as _
+import logging
+
+logger = logging.getLogger("variety")
+
+
+class QuotationsPageSource(IQuoteSource):
+    @classmethod
+    def get_info(cls):
+        return {
+            "name": "TheQuotationsPage.com",
+            "description": _("Fetches quotes from TheQuotationsPage.com"),
+            "author": "Peter Levi",
+            "version": "0.1"
+        }
+
+    def supports_search(self):
+        return True
+
+    def get_from_html(self, html):
+        quotes = []
+        bs = bs4.BeautifulSoup(html)
+        for item in bs.findAll('dt', 'quote'):
+            quote = None
+            try:
+                quote = item.find('a').contents[0]
+                quote = u"\u201C%s\u201D" % quote
+                link = "http://www.quotationspage.com" + item.find('a')['href']
+                try:
+                    author = item.next_sibling.find('b').find('a').contents[0]
+                except Exception:
+                    author = ''
+                quotes.append({"quote": quote, "author": author, "sourceName": "TheQuotationsPage.com", "link": link})
+            except Exception:
+                logger.warning("Could not get or parse quote: %s" % quote)
+        return quotes
+
+    def get_random(self):
+        return self.get_for_search_url("http://www.quotationspage.com/random.php3")
+
+    def get_for_author(self, author):
+        return self.get_for_search_url(
+            iri2uri((u"http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
+
+    def get_for_keyword(self, keyword):
+        return self.get_for_search_url(
+            iri2uri((u"http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
+
+    def get_for_search_url(self, url):
+        logger.info("Fetching quotes from Goodreads for search url=%s" % url)
+        html = Util.fetch(url)
+        try:
+            page = random.randint(1, int(re.findall('Page 1 of (\d+)', html)[0]))
+            url += "&page=%d" % page
+            html = Util.fetch(url)
+        except Exception:
+            pass # probably just one page
+
+        logger.info("Used QuotationsPage url %s" % url)
+
+        r = r'.*<dl>(.*)</dl>.*'
+        if re.match(r, html, flags=re.M | re.S):
+            html = re.sub(r, '<html><body>\\1</body></html>', html, flags=re.M | re.S)
+            # without this BeautifulSoup gets confused by some scripts
+
+        return self.get_from_html(html)
+
+
+if __name__ == "__main__":
+    q = QuotationsPageSource()
+    print q.get_for_author("einstein")
+    print q.get_for_keyword("funny")
+    print q.get_random()

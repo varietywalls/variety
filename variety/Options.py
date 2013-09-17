@@ -295,6 +295,18 @@ class Options:
                 pass
 
             try:
+                self.quotes_text_color = map(int, config["quotes_text_color"].split())
+                for i, x in enumerate(self.quotes_text_color):
+                    self.quotes_text_color[i] = max(0, min(255, x))
+            except Exception:
+                pass
+
+            try:
+                self.quotes_disabled_sources = config["quotes_disabled_sources"].strip().split('|')
+            except Exception:
+                pass
+
+            try:
                 self.quotes_tags = config["quotes_tags"]
             except Exception:
                 pass
@@ -480,6 +492,7 @@ class Options:
         self.quotes_bg_color = (80, 80, 80)
         self.quotes_bg_opacity = 55
         self.quotes_text_shadow = False
+        self.quotes_disabled_sources = []
         self.quotes_tags = ""
         self.quotes_authors = ""
         self.quotes_change_enabled = False
@@ -496,7 +509,7 @@ class Options:
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
-            [True, Options.SourceType.WALLBASE, "type:text;query:autumn;order:random;nsfw:100;board:2"]
+            [True, Options.SourceType.WALLBASE, "autumn"]
         ]
 
         self.filters = [
@@ -568,6 +581,7 @@ class Options:
             config["quotes_bg_color"] = " ".join(map(str, self.quotes_bg_color))
             config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
             config["quotes_text_shadow"] = str(self.quotes_text_shadow)
+            config["quotes_disabled_sources"] = '|'.join(self.quotes_disabled_sources)
             config["quotes_tags"] = str(self.quotes_tags)
             config["quotes_authors"] = str(self.quotes_authors)
             config["quotes_change_enabled"] = str(self.quotes_change_enabled)

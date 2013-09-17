@@ -31,9 +31,9 @@ from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
 import subprocess
 
-VARIETY_INFO = "Downloaded by Variety wallpaper changer, https://launchpad.net/variety"
+VARIETY_INFO = "Downloaded by Variety wallpaper changer, http://peterlevi.com/variety"
 
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.11 (KHTML, like Gecko) Ubuntu/12.04 Chromium/20.0.1132.47 Chrome/20.0.1132.47 Safari/536.11"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu/12.04 Chromium/25.0.1364.172 Chrome/25.0.1364.172 Safari/537.22"
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -419,3 +419,11 @@ class Util:
     def superuser_exec(*command_args):
         logger.warning("Executing as superuser: %s" % str(command_args))
         subprocess.check_call(["pkexec"] + list(command_args))
+
+    @staticmethod
+    def safe_map(f, l):
+        for element in l:
+            try:
+                yield f(element)
+            except Exception:
+                continue
