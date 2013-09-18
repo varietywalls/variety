@@ -1130,7 +1130,7 @@ class VarietyWindow(Gtk.Window):
         else:
             return os.path.normpath(option)
 
-    def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
+    def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL, force_clean=False):
         logger.info("Calling do_set_wp with " + str(filename))
         with self.do_set_wp_lock:
             self.set_wp_timer = None
@@ -1143,9 +1143,10 @@ class VarietyWindow(Gtk.Window):
                 self.write_filtered_wallpaper_origin(filename)
                 to_set = filename
 
-                to_set = self.apply_filters(to_set, refresh_level)
-                to_set = self.apply_quote(to_set)
-                to_set = self.apply_clock(to_set)
+                if not force_clean:
+                    to_set = self.apply_filters(to_set, refresh_level)
+                    to_set = self.apply_quote(to_set)
+                    to_set = self.apply_clock(to_set)
                 to_set = self.apply_copyto_operation(to_set)
 
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)

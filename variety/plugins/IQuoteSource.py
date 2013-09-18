@@ -18,10 +18,19 @@ from IVarietyPlugin import IVarietyPlugin
 
 class IQuoteSource(IVarietyPlugin):
     def supports_search(self):
+        """
+        False means that this plugins does not support searching by keyword or author (only get_random will
+        ever be called) and this plugin will be used only if the user has not specified search criteria.
+        True means get_for_keyword and get_for_author should also be implemented.
+        :return: True or False
+        """
         return False
 
     def get_random(self):
-        """Returns some quotes"""
+        """
+        Returns some quotes.
+        Individual quotes are hashes like the one below. Only quote should be non-null, the others can be None.
+        """
         return [{
             "quote": "Quote",
             "author": "Author",
