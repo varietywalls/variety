@@ -242,14 +242,21 @@ class QuotesEngine:
                     _("You have no quote plugins which support searching by keywords and authors"))
                 raise Exception("No quote plugins")
 
+        error_plugins = []
+        count_plugins = len(plugins)
         while self.running and self.parent.options.quotes_enabled:
             if not plugins:
                 if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(
                         self.used) < 5:
                     self.last_error_notification_time = time.time()
-                    self.parent.show_notification(
-                        _("Could not fetch quotes"),
-                        _("Quotes services may be down, we will continue trying"))
+                    if len(error_plugins) == count_plugins:
+                        self.parent.show_notification(
+                            _("Could not fetch quotes"),
+                            _("Quotes services may be down, we will continue trying"))
+                    else:
+                        self.parent.show_notification(
+                            _("Could not find quotes"),
+                            _("Maybe you are searching for something very obscure?"))
                 return None
 
             plugin = random.choice(plugins)
@@ -276,6 +283,7 @@ class QuotesEngine:
                 except Exception:
                     logger.exception("Exception in quote plugin")
                     plugins.remove(plugin)
+                    error_plugins.append(plugin)
                     continue
 
             if not cached:

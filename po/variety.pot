@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-22 13:19+0300\n"
+"POT-Creation-Date: 2013-09-22 14:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1580,10 +1580,18 @@ msgid ""
 "You have no quote plugins which support searching by keywords and authors"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:251
+#: ../variety/QuotesEngine.py:254
 msgid "Could not fetch quotes"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:252
+#: ../variety/QuotesEngine.py:255
 msgid "Quotes services may be down, we will continue trying"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:258
+msgid "Could not find quotes"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:259
+msgid "Maybe you are searching for something very obscure?"
 msgstr ""
