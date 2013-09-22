@@ -202,6 +202,14 @@ class Indicator:
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
+        self.quotes_preferences = Gtk.MenuItem(_("Preferences..."))
+        self.quotes_preferences.set_use_underline(True)
+        def _quotes_prefs(widget=None):
+            window.preferences_dialog.ui.notebook.set_current_page(2)
+            window.on_mnu_preferences_activate()
+        self.quotes_preferences.connect("activate", _quotes_prefs)
+        self.quotes_menu.append(self.quotes_preferences)
+
         self.quotes_disable = Gtk.MenuItem(_("Turn off"))
         self.quotes_disable.set_use_underline(True)
         self.quotes_disable.connect("activate", window.disable_quotes)
