@@ -60,7 +60,18 @@ class Indicator:
         self.rating = Gtk.MenuItem(_("Set Rating"))
         self.menu.append(self.rating)
 
+        self.no_effects = Gtk.CheckMenuItem(_("Reveal clean image"))
+        self.no_effects.set_active(False)
+        self.no_effects.set_use_underline(True)
+        def _toggle_no_effects(widget=None):
+            window.toggle_no_effects(self.no_effects.get_active())
+        self.no_effects_handler_id = self.no_effects.connect("toggled", _toggle_no_effects)
+        self.menu.append(self.no_effects)
+
         self.menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.no_effects_separator = Gtk.SeparatorMenuItem.new()
+        # self.menu.append(self.no_effects_separator)
 
         self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
         self.copy_to_favorites.set_use_underline(True)
@@ -150,10 +161,10 @@ class Indicator:
         self.quotes_menu.append(self.next_quote)
 
         self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
-        self.fast_forward_quote .set_use_underline(True)
+        self.fast_forward_quote.set_use_underline(True)
         def _fast_forward_quote(widget):
             window.next_quote(widget, bypass_history=True)
-        self.fast_forward_quote .connect("activate", _fast_forward_quote)
+        self.fast_forward_quote.connect("activate", _fast_forward_quote)
         self.quotes_menu.append(self.fast_forward_quote)
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())

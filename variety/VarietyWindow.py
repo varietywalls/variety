@@ -425,6 +425,12 @@ class VarietyWindow(Gtk.Window):
                 self.options.quotes_authors != self.previous_options.quotes_authors
             self.quotes_engine.on_options_updated(clear_prepared=clear_prepared)
 
+        if self.previous_options and (
+                self.options.filters != self.previous_options.filters or
+                self.options.quotes_enabled != self.previous_options.quotes_enabled or
+                self.options.clock_enabled != self.previous_options.clock_enabled):
+            self.no_effects_on = None
+
         def _update_indicator():
             self.update_indicator(auto_changed=False)
         GObject.idle_add(_update_indicator)
@@ -685,6 +691,13 @@ class VarietyWindow(Gtk.Window):
                         self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
                     self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
                     self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
+
+                    no_effects_visible = self.filters or self.options.quotes_enabled or self.options.clock_enabled
+                    self.ind.no_effects.set_visible(no_effects_visible)
+                    self.ind.no_effects_separator.set_visible(no_effects_visible)
+                    self.ind.no_effects.handler_block(self.ind.no_effects_handler_id)
+                    self.ind.no_effects.set_active(self.no_effects_on == file)
+                    self.ind.no_effects.handler_unblock(self.ind.no_effects_handler_id)
             finally:
                 if not is_gtk_thread:
                     Gdk.threads_leave()
@@ -1131,7 +1144,7 @@ class VarietyWindow(Gtk.Window):
         else:
             return os.path.normpath(option)
 
-    def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL, force_clean=False):
+    def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
         logger.info("Calling do_set_wp with " + str(filename))
         with self.do_set_wp_lock:
             self.set_wp_timer = None
@@ -1144,7 +1157,8 @@ class VarietyWindow(Gtk.Window):
                 self.write_filtered_wallpaper_origin(filename)
                 to_set = filename
 
-                if not force_clean:
+                if filename != self.no_effects_on:
+                    self.no_effects_on = None
                     to_set = self.apply_filters(to_set, refresh_level)
                     to_set = self.apply_quote(to_set)
                     to_set = self.apply_clock(to_set)
@@ -1591,6 +1605,8 @@ class VarietyWindow(Gtk.Window):
                         self.prepare_event.set()
                     if self.current == file:
                         self.current = new_file
+                        if self.no_effects_on == file:
+                            self.no_effects_on = new_file
                         self.set_wp_throttled(new_file, delay=0)
         except Exception:
             logger.exception("Exception in move_to_favorites")
@@ -2140,6 +2156,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
     def load_history(self):
         self.used = []
         self.position = 0
+        self.no_effects_on = None
 
         try:
             with open(os.path.join(self.config_folder, "history.txt"), "r") as f:
@@ -2334,3 +2351,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.quote and self.quote["author"]:
             os.system("xdg-open \"http://google.com/search?q=" +
                       urllib.quote_plus(self.quote["author"].encode('utf8')) + "\"")
+
+    def toggle_no_effects(self, no_effects):
+        self.no_effects_on = self.current if no_effects else None
+        self.refresh_wallpaper()

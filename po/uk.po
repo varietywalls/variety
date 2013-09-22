@@ -7,67 +7,71 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-03 02:49+0300\n"
-"PO-Revision-Date: 2013-06-09 05:10+0000\n"
-"Last-Translator: Stuartlittle1970@gmail.com <Stuartlittle1970@gmail.com>\n"
+"POT-Creation-Date: 2013-09-19 03:05+0300\n"
+"PO-Revision-Date: 2013-08-24 09:19+0000\n"
+"Last-Translator: andygol <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-06-09 19:16+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-09-19 21:16+0000\n"
+"X-Generator: Launchpad (build 16765)\n"
 
-#: ../variety/PreferencesVarietyDialog.py:288
-#: ../variety/PreferencesVarietyDialog.py:432
+#: ../data/plugins/quotes/GoodreadsSource.py:49
+msgid "Fetches quotes from Goodreads.com"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:304
+#: ../variety/PreferencesVarietyDialog.py:448
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr "Зображення"
 
-#: ../variety/PreferencesVarietyDialog.py:289
+#: ../variety/PreferencesVarietyDialog.py:305
 msgid "Folders"
 msgstr "Теки"
 
-#: ../variety/PreferencesVarietyDialog.py:290
+#: ../variety/PreferencesVarietyDialog.py:306
 #: ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr "Flickr"
 
-#: ../variety/PreferencesVarietyDialog.py:291
+#: ../variety/PreferencesVarietyDialog.py:307
 #: ../data/ui/AddWallbaseDialog.ui.h:2
 msgid "Wallbase.cc"
 msgstr "Wallbase.cc"
 
-#: ../variety/PreferencesVarietyDialog.py:292
+#: ../variety/PreferencesVarietyDialog.py:308
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
 msgid "Wallpapers.net"
 msgstr "Wallpapers.net"
 
-#: ../variety/PreferencesVarietyDialog.py:293
+#: ../variety/PreferencesVarietyDialog.py:309
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr "Медійні RSS"
 
-#: ../variety/PreferencesVarietyDialog.py:315
+#: ../variety/PreferencesVarietyDialog.py:331
 msgid "Remove the source, keep the files"
 msgstr "Вилучити джерело, зберегти файли"
 
-#: ../variety/PreferencesVarietyDialog.py:316
+#: ../variety/PreferencesVarietyDialog.py:332
 msgid "Remove the sources, keep the files"
 msgstr "Вилучити джерела, зберегти файли"
 
-#: ../variety/PreferencesVarietyDialog.py:323
+#: ../variety/PreferencesVarietyDialog.py:339
 msgid "Remove the source and delete the downloaded files"
 msgstr "Вилучити джерело й завантажені файли"
 
-#: ../variety/PreferencesVarietyDialog.py:324
+#: ../variety/PreferencesVarietyDialog.py:340
 msgid "Remove the sources and delete the downloaded files"
 msgstr "Вилучити джерела й завантажені файли"
 
-#: ../variety/PreferencesVarietyDialog.py:357
+#: ../variety/PreferencesVarietyDialog.py:373
 msgid "World Sunlight Map enabled"
 msgstr "Карту сонячного світла на планеті увімкнено"
 
-#: ../variety/PreferencesVarietyDialog.py:358
+#: ../variety/PreferencesVarietyDialog.py:374
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
@@ -76,41 +80,41 @@ msgstr ""
 "параметрів автоматичного стягування та оновлення не рідше ніж раз на 30-ть "
 "хвилин. Параметри будуть скориговані автоматично."
 
-#: ../variety/PreferencesVarietyDialog.py:425
+#: ../variety/PreferencesVarietyDialog.py:441
 msgid "Add Images"
-msgstr "Долучити зображення"
+msgstr "Додати зображення"
 
-#: ../variety/PreferencesVarietyDialog.py:426
-#: ../variety/PreferencesVarietyDialog.py:450 ../variety/FolderChooser.py:66
+#: ../variety/PreferencesVarietyDialog.py:442
+#: ../variety/PreferencesVarietyDialog.py:466 ../variety/FolderChooser.py:66
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../variety/PreferencesVarietyDialog.py:426
-#: ../variety/PreferencesVarietyDialog.py:450
+#: ../variety/PreferencesVarietyDialog.py:442
+#: ../variety/PreferencesVarietyDialog.py:466
 msgid "Add"
-msgstr "Долучити"
+msgstr "Додати"
 
-#: ../variety/PreferencesVarietyDialog.py:448
+#: ../variety/PreferencesVarietyDialog.py:464
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
-"Долучити теки-додавайте лише кореневі теки, пошук у підтеках рекурсивний"
+"Додати теки — додавайте лише кореневі теки, пошук у підтеках рекурсивний"
 
-#: ../variety/PreferencesVarietyDialog.py:574
-#: ../variety/PreferencesVarietyDialog.py:587
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../variety/PreferencesVarietyDialog.py:590
+#: ../variety/PreferencesVarietyDialog.py:603
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Edit..."
-msgstr "Змінити"
+msgstr "Змінити…"
 
-#: ../variety/PreferencesVarietyDialog.py:581
+#: ../variety/PreferencesVarietyDialog.py:597
 msgid "View Image"
 msgstr "Показати зображення"
 
-#: ../variety/PreferencesVarietyDialog.py:584
+#: ../variety/PreferencesVarietyDialog.py:600
 msgid "Open Folder"
 msgstr "Відкрити теку"
 
-#: ../variety/PreferencesVarietyDialog.py:913
+#: ../variety/PreferencesVarietyDialog.py:932
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
@@ -118,21 +122,21 @@ msgstr ""
 "Помилка при створенні пункту автозавантаження\n"
 "Будь-ласка, запустіть у терміналі з параметром -v й спробуйте ще раз."
 
-#: ../variety/PreferencesVarietyDialog.py:915
+#: ../variety/PreferencesVarietyDialog.py:934
 msgid "Oops"
 msgstr "Ой"
 
-#: ../variety/PreferencesVarietyDialog.py:974
 #: ../variety/PreferencesVarietyDialog.py:993
-#: ../variety/PreferencesVarietyDialog.py:1001
+#: ../variety/PreferencesVarietyDialog.py:1012
+#: ../variety/PreferencesVarietyDialog.py:1020
 msgid "No write permissions"
 msgstr "Немає прав для запису"
 
-#: ../variety/PreferencesVarietyDialog.py:981
+#: ../variety/PreferencesVarietyDialog.py:1000
 msgid "Limit disabled"
-msgstr "Ліміт вимкнено"
+msgstr "Обмеження вимкнено"
 
-#: ../variety/PreferencesVarietyDialog.py:982
+#: ../variety/PreferencesVarietyDialog.py:1001
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
@@ -140,326 +144,181 @@ msgstr ""
 "Зміна теки завантаження автоматично вимикає обмеження розміру для "
 "попередження випадкової втрати даних"
 
-#: ../variety/PreferencesVarietyDialog.py:988
+#: ../variety/PreferencesVarietyDialog.py:1007
 #, python-format
 msgid "Actual download folder: %s "
-msgstr "Фактична тека завантаження: %s "
+msgstr "Поточна тека завантаження: %s "
 
-#: ../variety/PreferencesVarietyDialog.py:1068
+#: ../variety/PreferencesVarietyDialog.py:1087
 msgid "Could not adjust permissions"
 msgstr "Не вдалося змінити права"
 
-#: ../variety/PreferencesVarietyDialog.py:1069
+#: ../variety/PreferencesVarietyDialog.py:1088
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
-"Ви можете спробувати вручну виконання цієї команди:\n"
+"Ви можете спробувати вручну виконати команду:\n"
 "sudo chmod %s \"%s\""
-
-#: ../data/ui/AddFlickrDialog.ui.h:1
-msgid "Variety - add Flickr as an image source"
-msgstr "Variety - долучити Flickr як джерело зображень"
-
-#: ../data/ui/AddFlickrDialog.ui.h:3
-msgid ""
-"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
-"Photos that match all of the chosen criteria will be downloaded. Leave "
-"unneeded criteria empty."
-msgstr ""
-"Будь-ласка задайте умови пошуку на <a href=\"http://flickr.com\">Flickr</a>. "
-"Буде завантажено лише фотографії які відповідають усім умовам Залиште "
-"непотрібні поля порожніми."
-
-#: ../data/ui/AddFlickrDialog.ui.h:4
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
-msgid "Tags: "
-msgstr "Теги: "
-
-#: ../data/ui/AddFlickrDialog.ui.h:5
-msgid ""
-"A comma-separated list of tags. A photo has to contain all of them "
-"simultaneosly in order to match.\n"
-"Example: yellow,car"
-msgstr ""
-"Список тегів, розділених комою, щоб відповідати, фотографія повинна містити "
-"їх усі одночасно.\n"
-"Приклад: жовтий,машина"
-
-#: ../data/ui/AddFlickrDialog.ui.h:7
-msgid "User: "
-msgstr "Користувач "
-
-#: ../data/ui/AddFlickrDialog.ui.h:8
-msgid ""
-"Please insert the URL to the user's photostream or to one of their photos.\n"
-"Example: <a href=\"http://www.flickr.com/photos/peter-"
-"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
-msgstr ""
-"Будь-ласка вкажіть URL користувацької галереї або однієї з її фотографій.\n"
-"Приклад: <a href=\"http://www.flickr.com/photos/peter-"
-"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
-
-#: ../data/ui/AddFlickrDialog.ui.h:10
-msgid "Group: "
-msgstr "Група "
-
-#: ../data/ui/AddFlickrDialog.ui.h:11
-msgid ""
-"Please insert the group's URL.\n"
-"Example: <a "
-"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
-"s/wallpapers/</a>"
-msgstr ""
-"Будь-ласка, вставте адресу URL групи.\n"
-"Приклад: <a "
-"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
-"s/wallpapers/</a>"
-
-#: ../data/ui/AddFlickrDialog.ui.h:13
-msgid "Text:"
-msgstr "Текст"
-
-#: ../data/ui/AddFlickrDialog.ui.h:14
-msgid ""
-"Free text search in photos' titles, descriptions and tags. Exclude terms by "
-"prepending them with -.\n"
-"Example: apple -pie"
-msgstr ""
-"Вільний пошук по тексту заголовків, описів та тегів фотографій.Параметри що "
-"виключаються випереджуються знаком -.\n"
-"Приклад: яблучний -пиріг"
-
-#: ../data/ui/AddFlickrDialog.ui.h:16 ../data/ui/AddWallbaseDialog.ui.h:25
-msgid "Just a moment to check this search"
-msgstr "Хвилинку, перевірка пошукового запиту"
-
-#: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddWallbaseDialog.ui.h:26
-#: ../data/ui/AddMediaRssDialog.ui.h:6
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
-msgid "  "
-msgstr "  "
 
 #: ../variety/AddMediaRssDialog.py:87
 msgid ""
 "This does not seem to be a valid Media RSS feed URL or there is no content "
 "there."
-msgstr "Це не схоже на URL фіда медіа-RSS або немає доступу"
+msgstr "Це не схоже на URL стрічки RSS або немає доступу"
 
-#. only use randomly half the images from the page -
-#. if we ever hit that same page again, we'll still have what to download
 #: ../data/ui/AddWallbaseDialog.ui.h:1
 msgid "Variety - add Wallbase.cc image source"
-msgstr "Variety - долучити Wallbase.cc як джерело"
+msgstr "Variety — додати Wallbase.cc як джерело"
 
 #: ../data/ui/AddWallbaseDialog.ui.h:3
 msgid ""
 "<a href=\"http://wallbase.cc\">Wallbase.cc</a> provides a variety of image "
-"search options. Please specify your criteria below."
+"search options. Below you can specify keywords to search for, or visit <a "
+"href=\"http://wallbase.cc\">Wallbase.cc</a>, setup your search criteria "
+"there, ensure you like the results, and paste the full Wallbase URL in the "
+"box.\n"
+"\n"
+"If you specify keywords, the most liked safe-for-work images that match any "
+"of the keywords will be used. \n"
+"\n"
+"If you specify a Wallbase URL, please choose the sorting criteria carefully -"
+" Variety regularly requests images, but uses only images from the first "
+"several hundred returned. Random or Date will mean this image source will "
+"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
+"better images and Relevance will provide closer matches when searching for "
+"phrases or colors."
 msgstr ""
-"<a href=\"http://wallbase.cc\">Wallbase.cc</a> надає різноманітні можливості "
-"з пошуку зображень.Будь-ласка, задайте умови нижче."
-
-#: ../data/ui/AddWallbaseDialog.ui.h:4
-msgid "Limit by keywords or color"
-msgstr "Обмежити по ключовим словам або кольору"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:5
-msgid "Use all images"
-msgstr "Використовувати усі зображення"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:6
-msgid "Images with these keywords: "
-msgstr "Зображення з наступними ключовими словами "
-
-#: ../data/ui/AddWallbaseDialog.ui.h:7
-msgid "Please specify"
-msgstr "Прохання уточнити"
 
 #: ../data/ui/AddWallbaseDialog.ui.h:8
-msgid "Images containing this color: "
-msgstr "У зображеннях є цей колір "
+msgid "Enter keywords or paste URL here: "
+msgstr ""
 
-#: ../data/ui/AddWallbaseDialog.ui.h:9
-msgid "Random or only favorites"
-msgstr "Випадкові або лише Вибрані"
+#: ../data/ui/AddWallbaseDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
+msgid "Just a moment to check this search"
+msgstr "Хвилинку, перевірка пошукового запиту"
 
-#: ../data/ui/AddWallbaseDialog.ui.h:10
-msgid "Use all matching images randomly"
-msgstr "Використовувати усі відповідні зображення у випадковому порядку"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:11
-msgid "Prefer just the most liked "
-msgstr "Надавати перевагу тим які більше сподобалися "
-
-#: ../data/ui/AddWallbaseDialog.ui.h:12
-msgid "20"
-msgstr "20"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:13
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
-msgid "100"
-msgstr "100"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:14
-msgid "300"
-msgstr "300"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:15
-msgid "1000"
-msgstr "1000"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:16
-msgid "10000"
-msgstr "10000"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:17
-msgid " images"
-msgstr " зображень"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:18
-msgid "Ordinary images or manga"
-msgstr "Звичайні зображення або манга"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:19
-msgid "Only ordinary images"
-msgstr "Лише звичайні зображення"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:20
-msgid "Only anime and manga"
-msgstr "Лише аніме та манга"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:21
-msgid "Both"
-msgstr "Обидва"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:22
-msgid "Safe-for-work or erotic"
-msgstr "Для офісу або еротика"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:23
-msgid "Only safe-for-work"
-msgstr "Лише для офісу"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:24
-msgid "Only slightly erotic or otherwise sketchy"
-msgstr "Лише трохи еротичні або з натяком"
+#: ../data/ui/AddWallbaseDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
+#: ../data/ui/AddMediaRssDialog.ui.h:6
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
+msgid "  "
+msgstr "  "
 
 #: ../data/ui/FacebookPublishDialog.ui.h:1
 msgid "Variety - Publish to Facebook"
-msgstr "Variety - Обнародувати у Facebook"
+msgstr "Variety — опублікувати у Facebook"
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:83
-#: ../variety/indicator.py:185
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:85
+#: ../variety/indicator.py:187
 msgid "Share on Facebook"
-msgstr "Поділитися подією у Facebook"
+msgstr "Поділитись у Facebook"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:3
 msgid ""
 "Publish a link to the current wallpaper on Facebook. Include this text along "
 "with the link (or just leave empty):"
 msgstr ""
-"Обнародувати посилання на поточні шпалери на Facebook. Включити цей текст "
+"Опублікувати посилання на поточні шпалери у Facebook. Включити цей текст "
 "разом з посиланням (або залишити порожнім):"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
 msgid "Do not ask anymore, always use the text above"
-msgstr "Більше не питати, завжди використовувати текст вище"
+msgstr "Більше не питати, завжди використовувати цей текст"
 
-#: ../variety/AddFlickrDialog.py:140 ../variety/AddWallbaseDialog.py:187
+#: ../variety/AddFlickrDialog.py:140 ../variety/AddWallbaseDialog.py:88
 msgid "No images found"
-msgstr "Зображення не знайдено"
+msgstr "Зображень не знайдено"
 
-#: ../variety/VarietyWindow.py:566
+#: ../variety/VarietyWindow.py:583
 msgid "Already in Favorites"
 msgstr "Завжди у Вибрані"
 
-#: ../variety/VarietyWindow.py:570 ../variety/ThumbsManager.py:124
-#: ../variety/indicator.py:63
+#: ../variety/VarietyWindow.py:587 ../variety/ThumbsManager.py:124
+#: ../variety/indicator.py:65
 msgid "Copy to _Favorites"
 msgstr "Копіювати у Вибрані"
 
-#: ../variety/VarietyWindow.py:571 ../variety/ThumbsManager.py:131
+#: ../variety/VarietyWindow.py:588 ../variety/ThumbsManager.py:131
 msgid "Move to _Favorites"
 msgstr "Перемістити у Вибрані"
 
 #. both
-#: ../variety/VarietyWindow.py:579 ../variety/indicator.py:68
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../variety/VarietyWindow.py:596 ../variety/indicator.py:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Move to Favorites"
 msgstr "Перемістити у Вибрані"
 
-#: ../variety/VarietyWindow.py:599
+#: ../variety/VarietyWindow.py:616 ../variety/VarietyWindow.py:678
 #, python-format
 msgid "View at %s"
 msgstr "Показати на %s"
 
-#: ../variety/VarietyWindow.py:599
+#: ../variety/VarietyWindow.py:616
 msgid "Fetched: Show Origin"
 msgstr "Обране: Показати оригінали"
 
-#: ../variety/VarietyWindow.py:654 ../variety/VarietyWindow.py:660
-#: ../variety/VarietyWindow.py:1790 ../variety/indicator.py:122
-#: ../variety/indicator.py:159
+#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
+#: ../variety/VarietyWindow.py:1830 ../variety/indicator.py:124
+#: ../variety/indicator.py:161
 msgid "Pause"
 msgstr "Призупинити"
 
-#: ../variety/VarietyWindow.py:654 ../variety/VarietyWindow.py:660
-#: ../variety/VarietyWindow.py:1794
+#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
+#: ../variety/VarietyWindow.py:1834
 msgid "Resume"
 msgstr "Продовжити"
 
-#: ../variety/VarietyWindow.py:780
+#: ../variety/VarietyWindow.py:807
 msgid "Filtering too strict?"
-msgstr "Фільтр надто строгий"
+msgstr "Фільтр занадто строгий?"
 
-#: ../variety/VarietyWindow.py:781
+#: ../variety/VarietyWindow.py:808
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
-"Variety знаходить надто мало фотографій, які відповідають вашим вподобанням "
+"Variety знаходить надто мало фотографій, які відповідають вашим критеріям "
 "фільтрації зображень"
 
-#: ../variety/VarietyWindow.py:1256
+#: ../variety/VarietyWindow.py:1296
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
-"Будь-ласка, долучіть декілька джерел зображення чи дочекайтесь завантаження"
+"Будь-ласка, додайте більше джерел зображеннь або дочекайтесь завантаження"
 
-#: ../variety/VarietyWindow.py:1258
+#: ../variety/VarietyWindow.py:1298
 msgid "Please add more image sources"
-msgstr "Будь-ласка, долучіть декілька джерел зображення"
+msgstr "Будь-ласка, додайте більше джерел зображеннь"
 
-#: ../variety/VarietyWindow.py:1259
+#: ../variety/VarietyWindow.py:1299
 msgid "No more wallpapers"
 msgstr "Зображень більше немає"
 
-#: ../variety/VarietyWindow.py:1433
+#: ../variety/VarietyWindow.py:1473
 msgid "Current wallpaper is not in the image sources"
 msgstr "Це зображення відсутнє у джерелі"
 
-#: ../variety/VarietyWindow.py:1464
+#: ../variety/VarietyWindow.py:1504
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr "Не можу перенести у %s. Можливо не вистачає прав для переміщення."
 
-#: ../variety/VarietyWindow.py:1466
+#: ../variety/VarietyWindow.py:1506
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr "Не можу скопіювати %s. Можливо не вистачає прав для копіювання."
 
-#: ../variety/VarietyWindow.py:1484 ../variety/VarietyWindow.py:1501
+#: ../variety/VarietyWindow.py:1524 ../variety/VarietyWindow.py:1541
 msgid "Cannot delete"
 msgstr "Не можу вилучити"
 
-#: ../variety/VarietyWindow.py:1485
+#: ../variety/VarietyWindow.py:1525
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
-msgstr "В вас немає прав для вилучення %s у смітник."
+msgstr "У вас немає прав для вилучення %s у смітник."
 
-#: ../variety/VarietyWindow.py:1502
+#: ../variety/VarietyWindow.py:1542
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
@@ -467,15 +326,15 @@ msgstr ""
 "Утиліти вилучення у Смітник не встановлено?\n"
 "Будь ласка, встановіть trash-cli, або gvfs-bin, або konquerer."
 
-#: ../variety/VarietyWindow.py:1719
+#: ../variety/VarietyWindow.py:1759
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
-"Я відкрию редактор з конфігураційним файлом й застосую зміни після того як "
-"ви збережете файл й закриєте редактор."
+"Буде відкритий редактор із файлом налаштувань, зміни будуть застосовані "
+"після того як ви збережете файл та закриєте редактор."
 
-#: ../variety/VarietyWindow.py:1744
+#: ../variety/VarietyWindow.py:1784
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -485,101 +344,102 @@ msgid ""
 "\n"
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
-"%prog [options] [files or urls]\n"
+"%prog [параметри] [файли чи url]\n"
 "\n"
-"Передача локальних файлів додасть їх у чергу Variety's.\n"
-"Передача віддалених адрес URL долучить їх у вибрану теку й помістить їх у "
-"чергу.\n"
+"Вказані локальні файли будуть додані у чергу Variety.\n"
+"Файли за вказаним адресами URL будуть завантажені до теки Fetched й додані "
+"до черги.\n"
 "\n"
-"Щоб встановити конкретну картинку: %prog /будь-яке/локальне/зображення.jpg --"
-"next"
+"Для встановлення конкретного зображенн: %prog /будь-"
+"яке/локальне/зображення.jpg --next"
 
-#: ../variety/VarietyWindow.py:1754
+#: ../variety/VarietyWindow.py:1794
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr ""
-"Показувати журнальовані повідомлення (-vv показує більш тонкі "
-"відлагоджувані, -vvv повідомлення  які відносяться до variety_lib)"
+"Показувати повідомлення журналу (-vv показує більш докладні відлагоджувані "
+"повідомлення, -vvv — повідомлення  які відносяться до variety_lib)"
 
-#: ../variety/VarietyWindow.py:1758
+#: ../variety/VarietyWindow.py:1798
 msgid "Make the running instance quit"
-msgstr "Вийти з запущеного додатку"
+msgstr "Вийти з запущеного екземпляру"
 
-#: ../variety/VarietyWindow.py:1762
+#: ../variety/VarietyWindow.py:1802
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
 "Показати шлях до зображення з робочого столу. Працює лише при запущеному "
-"додатку."
+"застосунку."
 
-#: ../variety/VarietyWindow.py:1766
+#: ../variety/VarietyWindow.py:1806
 msgid "Show Next wallpaper"
 msgstr "Показати наступні шпалери"
 
-#: ../variety/VarietyWindow.py:1770
+#: ../variety/VarietyWindow.py:1810
 msgid "Show Previous wallpaper"
 msgstr "Показати попередні шпалери"
 
-#: ../variety/VarietyWindow.py:1774
+#: ../variety/VarietyWindow.py:1814
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "Показати наступне зображення ігноруючи історію"
 
-#: ../variety/VarietyWindow.py:1778
+#: ../variety/VarietyWindow.py:1818
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
-"Перемістити поточні шпалери до смітника.Працює лише при запущеному додатку."
+"Перемістити поточні шпалери до смітника. Працює лише при запущеному "
+"застосунку."
 
-#: ../variety/VarietyWindow.py:1782
+#: ../variety/VarietyWindow.py:1822
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
-"Копіювати поточні шпалери у Вибрані. Працює лише при запущеному додатку."
+"Копіювати поточні шпалери у Вибрані. Працює лише при запущеному застосунку."
 
-#: ../variety/VarietyWindow.py:1786
+#: ../variety/VarietyWindow.py:1826
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
-"Перемістити поточні шпалери у Вибрані.Працює лише при запущеному додатку."
+"Перемістити поточні шпалери у Вибрані. Працює лише при запущеному застосунку."
 
-#: ../variety/VarietyWindow.py:1798
+#: ../variety/VarietyWindow.py:1838
 msgid "Toggle Pause/Resume state"
 msgstr "Перемикання Призупинити/Відтворити"
 
-#: ../variety/VarietyWindow.py:1802
+#: ../variety/VarietyWindow.py:1842
 msgid "Show Next quote"
 msgstr "Показати наступну цитату"
 
-#: ../variety/VarietyWindow.py:1806
+#: ../variety/VarietyWindow.py:1846
 msgid "Show Previous quote"
 msgstr "Показати попередню цитату"
 
-#: ../variety/VarietyWindow.py:1810
+#: ../variety/VarietyWindow.py:1850
 msgid "Show Next quote, skipping the forward history"
 msgstr "Показати наступну цитату ігноруючи історію"
 
-#: ../variety/VarietyWindow.py:1814
+#: ../variety/VarietyWindow.py:1854
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "Перемикання Призупинити/Відтворити для цитат"
 
-#: ../variety/VarietyWindow.py:1818
+#: ../variety/VarietyWindow.py:1858
 msgid "Toggle History display"
 msgstr "Переключити показ історії"
 
-#: ../variety/VarietyWindow.py:1822
+#: ../variety/VarietyWindow.py:1862
 msgid "Toggle Recent Downloads display"
 msgstr "Переключити показ останніх завантажень"
 
-#: ../variety/VarietyWindow.py:1826
+#: ../variety/VarietyWindow.py:1866
 msgid "Show Preferences dialog"
 msgstr "Показати діалог налаштувань"
 
-#: ../variety/VarietyWindow.py:1830
+#: ../variety/VarietyWindow.py:1870
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -587,63 +447,67 @@ msgid ""
 "option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
 "file directly in an unguarded way."
 msgstr ""
-"Вказування та застосування параметрів. Назви параметрів ті самі що й у файлі "
-"конфігурації ~/.config/variety/variety.conf. Декілька параметрів можна "
+"Встановлення та застосування параметрів. Назви параметрів ті самі що й у "
+"файлі налаштувань ~/.config/variety/variety.conf. Декілька параметрів можна "
 "вказати однією командою. Приклад: 'variety --set-option icon Dark --set-"
 "option clock_enabled True'. ВИКОРИСТОВУЙТЕ З ОБЕРЕЖНІСТЮ: Ви змінюєте файл "
-"налаштувань безпосередньо без механізмів захисту коректності."
+"налаштувань безпосередньо без механізмів перевірки коректності параметрів."
 
-#: ../variety/VarietyWindow.py:1840
+#: ../variety/VarietyWindow.py:1880
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
-msgstr ""
-"параметри --next/--fast-forward та --previous взаємовиключають одне-одне"
+msgstr "параметри --next/--fast-forward та --previous є взаємовиключними"
 
-#: ../variety/VarietyWindow.py:1843
+#: ../variety/VarietyWindow.py:1883
 msgid "options --trash and --favorite are mutually exclusive"
-msgstr "параметри --trash and --favorite взаємовиключають одне-одне"
+msgstr "параметри --trash та --favorite є взаємовиключними"
 
-#: ../variety/VarietyWindow.py:1846
+#: ../variety/VarietyWindow.py:1886
 msgid "options --pause and --resume are mutually exclusive"
-msgstr "параметри --pause and --resume взаємовиключають одне-одне"
+msgstr "параметри --pause та --resume є взаємовиключними"
 
-#: ../variety/VarietyWindow.py:1849
+#: ../variety/VarietyWindow.py:1889
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
-"параметри --quotes-next/--quotes-fast-forward та --quotes-previous "
-"взаємовиключають одне-одне"
+"параметри --quotes-next/--quotes-fast-forward та --quotes-previous є "
+"взаємовиключними"
 
-#: ../variety/VarietyWindow.py:1949 ../variety/ImageFetcher.py:58
+#: ../variety/VarietyWindow.py:1990 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
-msgstr "Не зображення"
+msgstr "Не є зображенням"
 
-#: ../variety/VarietyWindow.py:1954
+#: ../variety/VarietyWindow.py:1995
 msgid "Added to queue"
-msgstr "Долучено до цитат"
+msgstr "Додано до цитат"
 
-#: ../variety/VarietyWindow.py:1954 ../variety/ImageFetcher.py:91
+#: ../variety/VarietyWindow.py:1995 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
 msgstr "Натисніть Далі для перегляду"
 
-#: ../variety/VarietyWindow.py:2183 ../variety/VarietyWindow.py:2211
+#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
 msgid "Published"
-msgstr "Оголошено"
+msgstr "Опубліковано"
 
-#: ../variety/VarietyWindow.py:2183 ../variety/VarietyWindow.py:2211
+#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
 msgid "You may open your Facebook feed to see the post"
-msgstr "Ви можете перейти до своїх фідів у Facebook для перегляду поста"
+msgstr ""
+"Ви можете перейти до своєї стрічки у Facebook для перегляду повідомлення"
 
-#: ../variety/VarietyWindow.py:2185 ../variety/VarietyWindow.py:2213
+#: ../variety/VarietyWindow.py:2227 ../variety/VarietyWindow.py:2255
 msgid "Could not publish"
-msgstr "Не можу оголосити"
+msgstr "Неможливо опублікувати"
 
 #: ../variety/AddWallpapersNetCategoryDialog.py:87
 msgid "Could not find wallpapers there. Please check the URL."
 msgstr "Не можу знайти там зображень. Перевірте URL."
+
+#: ../data/plugins/quotes/QuotationsPageSource.py:35
+msgid "Fetches quotes from TheQuotationsPage.com"
+msgstr ""
 
 #: ../data/ui/WelcomeDialog.ui.h:1
 msgid "Welcome to Variety!"
@@ -651,7 +515,7 @@ msgstr "Ласкаво просимо до Variety!"
 
 #: ../data/ui/WelcomeDialog.ui.h:2
 msgid "Continue"
-msgstr "Продовжити"
+msgstr "Далі"
 
 #: ../data/ui/WelcomeDialog.ui.h:3
 msgid ""
@@ -669,24 +533,24 @@ msgid ""
 "\n"
 "Please take the time to set your preferences on the next screen."
 msgstr ""
-"Variety - програма для автоматичної зміни шпалер.Вкажіть декілька зображень "
-"або тек з картинками, й вона буде змінювати шпалери на робочому столі через "
+"Variety — програма для автоматичної зміни шпалер. Вкажіть декілька зображень "
+"або тек з картинками і вона буде змінювати шпалери на робочому столі через "
 "регулярні інтервали. Вона також може автоматично завантажувати чудові "
-"шпалери з декількох інтернет-джерел.\n"
+"шпалери з різних інтернет-джерел.\n"
 "\n"
-"Variety тихо працює у фоновому режимі й може керуватися через маленький "
-"схожий на гору індикатор біля годинника. Можете клацнути по ньому, щоб "
-"відкрити меню або прокрутити над ним коліщатко миші вперед або назад, щоб "
-"змінити шпалери.\n"
+"Variety працює у фоновому режимі та може керуватися через маленький схожий "
+"на гору індикатор біля годинника. Можете клацнути по ньому, щоб відкрити "
+"меню або крутнути над ним коліщатком миші вперед або назад, щоб змінити "
+"шпалери.\n"
 "\n"
-"Variety розроблена Петром Леві для участі в Ubuntu App Showdown, у червні-"
+"Variety створена Петром Леві для участі в Ubuntu App Showdown, у червні-"
 "липні 2012 року й розповсюджується під ліцензією GPL-3.\n"
 "\n"
-"будь-ласка, виділіть трохи часу налаштуванням на наступному екрані."
+"Будь-ласка, приділить трохи часу налаштуванням на наступному екрані."
 
 #: ../data/ui/WelcomeDialog.ui.h:10
 msgid "KDE Users - Important, please read:"
-msgstr "Користувачам KDE -будь-ласка, прочитайте, це важливо:"
+msgstr "Користувачі KDE — будь-ласка, прочитайте, це важливо:"
 
 #: ../data/ui/WelcomeDialog.ui.h:11
 msgid ""
@@ -700,14 +564,87 @@ msgid ""
 "Variety will update this file and KDE will automatically refresh the "
 "wallpaper."
 msgstr ""
-"Здається, ви використовуєте KDE. Хоч Variety підтримує KDE, вам таки "
-"необхідно спочатку дещо зробити:\n"
+"Якщо ви використовуєте KDE, хоча Variety і підтримує KDE, вам таки потрібно "
+"спочатку дещо зробити:\n"
 "\n"
-"Для програм, що не використовують специфічні KDE-бібліотеки, як і "
-"Variety,встановлювати шпалери досить трудомістка справа. \n"
-"Тому, будь-ласка, вручну вкажіть файл ~/.config/variety/wallpaper-kde.jpg як "
-"ваші шпалери й збережіть цей шлях. Пізніше при зміні шпалер, Variety оновить "
-"цей файл -й KDE автоматично оновить шпалери wallpaper."
+"Для програм, що не використовують специфічні KDE-бібліотеки, як і Variety, "
+"встановлювати шпалери досить важка справа. \n"
+"Тому, будь-ласка, вручну вкажіть що файл ~/.config/variety/wallpaper-kde.jpg "
+"є вашим шпалерами та збережіть його. Пізніше при зміні шпалер, Variety "
+"оновить цей файл та KDE автоматично оновить шпалери."
+
+#: ../data/ui/AddFlickrDialog.ui.h:1
+msgid "Variety - add Flickr as an image source"
+msgstr "Variety — додати Flickr як джерело зображень"
+
+#: ../data/ui/AddFlickrDialog.ui.h:3
+msgid ""
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
+"Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
+msgstr ""
+"Будь-ласка, задайте умови пошуку на <a "
+"href=\"http://flickr.com\">Flickr</a>. Буде завантажено лише фотографії які "
+"відповідають усім умовам. Залиште непотрібні поля порожніми."
+
+#: ../data/ui/AddFlickrDialog.ui.h:4
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+msgid "Tags: "
+msgstr "Теґи: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:5
+msgid ""
+"A comma-separated list of tags. A photo has to contain all of them "
+"simultaneosly in order to match.\n"
+"Example: yellow,car"
+msgstr ""
+"Список теґів, розділених комою. Фотографія повинна містити їх усі "
+"одночасно,\n"
+"Приклад: жовтий,машина"
+
+#: ../data/ui/AddFlickrDialog.ui.h:7
+msgid "User: "
+msgstr "Користувач: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:8
+msgid ""
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/peter-"
+"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+msgstr ""
+"Будь-ласка, вкажіть URL галереї користувача або однієї з його фотографій.\n"
+"Приклад: <a href=\"http://www.flickr.com/photos/peter-"
+"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui.h:10
+msgid "Group: "
+msgstr "Група: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:11
+msgid ""
+"Please insert the group's URL.\n"
+"Example: <a "
+"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
+"s/wallpapers/</a>"
+msgstr ""
+"Будь-ласка, вставте адресу URL групи.\n"
+"Приклад: <a "
+"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
+"s/wallpapers/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui.h:13
+msgid "Text:"
+msgstr "Текст:"
+
+#: ../data/ui/AddFlickrDialog.ui.h:14
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by "
+"prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+"Вільний пошук по тексту заголовків, описів та тегів фотографій.Параметри що "
+"виключаються випереджуються знаком -.\n"
+"Приклад: яблучний -пиріг"
 
 #: ../variety/FolderChooser.py:65
 msgid "Choose a folder"
@@ -715,18 +652,18 @@ msgstr "Оберіть теку"
 
 #: ../variety/FolderChooser.py:66
 msgid "OK"
-msgstr "Гаразд"
+msgstr "Так"
 
-#: ../variety/__init__.py:55
+#: ../variety/__init__.py:64
 msgid "Terminating signal received, quitting..."
-msgstr "Отримано сигнал скасовування -виходжу..."
+msgstr "Отримано сигнал припинення роботи — вихід…"
 
-#: ../variety/__init__.py:84
+#: ../variety/__init__.py:94
 msgid ""
 "Variety is already running. Sending the command to the running instance."
-msgstr "Variety вже працює. Відправлення команди на запущений екземпляр."
+msgstr "Variety вже працює. Надсилання команди до запущеного екземпляру."
 
-#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Bottom"
 msgstr "Знизу"
 
@@ -738,7 +675,7 @@ msgstr "Зверху"
 msgid "Left"
 msgstr "Ліворуч"
 
-#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Right"
 msgstr "Праворуч"
 
@@ -746,7 +683,7 @@ msgstr "Праворуч"
 msgid "Position"
 msgstr "Розташування"
 
-#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "Size"
 msgstr "Розмір"
 
@@ -754,15 +691,15 @@ msgstr "Розмір"
 msgid "Show Containing Folder"
 msgstr "Показати у теці"
 
-#: ../variety/ThumbsManager.py:116 ../variety/indicator.py:58
+#: ../variety/ThumbsManager.py:116 ../variety/indicator.py:60
 msgid "Set Rating"
-msgstr "Поставити оцінку"
+msgstr "Оцінити"
 
-#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:74
+#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:76
 msgid "Delete to _Trash"
 msgstr "Вилучити у смітник"
 
-#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:79
+#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:81
 msgid "Display Source"
 msgstr "Показати джерело"
 
@@ -772,7 +709,7 @@ msgstr "Закрити"
 
 #: ../variety/ThumbsManager.py:178
 msgid "Could not set rating"
-msgstr "Не вдалося встановити рейтинг"
+msgstr "Не вдалося встановити оцінку"
 
 #: ../variety/ThumbsManager.py:197
 msgid "Unrated"
@@ -800,7 +737,7 @@ msgstr "Variety"
 
 #: ../variety.desktop.in.h:2
 msgid "Variety Wallpaper Changer"
-msgstr "Variety-програма для зміни шпалер"
+msgstr "Variety — програма для зміни шпалер"
 
 #: ../variety.desktop.in.h:3
 msgid "Next"
@@ -820,16 +757,16 @@ msgstr "Історія"
 
 #: ../variety.desktop.in.h:7
 msgid "Preferences"
-msgstr "Параметри"
+msgstr "Налаштування"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
-msgstr "Variety - поділитися на Facebook"
+msgstr "Variety — поділитись на Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Facebook Sharing"
-msgstr "Поділитися на Facebook"
+msgstr "Поділитись на Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:3
 msgid ""
@@ -850,23 +787,38 @@ msgid ""
 msgstr ""
 "Ви вперше вирішили поділитися зображенням чи цитатою у Facebook.  Variety "
 "надає таку можливість для зображень, отриманих з інтернет-джерел, а також "
-"цитат, й вона працює наступним чином: \n"
+"цитат; це працює наступним чином: \n"
 "\n"
-"Якщо ви бажаєте поділитися зображенням, вам буде запропоновано вибрати "
-"повідомлення яке покажеться у запису. Потім у вбудованому переглідачі "
-"відкриється сторінка входу до  Facebook. Після входу вам буде запропоновано "
-"дозволити Variety оголошувати у вашому каналі від вашого ім’я:. Variety буде "
-"використовувати цей дозвіл для оголошення лише вибраних особисто вами, "
-"вручну, зображень, посилань або цитат й ні для чого більше. Коли ви вирішите "
-"поділитися у наступний раз, то по новій входити буде вже не потрібно.\n"
+"Якщо ви бажаєте поділитись зображенням, вам буде запропоновано вибрати текст "
+"для повідомлення. Потім у вбудованому оглядачі відкриється сторінка входу до "
+" Facebook. Після входу вам буде запропоновано дозволити Variety публікувати "
+"у вашій стрічці від вашого імені. Variety буде використовувати цей дозвіл "
+"для публікації лише вибраних особисто вами, вручну, зображень, посилань або "
+"цитат та ні для чого більше. Коли ви вирішите поділитися чимось наступного "
+"разу, повторний вхід вже буде не потрібний.\n"
 "\n"
 "На локальному диску не зберігається інформація про пароль чи логін, а лише "
-"ключ OAuth Facebook, дійсний декілька тижнів. Після закінчення його терміну "
+"ключ OAuth Facebook, дійсний кілька тижнів. Після закінчення терміну його "
 "дії (це визначає Facebook) вам буде запропоновано увійти знову."
+
+#: ../data/plugins/quotes/LocalFilesSource.py:34
+msgid ""
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
+"\n"
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
+msgstr ""
 
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
-msgstr "Variety - долучити медійний фід RSS"
+msgstr "Variety — додати стрічку Медіа RSS"
 
 #: ../data/ui/AddMediaRssDialog.ui.h:3
 msgid ""
@@ -881,8 +833,8 @@ msgid ""
 "href=\"http://interfacelift.com\">InterfaceLIFT</a>."
 msgstr ""
 "Будь-ласка вставте URL каналу Медіа RSS нижче. Зверніть увагу, що "
-"підтримуються лише канали Медіа RSS, а не довільні стрічки RSS. Медіа RSS "
-"канали містять тег media:content, який посилається безпосередньо на саме "
+"підтримуються лише канали Медіа RSS, а не довільні стрічки RSS. Канали Медіа "
+"RSS містять теґ media:content, який посилається безпосередньо на саме "
 "зображення. Деякі приклади сайтів, що надають Медіа RSS канали: <a "
 "href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
 "href=\"http://www.deviantart.com\">deviantART</a>, <a "
@@ -901,11 +853,89 @@ msgstr "Хвилинку, перевіримо, що за цією адресо�
 
 #: ../variety/FacebookHelper.py:91
 msgid "Variety - Login to Facebook"
-msgstr "Variety - вхід до Facebook"
+msgstr "Variety — вхід до Facebook"
 
 #: ../variety/FacebookHelper.py:153
 msgid "Login window closed before authorization"
-msgstr "Вікно входу зачинилося до авторизації"
+msgstr "Вікно входу було закрите до авторизації"
+
+#: ../data/plugins/quotes/QuotesDaddySource.py:31
+msgid ""
+"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
+"Does not support searching by tags or authors."
+msgstr ""
+
+#: ../variety/indicator.py:48
+msgid "Current desktop wallpaper"
+msgstr "Поточне зображення на робочому столі"
+
+#: ../variety/indicator.py:52
+msgid "Show origin"
+msgstr "Показати оригінал"
+
+#: ../variety/indicator.py:91
+msgid "_History"
+msgstr "Історія"
+
+#: ../variety/indicator.py:97
+msgid "Recent _Downloads"
+msgstr "Нові завантаження"
+
+#: ../variety/indicator.py:105 ../variety/indicator.py:142
+msgid "_Previous"
+msgstr "Попередні"
+
+#: ../variety/indicator.py:110 ../variety/indicator.py:147
+msgid "_Next"
+msgstr "Наступні"
+
+#: ../variety/indicator.py:115 ../variety/indicator.py:152
+msgid "_Fast Forward"
+msgstr "Швидке перемотування"
+
+#: ../variety/indicator.py:129
+msgid ""
+"Tip: Scroll wheel over icon\n"
+"for Next and Previous"
+msgstr ""
+"Порада: гортайте шпалери\n"
+"крутячи коліщатко миші на індикаторі"
+
+#: ../variety/indicator.py:135
+msgid "_Playback"
+msgstr "Відтворення"
+
+#: ../variety/indicator.py:167
+msgid "Copy to Clipboard"
+msgstr "Копіювати до буферу обміну"
+
+#: ../variety/indicator.py:177
+msgid "Google Quote"
+msgstr "Погуглити цитату"
+
+#: ../variety/indicator.py:182
+msgid "Google Author"
+msgstr "Погуглити автора"
+
+#: ../variety/indicator.py:194
+msgid "Turn off"
+msgstr ""
+
+#: ../variety/indicator.py:200
+msgid "_Quotes"
+msgstr "Цитати"
+
+#: ../variety/indicator.py:207
+msgid "Preferences..."
+msgstr "Налаштування…"
+
+#: ../variety/indicator.py:211
+msgid "About"
+msgstr "Про програму"
+
+#: ../variety/indicator.py:215
+msgid "Quit"
+msgstr "Вихід"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
 msgid "Copy to Favorites vs. Move to Favorites"
@@ -913,15 +943,15 @@ msgstr "Копіювати або перемістити у Вибрані"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
 msgid "Reset to Default"
-msgstr "Скинути установки"
+msgstr "Перевстановити типові налаштування"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
 msgid ""
 "Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
 "menu depending on the image location:"
 msgstr ""
-"Виберіть, чи надаєте ви перевагу бачити у меню 'Копіювати у Вибрані' чи "
-"'Перемісти у Вибрані' у залежності від розташування зображення:"
+"Виберіть, чи ви бажаєте бачити у меню 'Копіювати у Вибрані' чи 'Перемісти у "
+"Вибрані', в залежності від розташування зображення:"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
 msgid ""
@@ -939,12 +969,12 @@ msgid ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 msgstr ""
-"Будь-ласка, робіть по одному запису на лінію, усі пункти вигляду "
-"<Тека>:<Копіювати, Перемістити або Обидва>, де текою можуть бути Downloaded, "
-"Fetched, Others або шлях до певної локальної теки.\n"
+"Будь-ласка, робіть по одному запису на лінію, усі пункти повинні виглядати "
+"як: <Тека>:<Copy, Move чи Both>, де текою можуть бути Downloaded, Fetched, "
+"Others або шлях до певної локальної теки.\n"
 "Порядок важливий. Коли буде показано зображення, перша тека у списку, що "
-"містить зображення, визначить, які операції покажуться у меню Variety's. "
-"'Others'повинна бути у кінці списку, тому що будь-який файл входить до цієї "
+"містить зображення, визначить, які операції покажуться в меню Variety. "
+"'Others' повинно бути у кінці списку, тому що будь-який файл входить до цієї "
 "категорії.\n"
 "\n"
 "Приклад (Пишіть саме англійською):\n"
@@ -954,81 +984,9 @@ msgstr ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 
-#: ../variety/indicator.py:46
-msgid "Current desktop wallpaper"
-msgstr "Поточне зображення на робочому столі"
-
-#: ../variety/indicator.py:50
-msgid "Show origin"
-msgstr "Показати оригінал"
-
-#: ../variety/indicator.py:89
-msgid "_History"
-msgstr "Історія"
-
-#: ../variety/indicator.py:95
-msgid "Recent _Downloads"
-msgstr "Нові завантаження"
-
-#: ../variety/indicator.py:103 ../variety/indicator.py:140
-msgid "_Previous"
-msgstr "Попередні"
-
-#: ../variety/indicator.py:108 ../variety/indicator.py:145
-msgid "_Next"
-msgstr "Наступні"
-
-#: ../variety/indicator.py:113 ../variety/indicator.py:150
-msgid "_Fast Forward"
-msgstr "Швидке перемотування"
-
-#: ../variety/indicator.py:127
-msgid ""
-"Tip: Scroll wheel over icon\n"
-"for Next and Previous"
-msgstr ""
-"Порада: листайте шпалери\n"
-"крутячи коліща миші на індикаторі"
-
-#: ../variety/indicator.py:133
-msgid "_Playback"
-msgstr "Відтворення"
-
-#: ../variety/indicator.py:165
-msgid "Copy to Clipboard"
-msgstr "Копіювати до буферу обміну"
-
-#: ../variety/indicator.py:170
-msgid "View at QuotesDaddy"
-msgstr "Дивитися на QuotesDaddy"
-
-#: ../variety/indicator.py:175
-msgid "Google Quote"
-msgstr "Погуглити цитату"
-
-#: ../variety/indicator.py:180
-msgid "Google Author"
-msgstr "Погуглити автора"
-
-#: ../variety/indicator.py:190
-msgid "_Quotes"
-msgstr "Цитати"
-
-#: ../variety/indicator.py:197
-msgid "Preferences..."
-msgstr "Параметри"
-
-#: ../variety/indicator.py:201
-msgid "About"
-msgstr "Про програму"
-
-#: ../variety/indicator.py:205
-msgid "Quit"
-msgstr "Вихід"
-
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
-msgstr "Variety - долучення категорії з сайту Wallpapers.net"
+msgstr "Variety — додати категорії з сайту Wallpapers.net"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
 msgid ""
@@ -1040,31 +998,15 @@ msgid ""
 "Top wallpapers: <a "
 "href=\"http://wallpapers.net/top_wallpapers.html\">http://wallpapers.net/top_"
 "wallpapers.html</a>\n"
-"Autumn: <a href=\"http://wallpapers.net/autumn-desktop-"
+"Category 'autumn': <a href=\"http://wallpapers.net/autumn-desktop-"
 "wallpapers.html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
-"Color Green: <a "
-"href=\"http://wallpapers.net/colors/66CC00/\">http://wallpapers.net/colors/66"
-"CC00/</a>\n"
+"Search for 'fog': <a "
+"href=\"http://wallpapers.net/search.html?q=fog\">http://wallpapers.net/search"
+".html?q=fog</a>\n"
 "Specific resolution: <a href=\"http://wallpapers.net/1920x1200_wide-"
 "wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-"
 "r.html</a>\n"
 msgstr ""
-"Будь-ласка завітайте на <a href=\"http://wallpapers.net\">wallpapers.net</a> "
-"й виберіть категорію шпалер, які бажали би бачити на робочому столі, потім "
-"вставте її адресу нижче. Категорія - це який-небудь розділ на сайті, який "
-"містить одну чи більше сторінок зі шпалерами. Ось декілька прикладів:\n"
-"\n"
-"Топ шпалер: <a "
-"href=\"http://wallpapers.net/top_wallpapers.html\">http://wallpapers.net/top_"
-"wallpapers.html</a>\n"
-"Осінь: <a href=\"http://wallpapers.net/autumn-desktop-"
-"wallpapers.html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
-"Зелений колір: <a "
-"href=\"http://wallpapers.net/colors/66CC00/\">http://wallpapers.net/colors/66"
-"CC00/</a>\n"
-"Певна роздільна здатність: <a href=\"http://wallpapers.net/1920x1200_wide-"
-"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-"
-"r.html</a>\n"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
 msgid "Paste URL here: "
@@ -1088,7 +1030,7 @@ msgstr "дні(в)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:5
 msgid "Variety Preferences"
-msgstr "Параметри Variety"
+msgstr "Налаштування Variety"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:6
 msgid "General"
@@ -1123,96 +1065,103 @@ msgid "Location"
 msgstr "Розташування"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
-msgid "_Add..."
-msgstr "Долучити"
+msgid ""
+"<small><a "
+"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Recommende"
+"d sources</a></small>"
+msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
-msgid "Add images, folders or online image sources"
-msgstr "Долучити зображення, теки або інтернет-джерела"
+msgid "_Add..."
+msgstr "_Додати…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
-msgid "_Edit..."
-msgstr "Змінити"
+msgid "Add images, folders or online image sources"
+msgstr "Додати зображення, теки або інтернет-джерела"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
+msgid "_Edit..."
+msgstr "З_мінити…"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "Edit the selected source"
 msgstr "Змінити виділене джерело"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "_Remove..."
-msgstr "Вилучити"
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
+msgid "_Remove..."
+msgstr "_Вилучити…"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "Remove selected image sources"
 msgstr "Вилучити виділені джерела зображень"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
-msgid "_Use"
-msgstr "Застосувати"
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
-msgid "Enable the selected sources and disable all others"
-msgstr "Увімкнути вибрані джерела й від’єднати решту"
+msgid "_Use"
+msgstr "_Застосувати…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
+msgid "Enable the selected sources and disable all others"
+msgstr "Увімкнути вибрані джерела та від’єднати решту"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Download a wallpaper every "
 msgstr "Завантажувати шпалери кожні "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "Minimum interval is one minute"
 msgstr "Мінімальний інтервал - 1 хвилина"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "to "
 msgstr "у "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "Actual download folder "
 msgstr "Тека завантаження "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid ""
 "Caution: do NOT use this option if you use a custom download folder with "
 "valuable files in it. Variety will maintain the limit regardless of what is "
 "in the download folder."
 msgstr ""
 "Увага: НЕ використовуйте цей параметр, якщо у вказаній вами теці "
-"завантаження є важливі файли. Variety буде притримуватися межі незалежно від "
+"завантаження є важливі файли. Variety буде дотримуватися межі незалежно від "
 "вмісту теки."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Limit download folder to "
 msgstr "Обмежити розмір теки завантаження до "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "Minimum size is 50 MB"
 msgstr "Мінімальний розмір 50 МБ"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "MB by deleting oldest files when necessary"
 msgstr "МБ, за необхідності вилучаючи старі файли"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "Favorites"
 msgstr "Вибрані"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Copy favorite wallpapers to "
 msgstr "Копіювати вибрані шпалери у "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Fetch folder"
 msgstr "Завантажені вручну"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Save manually downloaded wallpapers to "
 msgstr "Зберегти завантажені вручну зображення у "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid "Drag and drop"
 msgstr "Перетягування"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1220,37 +1169,37 @@ msgid ""
 "To show the icon in the launcher choose About or Preferences. You may wish "
 "to lock it there for easy drag-and-drop access."
 msgstr ""
-"Піктограма Variety's у панелі запуску може слугувати метою для "
-"перетягування. Перетягніть будь-який URL зображення або файл прямо на нього, "
-"й вони збережуться у теку завантажених вручну зображень. Потім ви можете "
-"натиснути кнопку Наступні, щоб побачити їх на робочому столі.\n"
+"Піктограма Variety на панелі запуску може слугувати ціллю для перетягування. "
+"Перетягніть будь-який URL зображення або файл прямо на нього, й вони "
+"збережуться у теку завантажених вручну зображень. Потім ви можете натиснути "
+"кнопку Далі, щоб побачити їх на робочому столі.\n"
 "Щоб піктограма показалася у панелі запуску, виберіть пункт меню Про програму "
-"або Параметри. Ви можете закріпити його там для простого доступу до функції "
-"перетягування."
+"або Налаштування. Ви можете закріпити його там для простого доступу до "
+"функції перетягування."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Clipboard monitoring"
 msgstr "Стеження за буфером обміну"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr ""
 "Стежити за буфером обміну при виявлені там адреси зображення, завантажувати "
 "їх"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "But fetch only when the URL host is one of these:"
 msgstr "Завантажувати, лише якщо URL хосту один з наступних"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Manual downloading"
 msgstr "Ручне завантаження"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid "Filters"
 msgstr "Фільтри"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
@@ -1258,119 +1207,125 @@ msgstr ""
 "Застосовувати випадкові фільтри до виведених на екран шпалер (дякуємо "
 "чудовому ImageMagick)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Quotes"
 msgstr "Цитати"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
-msgid "Show random wise quotes on the desktop"
-msgstr "Показати випадкові мудрі цитати на робочому столі"
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:46
+msgid "Show random wise quotes on the desktop"
+msgstr "Показати випадкові афоризми на робочому столі"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Text color: "
 msgstr "Колір тексту: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Text font: "
 msgstr "Шрифт тексту: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Backdrop color: "
 msgstr "Колір тла: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid "Backdrop opacity: "
 msgstr "Прозорість тла: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid " Transparent"
 msgstr " Прозорий"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Opaque"
 msgstr "Непрозорий"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
-msgid "Draw a text shadow"
-msgstr "Малювати тінь від тексту"
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:53
+msgid "Draw a text shadow"
+msgstr "Показувати тінь від тексту"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Quotes area width: "
 msgstr "Ширина ділянки цитат: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Narrow "
 msgstr "Вузька "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Wide"
 msgstr "Широка"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Horizontal position: "
 msgstr "Горизонтальне розташування: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Left "
 msgstr "Ліворуч "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Vertical position: "
 msgstr "Вертикальне розташування: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Top "
 msgstr "Вгорі "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Placement"
 msgstr "Розташування"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
-msgid ""
-"Show only these tags and authors. Leave empty to use QuotesDaddy's Quote of "
-"the Day feed:"
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+msgid "Show quotes from these sources: "
 msgstr ""
-"Показувати лише ці теги й авторів. Залиште порожнім, щоб використовувати "
-"канал цитат дня QuotesDaddy:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
+msgid ""
+"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
+"plugins</a></small>"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+msgid "Show only these tags and authors. Leave empty to show random quotes."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "Example: funny, inspirational"
 msgstr "Приклад: funny, inspirational"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid "Example: Albert Einstein, Voltaire"
 msgstr "Приклад: Albert Einstein, Voltaire"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Authors: "
-msgstr "Автори "
+msgstr "Автори: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
-msgid "Tags and authors"
-msgstr "Теги та автори"
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+msgid "Sources and filtering"
+msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid "Change quote every "
 msgstr "Змінювати цитату через "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Minimum interval is 10 seconds"
 msgstr "Мінімальний інтервал 10 секунд"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Regular change"
 msgstr "Постійна зміна"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid "Clock"
 msgstr "Годинник"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
@@ -1378,26 +1333,26 @@ msgstr ""
 "Показувати на робочому столі великий цифровий годинник з поточним часом та "
 "датою"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid ""
 "To configure the clock's appearance edit the clock_filter property in "
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
 "in ~/.config/variety/variety_latest_default.conf as a guide."
 msgstr ""
-"Налаштуйте зовнішній вигляд годинника, відредагувавши властивість the "
-"clock_filter у файлі налаштувань Variety (~/.config/variety/variety.conf). У "
-"якості керівництва використовуйте коментарі у "
+"Налаштуйте зовнішній вигляд годинника, змінюючи параметр the clock_filter у "
+"файлі налаштувань Variety (~/.config/variety/variety.conf). У якості "
+"посібника використовуйте коментарі у "
 "~/.config/variety/variety_latest_default.conf."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Clock font: "
 msgstr "Шрифт годинника: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Date font: "
 msgstr "Шрифт дати: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid ""
 "These don't work? <a "
 "href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
@@ -1410,149 +1365,153 @@ msgstr ""
 "href=\"http://peterlevi.com/variety/2012/11/configuring-the-"
 "clock/\">Прочитай тут</a>."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "Effects"
 msgstr "Ефекти"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "When possible use images that:"
-msgstr "За можливістю використовувати зображення які"
+msgstr "За можливістю використовувати зображення які:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "Have landscape orientation"
 msgstr "Мають альбомну орієтацію"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "Are big at least "
 msgstr "Принаймні "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "50"
 msgstr "50"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
 msgid "80"
 msgstr "80"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+msgid "100"
+msgstr "100"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "% від розміру екрану"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Color"
 msgstr "Колір"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgid "Are dark or light:"
-msgstr "Темні або світлі"
+msgstr "Темні або світлі:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "Темні"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "Світлі"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "Contain this color: "
 msgstr "Містять цей колір: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "(Takes effect after some initial searching)"
 msgstr "(Вступає у силу після деяких початкових пошуків)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Rating"
 msgstr "Оцінка"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "Are rated and their rating is at least "
 msgstr "Мають рейтинг принаймні "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
 msgid "1"
 msgstr "1"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
 msgid "2"
 msgstr "2"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "3"
 msgstr "3"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "4"
 msgstr "4"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "5"
 msgstr "5"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "(Based on local image EXIF data)"
-msgstr "(Засновано на даних EXIF зображення)"
+msgstr "(На основі на даних EXIF зображення)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid "Show option to edit image ratings in the main menu"
-msgstr "Показати параметр редагування рейтингу у головному меню"
+msgstr "Показати параметр зміни оцінки у головному меню"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid ""
 "Ratings can also be edited from the thumbnails context menu. EXIF rating "
 "metadata is universal and can also be edited or used in external photo "
 "organization programs like Shotwell, Darktable, etc."
 msgstr ""
-"Рейтинг також може бути відредаговано з контекстного меню мініатюр. У EXIF "
-"рейтинг метаданих є універсальним й може бути відредаговано й використано у "
-"таких програмах огранізації фотографій як Shotwell, Darktable й т.п."
+"Оцінка також може бути змінена з контекстного меню мініатюр. Оцінка у "
+"метаданих EXIF є універсальною і може бути змінена та використана у таких "
+"програмах впорядкування фотографій як: Shotwell, Darktable й т.п."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid "Color and size"
 msgstr "Колір та розмір"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Indicator Icon"
 msgstr "Піктограма індикатора"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgid "Indicator icon:"
 msgstr "Піктограма індикатора:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgctxt "Icon option"
 msgid "Light"
 msgstr "Світлий"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "Темний"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Поточні шпалери"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgctxt "Icon option"
 msgid "Custom image..."
-msgstr "Вибрати зображення..."
+msgstr "Вибрати зображення…"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgctxt "Icon option"
 msgid "None"
 msgstr "Немає"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid "Select an icon"
 msgstr "Виберіть піктограму"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -1562,47 +1521,48 @@ msgstr ""
 "рядка або через списки дій панелі запуску. Запустіть \"variety --help\" щоб "
 "переглянути усі доступні команди."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Favorites Operations"
 msgstr "Вибрані операції"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid "Favorites operations to show in main menu:"
-msgstr "Вибрані операції, показувані у головному меню:"
+msgstr "Вибрані операції, що показуються в основному меню:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Copy to Favorites"
 msgstr "Копіювати у Вибрані"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Both Copy and Move"
 msgstr "Обидві (копіювати та перемістити)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:120
-msgid "Depends on folder..."
-msgstr "Залежить від теки..."
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:123
+msgid "Depends on folder..."
+msgstr "Залежить від теки…"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Enable sharing on Facebook for images coming from online sources"
 msgstr ""
 "Увімкнути параметр «поділитися у Facebook» для зображень з інтернет-джерел"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Display dialog to customize the Facebook post before publishing"
-msgstr "Показувати діалог зміни запису у Facebook перед оголошенням"
+msgstr ""
+"Показувати діалог зміни тексту повідомлення у Facebook перед публікацією"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "Login Screen Support"
 msgstr "Підтримка екрану входу у систему"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr ""
 "Переконайтеся, що шпалери, встановлені Variety, будуть використовуватися на "
 "екрані входу у систему"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -1611,42 +1571,42 @@ msgid ""
 "not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
 "multiuser systems."
 msgstr ""
-"<b>Попередження:</b> Щоб показати свої шпалери, LightDM потрібен дозвіл на "
-"читання зображення. При увімкненні цієї опції, Variety скопіює файл у "
-"загальну теку та змінить права, так що усі користувачі будуть мати право на "
-"читання. Типово це тека~/Pictures якщо ваша домашня директорія у не "
-"зашифрованому вигляді, та /usr/share/backgrounds - якщо зашифровано. Будь "
-"ласка, використовуйте цю опцію з обережністю."
+"<b>Попередження:</b> Щоб показати ваші шпалери, LightDM потрібен дозвіл на "
+"читання зображення. При увімкненні цього параметру, Variety скопіює шпалери "
+"у загальну теку та змінить права, так що усі користувачі будуть мати бачити "
+"їх. Типово це тека ~/Pictures, якщо ваша домашня тека у не зашифрованому "
+"вигляді, та — /usr/share/backgrounds, якщо вона зашифрована. Будь ласка, "
+"використовуйте цей параметр обережно."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Copy wallpaper image files to this folder: "
 msgstr "Копіювати файли шпалер для стільниці у цю теку: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Reset to default"
 msgstr "Відновити типові значення"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Still doesn't work?"
 msgstr "Усе ще не працює?"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
 msgstr ""
-"Здається, вашу домашню теку зашифровано, так що використання теки всередині "
-"не буде працювати"
+"Здається, вашу домашню теку зашифровано, так що використання теки в ній не "
+"буде працювати"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "You don't have write permissions for this folder."
-msgstr "В вас немає права на запис до цієї теки"
+msgstr "У вас немає права на запис до цієї теки"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr "Права не дозволяють LightDM читати файли з цієї теки."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134
+#: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
@@ -1654,39 +1614,39 @@ msgstr ""
 "Можна налаштувати дозвіл, але ви повинні будете надати Variety повноваження "
 "суперкористувача."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "Customize"
-msgstr "Налаштування переваг"
+msgstr "Налаштувати"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Tips and tricks"
 msgstr "Корисні поради"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Recent changes"
 msgstr "Останні зміни"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Visit website"
 msgstr "Завітати на сайт"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Report a bug or request a feature"
 msgstr "Повідомити про помилку або запропонувати нову функцію"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Send feedback"
-msgstr "Відправити відгук"
+msgstr "Надіслати відгук"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "Donate to Variety"
 msgstr "Пожертвувати на Variety"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Donate via PayPal"
 msgstr "Пожертвувати через PayPal"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -1698,17 +1658,17 @@ msgid ""
 msgstr ""
 "Я розробляю Variety у свій вільний час, який приходить звичайно у ті пізні "
 "години, коли мої діти лягають спати. Буду вдячний за будь-яку грошову "
-"пожертву. Це покаже мені, що Variety вартує для вас корстувачів й надасть "
+"підтримку. Це покаже мені, що Variety є корисною для вас та надасть мені "
 "натхнення активніше продовжувати роботу над програмою.\n"
 "\n"
 "Дякую,\n"
 "Пітер Леві"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:147
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "Spread the word"
 msgstr "Розкажіть про нас"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:148
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid ""
 "You can also help by making Variety more popular - write a post about it on "
 "your blog, on Facebook, Twitter or Google+. Please mention Variety's "
@@ -1718,7 +1678,7 @@ msgid ""
 "href=\"http://alternativeto.net/software/variety-wallpaper-"
 "changer/\">alternativeto.net</a>."
 msgstr ""
-"Ви також можете допомогти, зробивши Variety популярнішою - напишіть текст у "
+"Ви також можете допомогти, зробивши Variety популярнішою — напишіть текст у "
 "своєму блозі на Facebook, Twitter або Google+. Будь-ласка вкажіть офіційну "
 "сторінку Variety <a "
 "href=\"http://peterlevi.com/variety\">http://peterlevi.com/variety</a>. \n"
@@ -1726,9 +1686,9 @@ msgstr ""
 "href=\"http://alternativeto.net/software/variety-wallpaper-"
 "changer/\">alternativeto.net</a>."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "Donate"
-msgstr "Пожертви"
+msgstr "Пожертвувати"
 
 #: ../variety/ImageFetcher.py:54 ../variety/ImageFetcher.py:101
 msgid "Fetching"
@@ -1741,11 +1701,11 @@ msgstr "Отримані"
 #. too small - delete and do not use
 #: ../variety/ImageFetcher.py:116
 msgid "Image too small, ignoring it"
-msgstr "Зображення надто мале, ігнорую його"
+msgstr "Зображення надто мале, ігноруємо"
 
 #: ../variety/ImageFetcher.py:131
 msgid "Fetch failed for some reason"
-msgstr "Отримання перервано по деяким причинам"
+msgstr "Отримання перервано з певних причинам"
 
 #: ../variety/ImageFetcher.py:132
 msgid ""
@@ -1753,7 +1713,7 @@ msgid ""
 "retry the action"
 msgstr ""
 "Для отримання більш місткої інформації, будь-ласка, запустіть Variety з "
-"терміналу з параметром -v й повторіть дію"
+"терміналу з параметром -v та повторіть дію"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
@@ -1765,7 +1725,7 @@ msgstr "Про Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "An automatic wallpaper changer, downloader and manager."
-msgstr "Автоматичний змінювач, завантажувач та менеджер шпалер"
+msgstr "Автоматичний змінювач, завантажувач та менеджер шпалер."
 
 #: ../data/ui/AboutVarietyDialog.ui.h:4
 msgid "http://peterlevi.com/variety"
@@ -1790,7 +1750,7 @@ msgstr ""
 "# Авторські права © 2012, Peter Levi <peterlevi@peterlevi.com>\n"
 "# Це вільне програмне забезпечення; ви можете розповсюджувати та/або "
 "змінювати його\n"
-"# на умовах ліцензії GNU General Public License версії 3, оголошеної\n"
+"# на умовах ліцензії GNU General Public License версії 3, опублікованої\n"
 "# Фондом вільного програмного забезпечення.\n"
 "#\n"
 "# Ця програма розповсюджується з надією, що вона буде корисною, але\n"
@@ -1801,3 +1761,28 @@ msgstr ""
 "#\n"
 "# Ви повинні були отримати копію GNU General Public License\n"
 "# з цією програмою. Якщо ні, дивіться <http://www.gnu.org/licenses/>.\n"
+
+#: ../variety/QuotesEngine.py:235
+msgid "No quote plugins"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:235
+msgid "There are no quote plugins installed"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:241
+msgid "No suitable quote plugins"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:242
+msgid ""
+"You have no quote plugins which support searching by keywords and authors"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:251
+msgid "Could not fetch quotes"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:252
+msgid "Quotes services may be down, we will continue trying"
+msgstr ""

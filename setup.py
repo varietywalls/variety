@@ -92,25 +92,17 @@ DistUtilsExtra.auto.setup(
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
-    description='An automatic wallpaper changer, downloader and manager',
+    description='Wallpaper changer, downloader and manager',
     long_description=
-"Variety changes the desktop wallpaper on a regular basis, using user-specified "
+"Variety changes the desktop wallpaper regularly, using local "
 "or automatically downloaded images. "
 ""
 "Variety sits conveniently as an indicator in the panel and can be easily paused "
-"and resumed. The mouse wheel can be used to scroll wallpapers back and forth "
-"until you find the perfect one for your current mood. "
+"and resumed. The mouse wheel can be used to scroll wallpapers back and forth"
 ""
-"Apart from displaying images from local folders, several different online "
-"sources can be used to fetch wallpapers according to user-specified criteria - "
-"Flickr, Wallbase.cc, Wallpapers.net, NASA Astronomy Picture of the Day, Desktoppr.co. "
-"Media RSS feeds from Picasa, deviantART or any other place are also supported."
-""
-"Variety can also automatically apply various fancy filters to the displayed "
-"images - heavy blurring, oil painting, charcoal painting, etc. - so that your "
-"desktop is always fresh and unique. Heavy blurring for example is a great way to "
-"get abstract-looking and unobtrusive, yet colorful wallpapers, similar in spirit "
-"to the default one in Ubuntu. ",
-    url='https://launchpad.net/variety',
+"Variety can fetch wallpapers from Flickr, Wallbase.cc, Wallpapers.net, "
+"NASA Astronomy Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa, "
+"deviantART or any other place are also supported.",
+    url='https://peterlevi.com/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )

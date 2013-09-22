@@ -59,16 +59,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -306,8 +296,8 @@
                                     <signal name="row-activated" handler="on_source_doubleclicked" swapped="no"/>
                                     <child internal-child="selection">
                                       <object class="GtkTreeSelection" id="sources_selection">
-                                          <property name="mode">multiple</property>
-                                          <signal name="changed" handler="on_sources_selection_changed" swapped="no"/>
+                                        <property name="mode">multiple</property>
+                                        <signal name="changed" handler="on_sources_selection_changed" swapped="no"/>
                                       </object>
                                     </child>
                                     <child>
@@ -369,6 +359,7 @@
                                 <property name="margin_left">30</property>
                                 <property name="margin_right">10</property>
                                 <property name="margin_top">3</property>
+                                <property name="margin_bottom">3</property>
                                 <property name="hexpand">True</property>
                                 <property name="label" translatable="yes">&lt;small&gt;&lt;a href='http://peterlevi.com/variety/wiki/Recommended_image_sources'&gt;Recommended sources&lt;/a&gt;&lt;/small&gt;</property>
                                 <property name="use_markup">True</property>
@@ -3749,6 +3740,16 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_width_adjustment">
     <property name="upper">100</property>
