@@ -121,6 +121,10 @@ class TestUtil(unittest.TestCase):
             return i
         self.assertEquals([20,30], list(Util.safe_map(f, [1,5,20,10,30,4])))
 
+    def test_urlopen(self):
+        resp = Util.urlopen("//google.com")
+        self.assertTrue(len(resp.read()) > 0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -272,6 +272,8 @@ class Util:
 
     @staticmethod
     def urlopen(url, data=None):
+        if url.startswith('//'):
+            url = 'http:' + url
         request = urllib2.Request(url)
         request.add_header('User-Agent', USER_AGENT)
         request.add_header('Cache-Control', 'max-age=0')
