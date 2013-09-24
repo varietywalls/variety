@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-09-19 03:05+0300\n"
+"POT-Creation-Date: 2013-09-22 15:04+0300\n"
 "PO-Revision-Date: 2013-06-28 13:27+0000\n"
 "Last-Translator: ub <xenolith0bytetestcomgreen@gmail.com>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-09-19 21:16+0000\n"
-"X-Generator: Launchpad (build 16765)\n"
+"X-Launchpad-Export-Date: 2013-09-24 20:19+0000\n"
+"X-Generator: Launchpad (build 16771)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -203,8 +203,8 @@ msgstr "  "
 msgid "Variety - Publish to Facebook"
 msgstr "Variety - Facebookで公開"
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:85
-#: ../variety/indicator.py:187
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:96
+#: ../variety/indicator.py:198
 msgid "Share on Facebook"
 msgstr "Facebookで共有"
 
@@ -222,92 +222,93 @@ msgstr "次回から尋ねずに常にこの文字を使う"
 msgid "No images found"
 msgstr "画像がありません"
 
-#: ../variety/VarietyWindow.py:583
+#: ../variety/VarietyWindow.py:589
 msgid "Already in Favorites"
 msgstr "お気に入りに入っています"
 
-#: ../variety/VarietyWindow.py:587 ../variety/ThumbsManager.py:124
-#: ../variety/indicator.py:65
+#. self.menu.append(self.no_effects_separator)
+#: ../variety/VarietyWindow.py:593 ../variety/ThumbsManager.py:124
+#: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
 msgstr "お気に入りにコピー(_F)"
 
-#: ../variety/VarietyWindow.py:588 ../variety/ThumbsManager.py:131
+#: ../variety/VarietyWindow.py:594 ../variety/ThumbsManager.py:131
 msgid "Move to _Favorites"
 msgstr "お気に入りに移動(_F)"
 
 #. both
-#: ../variety/VarietyWindow.py:596 ../variety/indicator.py:70
+#: ../variety/VarietyWindow.py:602 ../variety/indicator.py:81
 #: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Move to Favorites"
 msgstr "お気に入りに移動"
 
-#: ../variety/VarietyWindow.py:616 ../variety/VarietyWindow.py:678
+#: ../variety/VarietyWindow.py:622 ../variety/VarietyWindow.py:684
 #, python-format
 msgid "View at %s"
 msgstr "壁紙の場所: %s"
 
-#: ../variety/VarietyWindow.py:616
+#: ../variety/VarietyWindow.py:622
 msgid "Fetched: Show Origin"
 msgstr "元の画像をブラウザーで表示"
 
-#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
-#: ../variety/VarietyWindow.py:1830 ../variety/indicator.py:124
-#: ../variety/indicator.py:161
+#: ../variety/VarietyWindow.py:677 ../variety/VarietyWindow.py:693
+#: ../variety/VarietyWindow.py:1846 ../variety/indicator.py:135
+#: ../variety/indicator.py:172
 msgid "Pause"
 msgstr "一時停止"
 
-#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
-#: ../variety/VarietyWindow.py:1834
+#: ../variety/VarietyWindow.py:677 ../variety/VarietyWindow.py:693
+#: ../variety/VarietyWindow.py:1850
 msgid "Resume"
 msgstr "スタート"
 
-#: ../variety/VarietyWindow.py:807
+#: ../variety/VarietyWindow.py:820
 msgid "Filtering too strict?"
 msgstr "フィルターが厳しいようです"
 
-#: ../variety/VarietyWindow.py:808
+#: ../variety/VarietyWindow.py:821
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr "基準に合う画像が少なすぎます"
 
-#: ../variety/VarietyWindow.py:1296
+#: ../variety/VarietyWindow.py:1310
 msgid "Please add more image sources or wait for some downloads"
 msgstr "画像の場所をさらに追加するかしばらくお待ち下さい"
 
-#: ../variety/VarietyWindow.py:1298
+#: ../variety/VarietyWindow.py:1312
 msgid "Please add more image sources"
 msgstr "さらに画像の場所を追加して下さい"
 
-#: ../variety/VarietyWindow.py:1299
+#: ../variety/VarietyWindow.py:1313
 msgid "No more wallpapers"
 msgstr "壁紙がありません"
 
-#: ../variety/VarietyWindow.py:1473
+#: ../variety/VarietyWindow.py:1487
 msgid "Current wallpaper is not in the image sources"
 msgstr "現在の壁紙は画像の場所にありません"
 
-#: ../variety/VarietyWindow.py:1504
+#: ../variety/VarietyWindow.py:1518
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr "%s に移動する権限がありません。"
 
-#: ../variety/VarietyWindow.py:1506
+#: ../variety/VarietyWindow.py:1520
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr "%s にコピーする権限がありません。"
 
-#: ../variety/VarietyWindow.py:1524 ../variety/VarietyWindow.py:1541
+#: ../variety/VarietyWindow.py:1538 ../variety/VarietyWindow.py:1555
 msgid "Cannot delete"
 msgstr "削除できません"
 
-#: ../variety/VarietyWindow.py:1525
+#: ../variety/VarietyWindow.py:1539
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr "%s をゴミ箱に移動する権限がありません。"
 
-#: ../variety/VarietyWindow.py:1542
+#: ../variety/VarietyWindow.py:1556
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
@@ -315,13 +316,13 @@ msgstr ""
 "ゴミ箱に移動するユーティリティーはありますか?\n"
 "trash-cliやgvfs-binやkonquererが必要です。"
 
-#: ../variety/VarietyWindow.py:1759
+#: ../variety/VarietyWindow.py:1775
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr "エディターで設定ファイルを開きます。保存後に変更が適用されます。"
 
-#: ../variety/VarietyWindow.py:1784
+#: ../variety/VarietyWindow.py:1800
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -338,85 +339,85 @@ msgstr ""
 "\n"
 "指定した壁紙をセットします: %prog /some/local/image.jpg --next"
 
-#: ../variety/VarietyWindow.py:1794
+#: ../variety/VarietyWindow.py:1810
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr "メッセージを表示 (-vv はさらに詳しく表示、-vvv debugs variety_libも同様)"
 
-#: ../variety/VarietyWindow.py:1798
+#: ../variety/VarietyWindow.py:1814
 msgid "Make the running instance quit"
 msgstr "実行中の動作を終了"
 
-#: ../variety/VarietyWindow.py:1802
+#: ../variety/VarietyWindow.py:1818
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr "現在の壁紙の場所を表示します。起動中のみ使用可能。"
 
-#: ../variety/VarietyWindow.py:1806
+#: ../variety/VarietyWindow.py:1822
 msgid "Show Next wallpaper"
 msgstr "次の壁紙を表示"
 
-#: ../variety/VarietyWindow.py:1810
+#: ../variety/VarietyWindow.py:1826
 msgid "Show Previous wallpaper"
 msgstr "前の壁紙を表示"
 
-#: ../variety/VarietyWindow.py:1814
+#: ../variety/VarietyWindow.py:1830
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "履歴を前方にスキップして壁紙を表示"
 
-#: ../variety/VarietyWindow.py:1818
+#: ../variety/VarietyWindow.py:1834
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr "現在の壁紙をゴミ箱に移動。起動中のみ使用可能。"
 
-#: ../variety/VarietyWindow.py:1822
+#: ../variety/VarietyWindow.py:1838
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "現在の壁紙をお気に入りにコピー。起動中のみ使用可能。"
 
-#: ../variety/VarietyWindow.py:1826
+#: ../variety/VarietyWindow.py:1842
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "現在の壁紙をお気に入りに移動。起動中のみ使用可能。"
 
-#: ../variety/VarietyWindow.py:1838
+#: ../variety/VarietyWindow.py:1854
 msgid "Toggle Pause/Resume state"
 msgstr "一時停止/スタートの切り替え"
 
-#: ../variety/VarietyWindow.py:1842
+#: ../variety/VarietyWindow.py:1858
 msgid "Show Next quote"
 msgstr "次の名言を表示"
 
-#: ../variety/VarietyWindow.py:1846
+#: ../variety/VarietyWindow.py:1862
 msgid "Show Previous quote"
 msgstr "前の名言を表示"
 
-#: ../variety/VarietyWindow.py:1850
+#: ../variety/VarietyWindow.py:1866
 msgid "Show Next quote, skipping the forward history"
 msgstr "履歴を前方にスキップして名言を表示"
 
-#: ../variety/VarietyWindow.py:1854
+#: ../variety/VarietyWindow.py:1870
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "名言の一時停止/スタートの切り替え"
 
-#: ../variety/VarietyWindow.py:1858
+#: ../variety/VarietyWindow.py:1874
 msgid "Toggle History display"
 msgstr "履歴表示の切り替え"
 
-#: ../variety/VarietyWindow.py:1862
+#: ../variety/VarietyWindow.py:1878
 msgid "Toggle Recent Downloads display"
 msgstr "最近のダウンロード表示の切り替え"
 
-#: ../variety/VarietyWindow.py:1866
+#: ../variety/VarietyWindow.py:1882
 msgid "Show Preferences dialog"
 msgstr "設定ダイアログの表示"
 
-#: ../variety/VarietyWindow.py:1870
+#: ../variety/VarietyWindow.py:1886
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -429,49 +430,49 @@ msgstr ""
 "option icon Dark --set-option clock_enabled True' 使用上の注意: "
 "設定ファイルを直接編集するのは勧めません。"
 
-#: ../variety/VarietyWindow.py:1880
+#: ../variety/VarietyWindow.py:1896
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr "オプション --next/--fast-forwardと --previousは同時に使えません"
 
-#: ../variety/VarietyWindow.py:1883
+#: ../variety/VarietyWindow.py:1899
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "オプション --trashと --favoriteは同時に使えません"
 
-#: ../variety/VarietyWindow.py:1886
+#: ../variety/VarietyWindow.py:1902
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "オプション --pauseと --resumeは同時に使えません"
 
-#: ../variety/VarietyWindow.py:1889
+#: ../variety/VarietyWindow.py:1905
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
 "オプション --quotes-next/--quotes-fast-forwardと --quotes-previousは同時に使えません"
 
-#: ../variety/VarietyWindow.py:1990 ../variety/ImageFetcher.py:58
+#: ../variety/VarietyWindow.py:2006 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr "画像ではありません"
 
-#: ../variety/VarietyWindow.py:1995
+#: ../variety/VarietyWindow.py:2011
 msgid "Added to queue"
 msgstr "キューに追加します"
 
-#: ../variety/VarietyWindow.py:1995 ../variety/ImageFetcher.py:91
+#: ../variety/VarietyWindow.py:2011 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
 msgstr "次へを押してください"
 
-#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
+#: ../variety/VarietyWindow.py:2242 ../variety/VarietyWindow.py:2270
 msgid "Published"
 msgstr "公開しました"
 
-#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
+#: ../variety/VarietyWindow.py:2242 ../variety/VarietyWindow.py:2270
 msgid "You may open your Facebook feed to see the post"
 msgstr "Facebookを開いて投稿を見る"
 
-#: ../variety/VarietyWindow.py:2227 ../variety/VarietyWindow.py:2255
+#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
 msgid "Could not publish"
 msgstr "公開できません"
 
@@ -658,11 +659,11 @@ msgstr "画像のあるフォルダーを表示"
 msgid "Set Rating"
 msgstr "評価をセット"
 
-#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:76
+#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:87
 msgid "Delete to _Trash"
 msgstr "ゴミ箱に移動(_T)"
 
-#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:81
+#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:92
 msgid "Display Source"
 msgstr "壁紙の場所を表示"
 
@@ -826,27 +827,31 @@ msgstr "現在の壁紙の場所"
 msgid "Show origin"
 msgstr "取得元を表示"
 
-#: ../variety/indicator.py:91
+#: ../variety/indicator.py:63
+msgid "Reveal clean image"
+msgstr ""
+
+#: ../variety/indicator.py:102
 msgid "_History"
 msgstr "履歴(_H)"
 
-#: ../variety/indicator.py:97
+#: ../variety/indicator.py:108
 msgid "Recent _Downloads"
 msgstr "最近のダウンロード(_D)"
 
-#: ../variety/indicator.py:105 ../variety/indicator.py:142
+#: ../variety/indicator.py:116 ../variety/indicator.py:153
 msgid "_Previous"
 msgstr "前へ(_P)"
 
-#: ../variety/indicator.py:110 ../variety/indicator.py:147
+#: ../variety/indicator.py:121 ../variety/indicator.py:158
 msgid "_Next"
 msgstr "次へ(_N)"
 
-#: ../variety/indicator.py:115 ../variety/indicator.py:152
+#: ../variety/indicator.py:126 ../variety/indicator.py:163
 msgid "_Fast Forward"
 msgstr "早送り(_F)"
 
-#: ../variety/indicator.py:129
+#: ../variety/indicator.py:140
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
@@ -854,39 +859,39 @@ msgstr ""
 "アイコン上でスクロール\n"
 "すると壁紙を変更します"
 
-#: ../variety/indicator.py:135
+#: ../variety/indicator.py:146
 msgid "_Playback"
 msgstr "壁紙(_P)"
 
-#: ../variety/indicator.py:167
+#: ../variety/indicator.py:178
 msgid "Copy to Clipboard"
 msgstr "クリップボードへコピー"
 
-#: ../variety/indicator.py:177
+#: ../variety/indicator.py:188
 msgid "Google Quote"
 msgstr "Googleで名言を検索"
 
-#: ../variety/indicator.py:182
+#: ../variety/indicator.py:193
 msgid "Google Author"
 msgstr "Googleで作者を検索"
 
-#: ../variety/indicator.py:194
-msgid "Turn off"
-msgstr ""
-
-#: ../variety/indicator.py:200
-msgid "_Quotes"
-msgstr "名言(_Q)"
-
-#: ../variety/indicator.py:207
+#: ../variety/indicator.py:205 ../variety/indicator.py:226
 msgid "Preferences..."
 msgstr "設定..."
 
-#: ../variety/indicator.py:211
+#: ../variety/indicator.py:213
+msgid "Turn off"
+msgstr ""
+
+#: ../variety/indicator.py:219
+msgid "_Quotes"
+msgstr "名言(_Q)"
+
+#: ../variety/indicator.py:230
 msgid "About"
 msgstr "情報"
 
-#: ../variety/indicator.py:215
+#: ../variety/indicator.py:234
 msgid "Quit"
 msgstr "終了"
 
@@ -1690,10 +1695,18 @@ msgid ""
 "You have no quote plugins which support searching by keywords and authors"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:251
+#: ../variety/QuotesEngine.py:254
 msgid "Could not fetch quotes"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:252
+#: ../variety/QuotesEngine.py:255
 msgid "Quotes services may be down, we will continue trying"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:258
+msgid "Could not find quotes"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:259
+msgid "Maybe you are searching for something very obscure?"
 msgstr ""

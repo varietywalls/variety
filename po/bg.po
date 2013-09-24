@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-09-19 03:05+0300\n"
-"PO-Revision-Date: 2013-09-19 21:32+0000\n"
+"POT-Creation-Date: 2013-09-22 15:04+0300\n"
+"PO-Revision-Date: 2013-09-24 20:32+0000\n"
 "Last-Translator: Peter Levi <Unknown>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-09-19 21:36+0000\n"
-"X-Generator: Launchpad (build 16765)\n"
+"X-Launchpad-Export-Date: 2013-09-24 20:36+0000\n"
+"X-Generator: Launchpad (build 16771)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -226,8 +226,8 @@ msgstr "  "
 msgid "Variety - Publish to Facebook"
 msgstr "Variety - Публикувай във Фейсбук"
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:85
-#: ../variety/indicator.py:187
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:96
+#: ../variety/indicator.py:198
 msgid "Share on Facebook"
 msgstr "Сподели във Фейсбук"
 
@@ -247,96 +247,97 @@ msgstr "Не питай повече, винаги използвай горни
 msgid "No images found"
 msgstr "Не намерих картинки"
 
-#: ../variety/VarietyWindow.py:583
+#: ../variety/VarietyWindow.py:589
 msgid "Already in Favorites"
 msgstr "Вече е в Любими"
 
-#: ../variety/VarietyWindow.py:587 ../variety/ThumbsManager.py:124
-#: ../variety/indicator.py:65
+#. self.menu.append(self.no_effects_separator)
+#: ../variety/VarietyWindow.py:593 ../variety/ThumbsManager.py:124
+#: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
 msgstr "Копирай в _Любими"
 
-#: ../variety/VarietyWindow.py:588 ../variety/ThumbsManager.py:131
+#: ../variety/VarietyWindow.py:594 ../variety/ThumbsManager.py:131
 msgid "Move to _Favorites"
 msgstr "Премести в _Любими"
 
 #. both
-#: ../variety/VarietyWindow.py:596 ../variety/indicator.py:70
+#: ../variety/VarietyWindow.py:602 ../variety/indicator.py:81
 #: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Move to Favorites"
 msgstr "Премести в Любими"
 
-#: ../variety/VarietyWindow.py:616 ../variety/VarietyWindow.py:678
+#: ../variety/VarietyWindow.py:622 ../variety/VarietyWindow.py:684
 #, python-format
 msgid "View at %s"
 msgstr "Виж във %s"
 
-#: ../variety/VarietyWindow.py:616
+#: ../variety/VarietyWindow.py:622
 msgid "Fetched: Show Origin"
 msgstr "Довлечено: Покажи източника"
 
-#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
-#: ../variety/VarietyWindow.py:1830 ../variety/indicator.py:124
-#: ../variety/indicator.py:161
+#: ../variety/VarietyWindow.py:677 ../variety/VarietyWindow.py:693
+#: ../variety/VarietyWindow.py:1846 ../variety/indicator.py:135
+#: ../variety/indicator.py:172
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../variety/VarietyWindow.py:671 ../variety/VarietyWindow.py:687
-#: ../variety/VarietyWindow.py:1834
+#: ../variety/VarietyWindow.py:677 ../variety/VarietyWindow.py:693
+#: ../variety/VarietyWindow.py:1850
 msgid "Resume"
 msgstr "Подновяване"
 
-#: ../variety/VarietyWindow.py:807
+#: ../variety/VarietyWindow.py:820
 msgid "Filtering too strict?"
 msgstr "Твърде строги филтри?"
 
-#: ../variety/VarietyWindow.py:808
+#: ../variety/VarietyWindow.py:821
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
 "Variety намира много малко картинки, които съответстват на филтрите ви."
 
-#: ../variety/VarietyWindow.py:1296
+#: ../variety/VarietyWindow.py:1310
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
 "Моля добавете още източници на картинки или изчакайте да се изтеглят нови"
 
-#: ../variety/VarietyWindow.py:1298
+#: ../variety/VarietyWindow.py:1312
 msgid "Please add more image sources"
 msgstr "Моля добавете още източници на картинки"
 
-#: ../variety/VarietyWindow.py:1299
+#: ../variety/VarietyWindow.py:1313
 msgid "No more wallpapers"
 msgstr "Няма повече тапети"
 
-#: ../variety/VarietyWindow.py:1473
+#: ../variety/VarietyWindow.py:1487
 msgid "Current wallpaper is not in the image sources"
 msgstr "Текущият тапет не е в никой от източниците"
 
-#: ../variety/VarietyWindow.py:1504
+#: ../variety/VarietyWindow.py:1518
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr ""
 "Не успях да преместя в %s. Вероятно нямате права да местите този файл."
 
-#: ../variety/VarietyWindow.py:1506
+#: ../variety/VarietyWindow.py:1520
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr ""
 "Не можах да копирам в %s. Вероятно нямате права да копирате този файл."
 
-#: ../variety/VarietyWindow.py:1524 ../variety/VarietyWindow.py:1541
+#: ../variety/VarietyWindow.py:1538 ../variety/VarietyWindow.py:1555
 msgid "Cannot delete"
 msgstr "Неуспешно изтриване"
 
-#: ../variety/VarietyWindow.py:1525
+#: ../variety/VarietyWindow.py:1539
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr "Нямате права да преместите %s в Коша."
 
-#: ../variety/VarietyWindow.py:1542
+#: ../variety/VarietyWindow.py:1556
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
@@ -344,7 +345,7 @@ msgstr ""
 "Може би нямате инсталирано приложение за триене към Коша?\n"
 "Моля инсталирайте trash-cli, gvfs-bin или konquerer."
 
-#: ../variety/VarietyWindow.py:1759
+#: ../variety/VarietyWindow.py:1775
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
@@ -352,7 +353,7 @@ msgstr ""
 "Ще отворя конфигурационния файл в редактор и ще презаредя промените след "
 "като запишете и затворите редактора."
 
-#: ../variety/VarietyWindow.py:1784
+#: ../variety/VarietyWindow.py:1800
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -370,7 +371,7 @@ msgstr ""
 "\n"
 "За да изберете текущ тапет: %prog /локална/картинка.jpg --next"
 
-#: ../variety/VarietyWindow.py:1794
+#: ../variety/VarietyWindow.py:1810
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
@@ -378,83 +379,83 @@ msgstr ""
 "Показвай logging информация (-vv логва с повече детайли, -vvv логва и дебъг "
 "информация от variety_lib)"
 
-#: ../variety/VarietyWindow.py:1798
+#: ../variety/VarietyWindow.py:1814
 msgid "Make the running instance quit"
 msgstr "Подай сигнал за излизане към вървящия процес"
 
-#: ../variety/VarietyWindow.py:1802
+#: ../variety/VarietyWindow.py:1818
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
 "Покажи пътя към текущия тапет. Използва се само при вървящо приложение."
 
-#: ../variety/VarietyWindow.py:1806
+#: ../variety/VarietyWindow.py:1822
 msgid "Show Next wallpaper"
 msgstr "Покажи следващия тапет"
 
-#: ../variety/VarietyWindow.py:1810
+#: ../variety/VarietyWindow.py:1826
 msgid "Show Previous wallpaper"
 msgstr "Покажи предишния тапет"
 
-#: ../variety/VarietyWindow.py:1814
+#: ../variety/VarietyWindow.py:1830
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "Покажи нов тапет, като пропуснеш forward историята"
 
-#: ../variety/VarietyWindow.py:1818
+#: ../variety/VarietyWindow.py:1834
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
 "Премести текущия тапет в Коша. Използва се само при вървящо приложение."
 
-#: ../variety/VarietyWindow.py:1822
+#: ../variety/VarietyWindow.py:1838
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 "Копирай текущия тапет в Любими. Използва се само при вървящо приложение."
 
-#: ../variety/VarietyWindow.py:1826
+#: ../variety/VarietyWindow.py:1842
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 "Премести текущия тапет в Любими. Използва се само при вървящо приложение."
 
-#: ../variety/VarietyWindow.py:1838
+#: ../variety/VarietyWindow.py:1854
 msgid "Toggle Pause/Resume state"
 msgstr "Паузирай или възобнови"
 
-#: ../variety/VarietyWindow.py:1842
+#: ../variety/VarietyWindow.py:1858
 msgid "Show Next quote"
 msgstr "Покажи следващия цитат"
 
-#: ../variety/VarietyWindow.py:1846
+#: ../variety/VarietyWindow.py:1862
 msgid "Show Previous quote"
 msgstr "Покажи предишния цитат"
 
-#: ../variety/VarietyWindow.py:1850
+#: ../variety/VarietyWindow.py:1866
 msgid "Show Next quote, skipping the forward history"
 msgstr "Покажи нов цитат като пропуснеш forward историята"
 
-#: ../variety/VarietyWindow.py:1854
+#: ../variety/VarietyWindow.py:1870
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "Паузирай или възобнови смяната на цитати"
 
-#: ../variety/VarietyWindow.py:1858
+#: ../variety/VarietyWindow.py:1874
 msgid "Toggle History display"
 msgstr "Покажи или скрий историята"
 
-#: ../variety/VarietyWindow.py:1862
+#: ../variety/VarietyWindow.py:1878
 msgid "Toggle Recent Downloads display"
 msgstr "Покажи или скрий скорошно изтеглените"
 
-#: ../variety/VarietyWindow.py:1866
+#: ../variety/VarietyWindow.py:1882
 msgid "Show Preferences dialog"
 msgstr "Покажи диалога за настройки"
 
-#: ../variety/VarietyWindow.py:1870
+#: ../variety/VarietyWindow.py:1886
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -468,19 +469,19 @@ msgstr ""
 "Dark --set-option clock_enabled True'. ИЗПОЛЗВАЙТЕ ВНИМАТЕЛНО: Сменяте опции "
 "директно в конфигурационния файл без да се извършва проверка за коректност."
 
-#: ../variety/VarietyWindow.py:1880
+#: ../variety/VarietyWindow.py:1896
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr "опциите --next/--fast-forward и --previous са взаимно изключващи се"
 
-#: ../variety/VarietyWindow.py:1883
+#: ../variety/VarietyWindow.py:1899
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "опциите --trash и --favorite са взаимно изключващи се"
 
-#: ../variety/VarietyWindow.py:1886
+#: ../variety/VarietyWindow.py:1902
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "опциите --pause и --resume са взаимно изключващи се"
 
-#: ../variety/VarietyWindow.py:1889
+#: ../variety/VarietyWindow.py:1905
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
@@ -488,30 +489,30 @@ msgstr ""
 "опциите --quotes-next/--quotes-fast-forward и --quotes-previous са взаимно "
 "изключващи се"
 
-#: ../variety/VarietyWindow.py:1990 ../variety/ImageFetcher.py:58
+#: ../variety/VarietyWindow.py:2006 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr "Не е картинка"
 
-#: ../variety/VarietyWindow.py:1995
+#: ../variety/VarietyWindow.py:2011
 msgid "Added to queue"
 msgstr "Добавено в опашката"
 
-#: ../variety/VarietyWindow.py:1995 ../variety/ImageFetcher.py:91
+#: ../variety/VarietyWindow.py:2011 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
 msgstr "Натиснете \"Напред\" за да го видите"
 
-#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
+#: ../variety/VarietyWindow.py:2242 ../variety/VarietyWindow.py:2270
 msgid "Published"
 msgstr "Публикувано"
 
-#: ../variety/VarietyWindow.py:2225 ../variety/VarietyWindow.py:2253
+#: ../variety/VarietyWindow.py:2242 ../variety/VarietyWindow.py:2270
 msgid "You may open your Facebook feed to see the post"
 msgstr "Можете да отворите своя Facebook фийд, за да видите публикацията"
 
-#: ../variety/VarietyWindow.py:2227 ../variety/VarietyWindow.py:2255
+#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
 msgid "Could not publish"
 msgstr "Публикуването беше неуспешно"
 
@@ -713,11 +714,11 @@ msgstr "Отвори папката"
 msgid "Set Rating"
 msgstr "Оценка"
 
-#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:76
+#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:87
 msgid "Delete to _Trash"
 msgstr "Изтрий към Коша"
 
-#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:81
+#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:92
 msgid "Display Source"
 msgstr "Покажи източника"
 
@@ -905,27 +906,31 @@ msgstr "Текущ тапет"
 msgid "Show origin"
 msgstr "Отвори източника"
 
-#: ../variety/indicator.py:91
+#: ../variety/indicator.py:63
+msgid "Reveal clean image"
+msgstr "Разкрий чистия тапет"
+
+#: ../variety/indicator.py:102
 msgid "_History"
 msgstr "_История"
 
-#: ../variety/indicator.py:97
+#: ../variety/indicator.py:108
 msgid "Recent _Downloads"
 msgstr "_Скорошно изтеглени"
 
-#: ../variety/indicator.py:105 ../variety/indicator.py:142
+#: ../variety/indicator.py:116 ../variety/indicator.py:153
 msgid "_Previous"
 msgstr "Назад"
 
-#: ../variety/indicator.py:110 ../variety/indicator.py:147
+#: ../variety/indicator.py:121 ../variety/indicator.py:158
 msgid "_Next"
 msgstr "Напред"
 
-#: ../variety/indicator.py:115 ../variety/indicator.py:152
+#: ../variety/indicator.py:126 ../variety/indicator.py:163
 msgid "_Fast Forward"
 msgstr "Напред, прескачайки историята"
 
-#: ../variety/indicator.py:129
+#: ../variety/indicator.py:140
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
@@ -933,39 +938,39 @@ msgstr ""
 "Съвет: Скролирайте с колелцето\n"
 "върху иконата за да сменяте тапета."
 
-#: ../variety/indicator.py:135
+#: ../variety/indicator.py:146
 msgid "_Playback"
 msgstr "_Плейбек"
 
-#: ../variety/indicator.py:167
+#: ../variety/indicator.py:178
 msgid "Copy to Clipboard"
 msgstr "Копирай в клипборда"
 
-#: ../variety/indicator.py:177
+#: ../variety/indicator.py:188
 msgid "Google Quote"
 msgstr "Потърси цитата в Google"
 
-#: ../variety/indicator.py:182
+#: ../variety/indicator.py:193
 msgid "Google Author"
 msgstr "Потърси автора в Google"
 
-#: ../variety/indicator.py:194
-msgid "Turn off"
-msgstr "Изключи"
-
-#: ../variety/indicator.py:200
-msgid "_Quotes"
-msgstr "_Цитати"
-
-#: ../variety/indicator.py:207
+#: ../variety/indicator.py:205 ../variety/indicator.py:226
 msgid "Preferences..."
 msgstr "Настройки..."
 
-#: ../variety/indicator.py:211
+#: ../variety/indicator.py:213
+msgid "Turn off"
+msgstr "Изключи"
+
+#: ../variety/indicator.py:219
+msgid "_Quotes"
+msgstr "_Цитати"
+
+#: ../variety/indicator.py:230
 msgid "About"
 msgstr "За приложението"
 
-#: ../variety/indicator.py:215
+#: ../variety/indicator.py:234
 msgid "Quit"
 msgstr "Изход"
 
@@ -1766,7 +1771,7 @@ msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
-msgstr ""
+msgstr "Запазени права (c) 2012, Петър Леви <peterlevi@peterlevi.com>"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:2
 msgid "About Variety"
@@ -1816,11 +1821,19 @@ msgid ""
 "You have no quote plugins which support searching by keywords and authors"
 msgstr "Никой от плъгините за цитати не поддържа търсене по думи и автори"
 
-#: ../variety/QuotesEngine.py:251
+#: ../variety/QuotesEngine.py:254
 msgid "Could not fetch quotes"
 msgstr "Не успях да изтегля цитати"
 
-#: ../variety/QuotesEngine.py:252
+#: ../variety/QuotesEngine.py:255
 msgid "Quotes services may be down, we will continue trying"
 msgstr ""
 "Може би няма връзка със сървърите за цитати, ще продължим да опитваме."
+
+#: ../variety/QuotesEngine.py:258
+msgid "Could not find quotes"
+msgstr "Не намерихме цитати"
+
+#: ../variety/QuotesEngine.py:259
+msgid "Maybe you are searching for something very obscure?"
+msgstr "Може би търсите нещо твърде затънтено?"
