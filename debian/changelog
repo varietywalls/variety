@@ -1,3 +1,27 @@
+variety (0.4.16) precise; urgency=low
+
+  * Append http: to links starting with //
+  * Updated translation files
+  * Quick access to quotes preferences
+  * QuotesEngine: different notif. warnings when sites are down and when
+    search criteria are bad
+  * Changes to filters - removed charcoal, added soft blur
+  * Option to reveal the clean image when using any effects
+  * Upped version to 0.4.16
+  * Added Recommended sources link under image sources list
+  * Quotes: better search by tags for Goodreads; local files also
+    support fortune file format
+  * Mrgd in variety-plugins
+  * Updated Wallbase dialog - simpler, allows entering keywords or URL
+  * Updating WallpapersNetDownloader to work with current Wp.net site
+  * Updating WallbaseDownloader to work with current Wallbase site
+  * QuoteWriter now works on GTK thread (fixes potential
+    SegmentationFault)
+  * Proper handling of terminating signals
+  * Fix bad quotes in Cinnamon section in set_wallpaper
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 25 Sep 2013 00:08:30 +0300
+
 variety (0.4.15ubuntu1) precise; urgency=low
 
   * 

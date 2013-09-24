@@ -1,7 +1,8 @@
 Source: variety
 Section: python
 Priority: extra
-Build-Depends: debhelper (>= 8), libglib2.0-bin, python (>= 2.6.6-3~),
+Build-Depends: debhelper (>= 8),
+ python (>= 2.6.6-3~),
  python-distutils-extra (>= 2.10)
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
 Standards-Version: 3.9.3
