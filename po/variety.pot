@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-24 23:44+0300\n"
+"POT-Creation-Date: 2013-09-26 18:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,9 +189,9 @@ msgstr ""
 msgid "Just a moment to check this search"
 msgstr ""
 
-#: ../data/ui/AddWallbaseDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddMediaRssDialog.ui.h:6
+#: ../data/ui/AddWallbaseDialog.ui.h:10
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
+#: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddMediaRssDialog.ui.h:6
 msgid "  "
 msgstr ""
 
@@ -509,6 +509,37 @@ msgid ""
 "wallpaper."
 msgstr ""
 
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
+msgid "Variety - add Wallpapers.net category"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+msgid ""
+"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
+"a category with wallpapers you would like to see on your desktop, then paste "
+"its URL below. A category is  anything on the site that has one or more "
+"pages with wallpapers on them. Here are some examples:\n"
+"\n"
+"Top wallpapers: <a href=\"http://wallpapers.net/top_wallpapers.html\">http://"
+"wallpapers.net/top_wallpapers.html</a>\n"
+"Category 'autumn': <a href=\"http://wallpapers.net/autumn-desktop-wallpapers."
+"html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
+"Search for 'fog': <a href=\"http://wallpapers.net/search.html?q=fog\">http://"
+"wallpapers.net/search.html?q=fog</a>\n"
+"Specific resolution: <a href=\"http://wallpapers.net/1920x1200_wide-"
+"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-r.html</"
+"a>\n"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
+msgid "Paste URL here: "
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
+#: ../data/ui/AddMediaRssDialog.ui.h:5
+msgid "Just a moment to check what's at that URL"
+msgstr ""
+
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
 msgstr ""
@@ -577,7 +608,7 @@ msgstr ""
 msgid "Terminating signal received, quitting..."
 msgstr ""
 
-#: ../variety/__init__.py:94
+#: ../variety/__init__.py:95
 msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr ""
@@ -705,21 +736,6 @@ msgid ""
 "(this is determined by Facebook) you will be asked to login again."
 msgstr ""
 
-#: ../data/plugins/quotes/LocalFilesSource.py:34
-msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
 msgstr ""
@@ -738,11 +754,6 @@ msgstr ""
 
 #: ../data/ui/AddMediaRssDialog.ui.h:4
 msgid "Paste the URL of the Media RSS feed here: "
-msgstr ""
-
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
-msgid "Just a moment to check what's at that URL"
 msgstr ""
 
 #: ../variety/FacebookHelper.py:91
@@ -864,30 +875,19 @@ msgid ""
 "\tOthers:Both"
 msgstr ""
 
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
-msgid "Variety - add Wallpapers.net category"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+#: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
-"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
-"a category with wallpapers you would like to see on your desktop, then paste "
-"its URL below. A category is  anything on the site that has one or more "
-"pages with wallpapers on them. Here are some examples:\n"
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
 "\n"
-"Top wallpapers: <a href=\"http://wallpapers.net/top_wallpapers.html\">http://"
-"wallpapers.net/top_wallpapers.html</a>\n"
-"Category 'autumn': <a href=\"http://wallpapers.net/autumn-desktop-wallpapers."
-"html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
-"Search for 'fog': <a href=\"http://wallpapers.net/search.html?q=fog\">http://"
-"wallpapers.net/search.html?q=fog</a>\n"
-"Specific resolution: <a href=\"http://wallpapers.net/1920x1200_wide-"
-"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-r.html</"
-"a>\n"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
-msgid "Paste URL here: "
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
