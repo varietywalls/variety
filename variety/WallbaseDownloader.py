@@ -90,7 +90,7 @@ class WallbaseDownloader(Downloader.Downloader):
             url += "&res_opt=gteq&res=%dx%d" % (max(100, self.parent.min_width), max(100, self.parent.min_height))
 
         if start_from:
-            url = url.replace('?', '/index/%d?' % start_from, 1)
+            url = url.replace('?', '/%d?' % start_from, 1)
 
         logger.info("Performing wallbase search: url=%s" % url)
         return Util.html_soup(url)

@@ -71,7 +71,7 @@ def set_up_logging(opts):
     try:
         logger_file = logging.FileHandler(
             os.path.join(os.path.expanduser("~/.config/variety/"), "variety.log"), "w")
-        logger_file.setFormatter(logging.Formatter("%(levelname)s: %(funcName)s() '%(message)s'"))
+        logger_file.setFormatter(formatter)
         logger.addHandler(logger_file)
     except Exception:
         logger.exception("Could not create file logger")

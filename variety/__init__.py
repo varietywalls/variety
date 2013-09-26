@@ -87,12 +87,13 @@ def main():
         Util.log_all(ThumbsManager.ThumbsManager)
         Util.log_all(ThumbsWindow.ThumbsWindow)
 
+    bus = dbus.SessionBus()
     # ensure singleton
-    if dbus.SessionBus().request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+    if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
             arguments = ["--preferences"]
         print _("Variety is already running. Sending the command to the running instance.")
-        method = dbus.SessionBus().get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+        method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
         result = method(arguments)
         if result:
             print result
@@ -103,6 +104,8 @@ def main():
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
     service = VarietyService(window)
+
+    bus.call_on_disconnection(window.on_quit)
 
     window.start(arguments)
 
