@@ -98,7 +98,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
         s = Util.html_soup(self.location)
         mp = 0
         urls = [url['href'] for x in s.find_all('div', 'pagination') for url in x.find_all('a') if
-                url['href'].index('/page/') > 0]
+                url['href'].find('/page/') > 0]
 
         if urls:
             for h in urls:
