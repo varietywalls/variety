@@ -97,9 +97,12 @@ class VarietyWindow(Gtk.Window):
 
         self.ind = None
 
-        if Gio.SettingsSchemaSource.get_default().lookup("org.gnome.desktop.background", True):
-            self.gsettings = Gio.Settings.new('org.gnome.desktop.background')
-        else:
+        try:
+            if Gio.SettingsSchemaSource.get_default().lookup("org.gnome.desktop.background", True):
+                self.gsettings = Gio.Settings.new('org.gnome.desktop.background')
+            else:
+                self.gsettings = None
+        except Exception:
             self.gsettings = None
 
         self.thumbs_manager = ThumbsManager(self)
