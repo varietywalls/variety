@@ -47,22 +47,27 @@ class QuotationsPageSource(IQuoteSource):
             quote = None
             try:
                 quote = item.find('a').contents[0]
-                quote = quote.encode('utf-8', 'ignore').replace(u'\u0092'.encode('utf-8'), "'"). \
+                quote = quote.encode('utf-8', 'ignore').\
+                    replace(u'\u0092'.encode('utf-8'), "'"). \
+                    replace(u'\u0085'.encode('utf-8'), "..."). \
                     replace(u'\u0097'.encode('utf-8'), " - "). \
+                    replace(u'\u0096'.encode('utf-8'), " - "). \
                     decode('utf-8')
                 quote = u"\u201C%s\u201D" % quote
                 link = "http://www.quotationspage.com" + item.find('a')['href']
                 try:
                     author = item.next_sibling.find('b').find('a').contents[0]
                 except Exception:
-                    author = item.next_sibling.find('b').contents[0]
+                    try:
+                        author = item.next_sibling.find('b').contents[0]
+                    except Exception:
+                        author = None
+
                 quotes.append({"quote": quote, "author": author, "sourceName": "TheQuotationsPage.com", "link": link})
             except Exception:
-                logger.exception("aaa")
                 logger.warning("Could not get or parse quote: %s" % quote)
 
         if not quotes:
-            logger.exception("aaa")
             logger.warning("QuotationsPage: no quotes found at %s" % url)
 
         return quotes
