@@ -43,16 +43,21 @@ class QuotationsPageSource(IQuoteSource):
     def get_from_html(self, url, html):
         quotes = []
         bs = bs4.BeautifulSoup(html)
+        fixmap = {
+            u'\u0091': u"\u2018",
+            u'\u0092': u"\u2019",
+            u'\u0093': u"\u201C",
+            u'\u0094': u"\u201D",
+            u'\u0085': "...",
+            u'\u0097': u"\u2014",
+            u'\u0096': "-"
+        }
         for item in bs.findAll('dt', 'quote'):
             quote = None
             try:
                 quote = item.find('a').contents[0]
-                quote = quote.encode('utf-8', 'ignore').\
-                    replace(u'\u0092'.encode('utf-8'), "'"). \
-                    replace(u'\u0085'.encode('utf-8'), "..."). \
-                    replace(u'\u0097'.encode('utf-8'), " - "). \
-                    replace(u'\u0096'.encode('utf-8'), " - "). \
-                    decode('utf-8')
+                for k, v in fixmap.items():
+                    quote = quote.replace(k, v)
                 quote = u"\u201C%s\u201D" % quote
                 link = "http://www.quotationspage.com" + item.find('a')['href']
                 try:
