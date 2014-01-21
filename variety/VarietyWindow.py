@@ -109,6 +109,7 @@ class VarietyWindow(Gtk.Window):
 
         self.quotes_engine = None
         self.quote = None
+        self.quote_favorites_contents = ''
         self.clock_thread = None
 
         self.prepare_config_folder()
@@ -422,6 +423,7 @@ class VarietyWindow(Gtk.Window):
                 self.quotes_engine.stop()
 
         if self.quotes_engine:
+            self.reload_quote_favorites_contents()
             clear_prepared = self.previous_options is None or \
                 self.options.quotes_disabled_sources != self.previous_options.quotes_disabled_sources or \
                 self.options.quotes_tags != self.previous_options.quotes_tags or \
@@ -687,13 +689,21 @@ class VarietyWindow(Gtk.Window):
                             self.ind.view_quote.set_label(_("View at %s") % self.quote["sourceName"])
                         else:
                             self.ind.view_quote.set_visible(False)
+
+                        if self.quotes_engine:
+                            self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
+
+                        self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
+
+                        not_fav = self.quote is not None and self.quote_favorites_contents.find(self.current_quote_to_text()) == -1
+                        self.ind.quote_favorite.set_sensitive(not_fav)
+                        self.ind.quote_favorite.set_label(_("Save to Favorites") if not_fav else _("Already in Favorites"))
+                        self.ind.quote_view_favs.set_sensitive(os.path.isfile(os.path.join(self.config_folder, "favorite_quotes.txt")))
+
+                        self.ind.quote_clipboard.set_sensitive(self.quote is not None)
+
                     else:
                         self.ind.quotes.set_visible(False)
-
-                    if self.quotes_engine:
-                        self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
-                    self.ind.quote_clipboard.set_sensitive(self.options.quotes_enabled and self.quote is not None)
-                    self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
 
                     no_effects_visible = self.filters or self.options.quotes_enabled or self.options.clock_enabled
                     self.ind.no_effects.set_visible(no_effects_visible)
@@ -2326,6 +2336,39 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
             clipboard.set_text(text, -1)
             clipboard.store()
+
+    def reload_quote_favorites_contents(self):
+        self.quote_favorites_contents = ''
+        try:
+            path = os.path.join(self.config_folder, "favorite_quotes.txt")
+            if os.path.isfile(path):
+                with open(path) as f:
+                    self.quote_favorites_contents = f.read().decode('utf-8')
+        except Exception:
+            logger.exception("Could not load favorite_quotes.txt")
+            self.quote_favorites_contents = ''
+
+    def current_quote_to_text(self):
+        return '"' + self.quote["quote"][1:-1] + '"' + '\n-- ' + self.quote["author"] + '\n.\n' if self.quote else ''
+
+    def quote_save_to_favorites(self, widget=None):
+        if self.quote:
+            try:
+                path = os.path.join(self.config_folder, "favorite_quotes.txt")
+                with open(path, "a") as f:
+                    text = self.current_quote_to_text()
+                    f.write(text.encode('utf-8'))
+                self.reload_quote_favorites_contents()
+                self.update_indicator()
+                self.show_notification("Saved", "Saved to %s" % path)
+            except Exception:
+                logger.exception("Could not save quote to favorites")
+                self.show_notification("Oops, something went wrong when trying to save the quote to the favorites file")
+
+    def quote_view_favorites(self, widget=None):
+        path = os.path.join(self.config_folder, "favorite_quotes.txt")
+        if os.path.isfile(path):
+            os.system("xdg-open \"" + path + "\"")
 
     def on_quotes_pause_resume(self, widget=None, change_enabled=None):
         if change_enabled is None:

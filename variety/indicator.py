@@ -175,6 +175,18 @@ class Indicator:
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
+        self.quote_favorite = Gtk.MenuItem(_("Save to Favorites"))
+        self.quote_favorite.set_use_underline(True)
+        self.quote_favorite.connect("activate", window.quote_save_to_favorites)
+        self.quotes_menu.append(self.quote_favorite)
+
+        self.quote_view_favs = Gtk.MenuItem(_("View Favorites..."))
+        self.quote_view_favs.set_use_underline(True)
+        self.quote_view_favs.connect("activate", window.quote_view_favorites)
+        self.quotes_menu.append(self.quote_view_favs)
+
+        self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
+
         self.quote_clipboard = Gtk.MenuItem(_("Copy to Clipboard"))
         self.quote_clipboard.set_use_underline(True)
         self.quote_clipboard.connect("activate", window.quote_copy_to_clipboard)
