@@ -71,7 +71,7 @@ class LocalFilesSource(IQuoteSource):
                 s = f.read().decode('utf-8', errors='ignore')
                 for q in re.split(r'(^\.$|^%$)', s, flags=re.MULTILINE):
                     try:
-                        if q.strip():
+                        if q.strip() and len(q.strip()) > 5:
                             parts = q.split('-- ')
                             quote = ' '.join(parts[0].split())
                             if quote[0] == quote[-1] == '"':

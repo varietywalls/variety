@@ -646,6 +646,10 @@ class VarietyWindow(Gtk.Window):
                 if deleteable and self.options.show_rating_enabled:
                     rating_menu = ThumbsManager.create_rating_menu(file, self)
 
+                quote_not_fav = True
+                if self.options.quotes_enabled and self.quote is not None:
+                    quote_not_fav = self.quote is not None and self.quote_favorites_contents.find(self.current_quote_to_text()) == -1
+
                 for i in xrange(5):    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                     self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
@@ -695,9 +699,8 @@ class VarietyWindow(Gtk.Window):
 
                         self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
 
-                        not_fav = self.quote is not None and self.quote_favorites_contents.find(self.current_quote_to_text()) == -1
-                        self.ind.quote_favorite.set_sensitive(not_fav)
-                        self.ind.quote_favorite.set_label(_("Save to Favorites") if not_fav else _("Already in Favorites"))
+                        self.ind.quote_favorite.set_sensitive(quote_not_fav)
+                        self.ind.quote_favorite.set_label(_("Save to Favorites") if quote_not_fav else _("Already in Favorites"))
                         self.ind.quote_view_favs.set_sensitive(os.path.isfile(self.options.quotes_favorites_file))
 
                         self.ind.quote_clipboard.set_sensitive(self.quote is not None)
@@ -1883,6 +1886,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Toggle Quotes Pause/Resume state"))
 
         parser.add_option(
+            "--quotes-save-favorite", action="store_true", dest="quotes_save_favorite",
+            help=_("Save the current quote to Favorites"))
+
+        parser.add_option(
             "--history", action="store_true", dest="history",
             help=_("Toggle History display"))
 
@@ -1980,6 +1987,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
                 if options.quotes_toggle_pause:
                     self.on_quotes_pause_resume()
+
+                if options.quotes_save_favorite:
+                    self.quote_save_to_favorites()
 
             GObject.timeout_add(3000 if initial_run else 100, _process_command)
 
@@ -2348,17 +2358,23 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quote_favorites_contents = ''
 
     def current_quote_to_text(self):
-        return '"' + self.quote["quote"][1:-1] + '"' + '\n-- ' + self.quote["author"] + '\n%\n' if self.quote else ''
+        return self.quote["quote"] + \
+               ('\n-- ' + self.quote["author"] if self.quote["author"] else '') + \
+               '\n%\n' if self.quote else ''
 
     def quote_save_to_favorites(self, widget=None):
         if self.quote:
             try:
-                with open(self.options.quotes_favorites_file, "a") as f:
-                    text = self.current_quote_to_text()
-                    f.write(text.encode('utf-8'))
                 self.reload_quote_favorites_contents()
-                self.update_indicator()
-                self.show_notification("Saved", "Saved to %s" % self.options.quotes_favorites_file)
+                if self.quote_favorites_contents.find(self.current_quote_to_text()) == -1:
+                    with open(self.options.quotes_favorites_file, "a") as f:
+                        text = self.current_quote_to_text()
+                        f.write(text.encode('utf-8'))
+                    self.reload_quote_favorites_contents()
+                    self.update_indicator()
+                    self.show_notification("Saved", "Saved to %s" % self.options.quotes_favorites_file)
+                else:
+                    self.show_notification(_("Already in Favorites"))
             except Exception:
                 logger.exception("Could not save quote to favorites")
                 self.show_notification("Oops, something went wrong when trying to save the quote to the favorites file")

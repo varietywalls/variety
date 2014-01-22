@@ -21,3 +21,5 @@ If you want to run custom commands every time the wallpaper changes or if you us
 Color and size options will be relaxed or ignored if there are too few matching images. The color options are still experimental, they take some time to take effect due to intial searching, and are not always very accurate.
 
 Variety's indicator icon is themeable - if you you choose the "Light" option for the icon, Variety will first check if the current GTK theme has an icon named "variety-indicator" and will use it instead of the bundled light icon.
+
+When you choose to save quotes to Favorites, these are by default saved to ~/.config/variety/favorite_quotes.txt. This file is compatible with Variety's local files quote source. If you want to use it - copy it to ~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote source. This file is also compatible with the Unix fortune utility.
