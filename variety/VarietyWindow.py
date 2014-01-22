@@ -2349,7 +2349,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quote_favorites_contents = ''
 
     def current_quote_to_text(self):
-        return '"' + self.quote["quote"][1:-1] + '"' + '\n-- ' + self.quote["author"] + '\n.\n' if self.quote else ''
+        return '"' + self.quote["quote"][1:-1] + '"' + '\n-- ' + self.quote["author"] + '\n%\n' if self.quote else ''
 
     def quote_save_to_favorites(self, widget=None):
         if self.quote:
