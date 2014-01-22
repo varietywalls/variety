@@ -346,6 +346,11 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.quotes_favorites_file = os.path.expanduser(config["quotes_favorites_file"])
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -500,6 +505,8 @@ class Options:
         self.quotes_width = 70
         self.quotes_hpos = 100
         self.quotes_vpos = 40
+        self.quotes_favorites_file = os.path.expanduser("~/.config/variety/favorite_quotes.txt")
+
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -589,6 +596,7 @@ class Options:
             config["quotes_width"] = str(self.quotes_width)
             config["quotes_hpos"] = str(self.quotes_hpos)
             config["quotes_vpos"] = str(self.quotes_vpos)
+            config["quotes_favorites_file"] = Util.collapseuser(self.quotes_favorites_file)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
