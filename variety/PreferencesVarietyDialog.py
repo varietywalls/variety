@@ -220,8 +220,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     self.ui.filters_grid.remove(cb)
                     cb.destroy()
             self.filter_checkboxes = []
+            self.filter_name_to_checkbox = {}
             for i, f in enumerate(self.options.filters):
-                cb = Gtk.CheckButton(f[1])
+                cb = Gtk.CheckButton(Texts.FILTER_NAMES.get(f[1], f[1]))
+                self.filter_name_to_checkbox[f[1]] = cb
                 cb.connect("toggled", self.delayed_apply)
                 cb.set_visible(True)
                 cb.set_active(f[0])
@@ -245,7 +247,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.quotes_sources_checkboxes.append(cb)
 
             self.ui.tips_buffer.set_text('\n\n'.join(Texts.TIPS))
-            
+
             try:
                 with open(get_data_file("ui/changes.txt")) as f:
                     self.ui.changes_buffer.set_text(f.read())
@@ -853,10 +855,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.quotes_disabled_sources = [
                 cb.get_label() for cb in self.quotes_sources_checkboxes if not cb.get_active()]
 
-
-            enabled_filters = [cb.get_label().lower() for cb in self.filter_checkboxes if cb.get_active()]
             for f in self.options.filters:
-                f[0] = f[1].lower() in enabled_filters
+                f[0] = self.filter_name_to_checkbox[f[1]].get_active()
 
             self.options.write()
 

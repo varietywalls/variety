@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-24 13:40+0200\n"
+"POT-Creation-Date: 2014-01-24 14:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,92 +21,92 @@ msgstr ""
 msgid "Fetches quotes from Goodreads.com"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:302
-#: ../variety/PreferencesVarietyDialog.py:446
+#: ../variety/PreferencesVarietyDialog.py:304
+#: ../variety/PreferencesVarietyDialog.py:448
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:303
+#: ../variety/PreferencesVarietyDialog.py:305
 msgid "Folders"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:304
+#: ../variety/PreferencesVarietyDialog.py:306
 #: ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:305
+#: ../variety/PreferencesVarietyDialog.py:307
 #: ../data/ui/AddWallbaseDialog.ui.h:2
 msgid "Wallbase.cc"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:306
+#: ../variety/PreferencesVarietyDialog.py:308
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
 msgid "Wallpapers.net"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:307
+#: ../variety/PreferencesVarietyDialog.py:309
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:329
+#: ../variety/PreferencesVarietyDialog.py:331
 msgid "Remove the source, keep the files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:330
+#: ../variety/PreferencesVarietyDialog.py:332
 msgid "Remove the sources, keep the files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:337
+#: ../variety/PreferencesVarietyDialog.py:339
 msgid "Remove the source and delete the downloaded files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:338
+#: ../variety/PreferencesVarietyDialog.py:340
 msgid "Remove the sources and delete the downloaded files"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:371
+#: ../variety/PreferencesVarietyDialog.py:373
 msgid "World Sunlight Map enabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:372
+#: ../variety/PreferencesVarietyDialog.py:374
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:439
+#: ../variety/PreferencesVarietyDialog.py:441
 msgid "Add Images"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:440
-#: ../variety/PreferencesVarietyDialog.py:464 ../variety/FolderChooser.py:66
+#: ../variety/PreferencesVarietyDialog.py:442
+#: ../variety/PreferencesVarietyDialog.py:466 ../variety/FolderChooser.py:66
 msgid "Cancel"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:440
-#: ../variety/PreferencesVarietyDialog.py:464
+#: ../variety/PreferencesVarietyDialog.py:442
+#: ../variety/PreferencesVarietyDialog.py:466
 msgid "Add"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:462
+#: ../variety/PreferencesVarietyDialog.py:464
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:588
-#: ../variety/PreferencesVarietyDialog.py:601
+#: ../variety/PreferencesVarietyDialog.py:590
+#: ../variety/PreferencesVarietyDialog.py:603
 #: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Edit..."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:595
+#: ../variety/PreferencesVarietyDialog.py:597
 msgid "View Image"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:598
+#: ../variety/PreferencesVarietyDialog.py:600
 msgid "Open Folder"
 msgstr ""
 
@@ -240,6 +240,38 @@ msgid ""
 "Variety's local files quote source. If you want to use it - copy it to ~/."
 "config/variety/pluginconfig/quotes/ and enable the Local Files quote source. "
 "This file is also compatible with the Unix fortune utility."
+msgstr ""
+
+#: ../variety/Texts.py:37
+msgid "Keep original"
+msgstr ""
+
+#: ../variety/Texts.py:38
+msgid "Grayscale"
+msgstr ""
+
+#: ../variety/Texts.py:39
+msgid "Heavy blur"
+msgstr ""
+
+#: ../variety/Texts.py:40
+msgid "Soft blur"
+msgstr ""
+
+#: ../variety/Texts.py:41
+msgid "Oil painting"
+msgstr ""
+
+#: ../variety/Texts.py:42
+msgid "Pencil sketch"
+msgstr ""
+
+#: ../variety/Texts.py:43
+msgid "Pointilism"
+msgstr ""
+
+#: ../variety/Texts.py:44
+msgid "Pixellate"
 msgstr ""
 
 #: ../variety/AddMediaRssDialog.py:87
