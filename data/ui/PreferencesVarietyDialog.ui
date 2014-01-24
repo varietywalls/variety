@@ -59,11 +59,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -3598,21 +3593,73 @@ Peter Levi</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLinkButton" id="linkbutton4">
-                    <property name="label" translatable="yes">Donate via PayPal</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="height_request">35</property>
+                  <object class="GtkBox" id="box36">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">25</property>
-                    <property name="margin_bottom">5</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="relief">none</property>
-                    <property name="xalign">0</property>
-                    <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton4">
+                        <property name="label" translatable="yes">Donate via PayPal</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">25</property>
+                        <property name="margin_bottom">5</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="relief">none</property>
+                        <property name="xalign">0</property>
+                        <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton6">
+                        <property name="label" translatable="yes">Donate Bitcoins to:</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">25</property>
+                        <property name="margin_bottom">5</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="relief">none</property>
+                        <property name="xalign">0</property>
+                        <property name="uri">bitcoin:1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu?label=Variety</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry1">
+                        <property name="height_request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_right">30</property>
+                        <property name="margin_bottom">2</property>
+                        <property name="editable">False</property>
+                        <property name="invisible_char">•</property>
+                        <property name="text">1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu</property>
+                        <property name="invisible_char_set">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -3747,6 +3794,11 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
