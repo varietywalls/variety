@@ -21,6 +21,7 @@ import stat
 
 import threading
 from variety.Util import Util
+from variety import Texts
 from variety.plugins.IQuoteSource import IQuoteSource
 from variety_lib import varietyconfig
 from variety_lib.varietyconfig import get_data_file
@@ -243,11 +244,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.quotes_sources_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.quotes_sources_checkboxes.append(cb)
 
-            try:
-                with open(get_data_file("ui/tips.txt")) as f:
-                    self.ui.tips_buffer.set_text(f.read())
-            except Exception:
-                logger.warning("Missing ui/tips.txt file")
+            self.ui.tips_buffer.set_text('\n\n'.join(Texts.TIPS))
+            
             try:
                 with open(get_data_file("ui/changes.txt")) as f:
                     self.ui.changes_buffer.set_text(f.read())
