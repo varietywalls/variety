@@ -208,7 +208,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.ui.sources.get_model().clear()
             for s in self.options.sources:
-                self.ui.sources.get_model().append([s[0], Options.type_to_str(s[1]), s[2]])
+                self.ui.sources.get_model().append(self.source_to_model_row(s))
 
             if not hasattr(self, "enabled_toggled_handler_id"):
                 self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
@@ -222,7 +222,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.filter_checkboxes = []
             self.filter_name_to_checkbox = {}
             for i, f in enumerate(self.options.filters):
-                cb = Gtk.CheckButton(Texts.FILTER_NAMES.get(f[1], f[1]))
+                cb = Gtk.CheckButton(Texts.FILTERS.get(f[1], f[1]))
                 self.filter_name_to_checkbox[f[1]] = cb
                 cb.connect("toggled", self.delayed_apply)
                 cb.set_visible(True)
@@ -485,13 +485,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if type == Options.SourceType.FOLDER:
                     existing[os.path.normpath(r[2])] = r, i
                 else:
-                    existing[r[2]] = r, i
+                    existing[self.model_row_to_source(r)[2]] = r, i
 
         for f in locations:
             if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
+
             if not f in existing:
-                self.ui.sources.get_model().append([True, Options.type_to_str(type), f])
+                self.ui.sources.get_model().append(self.source_to_model_row([True, type, f]))
                 self.ui.sources.get_selection().select_path(len(self.ui.sources.get_model()) - 1)
                 self.ui.sources.scroll_to_cell(len(self.ui.sources.get_model()) - 1, None, False, 0, 0)
             else:
@@ -504,7 +505,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.notebook.set_current_page(0)
         self.ui.sources.get_selection().unselect_all()
         for i, r in enumerate(self.ui.sources.get_model()):
-            if r[1] == Options.type_to_str(source[1]) and r[2] == source[2]:
+            if self.model_row_to_source(r)[1:] == source[1:]:
                 self.focused_image = image
                 self.ui.sources.get_selection().select_path(i)
                 self.ui.sources.scroll_to_cell(i, None, False, 0, 0)
@@ -617,11 +618,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.remove_sources.set_sensitive(len(rows) > 0)
 
     def model_row_to_source(self, row):
-        return [row[0], Options.str_to_type(row[1]), row[2]]
+        return [row[0], Options.str_to_type(row[1]), Texts.SOURCES[row[1]][0] if row[1] in Texts.SOURCES else row[2]]
 
-    def show_thumbs(self, sources):
+    def source_to_model_row(self, s):
+        srctype = Options.type_to_str(s[1])
+        return [s[0], srctype, s[2] if not srctype in Texts.SOURCES else Texts.SOURCES[srctype][1]]
+
+    def show_thumbs(self, source_rows):
         try:
-            if not sources:
+            if not source_rows:
                 return
 
             self.parent.thumbs_manager.hide(gdk_thread=False, force=True)
@@ -630,16 +635,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
             folders = []
             image_count = 0
 
-            for source in sources:
-                if not source:
+            for row in source_rows:
+                if not row:
                     continue
 
-                type = Options.str_to_type(source[1])
+                type = Options.str_to_type(row[1])
                 if type == Options.SourceType.IMAGE:
                     image_count += 1
-                    images.append(source[2])
+                    images.append(row[2])
                 else:
-                    folder = self.parent.get_folder_of_source(self.model_row_to_source(source))
+                    folder = self.parent.get_folder_of_source(self.model_row_to_source(row))
                     image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
                     folders.append(folder)
 
@@ -764,7 +769,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.sources = []
             for r in self.ui.sources.get_model():
-                self.options.sources.append([r[0], Options.str_to_type(r[1]), r[2]])
+                self.options.sources.append(self.model_row_to_source(r))
 
             if os.access(self.fetched_chooser.get_folder(), os.W_OK):
                 self.options.fetched_folder = self.fetched_chooser.get_folder()
