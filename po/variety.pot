@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-24 16:36+0200\n"
+"POT-Creation-Date: 2014-01-27 15:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,33 +212,41 @@ msgstr ""
 
 #: ../variety/Texts.py:42
 msgid ""
+"If you want to run custom commands every time the wallpaper changes or if "
+"you use an alternative desktop environment, please edit the scripts in ~/."
+"config/variety/scripts. There are examples there for various desktop "
+"environments."
+msgstr ""
+
+#: ../variety/Texts.py:43
+msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
 
-#: ../variety/Texts.py:43
+#: ../variety/Texts.py:44
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:45
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:46
 msgid ""
 "Adding your own custom filters is quite easy: open ~/.config/variety/variety."
 "conf in an editor and use the existing filters as an example. Every filter "
 "is just a line of options to be passed to ImageMagick's convert command."
 msgstr ""
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:47
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -246,12 +254,6 @@ msgid ""
 "operations. You can select multiple image sources to create a \"merged\" "
 "thumbnail view of all of them. Please mind that thumbnail view is limited to "
 "several hundred randomly selected images."
-msgstr ""
-
-#: ../variety/Texts.py:47
-msgid ""
-"The indicator has keyboard shortcuts for some of the actions - e.g. show "
-"indicator, then press F to copy to favorites, or T to move to Trash."
 msgstr ""
 
 #: ../variety/Texts.py:48
@@ -271,21 +273,13 @@ msgstr ""
 
 #: ../variety/Texts.py:50
 msgid ""
-"If you want to run custom commands every time the wallpaper changes or if "
-"you use an alternative desktop environment you should edit the scripts in ~/."
-"config/variety/scripts. There are examples there for various desktop "
-"environments."
-msgstr ""
-
-#: ../variety/Texts.py:51
-msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:51
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
