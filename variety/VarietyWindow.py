@@ -18,6 +18,7 @@ import gettext
 from gettext import gettext as _
 import subprocess
 import urllib
+from urllib2 import HTTPError
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
@@ -37,6 +38,7 @@ import time
 import logging
 import random
 import re
+import json
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -69,6 +71,7 @@ class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
+    VARIETY_SERVER_HOST = "http://localhost:4000"
     MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {
@@ -1554,6 +1557,8 @@ class VarietyWindow(Gtk.Window):
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
+                self.smart_report_file(file, 'trash')
+
                 command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
                 logger.info("Running trash command %s" % command)
                 result = os.system(command)
@@ -1595,11 +1600,71 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
+    def new_smart_user(self):
+        logger.info('Creating new smart user')
+        self.smart_user = Util.fetch_json(self.VARIETY_SERVER_HOST + '/newuser')
+        with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
+            json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
+            logger.info('Created smart user: %s' % self.smart_user["id"])
+
+    def load_smart_user(self):
+        if not hasattr(self, "smart_user"):
+            try:
+                with open(os.path.join(self.config_folder, '.user.json')) as f:
+                    self.smart_user = json.load(f)
+                    logger.info('Loaded smart user: %s' % self.smart_user["id"])
+            except IOError:
+                logger.info('Missing user.json, creating new smart user')
+                self.new_smart_user()
+
+    def get_thumbnail_data(self, filename, width, height):
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, width, height)
+        return pixbuf.save_to_bufferv('jpeg', [], [])[1]
+        # temp = os.path.join(self.config_folder, '.temp_thumbnail.jpg')
+        # pixbuf.savev(temp, 'jpeg', [], [])
+        # with open(temp, 'rb') as f:
+        #     data = f.read()
+        # os.unlink(temp)
+        # return data
+
+    def smart_report_file(self, filename, tag):
+        try:
+            import base64
+            self.load_smart_user()
+
+            meta = Util.read_metadata(filename)
+            if not "sourceName" in meta:
+                return  # we only log to server images coming from Variety online sources, not local images
+
+            data = {
+                'userid': self.smart_user['id'],
+                'thumbnail': base64.b64encode(self.get_thumbnail_data(filename, 240, 240)),
+                'url': meta['imageURL'],
+                'source_name': meta['sourceName'],
+                'source_location': meta.get('sourceLocation', None),
+                'source_url': meta['sourceURL']
+            }
+
+            logger.info("Smart-reporting %s as '%s'" % (filename, tag))
+            try:
+                result = Util.fetch(self.VARIETY_SERVER_HOST + '/' + tag, urllib.urlencode({'data': json.dumps(data)}))
+                logger.info("Smart-reported %s as '%s', server returned: %s" % (filename, tag, result))
+            except HTTPError, e:
+                if e.code == 403:
+                    logger.error("Server reported 'Uknown user', potential reason - server failure? Creating new user")
+                    self.new_smart_user()
+                    self.smart_report_file(filename, tag)
+                else:
+                    raise e
+        except Exception:
+            logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
+
     def copy_to_favorites(self, widget=None, file=None):
         try:
             if not file:
                 file = self.current
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
+                self.smart_report_file(file, 'favorite')
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
         except Exception:
@@ -1610,6 +1675,7 @@ class VarietyWindow(Gtk.Window):
             if not file:
                 file = self.current
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
+                self.smart_report_file(file, 'favorite')
                 operation = shutil.move if os.access(file, os.W_OK) else shutil.copy
                 ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
                 if ok:

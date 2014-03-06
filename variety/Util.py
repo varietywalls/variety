@@ -429,3 +429,4 @@ class Util:
                 yield f(element)
             except Exception:
                 continue
+
