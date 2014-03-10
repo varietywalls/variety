@@ -71,7 +71,7 @@ class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
-    VARIETY_SERVER_HOST = "http://localhost:4000"
+    VARIETY_API_URL = "http://localhost:4000/api"
     MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {
@@ -1602,7 +1602,7 @@ class VarietyWindow(Gtk.Window):
 
     def new_smart_user(self):
         logger.info('Creating new smart user')
-        self.smart_user = Util.fetch_json(self.VARIETY_SERVER_HOST + '/newuser')
+        self.smart_user = Util.fetch_json(self.VARIETY_API_URL + '/newuser')
         with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
             json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
             logger.info('Created smart user: %s' % self.smart_user["id"])
@@ -1620,12 +1620,6 @@ class VarietyWindow(Gtk.Window):
     def get_thumbnail_data(self, filename, width, height):
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, width, height)
         return pixbuf.save_to_bufferv('jpeg', [], [])[1]
-        # temp = os.path.join(self.config_folder, '.temp_thumbnail.jpg')
-        # pixbuf.savev(temp, 'jpeg', [], [])
-        # with open(temp, 'rb') as f:
-        #     data = f.read()
-        # os.unlink(temp)
-        # return data
 
     def smart_report_file(self, filename, tag):
         try:
@@ -1636,19 +1630,19 @@ class VarietyWindow(Gtk.Window):
             if not "sourceName" in meta:
                 return  # we only log to server images coming from Variety online sources, not local images
 
-            data = {
-                'userid': self.smart_user['id'],
+            image = {
                 'thumbnail': base64.b64encode(self.get_thumbnail_data(filename, 240, 240)),
-                'url': meta['imageURL'],
+                'origin_url': meta['sourceURL'],
                 'source_name': meta['sourceName'],
                 'source_location': meta.get('sourceLocation', None),
-                'source_url': meta['sourceURL']
+                'image_url': meta['imageURL']
             }
 
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
-                result = Util.fetch(self.VARIETY_SERVER_HOST + '/' + tag, urllib.urlencode({'data': json.dumps(data)}))
-                logger.info("Smart-reported %s as '%s', server returned: %s" % (filename, tag, result))
+                url = self.VARIETY_API_URL + '/' + self.smart_user['id'] + '/' + tag
+                result = Util.fetch(url, urllib.urlencode({'image': json.dumps(image)}))
+                logger.info("Smart-reported, server returned: %s" % result)
             except HTTPError, e:
                 if e.code == 403:
                     logger.error("Server reported 'Uknown user', potential reason - server failure? Creating new user")
