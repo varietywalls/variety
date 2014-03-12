@@ -69,7 +69,6 @@ class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
-    MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -837,7 +836,6 @@ class VarietyWindow(Gtk.Window):
                     _("Variety is finding too few images that match your image filtering criteria"))
 
     def prepare_thread(self):
-        time.sleep(20)
         logger.info("Prepare thread running")
         while self.running:
             try:
@@ -1199,34 +1197,13 @@ class VarietyWindow(Gtk.Window):
                 logger.exception("Error while setting wallpaper")
 
     def list_images(self):
-        return Util.list_files(self.individual_images, self.folders, Util.is_image, VarietyWindow.MAX_FILES)
+        return Util.list_files(self.individual_images, self.folders, Util.is_image, max_files=10000)
 
     def select_random_images(self, count):
-        # refresh image count often when few images in the folders and rarely when many:
-        if self.image_count < 20 or random.randint(0, max(0, min(100, self.image_count // 30))) == 0:
-            cnt = sum(1 for f in self.list_images())
-            if not cnt:
-                return []
-
-            self.image_count = cnt
-            logger.info("Refreshed image count: %d" % self.image_count)
-        else:
-            cnt = self.image_count
-
-        indexes = set()
-        for i in xrange(count):
-            indexes.add(random.randint(0, cnt - 1))
-
-        result = []
-        for index, f in enumerate(self.list_images()):
-            if index in indexes:
-                result.append(f)
-                indexes.remove(index)
-                if not indexes:
-                    break
-
-        random.shuffle(result)
-        return result
+        all_images = list(self.list_images())
+        self.image_count = len(all_images)
+        random.shuffle(all_images)
+        return all_images[:count]
 
     def on_indicator_scroll(self, indicator, steps, direction):
         if direction == Gdk.ScrollDirection.SMOOTH:
