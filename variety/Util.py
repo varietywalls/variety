@@ -249,12 +249,8 @@ class Util:
 
     @staticmethod
     def get_size(image):
-        try:
-            d = DominantColors(image)
-            return d.get_width(), d.get_height()
-        except Exception:
-            p = GdkPixbuf.Pixbuf.new_from_file(image)
-            return p.get_width(), p.get_height()
+        format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(image)
+        return image_width, image_height
 
     @staticmethod
     def find_unique_name(filename):
@@ -429,4 +425,11 @@ class Util:
                 yield f(element)
             except Exception:
                 continue
+
+    @staticmethod
+    def get_thumbnail_data(image, width, height):
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(image, width, height)
+        return pixbuf.save_to_bufferv('jpeg', [], [])[1]
+
+
 

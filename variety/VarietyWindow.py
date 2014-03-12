@@ -39,6 +39,7 @@ import logging
 import random
 import re
 import json
+import base64
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -1617,21 +1618,19 @@ class VarietyWindow(Gtk.Window):
                 logger.info('Missing user.json, creating new smart user')
                 self.new_smart_user()
 
-    def get_thumbnail_data(self, filename, width, height):
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, width, height)
-        return pixbuf.save_to_bufferv('jpeg', [], [])[1]
-
     def smart_report_file(self, filename, tag):
         try:
-            import base64
             self.load_smart_user()
 
             meta = Util.read_metadata(filename)
             if not "sourceName" in meta:
                 return  # we only log to server images coming from Variety online sources, not local images
 
+            width, height = Util.get_size(filename)
             image = {
-                'thumbnail': base64.b64encode(self.get_thumbnail_data(filename, 240, 240)),
+                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 240, 240)),
+                'width': width,
+                'height': height,
                 'origin_url': meta['sourceURL'],
                 'source_name': meta['sourceName'],
                 'source_location': meta.get('sourceLocation', None),
