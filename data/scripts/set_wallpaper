@@ -55,6 +55,9 @@ mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /
 # Cinnamon after 1.8
 gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
 
+# Cinnamon after 2.0
+gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
+
 # Gnome 2
 gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /dev/null
 
