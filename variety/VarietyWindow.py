@@ -1619,6 +1619,9 @@ class VarietyWindow(Gtk.Window):
                 self.new_smart_user()
 
     def smart_report_file(self, filename, tag):
+        if not self.options.smart_enabled:
+            return
+
         try:
             self.load_smart_user()
 
