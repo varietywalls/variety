@@ -59,6 +59,11 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -859,7 +864,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="smart_enabled">
-                        <property name="label" translatable="yes">Enable the smart features of Variety which learn and adapt to your taste</property>
+                        <property name="label" translatable="yes">Enable the smart features of Variety which recommend you images and sources by adapting to your taste</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -870,6 +875,8 @@
                         <property name="use_action_appearance">False</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_smart_enabled_toggled" swapped="no"/>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -884,7 +891,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Variety will collect data about the images you mark as favorite or delete, as well as the online sources you have enabled.  In return you will be able to use several smart image sources, such as the "Recommended images" source which fetches images that Variety thinks you will like. You will also have the option to let Variety maintain your list of sources in a way that will ensure you are always getting fresh interesting images without having to manually add new image sources on a regular basis. 
+                        <property name="label" translatable="yes">Variety will collect data about the images you mark as favorite or delete, as well as the online sources you have enabled.  In return you will be able to use several "smart" features, such as the "Recommended images" source which fetches images Variety thinks you will like and dynamically adapts to your taste.
 
 The collected data is anonymous, not linked to your identity in any way. Data is collected only for images downloaded by Variety itself, never for images you already had in your local folders that might be private.
 
@@ -907,7 +914,7 @@ Unless you are an extreme paranoic, please enable this - it will help Variety pr
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">(Please have in mind this is an experimental feature that will take some time to mature and become truly "smart")</property>
+                        <property name="label" translatable="yes">(Please keep in mind this is an experimental feature that will take some time to mature and become truly "smart")</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
                           <attribute name="weight" value="normal"/>
@@ -939,7 +946,7 @@ Unless you are an extreme paranoic, please enable this - it will help Variety pr
                         <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
-                        <property name="margin_top">15</property>
+                        <property name="margin_top">20</property>
                         <property name="label" translatable="yes">Facebook Sharing</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -1023,7 +1030,7 @@ Unless you are an extreme paranoic, please enable this - it will help Variety pr
               <object class="GtkLabel" id="social_tab_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Social features</property>
+                <property name="label" translatable="yes">Social</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -3914,11 +3921,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>

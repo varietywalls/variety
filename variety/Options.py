@@ -42,6 +42,7 @@ class Options:
         WALLBASE = 9
         MEDIA_RSS = 10
         EARTH = 11
+        RECOMMENDED = 12
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -54,7 +55,8 @@ class Options:
             APOD: "apod",
             WALLBASE: "wallbase",
             MEDIA_RSS: "mediarss",
-            EARTH: "earth"
+            EARTH: "earth",
+            RECOMMENDED: "recommended"
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
@@ -372,6 +374,10 @@ class Options:
 
             self.parse_autosources()
 
+            for s in self.sources:
+                if s[1] == Options.SourceType.RECOMMENDED and not self.smart_enabled:
+                    s[0] = False
+
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
@@ -584,6 +590,7 @@ class Options:
 
             config["smart_enabled"] = str(self.smart_enabled)
             config["smart_notice_shown"] = str(self.smart_notice_shown)
+
             config["facebook_enabled"] = str(self.facebook_enabled)
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)

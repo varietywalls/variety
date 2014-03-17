@@ -1847,9 +1847,6 @@ class VarietyWindow(Gtk.Window):
             dialog.destroy()
             self.dialogs.remove(dialog)
 
-            if self.options.smart_enabled:
-                print "Chose OK"
-
         dialog.ui.btn_ok.connect("clicked", _on_ok)
         self.dialogs.append(dialog)
         dialog.run()

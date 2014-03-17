@@ -32,6 +32,7 @@ from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
+from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 
 import gettext
 from gettext import gettext as _
@@ -51,13 +52,16 @@ UNREMOVEABLE_TYPES = [
     Options.SourceType.FETCHED,
     Options.SourceType.DESKTOPPR,
     Options.SourceType.APOD,
-    Options.SourceType.EARTH]
+    Options.SourceType.EARTH,
+    Options.SourceType.RECOMMENDED,
+]
 
 EDITABLE_TYPES = [
     Options.SourceType.WN,
     Options.SourceType.WALLBASE,
     Options.SourceType.FLICKR,
-    Options.SourceType.MEDIA_RSS]
+    Options.SourceType.MEDIA_RSS,
+]
 
 
 class PreferencesVarietyDialog(PreferencesDialog):
@@ -374,6 +378,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     _("World Sunlight Map enabled"),
                     _("Using the World Sunlight Map requires both downloading and changing "
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
+
+        # special case when enabling the Recommended downloader:
+        elif row[0] and row[1] == Options.type_to_str(Options.SourceType.RECOMMENDED) and not self.parent.options.smart_enabled:
+            row[0] = False
+            self.dialog = SmartFeaturesConfirmationDialog()
+            def _on_ok(button):
+                self.parent.options.smart_enabled = self.dialog.ui.smart_enabled.get_active()
+                self.parent.options.write()
+                self.ui.smart_enabled.set_active(self.parent.options.smart_enabled)
+                if self.parent.options.smart_enabled:
+                    row[0] = True
+
+            self.dialog.ui.btn_ok.connect("clicked", _on_ok)
+            self.dialog.run()
+            self.dialog.destroy()
+            self.dialog = None
 
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:
@@ -977,6 +997,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_facebook_enabled_toggled(self, widget = None):
         self.ui.facebook_show_dialog.set_sensitive(self.ui.facebook_enabled.get_active())
+
+    def on_smart_enabled_toggled(self, widget = None):
+        if not self.ui.smart_enabled.get_active():
+            for s in self.parent.options.sources:
+                if s[1] == Options.SourceType.RECOMMENDED and s[0]:
+                    self.parent.show_notification(_("Recommended source disabled"))
+                    s[0] = False
+                    self.parent.options.write()
+            for i, r in enumerate(self.ui.sources.get_model()):
+                if r[1] == Options.type_to_str(Options.SourceType.RECOMMENDED):
+                    r[0] = False
 
     def on_destroy(self, widget = None):
         if self.dialog:
