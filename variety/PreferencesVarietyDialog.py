@@ -163,6 +163,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
 
+            self.ui.smart_enabled.set_active(self.options.smart_enabled)
             self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
@@ -805,6 +806,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
 
+            self.options.smart_enabled = self.ui.smart_enabled.get_active()
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 

@@ -220,6 +220,11 @@ class Options:
                 pass
 
             try:
+                self.smart_notice_shown = config["smart_notice_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.facebook_enabled = config["facebook_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -484,7 +489,8 @@ class Options:
         self.min_rating = 4
         self.show_rating_enabled = False
 
-        self.smart_enabled = True
+        self.smart_enabled = False
+        self.smart_notice_shown = False
         self.facebook_enabled = True
         self.facebook_show_dialog = True
         self.facebook_message = ""
@@ -577,6 +583,7 @@ class Options:
             config["show_rating_enabled"] = str(self.show_rating_enabled)
 
             config["smart_enabled"] = str(self.smart_enabled)
+            config["smart_notice_shown"] = str(self.smart_notice_shown)
             config["facebook_enabled"] = str(self.facebook_enabled)
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)

@@ -44,14 +44,6 @@ class SmartFeaturesNoticeDialog(Gtk.Dialog):
         """
         pass
 
-    def on_btn_cancel_clicked(self, widget, data=None):
-        """The user has elected cancel changes.
-
-        Called before the dialog returns Gtk.ResponseType.CANCEL for run()
-        """
-        pass
-
-
 if __name__ == "__main__":
     dialog = SmartFeaturesNoticeDialog()
     dialog.show()

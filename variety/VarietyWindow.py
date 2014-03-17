@@ -19,6 +19,7 @@ from gettext import gettext as _
 import subprocess
 import urllib
 from urllib2 import HTTPError
+from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
@@ -49,6 +50,7 @@ from variety.WelcomeDialog import WelcomeDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
+from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
@@ -171,6 +173,7 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
+        self.show_smart_notice_dialog()
 
         GObject.idle_add(self.create_preferences_dialog)
 
@@ -1830,6 +1833,26 @@ class VarietyWindow(Gtk.Window):
                 self.write_current_version()
         except Exception:
             logger.exception("Error during version upgrade. Continuing.")
+
+    def show_smart_notice_dialog(self):
+        if self.options.smart_notice_shown:
+            return
+
+        # Show Smart Variety notice
+        dialog = SmartFeaturesNoticeDialog()
+        def _on_ok(button):
+            self.options.smart_enabled = dialog.ui.enabled.get_active()
+            self.options.smart_notice_shown = True
+            self.options.write()
+            dialog.destroy()
+            self.dialogs.remove(dialog)
+
+            if self.options.smart_enabled:
+                print "Chose OK"
+
+        dialog.ui.btn_ok.connect("clicked", _on_ok)
+        self.dialogs.append(dialog)
+        dialog.run()
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
