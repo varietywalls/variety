@@ -19,7 +19,6 @@ from gettext import gettext as _
 import subprocess
 import urllib
 from urllib2 import HTTPError
-from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
@@ -1621,7 +1620,7 @@ class VarietyWindow(Gtk.Window):
                 logger.info('Missing user.json, creating new smart user')
                 self.new_smart_user()
 
-    def smart_report_file(self, filename, tag):
+    def smart_report_file(self, filename, tag, attempt=0):
         if not self.options.smart_enabled:
             return
 
@@ -1650,9 +1649,12 @@ class VarietyWindow(Gtk.Window):
                 logger.info("Smart-reported, server returned: %s" % result)
             except HTTPError, e:
                 if e.code == 403:
-                    logger.error("Server reported 'Uknown user', potential reason - server failure? Creating new user")
+                    logger.error("Server reported 'Uknown user', potential reason - server failure?")
+                    if attempt == 3:
+                        return
+                    logger.info("Creating new user")
                     self.new_smart_user()
-                    self.smart_report_file(filename, tag)
+                    self.smart_report_file(filename, tag, attempt + 1)
                 else:
                     raise e
         except Exception:
@@ -1843,6 +1845,12 @@ class VarietyWindow(Gtk.Window):
         def _on_ok(button):
             self.options.smart_enabled = dialog.ui.enabled.get_active()
             self.options.smart_notice_shown = True
+            for s in self.options.sources:
+                if s[1] == Options.SourceType.RECOMMENDED:
+                    self.show_notification(_("Recommended source enabled"))
+                    s[0] = True
+                    self.options.write()
+                    self.reload_config()
             self.options.write()
             dialog.destroy()
             self.dialogs.remove(dialog)
