@@ -77,7 +77,7 @@ class MediaRssDownloader(Downloader.Downloader):
         origin_url, image_url = self.queue.pop()
         parse = urlparse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
-        return self.save_locally(origin_url, image_url, origin_name=host)
+        return self.save_locally(origin_url, image_url, source_name=host)
 
     @staticmethod
     def picasa_hack(feed_url):

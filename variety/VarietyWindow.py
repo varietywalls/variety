@@ -58,6 +58,7 @@ from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
+from variety.RecommendedDownloader import RecommendedDownloader
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
@@ -502,6 +503,8 @@ class VarietyWindow(Gtk.Window):
             return WallbaseDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
+        elif type == Options.SourceType.RECOMMENDED:
+            return RecommendedDownloader(self)
         else:
             raise Exception("Uknown downloader type")
 
