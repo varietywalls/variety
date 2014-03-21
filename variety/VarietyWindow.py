@@ -74,7 +74,7 @@ class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
-    VARIETY_API_URL = "http://localhost:4000/api"
+    VARIETY_API_URL = "http://localhost:4000"
     MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {
@@ -173,7 +173,10 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
-        self.show_smart_notice_dialog()
+        if not self.options.smart_notice_shown:
+            self.show_smart_notice_dialog()
+        else:
+            self.smart_report_existing_favorites()
 
         GObject.idle_add(self.create_preferences_dialog)
 
@@ -1441,8 +1444,8 @@ class VarietyWindow(Gtk.Window):
                     ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
 
                 return ok
-        except Exception, err:
-            logger.exception("Error in image_ok:")
+        except Exception:
+            logger.exception("Error in image_ok for file %s" % img)
             return False
 
     def size_ok(self, width, height, fuzziness=0):
@@ -1625,43 +1628,45 @@ class VarietyWindow(Gtk.Window):
 
     def smart_report_file(self, filename, tag, attempt=0):
         if not self.options.smart_enabled:
-            return
+            return -1
 
         try:
             self.load_smart_user()
 
             meta = Util.read_metadata(filename)
-            if not "sourceName" in meta:
-                return  # we only log to server images coming from Variety online sources, not local images
+            if not meta or not "sourceURL" in meta:
+                return -2  # we only smart-report images coming from Variety online sources, not local images
 
             width, height = Util.get_size(filename)
             image = {
-                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 240, 240)),
+                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 300, 300)),
                 'width': width,
                 'height': height,
                 'origin_url': meta['sourceURL'],
-                'source_name': meta['sourceName'],
+                'source_name': meta.get('sourceName', None),
                 'source_location': meta.get('sourceLocation', None),
-                'image_url': meta['imageURL']
+                'image_url': meta.get('imageURL', None)
             }
 
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
-                url = self.VARIETY_API_URL + '/' + self.smart_user['id'] + '/' + tag
+                url = self.VARIETY_API_URL + '/user/' + self.smart_user['id'] + '/' + tag
                 result = Util.fetch(url, urllib.urlencode({'image': json.dumps(image)}))
                 logger.info("Smart-reported, server returned: %s" % result)
+                return 0
             except HTTPError, e:
                 if e.code == 403:
                     logger.error("Server reported 'Uknown user', potential reason - server failure?")
                     if attempt == 3:
-                        return
+                        return -3
                     logger.info("Creating new user")
                     self.new_smart_user()
-                    self.smart_report_file(filename, tag, attempt + 1)
+                    return self.smart_report_file(filename, tag, attempt + 1)
                 else:
                     raise e
         except Exception:
             logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
+            return -4
 
     def copy_to_favorites(self, widget=None, file=None):
         try:
@@ -1840,27 +1845,66 @@ class VarietyWindow(Gtk.Window):
             logger.exception("Error during version upgrade. Continuing.")
 
     def show_smart_notice_dialog(self):
-        if self.options.smart_notice_shown:
-            return
-
         # Show Smart Variety notice
         dialog = SmartFeaturesNoticeDialog()
         def _on_ok(button):
             self.options.smart_enabled = dialog.ui.enabled.get_active()
             self.options.smart_notice_shown = True
-            for s in self.options.sources:
-                if s[1] == Options.SourceType.RECOMMENDED:
-                    self.show_notification(_("Recommended source enabled"))
-                    s[0] = True
-                    self.options.write()
-                    self.reload_config()
+            if self.options.smart_enabled:
+                for s in self.options.sources:
+                    if s[1] == Options.SourceType.RECOMMENDED:
+                        self.show_notification(_("Recommended source enabled"))
+                        s[0] = True
             self.options.write()
+            self.reload_config()
             dialog.destroy()
             self.dialogs.remove(dialog)
+            self.smart_report_existing_favorites()
 
         dialog.ui.btn_ok.connect("clicked", _on_ok)
         self.dialogs.append(dialog)
         dialog.run()
+
+    def smart_report_existing_favorites(self):
+        if not self.options.smart_enabled:
+            return
+
+        def _run():
+            try:
+                reportfile = os.path.join(self.config_folder, '.unreported_favorites.txt')
+                if not os.path.exists(reportfile):
+                    logger.info("Listing existing favorites that need smart-reporting")
+                    favs = []
+                    for name in os.listdir(self.options.favorites_folder):
+                        path = os.path.join(self.options.favorites_folder, name)
+                        if Util.is_image(path) and Util.is_downloaded_by_variety(path):
+                            logger.info("Existing favorite scheduled for smart-reporting: %s" % path)
+                            favs.append(path)
+                            time.sleep(0.1)
+                    with open(reportfile, 'w') as f:
+                        f.write('\n'.join(favs))
+                else:
+                    with open(reportfile) as f:
+                        favs = [line.strip() for line in f.readlines()]
+
+                for fav in list(favs):
+                    if not self.options.smart_enabled:
+                        return
+                    try:
+                        logger.info("Smart-reporting existing favorite %s" % fav)
+                        self.smart_report_file(fav, "favorite")
+                        favs.remove(fav)    # remove from list, no matter whether reporting suceeded or not
+                        with open(reportfile, 'w') as f:
+                            f.write('\n'.join(favs))
+                        time.sleep(1)
+                    except Exception:
+                        logger.exception("Could not smart-report existing favorite %s" % fav)
+            except Exception:
+                logger.exception("Error while smart-reporting existing favorites")
+
+        fav_report_thread = threading.Thread(target=_run)
+        fav_report_thread.daemon = True
+        fav_report_thread.start()
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()

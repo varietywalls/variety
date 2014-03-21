@@ -198,7 +198,7 @@ class Util:
                     lines = list(f)
                     info = {}
                     if len(lines) > 2 and lines[0].strip() == "INFO:":
-                        info["sourceName"] = lines[1].strip().replace("Downloaded from ", "") # TODO remove later on
+                        info["sourceName"] = lines[1].strip().replace("Downloaded from ", "")  # TODO remove later on
                         info["sourceURL"] = lines[2].strip()
                         if len(lines) > 3:
                             info["sourceLocation"] = lines[3].strip()
@@ -209,6 +209,11 @@ class Util:
                         return None
             except Exception:
                 return None
+
+    @staticmethod
+    def is_downloaded_by_variety(filename):
+        meta = Util.read_metadata(filename)
+        return meta and "sourceURL" in meta
 
     @staticmethod
     def set_rating(filename, rating):

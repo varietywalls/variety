@@ -47,12 +47,11 @@ class RecommendedDownloader(Downloader):
     def fill_queue(self):
         logger.info("Filling Recommended queue")
         self.parent.load_smart_user()
-        recommended_url = self.parent.VARIETY_API_URL + '/' + self.parent.smart_user["id"] + '/recommended/json'
+        recommended_url = self.parent.VARIETY_API_URL + '/user/' + self.parent.smart_user["id"] + '/recommended/json'
         recommended = AttrDict(Util.fetch_json(recommended_url))
         for url, data in recommended.items():
             if data.width and data.height and not self.parent.size_ok(data.width, data.height):
                 continue
             self.queue.append((url, data.image_url, data.sources[0][0], data.sources[0][1]))
-        random.shuffle(self.queue)
 
         logger.info("Recommended queue populated with %d URLs" % len(self.queue))
