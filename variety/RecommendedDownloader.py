@@ -50,6 +50,8 @@ class RecommendedDownloader(Downloader):
         recommended_url = self.parent.VARIETY_API_URL + '/user/' + self.parent.smart_user["id"] + '/recommended/json'
         recommended = AttrDict(Util.fetch_json(recommended_url))
         for url, data in recommended.items():
+            if not data.image_url or not data.sources:
+                continue
             if data.width and data.height and not self.parent.size_ok(data.width, data.height):
                 continue
             self.queue.append((url, data.image_url, data.sources[0][0], data.sources[0][1]))

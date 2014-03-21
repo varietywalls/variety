@@ -79,6 +79,11 @@ class Downloader(object):
         with open(local_filename, 'wb') as f:
             f.write(data)
 
+        if not Util.is_image(local_filename, check_contents=True):
+            logger.info("Downloaded data was not an image, image URL might be outdated")
+            os.unlink(local_filename)
+            return None
+
         Util.write_metadata(local_filename, {
             "sourceName": source_name,
             "sourceLocation": source_location,

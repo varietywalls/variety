@@ -103,8 +103,13 @@ class Util:
             logger.exception("Could not makedirs for %s" % path)
 
     @staticmethod
-    def is_image(filename):
-        return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg', '.bmp'))
+    def is_image(filename, check_contents=False):
+        if not check_contents:
+            return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg', '.bmp'))
+        else:
+            format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)
+            return bool(format)
+
 
     @staticmethod
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):
@@ -255,7 +260,10 @@ class Util:
     @staticmethod
     def get_size(image):
         format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(image)
-        return image_width, image_height
+        if not format:
+            raise Exception('Not an image or unsupported image format')
+        else:
+            return image_width, image_height
 
     @staticmethod
     def find_unique_name(filename):
