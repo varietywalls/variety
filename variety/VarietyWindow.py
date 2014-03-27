@@ -1651,7 +1651,8 @@ class VarietyWindow(Gtk.Window):
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
                 url = self.VARIETY_API_URL + '/user/' + self.smart_user['id'] + '/' + tag
-                result = Util.fetch(url, urllib.urlencode({'image': json.dumps(image)}))
+                result = Util.fetch(url, urllib.urlencode(
+                    {'image': json.dumps(image), 'authkey': self.smart_user['authkey']}))
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
             except HTTPError, e:
