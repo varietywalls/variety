@@ -40,6 +40,7 @@ import random
 import re
 import json
 import base64
+import urlparse
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -2160,6 +2161,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     if not self.running:
                         return
 
+                    if url.startswith(('variety://', 'vrty://')):
+                        self.process_variety_url(url)
+                        return
+
                     is_local = os.path.exists(url)
 
                     if is_local:
@@ -2196,6 +2201,22 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         fetch_thread = threading.Thread(target=fetch)
         fetch_thread.daemon = True
         fetch_thread.start()
+
+    def process_variety_url(self, url):
+        logger.info('Processing variety url %s' % url)
+
+        # make the url urlparse-friendly:
+        url = url.replace('variety://', 'http://')
+        url = url.replace('vrty://', 'http://')
+
+        parts = urlparse.urlparse(url)
+        command = parts.netloc
+        args = urlparse.parse_qs(parts.query)
+
+        if command == 'add-source':
+            self.preferences_dialog.add_sources(Options.str_to_type(args['type'][0]), [args['location'][0]])
+            self.preferences_dialog.delayed_apply()
+            self.show_notification(_('New image source added'))
 
     def get_desktop_wallpaper(self):
         try:
