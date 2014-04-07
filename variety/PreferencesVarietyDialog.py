@@ -508,6 +508,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 else:
                     existing[self.model_row_to_source(r)[2]] = r, i
 
+        newly_added = 0
         for f in locations:
             if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
@@ -516,11 +517,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.sources.get_model().append(self.source_to_model_row([True, type, f]))
                 self.ui.sources.get_selection().select_path(len(self.ui.sources.get_model()) - 1)
                 self.ui.sources.scroll_to_cell(len(self.ui.sources.get_model()) - 1, None, False, 0, 0)
+                newly_added += 1
             else:
                 logger.info("Source already exists, activating it: " + f)
                 existing[f][0][0] = True
                 self.ui.sources.get_selection().select_path(existing[f][1])
                 self.ui.sources.scroll_to_cell(existing[f][1], None, False, 0, 0)
+
+        return newly_added
 
     def focus_source_and_image(self, source, image):
         self.ui.notebook.set_current_page(0)

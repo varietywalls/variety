@@ -2214,9 +2214,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         args = urlparse.parse_qs(parts.query)
 
         if command == 'add-source':
-            self.preferences_dialog.add_sources(Options.str_to_type(args['type'][0]), [args['location'][0]])
-            self.preferences_dialog.delayed_apply()
-            self.show_notification(_('New image source added'))
+            def _add():
+                newly_added = self.preferences_dialog.add_sources(Options.str_to_type(args['type'][0]), [args['location'][0]])
+                self.preferences_dialog.delayed_apply()
+                if newly_added == 1:
+                    self.show_notification(_('New image source added'))
+                else:
+                    self.show_notification(_('Image source already exists, enabling it'))
+            GObject.idle_add(_add)
 
     def get_desktop_wallpaper(self):
         try:
