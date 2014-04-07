@@ -5,7 +5,7 @@
   <object class="SmartFeaturesNoticeDialog" id="smart_features_notice_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Variety gets smarter</property>
+    <property name="title" translatable="yes">Variety data collection notice</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
@@ -58,7 +58,7 @@
                 <property name="valign">start</property>
                 <property name="xpad">20</property>
                 <property name="ypad">20</property>
-                <property name="label" translatable="yes">Variety gets smarter!</property>
+                <property name="label" translatable="yes">Permission for data collection</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                   <attribute name="scale" value="1.5"/>
@@ -77,13 +77,11 @@
                 <property name="halign">start</property>
                 <property name="margin_top">7</property>
                 <property name="xpad">20</property>
-                <property name="label" translatable="yes">Till now in order to always receive fresh images, users had to manually update the image sources from time to time. And along with the great images some junk was passing too. I would like to remedy this. Variety will become smarter and will adapt to your tastes, offering you the best possible images without having you regularly edit the image sources. 
+                <property name="label" translatable="yes">In order to serve you the best possible images for your personal taste, Variety would like permission to collect data about the images you mark as favorite or delete, as well as the online sources you have enabled.  In return you will be able to use several smart features, such as the "Recommended images" source which fetches images Variety thinks you will like and dynamically adapts to your taste.
 
-To achieve this Variety will collect data about the images you mark as Favorite or delete to Trash, as well as data about the online sources you have enabled. In return you will be able to use several smart image sources which fetch images that Variety thinks you will like. You will also have the option to let Variety maintain your list of image sources in a way that will ensure you are always getting fresh interesting images. The collected data will also serve to filter out junk images.
+The collected data is anonymous, not linked to your identity in any way. Data is collected only for images downloaded by Variety itself, never for images you already had in your local folders that might be private.
 
-The collected data is anonymous, not linked to your identity in any way. Data will be collected only for images downloaded by Variety itself, never for images you already had in your local folders that might be private.
-
-Unless you are an extreme paranoic, please leave this enabled - it will help Variety provide better pictures for everyone.</property>
+Keeping this enabled will help Variety provide better pictures for everyone.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
