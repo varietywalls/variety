@@ -1657,8 +1657,8 @@ class VarietyWindow(Gtk.Window):
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
             except HTTPError, e:
-                if e.code == 403:
-                    logger.error("Server reported 'Uknown user', potential reason - server failure?")
+                if e.code in (403, 404):
+                    logger.error("Server returned %d, potential reason - server failure?" % e.code)
                     if attempt == 3:
                         return -3
                     logger.info("Creating new user")
@@ -2077,7 +2077,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if args:
                 logger.info("Treating free arguments as urls: " + str(args))
-                self.process_urls(args)
+                if not initial_run:
+                    self.process_urls(args)
+                else:
+                    def _process_urls():
+                        self.process_urls(args)
+                    GObject.timeout_add(5000, _process_urls)
+
 
             if options.set_options:
                 try:
@@ -2163,7 +2169,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
                     if url.startswith(('variety://', 'vrty://')):
                         self.process_variety_url(url)
-                        return
+                        continue
 
                     is_local = os.path.exists(url)
 
@@ -2177,6 +2183,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                         self.show_notification(_("Added to queue"), local_name + "\n" + _("Press Next to see it"), icon=file)
                     else:
                         file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
+                        if file:
+                            self.show_notification(_("Fetched"), os.path.basename(file) + "\n" + _("Press Next to see it"), icon=file)
 
                     if file:
                         self.downloaded.insert(0, file)
@@ -2214,14 +2222,33 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         args = urlparse.parse_qs(parts.query)
 
         if command == 'add-source':
+            source_type = args['type'][0].lower()
+            if not source_type in Options.SourceType.str_to_type:
+                self.show_notification(_('Unsupported source type'),
+                                       _('Are you running the most recent version of Variety?'))
+                return
             def _add():
-                newly_added = self.preferences_dialog.add_sources(Options.str_to_type(args['type'][0]), [args['location'][0]])
+                newly_added = self.preferences_dialog.add_sources(Options.str_to_type(source_type), [args['location'][0]])
                 self.preferences_dialog.delayed_apply()
                 if newly_added == 1:
                     self.show_notification(_('New image source added'))
                 else:
                     self.show_notification(_('Image source already exists, enabling it'))
             GObject.idle_add(_add)
+
+        elif command == 'set-wallpaper':
+            image = ImageFetcher.fetch(self, args["image_url"][0], self.options.fetched_folder,
+                                      source_url=args["origin_url"][0],
+                                      source_name=args.get("source_name", [None])[0],
+                                      source_location=args.get("source_location", [None])[0],
+                                      verbose=True)
+            if image:
+                self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
+                self.set_wallpaper(image, False, False)
+
+        else:
+            self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
+
 
     def get_desktop_wallpaper(self):
         try:

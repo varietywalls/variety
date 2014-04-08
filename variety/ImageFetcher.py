@@ -16,6 +16,7 @@
 import os
 
 import logging
+from urllib2 import HTTPError
 import urlparse
 from variety.Util import Util
 from PIL import Image
@@ -46,10 +47,10 @@ class ImageFetcher:
             return False
 
     @staticmethod
-    def fetch(parent, url, to, verbose = True):
+    def fetch(parent, url, to_folder, source_url=None, source_name=None, source_location=None, verbose=True):
         reported = verbose
         try:
-            logger.info("Trying to fetch URL %s to %s " % (url, to))
+            logger.info("Trying to fetch URL %s to %s " % (url, to_folder))
             if verbose:
                 parent.show_notification(_("Fetching"), url)
 
@@ -83,12 +84,11 @@ class ImageFetcher:
                 if cd_name:
                     local_name = cd_name
 
-            filename = os.path.join(to, local_name)
+            filename = os.path.join(to_folder, local_name)
             if os.path.exists(filename):
                 m = Util.read_metadata(filename)
                 if m and m.get("imageURL") == url:
                     logger.info("Local file already exists (%s)" % filename)
-                    parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
                     return filename
                 else:
                     logger.info("File with same name already exists, but from different imageURL; renaming new download")
@@ -117,19 +117,28 @@ class ImageFetcher:
                 os.unlink(filename)
                 return None
 
-            Util.write_metadata(filename, {"sourceName": "Fetched", "sourceURL": url, "imageURL": url})
+            metadata = {"sourceName": source_name or "Fetched",
+                        "sourceURL": source_url or url,
+                        "imageURL": url}
+            if source_location:
+                metadata["sourceLocation"] = source_location
+            Util.write_metadata(filename, metadata)
 
             logger.info("Fetched %s to %s." % (url, filename))
-            parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
 
             return filename
 
-        except Exception:
+        except Exception, e:
             logger.exception("Fetch failed for URL " + url)
             if reported:
-                parent.show_notification(
-                    _("Fetch failed for some reason"),
-                    _("To get more information, please run Variety from terminal with -v option and retry the action"))
+                if isinstance(e, HTTPError) and e.code in (403, 404):
+                    parent.show_notification(
+                        _("Sorry, got %s error...") % str(e.code),
+                        _("This means the link is no longer valid"))
+                else:
+                    parent.show_notification(
+                        _("Fetch failed for some reason"),
+                        _("To get more information, please run Variety from terminal with -v option and retry the action"))
             return None
 
     @staticmethod
