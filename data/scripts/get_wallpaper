@@ -15,7 +15,7 @@ elif [ "$desktop" == "xubuntu" ]; then
         xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path
 
 # LXDE/PCmanFM
-elif [ "$desktop" == "Lubuntu" ]; then
+elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
         grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
 
 # MATE

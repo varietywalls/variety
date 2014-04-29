@@ -41,7 +41,9 @@ xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "" 2> 
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$WP" 2> /dev/null
 
 # LXDE/PCmanFM
-pcmanfm --set-wallpaper "$WP" 2> /dev/null
+if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
+    pcmanfm --set-wallpaper "$WP" 2> /dev/null
+fi
 
 # Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
 # feh --bg-scale "$WP" 2> /dev/null
