@@ -59,6 +59,11 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -344,27 +349,6 @@
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label68">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="halign">end</property>
-                                <property name="margin_left">30</property>
-                                <property name="margin_right">10</property>
-                                <property name="margin_top">3</property>
-                                <property name="margin_bottom">3</property>
-                                <property name="hexpand">True</property>
-                                <property name="label" translatable="yes">&lt;small&gt;&lt;a href='http://peterlevi.com/variety/wiki/Recommended_image_sources'&gt;Recommended sources&lt;/a&gt;&lt;/small&gt;</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">fill</property>
-                                <property name="wrap">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
                               </packing>
                             </child>
                           </object>
@@ -3787,11 +3771,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
     <property name="upper">100</property>

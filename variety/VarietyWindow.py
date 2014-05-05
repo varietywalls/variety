@@ -1752,7 +1752,9 @@ class VarietyWindow(Gtk.Window):
         dialog = WelcomeDialog()
         if os.environ.get('KDE_FULL_SESSION') == 'true':
             logger.info("KDE detected")
-            shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), self.config_folder)
+            kde_wp_folder = os.path.join(Util.get_xdg_pictures_folder(), "variety-wallpaper")
+            Util.makedirs(kde_wp_folder)
+            shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), kde_wp_folder)
             dialog.ui.kde_warning.set_visible(True)
 
         def _on_continue(button):

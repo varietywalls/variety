@@ -21,11 +21,12 @@
 WP=$1
 
 
-# KDE - User will have to manually choose ~/.config/variety/wallpaper-kde.jpg as a wallpaper.
-# Afterwards, with the command below, Variety will just overwrite the file when changing the wallpaper
+# KDE - User will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short iterval.
+# Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
 # and KDE will refresh it
 if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
-    cp "$WP" ~/.config/variety/wallpaper-kde.jpg
+    mkdir -p "$(xdg-user-dir PICTURES)/variety-wallpaper"
+    cp "$WP" "$(xdg-user-dir PICTURES)/variety-wallpaper/wallpaper-kde.jpg"
     exit 0
 fi
 

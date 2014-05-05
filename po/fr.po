@@ -1,16 +1,16 @@
-# Japanese translation for variety
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# French translation for variety
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the variety package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-04-30 10:57+0300\n"
-"PO-Revision-Date: 2014-02-19 07:39+0000\n"
-"Last-Translator: ub <xenolith0bytetestcomgreen@gmail.com>\n"
-"Language-Team: Japanese <ja@li.org>\n"
+"PO-Revision-Date: 2014-05-04 17:22+0000\n"
+"Last-Translator: Jean Marc <m.balthazar@orange.fr>\n"
+"Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,17 +19,17 @@ msgstr ""
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
-msgstr "Goodreads.comから名言を取り込みます"
+msgstr "Récupère les citations depuis Goodreads.com"
 
 #: ../variety/PreferencesVarietyDialog.py:304
 #: ../variety/PreferencesVarietyDialog.py:448
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
-msgstr "画像"
+msgstr "Images"
 
 #: ../variety/PreferencesVarietyDialog.py:305
 msgid "Folders"
-msgstr "フォルダー"
+msgstr "Dossiers"
 
 #: ../variety/PreferencesVarietyDialog.py:306
 #: ../data/ui/AddFlickrDialog.ui.h:2
@@ -49,103 +49,112 @@ msgstr "Wallpapers.net"
 #: ../variety/PreferencesVarietyDialog.py:309
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
-msgstr "メディアRSS"
+msgstr "Média RSS"
 
 #: ../variety/PreferencesVarietyDialog.py:331
 msgid "Remove the source, keep the files"
-msgstr "ファイルを残して場所を削除"
+msgstr "Supprimer la source, garder les fichiers"
 
 #: ../variety/PreferencesVarietyDialog.py:332
 msgid "Remove the sources, keep the files"
-msgstr "ファイルを残して場所を削除"
+msgstr "Supprimer les sources, garder les fichiers"
 
 #: ../variety/PreferencesVarietyDialog.py:339
 msgid "Remove the source and delete the downloaded files"
-msgstr "場所とダウンロードした画像も削除"
+msgstr "Supprimer la source et supprimer les fichiers téléchargés"
 
 #: ../variety/PreferencesVarietyDialog.py:340
 msgid "Remove the sources and delete the downloaded files"
-msgstr "場所とダウンロードした画像も削除"
+msgstr "Supprimer les sources et supprimer les fichiers téléchargés"
 
 #: ../variety/PreferencesVarietyDialog.py:373
 msgid "World Sunlight Map enabled"
-msgstr "World Sunlight Map有効"
+msgstr "Carte d'ensoleillement du monde activée"
 
 #: ../variety/PreferencesVarietyDialog.py:374
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
-msgstr "World Sunlight Mapではダウンロードと30分以内の壁紙変更が必要です。設定は自動的に調整されます。"
+msgstr ""
+"L'utilisation de la carte d'ensoleillement du monde nécessite l'activation "
+"du téléchargement et du changement à un intervalle de 30 minutes ou moins. "
+"Les réglages ont été ajustés automatiquement."
 
 #: ../variety/PreferencesVarietyDialog.py:441
 msgid "Add Images"
-msgstr "画像を追加"
+msgstr "Ajouter des images"
 
 #: ../variety/PreferencesVarietyDialog.py:442
 #: ../variety/PreferencesVarietyDialog.py:466 ../variety/FolderChooser.py:66
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "Annuler"
 
 #: ../variety/PreferencesVarietyDialog.py:442
 #: ../variety/PreferencesVarietyDialog.py:466
 msgid "Add"
-msgstr "追加"
+msgstr "Ajouter"
 
 #: ../variety/PreferencesVarietyDialog.py:464
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
-msgstr "フォルダーを追加 - サブフォルダーも調べます"
+msgstr ""
+"Ajouter des dossiers - Ajouter seulement les dossiers racines, les sous-"
+"dossiers seront automatiquement pris en compte."
 
 #: ../variety/PreferencesVarietyDialog.py:591
 #: ../variety/PreferencesVarietyDialog.py:604
 #: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Edit..."
-msgstr "編集..."
+msgstr "Éditer…"
 
 #: ../variety/PreferencesVarietyDialog.py:598
 msgid "View Image"
-msgstr "画像を表示"
+msgstr "Afficher l'image"
 
 #: ../variety/PreferencesVarietyDialog.py:601
 msgid "Open Folder"
-msgstr "フォルダーを開く"
+msgstr "Ouvrir le dossier"
 
 #: ../variety/PreferencesVarietyDialog.py:935
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr ""
-"自動起動設定中にエラー\n"
-"端末で-vオプションをつけて起動してもう一度操作してください"
+"Une erreur s'est produite lors de la création de l'option de démarrage "
+"automatique.\n"
+"Veuillez lancer le programme depuis un terminal avec l'option -v et essayer "
+"de nouveau."
 
 #: ../variety/PreferencesVarietyDialog.py:937
 msgid "Oops"
-msgstr "…"
+msgstr "Oups"
 
 #: ../variety/PreferencesVarietyDialog.py:996
 #: ../variety/PreferencesVarietyDialog.py:1015
 #: ../variety/PreferencesVarietyDialog.py:1023
 msgid "No write permissions"
-msgstr "書き込み権限がありません"
+msgstr "Pas de droits d'écriture"
 
 #: ../variety/PreferencesVarietyDialog.py:1003
 msgid "Limit disabled"
-msgstr "制限を無効にしました"
+msgstr "Limite désactivée"
 
 #: ../variety/PreferencesVarietyDialog.py:1004
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
-msgstr "データ保護のためダウンロード・フォルダーのサイズ制限を解除します"
+msgstr ""
+"Changer le dossier de téléchargement désactive automatiquement la limite de "
+"taille afin de prévenir une perte accidentelle de données."
 
 #: ../variety/PreferencesVarietyDialog.py:1010
 #, python-format
 msgid "Actual download folder: %s "
-msgstr "現在のダウンロード・フォルダー: %s "
+msgstr "Dossier réel de téléchargement : %s "
 
 #: ../variety/PreferencesVarietyDialog.py:1090
 msgid "Could not adjust permissions"
-msgstr "パーミッションを変更できません"
+msgstr "Impossible de régler les permissions"
 
 #: ../variety/PreferencesVarietyDialog.py:1091
 #, python-format
@@ -153,66 +162,68 @@ msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
-"次のコマンドを試してください:\n"
+"Vous pouvez essayer d'exécuter manuellement cette commande :\n"
 "sudo chmod %s \"%s\""
 
 #: ../variety/Texts.py:22
 msgid "Keep original"
-msgstr "オリジナル画像"
+msgstr "Conserver l'original"
 
 #: ../variety/Texts.py:23
 msgid "Grayscale"
-msgstr "モノクロ"
+msgstr "Niveau de gris"
 
 #: ../variety/Texts.py:24
 msgid "Heavy blur"
-msgstr "ヘビーブラー(ぼかし)"
+msgstr "Flou intense"
 
 #: ../variety/Texts.py:25
 msgid "Soft blur"
-msgstr "ソフトブラー(ぼかし)"
+msgstr "Flou léger"
 
 #: ../variety/Texts.py:26
 msgid "Oil painting"
-msgstr "油絵"
+msgstr "Peinture à l’huile"
 
 #: ../variety/Texts.py:27
 msgid "Pencil sketch"
-msgstr "鉛筆画"
+msgstr "Dessin au crayon"
 
 #: ../variety/Texts.py:28
 msgid "Pointilism"
-msgstr "点描画"
+msgstr "Pointillisme"
 
 #: ../variety/Texts.py:29
 msgid "Pixellate"
-msgstr "モザイク"
+msgstr "Pixeliser"
 
 #: ../variety/Texts.py:33
 msgid "The Favorites folder"
-msgstr "お気に入りフォルダー"
+msgstr "Le dossier Favoris"
 
 #: ../variety/Texts.py:34
 msgid "The Fetched folder"
-msgstr "フェチフォルダー"
+msgstr ""
 
 #: ../variety/Texts.py:35
 msgid "Random wallpapers from Desktoppr.co"
-msgstr "Desktoppr.coからランダムに"
+msgstr "Fonds d'écran aléatoires provenant de Desktoppr.co"
 
 #: ../variety/Texts.py:36
 msgid "NASA's Astronomy Picture of the Day"
-msgstr "NASAの今日の天文写真"
+msgstr "Image astronomique du jour de la NASA"
 
 #: ../variety/Texts.py:37
 msgid "World Sunlight Map - live wallpaper from Opentopia.com"
-msgstr "Opentopia.comの世界日光地図"
+msgstr ""
+"Mappemonde de la lumière du soleil - fond d'écran en direct depuis "
+"Opentopia.com"
 
 #: ../variety/Texts.py:41
 msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
-msgstr "インジケータのアイコン上でマウスホイールをスクロールすると壁紙が変わります。"
+msgstr ""
 
 #: ../variety/Texts.py:42
 msgid ""
@@ -221,8 +232,10 @@ msgid ""
 "~/.config/variety/scripts. There are examples there for various desktop "
 "environments."
 msgstr ""
-"壁紙変更と共にカスタムコマンドを実行したり別のデスクトップ環境を使うときには ~/.config/variety/scripts "
-"を編集してください。そこには様々なデスクトップ環境の参考例があります。"
+"Si vous souhaitez lancer des commandes personnalisées à chaque changement de "
+"fond d'écran, ou si vous utilisez un environnement de bureau alternatif, "
+"veuillez éditer les scripts dans ~/.config/variety/scripts. Vous y trouverez "
+"des exemples pour différents environnements de bureau."
 
 #: ../variety/Texts.py:43
 msgid ""
@@ -230,8 +243,9 @@ msgid ""
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
-"Variety はコマンドラインで制御できます。そしてよく使う命令はショートカットに登録できます。\"variety --help\" "
-"ですべてのコマンドが確認できます。"
+"La ligne de commande vous permet de contrôler Variety et de définir les "
+"raccourcis-clavier pour les opérations les plus courantes. Lancez « variety -"
+"-help » pour voir les commandes disponibles."
 
 #: ../variety/Texts.py:44
 msgid ""
@@ -239,8 +253,11 @@ msgid ""
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
-"画像のリンクやファイルをランチャーのアイコンにドロップすると壁紙として使えます。特定のサイトからすばやくダウンロードするにはクリップボードモニターを使いま"
-"す。(手動ダウンロードタブを参照)"
+"Vous pouvez glisser des liens vers des images ou des fichiers sur l'icône du "
+"lanceur afin de les télécharger et de vous en servir comme fonds d'écran. "
+"Pour un téléchargement plus rapide depuis un site spécifique, vous pouvez "
+"aussi utiliser le gestionnaire de presse-papier (voir l'onglet "
+"« Téléchargement manuel »)."
 
 #: ../variety/Texts.py:45
 msgid ""
@@ -248,7 +265,9 @@ msgid ""
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
-"フィルターでヘビーブラー(ぼかし)を適用するとカラフルな壁紙でも抽象的で控えめになります。Ubuntuのデフォルトの壁紙のような感じです。"
+"Appliquer un filtre de flou intense est un excellent moyen pour obtenir des "
+"fonds d'écran visuellement abstraits, discrets, tout en restant colorés, "
+"dans l'état d'esprit du fond d'écran par défaut d'Ubuntu."
 
 #: ../variety/Texts.py:46
 msgid ""
@@ -257,8 +276,10 @@ msgid ""
 "an example. Every filter is just a line of options to be passed to "
 "ImageMagick's convert command."
 msgstr ""
-"カスタムフィルターの追加は簡単です:~/.config/variety/variety.conf "
-"を開いて編集します。それぞれのフィルターはImageMagickのconvertに渡されるオプションです。"
+"Ajouter vos propres filtres personnalisés est plutôt simple : ouvrez "
+"~/.config/variety/variety.conf dans un éditeur de texte et utilisez les "
+"filtres existants comme exemple. Chaque filtre n'est qu'une ligne d'options "
+"à envoyer à la commande de conversion d'ImageMagick."
 
 #: ../variety/Texts.py:47
 msgid ""
@@ -269,16 +290,23 @@ msgid ""
 "thumbnail view of all of them. Please mind that thumbnail view is limited to "
 "several hundred randomly selected images."
 msgstr ""
-"壁紙の場所を表示させると画面の下のウィンドウに画像が表示されます。リックするとその画像が壁紙に使われます。右クリックでウィンドウを閉じたり、ウィンドウの外"
-"観を変更したり、ファイルの操作もできます。画像の場所を複数指定していたらすべて結合したサムネイルが表示されます。ムネイルはランダムに選ばれた数百の画像を表"
-"示します。"
+"Quand vous choisissez une source d'images, ses images sont affichées dans "
+"une fenêtre en bas de l'écran. Cliquez sur une image pour la choisir comme "
+"fond d'écran. Effectuez un clic-droit pour fermer la fenêtre, modifier son "
+"apparence ou réaliser des opérations sur le fichier. Vous pouvez "
+"sélectionner plusieurs sources d'images pour toutes les visualiser sous la "
+"forme d'une vue en vignettes « fusionnées ». Gardez à l'esprit que la vue en "
+"vignettes  est limitée à quelques centaines d'images choisies de façon "
+"aléatoire."
 
 #: ../variety/Texts.py:48
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
 msgstr ""
-"壁紙の変更をデスクトップで通知するには ~/.config/variety/scripts/set_wallpaper の最後の２行のコメントを外します。"
+"Pour activer les notifications sur le bureau lorsque le fond d'écran change, "
+"décommentez les deux lignes en bas de "
+"~/.config/variety/scripts/set_wallpaper."
 
 #: ../variety/Texts.py:49
 msgid ""
@@ -288,9 +316,12 @@ msgid ""
 "KDE-specific libraries so we have to use a workaround - Variety updates this "
 "file, KDE notices the update and refreshes the wallpaper."
 msgstr ""
-"KDEを使っているなら手動で ~/.config/variety/wallpaper-kde.jpg "
-"を壁紙としてセットする必要があります。KDEでは特別なライブラリがなくてはプログラムが簡単に壁紙を変えることができません。そこで対処法（ワークアラウンド）"
-"を使うことになります。- Varietyはこのファイルを更新します。KDEが更新に気がつくと壁紙を更新します。"
+"Si vous utilisez KDE, vous aurez besoin de régler manuellement le fichier "
+"~/.config/variety/wallpaper-kde.jpg en tant que fond d'écran par défaut. KDE "
+"rend simplement impossible pour les programmes la mise à jour du fond "
+"d'écran sans recourir aux bibliothèques spécifiques de KDE, de sorte que "
+"nous devons contourner le problème. Variety met à jour ce fichier, KDE note "
+"la mise à jour et actualise le fond d'écran."
 
 #: ../variety/Texts.py:50
 msgid ""
@@ -299,9 +330,10 @@ msgid ""
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
-"Variety のインジケータアイコンにテーマが使えます。アイコンのオプションで "
-"\"明るいアイコン\"を選んだらVarietyはまず現在のGTKテーマに\"variety-"
-"indicator\"があるか調べます。ったら付属の明るいアイコンの代わりにそれを使います。"
+"Des thèmes peuvent être appliqués à l'icône d'indicateur de Variety : si "
+"vous choisissez le thème « Light » pour l'icône, Variety va tout d'abord "
+"vérifier si le thème GTK actuel possède une icône nommée « variety-"
+"indicator » et l'utilisera en lieu et place de l'icône « light » fournie."
 
 #: ../variety/Texts.py:51
 msgid ""
@@ -311,19 +343,25 @@ msgid ""
 "~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
 "source. This file is also compatible with the Unix fortune utility."
 msgstr ""
-"名言をお気に入りに保存する時デフォルトでは ~/.config/variety/favorite_quotes.txt に保存されます。このファイルは "
-"Variety の名言ローカルファイルと互換性があります。~/.config/variety/pluginconfig/quotes/ "
-"にコピーして名言のソースのローカルファイルを有効にすれば表示されます。このファイルはUnixのfortuneとも互換性があります。"
+"Si vous choisissez de sauvegarder des citations dans vos Favoris, celles-ci "
+"sont sauegardées par défaut dans ~/.config/variety/favorite_quotes.txt. Ce "
+"fichier est compatible avec les fichiers locaux de sources de citations. Si "
+"vous souhaitez l'utiliser, copiez-le vers "
+"~/.config/variety/pluginconfig/quotes/ et activez la source de citations "
+"« Fichiers locaux ». Le fichier est également compatible l'utilitaire "
+"« fortune » d'Unix."
 
 #: ../variety/AddMediaRssDialog.py:87
 msgid ""
 "This does not seem to be a valid Media RSS feed URL or there is no content "
 "there."
-msgstr "無効なメディアRSSのURLかコンテンツがありません"
+msgstr ""
+"Ceci ne semble pas être une URL de flux Media RSS valide, ou alors il ne "
+"contient rien."
 
 #: ../data/ui/AddWallbaseDialog.ui.h:1
 msgid "Variety - add Wallbase.cc image source"
-msgstr "Variety - Wallbase.ccを画像の場所に追加"
+msgstr "Variety - ajouter Wallbase.cc aux source d'images"
 
 #: ../data/ui/AddWallbaseDialog.ui.h:3
 msgid ""
@@ -343,24 +381,29 @@ msgid ""
 "better images and Relevance will provide closer matches when searching for "
 "phrases or colors."
 msgstr ""
-"<a href=\\\"http://wallbase.cc\\\">Wallbase.cc</a> "
-"は様々な画像検索オプションがあります。キーワードを指定するか  <a "
-"href=\"http://wallbase.cc\">Wallbase.cc</a> "
-"を訪問して検索の条件を設定します。結果を確認したらそのURLを下のボックスにペーストします。\n"
+"<a href=\"http://wallbase.cc\">Wallbase.cc</a> fournit de nombreuses options "
+"de recherche d'images. Ci-dessous, vous pouvez spécifier les mots clés à "
+"rechercher ou bien visiter <a href=\"http://wallbase.cc\">Wallbase.cc</a>, y "
+"configurer votre critère de recherche, vous assurer que les résultats vous "
+"conviennent, et copier l'URL Wallbase complète dans la zone de saisie.\n"
 "\n"
-"キーワードを指定したらキーワードにマッチした職場向け(safe-for-work)の画像を表示します。\n"
+"Si vous spécifiez des mots clés, les images politiquement correctes les plus "
+"appréciées qui répondent à l'un des mots clés seront utilisées. \n"
 "\n"
-"WallbaseのURLを指定したら慎重にソート条件を選んでください。 - "
-"Varietyは画像を定期的に取り込みますが最初に取り込んだ数百の画像を使います。Random や Date は適していません。Favorites "
-"は良い画像が見つかります。また Relevance はフレーズや色で検索する時に有効です。"
+"Si vous spécifiez une URL Wallbase, choisissez attentivement le critère de "
+"recherche - Variety recherche régulièrement les images, mais utilise "
+"uniquement les premières centaines. Aléatoire ou Date signifiera que cette "
+"source d'images aura une « durée de vie » plus longue, jusqu'à son "
+"épuisement. Favoris fournira de meilleures images et Pertinence fournira des "
+"résultats plus proches lors des recherches à base de phrases ou de couleurs."
 
 #: ../data/ui/AddWallbaseDialog.ui.h:8
 msgid "Enter keywords or paste URL here: "
-msgstr "キーワードを入力またはURLをペースト: "
+msgstr "Entrez des mots clés ou copiez l'URL ici : "
 
 #: ../data/ui/AddWallbaseDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
 msgid "Just a moment to check this search"
-msgstr "しばらくお待ち下さい"
+msgstr "Juste un moment pour vérifier cette recherche"
 
 #: ../data/ui/AddWallbaseDialog.ui.h:10
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
@@ -370,131 +413,143 @@ msgstr "  "
 
 #: ../data/ui/FacebookPublishDialog.ui.h:1
 msgid "Variety - Publish to Facebook"
-msgstr "Variety - Facebookで公開"
+msgstr "Variety - Publier sur Facebook"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:96
 #: ../variety/indicator.py:210
 msgid "Share on Facebook"
-msgstr "Facebookで共有"
+msgstr "Partager sur Facebook"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:3
 msgid ""
 "Publish a link to the current wallpaper on Facebook. Include this text along "
 "with the link (or just leave empty):"
-msgstr "この壁紙をFacebookで公開します。説明も入れられます。(空でもかまいません):"
+msgstr ""
+"Publier un lien vers le fond d'écran actuel sur Facebook. Inclure ce texte "
+"avec le lien (ou laisser vide) :"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
 msgid "Do not ask anymore, always use the text above"
-msgstr "次回から尋ねずに常にこの文字を使う"
+msgstr "Ne plus demander, toujours utiliser le texte ci-dessus"
 
 #: ../variety/AddFlickrDialog.py:140 ../variety/AddWallbaseDialog.py:88
 msgid "No images found"
-msgstr "画像がありません"
+msgstr "Aucune image trouvée"
 
 #: ../variety/VarietyWindow.py:595 ../variety/VarietyWindow.py:704
 #: ../variety/VarietyWindow.py:2356
 msgid "Already in Favorites"
-msgstr "お気に入りに入っています"
+msgstr "Déjà dans Favoris"
 
 #. self.menu.append(self.no_effects_separator)
 #: ../variety/VarietyWindow.py:599 ../variety/ThumbsManager.py:124
 #: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
-msgstr "お気に入りにコピー(_F)"
+msgstr "Copier vers _Favoris"
 
 #: ../variety/VarietyWindow.py:600 ../variety/ThumbsManager.py:131
 msgid "Move to _Favorites"
-msgstr "お気に入りに移動(_F)"
+msgstr "Déplacer vers _Favoris"
 
 #. both
 #: ../variety/VarietyWindow.py:608 ../variety/indicator.py:81
 #: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Move to Favorites"
-msgstr "お気に入りに移動"
+msgstr "Déplacer vers Favoris"
 
 #: ../variety/VarietyWindow.py:628 ../variety/VarietyWindow.py:694
 #, python-format
 msgid "View at %s"
-msgstr "壁紙の場所: %s"
+msgstr "Vue à %s"
 
 #: ../variety/VarietyWindow.py:628
 msgid "Fetched: Show Origin"
-msgstr "元の画像をブラウザーで表示"
+msgstr "Récupéré : montrer l'origine"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
 #: ../variety/VarietyWindow.py:1841 ../variety/indicator.py:135
 #: ../variety/indicator.py:172
 msgid "Pause"
-msgstr "一時停止"
+msgstr "Pause"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
 #: ../variety/VarietyWindow.py:1845
 msgid "Resume"
-msgstr "スタート"
+msgstr "Reprendre"
 
 #: ../variety/VarietyWindow.py:704 ../variety/indicator.py:178
 msgid "Save to Favorites"
-msgstr "お気に入りに保存"
+msgstr "Sauvegarder dans les Favoris"
 
 #: ../variety/VarietyWindow.py:837
 msgid "Filtering too strict?"
-msgstr "フィルターが厳しいようです"
+msgstr "Filtrage trop strict ?"
 
 #: ../variety/VarietyWindow.py:838
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
-msgstr "基準に合う画像が少なすぎます"
+msgstr ""
+"Variety ne trouve pas assez d'images correspondant à vos critères de filtrage"
 
 #: ../variety/VarietyWindow.py:1305
 msgid "Please add more image sources or wait for some downloads"
-msgstr "画像の場所をさらに追加するかしばらくお待ち下さい"
+msgstr ""
+"Veuillez ajouter plus de sources d'images ou attendre des téléchargements"
 
 #: ../variety/VarietyWindow.py:1307
 msgid "Please add more image sources"
-msgstr "さらに画像の場所を追加して下さい"
+msgstr "Veuillez ajouter plus de sources d'images"
 
 #: ../variety/VarietyWindow.py:1308
 msgid "No more wallpapers"
-msgstr "壁紙が少なすぎます"
+msgstr "Plus d'autre fond d'écran"
 
 #: ../variety/VarietyWindow.py:1482
 msgid "Current wallpaper is not in the image sources"
-msgstr "現在の壁紙は画像の場所にありません"
+msgstr "Le font d'écran actuel ne se trouve pas dans les sources d'images"
 
 #: ../variety/VarietyWindow.py:1513
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
-msgstr "%s に移動する権限がありません。"
+msgstr ""
+"Déplacement vers %s impossible. Vous n'avez probablement pas les droits "
+"nécessaires pour déplacer ce fichier."
 
 #: ../variety/VarietyWindow.py:1515
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
-msgstr "%s にコピーする権限がありません。"
+msgstr ""
+"Copie vers %s impossible. Vous n'avez probablement pas les droits "
+"nécessaires pour copier ce fichier."
 
 #: ../variety/VarietyWindow.py:1533 ../variety/VarietyWindow.py:1550
 msgid "Cannot delete"
-msgstr "削除できません"
+msgstr "Suppression impossible"
 
 #: ../variety/VarietyWindow.py:1534
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
-msgstr "%s をゴミ箱に移動する権限がありません。"
+msgstr ""
+"Vous n'avez pas les droits nécessaires pour supprimer %s vers la Corbeille."
 
 #: ../variety/VarietyWindow.py:1551
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
 msgstr ""
-"ゴミ箱に移動するユーティリティーはありますか?\n"
-"trash-cliやgvfs-binやkonquererが必要です。"
+"Il n'y a peut-être pas d'utilitaire pour mettre à la corbeille ?\n"
+"Veuillez installer trash-cli, gvfs-bin ou konquerer."
 
 #: ../variety/VarietyWindow.py:1770
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
-msgstr "エディターで設定ファイルを開きます。保存後に変更が適用されます。"
+msgstr ""
+"Je vais ouvrir le fichier de configuration avec un éditeur de texte et "
+"appliquer les changements une fois que vous aurez enregistré et fermé cet "
+"éditeur."
 
 #: ../variety/VarietyWindow.py:1795
 msgid ""
@@ -506,94 +561,106 @@ msgid ""
 "\n"
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
-"%prog [options] [files or urls]\n"
+"%prog [options] [fichiers ou URL]\n"
 "\n"
-"ファイルを指定するとVarietyのキューに追加します。\n"
-"URLを指定するとフェッチ・フォルダーに取り込んでキューに追加します。\n"
+"Passer des nom de fichiers locaux les ajoutera à la file d'attente de "
+"Variety.\n"
+"Passer des URL distantes fera télécharger les images dans le dossier des "
+"images reçues et les placera ensuite dans la file d'attente de Variety.\n"
 "\n"
-"指定した壁紙をセットします: %prog /some/local/image.jpg --next"
+"Pour choisir un fond d'écran spécifique : %prog /une/image/locale.jpg --next"
 
 #: ../variety/VarietyWindow.py:1805
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
-msgstr "メッセージを表示 (-vv はさらに詳しく表示、-vvv debugs variety_libも同様)"
+msgstr ""
+"Montre les messages de connexion (-vv montre même les messages de débogage "
+"les plus fins, -vvv débogue également variety_lib)"
 
 #: ../variety/VarietyWindow.py:1809
 msgid "Make the running instance quit"
-msgstr "実行中の動作を終了"
+msgstr "Quitter l'instance en cours"
 
 #: ../variety/VarietyWindow.py:1813
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
-msgstr "現在の壁紙の場所を表示します。起動中のみ使用可能。"
+msgstr ""
+"Affiche l'emplacement du fond d'écran actuel. À n'utiliser que quand "
+"l'application est déjà en fonctionnement."
 
 #: ../variety/VarietyWindow.py:1817
 msgid "Show Next wallpaper"
-msgstr "次の壁紙を表示"
+msgstr "Montrer le fond d'écran suivant"
 
 #: ../variety/VarietyWindow.py:1821
 msgid "Show Previous wallpaper"
-msgstr "前の壁紙を表示"
+msgstr "Montrer le fond d'écran précédent"
 
 #: ../variety/VarietyWindow.py:1825
 msgid "Show Next wallpaper, skipping the forward history"
-msgstr "履歴を前方にスキップして壁紙を表示"
+msgstr "Montrer le fond d'écran suivant, en ignorant la file d'attente"
 
 #: ../variety/VarietyWindow.py:1829
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
-msgstr "現在の壁紙をゴミ箱に移動。起動中のみ使用可能。"
+msgstr ""
+"Déplacer le fond d'écran actuel vers la Corbeille. À n'utiliser que quand "
+"l'application est déjà en fonctionnement."
 
 #: ../variety/VarietyWindow.py:1833
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
-msgstr "現在の壁紙をお気に入りにコピー。起動中のみ使用可能。"
+msgstr ""
+"Copier le fond d'écran actuel vers Favoris. À n'utiliser que quand "
+"l'application est déjà en fonctionnement."
 
 #: ../variety/VarietyWindow.py:1837
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
-msgstr "現在の壁紙をお気に入りに移動。起動中のみ使用可能。"
+msgstr ""
+"Déplacer le fond d'écran actuel vers Favoris. À n'utiliser que quand "
+"l'application est déjà en fonctionnement."
 
 #: ../variety/VarietyWindow.py:1849
 msgid "Toggle Pause/Resume state"
-msgstr "一時停止/スタートの切り替え"
+msgstr "Basculer entre les modes Pause/Reprendre"
 
 #: ../variety/VarietyWindow.py:1853
 msgid "Show Next quote"
-msgstr "次の名言を表示"
+msgstr "Montrer la citation suivante"
 
 #: ../variety/VarietyWindow.py:1857
 msgid "Show Previous quote"
-msgstr "前の名言を表示"
+msgstr "Montrer la citation précédente"
 
 #: ../variety/VarietyWindow.py:1861
 msgid "Show Next quote, skipping the forward history"
-msgstr "履歴を前方にスキップして名言を表示"
+msgstr "Montrer la citation suivante, en ignorant la file d'attente"
 
 #: ../variety/VarietyWindow.py:1865
 msgid "Toggle Quotes Pause/Resume state"
-msgstr "名言の一時停止/スタートの切り替え"
+msgstr "Basculer entre les modes Pause/Reprendre pour les citations"
 
 #: ../variety/VarietyWindow.py:1869
 msgid "Save the current quote to Favorites"
-msgstr "現在表示されている名言をお気に入りに保存"
+msgstr "Enregistrer la citation actuelle dans les Favoris"
 
 #: ../variety/VarietyWindow.py:1873
 msgid "Toggle History display"
-msgstr "履歴表示の切り替え"
+msgstr "Afficher/masquer l'historique"
 
 #: ../variety/VarietyWindow.py:1877
 msgid "Toggle Recent Downloads display"
-msgstr "最近のダウンロード表示の切り替え"
+msgstr "Afficher/masquer les téléchargements récents"
 
 #: ../variety/VarietyWindow.py:1881
 msgid "Show Preferences dialog"
-msgstr "設定ダイアログの表示"
+msgstr "Montrer la fenêtre Préférences"
 
 #: ../variety/VarietyWindow.py:1885
 msgid ""
@@ -603,72 +670,76 @@ msgid ""
 "option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
 "file directly in an unguarded way."
 msgstr ""
-"オプションを指定して適用します。使えるオプションは、Variety の設定ファイル "
-"~/.config/variety/variety.confにあります。一度に複数のオプションを指定できます。例: 'variety --set-"
-"option icon Dark --set-option clock_enabled True' 使用上の注意: "
-"設定ファイルを直接編集するのは勧めません。"
+"Choisit et applique une option. Le nom des options est le même que celui "
+"utilisé dans le fichier de configuration de Variety "
+"~/.config/variety/variety.conf. Plusieurs options peuvent être définies en "
+"une seule commande. Exemple : « variety --set-option icon Dark --set-option "
+"clock_enabled True ». À UTILISER AVEC PRÉCAUTION : vous êtes en train de "
+"changer directement le fichier des paramètres dans un mode non protégé."
 
 #: ../variety/VarietyWindow.py:1895
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
-msgstr "オプション --next/--fast-forwardと --previousは同時に使えません"
+msgstr ""
+"les options --next/--fast-forward et --previous s'excluent mutuellement"
 
 #: ../variety/VarietyWindow.py:1898
 msgid "options --trash and --favorite are mutually exclusive"
-msgstr "オプション --trashと --favoriteは同時に使えません"
+msgstr "les options --trash et --favorite s'excluent mutuellement"
 
 #: ../variety/VarietyWindow.py:1901
 msgid "options --pause and --resume are mutually exclusive"
-msgstr "オプション --pauseと --resumeは同時に使えません"
+msgstr "les options --pause et --resume s'excluent mutuellement"
 
 #: ../variety/VarietyWindow.py:1904
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
-"オプション --quotes-next/--quotes-fast-forwardと --quotes-previousは同時に使えません"
+"les options --quotes-next/--quotes-fast-forward et --quotes-previous "
+"s'excluent mutuellement"
 
 #: ../variety/VarietyWindow.py:2008 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
-msgstr "画像ではありません"
+msgstr "Ce n'est pas une image"
 
 #: ../variety/VarietyWindow.py:2013
 msgid "Added to queue"
-msgstr "キューに追加します"
+msgstr "Ajouté à la file d'attente"
 
 #: ../variety/VarietyWindow.py:2013 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
-msgstr "次へを押してください"
+msgstr "Appuyer sur Suivant pour le voir"
 
 #: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
 msgid "Published"
-msgstr "公開しました"
+msgstr "Publié"
 
 #: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
 msgid "You may open your Facebook feed to see the post"
-msgstr "Facebookを開いて投稿を見る"
+msgstr "Vous pouvez ouvrir votre mur Facebook pour voir la publication"
 
 #: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
 msgid "Could not publish"
-msgstr "公開できません"
+msgstr "Publication impossible"
 
 #: ../variety/AddWallpapersNetCategoryDialog.py:87
 msgid "Could not find wallpapers there. Please check the URL."
-msgstr "壁紙がありません。URLを確認して下さい。"
+msgstr "Aucun fond d'écran trouvé. Veuillez vérifier l'URL."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
-msgstr "TheQuotationsPage.comから名言を取り込みます"
+msgstr "Récupère des citations depuis TheQuotationsPage.com"
 
 #: ../data/ui/WelcomeDialog.ui.h:1
 msgid "Welcome to Variety!"
-msgstr "Varietyにようこそ!"
+msgstr "Bienvenue sur Variety !"
 
 #: ../data/ui/WelcomeDialog.ui.h:2
 msgid "Continue"
-msgstr "次へ"
+msgstr "Continuer"
 
 #: ../data/ui/WelcomeDialog.ui.h:3
 msgid ""
@@ -686,19 +757,25 @@ msgid ""
 "\n"
 "Please take the time to set your preferences on the next screen."
 msgstr ""
-"Varietyは自動壁紙チェンジャーです。画像や画像のあるフォルダーを指定するとデスクトップの壁紙を定期的に変更します。またオンライン上の素晴らしい壁紙を"
-"自動的にダウンロードします。\n"
+"Variety est un changeur de fond d'écran automatique. Vous choisissez des "
+"images ou des dossiers d'images et il changera votre fond d'écran à "
+"intervalles réguliers. Il peut aussi télécharger automatiquement de "
+"magnifiques fonds d'écran pour vous, issus de nombreuses sources en ligne.\n"
 "\n"
-"Varietyはバックグラウンドで実行されます。インジケーターの小さな山のアイコンで操作します。クリックするとメニューが開きます。アイコン上でマウスホィー"
-"ルをスクロールすると壁紙が変わります。\n"
+"Variety fonctionne discrètement en tâche de fond et peut être contrôlé par "
+"la petite îcône en forme de montagne près de l'horloge. Vous pouvez cliquer "
+"dessus pour obtenir un menu ou utiliser la molette de la souris au-dessus "
+"pour changer de fond d'écran dans la liste d'attente.\n"
 "\n"
-"Varietyは Ubuntuアプリとして2012年6月-7月に Peter Leviが公開しました。ライセンスは GPL-3です。\n"
+"Variety a été développé par Peter Levi pour l'Ubuntu App Showdown, en Juin-"
+"Juillet 2012 et est distribué sous la licence GPL-3.\n"
 "\n"
-"次の画面で設定を行なってください。"
+"Veuillez prendre le temps de sélectionner vos préférences sur la fenêtre "
+"suivante."
 
 #: ../data/ui/WelcomeDialog.ui.h:10
 msgid "KDE Users - Important, please read:"
-msgstr "KDEユーザーへ 重要:"
+msgstr "Utilisateurs KDE - Important, veuillez lire :"
 
 #: ../data/ui/WelcomeDialog.ui.h:11
 msgid ""
@@ -712,15 +789,20 @@ msgid ""
 "Variety will update this file and KDE will automatically refresh the "
 "wallpaper."
 msgstr ""
-"あなたはKDEを使っているようです。VarietyはKDEをサポートしていますが、まずいくつかの設定を行います。\n"
+"Il semble que vous utilisiez KDE. Variety supporte KDE, mais vous devez "
+"d'abord faire quelque chose :\n"
 "\n"
-"KDEではVarietyが壁紙を変えるのは困難です。これはKDEのライブラリが理由です。\n"
-"それでも ~/.config/variety/wallpaper-kde.jpgに壁紙を手動でセットすれば "
-"Varietyが変更します。これでKDEは自動的に壁紙を更新します。"
+"KDE rend le changement de fond d'écran très difficile pour les programmes "
+"s'ils n'utilisent pas les librairies spécifiques KDE et cela n'est pas "
+"envisageable pour Variety. \n"
+"Par conséquent, vous devez manuellement sélectionner le fichier "
+"~/.config/variety/wallpaper-kde.jpg comme fond d'écran et le conserver "
+"ainsi. Lorsque vous changerez de fond d'écran, Variety changera ce fichier "
+"et KDE rechargera automatiquement le fond d'écran."
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
-msgstr "Variety - Wallpapers.net categoryを追加"
+msgstr "Variety - ajouter la catégorie de Wallpapers.net"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
 msgid ""
@@ -741,33 +823,36 @@ msgid ""
 "wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-"
 "r.html</a>\n"
 msgstr ""
-"<a href=\"http://wallpapers.net\">wallpapers.net</a> "
-"を訪問して好みの壁紙のテゴリーを選んでください。そしてそのURLを下にペーストします。カテゴリーは１ページ以上の壁紙があるものを選んでください。いくつかの"
-"例を:\n"
+"Veuillez visiter <a href=\"http://wallpapers.net\">wallpapers.net</a> et "
+"choisir une catégorie avec des fonds d'écran que vous souhaiteriez voir sur "
+"votre bureau, puis collez son URL ci-dessous. Une catégorie est n'importe "
+"quoi sur le site ayant une ou plusieurs pages contenant des fonds d'écran. "
+"Voici quelques exemples :\n"
 "\n"
-"人気の壁紙: <a "
+"Les meilleurs fonds d'écran : <a "
 "href=\"http://wallpapers.net/top_wallpapers.html\">http://wallpapers.net/top_"
 "wallpapers.html</a>\n"
-"カテゴリー 'autumn': <a href=\"http://wallpapers.net/autumn-desktop-"
+"Catégorie 'automne' : <a href=\"http://wallpapers.net/autumn-desktop-"
 "wallpapers.html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
-"'fog' で検索: <a "
+"Recherche pour 'brouillard' : <a "
 "href=\"http://wallpapers.net/search.html?q=fog\">http://wallpapers.net/search"
 ".html?q=fog</a>\n"
-"解像度を指定: <a href=\"http://wallpapers.net/1920x1200_wide-wallpapers-"
-"r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-r.html</a>\n"
+"Résolution particulière : <a href=\"http://wallpapers.net/1920x1200_wide-"
+"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-"
+"r.html</a>\n"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
 msgid "Paste URL here: "
-msgstr "URLをここにペースト: "
+msgstr "Coller l'URL ici : "
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
 #: ../data/ui/AddMediaRssDialog.ui.h:5
 msgid "Just a moment to check what's at that URL"
-msgstr "URLをチェック中"
+msgstr "Juste un moment pour vérifier le contenu de cette URL"
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
-msgstr "Variety - Flickrを画像の場所に追加"
+msgstr "Variety - ajouter Flickr comme source d'image"
 
 #: ../data/ui/AddFlickrDialog.ui.h:3
 msgid ""
@@ -775,13 +860,15 @@ msgid ""
 "Photos that match all of the chosen criteria will be downloaded. Leave "
 "unneeded criteria empty."
 msgstr ""
-"<a href=\"http://flickr.com\">Flickr</a> "
-"指定した条件にあった写真をダウンロードします。選択しない場合は空にします。"
+"Veuillez spécifier les critères de recherche <a "
+"href=\"http://flickr.com\">Flickr</a>. Les photos qui coïncident avec tous "
+"les critères choisis seront téléchargées. Laisser vides les critères dont "
+"vous n'avez pas besoin."
 
 #: ../data/ui/AddFlickrDialog.ui.h:4
 #: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Tags: "
-msgstr "タグ: "
+msgstr "Tags : "
 
 #: ../data/ui/AddFlickrDialog.ui.h:5
 msgid ""
@@ -789,12 +876,13 @@ msgid ""
 "simultaneosly in order to match.\n"
 "Example: yellow,car"
 msgstr ""
-"タグをすべて含む写真。タグはコンマで区切ります。\n"
-"例: yellow,car"
+"Une lise de tags séparés par des virgules. Une photo doit tous les contenir "
+"afin de coïncider.\n"
+"Exemple : jaune,voiture"
 
 #: ../data/ui/AddFlickrDialog.ui.h:7
 msgid "User: "
-msgstr "ユーザー: "
+msgstr "Utilisateur : "
 
 #: ../data/ui/AddFlickrDialog.ui.h:8
 msgid ""
@@ -802,13 +890,14 @@ msgid ""
 "Example: <a href=\"http://www.flickr.com/photos/peter-"
 "levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 msgstr ""
-"ユーザーの写真のあるURLを入れて下さい。\n"
-"例: <a href=\"http://www.flickr.com/photos/peter-"
+"Veuillez écrire l'URL du diaporama de l'utilisateur ou de l'une de ses "
+"photos.\n"
+"Exemple : <a href=\"http://www.flickr.com/photos/peter-"
 "levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui.h:10
 msgid "Group: "
-msgstr "グループ: "
+msgstr "Groupe : "
 
 #: ../data/ui/AddFlickrDialog.ui.h:11
 msgid ""
@@ -817,14 +906,14 @@ msgid ""
 "href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
 "s/wallpapers/</a>"
 msgstr ""
-"グループURLを入れて下さい。\n"
-"例: <a "
+"Veuillez écrire l'URL du groupe.\n"
+"Exemple :  <a "
 "href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
 "s/wallpapers/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui.h:13
 msgid "Text:"
-msgstr "文字:"
+msgstr "Texte :"
 
 #: ../data/ui/AddFlickrDialog.ui.h:14
 msgid ""
@@ -832,12 +921,13 @@ msgid ""
 "prepending them with -.\n"
 "Example: apple -pie"
 msgstr ""
-"写真のタイトル、説明、タグを検索します。検索から除外するには - を使います。\n"
-"例: apple -pie"
+"Recherche par texte libre dans les titres, descriptions ou balises de "
+"photos. Exclure des termes en les faisant précéder d'un tiret (« - »).\n"
+"Exemple : pomme -tarte"
 
 #: ../variety/FolderChooser.py:65
 msgid "Choose a folder"
-msgstr "フォルダーを選択"
+msgstr "Choisir un dossier"
 
 #: ../variety/FolderChooser.py:66
 msgid "OK"
@@ -845,80 +935,80 @@ msgstr "OK"
 
 #: ../variety/__init__.py:64
 msgid "Terminating signal received, quitting..."
-msgstr "終了シグナルを受け取りました。終了します..."
+msgstr "Signal de terminaison reçu. Arrêt en cours…"
 
 #: ../variety/__init__.py:95
 msgid ""
 "Variety is already running. Sending the command to the running instance."
-msgstr "Varietyはすでに起動しています。そちらにコマンドを送ります。"
+msgstr "Variety est déjà démarré. Envoi de la commande à l'instance ouverte."
 
 #: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Bottom"
-msgstr "下"
+msgstr "Bas"
 
 #: ../variety/ThumbsManager.py:43
 msgid "Top"
-msgstr "上"
+msgstr "Haut"
 
 #: ../variety/ThumbsManager.py:44
 msgid "Left"
-msgstr "左"
+msgstr "Gauche"
 
 #: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Right"
-msgstr "右"
+msgstr "Droite"
 
 #: ../variety/ThumbsManager.py:95
 msgid "Position"
-msgstr "サムネイルの位置"
+msgstr "Position"
 
 #: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "Size"
-msgstr "画像のサイズ"
+msgstr "Taille"
 
 #: ../variety/ThumbsManager.py:110
 msgid "Show Containing Folder"
-msgstr "画像のあるフォルダーを表示"
+msgstr "Montrer le dossier parent"
 
 #: ../variety/ThumbsManager.py:116 ../variety/indicator.py:60
 msgid "Set Rating"
-msgstr "評価をセット"
+msgstr "Attribuer une note"
 
 #: ../variety/ThumbsManager.py:140 ../variety/indicator.py:87
 msgid "Delete to _Trash"
-msgstr "ゴミ箱に移動(_T)"
+msgstr "Supprimer vers la _Corbeille"
 
 #: ../variety/ThumbsManager.py:147 ../variety/indicator.py:92
 msgid "Display Source"
-msgstr "壁紙の場所を表示"
+msgstr "Afficher la source"
 
 #: ../variety/ThumbsManager.py:158
 msgid "Close"
-msgstr "閉じる"
+msgstr "Fermer"
 
 #: ../variety/ThumbsManager.py:178
 msgid "Could not set rating"
-msgstr "評価をセットできません"
+msgstr "Impossible d'attribuer une note"
 
 #: ../variety/ThumbsManager.py:197
 msgid "Unrated"
-msgstr "評価なし"
+msgstr "Non évalué"
 
 #: ../variety/ThumbsManager.py:204
 msgid "Rejected"
-msgstr "拒否"
+msgstr "Refusé"
 
 #: ../variety/ThumbsManager.py:303
 msgid "Variety History"
-msgstr "Variety 履歴"
+msgstr "Historique de Variety"
 
 #: ../variety/ThumbsManager.py:305
 msgid "Variety Recent Downloads"
-msgstr "Variety 最近のダウンロード"
+msgstr "Téléchargements récents de Variety"
 
 #: ../variety/ThumbsManager.py:307
 msgid "Variety Images"
-msgstr "Variety 画像"
+msgstr "Images de Variety"
 
 #: ../variety.desktop.in.h:1
 msgid "Variety"
@@ -926,36 +1016,36 @@ msgstr "Variety"
 
 #: ../variety.desktop.in.h:2
 msgid "Variety Wallpaper Changer"
-msgstr "Variety壁紙チェンジャー"
+msgstr "Changeur de fonds d'écran Variety"
 
 #: ../variety.desktop.in.h:3
 msgid "Next"
-msgstr "次の壁紙"
+msgstr "Suivant"
 
 #: ../variety.desktop.in.h:4
 msgid "Previous"
-msgstr "前の壁紙"
+msgstr "Précédent"
 
 #: ../variety.desktop.in.h:5
 msgid "Pause / Resume"
-msgstr "一時停止/スタート"
+msgstr "Pause / Reprendre"
 
 #: ../variety.desktop.in.h:6
 msgid "History"
-msgstr "履歴"
+msgstr "Historique"
 
 #: ../variety.desktop.in.h:7
 msgid "Preferences"
-msgstr "設定"
+msgstr "Préférences"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
-msgstr "Variety - Facebookで共有"
+msgstr "Variety - Partage sur Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
 #: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Facebook Sharing"
-msgstr "Facebookで共有"
+msgstr "Partage sur Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:3
 msgid ""
@@ -974,17 +1064,28 @@ msgid ""
 "token that will be valid for a couple of weeks. After its period expires "
 "(this is determined by Facebook) you will be asked to login again."
 msgstr ""
-"あなたは最初に画像や名言をFacebookで共有する設定をしました。Varietyからの共有はオンライン・ソースから行います。以下の方法で行います。\n"
+"Vous avez choisi pour la première fois de partager une image ou une citation "
+"sur Facebook. Le partage à partir de Variety est possible pour les images "
+"provenant de sources en ligne et pour les citations, et fonctionne de cette "
+"manière : \n"
 "\n"
-"画像を共有するときに投稿するメッセージを尋ねます。それから内蔵ブラウザーでログイン画面を開きます。ログインすると、Varietyで公開を許可するか尋ねられ"
-"ます。Varietyはこの許可を画像リンクやあなたが選んだ名言を公開するためだけに使います。 次に共有を選んだ時にはログインは必要ありません。\n"
+"Lorsque vous partagez une image, vous allez devoir choisir un message qui "
+"apparaîtra sur le post. Puis la page d'identification Facebook s'ouvrira "
+"dans un navigateur intégré à l'application. Une fois identifié, Facebook "
+"vous demandera d'autoriser Variety a publier sur votre Fil en votre nom. "
+"Variety utilisera cette permission uniquement pour publier les liens vers "
+"des images ou les citations que vous aurez manuellement choisi de partager, "
+"et rien d'autre. La prochaine fois que vous choisirez de partager une image, "
+"vous n'aurez plus à vous identifier.\n"
 "\n"
-"パスワードやログイン情報は保存しません。Facebookの "
-"OAuthシステムで数週間は有効でしょう。一定の期間が過ぎたら、再びログインする必要があります。(期間はFacebookによります)"
+"Aucun mot de passe ou identifiant n'est gardé en mémoire localement, juste "
+"un jeton d'identification OAuth Facebook qui sera valide pendant quelques "
+"semaines. Après que sa date de validité ait expiré (cela est déterminé par "
+"Facebook), vous devrez à nouveau vous identifier."
 
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
-msgstr "Variety - メディアRSSフィードを追加"
+msgstr "Variety - ajouter un flux Media RSS"
 
 #: ../data/ui/AddMediaRssDialog.ui.h:3
 msgid ""
@@ -998,9 +1099,11 @@ msgid ""
 "href=\"http://www.flickr.com\">Flickr</a>, <a "
 "href=\"http://interfacelift.com\">InterfaceLIFT</a>."
 msgstr ""
-"メディアRSSフィードのURLをここにペーストします。メディアRSSのみサポートしています。RSSとは違います。メディアRSSは実際の画像の内容につながっ"
-"ているタグを含みます。このようなメディアRSSフィードを行なっているサイトは: <a "
-"href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
+"Vous pouvez coller l'URL du flux media RSS ci-dessous. Notez que seuls les "
+"flux media RSS sont supportés, pas les flux RSS arbitraires. Les flux media "
+"RSS contiennent des balises media:content pointant directement sur le "
+"contenu réel de l'image. Voici des exemples de sites qui fournissent des "
+"flux media RSS : <a href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
 "href=\"http://www.deviantart.com\">deviantART</a>, <a "
 "href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
 "href=\"http://www.flickr.com\">Flickr</a>, <a "
@@ -1008,117 +1111,120 @@ msgstr ""
 
 #: ../data/ui/AddMediaRssDialog.ui.h:4
 msgid "Paste the URL of the Media RSS feed here: "
-msgstr "メディアRSSのURLをペースト: "
+msgstr "Coller l'URL du flux Media RSS ici : "
 
 #: ../variety/FacebookHelper.py:91
 msgid "Variety - Login to Facebook"
-msgstr "Variety - Facebookにログイン"
+msgstr "Variety - Se connecter à Facebook"
 
 #: ../variety/FacebookHelper.py:153
 msgid "Login window closed before authorization"
-msgstr "ログイン・ウィンドウは認証の前に閉じます"
+msgstr "Fenêtre de connexion fermée avant autorisation"
 
 #: ../data/plugins/quotes/QuotesDaddySource.py:31
 msgid ""
 "Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
 "Does not support searching by tags or authors."
 msgstr ""
-"QuotesDaddyの今日の一言のRSSフィードを取り込みます。\n"
-"タグや作者の指定はできません。"
+"Rechercher les citations depuis le flux RSS des citations quotidiennes de "
+"QuotesDaddy.\n"
+"Ne supporte pas la recherche par tags ou auteurs."
 
 #: ../variety/indicator.py:48
 msgid "Current desktop wallpaper"
-msgstr "現在の壁紙の場所"
+msgstr "Fond d'écran actuel du bureau"
 
 #: ../variety/indicator.py:52
 msgid "Show origin"
-msgstr "取得元を表示"
+msgstr "Afficher l'origine"
 
 #: ../variety/indicator.py:63
 msgid "Reveal clean image"
-msgstr "この画像のエフェクトを無効"
+msgstr "Dévoiler l'image nettoyée"
 
 #: ../variety/indicator.py:102
 msgid "_History"
-msgstr "履歴(_H)"
+msgstr "_Historique"
 
 #: ../variety/indicator.py:108
 msgid "Recent _Downloads"
-msgstr "最近のダウンロード(_D)"
+msgstr "_Téléchargements récents"
 
 #: ../variety/indicator.py:116 ../variety/indicator.py:153
 msgid "_Previous"
-msgstr "前へ(_P)"
+msgstr "_Précédent"
 
 #: ../variety/indicator.py:121 ../variety/indicator.py:158
 msgid "_Next"
-msgstr "次へ(_N)"
+msgstr "_Suivant"
 
 #: ../variety/indicator.py:126 ../variety/indicator.py:163
 msgid "_Fast Forward"
-msgstr "早送り(_F)"
+msgstr "_Avance rapide"
 
 #: ../variety/indicator.py:140
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
-"アイコン上でスクロール\n"
-"すると壁紙を変更します"
+"Astuce : défiler avec la molette sur l'icône\n"
+"pour Suivant et Précédent"
 
 #: ../variety/indicator.py:146
 msgid "_Playback"
-msgstr "壁紙(_P)"
+msgstr "_Lecture"
 
 #: ../variety/indicator.py:183
 msgid "View Favorites..."
-msgstr "お気に入りを表示..."
+msgstr "Voir les Favoris..."
 
 #: ../variety/indicator.py:190
 msgid "Copy to Clipboard"
-msgstr "クリップボードへコピー"
+msgstr "Copier dans le presse-papiers"
 
 #: ../variety/indicator.py:200
 msgid "Google Quote"
-msgstr "Googleで名言を検索"
+msgstr "Citation Google"
 
 #: ../variety/indicator.py:205
 msgid "Google Author"
-msgstr "Googleで作者を検索"
+msgstr "Auteur Google"
 
 #: ../variety/indicator.py:217 ../variety/indicator.py:238
 msgid "Preferences..."
-msgstr "設定..."
+msgstr "Préférences…"
 
 #: ../variety/indicator.py:225
 msgid "Turn off"
-msgstr "非表示"
+msgstr "Éteindre"
 
 #: ../variety/indicator.py:231
 msgid "_Quotes"
-msgstr "名言(_Q)"
+msgstr "_Citations"
 
 #: ../variety/indicator.py:242
 msgid "About"
-msgstr "情報"
+msgstr "À propos"
 
 #: ../variety/indicator.py:246
 msgid "Quit"
-msgstr "終了"
+msgstr "Quitter"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
 msgid "Copy to Favorites vs. Move to Favorites"
-msgstr "お気に入り動作メニューの設定"
+msgstr "Copier vers Favoris vs Déplacer vers Favoris"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
 msgid "Reset to Default"
-msgstr "初期値に戻す"
+msgstr "Restaurer les valeurs par défaut"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
 msgid ""
 "Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
 "menu depending on the image location:"
-msgstr "画像の場所によりメニューに表示する お気に入りにコピー または お気に入りに移動 を選択します:"
+msgstr ""
+"Choisissez si vous préférez « Copier vers Favoris » ou « Déplacer vers "
+"Favoris » dans le menu en fonction de l'emplacement de l'image :"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
 msgid ""
@@ -1136,12 +1242,15 @@ msgid ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 msgstr ""
-"一行に一つのエントリーを <Folder>:<Copy,Move,Both> の形式で記述します。\n"
-"Folderは Downloaded, Fetched,またはパスを指定します。\n"
-"Varietyは画像を表示するとリストを上から評価してどの項目をメニューに表示するか決めます。\n"
-"Othersはこのリストの最後に記述します。\n"
+"Merci d'entrer un élément par ligne, chaque élément sous la forme "
+"<Dossier>:<Copy, Move ou Both>, où Dossier peut être Downloaded, Fetched, "
+"Others ou un chemin vers un dossier spécifique.\n"
+"L'ordre est important. Lorsqu'une image est affichée, le premier dossier "
+"dans cette liste qui contient l'image déterminera quelles opérations seront "
+"montrées dans le menu de Variety. « Others » correspond à n'importe quel "
+"fichier et devrait être en dernier dans la liste.\n"
 "\n"
-"例:\n"
+"Exemple :\n"
 "\tDownloaded:Copy\n"
 "\tFetched:Move\n"
 "\t/pics/RandomImages:Move\n"
@@ -1162,69 +1271,70 @@ msgid ""
 "\n"
 "Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
-"ローカル・テキストファイルの名言を表示します。\n"
-"~/.config/variety/pluginconfig/quotes/ に xxx.txt ファイルを置きます。\n"
-"ファイルのフォーマットは:\n"
+"Afficher les citations, définies dans les fichiers texte locaux.\n"
+"Mettez vos propre fichier txt dans : "
+"~/.config/variety/pluginconfig/quotes/.\n"
+"Le format du fichier est :\n"
 "\n"
-"名言 -- 作者\n"
+"citation -- auteur\n"
 ".\n"
-"次の名言 -- 別の作者\n"
+"seconde citation -- un autre auteur\n"
 ".\n"
-"etc...\n"
+"etc…\n"
 "\n"
-"例: http://rvelthuis.de/zips/quotes.txt"
+"Exemple : http://rvelthuis.de/zips/quotes.txt"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
 msgid "seconds"
-msgstr "秒"
+msgstr "secondes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:2
 msgid "minutes"
-msgstr "分"
+msgstr "minutes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:3
 msgid "hours"
-msgstr "時間"
+msgstr "heures"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:4
 msgid "days"
-msgstr "日"
+msgstr "jours"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:5
 msgid "Variety Preferences"
-msgstr "Varietyの設定"
+msgstr "Préférences de Variety"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:6
 msgid "General"
-msgstr "一般"
+msgstr "Général"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:7
 msgid "Start Variety when the computer starts"
-msgstr "自動起動"
+msgstr "Démarrer Variety lorsque l'ordinateur démarre"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:8
 msgid "Change wallpaper every "
-msgstr "壁紙更新 "
+msgstr "Changer le fond d'écran toutes les "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:9
 msgid "Minimum interval is 5 seconds"
-msgstr "最小インターバルは5秒"
+msgstr "L'intervalle minimal est de 5 secondes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:10
 msgid "Change wallpaper on start"
-msgstr "起動時に壁紙を変更"
+msgstr "Changer le fond d'écran au démarrage"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:12
 msgid "Enabled"
-msgstr "有効"
+msgstr "Activé"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:13
 msgid "Type"
-msgstr "種類"
+msgstr "Type"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:14
 msgid "Location"
-msgstr "場所"
+msgstr "Emplacement"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
 msgid ""
@@ -1233,95 +1343,98 @@ msgid ""
 "d sources</a></small>"
 msgstr ""
 "<small><a "
-"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Recommende"
-"d sources</a></small>"
+"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Sources "
+"recommandées</a></small>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "_Add..."
-msgstr "追加(_A)..."
+msgstr "_Ajouter…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "Add images, folders or online image sources"
-msgstr "画像を追加します"
+msgstr "Ajouter des images, des dossiers ou des sources d'images en ligne"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "_Edit..."
-msgstr "編集(_E)..."
+msgstr "_Éditer…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "Edit the selected source"
-msgstr "画像の場所の編集"
+msgstr "Éditer la source sélectionnée"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "_Remove..."
-msgstr "削除(_R)..."
+msgstr "_Supprimer…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "Remove selected image sources"
-msgstr "画像の場所の削除"
+msgstr "Supprimer les sources d'images sélectionnées"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "_Use"
-msgstr "選択(_U)"
+msgstr "_Utiliser"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "Enable the selected sources and disable all others"
-msgstr "選択した場所を有効にして他を無効にします"
+msgstr "Activer les sources sélectionnées et désactiver toutes les autres"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Download a wallpaper every "
-msgstr "壁紙をダウンロードする間隔 "
+msgstr "Télécharger un fond d'écran toutes les "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "Minimum interval is one minute"
-msgstr "最小インターバルは１分"
+msgstr "L'intervalle minimum est une minute"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "to "
-msgstr "フォルダー "
+msgstr "vers "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "Actual download folder "
-msgstr "ダウンロード・フォルダーの選択 "
+msgstr "Dossier réel de téléchargement "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid ""
 "Caution: do NOT use this option if you use a custom download folder with "
 "valuable files in it. Variety will maintain the limit regardless of what is "
 "in the download folder."
-msgstr "注意:大切なファイルがあるフォルダーにはこのオプションを使用しないでください。制限が適用されるとファイルが消えます。"
+msgstr ""
+"Attention : N'utilisez PAS cette option si vous utilisez un dossier de "
+"téléchargement personnalisé avec des fichiers importants dedans. Variety "
+"gardera la limite sans s'occuper de ce qu'il y a à l'intérieur du dossier."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Limit download folder to "
-msgstr "ダウンロード・フォルダーの上限 "
+msgstr "Limiter le dossier de téléchargement à "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "Minimum size is 50 MB"
-msgstr "最小サイズは50MB"
+msgstr "La taille maximale est de 50 Mo"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "MB by deleting oldest files when necessary"
-msgstr "MB /古いファイルから削除します"
+msgstr "Mo en supprimant les plus vieux fichiers si nécessaire"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "Favorites"
-msgstr "お気に入りの壁紙"
+msgstr "Favoris"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Copy favorite wallpapers to "
-msgstr "お気に入りのコピー先 "
+msgstr "Copier les fonds d'écran favoris vers "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Fetch folder"
-msgstr "フェッチ・フォルダー"
+msgstr "Récupérer le dossier"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Save manually downloaded wallpapers to "
-msgstr "下記操作での壁紙の保存先 "
+msgstr "Sauvegarder les fonds d'écran téléchargés manuellement vers "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid "Drag and drop"
-msgstr "ドラッグ＆ドロップ"
+msgstr "Glisser-déposer"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:37
 msgid ""
@@ -1331,162 +1444,172 @@ msgid ""
 "To show the icon in the launcher choose About or Preferences. You may wish "
 "to lock it there for easy drag-and-drop access."
 msgstr ""
-"ランチャーにアイコンを表示するにはメニューの設定か情報を開きます。\n"
-"Varietyのアイコンに画像のURLやファイルをドロップするとフェッチ・\n"
-"フォルダーに保存されます。次へを押すとデスクトップに表示されます。\n"
-"アイコンを常に表示するにはランチャーに登録します。"
+"L'icône de Variety dans le lanceur sert comme cible de dépôt. Déposez dessus "
+"n'importe quel fichier ou URL d'image et il sera sauvegardé dans votre "
+"dossier de téléchargement. Vous pouvez ensuite appuyer sur Suivant pour le "
+"voir sur votre bureau.\n"
+"Pour afficher l'icône dans le lanceur, choisissez À propos ou Préférences. "
+"Vous pouvez choisir de la verrouiller pour faciliter l'accès au glisser-"
+"déposer."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Clipboard monitoring"
-msgstr "クリップボード・モニター"
+msgstr "Surveillance du presse-papier"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "Monitor clipboard for image URLs and fetch them"
-msgstr "クリップボードを監視して画像のURLを取り込む"
+msgstr "Surveiller le presse-papier pour les URL d'image et les récupérer"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "But fetch only when the URL host is one of these:"
-msgstr "取り込むURLを指定する:"
+msgstr ""
+"Mais récupérer uniquement quand l'hôte de l'URL est l'un de ceux-là :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Manual downloading"
-msgstr "手動ダウンロード"
+msgstr "Téléchargement manuel"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid "Filters"
-msgstr "フィルター"
+msgstr "Filtres"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
-msgstr "壁紙にランダムにこのフィルターを適用します(素晴らしいImageMagicに感謝)"
+msgstr ""
+"Appliquer aléatoirement ces filtres aux fonds d'écran affichés (grâce au "
+"super logiciel ImageMagick) :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Quotes"
-msgstr "名言"
+msgstr "Citations"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Show random wise quotes on the desktop"
-msgstr "名言をランダムに表示"
+msgstr "Afficher aléatoirement de sages citations sur le bureau"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Text color: "
-msgstr "文字の色: "
+msgstr "Couleur du texte : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Text font: "
-msgstr "文字のフォント: "
+msgstr "Police du texte : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Backdrop color: "
-msgstr "背景色: "
+msgstr "Couleur du fond : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid "Backdrop opacity: "
-msgstr "背景色の透過度: "
+msgstr "Opacité du fond : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid " Transparent"
-msgstr " 透明"
+msgstr " Transparent"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Opaque"
-msgstr "不透明"
+msgstr "Opaque"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Draw a text shadow"
-msgstr "文字に影をつける"
+msgstr "Dessiner une ombre pour le texte"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Appearance"
-msgstr "外観"
+msgstr "Apparence"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Quotes area width: "
-msgstr "表示エリアの幅: "
+msgstr "Largeur de la surface des citations : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Narrow "
-msgstr "狭い "
+msgstr "Étroit "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Wide"
-msgstr "広い"
+msgstr "Large"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Horizontal position: "
-msgstr "水平位置: "
+msgstr "Position horizontale : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Left "
-msgstr "左 "
+msgstr "Gauche "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Vertical position: "
-msgstr "垂直位置: "
+msgstr "Position verticale : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Top "
-msgstr "上 "
+msgstr "Haut "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Placement"
-msgstr "表示場所"
+msgstr "Positionnement"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "Show quotes from these sources: "
-msgstr "名言のソース: "
+msgstr "Montrer les citations depuis ces sources : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
 msgstr ""
-"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
-"plugins</a></small>"
+"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>Plus de "
+"greffons</a></small>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "Show only these tags and authors. Leave empty to show random quotes."
-msgstr "これらのタグと作者を表示します。空の場合はランダムに選びます。"
+msgstr ""
+"Montrer seulement ces tags et auteurs. Laissez vide pour montrer "
+"aléatoirement des citations."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "Example: funny, inspirational"
-msgstr "例: funny, inspirational"
+msgstr "Exemple : drôle, inspirant"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid "Example: Albert Einstein, Voltaire"
-msgstr "例: Albert Einstein, Voltaire"
+msgstr "Exemple : Albert Einstein, Voltaire"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Authors: "
-msgstr "作者: "
+msgstr "Auteurs : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Sources and filtering"
-msgstr "名言のソースとフィルター"
+msgstr "Sources et filtrage"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid "Change quote every "
-msgstr "名言の更新間隔 "
+msgstr "Changer les citations toutess les "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Minimum interval is 10 seconds"
-msgstr "最小インターバルは10秒"
+msgstr "L'intervalle minimal est de 10 secondes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Regular change"
-msgstr "定期的に更新"
+msgstr "Changement régulier"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid "Clock"
-msgstr "時計"
+msgstr "Horloge"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
-msgstr "素敵なデジタル時計を表示します"
+msgstr ""
+"Montrer une belle et large horloge numérique sur le bureau affichant la date "
+"et l'heure actuelle"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid ""
@@ -1494,17 +1617,18 @@ msgid ""
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
 "in ~/.config/variety/variety_latest_default.conf as a guide."
 msgstr ""
-"時計の外観を設定するにはVarietyの設定ファイル(~/.config/variety/variety.conf)にある "
-"clock_filterを編集します。~/.config/variety/variety_latest_default.conf "
-"にあるコメントがガイドになります。"
+"Pour configurer l'apparance de l'horloge, éditez la propriété clock_filter "
+"dans le fichier de configuration de Variety "
+"(~/.config/variety/variety.conf). Utilisez les commentaires de "
+"~/.config/variety/variety_latest_default.conf comme un guide."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Clock font: "
-msgstr "時計のフォント: "
+msgstr "Police de l'horloge : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Date font: "
-msgstr "日付のフォント: "
+msgstr "Police de la date : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid ""
@@ -1514,25 +1638,27 @@ msgid ""
 "href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Read "
 "here</a>."
 msgstr ""
-"動かない場合は <a href=\"https://answers.launchpad.net/variety/+faq/2138\">FAQ</a> "
-"時計の設定は <a href=\"http://peterlevi.com/variety/2012/11/configuring-the-"
-"clock/\">configuring-the-clockRead</a>."
+"Cela ne fonctionne pas ? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Lire ici</a>. "
+"Comment configurer encore plus l'horloge ? <a "
+"href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Lire "
+"ici</a>."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "Effects"
-msgstr "エフェクト"
+msgstr "Effets"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "When possible use images that:"
-msgstr "使用する画像:"
+msgstr "Quand cela est possible utiliser des images qui :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "Have landscape orientation"
-msgstr "横方向の画像"
+msgstr "Ont une orientation paysage"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "Are big at least "
-msgstr "少なくともスクリーン解像度の "
+msgstr "Ont une taille d'au moins "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "50"
@@ -1549,41 +1675,41 @@ msgstr "100"
 #: ../data/ui/PreferencesVarietyDialog.ui.h:91
 #, no-c-format
 msgid "% of the screen resolution"
-msgstr "% 以上"
+msgstr "% de la résolution de l'écran"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Color"
-msgstr "色"
+msgstr "Couleur"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgid "Are dark or light:"
-msgstr "画像の明るさ:"
+msgstr "Sont sombres ou claires :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
-msgstr "暗い"
+msgstr "Sombres"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
-msgstr "明るい"
+msgstr "Claires"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "Contain this color: "
-msgstr "この色を含む: "
+msgstr "Contiennent cette couleur : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "(Takes effect after some initial searching)"
-msgstr "(イニシャルサーチ後に有効)"
+msgstr "(Prends effet après quelques recherches préliminaires)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Rating"
-msgstr "評価"
+msgstr "Évaluation"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "Are rated and their rating is at least "
-msgstr "表示する画像の評価 "
+msgstr "Sont évaluées et ont une note d'au moins "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:100
 msgid "1"
@@ -1607,11 +1733,13 @@ msgstr "5"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "(Based on local image EXIF data)"
-msgstr "以上(EXIFデータに基づく)"
+msgstr "(Basé sur les données EXIF de l'image locale)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid "Show option to edit image ratings in the main menu"
-msgstr "メイン・メニューに評価の項目を表示"
+msgstr ""
+"Montrer l'option permettant d'éditer les notes des images dans le menu "
+"principal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid ""
@@ -1619,49 +1747,51 @@ msgid ""
 "metadata is universal and can also be edited or used in external photo "
 "organization programs like Shotwell, Darktable, etc."
 msgstr ""
-"評価はサムネイルのコンテキストメニューでも編集できます。EXIFのメタデータは共通でShotwellやDarktableのようなプログラムでも編集できます"
-"。"
+"Les notes peuvent également être éditées depuis le menu contextuel des "
+"miniatures. Les métadonnées EXIF des notations sont universelles et peuvent "
+"être éditées ou utilisées dans des programmes externes de gestions de photos "
+"comme Shotwell, Darktable, etc."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid "Color and size"
-msgstr "画像の指定"
+msgstr "Couleur et taille"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Indicator Icon"
-msgstr "インジケーターアイコン"
+msgstr "Icône de l'indicateur"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgid "Indicator icon:"
-msgstr "インジケーターアイコン:"
+msgstr "Icône de l'indicateur :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgctxt "Icon option"
 msgid "Light"
-msgstr "明るいアイコン"
+msgstr "Claire"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgctxt "Icon option"
 msgid "Dark"
-msgstr "暗いアイコン"
+msgstr "Sombre"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgctxt "Icon option"
 msgid "Use current wallpaper"
-msgstr "壁紙"
+msgstr "Utiliser le fond d'écran actuel"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgctxt "Icon option"
 msgid "Custom image..."
-msgstr "カスタム画像..."
+msgstr "Image personnalisée…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgctxt "Icon option"
 msgid "None"
-msgstr "なし"
+msgstr "Aucun"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid "Select an icon"
-msgstr "アイコンを選択"
+msgstr "Sélectionner une icône"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid ""
@@ -1669,45 +1799,52 @@ msgid ""
 "from the launcher quicklist. Run \"variety --help\" to see all available "
 "commands."
 msgstr ""
-"アイコンなしを選んだらコマンドラインかランチャーのクイックリストで操作します。\n"
-"\"variety --help\"で利用できるコマンドが表示されます。"
+"Quand l'icône est masquée, Variety peut être contrôlé en ligne de commande "
+"ou depuis la liste d'accès rapide du lanceur. Exécuter « variety --help » "
+"afin de voir toutes les commandes accessibles."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Favorites Operations"
-msgstr "お気に入りの動作"
+msgstr "Opérations sur Favoris"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid "Favorites operations to show in main menu:"
-msgstr "メイン・メニューに表示するお気に入りの動作:"
+msgstr "Opérations sur Favoris à montrer dans le menu principal :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Copy to Favorites"
-msgstr "お気に入りにコピー"
+msgstr "Copier vers Favoris"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Both Copy and Move"
-msgstr "コピーと移動"
+msgstr "Copier et déplacer"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Depends on folder..."
-msgstr "フォルダーに依存する..."
+msgstr "Dépend du dossier…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Enable sharing on Facebook for images coming from online sources"
-msgstr "オンライン・ソースの画像をFacebookで共有"
+msgstr ""
+"Autoriser le partage sur Facebook pour des images provenant de sources en "
+"ligne"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Display dialog to customize the Facebook post before publishing"
-msgstr "Facebookで公開前にカスタマイズするダイアログを開く"
+msgstr ""
+"Montrer une fenêtre de dialogue afin de personnaliser la publication "
+"Facebook avant de publier"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "Login Screen Support"
-msgstr "ログイン画面"
+msgstr "Prise en charge de l'écran de connexion"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
-msgstr "ログイン画面にVarietyの壁紙を使う"
+msgstr ""
+"Être sûr que les fonds d'écran mis par Variety seront utilisés par l'écran "
+"de connexion"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid ""
@@ -1718,73 +1855,83 @@ msgid ""
 "not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
 "multiuser systems."
 msgstr ""
-"<b>プライバシー上の警告:</b>あなたの壁紙を表示するにはLightDMが読めるパーミッションにします。このオプションで壁紙を公開フォルダーにコピーし"
-"ます。そしてすべてに読み取り権限を与えます。ホームが暗号化されていなければデフォルトで "
-"~/ピクチャと/usr/share/backgroundsを使います。マルチユーザー環境では注意してください。"
+"<b>Avertissement sur la vie privée :</b> Pour montrer votre fond d'écran, "
+"LightDM a besoin des droits de lecture sur l'image. Avec cette option "
+"activée, Variety copiera les fonds d'écran dans un dossier public et "
+"changera leurs permissions pour être lisibles par tous. Par défaut, le "
+"dossier est ~/Images si votre dossier personnel n'est pas chiffré, et "
+"/usr/share/backgrounds s'il l'est. A utiliser avec précaution sur les "
+"systèmes multi-utilisateurs."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Copy wallpaper image files to this folder: "
-msgstr "壁紙をコピーするフォルダー: "
+msgstr "Copier les fichiers d'images de fond d'écran vers ce dossier : "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Reset to default"
-msgstr "初期値に戻す"
+msgstr "Rétablir les valeurs par défaut"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Still doesn't work?"
-msgstr "まだ動きませんか?"
+msgstr "Cela ne fonctionne toujours pas ?"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
-msgstr "ホームが暗号化されているようです。その中のフォルダーは使えません。"
+msgstr ""
+"Il semble que votre dossier personnel soit chiffré, utiliser des dossiers à "
+"l'intérieur ne fonctionnera pas."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "You don't have write permissions for this folder."
-msgstr "このフォルダーへの書き込み権限がありません。"
+msgstr "Vous n'avez pas les permissions d'écriture sur ce dossier."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "Permissions do not allow LightDM to read files from this folder."
-msgstr "このフォルダーをLightDMが読む権限がありません。"
+msgstr ""
+"Les permissions ne permettent pas à LightDM de lire les fichiers depuis ce "
+"dossier."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
-msgstr "Varietyがパーミッションを調整するにはsuperuser特権を与える必要があります。"
+msgstr ""
+"Variety peut ajuster les permissions, mais vous aurez à fournir les "
+"privilèges de superuser."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "Customize"
-msgstr "高度な設定"
+msgstr "Personnaliser"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Tips and tricks"
-msgstr "ヒント"
+msgstr "Trucs et astuces"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Recent changes"
-msgstr "更新履歴"
+msgstr "Modifications récentes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Visit website"
-msgstr "ウェブサイト"
+msgstr "Visiter le site internet"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Report a bug or request a feature"
-msgstr "バグ報告と要望"
+msgstr "Signaler un bogue ou faire une demande de fonctionnalité"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Send feedback"
-msgstr "作者に連絡"
+msgstr "Envoyer des commentaires"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "Donate to Variety"
-msgstr "寄付"
+msgstr "Faire un don à Variety"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Donate via PayPal"
-msgstr "PayPalで寄付"
+msgstr "Faire un don via PayPal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid ""
@@ -1796,19 +1943,22 @@ msgid ""
 "Thank you,\n"
 "Peter Levi"
 msgstr ""
-"私はVarietyの開発を余暇に行います。通常は子供が寝た後の深夜です。どんな寄付も感謝します。それはVarietyがあなたの役に立った事を表し活動を続け"
-"るモチベーションになります。\n"
+"Je développe Varirety durant mon temps libre, ce qui signifie habituellement "
+"des heures tardives après que mes enfants soient allés au lit. Toute somme "
+"que vous donnerez sera appréciée. Cela me montrera que Variety a de la "
+"valeur pour vous - les utilisateurs - et me motivera à continuer de "
+"travailler activement dessus.\n"
 "\n"
-"ありがとう\n"
+"Merci,\n"
 "Peter Levi"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "Donate Bitcoins to:"
-msgstr "Bitcoinで寄付:"
+msgstr "Faire un don en Bitcoins à :"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid "Spread the word"
-msgstr "アプリを広める"
+msgstr "Passez le mot"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:152
 msgid ""
@@ -1820,38 +1970,42 @@ msgid ""
 "href=\"http://alternativeto.net/software/variety-wallpaper-"
 "changer/\">alternativeto.net</a>."
 msgstr ""
-"Variety を広めることはあなたにもできます。ブログや Facebook、Twitter、Google+ "
-"に書いて下さい。そのときにはどうかVarietyの公式URLも紹介してください。<a "
+"Vous pouvez aussi aider à rendre Variety plus populaire, en écrivant un "
+"article à son propos sur votre blog, sur Facebook, Twitter ou Google+. "
+"Veillez à mentionner la page officielle de Variety <a "
 "href=\"http://peterlevi.com/variety\">http://peterlevi.com/variety</a>. \n"
-"ここで投票ができます。<a href=\"http://alternativeto.net/software/variety-wallpaper-"
+"Ou vous pouvez voter pour lui sur <a "
+"href=\"http://alternativeto.net/software/variety-wallpaper-"
 "changer/\">alternativeto.net</a>."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:154
 msgid "Donate"
-msgstr "寄付"
+msgstr "Faire un don"
 
 #: ../variety/ImageFetcher.py:54 ../variety/ImageFetcher.py:101
 msgid "Fetching"
-msgstr "取り込み中"
+msgstr "Récupération"
 
 #: ../variety/ImageFetcher.py:91 ../variety/ImageFetcher.py:123
 msgid "Fetched"
-msgstr "取り込みました"
+msgstr "Récupéré"
 
 #. too small - delete and do not use
 #: ../variety/ImageFetcher.py:116
 msgid "Image too small, ignoring it"
-msgstr "画像が小さすぎます"
+msgstr "Image trop petite, ignorée"
 
 #: ../variety/ImageFetcher.py:131
 msgid "Fetch failed for some reason"
-msgstr "画像の取り込みに失敗しました"
+msgstr "Échec de la récupération pour une raison inconnue"
 
 #: ../variety/ImageFetcher.py:132
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
-msgstr "詳しい情報を得るために端末で-vオプションをつけてVarietyを起動してもう一度操作して下さい"
+msgstr ""
+"Pour avoir plus d'information, veuillez exécuter Variety depuis le terminal "
+"avec l'option -v et retenter cette action"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
@@ -1859,11 +2013,13 @@ msgstr "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:2
 msgid "About Variety"
-msgstr "Varietyについて"
+msgstr "À propos de Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "An automatic wallpaper changer, downloader and manager."
-msgstr "壁紙のダウンロードと管理ができる壁紙自動チェンジャー"
+msgstr ""
+"Une application automatique pour changer, gérer et télécharger des fonds "
+"d'écran."
 
 #: ../data/ui/AboutVarietyDialog.ui.h:4
 msgid "http://peterlevi.com/variety"
@@ -1886,45 +2042,55 @@ msgid ""
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 "# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
-"# このプログラムはフリーソフトウェアです: Free Software Foundationの\n"
-"# GNU General Public License version 3により再配布や変更ができます。\n"
+"# Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le \n"
+"# modifier suivant les termes de la « GNU General Public License » version 3 "
+"telle que \n"
+"# publiée par la Free Software Foundation.\n"
 "# \n"
-"# このプログラムが役に立つことを願って配布しますが、\n"
-"# いかなる保証もありません。\n"
-"# 詳しくはGNU General Public Licenseにあります。\n"
+"# Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS\n"
+"# AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ\n"
+"# ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la Licence Générale\n"
+"# Publique GNU pour plus de détails.\n"
 "# \n"
-"# プログラムと同時にGNU General Public Licenseを受け取るべきですが\n"
-"# もしなければ <http://www.gnu.org/licenses/>にあります。\n"
+"# Vous devriez avoir reçu une copie de la Licence Générale Publique GNU "
+"avec\n"
+"# ce programme ; si ce n’est pas le cas, consultez :\n"
+"# <http://www.gnu.org/licenses/>.\n"
 
 #: ../variety/QuotesEngine.py:235
 msgid "No quote plugins"
-msgstr "名言プラグインがありません"
+msgstr "Aucun greffon de citations"
 
 #: ../variety/QuotesEngine.py:235
 msgid "There are no quote plugins installed"
-msgstr "名言プラグインがインストールされていません"
+msgstr "Il n'a y pas de greffon de citations installé"
 
 #: ../variety/QuotesEngine.py:241
 msgid "No suitable quote plugins"
-msgstr "適切な名言プラグインがありません"
+msgstr "Pas de greffon de citations approprié"
 
 #: ../variety/QuotesEngine.py:242
 msgid ""
 "You have no quote plugins which support searching by keywords and authors"
-msgstr "キーワードと作者で検索できる名言プラグインがありません"
+msgstr ""
+"Vous n'avez pas de greffon de citations capable de chercher par mots clés et "
+"auteurs"
 
 #: ../variety/QuotesEngine.py:254
 msgid "Could not fetch quotes"
-msgstr "名言を取り込めません"
+msgstr "Impossible de récupérer des citations"
 
 #: ../variety/QuotesEngine.py:255
 msgid "Quotes services may be down, we will continue trying"
-msgstr "取り込みを続けますがおそらく名言サービスがダウンしています"
+msgstr ""
+"Les services de citations rencontrent peut-être des problèmes, nous allons "
+"continuer d'essayer"
 
 #: ../variety/QuotesEngine.py:258
 msgid "Could not find quotes"
-msgstr "名言が見つかりません"
+msgstr "Impossible de trouver des citations"
 
 #: ../variety/QuotesEngine.py:259
 msgid "Maybe you are searching for something very obscure?"
-msgstr "見つけにくい指定になっていませんか?"
+msgstr ""
+"Etes-vous peut-être en train de chercher quelque chose de vraiment étrange ?"
