@@ -1,3 +1,41 @@
+variety (0.4.18) precise; urgency=low
+
+  * Adding latest translations
+  * Bumping version to 0.4.18
+  * Note about KDE updated in tips and tricks
+  * Changes to KDE support. Added more translations.
+  * Fix support of XFCE (4.10 changed the way wallpapers are set)
+  * Fix 'Desktop manager not active' bug caused by pcmanfm - run it only
+    when LXDE active
+  * Merge
+  * Fixed an https-related problem with Flickr (Bug #1305370)
+  * Fixes in the changelog for some build experiments
+  * Streamlined the image-searching code
+  * Local files quotes plugin was getting perplexed by Windows line
+    endings
+  * Add missing Texts.py
+  * Some slight chnages to texts, Bulgarian transaltion updated
+  * Bitcoin donate link
+  * Translatable image source descriptions
+  * Translatable filter names
+  * Translatable tips and tricks
+  * More fixes to saving quotes to Favorites
+  * Configurable location of quotes favorites file
+  * Saving favorite quotes: use % for delimiter, as in the fortune file
+    format
+  * Proper fix for bad unicode characters in quotes from
+    TheQuotationsPage
+  * Options to save quotes to favorites and view the saved favorites
+  * Replace some more bad unicode characters in quotes from
+    TheQuotationsPage
+  * Replace some bad unicode characters in quotes from TheQuotationsPage
+  * Ignore error when GSettings lookup fails
+  * Creating ubuntu package
+  * Bugfix: Wallpapers.net downloader was failing when there were
+    subcategories on the page
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Fri, 09 May 2014 11:35:52 +0300
+
 variety (0.4.17ubuntu1) precise; urgency=low
 
   * 
