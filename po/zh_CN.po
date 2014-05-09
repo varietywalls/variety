@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-04-30 10:57+0300\n"
+"POT-Creation-Date: 2014-05-09 10:52+0300\n"
 "PO-Revision-Date: 2014-01-30 14:21+0000\n"
 "Last-Translator: kaiman <kaigfm@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-05 20:20+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Launchpad-Export-Date: 2014-05-09 08:24+0000\n"
+"X-Generator: Launchpad (build 16996)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -98,7 +98,7 @@ msgstr "增加文件夹-只需要添加顶层文件夹，子文件夹会自动�
 
 #: ../variety/PreferencesVarietyDialog.py:591
 #: ../variety/PreferencesVarietyDialog.py:604
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Edit..."
 msgstr "编辑..."
 
@@ -208,8 +208,8 @@ msgstr ""
 
 #: ../variety/Texts.py:41
 msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
+"If you use KDE, you need to perform some actions before Variety will work. "
+"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
 msgstr ""
 
 #: ../variety/Texts.py:42
@@ -267,28 +267,25 @@ msgstr ""
 
 #: ../variety/Texts.py:49
 msgid ""
-"If you are using KDE, you need to manually set the file "
-"~/.config/variety/wallpaper-kde.jpg as your desktop background. KDE simply "
-"makes it impossible for programs to update the wallpaper without relying on "
-"KDE-specific libraries so we have to use a workaround - Variety updates this "
-"file, KDE notices the update and refreshes the wallpaper."
-msgstr ""
-
-#: ../variety/Texts.py:50
-msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:50
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
 "Variety's local files quote source. If you want to use it - copy it to "
 "~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
 "source. This file is also compatible with the Unix fortune utility."
+msgstr ""
+
+#: ../variety/Texts.py:51
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
 msgstr ""
 
 #: ../variety/AddMediaRssDialog.py:87
@@ -358,7 +355,7 @@ msgid "No images found"
 msgstr "没有找到图像"
 
 #: ../variety/VarietyWindow.py:595 ../variety/VarietyWindow.py:704
-#: ../variety/VarietyWindow.py:2356
+#: ../variety/VarietyWindow.py:2358
 msgid "Already in Favorites"
 msgstr "收藏夹中已存在"
 
@@ -374,7 +371,7 @@ msgstr "移动到收藏夹(_F)"
 
 #. both
 #: ../variety/VarietyWindow.py:608 ../variety/indicator.py:81
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Move to Favorites"
 msgstr "移动到收藏夹"
 
@@ -388,13 +385,13 @@ msgid "Fetched: Show Origin"
 msgstr "抓到数据"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
-#: ../variety/VarietyWindow.py:1841 ../variety/indicator.py:135
+#: ../variety/VarietyWindow.py:1843 ../variety/indicator.py:135
 #: ../variety/indicator.py:172
 msgid "Pause"
 msgstr "暂停"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
-#: ../variety/VarietyWindow.py:1845
+#: ../variety/VarietyWindow.py:1847
 msgid "Resume"
 msgstr "继续"
 
@@ -456,13 +453,13 @@ msgstr ""
 "可能没有删除工具？\n"
 "请安装trash-cli, gvfs-bin或者konquerer."
 
-#: ../variety/VarietyWindow.py:1770
+#: ../variety/VarietyWindow.py:1772
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr "将要打开文本编辑器编辑配置文件。在您保存关闭文本编辑器后应用更改"
 
-#: ../variety/VarietyWindow.py:1795
+#: ../variety/VarietyWindow.py:1797
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -473,89 +470,89 @@ msgid ""
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1805
+#: ../variety/VarietyWindow.py:1807
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr "显示日志消息(-vv 显示更详细的debug消息, -vvv 用来debug varity的库文件"
 
-#: ../variety/VarietyWindow.py:1809
+#: ../variety/VarietyWindow.py:1811
 msgid "Make the running instance quit"
 msgstr "让运行中的实例退出"
 
-#: ../variety/VarietyWindow.py:1813
+#: ../variety/VarietyWindow.py:1815
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr "打印当前桌面图片地址。 只有当Variety运行时可用"
 
-#: ../variety/VarietyWindow.py:1817
+#: ../variety/VarietyWindow.py:1819
 msgid "Show Next wallpaper"
 msgstr "显示下一壁纸"
 
-#: ../variety/VarietyWindow.py:1821
+#: ../variety/VarietyWindow.py:1823
 msgid "Show Previous wallpaper"
 msgstr "显示前一壁纸"
 
-#: ../variety/VarietyWindow.py:1825
+#: ../variety/VarietyWindow.py:1827
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "显示下一张壁纸， 跳过前一壁纸历史"
 
-#: ../variety/VarietyWindow.py:1829
+#: ../variety/VarietyWindow.py:1831
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr "删除当前壁纸。程序运行时可用"
 
-#: ../variety/VarietyWindow.py:1833
+#: ../variety/VarietyWindow.py:1835
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "拷贝当前壁纸到Favorites."
 
-#: ../variety/VarietyWindow.py:1837
+#: ../variety/VarietyWindow.py:1839
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "剪切当前壁纸到Favorites."
 
-#: ../variety/VarietyWindow.py:1849
+#: ../variety/VarietyWindow.py:1851
 msgid "Toggle Pause/Resume state"
 msgstr "切换 暂停/继续 状态"
 
-#: ../variety/VarietyWindow.py:1853
+#: ../variety/VarietyWindow.py:1855
 msgid "Show Next quote"
 msgstr "显示下一箴言"
 
-#: ../variety/VarietyWindow.py:1857
+#: ../variety/VarietyWindow.py:1859
 msgid "Show Previous quote"
 msgstr "显示前一箴言"
 
-#: ../variety/VarietyWindow.py:1861
+#: ../variety/VarietyWindow.py:1863
 msgid "Show Next quote, skipping the forward history"
 msgstr "显示下一箴言，跳过向前显示历史"
 
-#: ../variety/VarietyWindow.py:1865
+#: ../variety/VarietyWindow.py:1867
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "切换箴言 暂停/继续 状态"
 
-#: ../variety/VarietyWindow.py:1869
+#: ../variety/VarietyWindow.py:1871
 msgid "Save the current quote to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1873
+#: ../variety/VarietyWindow.py:1875
 msgid "Toggle History display"
 msgstr "切换历史显示"
 
-#: ../variety/VarietyWindow.py:1877
+#: ../variety/VarietyWindow.py:1879
 msgid "Toggle Recent Downloads display"
 msgstr "切换最近下载现实"
 
-#: ../variety/VarietyWindow.py:1881
+#: ../variety/VarietyWindow.py:1883
 msgid "Show Preferences dialog"
 msgstr "现实首选项对话框"
 
-#: ../variety/VarietyWindow.py:1885
+#: ../variety/VarietyWindow.py:1887
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -564,48 +561,48 @@ msgid ""
 "file directly in an unguarded way."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1895
+#: ../variety/VarietyWindow.py:1897
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr "选项 --next/--fast-forward 和 --previous 是互斥的"
 
-#: ../variety/VarietyWindow.py:1898
+#: ../variety/VarietyWindow.py:1900
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "选项 --trash 和 --favorite 是互斥的"
 
-#: ../variety/VarietyWindow.py:1901
+#: ../variety/VarietyWindow.py:1903
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "选项 --parse 和 --resume 是互斥的"
 
-#: ../variety/VarietyWindow.py:1904
+#: ../variety/VarietyWindow.py:1906
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr "选项 --qutoes-next/--quotes-fast-forward 和 --quotes-previous 是互斥的"
 
-#: ../variety/VarietyWindow.py:2008 ../variety/ImageFetcher.py:58
+#: ../variety/VarietyWindow.py:2010 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr "不是一个图像"
 
-#: ../variety/VarietyWindow.py:2013
+#: ../variety/VarietyWindow.py:2015
 msgid "Added to queue"
 msgstr "加入队列"
 
-#: ../variety/VarietyWindow.py:2013 ../variety/ImageFetcher.py:91
+#: ../variety/VarietyWindow.py:2015 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
 msgstr "点击下一步查看"
 
-#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
+#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
 msgid "Published"
 msgstr "已发布"
 
-#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
+#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
 msgid "You may open your Facebook feed to see the post"
 msgstr "您可以打开您的Facebook feed来查看发布"
 
-#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
+#: ../variety/VarietyWindow.py:2248 ../variety/VarietyWindow.py:2276
 msgid "Could not publish"
 msgstr "不能发布"
 
@@ -655,23 +652,13 @@ msgstr "KDE用户 - 重要， 请阅读"
 
 #: ../data/ui/WelcomeDialog.ui.h:11
 msgid ""
-"You appear to be running KDE. Variety supports KDE, but you have to do "
-"something first:\n"
+"You appear to be running KDE. \n"
 "\n"
-"KDE makes it very hard for programs to set the wallpaper unless they use KDE-"
-"specific libraries and this is not an option for Variety. \n"
-"Instead, please manually set the file ~/.config/variety/wallpaper-kde.jpg as "
-"your wallpaper and keep it that way. When changing wallpapers later on, "
-"Variety will update this file and KDE will automatically refresh the "
-"wallpaper."
+"In KDE 4 it is impossible to set the wallpaper from inside a program (there "
+"is no API for this). To make Variety work, please read and follow <a "
+"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">the "
+"instructions here</a>.\n"
 msgstr ""
-"看起来您在使用KDE桌面环境, Variety支持KDE。 但是您需要知道\n"
-"\n"
-"一般必须使用KDE的程序库才可以修改KDE的桌面，但是Varity没有使用KDE的库文件。\n"
-"\n"
-"所以请手动制定~/.config/variety/wallpaper-kde.jpg作为您的壁纸。 Variety会自动更新上述文件， "
-"这样即使是KDE也可以使用\n"
-"Variety的功能了"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
@@ -718,7 +705,7 @@ msgid ""
 msgstr "请指定Flickr的搜图规则。所有满足搜图规则的图片将被下载"
 
 #: ../data/ui/AddFlickrDialog.ui.h:4
-#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "Tags: "
 msgstr "标记： "
 
@@ -784,7 +771,7 @@ msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr "Variey正在运行. 发送命令到正在运行的实例"
 
-#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Bottom"
 msgstr "底部"
 
@@ -796,7 +783,7 @@ msgstr "顶部"
 msgid "Left"
 msgstr "左侧"
 
-#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Right"
 msgstr "右侧"
 
@@ -804,7 +791,7 @@ msgstr "右侧"
 msgid "Position"
 msgstr "位置"
 
-#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "Size"
 msgstr "大小"
 
@@ -885,7 +872,7 @@ msgid "Variety - Facebook Sharing"
 msgstr "Variety - 分享到Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Facebook Sharing"
 msgstr "Facebook分享"
 
@@ -1121,100 +1108,93 @@ msgid "Location"
 msgstr "位置"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
-msgid ""
-"<small><a "
-"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Recommende"
-"d sources</a></small>"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "_Add..."
 msgstr "添加(_A)..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "Add images, folders or online image sources"
 msgstr "添加图片，文件夹或联机图片源"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "_Edit..."
 msgstr "编辑(_E)..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "Edit the selected source"
 msgstr "编辑被选中的源"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "_Remove..."
 msgstr "删除(_R)..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Remove selected image sources"
 msgstr "删除被选中的图片源"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "_Use"
 msgstr "使用(_U)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "Enable the selected sources and disable all others"
 msgstr "启用选中的源同时禁用其他的源。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "Download a wallpaper every "
 msgstr "下载一张壁纸每 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Minimum interval is one minute"
 msgstr "最小间隔是一分钟"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "to "
 msgstr "到 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Actual download folder "
 msgstr "实际下载文件夹 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid ""
 "Caution: do NOT use this option if you use a custom download folder with "
 "valuable files in it. Variety will maintain the limit regardless of what is "
 "in the download folder."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Limit download folder to "
 msgstr "存放下载文件的文件夹容量限制为 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Minimum size is 50 MB"
 msgstr "最小尺寸为 50 MB"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "MB by deleting oldest files when necessary"
 msgstr "MB 必要时删除最早的文件"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Favorites"
 msgstr "收藏夹"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "Copy favorite wallpapers to "
 msgstr "拷贝收藏壁纸到 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Fetch folder"
 msgstr "存放获取图片的文件夹"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Save manually downloaded wallpapers to "
 msgstr "手动保存下载的壁纸到 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Drag and drop"
 msgstr "拖放"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1223,157 +1203,157 @@ msgid ""
 "to lock it there for easy drag-and-drop access."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
 msgid "Clipboard monitoring"
 msgstr "监视剪贴板"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr "监视剪贴板中图片的URL并获取它们"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "But fetch only when the URL host is one of these:"
 msgstr "仅获取下面网站之一的图片"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "Manual downloading"
 msgstr "手动下载"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Filters"
 msgstr "修饰"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
 msgstr "用下面的修饰风格随机应用于当前显示的壁纸（归功于神奇的ImageMagick）："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid "Quotes"
 msgstr "箴言"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Show random wise quotes on the desktop"
 msgstr "在桌面显示随机的智慧箴言"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Text color: "
 msgstr "文字颜色 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Text font: "
 msgstr "文字字体: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Backdrop color: "
 msgstr "背景色： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Backdrop opacity: "
 msgstr "背景透明度： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid " Transparent"
 msgstr " 透明"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "Opaque"
 msgstr "不透明"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:53
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Draw a text shadow"
 msgstr "显示文字阴影"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Appearance"
 msgstr "外观"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Quotes area width: "
 msgstr "箴言区域宽度 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Narrow "
 msgstr "窄 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Wide"
 msgstr "宽"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Horizontal position: "
 msgstr "水平位置 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Left "
 msgstr "左侧 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Vertical position: "
 msgstr "竖直位置 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Top "
 msgstr "顶部 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Placement"
 msgstr "位置"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Show quotes from these sources: "
 msgstr "显示箴言从如下源： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Show only these tags and authors. Leave empty to show random quotes."
 msgstr "仅显示如下标签和作者的，留空则随机显示箴言。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Example: funny, inspirational"
 msgstr "例如：funny, inspirational"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "Example: Albert Einstein, Voltaire"
 msgstr "例如：Albert Einstein, Voltaire"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid "Authors: "
 msgstr "作者： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Sources and filtering"
 msgstr "源和过滤器"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Change quote every "
 msgstr "切换箴言每 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid "Minimum interval is 10 seconds"
 msgstr "最小间隔为10 秒"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Regular change"
 msgstr "切换规则"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Clock"
 msgstr "时钟"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
 msgstr "显示一个漂亮的大数字时钟，用于显示当前时间和日期。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid ""
 "To configure the clock's appearance edit the clock_filter property in "
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
@@ -1382,15 +1362,15 @@ msgstr ""
 "要配置时钟的外观可编辑Variety的配置文件中的clock_filter属性。可以参照~/.config/variety/variety_latest_"
 "default.conf中的内容。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid "Clock font: "
 msgstr "时钟字体： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Date font: "
 msgstr "日期字体： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid ""
 "These don't work? <a "
 "href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
@@ -1399,150 +1379,150 @@ msgid ""
 "here</a>."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid "Effects"
 msgstr "特效"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "When possible use images that:"
 msgstr "用到图片之处："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "Have landscape orientation"
 msgstr "保持景观取向"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "Are big at least "
 msgstr "大小至少是 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "50"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "80"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
 msgid "100"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "% 的屏幕分辨率"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
 msgid "Color"
 msgstr "颜色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Are dark or light:"
 msgstr "暗或亮："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "暗色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "加亮"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgid "Contain this color: "
 msgstr "包括该色彩： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "(Takes effect after some initial searching)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "Rating"
 msgstr "评分"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Are rated and their rating is at least "
 msgstr "评分等于或高于 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "1"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
 msgid "2"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
 msgid "3"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "4"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "5"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "(Based on local image EXIF data)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Show option to edit image ratings in the main menu"
 msgstr "在主菜单中显示编辑图片评分的选项"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid ""
 "Ratings can also be edited from the thumbnails context menu. EXIF rating "
 "metadata is universal and can also be edited or used in external photo "
 "organization programs like Shotwell, Darktable, etc."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid "Color and size"
 msgstr "色彩与尺寸"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid "Indicator Icon"
 msgstr "指示器图标"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Indicator icon:"
 msgstr "指示器图标："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgctxt "Icon option"
 msgid "Light"
 msgstr "加亮"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "暗色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "用当前壁纸"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgctxt "Icon option"
 msgid "Custom image..."
 msgstr "定制图片"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgctxt "Icon option"
 msgid "None"
 msgstr "无"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgid "Select an icon"
 msgstr "选择图标"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -1550,44 +1530,44 @@ msgid ""
 msgstr ""
 "当图标隐藏时，可以通过命令或启动器图标的上下文菜单中控制Variety。运行\"variety --help\" 可以看到所有可用的命令。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Favorites Operations"
 msgstr "收藏夹操作"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Favorites operations to show in main menu:"
 msgstr "在主菜单显示收藏夹操作"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:120
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid "Copy to Favorites"
 msgstr "拷贝到收藏夹"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Both Copy and Move"
 msgstr "拷贝且移动"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Depends on folder..."
 msgstr "依赖文件夹..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Enable sharing on Facebook for images coming from online sources"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Login Screen Support"
 msgstr "登录屏支持"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr "确认登录屏壁纸由Variety设置"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -1597,71 +1577,71 @@ msgid ""
 "multiuser systems."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "Copy wallpaper image files to this folder: "
 msgstr "复制壁纸图片到该文件夹： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Reset to default"
 msgstr "重置为默认设置"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Still doesn't work?"
 msgstr "还不能工作？"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
 msgstr "貌似你的主文件夹被加密了，因此其中的文件夹不能使用。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "You don't have write permissions for this folder."
 msgstr "你没有这个文件夹的写权限："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr "该文件夹没有赋予LightDM读文件的权限"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
 msgstr "Variety能够调整权限，但你必须提供超级用户的权限。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid "Customize"
 msgstr "自定义"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "Tips and tricks"
 msgstr "提示和窍门"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Recent changes"
 msgstr "最近切换"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Visit website"
 msgstr "浏览网站"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Report a bug or request a feature"
 msgstr "报告BUG或申请特性"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Send feedback"
 msgstr "发送反馈"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Donate to Variety"
 msgstr "捐赠 Variety"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "Donate via PayPal"
 msgstr "通过PayPal捐赠"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -1672,15 +1652,15 @@ msgid ""
 "Peter Levi"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "Donate Bitcoins to:"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:151
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "Spread the word"
 msgstr "散布消息"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:152
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid ""
 "You can also help by making Variety more popular - write a post about it on "
 "your blog, on Facebook, Twitter or Google+. Please mention Variety's "
@@ -1691,7 +1671,7 @@ msgid ""
 "changer/\">alternativeto.net</a>."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "Donate"
 msgstr "捐赠"
 

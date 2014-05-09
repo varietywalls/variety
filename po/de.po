@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-04-30 10:57+0300\n"
+"POT-Creation-Date: 2014-05-09 10:52+0300\n"
 "PO-Revision-Date: 2014-02-15 17:04+0000\n"
 "Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-05 20:20+0000\n"
-"X-Generator: Launchpad (build 16985)\n"
+"X-Launchpad-Export-Date: 2014-05-09 08:24+0000\n"
+"X-Generator: Launchpad (build 16996)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -103,7 +103,7 @@ msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:591
 #: ../variety/PreferencesVarietyDialog.py:604
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Edit..."
 msgstr "Bearbeiten …"
 
@@ -217,11 +217,9 @@ msgstr "Weltsonnenlichtkarte - aktuelles Hintergrundbild von Opentopia.com"
 
 #: ../variety/Texts.py:41
 msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
+"If you use KDE, you need to perform some actions before Variety will work. "
+"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
 msgstr ""
-"Das Hintergrundbild kann,  durch rollen über dem Anzeigensymbol, vor und "
-"zurück gewechselt werden."
 
 #: ../variety/Texts.py:42
 msgid ""
@@ -285,15 +283,6 @@ msgstr ""
 
 #: ../variety/Texts.py:49
 msgid ""
-"If you are using KDE, you need to manually set the file "
-"~/.config/variety/wallpaper-kde.jpg as your desktop background. KDE simply "
-"makes it impossible for programs to update the wallpaper without relying on "
-"KDE-specific libraries so we have to use a workaround - Variety updates this "
-"file, KDE notices the update and refreshes the wallpaper."
-msgstr ""
-
-#: ../variety/Texts.py:50
-msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
@@ -304,7 +293,7 @@ msgstr ""
 "GTK-Thema ein Symbol mit dem Namen »variety-indicator« gibt und dieses "
 "nutzen, anstatt des mitgelieferten hellen Symbols."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:50
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -316,6 +305,14 @@ msgstr ""
 "unter ~/.config/variety/favorite_quotes.txt gespeichert. Diese Datei ist "
 "kompatibel zu Varietys Quelle für Zitate aus lokalen Dateien. Die Datei ist "
 "ebenfalls kompatibel mit den Unix-Glückskeks-Hilfsmitteln."
+
+#: ../variety/Texts.py:51
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Das Hintergrundbild kann,  durch rollen über dem Anzeigensymbol, vor und "
+"zurück gewechselt werden."
 
 #: ../variety/AddMediaRssDialog.py:87
 msgid ""
@@ -403,7 +400,7 @@ msgid "No images found"
 msgstr "Kein Bild gefunden"
 
 #: ../variety/VarietyWindow.py:595 ../variety/VarietyWindow.py:704
-#: ../variety/VarietyWindow.py:2356
+#: ../variety/VarietyWindow.py:2358
 msgid "Already in Favorites"
 msgstr "Bereits in den Favoriten enthalten"
 
@@ -419,7 +416,7 @@ msgstr "Zu _Favoriten verschieben"
 
 #. both
 #: ../variety/VarietyWindow.py:608 ../variety/indicator.py:81
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Move to Favorites"
 msgstr "Zu Favoriten verschieben"
 
@@ -433,13 +430,13 @@ msgid "Fetched: Show Origin"
 msgstr "Abgerufen: Herkunft anzeigen"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
-#: ../variety/VarietyWindow.py:1841 ../variety/indicator.py:135
+#: ../variety/VarietyWindow.py:1843 ../variety/indicator.py:135
 #: ../variety/indicator.py:172
 msgid "Pause"
 msgstr "Pause"
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
-#: ../variety/VarietyWindow.py:1845
+#: ../variety/VarietyWindow.py:1847
 msgid "Resume"
 msgstr "Fortsetzen"
 
@@ -510,7 +507,7 @@ msgstr ""
 "Fehlt möglicherweise ein Werkzeug zum Verschieben in den Papierkorb?\n"
 "Bitte trash-cli, gvfs-bin oder konquerer installieren."
 
-#: ../variety/VarietyWindow.py:1770
+#: ../variety/VarietyWindow.py:1772
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
@@ -518,7 +515,7 @@ msgstr ""
 "Wird einen Editor mit der Konfigurationsdatei öffnen und die Änderungen "
 "anwenden, nachdem Sie den Editor geschlossen haben."
 
-#: ../variety/VarietyWindow.py:1795
+#: ../variety/VarietyWindow.py:1797
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -537,7 +534,7 @@ msgstr ""
 "Um ein bestimmtes Hintergrundbild festzulegen: %prog /some/local/image.jpg --"
 "next"
 
-#: ../variety/VarietyWindow.py:1805
+#: ../variety/VarietyWindow.py:1807
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
@@ -545,11 +542,11 @@ msgstr ""
 "Protokoll anzeigen (-vv zeigt mehr Details, -vvv berücksichtigt auch "
 "variety_lib)"
 
-#: ../variety/VarietyWindow.py:1809
+#: ../variety/VarietyWindow.py:1811
 msgid "Make the running instance quit"
 msgstr "Laufende Programminstanz beenden"
 
-#: ../variety/VarietyWindow.py:1813
+#: ../variety/VarietyWindow.py:1815
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
@@ -557,19 +554,19 @@ msgstr ""
 "Aktuelles Hintergrundverzeichnis ausgeben. Wird nur genutzt, wenn die "
 "Anwendung bereits läuft."
 
-#: ../variety/VarietyWindow.py:1817
+#: ../variety/VarietyWindow.py:1819
 msgid "Show Next wallpaper"
 msgstr "Nächstes Hintergrundbild anzeigen"
 
-#: ../variety/VarietyWindow.py:1821
+#: ../variety/VarietyWindow.py:1823
 msgid "Show Previous wallpaper"
 msgstr "Vorheriges Hintergrundbild anzeigen"
 
-#: ../variety/VarietyWindow.py:1825
+#: ../variety/VarietyWindow.py:1827
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "Nächstes Hintergrundbild anzeigen, Verlauf vorwärts überspringen"
 
-#: ../variety/VarietyWindow.py:1829
+#: ../variety/VarietyWindow.py:1831
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
@@ -577,7 +574,7 @@ msgstr ""
 "Aktuelles Hintergrundbild in den Papierkorb verschieben. Wird nur genutzt, "
 "wenn die Anwendung bereits läuft."
 
-#: ../variety/VarietyWindow.py:1833
+#: ../variety/VarietyWindow.py:1835
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -585,7 +582,7 @@ msgstr ""
 "Aktuelles Hintergrundbild zu den Favoriten kopieren. Wird nur genutzt, wenn "
 "die Anwendung bereits läuft."
 
-#: ../variety/VarietyWindow.py:1837
+#: ../variety/VarietyWindow.py:1839
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -593,43 +590,43 @@ msgstr ""
 "Aktuelles Hintergrundbild zu den Favoriten verschieben. Wird nur genutzt, "
 "wenn die Anwendung bereits läuft."
 
-#: ../variety/VarietyWindow.py:1849
+#: ../variety/VarietyWindow.py:1851
 msgid "Toggle Pause/Resume state"
 msgstr "Zwischen Pause/Weiter umschalten"
 
-#: ../variety/VarietyWindow.py:1853
+#: ../variety/VarietyWindow.py:1855
 msgid "Show Next quote"
 msgstr "Nächstes Zitat anzeigen"
 
-#: ../variety/VarietyWindow.py:1857
+#: ../variety/VarietyWindow.py:1859
 msgid "Show Previous quote"
 msgstr "Vorheriges Zitat anzeigen"
 
-#: ../variety/VarietyWindow.py:1861
+#: ../variety/VarietyWindow.py:1863
 msgid "Show Next quote, skipping the forward history"
 msgstr "Nächstes Zitat anzeigen, Verlauf vorwärts überspringen"
 
-#: ../variety/VarietyWindow.py:1865
+#: ../variety/VarietyWindow.py:1867
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "Zitatedurchlauf pausieren/fortsetzen"
 
-#: ../variety/VarietyWindow.py:1869
+#: ../variety/VarietyWindow.py:1871
 msgid "Save the current quote to Favorites"
 msgstr "Aktuelles Zitat unter Favoriten speichern"
 
-#: ../variety/VarietyWindow.py:1873
+#: ../variety/VarietyWindow.py:1875
 msgid "Toggle History display"
 msgstr "Verlaufsanzeige ein-/ausschalten"
 
-#: ../variety/VarietyWindow.py:1877
+#: ../variety/VarietyWindow.py:1879
 msgid "Toggle Recent Downloads display"
 msgstr "Letztes Heruntergeladenes anzeigen/ausblenden"
 
-#: ../variety/VarietyWindow.py:1881
+#: ../variety/VarietyWindow.py:1883
 msgid "Show Preferences dialog"
 msgstr "Einstellungen anzeigen"
 
-#: ../variety/VarietyWindow.py:1885
+#: ../variety/VarietyWindow.py:1887
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -638,21 +635,21 @@ msgid ""
 "file directly in an unguarded way."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1895
+#: ../variety/VarietyWindow.py:1897
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 "Die Optionen --next, --fast-forward und --previous schließen sich "
 "gegenseitig aus."
 
-#: ../variety/VarietyWindow.py:1898
+#: ../variety/VarietyWindow.py:1900
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "Die Optionen --trash und --favorite schließen sich gegenseitig aus"
 
-#: ../variety/VarietyWindow.py:1901
+#: ../variety/VarietyWindow.py:1903
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "Die Optionen --pause und --resume schließen sich gegenseitig aus"
 
-#: ../variety/VarietyWindow.py:1904
+#: ../variety/VarietyWindow.py:1906
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
@@ -660,30 +657,30 @@ msgstr ""
 "Die Optionen --quotes-next, --quotes-fast-forward und --quotes-previous "
 "schließen sich gegenseitig aus"
 
-#: ../variety/VarietyWindow.py:2008 ../variety/ImageFetcher.py:58
+#: ../variety/VarietyWindow.py:2010 ../variety/ImageFetcher.py:58
 #: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr "Kein Bild"
 
-#: ../variety/VarietyWindow.py:2013
+#: ../variety/VarietyWindow.py:2015
 msgid "Added to queue"
 msgstr "Zur Warteschlange hinzugefügt"
 
-#: ../variety/VarietyWindow.py:2013 ../variety/ImageFetcher.py:91
+#: ../variety/VarietyWindow.py:2015 ../variety/ImageFetcher.py:91
 #: ../variety/ImageFetcher.py:123
 msgid "Press Next to see it"
 msgstr "Weiter klicken zum Anschauen"
 
-#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
+#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: ../variety/VarietyWindow.py:2244 ../variety/VarietyWindow.py:2272
+#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
 msgid "You may open your Facebook feed to see the post"
 msgstr "Sie können Facebook öffnen, um die Nachricht zu sehen"
 
-#: ../variety/VarietyWindow.py:2246 ../variety/VarietyWindow.py:2274
+#: ../variety/VarietyWindow.py:2248 ../variety/VarietyWindow.py:2276
 msgid "Could not publish"
 msgstr "Konnte nicht veröffentlicht werden"
 
@@ -741,26 +738,13 @@ msgstr "KDE Nutzer - Wichtig, bitte beachten:"
 
 #: ../data/ui/WelcomeDialog.ui.h:11
 msgid ""
-"You appear to be running KDE. Variety supports KDE, but you have to do "
-"something first:\n"
+"You appear to be running KDE. \n"
 "\n"
-"KDE makes it very hard for programs to set the wallpaper unless they use KDE-"
-"specific libraries and this is not an option for Variety. \n"
-"Instead, please manually set the file ~/.config/variety/wallpaper-kde.jpg as "
-"your wallpaper and keep it that way. When changing wallpapers later on, "
-"Variety will update this file and KDE will automatically refresh the "
-"wallpaper."
+"In KDE 4 it is impossible to set the wallpaper from inside a program (there "
+"is no API for this). To make Variety work, please read and follow <a "
+"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">the "
+"instructions here</a>.\n"
 msgstr ""
-"Es scheint, als nutzen Sie KDE. Variety unterstützt KDE, allerdings müssen "
-"Sie zuerst etwas konfigurieren:\n"
-"\n"
-"KDE macht es Programmen sehr schwer,  das Hintergrundbild zu ändern, wenn "
-"diese nicht die KDE-spezifischen Bibliotheken verwenden. Das ist für Variety "
-"allerdings keine Option. \n"
-"Bitte legen Sie stattdessen manuell die Datei  ~/.config/variety/wallpaper-"
-"kde.jpg als Ihr Hintergrundbild fest und belassen Sie es dabei. Wenn Variety "
-"das Hintergrundbild ändern möchte, wird es diese Datei ersetzen und KDE "
-"erkennt dann diese Änderung automatisch."
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
@@ -810,7 +794,7 @@ msgstr ""
 "heruntergeladen. Nicht benötigte Kriterien können leer gelassen werden."
 
 #: ../data/ui/AddFlickrDialog.ui.h:4
-#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "Tags: "
 msgstr "Schlagworte: "
 
@@ -886,7 +870,7 @@ msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr "Variety läuft bereits. Befehl wird an die laufende Instanz gesendet."
 
-#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Bottom"
 msgstr "Unten"
 
@@ -898,7 +882,7 @@ msgstr "Oben"
 msgid "Left"
 msgstr "Links"
 
-#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Right"
 msgstr "Rechts"
 
@@ -906,7 +890,7 @@ msgstr "Rechts"
 msgid "Position"
 msgstr "Position"
 
-#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "Size"
 msgstr "Größe"
 
@@ -987,7 +971,7 @@ msgid "Variety - Facebook Sharing"
 msgstr "Variety - Facebook-Freigabe"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Facebook Sharing"
 msgstr "Facebook-Freigabe"
 
@@ -1253,103 +1237,93 @@ msgid "Location"
 msgstr "Standort"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
-msgid ""
-"<small><a "
-"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Recommende"
-"d sources</a></small>"
-msgstr ""
-"<small><a "
-"href='http://peterlevi.com/variety/wiki/Recommended_image_sources'>Empfohlene"
-" Quellen</a></small>"
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "_Add..."
 msgstr "_Hinzufügen …"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "Add images, folders or online image sources"
 msgstr "Bilder, Verzeichnisse oder Internetbildquellen hinzufügen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "_Edit..."
 msgstr "_Bearbeiten …"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "Edit the selected source"
 msgstr "Gewählte Quelle bearbeiten"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "_Remove..."
 msgstr "_Entfernen …"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Remove selected image sources"
 msgstr "Gewählte Quelle entfernen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "_Use"
 msgstr "_Benutzen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "Enable the selected sources and disable all others"
 msgstr "Gewählte Quellen aktivieren und alle anderen deaktivieren"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "Download a wallpaper every "
 msgstr "Ein Hintergrundbild herunterladen alle "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Minimum interval is one minute"
 msgstr "Kürzeste Zeitspanne beträgt eine Minute"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "to "
 msgstr "nach "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Actual download folder "
 msgstr "Aktueller Ordner für das Herunterladen "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid ""
 "Caution: do NOT use this option if you use a custom download folder with "
 "valuable files in it. Variety will maintain the limit regardless of what is "
 "in the download folder."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Limit download folder to "
 msgstr "Ordner für das Herunterladen limitieren auf "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid "Minimum size is 50 MB"
 msgstr "Mindestgröße sind 50 MB"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "MB by deleting oldest files when necessary"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Favorites"
 msgstr "Favoriten"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "Copy favorite wallpapers to "
 msgstr "Die Lieblingshintergrundbilder kopieren nach "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Fetch folder"
 msgstr "Abrufordner"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Save manually downloaded wallpapers to "
 msgstr "Manuell heruntergeladene Hintergrundbilder speichern unter "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Drag and drop"
 msgstr "Ziehen und Ablegen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1358,27 +1332,27 @@ msgid ""
 "to lock it there for easy drag-and-drop access."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
 msgid "Clipboard monitoring"
 msgstr "Überwachung der Zwischenablage"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr "Zwischenablage auf Bildadressen überwachen und diese abrufen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "But fetch only when the URL host is one of these:"
 msgstr "Aber abrufen, wenn die Adresse eine der Folgenden ist:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "Manual downloading"
 msgstr "Manuelles Herunterladen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Filters"
 msgstr "Filter"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
@@ -1386,83 +1360,83 @@ msgstr ""
 "Zufällig diese Filter auf die angezeigten Hintergrundbilder anwenden (dank "
 "des wundervollen ImageMagick)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid "Quotes"
 msgstr "Zitate"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Show random wise quotes on the desktop"
 msgstr "Zitate auf dem Schreibtisch nach dem Zufallsprinzip anzeigen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Text color: "
 msgstr "Textfarbe: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Text font: "
 msgstr "Schriftart: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Backdrop color: "
 msgstr "Hintergrundfarbe: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Backdrop opacity: "
 msgstr "Hintergrunddeckkraft: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid " Transparent"
 msgstr " Transparent"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "Opaque"
 msgstr "Deckend"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:53
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Draw a text shadow"
 msgstr "Textschatten anzeigen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Appearance"
 msgstr "Erscheinungsbild"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Quotes area width: "
 msgstr "Breite des Zitatbereichs: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Narrow "
 msgstr "Schmal "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Wide"
 msgstr "Breit"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Horizontal position: "
 msgstr "Horizontale Position: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid "Left "
 msgstr "Links "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Vertical position: "
 msgstr "Vertikale Position: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Top "
 msgstr "Oben "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Placement"
 msgstr "Platzierung"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Show quotes from these sources: "
 msgstr "Zitate von diesen Quellen anzeigen: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
@@ -1470,45 +1444,45 @@ msgstr ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>Mehr "
 "Erweiterungen</a></small>"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Show only these tags and authors. Leave empty to show random quotes."
 msgstr ""
 "Nur diese Schlagworte und Autoren anzeigen. Leer lassen, um zufällige Zitate "
 "anzuzeigen."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Example: funny, inspirational"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid "Example: Albert Einstein, Voltaire"
 msgstr "Beispiel: Albert Einstein, Voltaire"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid "Authors: "
 msgstr "Autoren: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Sources and filtering"
 msgstr "Quellen und Filter"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Change quote every "
 msgstr "Zitatwechsel alle "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid "Minimum interval is 10 seconds"
 msgstr "Kürzeste Zeitspanne beträgt zehn Sekunden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Regular change"
 msgstr "Regulärer Wechsel"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Clock"
 msgstr "Uhr"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
@@ -1516,22 +1490,22 @@ msgstr ""
 "Eine nette, große, digitale Uhr mit aktueller Zeit und Datum auf dem "
 "Schreibtisch anzeigen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid ""
 "To configure the clock's appearance edit the clock_filter property in "
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
 "in ~/.config/variety/variety_latest_default.conf as a guide."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid "Clock font: "
 msgstr "Uhrschriftart: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Date font: "
 msgstr "Datumsschriftart: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid ""
 "These don't work? <a "
 "href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
@@ -1540,150 +1514,150 @@ msgid ""
 "here</a>."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid "Effects"
 msgstr "Effekte"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "When possible use images that:"
 msgstr "Möglichst Bilder benutzten, auf die Folgendes zutrifft:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "Have landscape orientation"
 msgstr "Haben Landschaftsausrichtung"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "Are big at least "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "50"
 msgstr "50"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "80"
 msgstr "80"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
 msgid "100"
 msgstr "100"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "% der Bildschirmauflösung"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
 msgid "Color"
 msgstr "Farbe"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Are dark or light:"
 msgstr "Sind Dunkel oder Hell:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "Dunkel"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "Hell"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgid "Contain this color: "
 msgstr "Enhalten diese Farbe: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "(Takes effect after some initial searching)"
 msgstr "(Wirkt sich nach einigen anfänglichen Suchen aus)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "Rating"
 msgstr "Bewertung"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Are rated and their rating is at least "
 msgstr "Sind bewertet und die Bewertung ist mindestens "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "1"
 msgstr "1"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
 msgid "2"
 msgstr "2"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
 msgid "3"
 msgstr "3"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "4"
 msgstr "4"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "5"
 msgstr "5"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "(Based on local image EXIF data)"
 msgstr "(Basierend auf lokalen EXIF-Daten)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Show option to edit image ratings in the main menu"
 msgstr "Option zum Bearbeiten der Bildbewertung im Hauptmenü anzeigen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid ""
 "Ratings can also be edited from the thumbnails context menu. EXIF rating "
 "metadata is universal and can also be edited or used in external photo "
 "organization programs like Shotwell, Darktable, etc."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid "Color and size"
 msgstr "Farbe und Größe"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid "Indicator Icon"
 msgstr "Anzeigensymbol"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Indicator icon:"
 msgstr "Anzeigensymbol:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgctxt "Icon option"
 msgid "Light"
 msgstr "Hell"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "Dunkel"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Aktuelles Hintergrundbild verwenden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgctxt "Icon option"
 msgid "Custom image..."
 msgstr "Benutzerdefiniertes Bild …"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgctxt "Icon option"
 msgid "None"
 msgstr "Keins"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgid "Select an icon"
 msgstr "Symbol auswählen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -1693,47 +1667,47 @@ msgstr ""
 "oder von der Schnellwahl des Starters aus gesteuert werden. Um alle "
 "möglichen Kommandos zu sehen »variety --help« ausführen."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Favorites Operations"
 msgstr "Favoritenoperationen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Favorites operations to show in main menu:"
 msgstr "Favoritenoperationen, welche im Hauptmenü angezeigt werden sollen:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:120
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid "Copy to Favorites"
 msgstr "Zu Favoriten kopieren"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Both Copy and Move"
 msgstr "Sowohl Kopieren, als auch Verschieben"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Depends on folder..."
 msgstr "Abhängig vom Ordner …"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Enable sharing on Facebook for images coming from online sources"
 msgstr "Facebook-Freigabe aktivieren für Bilder aus Internetquellen."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 "Dialog zum Anpassen des Facebook-Beitrages, vor dem Veröffentlichen anzeigen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Login Screen Support"
 msgstr "Unterstützung für das Anmeldefenster"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr ""
 "Sicherstellen, dass die Hintergrundbilder von Variety auch im Anmeldefenster "
 "genutzt werden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -1743,19 +1717,19 @@ msgid ""
 "multiuser systems."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "Copy wallpaper image files to this folder: "
 msgstr "Hintergrundbilder in diesen Ordner kopieren: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Reset to default"
 msgstr "Auf Vorgabe zurücksetzen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Still doesn't work?"
 msgstr "Funktioniert immer noch nicht?"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
@@ -1763,55 +1737,55 @@ msgstr ""
 "Vermutlich ist Ihr persönlicher Ordner verschlüsselt. Ordner innerhalb "
 "können deshalb nicht benutzt werden."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "You don't have write permissions for this folder."
 msgstr "Keine Zugriffsrechte für diesen Ordner."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr ""
 "LightDM kann aufgrund fehlender Zugriffsrechte, Dateien in diesem Ordner "
 "nicht lesen."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid "Customize"
 msgstr "Anpassen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "Tips and tricks"
 msgstr "Tipps und Tricks"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Recent changes"
 msgstr "Letzte Änderungen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Visit website"
 msgstr "Webseite besuchen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Report a bug or request a feature"
 msgstr "Fehler melden oder neue Funktionen vorschlagen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Send feedback"
 msgstr "Rückmeldung senden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Donate to Variety"
 msgstr "Für Variety spenden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "Donate via PayPal"
 msgstr "Über PayPal spenden"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -1829,15 +1803,15 @@ msgstr ""
 "Vielen Dank,\n"
 "Peter Levi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "Donate Bitcoins to:"
 msgstr "Bitcoins spenden an:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:151
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "Spread the word"
 msgstr "Variety weiterempfehlen"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:152
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid ""
 "You can also help by making Variety more popular - write a post about it on "
 "your blog, on Facebook, Twitter or Google+. Please mention Variety's "
@@ -1848,7 +1822,7 @@ msgid ""
 "changer/\">alternativeto.net</a>."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "Donate"
 msgstr "Spenden"
 
