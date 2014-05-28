@@ -512,6 +512,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for f in locations:
             if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
+            elif type in UNREMOVEABLE_TYPES:
+                f = list(existing.keys())[0] if existing else None  # reuse the already existing location, do not add another one
 
             if not f in existing:
                 self.ui.sources.get_model().append(self.source_to_model_row([True, type, f]))
