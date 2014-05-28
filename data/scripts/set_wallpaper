@@ -21,11 +21,12 @@
 WP=$1
 
 
-# KDE - User will have to manually choose ~/.config/variety/wallpaper-kde.jpg as a wallpaper.
-# Afterwards, with the command below, Variety will just overwrite the file when changing the wallpaper
+# KDE - User will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short iterval.
+# Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
 # and KDE will refresh it
 if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
-    cp "$WP" ~/.config/variety/wallpaper-kde.jpg
+    mkdir -p "$(xdg-user-dir PICTURES)/variety-wallpaper"
+    cp "$WP" "$(xdg-user-dir PICTURES)/variety-wallpaper/wallpaper-kde.jpg"
     exit 0
 fi
 
@@ -37,11 +38,16 @@ if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" 
 fi
 
 # XFCE
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "" 2> /dev/null
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -s "$WP" 2> /dev/null
+for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l|egrep -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
+    xfconf-query -c xfce4-desktop -p $i -n -t string -s "" 2> /dev/null
+    xfconf-query -c xfce4-desktop -p $i -s "" 2> /dev/null
+    xfconf-query -c xfce4-desktop -p $i -s "$WP" 2> /dev/null
+done
 
 # LXDE/PCmanFM
-pcmanfm --set-wallpaper "$WP" 2> /dev/null
+if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
+    pcmanfm --set-wallpaper "$WP" 2> /dev/null
+fi
 
 # Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
 # feh --bg-scale "$WP" 2> /dev/null
@@ -54,6 +60,9 @@ mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /
 
 # Cinnamon after 1.8
 gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
+
+# Cinnamon after 2.0
+gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
 
 # Gnome 2
 gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /dev/null

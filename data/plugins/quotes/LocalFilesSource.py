@@ -67,7 +67,7 @@ class LocalFilesSource(IQuoteSource):
     def load(self, path):
         try:
             logger.info("Loading quotes file %s" % path)
-            with open(path) as f:
+            with open(path, 'rU') as f:
                 s = f.read().decode('utf-8', errors='ignore')
                 for q in re.split(r'(^\.$|^%$)', s, flags=re.MULTILINE):
                     try:

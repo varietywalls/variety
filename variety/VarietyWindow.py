@@ -76,7 +76,6 @@ class VarietyWindow(Gtk.Window):
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
     VARIETY_API_URL = "http://localhost:4000"
-    MAX_FILES = 10000
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -86,11 +85,13 @@ class VarietyWindow(Gtk.Window):
         "1562cb289319aa39ac1b37a8ee4c0103",
         "6c54123e87e98b15d87f0341d3e36fc5",
         "3f9fcc524bfee8fb146d1901613d3181",
-        "40db8163e22fbe8a505bfd1280190f0d"  #0.4.14, 0.4.15
+        "40db8163e22fbe8a505bfd1280190f0d",  # 0.4.14, 0.4.15
+        "59a037428784caeb0834a8dd7897a88b",  # 0.4.16, 0.4.17
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
-        "d8df22bf24baa87d5231e31027e79ee5"
+        "d8df22bf24baa87d5231e31027e79ee5",
+        "822aee143c6b3f1166e5d0a9c637dd16",  # 0.4.16, 0.4.17
     }
 
     def __init__(self):
@@ -850,7 +851,6 @@ class VarietyWindow(Gtk.Window):
                     _("Variety is finding too few images that match your image filtering criteria"))
 
     def prepare_thread(self):
-        time.sleep(20)
         logger.info("Prepare thread running")
         while self.running:
             try:
@@ -1212,34 +1212,13 @@ class VarietyWindow(Gtk.Window):
                 logger.exception("Error while setting wallpaper")
 
     def list_images(self):
-        return Util.list_files(self.individual_images, self.folders, Util.is_image, VarietyWindow.MAX_FILES)
+        return Util.list_files(self.individual_images, self.folders, Util.is_image, max_files=10000)
 
     def select_random_images(self, count):
-        # refresh image count often when few images in the folders and rarely when many:
-        if self.image_count < 20 or random.randint(0, max(0, min(100, self.image_count // 30))) == 0:
-            cnt = sum(1 for f in self.list_images())
-            if not cnt:
-                return []
-
-            self.image_count = cnt
-            logger.info("Refreshed image count: %d" % self.image_count)
-        else:
-            cnt = self.image_count
-
-        indexes = set()
-        for i in xrange(count):
-            indexes.add(random.randint(0, cnt - 1))
-
-        result = []
-        for index, f in enumerate(self.list_images()):
-            if index in indexes:
-                result.append(f)
-                indexes.remove(index)
-                if not indexes:
-                    break
-
-        random.shuffle(result)
-        return result
+        all_images = list(self.list_images())
+        self.image_count = len(all_images)
+        random.shuffle(all_images)
+        return all_images[:count]
 
     def on_indicator_scroll(self, indicator, steps, direction):
         if direction == Gdk.ScrollDirection.SMOOTH:
@@ -1912,7 +1891,9 @@ class VarietyWindow(Gtk.Window):
         dialog = WelcomeDialog()
         if os.environ.get('KDE_FULL_SESSION') == 'true':
             logger.info("KDE detected")
-            shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), self.config_folder)
+            kde_wp_folder = os.path.join(Util.get_xdg_pictures_folder(), "variety-wallpaper")
+            Util.makedirs(kde_wp_folder)
+            shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), kde_wp_folder)
             dialog.ui.kde_warning.set_visible(True)
 
         def _on_continue(button):

@@ -41,7 +41,7 @@ SOURCES = {
 }
 
 TIPS = [
-    _("You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."),
+    _("If you use KDE, you need to perform some actions before Variety will work. Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"),
     _("If you want to run custom commands every time the wallpaper changes or if you use an alternative desktop environment, please edit the scripts in ~/.config/variety/scripts. There are examples there for various desktop environments."),
     _("Variety can be controlled from the command line and you can use this to define keyboard shortcuts for the operations you use most often. Run \"variety --help\" to see all available commands."),
     _("You can drop image links or files on the launcher icon to download them and use them as wallpapers. For quicker downloading from a specific site, you can also use clipboard monitoring (see \"Manual downloading\" tab)."),
@@ -49,8 +49,8 @@ TIPS = [
     _("Adding your own custom filters is quite easy: open ~/.config/variety/variety.conf in an editor and use the existing filters as an example. Every filter is just a line of options to be passed to ImageMagick's convert command."),
     _("When you select an image source, its images are displayed in a window at the bottom of the screen. Click an image there to set is as wallpaper. Right-click to close the window, to modify its appearance or to perform file operations. You can select multiple image sources to create a \"merged\" thumbnail view of all of them. Please mind that thumbnail view is limited to several hundred randomly selected images."),
     _("To enable desktop notifications when the wallpaper changes, uncomment the two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."),
-    _("If you are using KDE, you need to manually set the file ~/.config/variety/wallpaper-kde.jpg as your desktop background. KDE simply makes it impossible for programs to update the wallpaper without relying on KDE-specific libraries so we have to use a workaround - Variety updates this file, KDE notices the update and refreshes the wallpaper."),
     _("Variety's indicator icon is themeable - if you you choose the \"Light\" option for the icon, Variety will first check if the current GTK theme has an icon named \"variety-indicator\" and will use it instead of the bundled light icon."),
-    _("When you choose to save quotes to Favorites, these are by default saved to ~/.config/variety/favorite_quotes.txt. This file is compatible with Variety's local files quote source. If you want to use it - copy it to ~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote source. This file is also compatible with the Unix fortune utility.")
+    _("When you choose to save quotes to Favorites, these are by default saved to ~/.config/variety/favorite_quotes.txt. This file is compatible with Variety's local files quote source. If you want to use it - copy it to ~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote source. This file is also compatible with the Unix fortune utility."),
+    _("You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."),
 ]
 

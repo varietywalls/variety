@@ -1,21 +1,22 @@
 #!/bin/bash
 
 # This script is run when the application starts
-# Its purpose is to print out the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
+# Its purpose is to obtain the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
+# This is needed by Variety at start to ensure History->Back works OK to revert back to the pre-Variety wallpaper.
 # You need to edit this if you use something other than Gnome 3 or Unity for a desktop environment
 
 desktop=$DESKTOP_SESSION
 
 # Gnome 3, Unity:
-if [ "$desktop" == "ubuntu" ]; then
+if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
         gsettings get org.gnome.desktop.background picture-uri
 
 # XFCE
-elif [ "$desktop" == "xubuntu" ]; then
-        xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path
+elif [ "$desktop" == "xubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
+        xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image
 
 # LXDE/PCmanFM
-elif [ "$desktop" == "Lubuntu" ]; then
+elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
         grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
 
 # MATE

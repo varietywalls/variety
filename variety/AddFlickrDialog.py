@@ -119,7 +119,7 @@ class AddFlickrDialog(Gtk.Dialog):
             self.show_spinner()
             u = FlickrDownloader.obtain_userid(user_url)
             if u[0]:
-                search += "user:" + self.ui.user_url.get_text().replace("http://", "") + ";"
+                search += "user:" + self.ui.user_url.get_text().replace("http://", "").replace("https://", "") + ";"
                 search += "user_id:" + u[2] + ";"
             else:
                 self.error = self.error + "\n" + u[1]
@@ -129,7 +129,7 @@ class AddFlickrDialog(Gtk.Dialog):
             self.show_spinner()
             g = FlickrDownloader.obtain_groupid(group_url)
             if g[0]:
-                search += "group:" + self.ui.group_url.get_text().replace("http://", "") + ";"
+                search += "group:" + self.ui.group_url.get_text().replace("http://", "").replace("https://", "") + ";"
                 search += "group_id:" + g[2]
             else:
                 self.error = self.error + "\n" + g[1]

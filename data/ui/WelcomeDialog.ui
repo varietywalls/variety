@@ -122,10 +122,11 @@ Please take the time to set your preferences on the next screen.</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="xpad">30</property>
-                <property name="label" translatable="yes">You appear to be running KDE. Variety supports KDE, but you have to do something first:
+                <property name="label" translatable="yes">You appear to be running KDE. 
 
-KDE makes it very hard for programs to set the wallpaper unless they use KDE-specific libraries and this is not an option for Variety. 
-Instead, please manually set the file ~/.config/variety/wallpaper-kde.jpg as your wallpaper and keep it that way. When changing wallpapers later on, Variety will update this file and KDE will automatically refresh the wallpaper.</property>
+In KDE 4 it is impossible to set the wallpaper from inside a program (there is no API for this). To make Variety work, please read and follow &lt;a href="http://peterlevi.com/variety/2014/05/variety-and-kde/"&gt;the instructions here&lt;/a&gt;.
+</property>
+                <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
               </object>
