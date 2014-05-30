@@ -64,6 +64,21 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -843,7 +858,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="smart_enabled">
-                        <property name="label" translatable="yes">Enable the smart features of Variety which recommend you images and sources by adapting to your taste</property>
+                        <property name="label" translatable="yes">Enable Smart Variety</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -864,17 +879,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label73">
+                      <object class="GtkLabel" id="data_collection_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Variety will collect data about the images you mark as favorite or delete, as well as the online sources you have enabled.  In return you will be able to use several "smart" features, such as the "Recommended images" source which fetches images Variety thinks you will like and dynamically adapts to your taste.
-
-The collected data is anonymous, not linked to your identity in any way. Data is collected only for images downloaded by Variety itself, never for images you already had in your local folders that might be private.
-
-Keeping this enabled will help Variety provide better pictures for everyone.</property>
+                        <property name="label" translatable="yes">Variety will recommend you images and sources based on your tastes. This implies collecting data about the images you like or dislike. &lt;a href='http://peterlevi.com/variety/data-collection-policy/'&gt;Please read the data collection policy here.&lt;/a&gt; Keeping this enabled will help Variety provide better pictures for everyone.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -3888,21 +3899,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_customize_combos">
     <widgets>
