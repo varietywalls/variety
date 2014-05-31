@@ -286,7 +286,7 @@ class Util:
         request = urllib2.Request(url)
         request.add_header('User-Agent', USER_AGENT)
         request.add_header('Cache-Control', 'max-age=0')
-        return urllib2.urlopen(request, data=data, timeout=20)
+        return urllib2.urlopen(request, data=urllib.urlencode(data) if data else None, timeout=20)
 
     @staticmethod
     def fetch(url, data=None):

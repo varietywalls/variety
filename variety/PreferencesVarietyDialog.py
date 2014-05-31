@@ -33,6 +33,7 @@ from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
+from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
 
 import gettext
 from gettext import gettext as _
@@ -258,6 +259,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     self.ui.changes_buffer.set_text(f.read())
             except Exception:
                 logger.warning("Missing ui/changes.txt file")
+
+            self.on_smart_user_updated()
 
             self.on_change_enabled_toggled()
             self.on_download_enabled_toggled()
@@ -1014,6 +1017,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             for i, r in enumerate(self.ui.sources.get_model()):
                 if r[1] == Options.type_to_str(Options.SourceType.RECOMMENDED):
                     r[0] = False
+        elif not self.parent.smart_user:
+                def _create():
+                    self.parent.new_smart_user()
+                    GObject.idle_add(self.on_smart_user_updated)
+                timer = threading.Timer(0, _create)
+                timer.start()
 
     def on_destroy(self, widget = None):
         if self.dialog:
@@ -1129,3 +1138,28 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 _("Could not adjust permissions"),
                 _('You may try manually running this command:\nsudo chmod %s "%s"') % (mode, folder))
         self.on_copyto_changed()
+
+    def on_btn_login_register_clicked(self, widget=None):
+        self.dialog = LoginOrRegisterDialog()
+        self.dialog.parent = self
+        self.dialog.run()
+        self.dialog.destroy()
+        self.dialog = None
+
+    def on_smart_user_updated(self):
+        if self.parent.smart_user:
+            self.ui.box_smart_user.set_visible(True)
+            username = self.parent.smart_user.get("username")
+            self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s/user/%s">%s</a>' % (
+                    self.parent.VARIETY_API_URL,
+                    '~' + username if username else self.parent.smart_user["id"],
+                    username or _('Anonymous')))
+            self.ui.btn_login_register.set_visible(not bool(username))
+            self.ui.smart_register_note.set_visible(not bool(username))
+        else:
+            self.ui.box_smart_user.set_visible(False)
+
+
+
+
+

@@ -143,6 +143,7 @@ class VarietyWindow(Gtk.Window):
 
         # load config
         self.options = None
+        self.smart_user = None
         self.server_options = {}
         self.load_banned()
         self.load_history()
@@ -350,6 +351,8 @@ class VarietyWindow(Gtk.Window):
 
         self.options = Options()
         self.options.read()
+
+        self.load_smart_user(create_if_missing=False)
 
         GObject.idle_add(self.update_indicator_icon)
 
@@ -1592,19 +1595,33 @@ class VarietyWindow(Gtk.Window):
     def new_smart_user(self):
         logger.info('Creating new smart user')
         self.smart_user = Util.fetch_json(self.VARIETY_API_URL + '/newuser')
+        if self.preferences_dialog:
+            self.preferences_dialog.on_smart_user_updated()
         with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
             json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
             logger.info('Created smart user: %s' % self.smart_user["id"])
 
-    def load_smart_user(self):
-        if not hasattr(self, "smart_user"):
+    def set_smart_user(self, user):
+        logger.info('Setting new smart user')
+        self.smart_user = user
+        if self.preferences_dialog:
+            self.preferences_dialog.on_smart_user_updated()
+        with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
+            json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
+            logger.info('Updated smart user: %s' % self.smart_user["id"])
+
+    def load_smart_user(self, create_if_missing=True, force_reload=False):
+        if not self.smart_user or force_reload:
             try:
                 with open(os.path.join(self.config_folder, '.user.json')) as f:
                     self.smart_user = json.load(f)
+                    if self.preferences_dialog:
+                        self.preferences_dialog.on_smart_user_updated()
                     logger.info('Loaded smart user: %s' % self.smart_user["id"])
             except IOError:
-                logger.info('Missing user.json, creating new smart user')
-                self.new_smart_user()
+                if create_if_missing:
+                    logger.info('Missing user.json, creating new smart user')
+                    self.new_smart_user()
 
     def smart_report_file(self, filename, tag, attempt=0):
         if not self.options.smart_enabled:
@@ -1631,8 +1648,7 @@ class VarietyWindow(Gtk.Window):
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
                 url = self.VARIETY_API_URL + '/user/' + self.smart_user['id'] + '/' + tag
-                result = Util.fetch(url, urllib.urlencode(
-                    {'image': json.dumps(image), 'authkey': self.smart_user['authkey']}))
+                result = Util.fetch(url, {'image': json.dumps(image), 'authkey': self.smart_user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
             except HTTPError, e:
