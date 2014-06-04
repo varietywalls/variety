@@ -1652,15 +1652,17 @@ class VarietyWindow(Gtk.Window):
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
             except HTTPError, e:
+                logger.error("Server returned %d, potential reason - server failure?" % e.code)
                 if e.code in (403, 404):
-                    logger.error("Server returned %d, potential reason - server failure?" % e.code)
-                    if attempt == 3:
-                        return -3
-                    logger.info("Creating new user")
+                    self.show_notification(
+                        _('Your Smart Variety credentials are probably outdated. Please login again.'))
                     self.new_smart_user()
-                    return self.smart_report_file(filename, tag, attempt + 1)
-                else:
-                    raise e
+                    self.preferences_dialog.on_btn_login_register_clicked()
+
+                if attempt == 3:
+                    logger.exception("Could not smart-report %s as '%s, server error code %s'" % (filename, tag, e.code))
+                    return -3
+                return self.smart_report_file(filename, tag, attempt + 1)
         except Exception:
             logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
             return -4
@@ -1670,9 +1672,9 @@ class VarietyWindow(Gtk.Window):
             if not file:
                 file = self.current
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
-                self.smart_report_file(file, 'favorite')
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
+                self.smart_report_file(file, 'favorite')
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -1681,11 +1683,11 @@ class VarietyWindow(Gtk.Window):
             if not file:
                 file = self.current
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
-                self.smart_report_file(file, 'favorite')
                 operation = shutil.move if os.access(file, os.W_OK) else shutil.copy
                 ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
                 if ok:
                     new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
+                    self.smart_report_file(new_file, 'favorite')
                     self.used = [(new_file if f == file else f) for f in self.used]
                     self.downloaded = [(new_file if f == file else f) for f in self.downloaded]
                     with self.prepared_lock:

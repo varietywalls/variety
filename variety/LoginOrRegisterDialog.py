@@ -4,6 +4,8 @@
 ### END LICENSE
 
 from gi.repository import Gtk  # pylint: disable=E0611
+import logging
+import urllib2
 from variety.Util import Util
 from variety_lib.helpers import get_builder
 
@@ -11,6 +13,7 @@ import gettext
 from gettext import gettext as _
 
 gettext.textdomain('variety')
+logger = logging.getLogger('variety')
 
 
 class LoginOrRegisterDialog(Gtk.Dialog):
@@ -40,22 +43,35 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         self.parent = None
         self.ui = builder.get_ui(self)
 
-    def on_btn_login_clicked(self, widget=None):
-        print self.parent.parent.VARIETY_API_URL
-        result = Util.fetch_json(self.parent.parent.VARIETY_API_URL + '/login',
-                                 {'username': self.ui.login_username.get_text(),
-                                  'password': self.ui.login_password.get_text()})
-        if 'error' in result:
-            self.ui.login_error.set_text(_(result['error']))
-            self.ui.login_error.set_visible(True)
+    def show_login_error(self, msg):
+        self.ui.login_error.set_text(msg)
+        self.ui.login_error.set_visible(True)
+
+    def show_register_error(self, msg):
+        self.ui.register_error.set_text(msg)
+        self.ui.register_error.set_visible(True)
+
+    def ajax(self, url, data, error_msg_handler):
+        try:
+            return Util.fetch_json(url, data)
+        except urllib2.HTTPError, e:
+            logger.exception('HTTPError for ' + url)
+            error_msg_handler(_('Oops, server returned error (%s)') % e.code)
+            raise
+
+        except urllib2.URLError:
+            logger.exception('Connection error for ' + url)
+            error_msg_handler(_('Could not connect to server'))
+            raise
 
     def on_btn_login_clicked(self, widget=None):
-        result = Util.fetch_json(self.parent.parent.VARIETY_API_URL + '/login',
-                                 {'username': self.ui.login_username.get_text(),
-                                  'password': self.ui.login_password.get_text()})
+        result = self.ajax(self.parent.parent.VARIETY_API_URL + '/login',
+                           {'username': self.ui.login_username.get_text(),
+                            'password': self.ui.login_password.get_text()},
+                           self.show_login_error)
+
         if 'error' in result:
-            self.ui.login_error.set_text(_(result['error']))
-            self.ui.login_error.set_visible(True)
+            self.show_login_error(_(result['error']))
         else:
             self.parent.parent.set_smart_user(result)
             self.destroy()
@@ -66,10 +82,13 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             self.ui.register_error.set_visible(True)
             return
 
-        result = Util.fetch_json(self.parent.parent.VARIETY_API_URL + '/register',
-                                 {'username': self.ui.register_username.get_text(),
-                                  'password': self.ui.register_password.get_text(),
-                                  'email': self.ui.register_email.get_text()})
+        result = self.ajax(self.parent.parent.VARIETY_API_URL + '/register',
+                           {'id': self.parent.parent.smart_user['id'],
+                            'authkey': self.parent.parent.smart_user['authkey'],
+                            'username': self.ui.register_username.get_text(),
+                            'password': self.ui.register_password.get_text(),
+                            'email': self.ui.register_email.get_text()},
+                           self.show_register_error)
         if 'error' in result:
             self.ui.register_error.set_text(_(result['error']))
             self.ui.register_error.set_visible(True)

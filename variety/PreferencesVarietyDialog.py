@@ -1146,6 +1146,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.destroy()
         self.dialog = None
 
+    def on_btn_smart_logoff_clicked(self, widget=None):
+        self.parent.new_smart_user()
+
     def on_smart_user_updated(self):
         if self.parent.smart_user:
             self.ui.box_smart_user.set_visible(True)
@@ -1155,6 +1158,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     '~' + username if username else self.parent.smart_user["id"],
                     username or _('Anonymous')))
             self.ui.btn_login_register.set_visible(not bool(username))
+            self.ui.btn_smart_logoff.set_visible(bool(username))
             self.ui.smart_register_note.set_visible(not bool(username))
         else:
             self.ui.box_smart_user.set_visible(False)
