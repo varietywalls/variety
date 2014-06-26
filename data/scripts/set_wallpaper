@@ -30,6 +30,20 @@ if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
     exit 0
 fi
 
+# Cinnamon, for cases when it is detectable
+if [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
+    gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
+    if [ "`gsettings get org.cinnamon.background picture-options`" == "'none'" ]; then
+        gsettings set org.cinnamon.background picture-options 'zoom'
+    fi
+
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
+    if [ "`gsettings get org.cinnamon.desktop.background picture-options`" == "'none'" ]; then
+        gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+    fi
+    exit 0
+fi
+
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
 gsettings set com.canonical.unity-greeter background "$WP"
@@ -58,7 +72,7 @@ gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 # MATE before 1.6
 mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /dev/null
 
-# Cinnamon after 1.8
+# Cinnamon after 1.8, before 2.0
 gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
 
 # Cinnamon after 2.0
