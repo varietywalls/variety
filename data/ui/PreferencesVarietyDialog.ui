@@ -59,6 +59,11 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -866,7 +871,7 @@
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
                         <property name="label" translatable="yes">Variety will recommend you images and sources based on your tastes. This implies collecting data about the images you like or dislike. Keeping this enabled will help Variety provide better pictures for everyone. 
-&lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Please read more details about the service and the data collection policy here.&lt;/a&gt; </property>
+Applies only to images downloaded by Variety itself. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -885,7 +890,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">(Please keep in mind this is an experimental feature that will take some time to mature and become truly "smart")</property>
+                        <property name="label" translatable="yes">(This is a beta feature that will take some time to mature and become truly "smart")</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
                           <attribute name="weight" value="normal"/>
@@ -991,6 +996,108 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkBox" id="box39">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_right">15</property>
+                    <property name="margin_top">10</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label68">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="label" translatable="yes">Sync</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="box41">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkCheckButton" id="sync_enabled">
+                            <property name="label" translatable="yes">Synchronize favorite images between computers</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">15</property>
+                            <property name="margin_top">10</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="sync_login_message">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">15</property>
+                            <property name="margin_top">7</property>
+                            <property name="label" translatable="yes">Requires Smart Variety login.</property>
+                            <property name="justify">fill</property>
+                            <property name="wrap">True</property>
+                            <attributes>
+                              <attribute name="style" value="italic"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="sync_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">When enabled, images that you favorite on other computers will be automatically downloaded to this computer. Syncing will not delete any images. You need to be logged with the same user everywhere. Applies only to images downloaded by Variety itself. </property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="facebook_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -1075,7 +1182,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -1087,7 +1194,7 @@
               <object class="GtkLabel" id="social_tab_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Social</property>
+                <property name="label" translatable="yes">Sync and sharing</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -3966,11 +4073,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     <action-widgets>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
     <property name="upper">100</property>
