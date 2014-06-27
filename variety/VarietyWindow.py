@@ -1596,7 +1596,7 @@ class VarietyWindow(Gtk.Window):
         logger.info('Creating new smart user')
         self.smart_user = Util.fetch_json(self.VARIETY_API_URL + '/newuser')
         if self.preferences_dialog:
-            self.preferences_dialog.on_smart_user_updated()
+            GObject.idle_add(self.preferences_dialog.on_smart_user_updated)
         with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
             json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
             logger.info('Created smart user: %s' % self.smart_user["id"])

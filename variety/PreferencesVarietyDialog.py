@@ -169,6 +169,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
 
             self.ui.smart_enabled.set_active(self.options.smart_enabled)
+            self.ui.sync_enabled.set_active(self.options.sync_enabled)
+
             self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
@@ -836,6 +838,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
 
             self.options.smart_enabled = self.ui.smart_enabled.get_active()
+            if self.ui.sync_enabled.get_sensitive():
+                self.options.sync_enabled = self.ui.sync_enabled.get_active()
+
             self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -1007,7 +1012,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_facebook_enabled_toggled(self, widget = None):
         self.ui.facebook_show_dialog.set_sensitive(self.ui.facebook_enabled.get_active())
 
-    def on_smart_enabled_toggled(self, widget = None):
+    def on_smart_enabled_toggled(self, widget=None):
+        self.on_smart_user_updated()
         if not self.ui.smart_enabled.get_active():
             for s in self.parent.options.sources:
                 if s[1] == Options.SourceType.RECOMMENDED and s[0]:
@@ -1150,6 +1156,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.parent.new_smart_user()
 
     def on_smart_user_updated(self):
+        sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart_user and self.parent.smart_user.get("username") is not None
+        self.ui.sync_enabled.set_sensitive(sync_allowed)
+        self.ui.sync_login_note.set_visible(not sync_allowed)
+        if not sync_allowed:
+            self.ui.sync_enabled.set_active(False)
+        else:
+            self.ui.sync_enabled.set_active(self.options.sync_enabled)
+
         if self.parent.smart_user:
             self.ui.box_smart_user.set_visible(True)
             username = self.parent.smart_user.get("username")
