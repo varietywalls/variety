@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-26 13:27+0300\n"
+"POT-Creation-Date: 2014-06-30 16:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -323,7 +323,7 @@ msgid "Just a moment to check this search"
 msgstr ""
 
 #: ../data/ui/AddWallbaseDialog.ui.h:10
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:12
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
 #: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddMediaRssDialog.ui.h:6
 msgid "  "
 msgstr ""
@@ -655,26 +655,21 @@ msgstr ""
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
 msgid ""
 "Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
-"a category with wallpapers you would like to see on your desktop, then paste "
-"its URL below. A category is  anything on the site that has one or more "
-"pages with wallpapers on them. Here are some examples:\n"
+"a category with wallpapers, then paste its URL below. A category is  "
+"anything on the site that has one or more pages with wallpapers on them. "
+"Here are some examples:\n"
 "\n"
-"Top wallpapers: <a href=\"http://wallpapers.net/top_wallpapers.html\">http://"
-"wallpapers.net/top_wallpapers.html</a>\n"
-"Category 'autumn': <a href=\"http://wallpapers.net/autumn-desktop-wallpapers."
-"html\">http://wallpapers.net/autumn-desktop-wallpapers.html</a>\n"
-"Search for 'fog': <a href=\"http://wallpapers.net/search.html?q=fog\">http://"
-"wallpapers.net/search.html?q=fog</a>\n"
-"Specific resolution: <a href=\"http://wallpapers.net/1920x1200_wide-"
-"wallpapers-r.html\">http://wallpapers.net/1920x1200_wide-wallpapers-r.html</"
-"a>\n"
+"All wallpapers: <a href=\"http://www.wallpapers.net/\">http://www.wallpapers."
+"net/</a>\n"
+"Specific resolution: <a href=\"http://www.wallpapers.net/2560x1440-"
+"wallpapers_r19\">http://www.wallpapers.net/2560x1440-wallpapers_r19</a>\n"
 msgstr ""
 
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:8
 msgid "Paste URL here: "
 msgstr ""
 
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:11
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:9
 #: ../data/ui/AddMediaRssDialog.ui.h:5
 msgid "Just a moment to check what's at that URL"
 msgstr ""
