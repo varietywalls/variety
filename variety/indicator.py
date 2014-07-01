@@ -55,25 +55,6 @@ class Indicator:
         self.show_origin.set_sensitive(False)
         self.menu.append(self.show_origin)
 
-        self.rating_separator = Gtk.SeparatorMenuItem.new()
-        self.menu.append(self.rating_separator)
-
-        self.rating = Gtk.MenuItem(_("Set Rating"))
-        self.menu.append(self.rating)
-
-        self.no_effects = Gtk.CheckMenuItem(_("Reveal clean image"))
-        self.no_effects.set_active(False)
-        self.no_effects.set_use_underline(True)
-        def _toggle_no_effects(widget=None):
-            window.toggle_no_effects(self.no_effects.get_active())
-        self.no_effects_handler_id = self.no_effects.connect("toggled", _toggle_no_effects)
-        self.menu.append(self.no_effects)
-
-        self.menu.append(Gtk.SeparatorMenuItem.new())
-
-        self.no_effects_separator = Gtk.SeparatorMenuItem.new()
-        # self.menu.append(self.no_effects_separator)
-
         self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
         self.copy_to_favorites.set_use_underline(True)
         self.copy_to_favorites.connect("activate", window.copy_to_favorites)
@@ -90,36 +71,36 @@ class Indicator:
         self.trash.connect("activate", window.move_to_trash)
         self.menu.append(self.trash)
 
-        self.focus = Gtk.MenuItem(_("Display Source"))
+        self.menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.image_menu = Gtk.Menu()
+
+        self.focus = Gtk.MenuItem(_("Where is it from?"))
         self.focus.connect("activate", window.focus_in_preferences)
-        self.menu.append(self.focus)
+        self.image_menu.append(self.focus)
+
+        self.no_effects = Gtk.CheckMenuItem(_("Show without effects"))
+        self.no_effects.set_active(False)
+        self.no_effects.set_use_underline(True)
+        def _toggle_no_effects(widget=None):
+            window.toggle_no_effects(self.no_effects.get_active())
+        self.no_effects_handler_id = self.no_effects.connect("toggled", _toggle_no_effects)
+        self.image_menu.append(self.no_effects)
 
         self.publish_fb = Gtk.MenuItem(_("Share on Facebook"))
         self.publish_fb.connect("activate", window.publish_on_facebook)
-        self.menu.append(self.publish_fb)
+        self.image_menu.append(self.publish_fb)
 
-        self.menu.append(Gtk.SeparatorMenuItem.new())
+        self.rating_separator = Gtk.SeparatorMenuItem.new()
+        self.image_menu.append(self.rating_separator)
 
-        self.history = Gtk.CheckMenuItem(_("_History"))
-        self.history.set_active(False)
-        self.history.set_use_underline(True)
-        self.history_handler_id = self.history.connect("toggled", window.show_hide_history)
-        self.menu.append(self.history)
+        self.rating = Gtk.MenuItem(_("Set EXIF Rating"))
+        self.image_menu.append(self.rating)
 
-        self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))
-        self.downloads.set_active(False)
-        self.downloads.set_use_underline(True)
-        self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
-        self.menu.append(self.downloads)
-
-        self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
-        self.selector.set_active(False)
-        self.selector.set_use_underline(True)
-        def _selector(widget=None):
-            timer = threading.Timer(0, window.show_hide_wallpaper_selector)
-            timer.start()
-        self.selector_handler_id = self.selector.connect("toggled", _selector)
-        self.menu.append(self.selector)
+        self.image_item = Gtk.MenuItem(_("Image"))
+        self.image_item.set_use_underline(True)
+        self.image_item.set_submenu(self.image_menu)
+        self.menu.append(self.image_item)
 
         self.playback_menu = Gtk.Menu()
 
@@ -150,8 +131,6 @@ class Indicator:
         self.scroll_tip = Gtk.MenuItem(_("Tip: Scroll wheel over icon\nfor Next and Previous"))
         self.scroll_tip.set_sensitive(False)
         self.playback_menu.append(self.scroll_tip)
-
-        self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.playback = Gtk.MenuItem(_("_Playback"))
         self.playback.set_use_underline(True)
@@ -242,6 +221,29 @@ class Indicator:
         self.quotes.set_use_underline(True)
         self.quotes.set_submenu(self.quotes_menu)
         self.menu.append(self.quotes)
+
+        self.menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.history = Gtk.CheckMenuItem(_("_History"))
+        self.history.set_active(False)
+        self.history.set_use_underline(True)
+        self.history_handler_id = self.history.connect("toggled", window.show_hide_history)
+        self.menu.append(self.history)
+
+        self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))
+        self.downloads.set_active(False)
+        self.downloads.set_use_underline(True)
+        self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
+        self.menu.append(self.downloads)
+
+        self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
+        self.selector.set_active(False)
+        self.selector.set_use_underline(True)
+        def _selector(widget=None):
+            timer = threading.Timer(0, window.show_hide_wallpaper_selector)
+            timer.start()
+        self.selector_handler_id = self.selector.connect("toggled", _selector)
+        self.menu.append(self.selector)
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 

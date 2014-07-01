@@ -715,7 +715,6 @@ class VarietyWindow(Gtk.Window):
 
                     no_effects_visible = self.filters or self.options.quotes_enabled or self.options.clock_enabled
                     self.ind.no_effects.set_visible(no_effects_visible)
-                    self.ind.no_effects_separator.set_visible(no_effects_visible)
                     self.ind.no_effects.handler_block(self.ind.no_effects_handler_id)
                     self.ind.no_effects.set_active(self.no_effects_on == file)
                     self.ind.no_effects.handler_unblock(self.ind.no_effects_handler_id)
