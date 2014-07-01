@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk # pylint: disable=E0611
 import os
+import threading
 from variety.Util import Util
 
 THEME_ICON_NAME = "variety-indicator"
@@ -110,6 +111,15 @@ class Indicator:
         self.downloads.set_use_underline(True)
         self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
         self.menu.append(self.downloads)
+
+        self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
+        self.selector.set_active(False)
+        self.selector.set_use_underline(True)
+        def _selector(widget=None):
+            timer = threading.Timer(0, window.show_hide_wallpaper_selector)
+            timer.start()
+        self.selector_handler_id = self.selector.connect("toggled", _selector)
+        self.menu.append(self.selector)
 
         self.playback_menu = Gtk.Menu()
 

@@ -624,7 +624,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         srctype = Options.type_to_str(s[1])
         return [s[0], srctype, s[2] if not srctype in Texts.SOURCES else Texts.SOURCES[srctype][1]]
 
-    def show_thumbs(self, source_rows):
+    def show_thumbs(self, source_rows, pin=False, thumbs_type=None):
         try:
             if not source_rows:
                 return
@@ -659,7 +659,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         pass
                     to_show.insert(0, self.focused_image)
                     self.focused_image = None
-                self.parent.thumbs_manager.show(to_show, gdk_thread=False, screen=self.get_screen(), folders=folders)
+                self.parent.thumbs_manager.show(
+                    to_show, gdk_thread=False, screen=self.get_screen(), folders=folders, type=thumbs_type)
+                if pin:
+                    self.parent.thumbs_manager.pin()
+                if thumbs_type:
+                    self.parent.update_indicator(is_gtk_thread=False, auto_changed=False)
+
         except Exception:
             logger.exception("Could not create thumbs window:")
 
