@@ -95,7 +95,6 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     exit 0
 fi
 
-
 # KDE - User will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short iterval.
 # Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
 # and KDE will refresh it

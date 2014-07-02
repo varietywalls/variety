@@ -161,9 +161,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.favorites_operations = self.options.favorites_operations
 
-            self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
-
-            self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
             self.ui.copyto_enabled.set_active(self.options.copyto_enabled)
@@ -261,7 +258,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_min_size_enabled_toggled()
             self.on_lightness_enabled_toggled()
             self.on_min_rating_enabled_toggled()
-            self.on_facebook_enabled_toggled()
             self.on_copyto_enabled_toggled()
             self.on_quotes_change_enabled_toggled()
             self.on_icon_changed()
@@ -809,9 +805,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 # will be set in the favops editor dialog
                 pass
 
-            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
-
-            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.copyto_enabled = self.ui.copyto_enabled.get_active()
@@ -978,9 +971,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
-
-    def on_facebook_enabled_toggled(self, widget = None):
-        self.ui.facebook_show_dialog.set_sensitive(self.ui.facebook_enabled.get_active())
 
     def on_destroy(self, widget = None):
         if self.dialog:

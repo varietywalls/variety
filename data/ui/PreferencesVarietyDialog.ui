@@ -2544,7 +2544,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkCheckButton" id="min_rating_enabled">
-                            <property name="label" translatable="yes">Are rated and their rating is at least </property>
+                            <property name="label" translatable="yes">Have EXIF rating which is at least </property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -2584,67 +2584,11 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="position">1</property>
                           </packing>
                         </child>
-                        <child>
-                          <object class="GtkLabel" id="label3">
-                            <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_left">5</property>
-                            <property name="label" translatable="yes">(Based on local image EXIF data)</property>
-                            <attributes>
-                              <attribute name="style" value="italic"/>
-                              <attribute name="weight" value="normal"/>
-                            </attributes>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="show_rating_enabled">
-                        <property name="label" translatable="yes">Show option to edit image ratings in the main menu</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_left">30</property>
-                        <property name="margin_bottom">5</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="xalign">0</property>
-                        <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label35">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_left">30</property>
-                        <property name="margin_right">30</property>
-                        <property name="label" translatable="yes">Ratings can also be edited from the thumbnails context menu. EXIF rating metadata is universal and can also be edited or used in external photo organization programs like Shotwell, Darktable, etc.</property>
-                        <property name="justify">fill</property>
-                        <property name="wrap">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>
@@ -2933,8 +2877,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="hexpand">True</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="facebook_enabled">
-                            <property name="label" translatable="yes">Enable sharing on Facebook for images coming from online sources</property>
+                          <object class="GtkCheckButton" id="facebook_show_dialog">
+                            <property name="label" translatable="yes">Display dialog to customize the Facebook post before publishing</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -2944,32 +2888,12 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_facebook_enabled_toggled" swapped="no"/>
                             <signal name="toggled" handler="delayed_apply" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkCheckButton" id="facebook_show_dialog">
-                            <property name="label" translatable="yes">Display dialog to customize the Facebook post before publishing</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="halign">start</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="xalign">0</property>
-                            <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>

@@ -97,7 +97,7 @@ class Indicator:
         self.rating = Gtk.MenuItem(_("Set EXIF Rating"))
         self.image_menu.append(self.rating)
 
-        self.image_item = Gtk.MenuItem(_("Image"))
+        self.image_item = Gtk.MenuItem(_("_Image"))
         self.image_item.set_use_underline(True)
         self.image_item.set_submenu(self.image_menu)
         self.menu.append(self.image_item)

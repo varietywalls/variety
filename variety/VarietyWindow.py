@@ -644,7 +644,7 @@ class VarietyWindow(Gtk.Window):
 
             try:
                 rating_menu = None
-                if deleteable and self.options.show_rating_enabled:
+                if deleteable:
                     rating_menu = ThumbsManager.create_rating_menu(file, self)
 
                 quote_not_fav = True
@@ -665,8 +665,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.show_origin.set_label(label)
                     self.ind.show_origin.set_sensitive(True)
 
-                    self.ind.rating_separator.set_visible(self.options.show_rating_enabled)
-                    self.ind.rating.set_visible(self.options.show_rating_enabled)
                     self.ind.rating.set_sensitive(rating_menu is not None)
                     if rating_menu:
                         self.ind.rating.set_submenu(rating_menu)
@@ -685,7 +683,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.selector.set_active(self.thumbs_manager.is_showing("selector"))
                     self.ind.selector.handler_unblock(self.ind.selector_handler_id)
 
-                    self.ind.publish_fb.set_visible(self.options.facebook_enabled)
                     self.ind.publish_fb.set_sensitive(self.url is not None)
 
                     self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
