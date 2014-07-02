@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 02:40+0300\n"
+"POT-Creation-Date: 2014-07-02 10:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,9 +322,9 @@ msgstr ""
 msgid "Just a moment to check this search"
 msgstr ""
 
-#: ../data/ui/AddWallbaseDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddMediaRssDialog.ui.h:6
+#: ../data/ui/AddWallbaseDialog.ui.h:10
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
+#: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddMediaRssDialog.ui.h:6
 msgid "  "
 msgstr ""
 
@@ -653,6 +653,32 @@ msgid ""
 "here</a>.\n"
 msgstr ""
 
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
+msgid "Variety - add Wallpapers.net category"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+msgid ""
+"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
+"a category with wallpapers, then paste its URL below. A category is  "
+"anything on the site that has one or more pages with wallpapers on them. "
+"Here are some examples:\n"
+"\n"
+"All wallpapers: <a href=\"http://www.wallpapers.net/\">http://www.wallpapers."
+"net/</a>\n"
+"Specific resolution: <a href=\"http://www.wallpapers.net/2560x1440-"
+"wallpapers_r19\">http://www.wallpapers.net/2560x1440-wallpapers_r19</a>\n"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:8
+msgid "Paste URL here: "
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:9
+#: ../data/ui/AddMediaRssDialog.ui.h:5
+msgid "Just a moment to check what's at that URL"
+msgstr ""
+
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
 msgstr ""
@@ -849,21 +875,6 @@ msgid ""
 "(this is determined by Facebook) you will be asked to login again."
 msgstr ""
 
-#: ../data/plugins/quotes/LocalFilesSource.py:34
-msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
 msgstr ""
@@ -882,11 +893,6 @@ msgstr ""
 
 #: ../data/ui/AddMediaRssDialog.ui.h:4
 msgid "Paste the URL of the Media RSS feed here: "
-msgstr ""
-
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:9
-msgid "Just a moment to check what's at that URL"
 msgstr ""
 
 #: ../variety/FacebookHelper.py:91
@@ -1020,25 +1026,19 @@ msgid ""
 "\tOthers:Both"
 msgstr ""
 
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
-msgid "Variety - add Wallpapers.net category"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+#: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
-"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
-"a category with wallpapers, then paste its URL below. A category is  "
-"anything on the site that has one or more pages with wallpapers on them. "
-"Here are some examples:\n"
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
 "\n"
-"All wallpapers: <a href=\"http://www.wallpapers.net/\">http://www.wallpapers."
-"net/</a>\n"
-"Specific resolution: <a href=\"http://www.wallpapers.net/2560x1440-"
-"wallpapers_r19\">http://www.wallpapers.net/2560x1440-wallpapers_r19</a>\n"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:8
-msgid "Paste URL here: "
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
