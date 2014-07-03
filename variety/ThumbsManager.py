@@ -113,7 +113,7 @@ class ThumbsManager():
         menu.append(open_folder)
 
         menu.append(Gtk.SeparatorMenuItem.new())
-        rating_item  = Gtk.MenuItem(_("Set Rating"))
+        rating_item  = Gtk.MenuItem(_("Set EXIF Rating"))
         rating_item.set_submenu(ThumbsManager.create_rating_menu(file, self.parent))
         if not os.access(file, os.W_OK):
             rating_item.set_sensitive(False)
@@ -144,7 +144,7 @@ class ThumbsManager():
         trash_item.connect("activate", _trash)
         menu.append(trash_item)
 
-        focus = Gtk.MenuItem(_("Display Source"))
+        focus = Gtk.MenuItem(_("Where is it from?"))
         focus.set_sensitive(self.parent.get_source(file) is not None)
         def _focus(widget):
             self.parent.focus_in_preferences(widget, file)
@@ -174,8 +174,8 @@ class ThumbsManager():
                     Util.set_rating(file, rating)
                     main_window.on_rating_changed(file)
                 except Exception:
-                    logger.exception("Could not set rating")
-                    main_window.show_notification(_("Could not set rating"))
+                    logger.exception("Could not set EXIF rating")
+                    main_window.show_notification(_("Could not set EXIF rating"))
             return _set_rating
 
         try:

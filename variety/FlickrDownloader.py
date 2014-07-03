@@ -64,7 +64,7 @@ class FlickrDownloader(Downloader.Downloader):
         try:
             logger.info("Fetching flickr user_id from URL: " + url)
 
-            call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
+            call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
                 urllib.quote_plus(url))
 
@@ -76,7 +76,8 @@ class FlickrDownloader(Downloader.Downloader):
             else:
                 logger.info("Oops " + resp["message"])
                 return False, resp["message"], None
-        except Exception:
+        except Exception, e:
+            logger.exception("Exception while checking Flickr user")
             return False, "Exception while checking user. Please run with -v and check log.", None
 
     @staticmethod
@@ -84,7 +85,7 @@ class FlickrDownloader(Downloader.Downloader):
         try:
             logger.info("Fetching flickr group_id from URL: " + url)
 
-            call = "http://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
+            call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
                 urllib.quote_plus(url))
 
@@ -96,7 +97,8 @@ class FlickrDownloader(Downloader.Downloader):
             else:
                 logger.info("Oops " + resp["message"])
                 return False, resp["message"], None
-        except Exception:
+        except Exception, e:
+            logger.exception("Exception while checking Flickr group")
             return False, "Exception while checking group. Please run with -v and check log.", None
 
     @staticmethod
@@ -109,7 +111,7 @@ class FlickrDownloader(Downloader.Downloader):
             return 0
 
     def count_results(self):
-        call = "http://api.flickr.com/services/rest/?method=flickr.photos.search"\
+        call = "https://api.flickr.com/services/rest/?method=flickr.photos.search"\
                "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
         for k, v in self.params.items():
@@ -154,7 +156,7 @@ class FlickrDownloader(Downloader.Downloader):
 
         logger.info("Filling Flickr download queue: " + self.location)
 
-        call = "http://api.flickr.com/services/rest/?method=flickr.photos.search" \
+        call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
                "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
         for k, v in self.params.items():
@@ -195,7 +197,7 @@ class FlickrDownloader(Downloader.Downloader):
         logger.info("Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
         for ph in resp["photos"]["photo"]:
             try:
-                photo_url = "http://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
+                photo_url = "https://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
                 logger.debug("Checking photo_url " + photo_url)
 
                 if self.parent and photo_url in self.parent.banned:

@@ -37,7 +37,8 @@ class ImageFetcher:
             if p.scheme in ['http', 'https']:
                 if use_whitelist:
                     for host in hosts_whitelist:
-                        if host.strip() and p.netloc.find(host) >= 0:
+                        h = host.strip().lower()
+                        if h and p.netloc.lower().find(h) >= 0:
                             return True
                 else:
                     return p.path.lower().endswith(('.jpg', '.jpeg', '.png', '.tiff'))

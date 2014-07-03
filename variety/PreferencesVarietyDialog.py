@@ -16,7 +16,7 @@
 
 # This is the preferences dialog.
 
-from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
 import stat
 
 import threading
@@ -166,12 +166,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.favorites_operations = self.options.favorites_operations
 
-            self.ui.show_rating_enabled.set_active(self.options.show_rating_enabled)
-
             self.ui.smart_enabled.set_active(self.options.smart_enabled)
             self.ui.sync_enabled.set_active(self.options.sync_enabled)
 
-            self.ui.facebook_enabled.set_active(self.options.facebook_enabled)
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
             self.ui.copyto_enabled.set_active(self.options.copyto_enabled)
@@ -271,7 +268,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_min_size_enabled_toggled()
             self.on_lightness_enabled_toggled()
             self.on_min_rating_enabled_toggled()
-            self.on_facebook_enabled_toggled()
             self.on_copyto_enabled_toggled()
             self.on_quotes_change_enabled_toggled()
             self.on_icon_changed()
@@ -656,7 +652,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         srctype = Options.type_to_str(s[1])
         return [s[0], srctype, s[2] if not srctype in Texts.SOURCES else Texts.SOURCES[srctype][1]]
 
-    def show_thumbs(self, source_rows):
+    def show_thumbs(self, source_rows, pin=False, thumbs_type=None):
         try:
             if not source_rows:
                 return
@@ -691,7 +687,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         pass
                     to_show.insert(0, self.focused_image)
                     self.focused_image = None
-                self.parent.thumbs_manager.show(to_show, gdk_thread=False, screen=self.get_screen(), folders=folders)
+                self.parent.thumbs_manager.show(
+                    to_show, gdk_thread=False, screen=self.get_screen(), folders=folders, type=thumbs_type)
+                if pin:
+                    self.parent.thumbs_manager.pin()
+                if thumbs_type:
+                    self.parent.update_indicator(is_gtk_thread=False, auto_changed=False)
+
         except Exception:
             logger.exception("Could not create thumbs window:")
 
@@ -835,13 +837,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 # will be set in the favops editor dialog
                 pass
 
-            self.options.show_rating_enabled = self.ui.show_rating_enabled.get_active()
-
             self.options.smart_enabled = self.ui.smart_enabled.get_active()
             if self.ui.sync_enabled.get_sensitive():
                 self.options.sync_enabled = self.ui.sync_enabled.get_active()
 
-            self.options.facebook_enabled = self.ui.facebook_enabled.get_active()
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.copyto_enabled = self.ui.copyto_enabled.get_active()
@@ -1009,9 +1008,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
 
-    def on_facebook_enabled_toggled(self, widget = None):
-        self.ui.facebook_show_dialog.set_sensitive(self.ui.facebook_enabled.get_active())
-
     def on_smart_enabled_toggled(self, widget=None):
         self.on_smart_user_updated()
         if not self.ui.smart_enabled.get_active():
@@ -1156,7 +1152,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.parent.new_smart_user()
 
     def on_smart_user_updated(self):
-        sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart_user and self.parent.smart_user.get("username") is not None
+        sync_allowed = self.ui.smart_enabled.get_active() and \
+                       self.parent.smart_user is not None and \
+                       self.parent.smart_user.get("username") is not None
         self.ui.sync_enabled.set_sensitive(sync_allowed)
         self.ui.sync_login_note.set_visible(not sync_allowed)
         if not sync_allowed:

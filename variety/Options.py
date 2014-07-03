@@ -212,11 +212,6 @@ class Options:
                 pass
 
             try:
-                self.show_rating_enabled = config["show_rating_enabled"].lower() in TRUTH_VALUES
-            except Exception:
-                pass
-
-            try:
                 self.smart_enabled = config["smart_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -228,11 +223,6 @@ class Options:
 
             try:
                 self.sync_enabled = config["sync_enabled"].lower() in TRUTH_VALUES
-            except Exception:
-                pass
-
-            try:
-                self.facebook_enabled = config["facebook_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
 
@@ -498,12 +488,11 @@ class Options:
         self.lightness_mode = Options.LightnessMode.DARK
         self.min_rating_enabled = False
         self.min_rating = 4
-        self.show_rating_enabled = False
 
         self.smart_enabled = True
         self.smart_notice_shown = False
         self.sync_enabled = True
-        self.facebook_enabled = True
+
         self.facebook_show_dialog = True
         self.facebook_message = ""
 
@@ -592,13 +581,11 @@ class Options:
             config["lightness_mode"] = str(self.lightness_mode)
             config["min_rating_enabled"] = str(self.min_rating_enabled)
             config["min_rating"] = str(self.min_rating)
-            config["show_rating_enabled"] = str(self.show_rating_enabled)
 
             config["smart_enabled"] = str(self.smart_enabled)
             config["smart_notice_shown"] = str(self.smart_notice_shown)
             config["sync_enabled"] = str(self.sync_enabled)
 
-            config["facebook_enabled"] = str(self.facebook_enabled)
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = str(self.facebook_message)
 

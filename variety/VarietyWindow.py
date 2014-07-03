@@ -660,7 +660,7 @@ class VarietyWindow(Gtk.Window):
 
             try:
                 rating_menu = None
-                if deleteable and self.options.show_rating_enabled:
+                if deleteable:
                     rating_menu = ThumbsManager.create_rating_menu(file, self)
 
                 quote_not_fav = True
@@ -681,8 +681,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.show_origin.set_label(label)
                     self.ind.show_origin.set_sensitive(True)
 
-                    self.ind.rating_separator.set_visible(self.options.show_rating_enabled)
-                    self.ind.rating.set_visible(self.options.show_rating_enabled)
                     self.ind.rating.set_sensitive(rating_menu is not None)
                     if rating_menu:
                         self.ind.rating.set_submenu(rating_menu)
@@ -697,7 +695,10 @@ class VarietyWindow(Gtk.Window):
                     self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
                     self.ind.downloads.handler_unblock(self.ind.downloads_handler_id)
 
-                    self.ind.publish_fb.set_visible(self.options.facebook_enabled)
+                    self.ind.selector.handler_block(self.ind.selector_handler_id)
+                    self.ind.selector.set_active(self.thumbs_manager.is_showing("selector"))
+                    self.ind.selector.handler_unblock(self.ind.selector_handler_id)
+
                     self.ind.publish_fb.set_sensitive(self.url is not None)
 
                     self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
@@ -727,7 +728,6 @@ class VarietyWindow(Gtk.Window):
 
                     no_effects_visible = self.filters or self.options.quotes_enabled or self.options.clock_enabled
                     self.ind.no_effects.set_visible(no_effects_visible)
-                    self.ind.no_effects_separator.set_visible(no_effects_visible)
                     self.ind.no_effects.handler_block(self.ind.no_effects_handler_id)
                     self.ind.no_effects.set_active(self.no_effects_on == file)
                     self.ind.no_effects.handler_unblock(self.ind.no_effects_handler_id)
@@ -2040,6 +2040,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Show Preferences dialog"))
 
         parser.add_option(
+            "--selector", "--show-selector", action="store_true", dest="selector",
+            help=_("Show manual wallpaper selector - the thumbnail bar filled with images from the active image sources"))
+
+        parser.add_option(
             "--set-option", action="append", dest="set_options", nargs=2,
             help=_("Sets and applies an option. "
                    "The option names are the same that are used in Variety's config file ~/.config/variety/variety.conf. "
@@ -2119,6 +2123,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_history()
                 if options.downloads:
                     self.show_hide_downloads()
+                if options.selector:
+                    self.show_hide_wallpaper_selector()
                 if options.preferences:
                     self.on_mnu_preferences_activate()
 
@@ -2325,6 +2331,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.thumbs_manager.show(self.downloaded[:200], gdk_thread=True, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
+
+    def show_hide_wallpaper_selector(self, widget=None):
+        if self.thumbs_manager.is_showing("selector"):
+            self.thumbs_manager.hide(gdk_thread=False, force=True)
+        else:
+            rows = [r for r in self.preferences_dialog.ui.sources.get_model() if r[0]]
+            self.preferences_dialog.show_thumbs(rows, pin=True, thumbs_type="selector")
 
     def save_last_change_time(self):
         with open(os.path.join(self.config_folder, ".last_change_time"), "w") as f:

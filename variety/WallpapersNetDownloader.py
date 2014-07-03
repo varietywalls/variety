@@ -13,12 +13,13 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
 import random
 import re
 
 import logging
 import time
+from lxml import etree
+import StringIO
 from variety import Downloader
 from variety.Util import Util
 
@@ -31,9 +32,14 @@ class WallpapersNetDownloader(Downloader.Downloader):
 
     def __init__(self, parent, category_url):
         super(WallpapersNetDownloader, self).__init__(parent, "Wallpapers.net", category_url)
-        self.host = "http://wallpapers.net"
+        self.host = "http://wallpapers.net/"
         self.last_fill_time = 0
         self.queue = []
+
+    @staticmethod
+    def fetch_and_parse(url):
+        html = Util.fetch(url)
+        return etree.parse(StringIO.StringIO(html), etree.HTMLParser())
 
     @staticmethod
     def validate(url):
@@ -44,8 +50,8 @@ class WallpapersNetDownloader(Downloader.Downloader):
             if not url.lower().startswith("http://www.wallpapers.net") and not url.lower().startswith("http://wallpapers.net"):
                 return False
 
-            s = Util.html_soup(url)
-            walls = [wall.find("a") for wall in s.findAll("div", "wall")]
+            tree = WallpapersNetDownloader.fetch_and_parse(url)
+            walls = list(tree.findall('//**/div[@class="screen"]/div[@class="title"]/a'))
             return len(walls) > 0
         except Exception:
             logger.exception("Error while validating URL, proabably bad URL")
@@ -79,14 +85,10 @@ class WallpapersNetDownloader(Downloader.Downloader):
         wallpaper_url = self.queue.pop()
         logger.info("Wallpaper URL: " + wallpaper_url)
 
-        s = Util.html_soup(wallpaper_url)
-        resolution_links = s.find('div', 'resolutionsList').find_all('a')
-        max_res_link = max(resolution_links, key=lambda a: int(a['title'].split()[0]))
-        img_url = self.host + max_res_link['href']
-        logger.info("Image page URL: " + img_url)
-
-        s = Util.html_soup(img_url)
-        src_url = s.img['src']
+        tree = WallpapersNetDownloader.fetch_and_parse(wallpaper_url)
+        resolution_links = [a.get("href") for a in tree.findall('**/table/tr/td/a') if a.get('href').endswith(('.jpg', '.jpeg'))]
+        max_res_link = max(resolution_links, key=lambda a: re.search('(\d+)x(\d+)\.', a).group(1))
+        src_url = self.host + max_res_link
         logger.info("Image src URL: " + src_url)
 
         return self.save_locally(wallpaper_url, src_url)
@@ -95,30 +97,25 @@ class WallpapersNetDownloader(Downloader.Downloader):
         self.last_fill_time = time.time()
 
         logger.info("Category URL: " + self.location)
-        s = Util.html_soup(self.location)
+        tree = WallpapersNetDownloader.fetch_and_parse(self.location)
         mp = 0
-        urls = [url['href'] for x in s.find_all('div', 'pagination') for url in x.find_all('a') if
-                url['href'].find('/page/') > 0]
+        urls = [url.get('href') for url in tree.findall('**/div[@class="pagination"]/a') if url.get('href').find('_p') > 0]
 
         if urls:
             for h in urls:
-                page = (re.search(r'/page/(\d+)', h)).group(1)
+                page = (re.search(r'_p(\d+)$', h)).group(1)
                 mp = max(mp, int(page))
 
-            # special case the top wallpapers - limit to the best 200 pages
-            if "top_wallpapers" in self.location:
-                mp = min(mp, 200)
-
-            page = random.randint(0, mp)
+            page = random.randint(1, mp)
             h = urls[0]
-            page_url = self.host + re.sub(r'/page/\d+', '/page/%d' % page, h)
+            page_url = self.host + re.sub(r'_p\d+$', '_p%d' % page, h)
 
             logger.info("Page URL: " + page_url)
-            s = Util.html_soup(page_url)
+            tree = WallpapersNetDownloader.fetch_and_parse(page_url)
         else:
             logger.info("Single page in category")
 
-        walls = [self.host + x.a['href'] for x in s.find_all('div', 'wall')]
+        walls = [self.host + a.get('href') for a in tree.findall('//**/div[@class="screen"]/div[@class="title"]/a')]
         walls = [x for x in walls if x not in self.parent.banned]
 
         self.queue.extend(walls)
