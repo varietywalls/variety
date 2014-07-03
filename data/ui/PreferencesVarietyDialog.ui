@@ -64,6 +64,11 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">750</property>
     <property name="can_focus">False</property>
@@ -2544,7 +2549,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkCheckButton" id="min_rating_enabled">
-                            <property name="label" translatable="yes">Have EXIF rating which is at least </property>
+                            <property name="label" translatable="yes">Have EXIF rating at least </property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -3697,11 +3702,6 @@ Or you can vote for it on &lt;a href="http://alternativeto.net/software/variety-
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>

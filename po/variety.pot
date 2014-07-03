@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 11:29+0300\n"
+"POT-Creation-Date: 2014-07-03 14:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -579,9 +579,9 @@ msgid ""
 "mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2016 ../variety/ImageFetcher.py:58
-#: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
-#: ../variety/ImageFetcher.py:110
+#: ../variety/VarietyWindow.py:2016 ../variety/ImageFetcher.py:59
+#: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
+#: ../variety/ImageFetcher.py:111
 msgid "Not an image"
 msgstr ""
 
@@ -589,8 +589,8 @@ msgstr ""
 msgid "Added to queue"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2021 ../variety/ImageFetcher.py:91
-#: ../variety/ImageFetcher.py:123
+#: ../variety/VarietyWindow.py:2021 ../variety/ImageFetcher.py:92
+#: ../variety/ImageFetcher.py:124
 msgid "Press Next to see it"
 msgstr ""
 
@@ -1426,7 +1426,7 @@ msgid "Rating"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:98
-msgid "Have EXIF rating which is at least "
+msgid "Have EXIF rating at least "
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:99
@@ -1637,24 +1637,24 @@ msgstr ""
 msgid "Donate"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:54 ../variety/ImageFetcher.py:101
+#: ../variety/ImageFetcher.py:55 ../variety/ImageFetcher.py:102
 msgid "Fetching"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:91 ../variety/ImageFetcher.py:123
+#: ../variety/ImageFetcher.py:92 ../variety/ImageFetcher.py:124
 msgid "Fetched"
 msgstr ""
 
 #. too small - delete and do not use
-#: ../variety/ImageFetcher.py:116
+#: ../variety/ImageFetcher.py:117
 msgid "Image too small, ignoring it"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:131
+#: ../variety/ImageFetcher.py:132
 msgid "Fetch failed for some reason"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:132
+#: ../variety/ImageFetcher.py:133
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"

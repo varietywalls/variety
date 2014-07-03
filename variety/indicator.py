@@ -278,7 +278,7 @@ class Indicator:
         def on_indicator_scroll_status_icon(status_icon, event):
             window.on_indicator_scroll(None, 1, event.direction)
 
-        icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+        icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
         if use_appindicator:
             self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
             self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
@@ -320,13 +320,13 @@ class Indicator:
             return
 
         if icon == "Light":
-            icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
         elif icon == "Dark":
-            icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.svg")
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
         elif os.access(icon, os.R_OK) and Util.is_image(icon):
             icon_path = icon
         else:
-            icon_path = varietyconfig.get_data_file("media", "variety-indicator.svg")
+            icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
 
         if self.indicator:
             logger.info("Showing indicator icon image: " + icon_path)
