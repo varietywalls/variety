@@ -18,10 +18,6 @@
 import sys
 import os
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
-
 # Add project root directory (enable symlink and trunk execution)
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))

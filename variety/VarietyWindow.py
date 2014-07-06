@@ -13,16 +13,14 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import io
 
-import gettext
-from gettext import gettext as _
+from variety import _, _u
 import subprocess
 import urllib
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
-
-gettext.textdomain('variety')
 
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
 Notify.init("Variety")
@@ -274,7 +272,7 @@ class VarietyWindow(Gtk.Window):
                 try:
                     os.system(
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
-                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename)
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename.encode('utf8'))
                 except Exception:
                     logger.exception("Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
@@ -539,7 +537,7 @@ class VarietyWindow(Gtk.Window):
     def load_banned(self):
         self.banned = set()
         try:
-            with open(os.path.join(self.config_folder, "banned.txt")) as f:
+            with io.open(os.path.join(self.config_folder, "banned.txt"), encoding='utf8') as f:
                 for line in f:
                     self.banned.add(line.strip())
         except Exception:
@@ -615,7 +613,7 @@ class VarietyWindow(Gtk.Window):
         if auto_changed is None:
             auto_changed = self.auto_changed
 
-        logger.info("Setting file info to: " + str(file))
+        logger.info("Setting file info to: " + file)
         try:
             self.url = None
             self.image_url = None
@@ -1009,46 +1007,43 @@ class VarietyWindow(Gtk.Window):
         if not self.filters:
             return None
 
-        filter = random.choice(self.filters).strip().decode('utf-8')
+        filter = random.choice(self.filters).strip()
         if not filter:
             return None
 
-        filename = filename.decode('utf-8')
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = u'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        logger.info(u"Applying filter: " + filter)
+        logger.info("Applying filter: " + filter)
         cmd += filter + ' '
 
-        cmd = cmd + u' "' + target_file + '"'
-        cmd = cmd.replace(u"%FILEPATH%", filename)
-        cmd = cmd.replace(u"%FILENAME%", os.path.basename(filename))
+        cmd = cmd + ' "' + target_file + '"'
+        cmd = cmd.replace("%FILEPATH%", filename)
+        cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
 
-        logger.info(u"ImageMagick filter cmd: " + cmd)
+        logger.info("ImageMagick filter cmd: " + cmd)
         return cmd.encode('utf-8')
 
     def build_imagemagick_clock_cmd(self, filename, target_file):
         if not (self.options.clock_enabled and self.options.clock_filter.strip()):
             return None
 
-        filename = filename.decode('utf-8')
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = u'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
         clock_filter = self.options.clock_filter
         clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
         clock_filter = self.replace_clock_filter_fonts(clock_filter)
-        clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
 
-        # Note: time.strftime does not support Unicode format, so we decode the clock_filter after the above conversions
-        clock_filter = clock_filter.decode('utf-8')
-        logger.info(u"Applying clock filter: " + clock_filter)
+        # Note: time.strftime does not support Unicode format, so the encode/decode cycle
+        clock_filter = time.strftime(clock_filter.encode('utf8'), time.localtime()).decode('utf8') # this should always be called last
+        logger.info("Applying clock filter: " + clock_filter)
 
         cmd += clock_filter + u' "' + target_file + '"'
-        logger.info(u"ImageMagick clock cmd: " + cmd)
+        logger.info("ImageMagick clock cmd: " + cmd)
         return cmd.encode('utf-8')
 
     def replace_clock_filter_fonts(self, clock_filter):
@@ -1079,7 +1074,7 @@ class VarietyWindow(Gtk.Window):
 
     def write_filtered_wallpaper_origin(self, filename):
         try:
-            with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w") as f:
+            with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
                 f.write(filename)
         except Exception:
             logger.exception("Cannot write wallpaper.jpg.txt")
@@ -1161,7 +1156,7 @@ class VarietyWindow(Gtk.Window):
             return os.path.normpath(option)
 
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
-        logger.info("Calling do_set_wp with " + str(filename))
+        logger.info("Calling do_set_wp with " + filename)
         with self.do_set_wp_lock:
             self.set_wp_timer = None
 
@@ -1316,7 +1311,7 @@ class VarietyWindow(Gtk.Window):
             logger.exception("Could not change wallpaper")
 
     def set_wallpaper(self, img, throttle=True, auto_changed=False):
-        logger.info("Calling set_wallpaper with " + str(img))
+        logger.info("Calling set_wallpaper with " + img)
         if img == self.current and not self.is_current_refreshable():
             return
         if os.access(img, os.R_OK):
@@ -1336,7 +1331,7 @@ class VarietyWindow(Gtk.Window):
             else:
                 self.set_wp_throttled(img, 0)
         else:
-            logger.warning("set_wallpaper called with unaccessible image " + str(img))
+            logger.warning("set_wallpaper called with unaccessible image " + img)
 
     def refresh_thumbs_history(self, added_image, at_front=False):
         if self.thumbs_manager.is_showing("history"):
@@ -1430,17 +1425,17 @@ class VarietyWindow(Gtk.Window):
     def open_folder(self, widget=None, file=None):
         if not file:
             file = self.current
-        os.system("xdg-open \"" + os.path.dirname(file) + "\"")
+        subprocess.call(["xdg-open", os.path.dirname(file)])
 
     def open_file(self, widget=None, file=None):
         if not file:
             file = self.current
-        os.system("xdg-open \"" + os.path.realpath(file) + "\"")
+        subprocess.call(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
             logger.info("Opening url: " + self.url)
-            os.system("xdg-open \"" + self.url + "\"")
+            subprocess.call(["xdg-open", self.url])
         else:
             self.open_folder()
 
@@ -1535,7 +1530,7 @@ class VarietyWindow(Gtk.Window):
             else:
                 command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
                 logger.info("Running trash command %s" % command)
-                result = os.system(command)
+                result = os.system(command.encode('utf8'))
                 if result == 0:
                     if self.current == file:
                         self.next_wallpaper(widget)
@@ -1555,8 +1550,8 @@ class VarietyWindow(Gtk.Window):
     def ban_url(self, url):
         try:
             self.banned.add(url)
-            with open(os.path.join(self.config_folder, "banned.txt"), "a") as f:
-                f.write(self.url + "\n")
+            with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
+                f.write(_u(self.url) + "\n")
         except Exception:
             logger.exception("Could not ban URL")
 
@@ -1688,7 +1683,7 @@ class VarietyWindow(Gtk.Window):
             else:
                 try:
                     with open(os.path.join(self.config_folder, ".version")) as f:
-                            last_version = f.read().strip()
+                        last_version = f.read().strip()
                 except Exception:
                     last_version = "0.4.12" # this is the last release that did not have the .version file
 
@@ -1775,7 +1770,7 @@ class VarietyWindow(Gtk.Window):
         dialog.run()
         dialog.destroy()
         self.dialogs.remove(dialog)
-        os.system("gedit ~/.config/variety/variety.conf")
+        subprocess.call(["gedit", "~/.config/variety/variety.conf"])
         self.reload_config()
 
     def on_pause_resume(self, widget=None, change_enabled=None):
@@ -1913,6 +1908,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def process_command(self, arguments, initial_run):
         try:
+            arguments = [unicode(arg) for arg in arguments]
             logger.info("Received command: " + str(arguments))
 
             options, args = self.parse_options(arguments, report_errors=False)
@@ -2018,7 +2014,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
                         file = url
                         local_name = os.path.basename(file)
-                        self.show_notification(_("Added to queue"), local_name + "\n" + _("Press Next to see it"), icon=file)
+                        self.show_notification(_("Added to queue"),
+                                               local_name + "\n" + _("Press Next to see it"),
+                                               icon=file)
                     else:
                         file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
 
@@ -2057,7 +2055,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 try:
                     output = subprocess.check_output(script).strip()
                     if output:
-                        file = output
+                        file = _u(output)
                 except subprocess.CalledProcessError:
                     logger.exception("Exception when calling get_wallpaper script")
             else:
@@ -2163,8 +2161,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             start = max(0, self.position - 100) # TODO do we want to remember forward history?
             end = min(self.position + 100, len(self.used))
             to_save = self.used[start:end]
-            with open(os.path.join(self.config_folder, "history.txt"), "w") as f:
-                f.write("%d\n" % (self.position - start))
+            with io.open(os.path.join(self.config_folder, "history.txt"), "w", encoding='utf8') as f:
+                f.write(u"%d\n" % (self.position - start))
                 for file in to_save:
                     f.write(file + "\n")
         except Exception:
@@ -2176,7 +2174,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         self.no_effects_on = None
 
         try:
-            with open(os.path.join(self.config_folder, "history.txt"), "r") as f:
+            with io.open(os.path.join(self.config_folder, "history.txt"), "r", encoding='utf8') as f:
                 lines = list(f)
             self.position = int(lines[0].strip())
             for i, line in enumerate(lines[1:]):
@@ -2193,7 +2191,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                os.path.basename(current).startswith("variety-copied-wallpaper-"):
 
                 try:
-                    with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt")) as f:
+                    with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), encoding='utf8') as f:
                         current = f.read().strip()
                 except Exception:
                     logger.exception("Cannot read wallpaper.jpg.txt")
@@ -2242,7 +2240,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             if response != Gtk.ResponseType.OK:
                 publish = False
             else:
-                self.options.facebook_message = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).strip()
+                self.options.facebook_message = _u(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)).strip()
                 self.options.facebook_show_dialog = not self.facebook_dialog.ui.hide_dialog.get_active()
                 self.options.write()
 
@@ -2345,8 +2343,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         self.quote_favorites_contents = ''
         try:
             if os.path.isfile(self.options.quotes_favorites_file):
-                with open(self.options.quotes_favorites_file) as f:
-                    self.quote_favorites_contents = f.read().decode('utf-8')
+                with io.open(self.options.quotes_favorites_file, encoding='utf8') as f:
+                    self.quote_favorites_contents = f.read()
         except Exception:
             logger.exception("Could not load favorite quotes file %s" % self.options.quotes_favorites_file)
             self.quote_favorites_contents = ''
@@ -2375,7 +2373,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def quote_view_favorites(self, widget=None):
         if os.path.isfile(self.options.quotes_favorites_file):
-            os.system("xdg-open \"" + self.options.quotes_favorites_file + "\"")
+            subprocess.call(["xdg-open", self.options.quotes_favorites_file])
 
     def on_quotes_pause_resume(self, widget=None, change_enabled=None):
         if change_enabled is None:
@@ -2393,17 +2391,17 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def view_quote(self, widget=None):
         if self.quote and self.quote.get("link", None):
-            os.system("xdg-open \"" + self.quote["link"] + "\"")
+            subprocess.call(["xdg-open", self.quote["link"]])
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
-            os.system("xdg-open \"http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["quote"].encode('utf8')) + "\"")
+            subprocess.call(["xdg-open", "http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["quote"].encode('utf8'))])
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:
-            os.system("xdg-open \"http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["author"].encode('utf8')) + "\"")
+            subprocess.call(["xdg-open", "http://google.com/search?q=" +
+                      urllib.quote_plus(self.quote["author"].encode('utf8'))])
 
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None

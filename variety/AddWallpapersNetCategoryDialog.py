@@ -20,9 +20,7 @@ from variety_lib.helpers import get_builder
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 
 import threading
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 class AddWallpapersNetCategoryDialog(Gtk.Dialog):
     __gtype_name__ = "AddWallpapersNetCategoryDialog"

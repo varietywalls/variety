@@ -14,9 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 FILTERS = {
     "Keep original": _("Keep original"),

@@ -51,9 +51,7 @@ import pycurl
 import StringIO
 import logging
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 logger = logging.getLogger('variety')
 
@@ -162,6 +160,10 @@ class FacebookHelper:
 
     def publish(self, message=None, link=None, picture=None, caption=None, description=None,
                 on_success=None, on_failure=None, attempts=0):
+
+        message = message.encode('utf8') if type(message) == unicode else message
+        link = link.encode('utf8') if type(link) == unicode else link
+
         def republish(action=None, token=None):
             self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
                          on_success=on_success, on_failure=on_failure, attempts=attempts + 1)

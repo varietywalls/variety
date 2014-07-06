@@ -31,9 +31,7 @@ except ImportError:
 
 from variety_lib import varietyconfig
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 import logging
 logger = logging.getLogger('variety')

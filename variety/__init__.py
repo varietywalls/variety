@@ -15,9 +15,23 @@
 ### END LICENSE
 
 import gettext
-from gettext import gettext as _
+gettext.textdomain('variety')
+
+
+def _u(s):
+    return unicode(s, 'utf8')
+
+
+def _(text):
+    return _u(gettext.gettext(text))
+
+
 import os
 import sys
+# # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
+# reload(sys)
+# sys.setdefaultencoding('UTF8')
+
 import signal
 import dbus, dbus.service, dbus.glib
 import logging
@@ -33,7 +47,6 @@ from variety_lib import set_up_logging
 DBUS_KEY = 'com.peterlevi.Variety'
 DBUS_PATH = '/com/peterlevi/Variety'
 
-gettext.textdomain('variety')
 
 class VarietyService(dbus.service.Object):
     def __init__(self, variety_window):
@@ -68,6 +81,7 @@ def check_quit():
         GObject.idle_add(VARIETY_WINDOW.on_quit)
     Util.start_force_exit_thread(10)
 
+
 def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
@@ -76,7 +90,8 @@ def main():
 
     Util.makedirs(os.path.expanduser("~/.config/variety/"))
 
-    arguments = sys.argv[1:]
+    arguments = map(_u, sys.argv[1:])
+
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
     set_up_logging(options)

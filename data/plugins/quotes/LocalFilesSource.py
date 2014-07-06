@@ -16,7 +16,7 @@
 import os
 import re
 from variety.plugins.IQuoteSource import IQuoteSource
-from gettext import gettext as _
+from variety import _, _u
 import logging
 
 logger = logging.getLogger("variety")

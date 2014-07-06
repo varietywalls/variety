@@ -21,10 +21,6 @@ import os
 from . varietyconfig import get_data_file
 from . Builder import Builder
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
-
 def get_builder(builder_file_name):
     """Return a fully-instantiated Gtk.Builder instance from specified ui 
     file

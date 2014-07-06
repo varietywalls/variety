@@ -285,7 +285,7 @@ class ThumbsWindow(Gtk.Window):
 
     def mark_active(self, file=None, position=None):
         def _mark():
-            logger.debug("Marking file %s, position %s" % (str(file), str(position)))
+            logger.debug("Marking file %s, position %s" % (file, str(position)))
 
             self.active_file = file
             self.active_position = position

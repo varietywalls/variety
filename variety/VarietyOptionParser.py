@@ -23,6 +23,18 @@ class VarietyOptionParser(optparse.OptionParser):
         optparse.OptionParser.__init__(self, usage=usage, version=version)
         self.report_errors = report_errors
 
+    def print_help(self, file=None):
+        """print_help(file : file = stdout)
+
+        Print an extended help message, listing all options and any
+        help text provided with them, to 'file' (default stdout).
+        """
+        if file is None:
+            print self.format_help()
+        else:
+            encoding = self._get_encoding(file)
+            file.write(self.format_help().encode(encoding, "replace"))
+
     def error(self, msg):
         if self.report_errors:
             optparse.OptionParser.error(self, msg)

@@ -33,10 +33,6 @@ __version__ = '0.4.18'
 
 import os
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
-
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
 

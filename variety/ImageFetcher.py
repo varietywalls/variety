@@ -20,9 +20,7 @@ import urlparse
 from variety.Util import Util
 from PIL import Image
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 logger = logging.getLogger('variety')
 

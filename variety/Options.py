@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import io
 
 import os
 import hashlib
@@ -384,7 +385,7 @@ class Options:
 
     def parse_autosources(self):
         try:
-            with open(varietyconfig.get_data_file("config", "sources.txt")) as f:
+            with io.open(varietyconfig.get_data_file("config", "sources.txt"), encoding='utf8') as f:
                 for line in f:
                     if not line.strip() or line.strip().startswith('#'):
                         continue
@@ -400,7 +401,7 @@ class Options:
 
     def parse_autofilters(self):
         try:
-            with open(varietyconfig.get_data_file("config", "filters.txt")) as f:
+            with io.open(varietyconfig.get_data_file("config", "filters.txt"), encoding='utf8') as f:
                 for line in f:
                     if not line.strip() or line.strip().startswith('#'):
                         continue
@@ -520,9 +521,9 @@ class Options:
 
     def write(self):
         try:
-            config = ConfigObj(self.configfile)
+            config = ConfigObj(self.configfile, encoding='utf8', default_encoding='utf8')
         except Exception:
-            config = ConfigObj()
+            config = ConfigObj(encoding='utf8', default_encoding='utf8')
             config.filename = self.configfile
 
         try:
@@ -541,8 +542,8 @@ class Options:
             config["favorites_operations"] = ';'.join(':'.join(x) for x in self.favorites_operations)
 
             config["fetched_folder"] = Util.collapseuser(self.fetched_folder)
-            config["clipboard_enabled"] = self.clipboard_enabled
-            config["clipboard_use_whitelist"] = self.clipboard_use_whitelist
+            config["clipboard_enabled"] = str(self.clipboard_enabled)
+            config["clipboard_use_whitelist"] = str(self.clipboard_use_whitelist)
             config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
 
             config["icon"] = self.icon
@@ -558,13 +559,13 @@ class Options:
             config["min_rating"] = str(self.min_rating)
 
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
-            config["facebook_message"] = str(self.facebook_message)
+            config["facebook_message"] = self.facebook_message
 
             config["copyto_enabled"] = str(self.copyto_enabled)
             config["copyto_folder"] = Util.collapseuser(str(self.copyto_folder))
 
             config["clock_enabled"] = str(self.clock_enabled)
-            config["clock_filter"] = str(self.clock_filter)
+            config["clock_filter"] = self.clock_filter
             config["clock_font"] = str(self.clock_font)
             config["clock_date_font"] = str(self.clock_date_font)
 
@@ -575,8 +576,8 @@ class Options:
             config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
             config["quotes_text_shadow"] = str(self.quotes_text_shadow)
             config["quotes_disabled_sources"] = '|'.join(self.quotes_disabled_sources)
-            config["quotes_tags"] = str(self.quotes_tags)
-            config["quotes_authors"] = str(self.quotes_authors)
+            config["quotes_tags"] = self.quotes_tags
+            config["quotes_authors"] = self.quotes_authors
             config["quotes_change_enabled"] = str(self.quotes_change_enabled)
             config["quotes_change_interval"] = str(self.quotes_change_interval)
             config["quotes_width"] = str(self.quotes_width)
@@ -605,7 +606,7 @@ class Options:
         config.write()
 
     def read_config(self):
-        config = ConfigObj(raise_errors=False)
+        config = ConfigObj(raise_errors=False, encoding='utf8', default_encoding='utf8')
         config.filename = self.configfile
         try:
             config.reload()

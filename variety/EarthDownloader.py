@@ -16,6 +16,7 @@
 
 import logging
 import os
+import subprocess
 
 logger = logging.getLogger('variety')
 
@@ -37,7 +38,7 @@ class EarthDownloader(Downloader.Downloader):
         logger.info("Downloading world sunlight map from " + EARTH_ORIGIN_URL)
         downloaded = self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True)
         cropped = os.path.join(self.target_folder, EARTH_FILENAME)
-        os.system("convert \"" + downloaded + "\" -gravity north -crop 100%x95% \"" + cropped + "\"")
+        subprocess.call(["convert", downloaded, "-gravity", "north", "-crop", "100%x95%", cropped])
         for f in os.listdir(self.target_folder):
             if f != EARTH_FILENAME and f.lower().endswith(".jpg"):
                 os.unlink(os.path.join(self.target_folder, f))
