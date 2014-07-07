@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-06 15:51+0300\n"
+"POT-Creation-Date: 2014-07-07 20:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,9 +322,9 @@ msgstr ""
 msgid "Just a moment to check this search"
 msgstr ""
 
-#: ../data/ui/AddWallbaseDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddMediaRssDialog.ui.h:6
+#: ../data/ui/AddWallbaseDialog.ui.h:10
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:10
+#: ../data/ui/AddFlickrDialog.ui.h:17 ../data/ui/AddMediaRssDialog.ui.h:6
 msgid "  "
 msgstr ""
 
@@ -351,109 +351,109 @@ msgstr ""
 msgid "No images found"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:593 ../variety/VarietyWindow.py:703
-#: ../variety/VarietyWindow.py:2369
+#: ../variety/VarietyWindow.py:594 ../variety/VarietyWindow.py:704
+#: ../variety/VarietyWindow.py:2394
 msgid "Already in Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:597 ../variety/ThumbsManager.py:122
+#: ../variety/VarietyWindow.py:598 ../variety/ThumbsManager.py:122
 #: ../variety/indicator.py:56
 msgid "Copy to _Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:598 ../variety/ThumbsManager.py:129
+#: ../variety/VarietyWindow.py:599 ../variety/ThumbsManager.py:129
 msgid "Move to _Favorites"
 msgstr ""
 
 #. both
-#: ../variety/VarietyWindow.py:606 ../variety/indicator.py:61
+#: ../variety/VarietyWindow.py:607 ../variety/indicator.py:61
 #: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Move to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:626 ../variety/VarietyWindow.py:693
+#: ../variety/VarietyWindow.py:627 ../variety/VarietyWindow.py:694
 #, python-format
 msgid "View at %s"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:626
+#: ../variety/VarietyWindow.py:627
 msgid "Fetched: Show Origin"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:686 ../variety/VarietyWindow.py:700
-#: ../variety/VarietyWindow.py:1838 ../variety/indicator.py:124
+#: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
+#: ../variety/VarietyWindow.py:1839 ../variety/indicator.py:124
 #: ../variety/indicator.py:159
 msgid "Pause"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:686 ../variety/VarietyWindow.py:700
-#: ../variety/VarietyWindow.py:1842
+#: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
+#: ../variety/VarietyWindow.py:1843
 msgid "Resume"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:703 ../variety/indicator.py:165
+#: ../variety/VarietyWindow.py:704 ../variety/indicator.py:165
 msgid "Save to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:835
+#: ../variety/VarietyWindow.py:836
 msgid "Filtering too strict?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:836
+#: ../variety/VarietyWindow.py:837
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1300
+#: ../variety/VarietyWindow.py:1301
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1302
+#: ../variety/VarietyWindow.py:1303
 msgid "Please add more image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1303
+#: ../variety/VarietyWindow.py:1304
 msgid "No more wallpapers"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1477
+#: ../variety/VarietyWindow.py:1478
 msgid "Current wallpaper is not in the image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1508
+#: ../variety/VarietyWindow.py:1509
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1510
+#: ../variety/VarietyWindow.py:1511
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1528 ../variety/VarietyWindow.py:1545
+#: ../variety/VarietyWindow.py:1529 ../variety/VarietyWindow.py:1546
 msgid "Cannot delete"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1529
+#: ../variety/VarietyWindow.py:1530
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1546
+#: ../variety/VarietyWindow.py:1547
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1767
+#: ../variety/VarietyWindow.py:1768
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1792
+#: ../variety/VarietyWindow.py:1793
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -464,95 +464,95 @@ msgid ""
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1802
+#: ../variety/VarietyWindow.py:1803
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1806
+#: ../variety/VarietyWindow.py:1807
 msgid "Make the running instance quit"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1810
+#: ../variety/VarietyWindow.py:1811
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1814
+#: ../variety/VarietyWindow.py:1815
 msgid "Show Next wallpaper"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1818
+#: ../variety/VarietyWindow.py:1819
 msgid "Show Previous wallpaper"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1822
+#: ../variety/VarietyWindow.py:1823
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1826
+#: ../variety/VarietyWindow.py:1827
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1830
+#: ../variety/VarietyWindow.py:1831
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1834
+#: ../variety/VarietyWindow.py:1835
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1846
+#: ../variety/VarietyWindow.py:1847
 msgid "Toggle Pause/Resume state"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1850
+#: ../variety/VarietyWindow.py:1851
 msgid "Show Next quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1854
+#: ../variety/VarietyWindow.py:1855
 msgid "Show Previous quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1858
+#: ../variety/VarietyWindow.py:1859
 msgid "Show Next quote, skipping the forward history"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1862
+#: ../variety/VarietyWindow.py:1863
 msgid "Toggle Quotes Pause/Resume state"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1866
+#: ../variety/VarietyWindow.py:1867
 msgid "Save the current quote to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1870
+#: ../variety/VarietyWindow.py:1871
 msgid "Toggle History display"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1874
+#: ../variety/VarietyWindow.py:1875
 msgid "Toggle Recent Downloads display"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1878
+#: ../variety/VarietyWindow.py:1879
 msgid "Show Preferences dialog"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1882
+#: ../variety/VarietyWindow.py:1883
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1886
+#: ../variety/VarietyWindow.py:1887
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -561,48 +561,60 @@ msgid ""
 "file directly in an unguarded way."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1896
+#: ../variety/VarietyWindow.py:1897
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1899
+#: ../variety/VarietyWindow.py:1900
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1902
+#: ../variety/VarietyWindow.py:1903
 msgid "options --pause and --resume are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1905
+#: ../variety/VarietyWindow.py:1906
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2012 ../variety/ImageFetcher.py:57
+#: ../variety/VarietyWindow.py:2017 ../variety/ImageFetcher.py:57
 #: ../variety/ImageFetcher.py:68 ../variety/ImageFetcher.py:75
 #: ../variety/ImageFetcher.py:109
 msgid "Not an image"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2017
+#: ../variety/VarietyWindow.py:2022
 msgid "Added to queue"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2018 ../variety/ImageFetcher.py:90
+#: ../variety/VarietyWindow.py:2023 ../variety/ImageFetcher.py:90
 #: ../variety/ImageFetcher.py:122
 msgid "Press Next to see it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2257 ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2065
+msgid "Authenticated, publishing..."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2069
+msgid "Unsupported command"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2069
+msgid "Are you running the most recent version of Variety?"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2281 ../variety/VarietyWindow.py:2310
 msgid "Published"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2257 ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2281 ../variety/VarietyWindow.py:2310
 msgid "You may open your Facebook feed to see the post"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2259 ../variety/VarietyWindow.py:2287
+#: ../variety/VarietyWindow.py:2283 ../variety/VarietyWindow.py:2312
 msgid "Could not publish"
 msgstr ""
 
@@ -651,6 +663,32 @@ msgid ""
 "is no API for this). To make Variety work, please read and follow <a href="
 "\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">the instructions "
 "here</a>.\n"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
+msgid "Variety - add Wallpapers.net category"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+msgid ""
+"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
+"a category with wallpapers, then paste its URL below. A category is  "
+"anything on the site that has one or more pages with wallpapers on them. "
+"Here are some examples:\n"
+"\n"
+"All wallpapers: <a href=\"http://www.wallpapers.net/\">http://www.wallpapers."
+"net/</a>\n"
+"Specific resolution: <a href=\"http://www.wallpapers.net/2560x1440-"
+"wallpapers_r19\">http://www.wallpapers.net/2560x1440-wallpapers_r19</a>\n"
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:8
+msgid "Paste URL here: "
+msgstr ""
+
+#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:9
+#: ../data/ui/AddMediaRssDialog.ui.h:5
+msgid "Just a moment to check what's at that URL"
 msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
@@ -849,21 +887,6 @@ msgid ""
 "(this is determined by Facebook) you will be asked to login again."
 msgstr ""
 
-#: ../data/plugins/quotes/LocalFilesSource.py:34
-msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
 msgstr ""
@@ -884,17 +907,8 @@ msgstr ""
 msgid "Paste the URL of the Media RSS feed here: "
 msgstr ""
 
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:9
-msgid "Just a moment to check what's at that URL"
-msgstr ""
-
-#: ../variety/FacebookHelper.py:89
-msgid "Variety - Login to Facebook"
-msgstr ""
-
-#: ../variety/FacebookHelper.py:151
-msgid "Login window closed before authorization"
+#: ../variety/FacebookHelper.py:113
+msgid "Authorization failed"
 msgstr ""
 
 #: ../data/plugins/quotes/QuotesDaddySource.py:31
@@ -1020,25 +1034,19 @@ msgid ""
 "\tOthers:Both"
 msgstr ""
 
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
-msgid "Variety - add Wallpapers.net category"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:3
+#: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
-"Please visit <a href=\"http://wallpapers.net\">wallpapers.net</a> and choose "
-"a category with wallpapers, then paste its URL below. A category is  "
-"anything on the site that has one or more pages with wallpapers on them. "
-"Here are some examples:\n"
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
 "\n"
-"All wallpapers: <a href=\"http://www.wallpapers.net/\">http://www.wallpapers."
-"net/</a>\n"
-"Specific resolution: <a href=\"http://www.wallpapers.net/2560x1440-"
-"wallpapers_r19\">http://www.wallpapers.net/2560x1440-wallpapers_r19</a>\n"
-msgstr ""
-
-#: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:8
-msgid "Paste URL here: "
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1

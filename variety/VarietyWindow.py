@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import io
+import urlparse
 
 from variety import _, _u
 import subprocess
@@ -2005,6 +2006,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     if not self.running:
                         return
 
+                    if url.startswith(('variety://', 'vrty://')):
+                        self.process_variety_url(url)
+                        continue
+
                     is_local = os.path.exists(url)
 
                     if is_local:
@@ -2043,6 +2048,25 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         fetch_thread = threading.Thread(target=fetch)
         fetch_thread.daemon = True
         fetch_thread.start()
+
+    def process_variety_url(self, url):
+        logger.info('Processing variety url %s' % url)
+
+        # make the url urlparse-friendly:
+        url = url.replace('variety://', 'http://')
+        url = url.replace('vrty://', 'http://')
+
+        parts = urlparse.urlparse(url)
+        command = parts.netloc
+        args = urlparse.parse_qs(parts.query)
+
+        if command == 'facebook-auth':
+            if hasattr(self, 'facebook_helper'):
+                self.show_notification(_("Authenticated, publishing..."))
+                self.facebook_helper.on_facebook_auth(urlparse.parse_qs(parts.fragment))
+
+        else:
+            self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
 
     def get_desktop_wallpaper(self):
         try:
@@ -2252,13 +2276,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         if publish:
             def do_publish():
-                fb = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
+                self.facebook_helper = FacebookHelper(token_file=os.path.join(self.config_folder, ".fbtoken"))
                 def on_success(fb, action, data):
                     self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"), icon=file)
                 def on_failure(fb, action, data):
                     self.show_notification(_("Could not publish"), str(data), icon=file)
 
-                fb.publish(message=self.options.facebook_message, link=link, picture=picture, caption=caption,
+                self.facebook_helper.publish(
+                    message=self.options.facebook_message, link=link, picture=picture, caption=caption,
                     on_success=on_success, on_failure=on_failure)
             GObject.idle_add(do_publish)
 
