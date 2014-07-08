@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 18:08+0300\n"
+"POT-Creation-Date: 2014-07-08 18:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -332,7 +332,7 @@ msgstr ""
 msgid "Variety - Publish to Facebook"
 msgstr ""
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:88
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:123
 #: ../variety/indicator.py:197
 msgid "Share on Facebook"
 msgstr ""
@@ -385,7 +385,7 @@ msgid "Fetched: Show Origin"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:687 ../variety/VarietyWindow.py:701
-#: ../variety/VarietyWindow.py:1839 ../variety/indicator.py:124
+#: ../variety/VarietyWindow.py:1839 ../variety/indicator.py:95
 #: ../variety/indicator.py:159
 msgid "Pause"
 msgstr ""
@@ -796,7 +796,7 @@ msgstr ""
 msgid "Show Containing Folder"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:114 ../variety/indicator.py:95
+#: ../variety/ThumbsManager.py:114 ../variety/indicator.py:130
 msgid "Set EXIF Rating"
 msgstr ""
 
@@ -804,7 +804,7 @@ msgstr ""
 msgid "Delete to _Trash"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:145 ../variety/indicator.py:76
+#: ../variety/ThumbsManager.py:145 ../variety/indicator.py:111
 msgid "Where is it from?"
 msgstr ""
 
@@ -946,34 +946,30 @@ msgstr ""
 msgid "Show origin"
 msgstr ""
 
-#: ../variety/indicator.py:80
-msgid "Show without effects"
-msgstr ""
-
-#: ../variety/indicator.py:98
-msgid "_Image"
-msgstr ""
-
-#: ../variety/indicator.py:105 ../variety/indicator.py:140
+#: ../variety/indicator.py:76 ../variety/indicator.py:140
 msgid "_Previous"
 msgstr ""
 
-#: ../variety/indicator.py:110 ../variety/indicator.py:145
+#: ../variety/indicator.py:81 ../variety/indicator.py:145
 msgid "_Next"
 msgstr ""
 
-#: ../variety/indicator.py:115 ../variety/indicator.py:150
+#: ../variety/indicator.py:86 ../variety/indicator.py:150
 msgid "_Fast Forward"
 msgstr ""
 
-#: ../variety/indicator.py:129
+#: ../variety/indicator.py:100
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
 
-#: ../variety/indicator.py:133
-msgid "_Playback"
+#: ../variety/indicator.py:104
+msgid "_Image"
+msgstr ""
+
+#: ../variety/indicator.py:115
+msgid "Show without effects"
 msgstr ""
 
 #: ../variety/indicator.py:170
@@ -1001,7 +997,7 @@ msgid "Turn off"
 msgstr ""
 
 #: ../variety/indicator.py:218
-msgid "_Quotes"
+msgid "_Quote"
 msgstr ""
 
 #: ../variety/indicator.py:225
@@ -1009,11 +1005,11 @@ msgid "_History"
 msgstr ""
 
 #: ../variety/indicator.py:231
-msgid "Recent _Downloads"
+msgid "_Wallpaper Selector"
 msgstr ""
 
-#: ../variety/indicator.py:237
-msgid "_Wallpaper Selector"
+#: ../variety/indicator.py:240
+msgid "Recent _Downloads"
 msgstr ""
 
 #: ../variety/indicator.py:252
