@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-07 20:38+0300\n"
+"POT-Creation-Date: 2014-07-08 16:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -344,6 +344,10 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
+msgid "Use current quote"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2256
 msgid "Do not ask anymore, always use the text above"
 msgstr ""
 
@@ -352,7 +356,7 @@ msgid "No images found"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:594 ../variety/VarietyWindow.py:704
-#: ../variety/VarietyWindow.py:2394
+#: ../variety/VarietyWindow.py:2412
 msgid "Already in Favorites"
 msgstr ""
 
@@ -594,27 +598,27 @@ msgstr ""
 msgid "Press Next to see it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2065
-msgid "Authenticated, publishing..."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2069
+#: ../variety/VarietyWindow.py:2070
 msgid "Unsupported command"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2069
+#: ../variety/VarietyWindow.py:2070
 msgid "Are you running the most recent version of Variety?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2281 ../variety/VarietyWindow.py:2310
+#: ../variety/VarietyWindow.py:2253
+msgid "Do not ask anymore, always use the current quote"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2288 ../variety/VarietyWindow.py:2317
 msgid "Published"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2281 ../variety/VarietyWindow.py:2310
+#: ../variety/VarietyWindow.py:2288 ../variety/VarietyWindow.py:2317
 msgid "You may open your Facebook feed to see the post"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2283 ../variety/VarietyWindow.py:2312
+#: ../variety/VarietyWindow.py:2291 ../variety/VarietyWindow.py:2320
 msgid "Could not publish"
 msgstr ""
 
@@ -873,18 +877,27 @@ msgstr ""
 msgid ""
 "You have chosen to share an image or quote on Facebook for the first time. "
 "Sharing from Variety is available for those images that come from online "
-"sources, and also for quotes, and it works this way: \n"
+"sources and for quotes. It works this way: \n"
 "\n"
-"If sharing an image you will be asked to choose a message that will appear "
-"in the post. Then the Facebook login page will open in an embedded browser. "
-"After you login you will be asked to allow Variety to publish to your feed "
-"on your behalf. Variety will only use this permission to publish those image "
-"links or quotes that you have manually chosen to share, nothing else. Next "
-"time you choose to share, you will not have to login again.\n"
+"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
+"Facebook will open in your default browser. You will be prompted to login if "
+"you are not already logged in. \n"
+"\n"
+"<span font_weight=\"bold\">2. Authorize Variety to publish to your feed.</"
+"span>\n"
+"You will be asked to allow Variety to publish to your feed on your behalf. "
+"Variety will only use this permission to publish those images and quotes "
+"that you tell it to, nothing else.\n"
+"\n"
+"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
+"with Variety or xdg-open</span>\n"
+"Then you will be redirected to a page with instructions to associate "
+"\"variety://\" links with Variety in your browser. Please follow these "
+"instructions to complete the setup. You have to do this only once.\n"
 "\n"
 "No passwords or login information is kept locally, just an OAuth Facebook "
-"token that will be valid for a couple of weeks. After its period expires "
-"(this is determined by Facebook) you will be asked to login again."
+"token that will be valid for a couple of weeks. After its validity expires "
+"you will be asked to login again."
 msgstr ""
 
 #: ../data/ui/AddMediaRssDialog.ui.h:1
@@ -907,7 +920,15 @@ msgstr ""
 msgid "Paste the URL of the Media RSS feed here: "
 msgstr ""
 
-#: ../variety/FacebookHelper.py:113
+#: ../variety/FacebookHelper.py:116
+msgid "Authorization successful"
+msgstr ""
+
+#: ../variety/FacebookHelper.py:116
+msgid "Publishing..."
+msgstr ""
+
+#: ../variety/FacebookHelper.py:121
 msgid "Authorization failed"
 msgstr ""
 

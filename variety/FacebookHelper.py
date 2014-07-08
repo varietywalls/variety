@@ -52,11 +52,12 @@ import logging
 import webbrowser
 
 from variety import _
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
 AUTH_URL = 'https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s&response_type=token&scope=%s'
-AUTH_REDIRECT_URL = 'http://peterlevi.com/variety/facebook-auth.html'
+AUTH_REDIRECT_URL = 'https://vrty.org/facebook-auth?hash=%s'
 PUBLISH_URL = "https://graph.facebook.com/me/feed"
 
 
@@ -67,13 +68,14 @@ class FacebookHelper:
         saved to token_file.
     """
 
-    def __init__(self, token_file, app_key='368780939859975', scope='publish_stream'):
+    def __init__(self, parent, token_file, app_key='368780939859975', scope='publish_stream'):
         """ Constructor. Creates the GTK+ app and adds the WebKit widget
             @param app_key Application key ID (Public).
 
             @param scope A string list of permissions to ask for. More at
             http://developers.facebook.com/docs/reference/api/permissions/
         """
+        self.parent = parent
         self.app_key = app_key
         self.token_file = token_file
         self.scope = scope
@@ -87,17 +89,21 @@ class FacebookHelper:
         self.token_expire = ''
         self.on_success = on_success
         self.on_failure = on_failure
+        self.hash = Util.random_hash()[:4]
 
         # Loads the Facebook OAuth page
         auth_url = AUTH_URL % (
             urllib.quote(self.app_key),
-            urllib.quote(AUTH_REDIRECT_URL),
+            urllib.quote(AUTH_REDIRECT_URL % self.hash),
             urllib.quote(self.scope))
 
         webbrowser.open(auth_url)
 
     def on_facebook_auth(self, params):
         try:
+            if self.hash != params["hash"][0]:
+                return  # user has reloaded an old redirect page, ignore it
+
             self.token = params['access_token'][0]
             self.token_expire = params['expires_in'][0]  # Should be equal to 0, don't expire
 
@@ -107,8 +113,10 @@ class FacebookHelper:
                 token_file.close()
 
             if self.on_success:
+                self.parent.show_notification(_("Authorization successful"), _("Publishing..."))
                 self.on_success(self, self.token)
-        except Exception, e:
+        except Exception:
+            logger.exception("Facebook auth failed")
             if self.on_failure:
                 self.on_failure(self, "authorize", _("Authorization failed"))
 
