@@ -2240,6 +2240,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             caption = self.source_name + ", via Variety Wallpaper Changer"
         logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
+        message = self.options.facebook_message
+        if message == u'<current_quote>':
+            message = quote_text
+
         if self.options.facebook_show_dialog:
             publish_dialog = FacebookPublishDialog()
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 200, 100)
@@ -2257,8 +2261,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             buf.connect("changed", _text_changed)
 
-            message = self.options.facebook_message
-            buf.set_text(quote_text if message == u'<current_quote>' else message)
+            buf.set_text(message)
 
             publish_dialog.ui.fill_quote.set_visible(bool(quote_text))
             def _fill_quote(widget=None):
@@ -2298,7 +2301,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def get_quote_text_for_publishing(self):
         if not self.quote:
-            return None
+            return ''
         author = (" - " + self.quote["author"]) if self.quote.get("author", None) else ""
         text = (self.quote["quote"] + author).strip().encode('utf8')
         return text
