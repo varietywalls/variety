@@ -19,10 +19,7 @@ from variety.FlickrDownloader import FlickrDownloader
 
 from variety_lib.helpers import get_builder
 
-import gettext
-from gettext import gettext as _
-
-gettext.textdomain('variety')
+from variety import _, _u
 
 import logging
 import threading

@@ -23,10 +23,7 @@ import threading
 
 logger = logging.getLogger('variety')
 
-import locale
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 
 class QuotesEngine:
@@ -74,7 +71,7 @@ class QuotesEngine:
 
         self.cache = {}
 
-        self.started = False
+        self.started = True
         self.running = True
 
         self.last_change_time = time.time()
@@ -220,10 +217,10 @@ class QuotesEngine:
     def get_one_quote(self):
         keywords = []
         if self.parent.options.quotes_tags.strip():
-            keywords = self.parent.options.quotes_tags.decode('utf-8').split(",")
+            keywords = self.parent.options.quotes_tags.split(",")
         authors = []
         if self.parent.options.quotes_authors.strip():
-            authors = self.parent.options.quotes_authors.decode('utf-8').split(",")
+            authors = self.parent.options.quotes_authors.split(",")
 
         category, search = ("random", "")
         if keywords or authors:

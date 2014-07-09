@@ -1,5 +1,5 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
-### BEGIN LICENSE
+# ## BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
@@ -43,22 +43,23 @@
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from gi.repository import Gtk, Gdk, WebKit
 import json
 import urllib
 import urlparse
 import pycurl
 import StringIO
 import logging
+import webbrowser
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _
+from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
 AUTH_URL = 'https://www.facebook.com/dialog/oauth?client_id=%s&redirect_uri=%s&response_type=token&scope=%s'
+AUTH_REDIRECT_URL = 'https://vrty.org/facebook-auth?hash=%s'
 PUBLISH_URL = "https://graph.facebook.com/me/feed"
+
 
 class FacebookHelper:
     """ Creates a web browser using GTK+ and WebKit to authorize a
@@ -67,13 +68,14 @@ class FacebookHelper:
         saved to token_file.
     """
 
-    def __init__(self, token_file, app_key='368780939859975', scope='publish_stream'):
+    def __init__(self, parent, token_file, app_key='368780939859975', scope='publish_stream'):
         """ Constructor. Creates the GTK+ app and adds the WebKit widget
             @param app_key Application key ID (Public).
 
             @param scope A string list of permissions to ask for. More at
             http://developers.facebook.com/docs/reference/api/permissions/
         """
+        self.parent = parent
         self.app_key = app_key
         self.token_file = token_file
         self.scope = scope
@@ -85,72 +87,38 @@ class FacebookHelper:
 
         self.token = ''
         self.token_expire = ''
+        self.on_success = on_success
+        self.on_failure = on_failure
+        self.hash = Util.random_hash()[:4]
 
-        # Creates the GTK+ app
-        self.window = Gtk.Window()
-        self.window.set_title(_("Variety - Login to Facebook"))
-        self.window.set_position(Gtk.WindowPosition.CENTER)
-        self.scrolled_window = Gtk.ScrolledWindow()
-
-        # Creates a WebKit view
-        self.web_view = WebKit.WebView()
-        self.scrolled_window.add(self.web_view)
-        self.window.add(self.scrolled_window)
-
-        # Connects events
-
-        def destroy_event_cb(widget, parent=self, on_failure=on_failure):
-            parent._destroy_event_cb(widget, on_failure)
-
-        def load_committed_cb(web_view, frame, parent=self, on_success=on_success):
-            parent._load_committed_cb(web_view, frame, on_success)
-
-        self.window.connect('destroy', destroy_event_cb) # Close window
-
-        self.web_view.connect('load-committed', load_committed_cb) # Load page
-
-        self.window.set_default_size(1024, 800)
         # Loads the Facebook OAuth page
-        self.web_view.load_uri(
-            AUTH_URL % (
-                urllib.quote(self.app_key),
-                urllib.quote('https://www.facebook.com/connect/login_success.html'),
-                urllib.quote(self.scope))
-            )
+        auth_url = AUTH_URL % (
+            urllib.quote(self.app_key),
+            urllib.quote(AUTH_REDIRECT_URL % self.hash),
+            urllib.quote(self.scope))
 
-    def _load_committed_cb(self, web_view, frame, on_success):
-        """ Callback. The page is about to be loaded. This event is captured
-            to intercept the OAuth 2.0 redirection, which includes the
-            access token.
+        webbrowser.open(auth_url)
 
-            @param web_view A reference to the current WebKitWebView.
+    def on_facebook_auth(self, params):
+        try:
+            if self.hash != params["hash"][0]:
+                return  # user has reloaded an old redirect page, ignore it
 
-            @param frame A reference to the main WebKitWebFrame.
-        """
-        # Gets the current URL to check whether is the one of the redirection
-        uri = frame.get_uri()
-        parse = urlparse.urlparse(uri)
-        if (hasattr(parse, 'netloc') and hasattr(parse, 'path') and
-            hasattr(parse, 'fragment') and parse.netloc == 'www.facebook.com' and
-            parse.path == '/connect/login_success.html' and parse.fragment):
-            # Get token from URL
-            params = urlparse.parse_qs(parse.fragment)
             self.token = params['access_token'][0]
-            self.token_expire = params['expires_in'][0] # Should be equal to 0, don't expire
+            self.token_expire = params['expires_in'][0]  # Should be equal to 0, don't expire
+
             # Save token to file
             with open(self.token_file, 'w') as token_file:
                 token_file.write(self.token)
                 token_file.close()
-            self.window.destroy()
-            if on_success:
-                on_success(self, self.token)
-        else:
-            self.window.show_all()
 
-    def _destroy_event_cb(self, widget, on_failure):
-        self.window.destroy()
-        if not self.token and on_failure:
-            on_failure(self, "authorize", _("Login window closed before authorization"))
+            if self.on_success:
+                self.parent.show_notification(_("Authorization successful"), _("Publishing..."))
+                self.on_success(self, self.token)
+        except Exception:
+            logger.exception("Facebook auth failed")
+            if self.on_failure:
+                self.on_failure(self, "authorize", _("Authorization failed"))
 
     def load_token(self):
         logger.info("Loading token from file")
@@ -162,6 +130,10 @@ class FacebookHelper:
 
     def publish(self, message=None, link=None, picture=None, caption=None, description=None,
                 on_success=None, on_failure=None, attempts=0):
+
+        message = message.encode('utf8') if type(message) == unicode else message
+        link = link.encode('utf8') if type(link) == unicode else link
+
         def republish(action=None, token=None):
             self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
                          on_success=on_success, on_failure=on_failure, attempts=attempts + 1)
@@ -200,7 +172,7 @@ class FacebookHelper:
         if "error" in response:
             logger.warning("Could not publish to Facebook, error message %s" % response["error"]["message"])
             code = response["error"].get("code", -1)
-            if attempts < 2 and code in [190, 200]: # 190 is invalid token, 200 means no permission to publish
+            if attempts < 2 and code in [190, 200]:  # 190 is invalid token, 200 means no permission to publish
                 logger.info("Code %d, trying to reauthorize" % code)
                 self.authorize(on_success=republish, on_failure=on_failure)
                 return
@@ -230,19 +202,3 @@ class FacebookHelper:
         c.close()
         return b.getvalue()
 
-if __name__ == '__main__':
-    def success(browser, token):
-        print "Token: %s" % token
-        browser.authorize()
-
-    def cancel(browser):
-        print "Pity."
-        Gtk.main_quit()
-
-    browser = FacebookHelper(app_key='368780939859975', token_file=".fbtoken", scope='publish_stream')
-    def on_success(browser, action, data): print "Published"; Gtk.main_quit()
-    def on_failure(browser, action, error): print "Pity"; Gtk.main_quit()
-    browser.publish(message="Testing something, ignore", link="http://google.com",
-                    on_success=on_success,
-                    on_failure=on_failure)
-    Gtk.main()

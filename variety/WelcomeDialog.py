@@ -18,9 +18,7 @@ from gi.repository import Gtk # pylint: disable=E0611
 
 from variety_lib.helpers import get_builder
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 class WelcomeDialog(Gtk.Dialog):
     __gtype_name__ = "WelcomeDialog"

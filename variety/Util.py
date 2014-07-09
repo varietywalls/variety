@@ -15,6 +15,7 @@
 ### END LICENSE
 import bs4
 import hashlib
+import io
 import json
 import re
 import os
@@ -168,8 +169,8 @@ class Util:
         except Exception:
             # could not write metadata inside file, use txt instead
             try:
-                with open(filename + ".txt", "w") as f:
-                    f.write("INFO:\n%s\n%s\n%s\n%s\n%s\n" % (
+                with io.open(filename + ".txt", "w", encoding='utf8') as f:
+                    f.write(u"INFO:\n%s\n%s\n%s\n%s\n%s\n" % (
                             info["sourceName"],
                             info["sourceURL"],
                             info["sourceLocation"],
@@ -199,7 +200,7 @@ class Util:
         except Exception, e:
             # could not read metadata inside file, use txt instead
             try:
-                with open(filename + ".txt") as f:
+                with io.open(filename + ".txt", encoding='utf8') as f:
                     lines = list(f)
                     info = {}
                     if len(lines) > 2 and lines[0].strip() == "INFO:":

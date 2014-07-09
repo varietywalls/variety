@@ -42,13 +42,21 @@
             <property name="can_focus">False</property>
             <property name="halign">start</property>
             <property name="valign">start</property>
-            <property name="margin_bottom">80</property>
+            <property name="margin_bottom">20</property>
             <property name="xpad">30</property>
-            <property name="label" translatable="yes">You have chosen to share an image or quote on Facebook for the first time. Sharing from Variety is available for those images that come from online sources, and also for quotes, and it works this way: 
+            <property name="label" translatable="yes">You are sharing on Facebook for the first time. Sharing from Variety is available for images that come from online sources and for quotes. It works this way: 
 
-If sharing an image you will be asked to choose a message that will appear in the post. Then the Facebook login page will open in an embedded browser. After you login you will be asked to allow Variety to publish to your feed on your behalf. Variety will only use this permission to publish those image links or quotes that you have manually chosen to share, nothing else. Next time you choose to share, you will not have to login again.
+&lt;span font_weight="bold"&gt;1. Login to Facebook&lt;/span&gt;
+Facebook will open in your default browser. You will be prompted to login if you are not already logged in. 
 
-No passwords or login information is kept locally, just an OAuth Facebook token that will be valid for a couple of weeks. After its period expires (this is determined by Facebook) you will be asked to login again.</property>
+&lt;span font_weight="bold"&gt;2. Authorize Variety to publish to your feed.&lt;/span&gt;
+You will be asked to allow Variety to publish to your feed on your behalf. Variety will only use this permission to publish those images and quotes that you tell it to, nothing else.
+
+&lt;span font_weight="bold"&gt;3. Configure browser to open variety:// links with Variety or xdg-open&lt;/span&gt;
+Then you will be redirected to a page with instructions to associate "variety://" links with Variety in your browser. Please follow these instructions to complete the setup. You have to do this only once.
+
+No passwords or login information is kept locally, just an OAuth Facebook token that will be valid for a couple of weeks. After its validity expires you will be asked to login again.</property>
+            <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
           </object>

@@ -31,9 +31,7 @@ except ImportError:
 
 from variety_lib import varietyconfig
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 import logging
 logger = logging.getLogger('variety')
@@ -75,6 +73,41 @@ class Indicator:
 
         self.image_menu = Gtk.Menu()
 
+        self.prev = Gtk.MenuItem(_("_Previous"))
+        self.prev.set_use_underline(True)
+        self.prev.connect("activate", window.prev_wallpaper)
+        self.image_menu.append(self.prev)
+
+        self.next = Gtk.MenuItem(_("_Next"))
+        self.next.set_use_underline(True)
+        self.next.connect("activate", window.next_wallpaper)
+        self.image_menu.append(self.next)
+
+        self.fast_forward = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward.set_use_underline(True)
+        def _fast_forward(widget):
+            window.next_wallpaper(widget, bypass_history=True)
+        self.fast_forward.connect("activate", _fast_forward)
+        self.image_menu.append(self.fast_forward)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.pause_resume = Gtk.MenuItem(_("Pause"))
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.image_menu.append(self.pause_resume)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+        self.scroll_tip = Gtk.MenuItem(_("Tip: Scroll wheel over icon\nfor Next and Previous"))
+        self.scroll_tip.set_sensitive(False)
+        self.image_menu.append(self.scroll_tip)
+
+        self.image_item = Gtk.MenuItem(_("_Image"))
+        self.image_item.set_use_underline(True)
+        self.image_item.set_submenu(self.image_menu)
+        self.menu.append(self.image_item)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+
         self.focus = Gtk.MenuItem(_("Where is it from?"))
         self.focus.connect("activate", window.focus_in_preferences)
         self.image_menu.append(self.focus)
@@ -97,46 +130,11 @@ class Indicator:
         self.rating = Gtk.MenuItem(_("Set EXIF Rating"))
         self.image_menu.append(self.rating)
 
-        self.image_item = Gtk.MenuItem(_("_Image"))
-        self.image_item.set_use_underline(True)
-        self.image_item.set_submenu(self.image_menu)
-        self.menu.append(self.image_item)
-
-        self.playback_menu = Gtk.Menu()
-
-        self.prev = Gtk.MenuItem(_("_Previous"))
-        self.prev.set_use_underline(True)
-        self.prev.connect("activate", window.prev_wallpaper)
-        self.playback_menu.append(self.prev)
-
-        self.next = Gtk.MenuItem(_("_Next"))
-        self.next.set_use_underline(True)
-        self.next.connect("activate", window.next_wallpaper)
-        self.playback_menu.append(self.next)
-
-        self.fast_forward = Gtk.MenuItem(_("_Fast Forward"))
-        self.fast_forward.set_use_underline(True)
-        def _fast_forward(widget):
-            window.next_wallpaper(widget, bypass_history=True)
-        self.fast_forward.connect("activate", _fast_forward)
-        self.playback_menu.append(self.fast_forward)
-
-        self.playback_menu.append(Gtk.SeparatorMenuItem.new())
-
-        self.pause_resume = Gtk.MenuItem(_("Pause"))
-        self.pause_resume.connect("activate", window.on_pause_resume)
-        self.playback_menu.append(self.pause_resume)
-
-        self.playback_menu.append(Gtk.SeparatorMenuItem.new())
-        self.scroll_tip = Gtk.MenuItem(_("Tip: Scroll wheel over icon\nfor Next and Previous"))
-        self.scroll_tip.set_sensitive(False)
-        self.playback_menu.append(self.scroll_tip)
-
-        self.playback = Gtk.MenuItem(_("_Playback"))
-        self.playback.set_use_underline(True)
-        self.playback.set_submenu(self.playback_menu)
-        self.menu.append(self.playback)
-
+        # self.image_item = Gtk.MenuItem(_("_Image"))
+        # self.image_item.set_use_underline(True)
+        # self.image_item.set_submenu(self.image_menu)
+        # self.menu.append(self.image_item)
+        #
         self.quotes_menu = Gtk.Menu()
 
         self.prev_quote = Gtk.MenuItem(_("_Previous"))
@@ -217,7 +215,7 @@ class Indicator:
         self.quotes_menu.append(self.quotes_disable)
 
 
-        self.quotes = Gtk.MenuItem(_("_Quotes"))
+        self.quotes = Gtk.MenuItem(_("_Quote"))
         self.quotes.set_use_underline(True)
         self.quotes.set_submenu(self.quotes_menu)
         self.menu.append(self.quotes)
@@ -230,12 +228,6 @@ class Indicator:
         self.history_handler_id = self.history.connect("toggled", window.show_hide_history)
         self.menu.append(self.history)
 
-        self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))
-        self.downloads.set_active(False)
-        self.downloads.set_use_underline(True)
-        self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
-        self.menu.append(self.downloads)
-
         self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
         self.selector.set_active(False)
         self.selector.set_use_underline(True)
@@ -244,6 +236,12 @@ class Indicator:
             timer.start()
         self.selector_handler_id = self.selector.connect("toggled", _selector)
         self.menu.append(self.selector)
+
+        self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))
+        self.downloads.set_active(False)
+        self.downloads.set_use_underline(True)
+        self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
+        self.menu.append(self.downloads)
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 

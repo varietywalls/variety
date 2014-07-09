@@ -17,9 +17,11 @@
 # This is the preferences dialog.
 
 from gi.repository import Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+import io
 import stat
 
 import threading
+import subprocess
 from variety.Util import Util
 from variety import Texts
 from variety.plugins.IQuoteSource import IQuoteSource
@@ -35,9 +37,7 @@ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
 
-import gettext
-from gettext import gettext as _
-gettext.textdomain('variety')
+from variety import _, _u
 
 import os
 import logging
@@ -254,7 +254,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.tips_buffer.set_text('\n\n'.join(Texts.TIPS))
 
             try:
-                with open(get_data_file("ui/changes.txt")) as f:
+                with io.open(get_data_file("ui/changes.txt")) as f:
                     self.ui.changes_buffer.set_text(f.read())
             except Exception:
                 logger.warning("Missing ui/changes.txt file")
@@ -505,7 +505,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for i, r in enumerate(self.ui.sources.get_model()):
             if r[1] == Options.type_to_str(type):
                 if type == Options.SourceType.FOLDER:
-                    existing[os.path.normpath(r[2])] = r, i
+                    existing[os.path.normpath(_u(r[2]))] = r, i
                 else:
                     existing[self.model_row_to_source(r)[2]] = r, i
 
@@ -582,11 +582,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         type = Options.str_to_type(edited_row[1])
 
         if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
-            os.system("xdg-open \"" + os.path.realpath(edited_row[2]) + "\"")
+            subprocess.call(["xdg-open", os.path.realpath(_u(edited_row[2]))])
         elif type == Options.SourceType.FAVORITES:
-            os.system("xdg-open \"" + self.parent.options.favorites_folder + "\"")
+            subprocess.call(["xdg-open", self.parent.options.favorites_folder])
         elif type == Options.SourceType.FETCHED:
-            os.system("xdg-open \"" + self.parent.options.fetched_folder + "\"")
+            subprocess.call(["xdg-open", self.parent.options.fetched_folder])
         elif type in EDITABLE_TYPES:
             if type == Options.SourceType.WN:
                 self.dialog = AddWallpapersNetCategoryDialog()
@@ -646,7 +646,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.remove_sources.set_sensitive(len(rows) > 0)
 
     def model_row_to_source(self, row):
-        return [row[0], Options.str_to_type(row[1]), Texts.SOURCES[row[1]][0] if row[1] in Texts.SOURCES else row[2]]
+        return [row[0],
+                Options.str_to_type(row[1]),
+                Texts.SOURCES[row[1]][0] if row[1] in Texts.SOURCES else _u(row[2])]
 
     def source_to_model_row(self, s):
         srctype = Options.type_to_str(s[1])
@@ -670,7 +672,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 type = Options.str_to_type(row[1])
                 if type == Options.SourceType.IMAGE:
                     image_count += 1
-                    images.append(row[2])
+                    images.append(_u(row[2]))
                 else:
                     folder = self.parent.get_folder_of_source(self.model_row_to_source(row))
                     image_count += sum(1 for f in Util.list_files(folders=(folder,), filter_func=Util.is_image, max_files=1, randomize=False))
@@ -810,7 +812,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.clipboard_enabled = self.ui.clipboard_enabled.get_active()
             self.options.clipboard_use_whitelist = self.ui.clipboard_use_whitelist.get_active()
             buf = self.ui.clipboard_hosts.get_buffer()
-            self.options.clipboard_hosts = Util.split(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
+            self.options.clipboard_hosts = Util.split(_u(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)))
 
             if self.ui.icon.get_active() == 0:
                 self.options.icon = "Light"
@@ -821,7 +823,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             elif self.ui.icon.get_active() == 4:
                 self.options.icon = "None"
             elif self.ui.icon.get_active() == 3:
-                file = self.ui.icon_chooser.get_filename()
+                file = _u(self.ui.icon_chooser.get_filename())
                 if file and os.access(file, os.R_OK):
                     self.options.icon = file
                 else:
@@ -884,8 +886,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.quotes_bg_color = (c.red // 256, c.green // 256, c.blue // 256)
             self.options.quotes_bg_opacity = max(0, min(100, int(self.ui.quotes_bg_opacity.get_value())))
             self.options.quotes_text_shadow = self.ui.quotes_text_shadow.get_active()
-            self.options.quotes_tags = self.ui.quotes_tags.get_text()
-            self.options.quotes_authors = self.ui.quotes_authors.get_text()
+            self.options.quotes_tags = _u(self.ui.quotes_tags.get_text())
+            self.options.quotes_authors = _u(self.ui.quotes_authors.get_text())
             self.options.quotes_change_enabled = self.ui.quotes_change_enabled.get_active()
             self.options.quotes_change_interval = self.get_quotes_change_interval()
             self.options.quotes_width = max(0, min(100, int(self.ui.quotes_width.get_value())))
@@ -1085,7 +1087,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         buf = self.dialog.ui.textbuffer
         buf.set_text('\n'.join(':'.join(x) for x in self.favorites_operations))
         if self.dialog.run() == Gtk.ResponseType.OK:
-            text = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)
+            text = _u(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False))
             self.favorites_operations = list([x.strip().split(':') for x in text.split('\n') if x])
             self.delayed_apply()
         self.dialog.destroy()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 00:44+0300\n"
+"POT-Creation-Date: 2014-07-09 09:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,125 +138,125 @@ msgstr ""
 msgid "Open Folder"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:970
+#: ../variety/PreferencesVarietyDialog.py:972
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:972
+#: ../variety/PreferencesVarietyDialog.py:974
 msgid "Oops"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1016
+#: ../variety/PreferencesVarietyDialog.py:1018
 msgid "Recommended source disabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1046
-#: ../variety/PreferencesVarietyDialog.py:1065
-#: ../variety/PreferencesVarietyDialog.py:1073
+#: ../variety/PreferencesVarietyDialog.py:1048
+#: ../variety/PreferencesVarietyDialog.py:1067
+#: ../variety/PreferencesVarietyDialog.py:1075
 msgid "No write permissions"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1053
+#: ../variety/PreferencesVarietyDialog.py:1055
 msgid "Limit disabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1054
+#: ../variety/PreferencesVarietyDialog.py:1056
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1060
+#: ../variety/PreferencesVarietyDialog.py:1062
 #, python-format
 msgid "Actual download folder: %s "
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1140
+#: ../variety/PreferencesVarietyDialog.py:1142
 msgid "Could not adjust permissions"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1141
+#: ../variety/PreferencesVarietyDialog.py:1143
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1168
+#: ../variety/PreferencesVarietyDialog.py:1170
 msgid "Logged in as: "
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1171
+#: ../variety/PreferencesVarietyDialog.py:1173
 msgid "Anonymous"
 msgstr ""
 
-#: ../variety/Texts.py:22
+#: ../variety/Texts.py:20
 msgid "Keep original"
 msgstr ""
 
-#: ../variety/Texts.py:23
+#: ../variety/Texts.py:21
 msgid "Grayscale"
 msgstr ""
 
-#: ../variety/Texts.py:24
+#: ../variety/Texts.py:22
 msgid "Heavy blur"
 msgstr ""
 
-#: ../variety/Texts.py:25
+#: ../variety/Texts.py:23
 msgid "Soft blur"
 msgstr ""
 
-#: ../variety/Texts.py:26
+#: ../variety/Texts.py:24
 msgid "Oil painting"
 msgstr ""
 
-#: ../variety/Texts.py:27
+#: ../variety/Texts.py:25
 msgid "Pencil sketch"
 msgstr ""
 
-#: ../variety/Texts.py:28
+#: ../variety/Texts.py:26
 msgid "Pointilism"
 msgstr ""
 
-#: ../variety/Texts.py:29
+#: ../variety/Texts.py:27
 msgid "Pixellate"
 msgstr ""
 
-#: ../variety/Texts.py:33
+#: ../variety/Texts.py:31
 msgid "The Favorites folder"
 msgstr ""
 
-#: ../variety/Texts.py:34
+#: ../variety/Texts.py:32
 msgid "The Fetched folder"
 msgstr ""
 
-#: ../variety/Texts.py:37
+#: ../variety/Texts.py:35
 msgid ""
 "Recommended by Variety. Adapts automatically to your taste as you mark "
 "images as favorite or trash."
 msgstr ""
 
-#: ../variety/Texts.py:38
+#: ../variety/Texts.py:36
 msgid "Random wallpapers from Desktoppr.co"
 msgstr ""
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:37
 msgid "NASA's Astronomy Picture of the Day"
 msgstr ""
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:38
 msgid "World Sunlight Map - live wallpaper from Opentopia.com"
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:42
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
 msgstr ""
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:43
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in ~/."
@@ -264,35 +264,35 @@ msgid ""
 "environments."
 msgstr ""
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:44
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:45
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:46
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:47
 msgid ""
 "Adding your own custom filters is quite easy: open ~/.config/variety/variety."
 "conf in an editor and use the existing filters as an example. Every filter "
 "is just a line of options to be passed to ImageMagick's convert command."
 msgstr ""
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:48
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -302,13 +302,13 @@ msgid ""
 "several hundred randomly selected images."
 msgstr ""
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:49
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
 msgstr ""
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:50
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -316,7 +316,7 @@ msgid ""
 "light icon."
 msgstr ""
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:51
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -325,7 +325,7 @@ msgid ""
 "This file is also compatible with the Unix fortune utility."
 msgstr ""
 
-#: ../variety/Texts.py:54
+#: ../variety/Texts.py:52
 msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
@@ -344,7 +344,7 @@ msgstr ""
 msgid "Passwords must match"
 msgstr ""
 
-#: ../variety/AddMediaRssDialog.py:87
+#: ../variety/AddMediaRssDialog.py:85
 msgid ""
 "This does not seem to be a valid Media RSS feed URL or there is no content "
 "there."
@@ -391,8 +391,8 @@ msgstr ""
 msgid "Variety - Publish to Facebook"
 msgstr ""
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:90
-#: ../variety/indicator.py:199
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:123
+#: ../variety/indicator.py:197
 msgid "Share on Facebook"
 msgstr ""
 
@@ -403,121 +403,125 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
+msgid "Use current quote"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2450
 msgid "Do not ask anymore, always use the text above"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:611 ../variety/VarietyWindow.py:721
-#: ../variety/VarietyWindow.py:2580
+#: ../variety/VarietyWindow.py:610 ../variety/VarietyWindow.py:720
+#: ../variety/VarietyWindow.py:2605
 msgid "Already in Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:615 ../variety/ThumbsManager.py:124
-#: ../variety/indicator.py:58
+#: ../variety/VarietyWindow.py:614 ../variety/ThumbsManager.py:122
+#: ../variety/indicator.py:56
 msgid "Copy to _Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:616 ../variety/ThumbsManager.py:131
+#: ../variety/VarietyWindow.py:615 ../variety/ThumbsManager.py:129
 msgid "Move to _Favorites"
 msgstr ""
 
 #. both
-#: ../variety/VarietyWindow.py:624 ../variety/indicator.py:63
+#: ../variety/VarietyWindow.py:623 ../variety/indicator.py:61
 #: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Move to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:644 ../variety/VarietyWindow.py:711
+#: ../variety/VarietyWindow.py:643 ../variety/VarietyWindow.py:710
 #, python-format
 msgid "View at %s"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:644
+#: ../variety/VarietyWindow.py:643
 msgid "Fetched: Show Origin"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:704 ../variety/VarietyWindow.py:718
-#: ../variety/VarietyWindow.py:2000 ../variety/indicator.py:126
-#: ../variety/indicator.py:161
+#: ../variety/VarietyWindow.py:703 ../variety/VarietyWindow.py:717
+#: ../variety/VarietyWindow.py:1996 ../variety/indicator.py:95
+#: ../variety/indicator.py:159
 msgid "Pause"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:704 ../variety/VarietyWindow.py:718
-#: ../variety/VarietyWindow.py:2004
+#: ../variety/VarietyWindow.py:703 ../variety/VarietyWindow.py:717
+#: ../variety/VarietyWindow.py:2000
 msgid "Resume"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:721 ../variety/indicator.py:167
+#: ../variety/VarietyWindow.py:720 ../variety/indicator.py:165
 msgid "Save to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:853
+#: ../variety/VarietyWindow.py:852
 msgid "Filtering too strict?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:854
+#: ../variety/VarietyWindow.py:853
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1321
+#: ../variety/VarietyWindow.py:1317
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1323
+#: ../variety/VarietyWindow.py:1319
 msgid "Please add more image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1324
+#: ../variety/VarietyWindow.py:1320
 msgid "No more wallpapers"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1498
+#: ../variety/VarietyWindow.py:1494
 msgid "Current wallpaper is not in the image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1529
+#: ../variety/VarietyWindow.py:1525
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1531
+#: ../variety/VarietyWindow.py:1527
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1549 ../variety/VarietyWindow.py:1568
+#: ../variety/VarietyWindow.py:1545 ../variety/VarietyWindow.py:1564
 msgid "Cannot delete"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1550
+#: ../variety/VarietyWindow.py:1546
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1569
+#: ../variety/VarietyWindow.py:1565
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1658
+#: ../variety/VarietyWindow.py:1654
 msgid ""
 "Your Smart Variety credentials are probably outdated. Please login again."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1855
+#: ../variety/VarietyWindow.py:1851
 msgid "Recommended source enabled"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1929
+#: ../variety/VarietyWindow.py:1925
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1954
+#: ../variety/VarietyWindow.py:1950
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -528,95 +532,95 @@ msgid ""
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1964
+#: ../variety/VarietyWindow.py:1960
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1968
+#: ../variety/VarietyWindow.py:1964
 msgid "Make the running instance quit"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1972
+#: ../variety/VarietyWindow.py:1968
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1976
+#: ../variety/VarietyWindow.py:1972
 msgid "Show Next wallpaper"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1980
+#: ../variety/VarietyWindow.py:1976
 msgid "Show Previous wallpaper"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1984
+#: ../variety/VarietyWindow.py:1980
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1988
+#: ../variety/VarietyWindow.py:1984
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1992
+#: ../variety/VarietyWindow.py:1988
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1996
+#: ../variety/VarietyWindow.py:1992
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2008
+#: ../variety/VarietyWindow.py:2004
 msgid "Toggle Pause/Resume state"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2012
+#: ../variety/VarietyWindow.py:2008
 msgid "Show Next quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2016
+#: ../variety/VarietyWindow.py:2012
 msgid "Show Previous quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2020
+#: ../variety/VarietyWindow.py:2016
 msgid "Show Next quote, skipping the forward history"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2024
+#: ../variety/VarietyWindow.py:2020
 msgid "Toggle Quotes Pause/Resume state"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2028
+#: ../variety/VarietyWindow.py:2024
 msgid "Save the current quote to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2032
+#: ../variety/VarietyWindow.py:2028
 msgid "Toggle History display"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2036
+#: ../variety/VarietyWindow.py:2032
 msgid "Toggle Recent Downloads display"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2040
+#: ../variety/VarietyWindow.py:2036
 msgid "Show Preferences dialog"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2044
+#: ../variety/VarietyWindow.py:2040
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2048
+#: ../variety/VarietyWindow.py:2044
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -625,83 +629,87 @@ msgid ""
 "file directly in an unguarded way."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2058
+#: ../variety/VarietyWindow.py:2054
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2061
+#: ../variety/VarietyWindow.py:2057
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2064
+#: ../variety/VarietyWindow.py:2060
 msgid "options --pause and --resume are mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2067
+#: ../variety/VarietyWindow.py:2063
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2183 ../variety/ImageFetcher.py:60
-#: ../variety/ImageFetcher.py:71 ../variety/ImageFetcher.py:78
-#: ../variety/ImageFetcher.py:111
+#: ../variety/VarietyWindow.py:2180 ../variety/ImageFetcher.py:58
+#: ../variety/ImageFetcher.py:69 ../variety/ImageFetcher.py:76
+#: ../variety/ImageFetcher.py:109
 msgid "Not an image"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2188
+#: ../variety/VarietyWindow.py:2185
 msgid "Added to queue"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2188 ../variety/VarietyWindow.py:2192
+#: ../variety/VarietyWindow.py:2186 ../variety/VarietyWindow.py:2191
 msgid "Press Next to see it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2192
+#: ../variety/VarietyWindow.py:2191
 msgid "Fetched"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2232
+#: ../variety/VarietyWindow.py:2237
 msgid "Unsupported source type"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2233 ../variety/VarietyWindow.py:2255
+#: ../variety/VarietyWindow.py:2238 ../variety/VarietyWindow.py:2260
 msgid "Are you running the most recent version of Variety?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2239
+#: ../variety/VarietyWindow.py:2244
 msgid "New image source added"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2241
+#: ../variety/VarietyWindow.py:2246
 msgid "Image source already exists, enabling it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2251
+#: ../variety/VarietyWindow.py:2256
 msgid "Fetched and applied"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2255
+#: ../variety/VarietyWindow.py:2260
 msgid "Unsupported command"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2468 ../variety/VarietyWindow.py:2496
+#: ../variety/VarietyWindow.py:2447
+msgid "Do not ask anymore, always use the current quote"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2481 ../variety/VarietyWindow.py:2510
 msgid "Published"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2468 ../variety/VarietyWindow.py:2496
+#: ../variety/VarietyWindow.py:2481 ../variety/VarietyWindow.py:2510
 msgid "You may open your Facebook feed to see the post"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2470 ../variety/VarietyWindow.py:2498
+#: ../variety/VarietyWindow.py:2484 ../variety/VarietyWindow.py:2513
 msgid "Could not publish"
 msgstr ""
 
-#: ../variety/AddWallbaseDialog.py:88 ../variety/AddFlickrDialog.py:140
+#: ../variety/AddWallbaseDialog.py:86 ../variety/AddFlickrDialog.py:137
 msgid "No images found"
 msgstr ""
 
-#: ../variety/AddWallpapersNetCategoryDialog.py:87
+#: ../variety/AddWallpapersNetCategoryDialog.py:85
 msgid "Could not find wallpapers there. Please check the URL."
 msgstr ""
 
@@ -812,80 +820,80 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../variety/__init__.py:64
+#: ../variety/__init__.py:77
 msgid "Terminating signal received, quitting..."
 msgstr ""
 
-#: ../variety/__init__.py:95
+#: ../variety/__init__.py:110
 msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr ""
 
-#: ../variety/ThumbsManager.py:42 ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../variety/ThumbsManager.py:40 ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid "Bottom"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:43
+#: ../variety/ThumbsManager.py:41
 msgid "Top"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:44
+#: ../variety/ThumbsManager.py:42
 msgid "Left"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:45 ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../variety/ThumbsManager.py:43 ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Right"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:95
+#: ../variety/ThumbsManager.py:93
 msgid "Position"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:99 ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../variety/ThumbsManager.py:97 ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Size"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:110
+#: ../variety/ThumbsManager.py:108
 msgid "Show Containing Folder"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:116 ../variety/indicator.py:97
+#: ../variety/ThumbsManager.py:114 ../variety/indicator.py:130
 msgid "Set EXIF Rating"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:140 ../variety/indicator.py:69
+#: ../variety/ThumbsManager.py:138 ../variety/indicator.py:67
 msgid "Delete to _Trash"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:147 ../variety/indicator.py:78
+#: ../variety/ThumbsManager.py:145 ../variety/indicator.py:111
 msgid "Where is it from?"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:158
+#: ../variety/ThumbsManager.py:156
 msgid "Close"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:178
+#: ../variety/ThumbsManager.py:176
 msgid "Could not set EXIF rating"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:197
+#: ../variety/ThumbsManager.py:195
 msgid "Unrated"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:204
+#: ../variety/ThumbsManager.py:202
 msgid "Rejected"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:303
+#: ../variety/ThumbsManager.py:302
 msgid "Variety History"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:305
+#: ../variety/ThumbsManager.py:304
 msgid "Variety Recent Downloads"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:307
+#: ../variety/ThumbsManager.py:306
 msgid "Variety Images"
 msgstr ""
 
@@ -928,20 +936,29 @@ msgstr ""
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:3
 msgid ""
-"You have chosen to share an image or quote on Facebook for the first time. "
-"Sharing from Variety is available for those images that come from online "
-"sources, and also for quotes, and it works this way: \n"
+"You are sharing on Facebook for the first time. Sharing from Variety is "
+"available for images that come from online sources and for quotes. It works "
+"this way: \n"
 "\n"
-"If sharing an image you will be asked to choose a message that will appear "
-"in the post. Then the Facebook login page will open in an embedded browser. "
-"After you login you will be asked to allow Variety to publish to your feed "
-"on your behalf. Variety will only use this permission to publish those image "
-"links or quotes that you have manually chosen to share, nothing else. Next "
-"time you choose to share, you will not have to login again.\n"
+"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
+"Facebook will open in your default browser. You will be prompted to login if "
+"you are not already logged in. \n"
+"\n"
+"<span font_weight=\"bold\">2. Authorize Variety to publish to your feed.</"
+"span>\n"
+"You will be asked to allow Variety to publish to your feed on your behalf. "
+"Variety will only use this permission to publish those images and quotes "
+"that you tell it to, nothing else.\n"
+"\n"
+"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
+"with Variety or xdg-open</span>\n"
+"Then you will be redirected to a page with instructions to associate "
+"\"variety://\" links with Variety in your browser. Please follow these "
+"instructions to complete the setup. You have to do this only once.\n"
 "\n"
 "No passwords or login information is kept locally, just an OAuth Facebook "
-"token that will be valid for a couple of weeks. After its period expires "
-"(this is determined by Facebook) you will be asked to login again."
+"token that will be valid for a couple of weeks. After its validity expires "
+"you will be asked to login again."
 msgstr ""
 
 #: ../data/plugins/quotes/LocalFilesSource.py:34
@@ -984,12 +1001,16 @@ msgstr ""
 msgid "Just a moment to check what's at that URL"
 msgstr ""
 
-#: ../variety/FacebookHelper.py:91
-msgid "Variety - Login to Facebook"
+#: ../variety/FacebookHelper.py:116
+msgid "Authorization successful"
 msgstr ""
 
-#: ../variety/FacebookHelper.py:153
-msgid "Login window closed before authorization"
+#: ../variety/FacebookHelper.py:116
+msgid "Publishing..."
+msgstr ""
+
+#: ../variety/FacebookHelper.py:121
+msgid "Authorization failed"
 msgstr ""
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
@@ -1062,89 +1083,85 @@ msgid ""
 "Does not support searching by tags or authors."
 msgstr ""
 
-#: ../variety/indicator.py:49
+#: ../variety/indicator.py:47
 msgid "Current desktop wallpaper"
 msgstr ""
 
-#: ../variety/indicator.py:53
+#: ../variety/indicator.py:51
 msgid "Show origin"
 msgstr ""
 
-#: ../variety/indicator.py:82
-msgid "Show without effects"
-msgstr ""
-
-#: ../variety/indicator.py:100
-msgid "_Image"
-msgstr ""
-
-#: ../variety/indicator.py:107 ../variety/indicator.py:142
+#: ../variety/indicator.py:76 ../variety/indicator.py:140
 msgid "_Previous"
 msgstr ""
 
-#: ../variety/indicator.py:112 ../variety/indicator.py:147
+#: ../variety/indicator.py:81 ../variety/indicator.py:145
 msgid "_Next"
 msgstr ""
 
-#: ../variety/indicator.py:117 ../variety/indicator.py:152
+#: ../variety/indicator.py:86 ../variety/indicator.py:150
 msgid "_Fast Forward"
 msgstr ""
 
-#: ../variety/indicator.py:131
+#: ../variety/indicator.py:100
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
 
-#: ../variety/indicator.py:135
-msgid "_Playback"
+#: ../variety/indicator.py:104
+msgid "_Image"
 msgstr ""
 
-#: ../variety/indicator.py:172
+#: ../variety/indicator.py:115
+msgid "Show without effects"
+msgstr ""
+
+#: ../variety/indicator.py:170
 msgid "View Favorites..."
 msgstr ""
 
-#: ../variety/indicator.py:179
+#: ../variety/indicator.py:177
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: ../variety/indicator.py:189
+#: ../variety/indicator.py:187
 msgid "Google Quote"
 msgstr ""
 
-#: ../variety/indicator.py:194
+#: ../variety/indicator.py:192
 msgid "Google Author"
 msgstr ""
 
-#: ../variety/indicator.py:206 ../variety/indicator.py:250
+#: ../variety/indicator.py:204 ../variety/indicator.py:248
 msgid "Preferences..."
 msgstr ""
 
-#: ../variety/indicator.py:214
+#: ../variety/indicator.py:212
 msgid "Turn off"
 msgstr ""
 
-#: ../variety/indicator.py:220
-msgid "_Quotes"
+#: ../variety/indicator.py:218
+msgid "_Quote"
 msgstr ""
 
-#: ../variety/indicator.py:227
+#: ../variety/indicator.py:225
 msgid "_History"
 msgstr ""
 
-#: ../variety/indicator.py:233
-msgid "Recent _Downloads"
-msgstr ""
-
-#: ../variety/indicator.py:239
+#: ../variety/indicator.py:231
 msgid "_Wallpaper Selector"
 msgstr ""
 
-#: ../variety/indicator.py:254
+#: ../variety/indicator.py:240
+msgid "Recent _Downloads"
+msgstr ""
+
+#: ../variety/indicator.py:252
 msgid "About"
 msgstr ""
 
-#: ../variety/indicator.py:258
+#: ../variety/indicator.py:256
 msgid "Quit"
 msgstr ""
 
@@ -1854,29 +1871,29 @@ msgstr ""
 msgid "Donate"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
+#: ../variety/ImageFetcher.py:54 ../variety/ImageFetcher.py:100
 msgid "Fetching"
 msgstr ""
 
 #. too small - delete and do not use
-#: ../variety/ImageFetcher.py:117
+#: ../variety/ImageFetcher.py:115
 msgid "Image too small, ignoring it"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:137
+#: ../variety/ImageFetcher.py:135
 #, python-format
 msgid "Sorry, got %s error..."
 msgstr ""
 
-#: ../variety/ImageFetcher.py:138
+#: ../variety/ImageFetcher.py:136
 msgid "This means the link is no longer valid"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:141
+#: ../variety/ImageFetcher.py:139
 msgid "Fetch failed for some reason"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:142
+#: ../variety/ImageFetcher.py:140
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
@@ -1915,35 +1932,35 @@ msgid ""
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:235
+#: ../variety/QuotesEngine.py:232
 msgid "No quote plugins"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:235
+#: ../variety/QuotesEngine.py:232
 msgid "There are no quote plugins installed"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:241
+#: ../variety/QuotesEngine.py:238
 msgid "No suitable quote plugins"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:242
+#: ../variety/QuotesEngine.py:239
 msgid ""
 "You have no quote plugins which support searching by keywords and authors"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:254
+#: ../variety/QuotesEngine.py:251
 msgid "Could not fetch quotes"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:255
+#: ../variety/QuotesEngine.py:252
 msgid "Quotes services may be down, we will continue trying"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:258
+#: ../variety/QuotesEngine.py:255
 msgid "Could not find quotes"
 msgstr ""
 
-#: ../variety/QuotesEngine.py:259
+#: ../variety/QuotesEngine.py:256
 msgid "Maybe you are searching for something very obscure?"
 msgstr ""
