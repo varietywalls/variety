@@ -930,7 +930,7 @@ class VarietyWindow(Gtk.Window):
         if file:
             if not self.downloaded or self.downloaded[0] != file:
                 self.downloaded.insert(0, file)
-                self.downloaded = self.downloaded[:200]
+                self.downloaded = self.downloaded[:100]
                 self.refresh_thumbs_downloads(file)
                 self.download_folder_size += os.path.getsize(file)
 
@@ -1340,7 +1340,7 @@ class VarietyWindow(Gtk.Window):
                 if at_front:
                     self.thumbs_manager.add_image(added_image, gdk_thread=False)
                 else:
-                    self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
+                    self.thumbs_manager.show(self.used[:100], gdk_thread=False, type="history")
                     self.thumbs_manager.pin()
             add_timer = threading.Timer(0, _add)
             add_timer.start()
@@ -1975,7 +1975,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if options.quotes_save_favorite:
                     self.quote_save_to_favorites()
 
-            GObject.timeout_add(3000 if initial_run else 100, _process_command)
+            GObject.timeout_add(3000 if initial_run else 1, _process_command)
 
             return self.current if options.show_current else ""
         except Exception:
@@ -2134,7 +2134,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.thumbs_manager.is_showing("history"):
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
+            self.thumbs_manager.show(self.used[:100], gdk_thread=True, type="history")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
@@ -2142,16 +2142,20 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.thumbs_manager.is_showing("downloads"):
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            self.thumbs_manager.show(self.downloaded[:200], gdk_thread=True, type="downloads")
+            self.thumbs_manager.show(self.downloaded[:100], gdk_thread=True, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
     def show_hide_wallpaper_selector(self, widget=None):
+        pref_dialog = self.get_preferences_dialog()
         if self.thumbs_manager.is_showing("selector"):
-            self.thumbs_manager.hide(gdk_thread=False, force=True)
+            self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            rows = [r for r in self.preferences_dialog.ui.sources.get_model() if r[0]]
-            self.preferences_dialog.show_thumbs(rows, pin=True, thumbs_type="selector")
+            rows = [r for r in pref_dialog.ui.sources.get_model() if r[0]]
+            def _go():
+                pref_dialog.show_thumbs(rows, pin=True, thumbs_type="selector")
+            threading.Timer(0, _go).start()
+
 
     def save_last_change_time(self):
         with open(os.path.join(self.config_folder, ".last_change_time"), "w") as f:
