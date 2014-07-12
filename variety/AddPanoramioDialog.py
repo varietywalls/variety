@@ -63,7 +63,7 @@ class AddPanoramioDialog(Gtk.Dialog):
             self.destroy()
 
     def load_map(self):
-        with open(varietyconfig.get_data_file('html/panoramio.html')) as f:
+        with open(varietyconfig.get_data_file('panoramio/panoramio.html')) as f:
             html = f.read()
 
         self.web_view = WebKit.WebView()
@@ -82,7 +82,7 @@ class AddPanoramioDialog(Gtk.Dialog):
             self.web_view_loaded = True
         self.web_view.connect('document-load-finished', _loaded)
 
-        self.web_view.load_string(html, "text/html", "UTF-8", self.path2url(varietyconfig.get_data_path()) + '/html/')
+        self.web_view.load_string(html, "text/html", "UTF-8", self.path2url(varietyconfig.get_data_path()) + '/panoramio/')
         self.web_view.set_visible(True)
         self.ui.scrolledwindow.add(self.web_view)
 

@@ -89,7 +89,8 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="halign">start</property>
-            <property name="label" translatable="yes">Please zoom over the area you want to get images for in the map below.</property>
+            <property name="margin_bottom">7</property>
+            <property name="label" translatable="yes">Please zoom over your area of interest.</property>
             <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
