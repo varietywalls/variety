@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Panoramio Layer</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=panoramio"></script>
+    <script type="text/javascript" src="underscore-min.js"></script>
+    <script>
+var map;
+
+function python(command) {
+    console.log('Python command: ' + command);
+    window.status = new Date().getTime() + '|' + command;
+}
+
+function initialize() {
+  var mapOptions = {
+    zoom: 1,
+    center: new google.maps.LatLng(0, 20),
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var panoramioLayer = new google.maps.panoramio.PanoramioLayer();
+  panoramioLayer.setMap(map);
+}
+
+function setLocation(json) {
+    var l = JSON.parse(json, jsonReviver);
+    map.setZoom(l["zoom"]);
+    map.setCenter(l["center"]);
+}
+
+function reportLocation() {
+    var json = JSON.stringify({
+        zoom: map.getZoom(),
+        center: map.getCenter(),
+        minx: map.getBounds().getSouthWest().lng(),
+        miny: map.getBounds().getSouthWest().lat(),
+        maxx: map.getBounds().getNorthEast().lng(),
+        maxy: map.getBounds().getNorthEast().lat()
+    }, jsonReplacer);
+    console.log("Reporting location: " + json);
+    python('location:' + json);
+}
+
+function jsonReplacer(k, v) {
+    if (v instanceof google.maps.LatLng) {
+        return {lat: v.lat(), lng: v.lng()};
+    } else if (v instanceof google.maps.LatLngBounds) {
+        return {sw: v.getSouthWest(), ne: v.getNorthEast()}
+    }
+    return v;
+}
+
+function jsonReviver(k, v) {
+    if (_.isEqual(_.isObject(v) && _.keys(v).sort(), ['lat', 'lng'])) {
+        return new google.maps.LatLng(v.lat, v.lng);
+    } else if (_.isEqual(_.isObject(v) && _.keys(v).sort(), ['sw', 'ne'])) {
+        return new google.maps.LatLngBounds(v.sw, v.ne);
+    }
+    return v;
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>

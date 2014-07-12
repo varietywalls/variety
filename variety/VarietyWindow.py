@@ -48,6 +48,7 @@ from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
+from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
@@ -496,6 +497,8 @@ class VarietyWindow(Gtk.Window):
             return WallbaseDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
+        elif type == Options.SourceType.PANORAMIO:
+            return PanoramioDownloader(self, location)
         else:
             raise Exception("Uknown downloader type")
 
