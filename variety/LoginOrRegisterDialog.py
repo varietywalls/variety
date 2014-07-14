@@ -7,6 +7,7 @@ from gi.repository import Gtk  # pylint: disable=E0611
 import logging
 import urllib2
 from variety.Util import Util
+from variety.Smart import Smart
 from variety_lib.helpers import get_builder
 
 import gettext
@@ -40,7 +41,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         """
         # Get a reference to the builder and set up the signals.
         self.builder = builder
-        self.parent = None
+        self.smart = None
         self.ui = builder.get_ui(self)
 
     def show_login_error(self, msg):
@@ -65,7 +66,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             raise
 
     def on_btn_login_clicked(self, widget=None):
-        result = self.ajax(self.parent.parent.VARIETY_API_URL + '/login',
+        result = self.ajax(Smart.API_URL + '/login',
                            {'username': self.ui.login_username.get_text(),
                             'password': self.ui.login_password.get_text()},
                            self.show_login_error)
@@ -73,7 +74,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         if 'error' in result:
             self.show_login_error(_(result['error']))
         else:
-            self.parent.parent.set_smart_user(result)
+            self.smart.set_user(result)
             self.destroy()
 
     def on_btn_register_clicked(self, widget=None):
@@ -82,9 +83,9 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             self.ui.register_error.set_visible(True)
             return
 
-        result = self.ajax(self.parent.parent.VARIETY_API_URL + '/register',
-                           {'id': self.parent.parent.smart_user['id'],
-                            'authkey': self.parent.parent.smart_user['authkey'],
+        result = self.ajax(Smart.API_URL + '/register',
+                           {'id': self.smart.user['id'],
+                            'authkey': self.smart.user['authkey'],
                             'username': self.ui.register_username.get_text(),
                             'password': self.ui.register_password.get_text(),
                             'email': self.ui.register_email.get_text()},
@@ -93,7 +94,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             self.ui.register_error.set_text(_(result['error']))
             self.ui.register_error.set_visible(True)
         else:
-            self.parent.parent.set_smart_user(result)
+            self.smart.set_user(result)
             self.destroy()
 
 

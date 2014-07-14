@@ -231,10 +231,7 @@ class Indicator:
         self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
         self.selector.set_active(False)
         self.selector.set_use_underline(True)
-        def _selector(widget=None):
-            timer = threading.Timer(0, window.show_hide_wallpaper_selector)
-            timer.start()
-        self.selector_handler_id = self.selector.connect("toggled", _selector)
+        self.selector_handler_id = self.selector.connect("toggled", window.show_hide_wallpaper_selector)
         self.menu.append(self.selector)
 
         self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))

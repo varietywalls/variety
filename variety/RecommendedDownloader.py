@@ -18,6 +18,7 @@ import random
 import logging
 from variety.Downloader import Downloader
 from variety.Util import Util
+from variety.Smart import Smart
 from variety.AttrDict import AttrDict
 
 logger = logging.getLogger('variety')
@@ -46,8 +47,8 @@ class RecommendedDownloader(Downloader):
 
     def fill_queue(self):
         logger.info("Filling Recommended queue")
-        self.parent.load_smart_user()
-        recommended_url = self.parent.VARIETY_API_URL + '/user/' + self.parent.smart_user["id"] + '/recommended/json'
+        self.parent.smart.load_user()
+        recommended_url = Smart.API_URL + '/user/' + self.parent.smart.user["id"] + '/recommended/json'
         recommended = map(AttrDict, Util.fetch_json(recommended_url))
         for image in recommended:
             if not image.image_url or not image.sources:

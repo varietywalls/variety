@@ -36,6 +36,7 @@ from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
+from variety.Smart import Smart
 
 from variety import _, _u
 
@@ -681,7 +682,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if image_count > -1:
                 folder_images = list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000))
                 random.shuffle(folder_images)
-                to_show = images + folder_images[:200]
+                to_show = images + folder_images[:100]
                 if hasattr(self, "focused_image") and self.focused_image is not None:
                     try:
                         to_show.remove(self.focused_image)
@@ -1021,9 +1022,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             for i, r in enumerate(self.ui.sources.get_model()):
                 if r[1] == Options.type_to_str(Options.SourceType.RECOMMENDED):
                     r[0] = False
-        elif not self.parent.smart_user:
+        elif not self.parent.smart.user:
                 def _create():
-                    self.parent.new_smart_user()
+                    self.parent.smart.new_user()
                     GObject.idle_add(self.on_smart_user_updated)
                 timer = threading.Timer(0, _create)
                 timer.start()
@@ -1145,18 +1146,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_btn_login_register_clicked(self, widget=None):
         self.dialog = LoginOrRegisterDialog()
-        self.dialog.parent = self
+        self.dialog.smart = self.parent.smart
         self.dialog.run()
         self.dialog.destroy()
         self.dialog = None
 
     def on_btn_smart_logoff_clicked(self, widget=None):
-        self.parent.new_smart_user()
+        self.parent.smart.new_user()
 
     def on_smart_user_updated(self):
         sync_allowed = self.ui.smart_enabled.get_active() and \
-                       self.parent.smart_user is not None and \
-                       self.parent.smart_user.get("username") is not None
+                       self.parent.smart.user is not None and \
+                       self.parent.smart.user.get("username") is not None
         self.ui.sync_enabled.set_sensitive(sync_allowed)
         self.ui.sync_login_note.set_visible(not sync_allowed)
         if not sync_allowed:
@@ -1164,12 +1165,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         else:
             self.ui.sync_enabled.set_active(self.options.sync_enabled)
 
-        if self.parent.smart_user:
+        if self.parent.smart.user:
             self.ui.box_smart_user.set_visible(True)
-            username = self.parent.smart_user.get("username")
+            username = self.parent.smart.user.get("username")
             self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s/user/%s">%s</a>' % (
-                    self.parent.VARIETY_API_URL,
-                    '~' + username if username else self.parent.smart_user["id"],
+                    Smart.API_URL,
+                    '~' + username if username else self.parent.smart.user["id"],
                     username or _('Anonymous')))
             self.ui.btn_login_register.set_visible(not bool(username))
             self.ui.btn_smart_logoff.set_visible(bool(username))

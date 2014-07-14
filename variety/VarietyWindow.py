@@ -14,12 +14,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import io
-import urlparse
 
 from variety import _, _u
 import subprocess
 import urllib
-from urllib2 import HTTPError
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
@@ -37,8 +35,6 @@ import time
 import logging
 import random
 import re
-import json
-import base64
 import urlparse
 
 random.seed()
@@ -49,7 +45,6 @@ from variety.WelcomeDialog import WelcomeDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
-from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
@@ -65,6 +60,7 @@ from variety.Util import Util
 from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
+from variety.Smart import Smart
 from variety import indicator
 
 
@@ -74,7 +70,6 @@ class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
     SERVERSIDE_OPTIONS_URL = "http://smarturl.it/varietyserveroptions"
-    VARIETY_API_URL = "http://localhost:4000"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -101,7 +96,6 @@ class VarietyWindow(Gtk.Window):
 
         self.about = None
         self.preferences_dialog = None
-
         self.ind = None
 
         try:
@@ -142,7 +136,6 @@ class VarietyWindow(Gtk.Window):
 
         # load config
         self.options = None
-        self.smart_user = None
         self.server_options = {}
         self.load_banned()
         self.load_history()
@@ -162,6 +155,8 @@ class VarietyWindow(Gtk.Window):
         self.wheel_timer = None
         self.set_wp_timer = None
 
+        self.smart = Smart(self)
+
         self.reload_config()
         self.load_last_change_time()
 
@@ -175,10 +170,7 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
-        if not self.options.smart_notice_shown:
-            self.show_smart_notice_dialog()
-        else:
-            self.smart_report_existing_favorites()
+        self.smart.first_run()
 
         GObject.idle_add(self.create_preferences_dialog)
 
@@ -351,7 +343,7 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
-        self.load_smart_user(create_if_missing=False)
+        self.smart.reload()
 
         GObject.idle_add(self.update_indicator_icon)
 
@@ -946,7 +938,7 @@ class VarietyWindow(Gtk.Window):
         if file:
             if not self.downloaded or self.downloaded[0] != file:
                 self.downloaded.insert(0, file)
-                self.downloaded = self.downloaded[:200]
+                self.downloaded = self.downloaded[:100]
                 self.refresh_thumbs_downloads(file)
                 self.download_folder_size += os.path.getsize(file)
 
@@ -1356,7 +1348,7 @@ class VarietyWindow(Gtk.Window):
                 if at_front:
                     self.thumbs_manager.add_image(added_image, gdk_thread=False)
                 else:
-                    self.thumbs_manager.show(self.used[:200], gdk_thread=False, type="history")
+                    self.thumbs_manager.show(self.used[:100], gdk_thread=False, type="history")
                     self.thumbs_manager.pin()
             add_timer = threading.Timer(0, _add)
             add_timer.start()
@@ -1545,7 +1537,7 @@ class VarietyWindow(Gtk.Window):
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
-                self.smart_report_file(file, 'trash')
+                self.smart.report_file(file, 'trash')
 
                 command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
                 logger.info("Running trash command %s" % command)
@@ -1588,81 +1580,6 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
-    def new_smart_user(self):
-        logger.info('Creating new smart user')
-        self.smart_user = Util.fetch_json(self.VARIETY_API_URL + '/newuser')
-        if self.preferences_dialog:
-            GObject.idle_add(self.preferences_dialog.on_smart_user_updated)
-        with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
-            json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
-            logger.info('Created smart user: %s' % self.smart_user["id"])
-
-    def set_smart_user(self, user):
-        logger.info('Setting new smart user')
-        self.smart_user = user
-        if self.preferences_dialog:
-            self.preferences_dialog.on_smart_user_updated()
-        with open(os.path.join(self.config_folder, '.user.json'), 'w') as f:
-            json.dump(self.smart_user, f, ensure_ascii=False, indent=2)
-            logger.info('Updated smart user: %s' % self.smart_user["id"])
-
-    def load_smart_user(self, create_if_missing=True, force_reload=False):
-        if not self.smart_user or force_reload:
-            try:
-                with open(os.path.join(self.config_folder, '.user.json')) as f:
-                    self.smart_user = json.load(f)
-                    if self.preferences_dialog:
-                        self.preferences_dialog.on_smart_user_updated()
-                    logger.info('Loaded smart user: %s' % self.smart_user["id"])
-            except IOError:
-                if create_if_missing:
-                    logger.info('Missing user.json, creating new smart user')
-                    self.new_smart_user()
-
-    def smart_report_file(self, filename, tag, attempt=0):
-        if not self.options.smart_enabled:
-            return -1
-
-        try:
-            self.load_smart_user()
-
-            meta = Util.read_metadata(filename)
-            if not meta or not "sourceURL" in meta:
-                return -2  # we only smart-report images coming from Variety online sources, not local images
-
-            width, height = Util.get_size(filename)
-            image = {
-                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 300, 300)),
-                'width': width,
-                'height': height,
-                'origin_url': meta['sourceURL'],
-                'source_name': meta.get('sourceName', None),
-                'source_location': meta.get('sourceLocation', None),
-                'image_url': meta.get('imageURL', None)
-            }
-
-            logger.info("Smart-reporting %s as '%s'" % (filename, tag))
-            try:
-                url = self.VARIETY_API_URL + '/user/' + self.smart_user['id'] + '/' + tag
-                result = Util.fetch(url, {'image': json.dumps(image), 'authkey': self.smart_user['authkey']})
-                logger.info("Smart-reported, server returned: %s" % result)
-                return 0
-            except HTTPError, e:
-                logger.error("Server returned %d, potential reason - server failure?" % e.code)
-                if e.code in (403, 404):
-                    self.show_notification(
-                        _('Your Smart Variety credentials are probably outdated. Please login again.'))
-                    self.new_smart_user()
-                    self.preferences_dialog.on_btn_login_register_clicked()
-
-                if attempt == 3:
-                    logger.exception("Could not smart-report %s as '%s, server error code %s'" % (filename, tag, e.code))
-                    return -3
-                return self.smart_report_file(filename, tag, attempt + 1)
-        except Exception:
-            logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
-            return -4
-
     def copy_to_favorites(self, widget=None, file=None):
         try:
             if not file:
@@ -1670,7 +1587,7 @@ class VarietyWindow(Gtk.Window):
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
-                self.smart_report_file(file, 'favorite')
+                self.smart.report_file(file, 'favorite')
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -1683,7 +1600,7 @@ class VarietyWindow(Gtk.Window):
                 ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
                 if ok:
                     new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
-                    self.smart_report_file(new_file, 'favorite')
+                    self.smart.report_file(new_file, 'favorite')
                     self.used = [(new_file if f == file else f) for f in self.used]
                     self.downloaded = [(new_file if f == file else f) for f in self.downloaded]
                     with self.prepared_lock:
@@ -1838,68 +1755,6 @@ class VarietyWindow(Gtk.Window):
                 self.write_current_version()
         except Exception:
             logger.exception("Error during version upgrade. Continuing.")
-
-    def show_smart_notice_dialog(self):
-        # Show Smart Variety notice
-        dialog = SmartFeaturesNoticeDialog()
-        def _on_ok(button):
-            self.options.smart_enabled = dialog.ui.enabled.get_active()
-            self.options.smart_notice_shown = True
-            if self.options.smart_enabled:
-                for s in self.options.sources:
-                    if s[1] == Options.SourceType.RECOMMENDED:
-                        self.show_notification(_("Recommended source enabled"))
-                        s[0] = True
-            self.options.write()
-            self.reload_config()
-            dialog.destroy()
-            self.dialogs.remove(dialog)
-            self.smart_report_existing_favorites()
-
-        dialog.ui.btn_ok.connect("clicked", _on_ok)
-        self.dialogs.append(dialog)
-        dialog.run()
-
-    def smart_report_existing_favorites(self):
-        if not self.options.smart_enabled:
-            return
-
-        def _run():
-            try:
-                reportfile = os.path.join(self.config_folder, '.unreported_favorites.txt')
-                if not os.path.exists(reportfile):
-                    logger.info("Listing existing favorites that need smart-reporting")
-                    favs = []
-                    for name in os.listdir(self.options.favorites_folder):
-                        path = os.path.join(self.options.favorites_folder, name)
-                        if Util.is_image(path) and Util.is_downloaded_by_variety(path):
-                            logger.info("Existing favorite scheduled for smart-reporting: %s" % path)
-                            favs.append(path)
-                            time.sleep(0.1)
-                    with open(reportfile, 'w') as f:
-                        f.write('\n'.join(favs))
-                else:
-                    with open(reportfile) as f:
-                        favs = [line.strip() for line in f.readlines()]
-
-                for fav in list(favs):
-                    if not self.options.smart_enabled:
-                        return
-                    try:
-                        logger.info("Smart-reporting existing favorite %s" % fav)
-                        self.smart_report_file(fav, "favorite")
-                        favs.remove(fav)    # remove from list, no matter whether reporting suceeded or not
-                        with open(reportfile, 'w') as f:
-                            f.write('\n'.join(favs))
-                        time.sleep(1)
-                    except Exception:
-                        logger.exception("Could not smart-report existing favorite %s" % fav)
-            except Exception:
-                logger.exception("Error while smart-reporting existing favorites")
-
-        fav_report_thread = threading.Thread(target=_run)
-        fav_report_thread.daemon = True
-        fav_report_thread.start()
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
@@ -2138,7 +1993,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if options.quotes_save_favorite:
                     self.quote_save_to_favorites()
 
-            GObject.timeout_add(3000 if initial_run else 100, _process_command)
+            GObject.timeout_add(3000 if initial_run else 1, _process_command)
 
             return self.current if options.show_current else ""
         except Exception:
@@ -2324,7 +2179,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.thumbs_manager.is_showing("history"):
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            self.thumbs_manager.show(self.used[:200], gdk_thread=True, type="history")
+            self.thumbs_manager.show(self.used[:100], gdk_thread=True, type="history")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
@@ -2332,16 +2187,20 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.thumbs_manager.is_showing("downloads"):
             self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            self.thumbs_manager.show(self.downloaded[:200], gdk_thread=True, type="downloads")
+            self.thumbs_manager.show(self.downloaded[:100], gdk_thread=True, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
     def show_hide_wallpaper_selector(self, widget=None):
+        pref_dialog = self.get_preferences_dialog()
         if self.thumbs_manager.is_showing("selector"):
-            self.thumbs_manager.hide(gdk_thread=False, force=True)
+            self.thumbs_manager.hide(gdk_thread=True, force=True)
         else:
-            rows = [r for r in self.preferences_dialog.ui.sources.get_model() if r[0]]
-            self.preferences_dialog.show_thumbs(rows, pin=True, thumbs_type="selector")
+            rows = [r for r in pref_dialog.ui.sources.get_model() if r[0]]
+            def _go():
+                pref_dialog.show_thumbs(rows, pin=True, thumbs_type="selector")
+            threading.Timer(0, _go).start()
+
 
     def save_last_change_time(self):
         with open(os.path.join(self.config_folder, ".last_change_time"), "w") as f:
