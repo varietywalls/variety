@@ -23,7 +23,10 @@ def _u(s):
 
 
 def _(text):
-    return _u(gettext.gettext(text))
+    # TODO: We use locale instead of gettext because of the way Quikcly deploys to extras
+    # TODO: use gettext.gettext below when we stop using extras deployment
+    from locale import gettext as _
+    return _u(_(text))
 
 
 import os
