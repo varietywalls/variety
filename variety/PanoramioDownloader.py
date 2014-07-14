@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import os
 import urllib
 import json
 import random
@@ -21,6 +22,7 @@ import logging
 import time
 from variety import Downloader
 from variety.Util import Util
+from variety_lib import varietyconfig
 
 logger = logging.getLogger('variety')
 
@@ -77,9 +79,17 @@ class PanoramioDownloader(Downloader.Downloader):
         PanoramioDownloader.last_download_time = time.time()
 
         photo = self.queue.pop()
-        return self.save_locally(photo["photo_url"],
+        image = self.save_locally(photo["photo_url"],
                                  photo["photo_file_url"],
-                                 extra_metadata={"author": photo["owner_name"]})
+                                 extra_metadata={"author": photo["owner_name"],
+                                                 "authorURL": photo["owner_url"]})
+
+        # Uncomment to overlay Panoramio logo:
+        # logo = os.path.join(varietyconfig.get_data_path(), 'panoramio/logo.png')
+        # logo_command = u"mogrify -gravity SouthEast -draw 'image Over 70,70 0,0 \"%s\"' \"%s\"" % (logo, image)
+        # os.system(logo_command.encode('utf8'))
+
+        return image
 
     def fill_queue(self):
         self.last_fill_time = time.time()

@@ -8,8 +8,8 @@ function python(command) {
 function initialize() {
     var mapOptions = {
         zoom: 1,
-        center: new google.maps.LatLng(0, 20),
-        mapTypeId: google.maps.MapTypeId.SATELLITE
+        center: new google.maps.LatLng(0, 20)
+        //mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);

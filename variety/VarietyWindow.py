@@ -632,8 +632,6 @@ class VarietyWindow(Gtk.Window):
                 if "Fetched" in self.source_name:
                     self.source_name = None
                     label = _("Fetched: Show Origin")
-                elif "author" in info:
-                    label = _("At %s, by %s") % (self.source_name, info["author"])
                 else:
                     label = _("View at %s") % self.source_name
 
@@ -642,6 +640,15 @@ class VarietyWindow(Gtk.Window):
                     self.image_url = info["imageURL"]
             if len(label) > 50:
                 label = label[:50] + "..."
+
+            author = None
+            if info and "author" in info and "authorURL" in info:
+                author = info["author"]
+                if len(author) > 50:
+                    author = author[:50] + "..."
+                self.author_url = info["authorURL"]
+            else:
+                self.author_url = None
 
             if not self.ind:
                 return
@@ -675,6 +682,14 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.show_origin.set_label(label)
                     self.ind.show_origin.set_sensitive(True)
+
+                    if not author:
+                        self.ind.show_author.set_visible(False)
+                        self.ind.show_author.set_sensitive(False)
+                    else:
+                        self.ind.show_author.set_visible(True)
+                        self.ind.show_author.set_sensitive(True)
+                        self.ind.show_author.set_label(_("Author: %s") % author)
 
                     self.ind.rating.set_sensitive(rating_menu is not None)
                     if rating_menu:
@@ -1451,6 +1466,11 @@ class VarietyWindow(Gtk.Window):
             subprocess.call(["xdg-open", self.url])
         else:
             self.open_folder()
+
+    def on_show_author(self, widget=None):
+        if hasattr(self, "author_url") and self.author_url:
+            logger.info("Opening url: " + self.author_url)
+            subprocess.call(["xdg-open", self.author_url])
 
     def get_source(self, file = None):
         if not file:
