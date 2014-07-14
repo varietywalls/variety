@@ -2344,7 +2344,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
     def get_quote_text_for_publishing(self):
         if not self.quote:
             return ''
-        author = (" - " + self.quote["author"]) if self.quote.get("author", None) else ""
+        author = ("\n-- " + self.quote["author"]) if self.quote.get("author", None) else ""
         text = (self.quote["quote"] + author).strip().encode('utf8')
         return text
 
@@ -2384,6 +2384,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quotes_engine.stop()
 
     def facebook_firstrun(self):
+        def _cleanup():
+            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+                self.facebook_dialog.destroy()
+                try:
+                    self.dialogs.remove(self.facebook_dialog)
+                except Exception:
+                    pass
+                self.facebook_dialog = None
+
         first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
         if not os.path.exists(first_run_file):
             if hasattr(self, "facebook_dialog") and self.facebook_dialog:
@@ -2392,20 +2401,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             else:
                 self.facebook_dialog = FacebookFirstRunDialog()
                 self.dialogs.append(self.facebook_dialog)
-                self.facebook_dialog.run()
-                if not self.running:
+                response = self.facebook_dialog.run()
+                if not self.running or response != Gtk.ResponseType.OK:
+                    _cleanup()
                     return True
                 with open(first_run_file, "w") as f:
                     f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-        if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-            self.facebook_dialog.destroy()
-            try:
-                self.dialogs.remove(self.facebook_dialog)
-            except Exception:
-                pass
-            self.facebook_dialog = None
-
+        _cleanup()
         return False
 
     def prev_quote(self, widget=None):
