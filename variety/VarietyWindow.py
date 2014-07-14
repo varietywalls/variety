@@ -80,11 +80,13 @@ class VarietyWindow(Gtk.Window):
         "3f9fcc524bfee8fb146d1901613d3181",
         "40db8163e22fbe8a505bfd1280190f0d",  # 0.4.14, 0.4.15
         "59a037428784caeb0834a8dd7897a88b",  # 0.4.16, 0.4.17
+        "e4510e39fd6829ef550e128a1a4a036b",  # 0.4.18
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
         "d8df22bf24baa87d5231e31027e79ee5",
         "822aee143c6b3f1166e5d0a9c637dd16",  # 0.4.16, 0.4.17
+        "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18
     }
 
     def __init__(self):
@@ -1718,19 +1720,6 @@ class VarietyWindow(Gtk.Window):
             if Util.compare_versions(last_version, "0.4.14") < 0:
                 logger.info("Performing upgrade to 0.4.14")
 
-                def upgrade_script(script, outdated_md5):
-                    try:
-                        script_file = os.path.join(self.scripts_folder, script)
-                        if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
-                            logger.info("Outdated %s file, copying it from %s" %
-                                        (script, varietyconfig.get_data_file("scripts", script)))
-                            shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
-                    except Exception:
-                        logger.exception("Could not upgrade script " + script)
-
-                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
-                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
-
                 # Current wallpaper is now stored in wallpaper subfolder, remove old artefacts:
                 walltxt = os.path.join(self.config_folder, "wallpaper.jpg.txt")
                 if os.path.exists(walltxt):
@@ -1749,8 +1738,24 @@ class VarietyWindow(Gtk.Window):
                     except Exception:
                         logger.warning("Could not delete %s, no worries" % file)
 
+            # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
+
+                # Upgrade set and get_wallpaper scripts
+                def upgrade_script(script, outdated_md5):
+                    try:
+                        script_file = os.path.join(self.scripts_folder, script)
+                        if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
+                            logger.info("Outdated %s file, copying it from %s" %
+                                        (script, varietyconfig.get_data_file("scripts", script)))
+                            shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
+                    except Exception:
+                        logger.exception("Could not upgrade script " + script)
+
+                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
+                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
+
         except Exception:
             logger.exception("Error during version upgrade. Continuing.")
 
