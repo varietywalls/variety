@@ -58,7 +58,7 @@
                 <property name="valign">start</property>
                 <property name="xpad">20</property>
                 <property name="ypad">20</property>
-                <property name="label" translatable="yes">Permission for data collection</property>
+                <property name="label" translatable="yes">Introducing Smart Variety!</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                   <attribute name="scale" value="1.5"/>
@@ -75,11 +75,10 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="margin_top">7</property>
                 <property name="xpad">20</property>
-                <property name="label" translatable="yes">In order to serve you the best possible images for your personal taste, Variety would like permission to collect data about the images you mark as favorite or delete, as well as the online sources you have enabled.  In return you will be able to use several smart features, such as the "Recommended images" source which fetches images Variety thinks you will like and dynamically adapts to your taste.
+                <property name="label" translatable="yes">Variety comes with some exciting new features: synchronization of favorite images between computers and personalized image recommendations. To enable them Variety needs permission to collect data about the images you mark as favorite or delete and the online sources you have enabled.
 
-The collected data is anonymous, not linked to your identity in any way. Data is collected only for images downloaded by Variety itself, never for images you already had in your local folders that might be private.
+The collected data is anonymous and applies only to images downloaded by Variety itself, it does not include data about images you already had in your local folders that might be private.
 
 Keeping this enabled will help Variety provide better pictures for everyone.</property>
                 <property name="use_markup">True</property>
@@ -94,7 +93,7 @@ Keeping this enabled will help Variety provide better pictures for everyone.</pr
             </child>
             <child>
               <object class="GtkCheckButton" id="enabled">
-                <property name="label" translatable="yes">Enable the smart features of Variety by letting it collect data about the images and sources you like or dislike</property>
+                <property name="label" translatable="yes">Enable sync and recommendations by letting Variety collect data about the images you like or dislike</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
