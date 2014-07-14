@@ -77,7 +77,9 @@ class PanoramioDownloader(Downloader.Downloader):
         PanoramioDownloader.last_download_time = time.time()
 
         photo = self.queue.pop()
-        return self.save_locally(photo["photo_url"], photo["photo_file_url"])
+        return self.save_locally(photo["photo_url"],
+                                 photo["photo_file_url"],
+                                 extra_metadata={"author": photo["owner_name"]})
 
     def fill_queue(self):
         self.last_fill_time = time.time()

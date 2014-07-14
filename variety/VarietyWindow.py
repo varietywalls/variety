@@ -626,8 +626,15 @@ class VarietyWindow(Gtk.Window):
             label = os.path.dirname(file).replace('_', '__')
             info = Util.read_metadata(file)
             if info and "sourceURL" in info and "sourceName" in info:
-                self.source_name = info["sourceName"] if info["sourceName"].find("Fetched") < 0 else None
-                label = (_("View at %s") % info["sourceName"]) if info["sourceName"].find("Fetched") < 0 else _("Fetched: Show Origin")
+                self.source_name = info["sourceName"]
+                if "Fetched" in self.source_name:
+                    self.source_name = None
+                    label = _("Fetched: Show Origin")
+                elif "author" in info:
+                    label = _("At %s, by %s") % (self.source_name, info["author"])
+                else:
+                    label = _("View at %s") % self.source_name
+
                 self.url = info["sourceURL"]
                 if "imageURL" in info:
                     self.image_url = info["imageURL"]
@@ -2245,6 +2252,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         quote_text = self.get_quote_text_for_publishing()
         if self.source_name:
             caption = self.source_name + ", via Variety Wallpaper Changer"
+        else:
+            caption = "Via Variety Wallpaper Changer"
+
         logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
         message = self.options.facebook_message

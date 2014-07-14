@@ -51,7 +51,7 @@ class Downloader(object):
     def is_in_favorites(self, url):
         return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
-    def save_locally(self, origin_url, image_url, origin_name = None, force_download = False):
+    def save_locally(self, origin_url, image_url, origin_name=None, force_download=False, extra_metadata={}):
         if not origin_name:
             origin_name = self.name
 
@@ -77,12 +77,14 @@ class Downloader(object):
         with open(local_filename, 'wb') as f:
             f.write(data)
 
-        Util.write_metadata(local_filename, {
+        metadata = {
             "sourceName": origin_name,
             "sourceLocation": self.location,
             "sourceURL": origin_url,
             "imageURL": image_url
-        })
+        }
+        metadata.update(extra_metadata)
+        Util.write_metadata(local_filename, metadata)
 
         logger.info("Download complete")
         return local_filename

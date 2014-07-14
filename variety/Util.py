@@ -187,7 +187,7 @@ class Util:
             m.read()
 
             info = {}
-            keys = ["sourceName", "sourceLocation", "sourceURL", "imageURL"]
+            keys = ["sourceName", "sourceLocation", "sourceURL", "imageURL", "author"]
             for k in keys:
                 if "Xmp.variety." + k in m:
                     info[k] = m["Xmp.variety." + k].value
