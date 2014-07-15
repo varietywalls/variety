@@ -564,7 +564,7 @@ class Options:
             config["facebook_message"] = self.facebook_message
 
             config["copyto_enabled"] = str(self.copyto_enabled)
-            config["copyto_folder"] = Util.collapseuser(str(self.copyto_folder))
+            config["copyto_folder"] = Util.collapseuser(self.copyto_folder)
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = self.clock_filter
