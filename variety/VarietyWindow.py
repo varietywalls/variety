@@ -227,7 +227,7 @@ class VarietyWindow(Gtk.Window):
             # destroy command moved into dialog to allow for a help button
 
     def prepare_config_folder(self):
-        self.config_folder = os.path.expanduser("~/.config/variety")
+        self.config_folder = os.path.expanduser(u"~/.config/variety")
         Util.makedirs(self.config_folder)
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),

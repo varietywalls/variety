@@ -91,7 +91,7 @@ def main():
     signal.signal(signal.SIGTERM, sigint_handler)
     signal.signal(signal.SIGQUIT, sigint_handler)
 
-    Util.makedirs(os.path.expanduser("~/.config/variety/"))
+    Util.makedirs(os.path.expanduser(u"~/.config/variety/"))
 
     arguments = map(_u, sys.argv[1:])
 

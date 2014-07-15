@@ -66,7 +66,7 @@ def set_up_logging(opts):
 
     try:
         logger_file = logging.FileHandler(
-            os.path.join(os.path.expanduser("~/.config/variety/"), "variety.log"), "w")
+            os.path.join(os.path.expanduser(u"~/.config/variety/"), "variety.log"), "w")
         logger_file.setFormatter(formatter)
         logger.addHandler(logger_file)
     except Exception:

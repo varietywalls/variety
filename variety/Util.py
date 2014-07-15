@@ -413,10 +413,10 @@ class Util:
     @staticmethod
     def get_xdg_pictures_folder():
         try:
-            return subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0]
+            return unicode(subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0], 'utf8')
         except Exception:
             logger.exception("Could not get path to Pictures folder")
-            return os.path.expanduser('~/Pictures')
+            return os.path.expanduser(u'~/Pictures')
 
     @staticmethod
     def superuser_exec(*command_args):
