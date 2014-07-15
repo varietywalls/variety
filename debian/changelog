@@ -1,3 +1,39 @@
+variety (0.4.19) precise; urgency=low
+
+  * Fix to Facebook first run dialog. Added latest translations.
+  * Separate Author entry in menu for images from Panoramio
+  * Bumped version to 0.4.19
+  * Merged with trunk
+  * Save author when dowloading from Panoramio
+  * Panoramio support: added search box
+  * Panoramio support, initial drop
+  * Thumbs: show 100, not 200 images, reduces CPU spike period
+  * Menu: merged Playback and Image submenus
+  * Facebook sharing: Updated text of first time dialog
+  * Facebook sharing updates, bugfix
+  * Polishing updates to Facebook publishing. Easy way to include quote
+    with image.
+  * Facebook authentication uses variety:// redirects, not internal
+    Webkit windows
+  * More explicit Unicode handling. Tackle unicode encode/decode errors
+    by working with unicode internally for filepaths, options, etc.
+  * Minor update to indicator icon
+  * Use 22px png for the indicator, not svg - works better in XFCE and
+    Gnome
+  * Minor fix related to clipboard monitoring hosts
+  * Removed preferences for Facebook and Rating menuitems, not needed
+    anymore
+  * Added support for Enlightenment
+  * Streamlining the menu, TODO: remove preferences for Facebook and
+    Rating menuitems
+  * Menuitem and command option to show thumbsbar for manual wallpaper
+    selection
+  * Fixing Wallpapers.net support
+  * Update Flickr calls to use https (Flickr closed non-SSL API access)
+  * Cinnamon: Fix for reverting scaling mode to Zoom on every WP change
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 15 Jul 2014 09:02:16 +0300
+
 variety (0.4.18ubuntu1) precise; urgency=low
 
   * 
