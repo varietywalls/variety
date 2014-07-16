@@ -15,10 +15,12 @@
 ### END LICENSE
 
 from gi.repository import GObject
+import hashlib
 from urllib2 import HTTPError
 from variety.Util import Util
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
+from variety.AttrDict import AttrDict
 
 from variety import _, _u
 
@@ -160,7 +162,7 @@ class Smart:
                     favs = []
                     for name in os.listdir(self.parent.options.favorites_folder):
                         path = os.path.join(self.parent.options.favorites_folder, name)
-                        if Util.is_image(path) and Util.is_downloaded_by_variety(path):
+                        if Util.is_image(path) and Util.get_variety_source_url(path):
                             logger.info("Existing favorite scheduled for smart-reporting: %s" % path)
                             favs.append(path)
                             time.sleep(0.1)
@@ -188,3 +190,79 @@ class Smart:
         fav_report_thread = threading.Thread(target=_run)
         fav_report_thread.daemon = True
         fav_report_thread.start()
+
+    def load_syncdb(self):
+        syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
+        try:
+            with open(syncdb_file) as f:
+                syncdb = AttrDict(json.load(f, encoding='utf8'))
+        except:
+            syncdb = {}
+
+        return syncdb
+
+    def write_syncdb(self, syncdb):
+        syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
+        with open(syncdb_file) as f:
+            json.dump(syncdb.asdict(), f, encoding='utf8', indent=4)
+
+    def get_image_id(self, url):
+        return base64.urlsafe_b64encode(hashlib.md5(url).digest())[:10].replace('-', 'a').replace('_', 'b').lower()
+
+    def sync(self):
+        if not self.parent.options.smart_enabled:
+            return
+        if getattr(self, "syncing", False):
+            return
+
+        def _run():
+            try:
+                self.syncing = True
+                self.load_user()
+                server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/sync/' + self.user["id"]))
+
+                syncdb = self.load_syncdb()
+
+                # first upload local favorites that need uploading:
+                for name in os.listdir(self.parent.options.favorites_folder):
+                    try:
+                        if not self.parent.options.smart_enabled:
+                            return
+
+                        time.sleep(0.1)
+
+                        path = os.path.join(self.parent.options.favorites_folder, name)
+                        if not Util.is_image(path):
+                            continue
+
+                        if path in syncdb:
+                            info = syncdb[path]
+                        else:
+                            info = {}
+                            source_url = Util.get_variety_source_url(path)
+                            if source_url:
+                                info["sourceURL"] = source_url
+                            else:
+                                info["ignore"] = True
+                            syncdb[path] = info
+                            self.write_syncdb(syncdb)
+
+                        if "ignore" in info:
+                            continue
+
+                        image_id = self.get_image_id(info["sourceURL"])
+                        if not image_id in server_data["favorite"]:
+                            logger.info("Smart-reporting existing favorite %s" % path)
+                            self.report_file(path, "favorite")
+                    except:
+                        logger.exception("sync: Could not process file %s" % path)
+
+                # then download missing local favorites from the server #TODO
+
+
+            finally:
+                self.syncing = False
+
+        sync_thread = threading.Thread(target=_run)
+        sync_thread.daemon = True
+        sync_thread.start()

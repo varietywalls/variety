@@ -217,9 +217,9 @@ class Util:
                 return None
 
     @staticmethod
-    def is_downloaded_by_variety(filename):
+    def get_variety_source_url(filename):
         meta = Util.read_metadata(filename)
-        return meta and "sourceURL" in meta
+        return None if meta is None else meta.get("sourceURL", None)
 
     @staticmethod
     def set_rating(filename, rating):
