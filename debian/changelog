@@ -1,3 +1,15 @@
+variety (0.4.20) precise; urgency=low
+
+  * Bumping version to 0.4.20
+  * set_wallpaper: Do not call the XFCE-related code when xfconf-query
+    is not present
+  * Another Unicode-related fix (logging with -vvv was throwing Unicode-
+    related errors)
+  * Another Unicode-related fix
+  * Another Unicode-related fix
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 17 Jul 2014 16:33:18 +0300
+
 variety (0.4.19ubuntu1) precise; urgency=low
 
   * 
