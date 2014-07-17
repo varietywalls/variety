@@ -81,12 +81,13 @@ class VarietyWindow(Gtk.Window):
         "40db8163e22fbe8a505bfd1280190f0d",  # 0.4.14, 0.4.15
         "59a037428784caeb0834a8dd7897a88b",  # 0.4.16, 0.4.17
         "e4510e39fd6829ef550e128a1a4a036b",  # 0.4.18
+        "d8d6a6c407a3d02ee242e9ce9ceaf293",  # 0.4.19
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
         "d8df22bf24baa87d5231e31027e79ee5",
         "822aee143c6b3f1166e5d0a9c637dd16",  # 0.4.16, 0.4.17
-        "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18
+        "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
     }
 
     def __init__(self):
