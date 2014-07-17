@@ -2041,7 +2041,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                                local_name + "\n" + _("Press Next to see it"),
                                                icon=file)
                     else:
-                        file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
+                        file = ImageFetcher.fetch(url, self.options.fetched_folder,
+                                                  progress_reporter=self.show_notification, verbose=verbose)
                         if file:
                             self.show_notification(_("Fetched"), os.path.basename(file) + "\n" + _("Press Next to see it"), icon=file)
 
@@ -2102,11 +2103,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             GObject.idle_add(_add)
 
         elif command == 'set-wallpaper':
-            image = ImageFetcher.fetch(self, args["image_url"][0], self.options.fetched_folder,
-                                      source_url=args["origin_url"][0],
-                                      source_name=args.get("source_name", [None])[0],
-                                      source_location=args.get("source_location", [None])[0],
-                                      verbose=True)
+            image = ImageFetcher.fetch(args["image_url"][0], self.options.fetched_folder,
+                                       source_url=args["origin_url"][0],
+                                       source_name=args.get("source_name", [None])[0],
+                                       source_location=args.get("source_location", [None])[0],
+                                       progress_reporter=self.show_notification,
+                                       verbose=True)
             if image:
                 self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
                 self.set_wallpaper(image, False, False)
