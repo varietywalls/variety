@@ -31,6 +31,7 @@ from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
 import subprocess
+from variety import _u, _str
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, http://peterlevi.com/variety"
 
@@ -47,7 +48,7 @@ class LogMethodCalls(object):
     def __get__(self, obj, cls=None):
         def logcall(*func_args, **func_kwargs):
             logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.func_name +
-                         '(' + ', '.join(map(str, func_args)) +
+                         '(' + ', '.join(map(_str, func_args)) +
                          ((', %s' % func_kwargs) if func_kwargs else '') + ')')
             if inspect.isfunction(self.func) or inspect.isclass(self.func.im_self):
                 ret = self.func(*func_args, **func_kwargs)
@@ -413,14 +414,14 @@ class Util:
     @staticmethod
     def get_xdg_pictures_folder():
         try:
-            return unicode(subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0], 'utf8')
+            return _u(subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0])
         except Exception:
             logger.exception("Could not get path to Pictures folder")
             return os.path.expanduser(u'~/Pictures')
 
     @staticmethod
     def superuser_exec(*command_args):
-        logger.warning("Executing as superuser: %s" % str(command_args))
+        logger.warning("Executing as superuser: %s" % _str(command_args))
         subprocess.check_call(["pkexec"] + list(command_args))
 
     @staticmethod
