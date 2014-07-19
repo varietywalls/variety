@@ -83,13 +83,16 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             self.ui.register_error.set_visible(True)
             return
 
-        result = self.ajax(Smart.API_URL + '/register',
-                           {'id': self.smart.user['id'],
-                            'authkey': self.smart.user['authkey'],
-                            'username': self.ui.register_username.get_text(),
-                            'password': self.ui.register_password.get_text(),
-                            'email': self.ui.register_email.get_text()},
-                           self.show_register_error)
+        user = {'username': self.ui.register_username.get_text(),
+                'password': self.ui.register_password.get_text(),
+                'email': self.ui.register_email.get_text()}
+
+        # If the current user is anonymous, use its existing data, do not register a completely new user:
+        if self.smart.user.get("username") is None:
+            user.update({'id': self.smart.user['id'], 'authkey': self.smart.user['authkey']})
+
+        result = self.ajax(Smart.API_URL + '/register', user, self.show_register_error)
+
         if 'error' in result:
             self.ui.register_error.set_text(_(result['error']))
             self.ui.register_error.set_visible(True)

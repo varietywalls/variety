@@ -1595,7 +1595,7 @@ class VarietyWindow(Gtk.Window):
         try:
             self.banned.add(url)
             with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
-                f.write(_u(self.url) + "\n")
+                f.write(_u(url) + "\n")
         except Exception:
             logger.exception("Could not ban URL")
 

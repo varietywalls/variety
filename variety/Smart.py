@@ -45,17 +45,25 @@ class Smart:
         self.user = None
 
     def reload(self):
-        self.load_user(create_if_missing=False)
-        self.sync()
+        if self.smart_settings_changed():
+            self.load_user(create_if_missing=False, force_reload=True)
+            self.reset_sync()
+            self.sync()
+
+    def smart_settings_changed(self):
+        return self.parent.previous_options is None or \
+               self.parent.previous_options.smart_enabled != self.parent.options.smart_enabled or \
+               self.parent.previous_options.sync_enabled != self.parent.options.sync_enabled
 
     def first_run(self):
         if not self.parent.options.smart_notice_shown:
             self.show_notice_dialog()
-        else:
-            self.sync()
 
     def new_user(self):
         logger.info('Creating new smart user')
+
+        self.reset_sync()
+
         self.user = Util.fetch_json(Smart.API_URL + '/newuser')
         if self.parent.preferences_dialog:
             GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
@@ -63,8 +71,13 @@ class Smart:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
             logger.info('Created smart user: %s' % self.user["id"])
 
+    def reset_sync(self):
+        self.sync_hash = Util.random_hash()  #  stop current sync if running
+        self.last_synced = 0
+
     def set_user(self, user):
         logger.info('Setting new smart user')
+
         self.user = user
         if self.parent.preferences_dialog:
             self.parent.preferences_dialog.on_smart_user_updated()
@@ -72,8 +85,12 @@ class Smart:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
             logger.info('Updated smart user: %s' % self.user["id"])
 
+        self.reset_sync()
+        self.sync()
+
     def load_user(self, create_if_missing=True, force_reload=False):
         if not self.user or force_reload:
+            self.user = None
             try:
                 with open(os.path.join(self.parent.config_folder, 'smart_user.json')) as f:
                     self.user = json.load(f)
@@ -82,8 +99,34 @@ class Smart:
                     logger.info('Loaded smart user: %s' % self.user["id"])
             except IOError:
                 if create_if_missing:
-                    logger.info('Missing user.json, creating new smart user')
+                    logger.info('Missing smart_user.json, creating new smart user')
                     self.new_user()
+
+    def report_trash(self, url):
+        if not self.is_smart_enabled():
+            return
+
+        try:
+            self.load_user()
+            user = self.user
+
+            logger.info("Smart-reporting %s as trash" % url)
+            try:
+                url = Smart.API_URL + '/user/' + user['id'] + '/trash'
+                result = Util.fetch(url, {'image': json.dumps({'origin_url': url}), 'authkey': user['authkey']})
+                logger.info("Smart-reported, server returned: %s" % result)
+                return
+
+            except HTTPError, e:
+                logger.error("Server returned %d, potential reason - server failure?" % e.code)
+                if e.code in (403, 404):
+                    self.parent.show_notification(
+                        _('Your Smart Variety credentials are probably outdated. Please login again.'))
+                    self.new_user()
+                    self.parent.preferences_dialog.on_btn_login_register_clicked()
+
+        except Exception:
+            logger.exception("Could not smart-report %s as trash" % url)
 
     def report_file(self, filename, tag, attempt=0):
         if not self.is_smart_enabled():
@@ -91,6 +134,7 @@ class Smart:
 
         try:
             self.load_user()
+            user = self.user
 
             meta = Util.read_metadata(filename)
             if not meta or not "sourceURL" in meta:
@@ -109,8 +153,8 @@ class Smart:
 
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
-                url = Smart.API_URL + '/user/' + self.user['id'] + '/' + tag
-                result = Util.fetch(url, {'image': json.dumps(image), 'authkey': self.user['authkey']})
+                url = Smart.API_URL + '/user/' + user['id'] + '/' + tag
+                result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
             except HTTPError, e:
@@ -191,14 +235,14 @@ class Smart:
             logger.info('sync: Started, hash %s' % current_sync_hash)
 
             try:
-                self.load_user(True, True)
+                self.load_user(create_if_missing=True)
 
                 logger.info("sync: Fetching serverside data")
                 server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/sync/' + self.user["id"]))
 
                 syncdb = self.load_syncdb()
 
-                # first upload local favorites that need uploading:
+                # First upload local favorites that need uploading:
                 logger.info("sync: Uploading local favorites to server")
                 for name in os.listdir(self.parent.options.favorites_folder):
                     try:
@@ -231,66 +275,94 @@ class Smart:
                         if not imageid in server_data["favorite"]:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
                             self.report_file(path, "favorite")
-                            time.sleep(2)
+                            time.sleep(1)
                     except:
-                        logger.exception("sync: Could not process file %s" % path)
+                        logger.exception("sync: Could not process file %s" % name)
 
-                if not self.is_sync_enabled():
-                    return
-
-                # then download locally-missing favorites from the server
-                to_sync = []
-                for imageid in server_data["favorite"]:
-                    if imageid in server_data["trash"]:
-                        continue  # do not download favorites that have later been trashed;
-                        # TODO: we need a better way to un-favorite things and forbid them from downloading
-
-                    key = "id:" + imageid
-
-                    if key in syncdb:
-                        if 'success' in syncdb[key]:
-                            continue  # we have this image locally
-                        if syncdb[key].get('error', 0) >= 3:
-                            continue  # we have tried and got error for this image 3 or more times, leave it alone
-                    to_sync.append(imageid)
-
-                if to_sync:
-                    self.parent.show_notification(_("Sync"), _("Fetching %d images") % len(to_sync))
-
-                for imageid in to_sync:
-                    if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
+                # Upload locally trashed URLs
+                logger.info("sync: Reporting local banned URLs to server")
+                for url in self.parent.banned:
+                    if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
                         return
+                    imageid = self.get_image_id(url)
+                    if not imageid in server_data["trash"]:
+                        self.report_trash(url)
+                        time.sleep(1)
 
-                    key = "id:" + imageid
-                    try:
-                        logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
-                        image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
+                # Perform server to local downloading only if Sync is enabled
+                if self.is_sync_enabled():
 
-                        ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
-                                           source_url=image_data["origin_url"],
-                                           source_name=image_data["sources"][0][0] if image_data.get("sources", []) else None,
-                                           source_location=image_data["sources"][0][1] if image_data.get("sources", []) else None,
-                                           verbose=False)
-                        syncdb[key] = {"success": True}
+                    # Append locally missing trashed URLs to banned list
+                    local_trash = map(self.get_image_id, self.parent.banned)
+                    for imageid in server_data["trash"]:
+                        if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
+                            return
+                        if not imageid in local_trash:
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
+                            self.parent.ban_url(image_data["origin_url"])
 
-                    except:
-                        logger.exception("sync: Could not fetch favorite image %s" % imageid)
-                        syncdb[key] = syncdb[key] or {}
-                        syncdb[key].setdefault("error", 0)
-                        syncdb[key]["error"] += 1
+                    # Download locally-missing favorites from the server
+                    to_sync = []
+                    for imageid in server_data["favorite"]:
+                        if imageid in server_data["trash"]:
+                            continue  # do not download favorites that have later been trashed;
+                            # TODO: we need a better way to un-favorite things and forbid them from downloading
 
-                    finally:
-                        if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
+                        key = "id:" + imageid
+
+                        if key in syncdb:
+                            if 'success' in syncdb[key]:
+                                continue  # we have this image locally
+                            if syncdb[key].get('error', 0) >= 3:
+                                continue  # we have tried and got error for this image 3 or more times, leave it alone
+                        to_sync.append(imageid)
+
+                    if to_sync:
+                        self.parent.show_notification(_("Sync"), _("Fetching %d images") % len(to_sync))
+
+                    for imageid in to_sync:
+                        if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
                             return
 
-                        self.write_syncdb(syncdb)
-                        time.sleep(2)
+                        key = "id:" + imageid
+                        try:
+                            logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
 
-                if to_sync:
-                    self.parent.show_notification(_("Sync"), _("Finished"))
+                            ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
+                                               source_url=image_data["origin_url"],
+                                               source_name=image_data["sources"][0][0] if image_data.get("sources", []) else None,
+                                               source_location=image_data["sources"][0][1] if image_data.get("sources", []) else None,
+                                               verbose=False)
+                            syncdb[key] = {"success": True}
+
+                        except:
+                            logger.exception("sync: Could not fetch favorite image %s" % imageid)
+                            syncdb[key] = syncdb[key] or {}
+                            syncdb[key].setdefault("error", 0)
+                            syncdb[key]["error"] += 1
+
+                        finally:
+                            if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
+                                return
+
+                            self.write_syncdb(syncdb)
+                            time.sleep(1)
+
+                    if to_sync:
+                        self.parent.show_notification(_("Sync"), _("Finished"))
+
+                self.last_synced = time.time()
             finally:
                 self.syncing = False
 
         sync_thread = threading.Thread(target=_run)
         sync_thread.daemon = True
         sync_thread.start()
+
+    def sync_if_its_time(self):
+        if not self.is_smart_enabled():
+            return
+        last_synced = getattr(self, 'last_synced', 0)
+        if time.time() - last_synced > 6 * 60 * 3600:
+            self.sync()
