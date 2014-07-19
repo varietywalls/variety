@@ -22,12 +22,17 @@ def _u(s):
     return unicode(s, 'utf8')
 
 
+def _str(s):
+    if isinstance(s, unicode):
+        return s.encode('utf8')
+    else:
+        return str(s)
+
 def _(text):
     # TODO: We use locale instead of gettext because of the way Quikcly deploys to extras
     # TODO: use gettext.gettext below when we stop using extras deployment
     from locale import gettext as _
     return _u(_(text))
-
 
 import os
 import sys
@@ -91,7 +96,7 @@ def main():
     signal.signal(signal.SIGTERM, sigint_handler)
     signal.signal(signal.SIGQUIT, sigint_handler)
 
-    Util.makedirs(os.path.expanduser("~/.config/variety/"))
+    Util.makedirs(os.path.expanduser(u"~/.config/variety/"))
 
     arguments = map(_u, sys.argv[1:])
 

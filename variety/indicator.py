@@ -53,6 +53,12 @@ class Indicator:
         self.show_origin.set_sensitive(False)
         self.menu.append(self.show_origin)
 
+        self.show_author = Gtk.MenuItem("Show author")
+        self.show_author.connect("activate", window.on_show_author)
+        self.show_author.set_sensitive(False)
+        self.show_author.set_visible(False)
+        self.menu.append(self.show_author)
+
         self.copy_to_favorites = Gtk.MenuItem(_("Copy to _Favorites"))
         self.copy_to_favorites.set_use_underline(True)
         self.copy_to_favorites.connect("activate", window.copy_to_favorites)

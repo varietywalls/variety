@@ -31,8 +31,8 @@ SOURCES = {
     "favorites": ("The Favorites folder", _("The Favorites folder")),
     "fetched": ("The Fetched folder", _("The Fetched folder")),
     "recommended":
-        ("Recommended by Variety. Adapts automatically to your taste as you mark images as favorite or trash.",
-        _("Recommended by Variety. Adapts automatically to your taste as you mark images as favorite or trash.")),
+        ("Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.",
+        _("Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.")),
     "desktoppr": ("Random wallpapers from Desktoppr.co", _("Random wallpapers from Desktoppr.co")),
     "apod": ("NASA's Astronomy Picture of the Day", _("NASA's Astronomy Picture of the Day")),
     "earth": ("World Sunlight Map - live wallpaper from Opentopia.com", _("World Sunlight Map - live wallpaper from Opentopia.com"))

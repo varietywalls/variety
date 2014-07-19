@@ -17,7 +17,7 @@
 from bs4 import BeautifulSoup
 import random
 import logging
-from variety import Downloader
+from variety import Downloader, _str
 from variety.Util import Util
 
 logger = logging.getLogger('variety')
@@ -84,7 +84,7 @@ class APODDownloader(Downloader.Downloader):
         logger.info("Filling APOD queue from RSS")
 
         s = self.fetch(self.location, xml=True)
-        urls = [str(x.find("link").contents[0]) for x in s.findAll("item")]
+        urls = [_str(x.find("link").contents[0]) for x in s.findAll("item")]
         urls = [x for x in urls if x not in self.parent.banned]
 
         self.queue.extend(urls)

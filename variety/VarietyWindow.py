@@ -48,6 +48,7 @@ from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
+from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
@@ -81,11 +82,14 @@ class VarietyWindow(Gtk.Window):
         "3f9fcc524bfee8fb146d1901613d3181",
         "40db8163e22fbe8a505bfd1280190f0d",  # 0.4.14, 0.4.15
         "59a037428784caeb0834a8dd7897a88b",  # 0.4.16, 0.4.17
+        "e4510e39fd6829ef550e128a1a4a036b",  # 0.4.18
+        "d8d6a6c407a3d02ee242e9ce9ceaf293",  # 0.4.19
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
         "d8df22bf24baa87d5231e31027e79ee5",
         "822aee143c6b3f1166e5d0a9c637dd16",  # 0.4.16, 0.4.17
+        "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
     }
 
     def __init__(self):
@@ -228,7 +232,7 @@ class VarietyWindow(Gtk.Window):
             # destroy command moved into dialog to allow for a help button
 
     def prepare_config_folder(self):
-        self.config_folder = os.path.expanduser("~/.config/variety")
+        self.config_folder = os.path.expanduser(u"~/.config/variety")
         Util.makedirs(self.config_folder)
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
@@ -502,6 +506,8 @@ class VarietyWindow(Gtk.Window):
             return WallbaseDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
+        elif type == Options.SourceType.PANORAMIO:
+            return PanoramioDownloader(self, location)
         elif type == Options.SourceType.RECOMMENDED:
             return RecommendedDownloader(self)
         else:
@@ -631,13 +637,27 @@ class VarietyWindow(Gtk.Window):
             label = os.path.dirname(file).replace('_', '__')
             info = Util.read_metadata(file)
             if info and "sourceURL" in info and "sourceName" in info:
-                self.source_name = info["sourceName"] if info["sourceName"].find("Fetched") < 0 else None
-                label = (_("View at %s") % info["sourceName"]) if info["sourceName"].find("Fetched") < 0 else _("Fetched: Show Origin")
+                self.source_name = info["sourceName"]
+                if "Fetched" in self.source_name:
+                    self.source_name = None
+                    label = _("Fetched: Show Origin")
+                else:
+                    label = _("View at %s") % self.source_name
+
                 self.url = info["sourceURL"]
                 if "imageURL" in info:
                     self.image_url = info["imageURL"]
             if len(label) > 50:
                 label = label[:50] + "..."
+
+            author = None
+            if info and "author" in info and "authorURL" in info:
+                author = info["author"]
+                if len(author) > 50:
+                    author = author[:50] + "..."
+                self.author_url = info["authorURL"]
+            else:
+                self.author_url = None
 
             if not self.ind:
                 return
@@ -671,6 +691,14 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.show_origin.set_label(label)
                     self.ind.show_origin.set_sensitive(True)
+
+                    if not author:
+                        self.ind.show_author.set_visible(False)
+                        self.ind.show_author.set_sensitive(False)
+                    else:
+                        self.ind.show_author.set_visible(True)
+                        self.ind.show_author.set_sensitive(True)
+                        self.ind.show_author.set_label(_("Author: %s") % author)
 
                     self.ind.rating.set_sensitive(rating_menu is not None)
                     if rating_menu:
@@ -1448,6 +1476,11 @@ class VarietyWindow(Gtk.Window):
         else:
             self.open_folder()
 
+    def on_show_author(self, widget=None):
+        if hasattr(self, "author_url") and self.author_url:
+            logger.info("Opening url: " + self.author_url)
+            subprocess.call(["xdg-open", self.author_url])
+
     def get_source(self, file = None):
         if not file:
             file = self.current
@@ -1720,19 +1753,6 @@ class VarietyWindow(Gtk.Window):
             if Util.compare_versions(last_version, "0.4.14") < 0:
                 logger.info("Performing upgrade to 0.4.14")
 
-                def upgrade_script(script, outdated_md5):
-                    try:
-                        script_file = os.path.join(self.scripts_folder, script)
-                        if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
-                            logger.info("Outdated %s file, copying it from %s" %
-                                        (script, varietyconfig.get_data_file("scripts", script)))
-                            shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
-                    except Exception:
-                        logger.exception("Could not upgrade script " + script)
-
-                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
-                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
-
                 # Current wallpaper is now stored in wallpaper subfolder, remove old artefacts:
                 walltxt = os.path.join(self.config_folder, "wallpaper.jpg.txt")
                 if os.path.exists(walltxt):
@@ -1751,8 +1771,24 @@ class VarietyWindow(Gtk.Window):
                     except Exception:
                         logger.warning("Could not delete %s, no worries" % file)
 
+            # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
+
+                # Upgrade set and get_wallpaper scripts
+                def upgrade_script(script, outdated_md5):
+                    try:
+                        script_file = os.path.join(self.scripts_folder, script)
+                        if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
+                            logger.info("Outdated %s file, copying it from %s" %
+                                        (script, varietyconfig.get_data_file("scripts", script)))
+                            shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
+                    except Exception:
+                        logger.exception("Could not upgrade script " + script)
+
+                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
+                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
+
         except Exception:
             logger.exception("Error during version upgrade. Continuing.")
 
@@ -2289,6 +2325,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         quote_text = self.get_quote_text_for_publishing()
         if self.source_name:
             caption = self.source_name + ", via Variety Wallpaper Changer"
+        else:
+            caption = "Via Variety Wallpaper Changer"
+
         logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
         message = self.options.facebook_message
@@ -2353,7 +2392,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
     def get_quote_text_for_publishing(self):
         if not self.quote:
             return ''
-        author = (" - " + self.quote["author"]) if self.quote.get("author", None) else ""
+        author = ("\n-- " + self.quote["author"]) if self.quote.get("author", None) else ""
         text = (self.quote["quote"] + author).strip().encode('utf8')
         return text
 
@@ -2393,6 +2432,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.quotes_engine.stop()
 
     def facebook_firstrun(self):
+        def _cleanup():
+            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
+                self.facebook_dialog.destroy()
+                try:
+                    self.dialogs.remove(self.facebook_dialog)
+                except Exception:
+                    pass
+                self.facebook_dialog = None
+
         first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
         if not os.path.exists(first_run_file):
             if hasattr(self, "facebook_dialog") and self.facebook_dialog:
@@ -2401,20 +2449,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             else:
                 self.facebook_dialog = FacebookFirstRunDialog()
                 self.dialogs.append(self.facebook_dialog)
-                self.facebook_dialog.run()
-                if not self.running:
+                response = self.facebook_dialog.run()
+                if not self.running or response != Gtk.ResponseType.OK:
+                    _cleanup()
                     return True
                 with open(first_run_file, "w") as f:
                     f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-        if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-            self.facebook_dialog.destroy()
-            try:
-                self.dialogs.remove(self.facebook_dialog)
-            except Exception:
-                pass
-            self.facebook_dialog = None
-
+        _cleanup()
         return False
 
     def prev_quote(self, widget=None):

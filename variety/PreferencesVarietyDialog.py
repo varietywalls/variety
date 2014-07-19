@@ -33,6 +33,7 @@ from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialo
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
+from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
@@ -63,6 +64,7 @@ EDITABLE_TYPES = [
     Options.SourceType.WALLBASE,
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS,
+    Options.SourceType.PANORAMIO,
 ]
 
 
@@ -122,7 +124,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options = Options()
             self.options.read()
 
-            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
+            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser(u"~/.config/autostart/variety.desktop")))
 
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
@@ -310,16 +312,21 @@ class PreferencesVarietyDialog(PreferencesDialog):
         items = [
             (_("Images"), self.on_add_images_clicked),
             (_("Folders"), self.on_add_folders_clicked),
+            '-',
             (_("Flickr"), self.on_add_flickr_clicked),
+            (_("Panoramio"), self.on_add_panoramio_clicked),
             (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Wallpapers.net"), self.on_add_wn_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
 
         for x in items:
-            item = Gtk.MenuItem()
-            item.set_label(x[0])
-            item.connect("activate", x[1])
+            if x == '-':
+                item = Gtk.SeparatorMenuItem.new()
+            else:
+                item = Gtk.MenuItem()
+                item.set_label(x[0])
+                item.connect("activate", x[1])
             self.add_menu.append(item)
 
         self.add_menu.show_all()
@@ -597,6 +604,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddWallbaseDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
+            elif type == Options.SourceType.PANORAMIO:
+                self.dialog = AddPanoramioDialog()
 
             self.dialog.set_edited_row(edited_row)
 
@@ -712,6 +721,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_add_wallbase_clicked(self, widget=None):
         self.show_dialog(AddWallbaseDialog())
 
+    def on_add_panoramio_clicked(self, widget=None):
+        self.show_dialog(AddPanoramioDialog())
+
     def show_dialog(self, dialog):
         self.dialog = dialog
         self.dialog.parent = self
@@ -744,6 +756,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
             edited_row[2] = wallbase_search
         else:
             self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
+        self.dialog = None
+
+    def on_panoramio_dialog_okay(self, panoramio_config, edited_row):
+        if edited_row:
+            edited_row[2] = panoramio_config
+        else:
+            self.add_sources(Options.SourceType.PANORAMIO, [panoramio_config])
         self.dialog = None
 
     def close(self):
@@ -933,7 +952,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 "X-GNOME-Autostart-Delay=20\n"
             )
 
-            file = os.path.expanduser("~/.config/autostart/variety.desktop")
+            file = os.path.expanduser(u"~/.config/autostart/variety.desktop")
 
             if not self.ui.autostart.get_active():
                 try:
@@ -946,7 +965,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if not os.path.exists(file):
                     logger.info("Creating autostart entry")
 
-                    Util.makedirs(os.path.expanduser("~/.config/autostart/"))
+                    Util.makedirs(os.path.expanduser(u"~/.config/autostart/"))
 
                     with open("/proc/%s/cmdline" % os.getpid()) as f:
                         cmdline = f.read().strip()

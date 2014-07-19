@@ -126,11 +126,15 @@ if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" 
 fi
 
 # XFCE
-for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l|egrep -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
-    xfconf-query -c xfce4-desktop -p $i -n -t string -s "" 2> /dev/null
-    xfconf-query -c xfce4-desktop -p $i -s "" 2> /dev/null
-    xfconf-query -c xfce4-desktop -p $i -s "$WP" 2> /dev/null
-done
+command -v xfconf-query >/dev/null 2>&1
+rc=$?
+if [[ $rc = 0 ]] ; then
+    for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l|egrep -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
+        xfconf-query -c xfce4-desktop -p $i -n -t string -s "" 2> /dev/null
+        xfconf-query -c xfce4-desktop -p $i -s "" 2> /dev/null
+        xfconf-query -c xfce4-desktop -p $i -s "$WP" 2> /dev/null
+    done
+fi
 
 # LXDE/PCmanFM
 if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then

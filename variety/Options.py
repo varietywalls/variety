@@ -43,7 +43,8 @@ class Options:
         WALLBASE = 9
         MEDIA_RSS = 10
         EARTH = 11
-        RECOMMENDED = 12
+        PANORAMIO = 12
+        RECOMMENDED = 13
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -57,19 +58,20 @@ class Options:
             WALLBASE: "wallbase",
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
+            PANORAMIO: "panoramio",
             RECOMMENDED: "recommended"
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, RECOMMENDED]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, RECOMMENDED]
 
     class LightnessMode:
         DARK = 0
         LIGHT = 1
 
     def __init__(self):
-        self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
+        self.configfile = os.path.expanduser(u"~/.config/variety/variety.conf")
 
     def read(self):
         self.set_defaults()
@@ -466,14 +468,14 @@ class Options:
 
         self.download_enabled = True
         self.download_interval = 600
-        self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
+        self.download_folder = os.path.expanduser(u"~/.config/variety/Downloaded")
         self.quota_enabled = True
         self.quota_size = 500
 
-        self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
+        self.favorites_folder = os.path.expanduser(u"~/.config/variety/Favorites")
         self.favorites_operations = [["Downloaded", "Copy"], ["Fetched", "Move"], ["Others", "Copy"]]
 
-        self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
+        self.fetched_folder = os.path.expanduser(u"~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
         self.clipboard_hosts = "wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
@@ -519,7 +521,7 @@ class Options:
         self.quotes_width = 70
         self.quotes_hpos = 100
         self.quotes_vpos = 40
-        self.quotes_favorites_file = os.path.expanduser("~/.config/variety/favorite_quotes.txt")
+        self.quotes_favorites_file = os.path.expanduser(u"~/.config/variety/favorite_quotes.txt")
 
 
         self.sources = [
@@ -591,7 +593,7 @@ class Options:
             config["facebook_message"] = self.facebook_message
 
             config["copyto_enabled"] = str(self.copyto_enabled)
-            config["copyto_folder"] = Util.collapseuser(str(self.copyto_folder))
+            config["copyto_folder"] = Util.collapseuser(self.copyto_folder)
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = self.clock_filter
