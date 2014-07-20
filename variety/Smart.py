@@ -53,7 +53,8 @@ class Smart:
     def smart_settings_changed(self):
         return self.parent.previous_options is None or \
                self.parent.previous_options.smart_enabled != self.parent.options.smart_enabled or \
-               self.parent.previous_options.sync_enabled != self.parent.options.sync_enabled
+               self.parent.previous_options.sync_enabled != self.parent.options.sync_enabled or \
+               self.parent.previous_options.favorites_folder != self.parent.options.favorites_folder
 
     def first_run(self):
         if not self.parent.options.smart_notice_shown:
@@ -184,7 +185,8 @@ class Smart:
             if self.parent.options.smart_enabled:
                 for s in self.parent.options.sources:
                     if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
-                        self.parent.show_notification(_("Recommended and Latest sources enabled"))
+                        self.parent.show_notification(_("New image sources"),
+                                                      _("Recommended and Latest Favorites image sources enabled"))
                         s[0] = True
             self.parent.options.write()
             self.parent.reload_config()

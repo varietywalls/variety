@@ -1039,7 +1039,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if not self.ui.smart_enabled.get_active():
             for s in self.parent.options.sources:
                 if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST) and s[0]:
-                    self.parent.show_notification(_("Recommended and Latest sources disabled"))
+                    self.parent.show_notification(_("Disabling Smart sources"),
+                                                  _("Recommended and Latest favorites sources disabled"))
                     s[0] = False
                     self.parent.options.write()
             for i, r in enumerate(self.ui.sources.get_model()):
