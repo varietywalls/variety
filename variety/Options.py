@@ -45,6 +45,7 @@ class Options:
         EARTH = 11
         PANORAMIO = 12
         RECOMMENDED = 13
+        LATEST = 14
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -59,12 +60,13 @@ class Options:
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
             PANORAMIO: "panoramio",
-            RECOMMENDED: "recommended"
+            RECOMMENDED: "recommended",
+            LATEST: "latest"
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, RECOMMENDED]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0
@@ -373,7 +375,7 @@ class Options:
             self.parse_autosources()
 
             for s in self.sources:
-                if s[1] == Options.SourceType.RECOMMENDED and not self.smart_enabled:
+                if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST) and not self.smart_enabled:
                     s[0] = False
 
             if "filters" in config:

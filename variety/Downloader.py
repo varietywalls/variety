@@ -76,9 +76,13 @@ class Downloader(object):
             logger.info("File already exists, skip downloading")
             return None
 
-        data = Util.fetch(image_url)
-        with open(local_filename, 'wb') as f:
-            f.write(data)
+        try:
+            data = Util.fetch(image_url)
+            with open(local_filename, 'wb') as f:
+                f.write(data)
+        except Exception, e:
+            logger.info("Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
+            raise e
 
         if not Util.is_image(local_filename, check_contents=True):
             logger.info("Downloaded data was not an image, image URL might be outdated")

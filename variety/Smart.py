@@ -183,8 +183,8 @@ class Smart:
             self.parent.options.smart_notice_shown = True
             if self.parent.options.smart_enabled:
                 for s in self.parent.options.sources:
-                    if s[1] == Options.SourceType.RECOMMENDED:
-                        self.parent.show_notification(_("Recommended source enabled"))
+                    if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
+                        self.parent.show_notification(_("Recommended and Latest sources enabled"))
                         s[0] = True
             self.parent.options.write()
             self.parent.reload_config()
