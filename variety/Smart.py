@@ -17,6 +17,7 @@
 from gi.repository import GObject
 import hashlib
 from urllib2 import HTTPError
+import io
 from variety.Util import Util
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
@@ -202,17 +203,18 @@ class Smart:
         logger.debug("sync: Loading syncdb")
         syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
         try:
-            with open(syncdb_file) as f:
-                syncdb = AttrDict(json.load(f, encoding='utf8'))
+            with io.open(syncdb_file, encoding='utf8') as f:
+                data = f.read()
+                syncdb = AttrDict(json.loads(data))
         except:
-            syncdb = AttrDict()
+            syncdb = AttrDict(version=1, local={}, remote={})
 
         return syncdb
 
     def write_syncdb(self, syncdb):
         syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
-        with open(syncdb_file, "w") as f:
-            json.dump(syncdb.asdict(), f, encoding='utf8', indent=4, ensure_ascii=False)
+        with io.open(syncdb_file, "w", encoding='utf8') as f:
+            f.write(json.dumps(syncdb.asdict(), indent=4, ensure_ascii=False))
 
     @staticmethod
     def get_image_id(url):
@@ -257,22 +259,23 @@ class Smart:
                         if not Util.is_image(path):
                             continue
 
-                        if path in syncdb:
-                            info = syncdb[path]
+                        if path in syncdb.local:
+                            info = syncdb.local[path]
                         else:
                             info = {}
                             source_url = Util.get_variety_source_url(path)
                             if source_url:
                                 info["sourceURL"] = source_url
-                            syncdb[path] = info
+                            syncdb.local[path] = info
                             self.write_syncdb(syncdb)
 
                         if not "sourceURL" in info:
                             continue
 
                         imageid = self.get_image_id(info["sourceURL"])
-                        syncdb["id:" + imageid] = {"success": True}
-                        self.write_syncdb(syncdb)
+                        if not "success" in syncdb.remote[imageid]:
+                            syncdb.remote[imageid] = {"success": True}
+                            self.write_syncdb(syncdb)
 
                         if not imageid in server_data["favorite"]:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
@@ -310,12 +313,10 @@ class Smart:
                             continue  # do not download favorites that have later been trashed;
                             # TODO: we need a better way to un-favorite things and forbid them from downloading
 
-                        key = "id:" + imageid
-
-                        if key in syncdb:
-                            if 'success' in syncdb[key]:
+                        if imageid in syncdb.remote:
+                            if 'success' in syncdb.remote[imageid]:
                                 continue  # we have this image locally
-                            if syncdb[key].get('error', 0) >= 3:
+                            if syncdb.remote[imageid].get('error', 0) >= 3:
                                 continue  # we have tried and got error for this image 3 or more times, leave it alone
                         to_sync.append(imageid)
 
@@ -326,23 +327,26 @@ class Smart:
                         if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
                             return
 
-                        key = "id:" + imageid
                         try:
                             logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
 
-                            ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
+                            path = ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
                                                source_url=image_data["origin_url"],
                                                source_name=image_data["sources"][0][0] if image_data.get("sources", []) else None,
                                                source_location=image_data["sources"][0][1] if image_data.get("sources", []) else None,
                                                verbose=False)
-                            syncdb[key] = {"success": True}
+                            if not path:
+                                raise Exception("Fetch failed")
+
+                            syncdb.remote[imageid] = {"success": True}
+                            syncdb.local[path] = {'sourceURL': image_data["origin_url"]}
 
                         except:
                             logger.exception("sync: Could not fetch favorite image %s" % imageid)
-                            syncdb[key] = syncdb[key] or {}
-                            syncdb[key].setdefault("error", 0)
-                            syncdb[key]["error"] += 1
+                            syncdb.remote[imageid] = syncdb.remote[imageid] or {}
+                            syncdb.remote[imageid].setdefault("error", 0)
+                            syncdb.remote[imageid]["error"] += 1
 
                         finally:
                             if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
