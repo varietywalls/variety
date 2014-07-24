@@ -860,11 +860,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 pass
 
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
-            self.options.clock_font = self.ui.clock_font.get_font_name()
-            self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
+            self.options.clock_font = _u(self.ui.clock_font.get_font_name())
+            self.options.clock_date_font = _u(self.ui.clock_date_font.get_font_name())
 
             self.options.quotes_enabled = self.ui.quotes_enabled.get_active()
-            self.options.quotes_font = self.ui.quotes_font.get_font_name()
+            self.options.quotes_font = _u(self.ui.quotes_font.get_font_name())
             c = self.ui.quotes_text_color.get_color()
             self.options.quotes_text_color = (c.red // 256, c.green // 256, c.blue // 256)
             c = self.ui.quotes_bg_color.get_color()

@@ -568,11 +568,11 @@ class Options:
 
             config["clock_enabled"] = str(self.clock_enabled)
             config["clock_filter"] = self.clock_filter
-            config["clock_font"] = str(self.clock_font)
-            config["clock_date_font"] = str(self.clock_date_font)
+            config["clock_font"] = self.clock_font
+            config["clock_date_font"] = self.clock_date_font
 
             config["quotes_enabled"] = str(self.quotes_enabled)
-            config["quotes_font"] = str(self.quotes_font)
+            config["quotes_font"] = self.quotes_font
             config["quotes_text_color"] = " ".join(map(str, self.quotes_text_color))
             config["quotes_bg_color"] = " ".join(map(str, self.quotes_bg_color))
             config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
