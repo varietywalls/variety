@@ -511,7 +511,7 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.RECOMMENDED:
             return RecommendedDownloader(self)
         elif type == Options.SourceType.LATEST:
-            return MediaRssDownloader(self, Smart.API_URL + '/feed')
+            return MediaRssDownloader(self, Smart.SITE_URL + '/feed')
         else:
             raise Exception("Uknown downloader type")
 

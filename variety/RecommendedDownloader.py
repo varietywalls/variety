@@ -48,7 +48,7 @@ class RecommendedDownloader(Downloader):
     def fill_queue(self):
         logger.info("Filling Recommended queue")
         self.parent.smart.load_user()
-        recommended_url = Smart.API_URL + '/user/' + self.parent.smart.user["id"] + '/recommended/json'
+        recommended_url = Smart.API_URL + '/user/' + self.parent.smart.user["id"] + '/recommended'
         recommended = map(AttrDict, Util.fetch_json(recommended_url))
         for image in recommended:
             if not image.image_url or not image.sources:

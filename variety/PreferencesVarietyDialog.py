@@ -1190,7 +1190,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.box_smart_user.set_visible(True)
             username = self.parent.smart.user.get("username")
             self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s/user/%s">%s</a>' % (
-                    Smart.API_URL,
+                    Smart.SITE_URL,
                     '~' + username if username else self.parent.smart.user["id"],
                     username or _('Anonymous')))
             self.ui.btn_login_register.set_label(_('Login or register') if not bool(username) else _('Switch user'))

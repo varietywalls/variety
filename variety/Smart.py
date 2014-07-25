@@ -39,7 +39,8 @@ logger = logging.getLogger('variety')
 
 
 class Smart:
-    API_URL = "http://localhost:4000"
+    SITE_URL = 'http://localhost:4000'
+    API_URL = SITE_URL + '/api'
 
     def __init__(self, parent):
         self.parent = parent
@@ -114,7 +115,7 @@ class Smart:
 
             logger.info("Smart-reporting %s as trash" % url)
             try:
-                url = Smart.API_URL + '/user/' + user['id'] + '/trash'
+                url = Smart.API_URL + '/tag/' + user['id'] + '/trash'
                 result = Util.fetch(url, {'image': json.dumps({'origin_url': url}), 'authkey': user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
                 return
@@ -155,7 +156,7 @@ class Smart:
 
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
-                url = Smart.API_URL + '/user/' + user['id'] + '/' + tag
+                url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
                 result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
                 return 0
@@ -303,7 +304,7 @@ class Smart:
                         if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
                             return
                         if not imageid in local_trash:
-                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
                             self.parent.ban_url(image_data["origin_url"])
 
                     # Download locally-missing favorites from the server
@@ -329,7 +330,7 @@ class Smart:
 
                         try:
                             logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
-                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '/json')
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
                             path = ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
                                                source_url=image_data["origin_url"],
