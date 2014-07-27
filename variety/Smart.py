@@ -148,6 +148,7 @@ class Smart:
                 'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 300, 300)),
                 'width': width,
                 'height': height,
+                'filename': os.path.basename(filename),
                 'origin_url': meta['sourceURL'],
                 'source_name': meta.get('sourceName', None),
                 'source_location': meta.get('sourceLocation', None),
