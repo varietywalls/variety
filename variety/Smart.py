@@ -33,13 +33,14 @@ import json
 import base64
 import threading
 import time
+import sys
 
 random.seed()
 logger = logging.getLogger('variety')
 
 
 class Smart:
-    SITE_URL = 'http://localhost:4000'
+    SITE_URL = 'http://localhost:4000' if '--debug-smart' in sys.argv else 'https://vrty.org'
     API_URL = SITE_URL + '/api'
 
     def __init__(self, parent):

@@ -1940,6 +1940,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                    "Example: 'variety --set-option icon Dark --set-option clock_enabled True'. "
                    "USE WITH CAUTION: You are changing the settings file directly in an unguarded way."))
 
+        parser.add_option(
+            "--debug-smart", action="store_true", dest="debug_smart",
+            help="Debug Smart/Sync functionality by using local server")
+
         options, args = parser.parse_args(arguments)
 
         if report_errors:
