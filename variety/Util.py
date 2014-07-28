@@ -360,7 +360,7 @@ class Util:
     @staticmethod
     def gtk_to_fcmatch_font(gtk_font_name):
         fd = Pango.FontDescription(gtk_font_name)
-        family = fd.get_family()
+        family = _u(fd.get_family())
         size = gtk_font_name[gtk_font_name.rindex(' '):].strip()
         rest = gtk_font_name.replace(family, '').strip().replace(' ', ':')
         return family + ":" + rest, size
