@@ -812,7 +812,7 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox" id="box37">
+                  <object class="GtkBox" id="smart_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">15</property>
@@ -865,8 +865,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Variety will recommend you images and sources based on your tastes. This implies collecting data about the images you like or dislike. Keeping this enabled will help Variety provide better pictures for everyone. 
-Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
+                        <property name="label" translatable="yes">Variety will recommend you images and sources based on your tastes. This implies collecting data about the images you like or dislike. Keeping this enabled will help Variety provide better pictures for everyone.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -976,7 +975,7 @@ Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/v
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="box39">
+                  <object class="GtkBox" id="sync_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">15</property>
@@ -1059,7 +1058,7 @@ Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/v
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">When enabled, images that you favorite on other computers will be automatically downloaded to this computer. You need to be logged in with the same smart user everywhere. Sync will not delete any images. Sync applies only to images downloaded by Variety.</property>
+                        <property name="label" translatable="yes">Your favorite images from other computers will be automatically downloaded to this computer. You need to be logged in with the same smart user everywhere. Sync will not delete any images.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1078,20 +1077,20 @@ Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/v
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="facebook_box">
+                  <object class="GtkBox" id="about_smart_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="valign">start</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_right">15</property>
+                    <property name="margin_top">15</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkLabel" id="label27">
+                      <object class="GtkLabel" id="label1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">start</property>
-                        <property name="margin_left">15</property>
-                        <property name="margin_top">20</property>
-                        <property name="label" translatable="yes">Facebook Sharing</property>
+                        <property name="label" translatable="yes">Data collection policy</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -1103,39 +1102,39 @@ Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/v
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="box18">
+                      <object class="GtkLabel" id="sync_label1">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="valign">start</property>
-                        <property name="margin_left">30</property>
-                        <property name="margin_right">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkCheckButton" id="facebook_show_dialog">
-                            <property name="label" translatable="yes">Display dialog to customize the Facebook post before publishing</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="halign">start</property>
-                            <property name="margin_top">7</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="xalign">0</property>
-                            <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
+                        <property name="can_focus">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">Smart and Sync apply only to images downloaded by Variety from the different online image sources. No data is collected for local-only images that might be private, and Sync does not work for such images.</property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="data_collection_label1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">&lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
@@ -1154,7 +1153,7 @@ Applies only to images downloaded by Variety. &lt;a href='http://peterlevi.com/v
               <object class="GtkLabel" id="social_tab_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Sync and sharing</property>
+                <property name="label" translatable="yes">Smart and sync</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -3193,11 +3192,66 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="facebook_box1">
+                  <object class="GtkBox" id="facebook_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="valign">start</property>
                     <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label27">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Facebook Sharing</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="box18">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="valign">start</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_right">10</property>
+                        <property name="hexpand">True</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkCheckButton" id="facebook_show_dialog">
+                            <property name="label" translatable="yes">Display dialog to customize the Facebook post before publishing</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_top">7</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -3463,7 +3517,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
