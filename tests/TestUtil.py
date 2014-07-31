@@ -94,7 +94,7 @@ class TestUtil(unittest.TestCase):
         self.assertEquals("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
 
     def test_md5file(self):
-        self.assertEquals("a32377b309e3230f3c89c455ef1bdf0b", Util.md5file("test.jpg"))
+        self.assertEquals("1e088164ca8e87112236c8adeea2bfa4", Util.md5file("test.jpg"))
 
     def test_collapseuser(self):
         self.assertEquals("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))
@@ -134,6 +134,21 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_image('test.jpg', check_contents=True))
         self.assertTrue(Util.is_image('fake_image.jpg'))
         self.assertFalse(Util.is_image('fake_image.jpg', check_contents=True))
+
+    def test_is_working_link(self):
+        self.assertFalse(Util.is_working_link(None))
+        self.assertTrue(Util.is_working_link('http://www.google.com/'))
+        self.assertTrue(Util.is_working_link('http://vrty.org/'))
+        self.assertFalse(Util.is_working_link('http://www.google.com/dejkjdrelkjflkrejfjre'))
+
+    def test_is_working_image_link(self):
+        self.assertFalse(Util.is_working_image_link(None))
+        self.assertFalse(Util.is_working_image_link('http://www.google.com/'))
+        self.assertFalse(Util.is_working_image_link('http://vrty.org/'))
+        self.assertFalse(Util.is_working_image_link('http://www.google.com/dejkjdrelkjflkrejfjre'))
+        self.assertTrue(Util.is_working_image_link('http://upload.wikimedia.org/wikipedia/commons/5/53/Wikipedia-logo-en-big.png'))
+        self.assertTrue(Util.is_working_image_link('http://wallpapers.wallbase.cc/rozne/wallpaper-1206472.jpg'))
+        self.assertTrue(Util.is_working_image_link('https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg'))
 
 
 if __name__ == '__main__':

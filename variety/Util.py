@@ -60,6 +60,11 @@ class LogMethodCalls(object):
         return logcall
 
 
+class HeadRequest(urllib2.Request):
+    def get_method(self):
+        return "HEAD"
+
+
 class Util:
     @staticmethod
     def log_all(cls, level=logging.DEBUG):
@@ -446,5 +451,22 @@ class Util:
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(image, width, height)
         return pixbuf.save_to_bufferv('jpeg', [], [])[1]
 
+    @staticmethod
+    def is_working_link(url):
+        if not url:
+            return False
+        try:
+            urllib2.urlopen(HeadRequest(url))
+            return True
+        except urllib2.HTTPError:
+            return False
 
-
+    @staticmethod
+    def is_working_image_link(url):
+        if not url:
+            return False
+        try:
+            u = urllib2.urlopen(HeadRequest(url))
+            return u.info().get("content-type", "").startswith("image/")
+        except urllib2.HTTPError:
+            return False

@@ -132,9 +132,17 @@ class Smart:
         except Exception:
             logger.exception("Could not smart-report %s as trash" % url)
 
-    def report_file(self, filename, tag, attempt=0):
+    def report_file(self, filename, tag, async=True, upload_full_image=False):
+        if not async:
+            self._do_report_file(filename, tag, upload_full_image=upload_full_image)
+        else:
+            def _go():
+                self._do_report_file(filename, tag, upload_full_image=upload_full_image)
+            threading.Timer(0, _go).start()
+
+    def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False):
         if not self.is_smart_enabled():
-            return -1
+            return
 
         try:
             self.load_user()
@@ -142,7 +150,7 @@ class Smart:
 
             meta = Util.read_metadata(filename)
             if not meta or not "sourceURL" in meta:
-                return -2  # we only smart-report images coming from Variety online sources, not local images
+                return  # we only smart-report images coming from Variety online sources, not local images
 
             width, height = Util.get_size(filename)
             image = {
@@ -156,12 +164,17 @@ class Smart:
                 'image_url': meta.get('imageURL', None)
             }
 
+            # check for dead links and upload full image in that case (happens with old favorites):
+            if upload_full_image or (tag == 'favorite' and not Util.is_working_image_link(meta.get('imageURL', None))):
+                with open(filename, 'r') as f:
+                    image['full_image'] = base64.b64encode(f.read())
+
             logger.info("Smart-reporting %s as '%s'" % (filename, tag))
             try:
                 url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
                 result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
-                return 0
+                return
             except HTTPError, e:
                 logger.error("Server returned %d, potential reason - server failure?" % e.code)
                 if e.code in (403, 404):
@@ -170,14 +183,12 @@ class Smart:
                     self.new_user()
                     self.parent.preferences_dialog.on_btn_login_register_clicked()
 
-                if attempt == 3:
-                    logger.exception(
-                        "Could not smart-report %s as '%s, server error code %s'" % (filename, tag, e.code))
-                    return -3
-                return self.report_file(filename, tag, attempt + 1)
+                if attempt < 3:
+                    self._do_report_file(filename, tag, attempt + 1)
+                else:
+                    logger.exception("Could not smart-report %s as '%s, server error code %s'" % (filename, tag, e.code))
         except Exception:
             logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
-            return -4
 
     def show_notice_dialog(self):
         # Show Smart Variety notice
@@ -282,7 +293,7 @@ class Smart:
 
                         if not imageid in server_data["favorite"]:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
-                            self.report_file(path, "favorite")
+                            self.report_file(path, "favorite", async=False)
                             time.sleep(1)
                     except:
                         logger.exception("sync: Could not process file %s" % name)

@@ -1572,7 +1572,7 @@ class VarietyWindow(Gtk.Window):
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
-                self.smart.report_file(file, 'trash')
+                self.smart.report_file(file, 'trash', async=False)
 
                 command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
                 logger.info("Running trash command %s" % command)
@@ -1622,7 +1622,7 @@ class VarietyWindow(Gtk.Window):
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
-                self.smart.report_file(file, 'favorite')
+                self.smart.report_file(file, 'favorite', async=True)
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -1635,7 +1635,6 @@ class VarietyWindow(Gtk.Window):
                 ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
                 if ok:
                     new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
-                    self.smart.report_file(new_file, 'favorite')
                     self.used = [(new_file if f == file else f) for f in self.used]
                     self.downloaded = [(new_file if f == file else f) for f in self.downloaded]
                     with self.prepared_lock:
@@ -1646,6 +1645,8 @@ class VarietyWindow(Gtk.Window):
                         if self.no_effects_on == file:
                             self.no_effects_on = new_file
                         self.set_wp_throttled(new_file, delay=0)
+
+                    self.smart.report_file(new_file, 'favorite', async=True)
         except Exception:
             logger.exception("Exception in move_to_favorites")
 
