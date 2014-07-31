@@ -106,7 +106,7 @@ class Smart:
                     logger.info('Missing smart_user.json, creating new smart user')
                     self.new_user()
 
-    def report_trash(self, url):
+    def report_trash(self, origin_url):
         if not self.is_smart_enabled():
             return
 
@@ -114,10 +114,10 @@ class Smart:
             self.load_user()
             user = self.user
 
-            logger.info("Smart-reporting %s as trash" % url)
+            logger.info("Smart-reporting %s as trash" % origin_url)
             try:
                 url = Smart.API_URL + '/tag/' + user['id'] + '/trash'
-                result = Util.fetch(url, {'image': json.dumps({'origin_url': url}), 'authkey': user['authkey']})
+                result = Util.fetch(url, {'image': json.dumps({'origin_url': origin_url}), 'authkey': user['authkey']})
                 logger.info("Smart-reported, server returned: %s" % result)
                 return
 
@@ -245,7 +245,7 @@ class Smart:
                 self.load_user(create_if_missing=True)
 
                 logger.info("sync: Fetching serverside data")
-                server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/sync/' + self.user["id"]))
+                server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/user/' + self.user["id"] + '/sync'))
 
                 syncdb = self.load_syncdb()
 
@@ -288,7 +288,7 @@ class Smart:
                         logger.exception("sync: Could not process file %s" % name)
 
                 # Upload locally trashed URLs
-                logger.info("sync: Reporting local banned URLs to server")
+                logger.info("sync: Uploading local banned URLs to server")
                 for url in self.parent.banned:
                     if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
                         return
