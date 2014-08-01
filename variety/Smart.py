@@ -165,7 +165,7 @@ class Smart:
             }
 
             # check for dead links and upload full image in that case (happens with old favorites):
-            if upload_full_image or (tag == 'favorite' and not Util.is_working_image_link(meta.get('imageURL', None))):
+            if upload_full_image or (tag == 'favorite' and Util.is_dead_or_not_image(meta.get('imageURL', None))):
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
@@ -295,6 +295,11 @@ class Smart:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False)
                             time.sleep(1)
+                        elif "upload_full_image" in server_data["favorite"][imageid]:
+                            logger.info("sync: Uploading full image for existing favorite %s" % path)
+                            self.report_file(path, "favorite", async=False, upload_full_image=True)
+                            time.sleep(1)
+
                     except:
                         logger.exception("sync: Could not process file %s" % name)
 

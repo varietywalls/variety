@@ -452,21 +452,13 @@ class Util:
         return pixbuf.save_to_bufferv('jpeg', [], [])[1]
 
     @staticmethod
-    def is_working_link(url):
+    def is_dead_or_not_image(url):
         if not url:
-            return False
-        try:
-            urllib2.urlopen(HeadRequest(url))
             return True
-        except urllib2.HTTPError:
-            return False
-
-    @staticmethod
-    def is_working_image_link(url):
-        if not url:
-            return False
         try:
             u = urllib2.urlopen(HeadRequest(url))
-            return u.info().get("content-type", "").startswith("image/")
-        except urllib2.HTTPError:
+            return not u.info().get("content-type", "").startswith("image/")
+        except urllib2.HTTPError, e:
+            if e.code in (403, 404):
+                return True
             return False
