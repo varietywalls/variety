@@ -64,7 +64,7 @@ class Smart:
             self.show_notice_dialog()
 
     def new_user(self):
-        logger.info('Creating new smart user')
+        logger.info('smart: Creating new smart user')
 
         self.reset_sync()
 
@@ -73,21 +73,21 @@ class Smart:
             GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
         with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
-            logger.info('Created smart user: %s' % self.user["id"])
+            logger.info('smart: Created smart user: %s' % self.user["id"])
 
     def reset_sync(self):
         self.sync_hash = Util.random_hash()  #  stop current sync if running
         self.last_synced = 0
 
     def set_user(self, user):
-        logger.info('Setting new smart user')
+        logger.info('smart: Setting new smart user')
 
         self.user = user
         if self.parent.preferences_dialog:
             self.parent.preferences_dialog.on_smart_user_updated()
         with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
-            logger.info('Updated smart user: %s' % self.user["id"])
+            logger.info('smart: Updated smart user: %s' % self.user["id"])
 
         self.reset_sync()
         self.sync()
@@ -100,10 +100,10 @@ class Smart:
                     self.user = json.load(f)
                     if self.parent.preferences_dialog:
                         self.parent.preferences_dialog.on_smart_user_updated()
-                    logger.info('Loaded smart user: %s' % self.user["id"])
+                    logger.info('smart: Loaded smart user: %s' % self.user["id"])
             except IOError:
                 if create_if_missing:
-                    logger.info('Missing smart_user.json, creating new smart user')
+                    logger.info('smart: Missing smart_user.json, creating new smart user')
                     self.new_user()
 
     def report_trash(self, origin_url):
@@ -114,15 +114,15 @@ class Smart:
             self.load_user()
             user = self.user
 
-            logger.info("Smart-reporting %s as trash" % origin_url)
+            logger.info("smart: Reporting %s as trash" % origin_url)
             try:
                 url = Smart.API_URL + '/tag/' + user['id'] + '/trash'
                 result = Util.fetch(url, {'image': json.dumps({'origin_url': origin_url}), 'authkey': user['authkey']})
-                logger.info("Smart-reported, server returned: %s" % result)
+                logger.info("smart: Reported, server returned: %s" % result)
                 return
 
             except HTTPError, e:
-                logger.error("Server returned %d, potential reason - server failure?" % e.code)
+                logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
                 if e.code in (403, 404):
                     self.parent.show_notification(
                         _('Your Smart Variety credentials are probably outdated. Please login again.'))
@@ -130,7 +130,7 @@ class Smart:
                     self.parent.preferences_dialog.on_btn_login_register_clicked()
 
         except Exception:
-            logger.exception("Could not smart-report %s as trash" % url)
+            logger.exception("smart: Could not report %s as trash" % url)
 
     def report_file(self, filename, tag, async=True, upload_full_image=False):
         if not async:
@@ -169,14 +169,14 @@ class Smart:
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
-            logger.info("Smart-reporting %s as '%s'" % (filename, tag))
+            logger.info("smart: Reporting %s as '%s'" % (filename, tag))
             try:
                 url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
                 result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})
-                logger.info("Smart-reported, server returned: %s" % result)
+                logger.info("smart: Reported, server returned: %s" % result)
                 return
             except HTTPError, e:
-                logger.error("Server returned %d, potential reason - server failure?" % e.code)
+                logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
                 if e.code in (403, 404):
                     self.parent.show_notification(
                         _('Your Smart Variety credentials are probably outdated. Please login again.'))
@@ -186,9 +186,9 @@ class Smart:
                 if attempt < 3:
                     self._do_report_file(filename, tag, attempt + 1)
                 else:
-                    logger.exception("Could not smart-report %s as '%s, server error code %s'" % (filename, tag, e.code))
+                    logger.exception("smart: Could not report %s as '%s, server error code %s'" % (filename, tag, e.code))
         except Exception:
-            logger.exception("Could not smart-report %s as '%s'" % (filename, tag))
+            logger.exception("smart: Could not report %s as '%s'" % (filename, tag))
 
     def show_notice_dialog(self):
         # Show Smart Variety notice
@@ -291,6 +291,11 @@ class Smart:
                             syncdb.remote[imageid] = {"success": True}
                             self.write_syncdb(syncdb)
 
+                        if imageid in server_data["ignore"]:
+                            logger.warning('sync: Skipping upload of %s as it is has been deleted from your profile. '
+                                           'To undo this visit: %s' % (name, Smart.SITE_URL + '/image/' + imageid))
+                            continue
+
                         if not imageid in server_data["favorite"]:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False)
@@ -328,9 +333,15 @@ class Smart:
                     # Download locally-missing favorites from the server
                     to_sync = []
                     for imageid in server_data["favorite"]:
+                        if imageid in server_data["ignore"]:
+                            logger.warning('sync: Skipping download of %s as it is has been deleted from your profile. '
+                                           'To undo this visit: %s' % (imageid, Smart.SITE_URL + '/image/' + imageid))
+                            continue
+
                         if imageid in server_data["trash"]:
-                            continue  # do not download favorites that have later been trashed;
-                            # TODO: we need a better way to un-favorite things and forbid them from downloading
+                             # do not download favorites that have later been trashed
+                            logger.info('sync: Skipping download of %s as it is also in trash. ' % imageid)
+                            continue
 
                         if imageid in syncdb.remote:
                             if 'success' in syncdb.remote[imageid]:
@@ -340,7 +351,9 @@ class Smart:
                         to_sync.append(imageid)
 
                     if to_sync:
-                        self.parent.show_notification(_("Sync"), _("Fetching %d images") % len(to_sync))
+                        self.parent.show_notification(
+                            _("Sync"),
+                            (_("Fetching %d images") % len(to_sync)) if len(to_sync) != 1 else _("Fetching 1 image"))
 
                     for imageid in to_sync:
                         if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
@@ -350,7 +363,7 @@ class Smart:
                             logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
-                            path = ImageFetcher.fetch(image_data["image_url"], self.parent.options.favorites_folder,
+                            path = ImageFetcher.fetch(image_data["download_url"], self.parent.options.favorites_folder,
                                                source_url=image_data["origin_url"],
                                                source_name=image_data["sources"][0][0] if image_data.get("sources", []) else None,
                                                source_location=image_data["sources"][0][1] if image_data.get("sources", []) else None,
