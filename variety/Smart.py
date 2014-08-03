@@ -391,6 +391,8 @@ class Smart:
                         self.parent.show_notification(_("Sync"), _("Finished"))
 
                 self.last_synced = time.time()
+            except:
+                logger.exception('sync: Error')
             finally:
                 self.syncing = False
 

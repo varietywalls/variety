@@ -137,12 +137,14 @@ class TestUtil(unittest.TestCase):
 
     def test_is_dead_or_not_image(self):
         self.assertTrue(Util.is_dead_or_not_image(None))
+        self.assertTrue(Util.is_dead_or_not_image('not a URL'))
         self.assertTrue(Util.is_dead_or_not_image('http://www.google.com/'))
         self.assertTrue(Util.is_dead_or_not_image('http://vrty.org/'))
         self.assertTrue(Util.is_dead_or_not_image('http://www.google.com/dejkjdrelkjflkrejfjre'))
         self.assertFalse(Util.is_dead_or_not_image('http://upload.wikimedia.org/wikipedia/commons/5/53/Wikipedia-logo-en-big.png'))
         self.assertFalse(Util.is_dead_or_not_image('http://wallpapers.wallbase.cc/rozne/wallpaper-1206472.jpg'))
         self.assertFalse(Util.is_dead_or_not_image('https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg'))
+        self.assertFalse(Util.is_dead_or_not_image('http://interfacelift.com/wallpaper/D98ef829/00899_rustedbolt_2560x1600.jpg'))
 
 
 if __name__ == '__main__':

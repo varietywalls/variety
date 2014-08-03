@@ -27,6 +27,7 @@ import time
 import pyexiv2
 import urllib
 import urllib2
+from urlparse import urlparse
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
@@ -287,10 +288,10 @@ class Util:
         return f
 
     @staticmethod
-    def urlopen(url, data=None):
+    def urlopen(url, data=None, head_request=False):
         if url.startswith('//'):
             url = 'http:' + url
-        request = urllib2.Request(url)
+        request = urllib2.Request(url) if not head_request else HeadRequest(url)
         request.add_header('User-Agent', USER_AGENT)
         request.add_header('Cache-Control', 'max-age=0')
         return urllib2.urlopen(request, data=urllib.urlencode(data) if data else None, timeout=20)
@@ -455,10 +456,21 @@ class Util:
     def is_dead_or_not_image(url):
         if not url:
             return True
+
         try:
-            u = urllib2.urlopen(HeadRequest(url))
+            if urlparse(url).netloc.startswith('interfacelift.com'):
+                return False
+        except:
+            return True
+
+        try:
+            u = Util.urlopen(url, head_request=True)
             return not u.info().get("content-type", "").startswith("image/")
         except urllib2.HTTPError, e:
             if e.code in (403, 404):
                 return True
+            return False
+        except ValueError:  # not a valid URL
+            return True
+        except:
             return False
