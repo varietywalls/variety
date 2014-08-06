@@ -154,7 +154,7 @@ class Smart:
 
             width, height = Util.get_size(filename)
             image = {
-                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 600, 450)),
+                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 1024, 1024)),
                 'width': width,
                 'height': height,
                 'filename': os.path.basename(filename),
