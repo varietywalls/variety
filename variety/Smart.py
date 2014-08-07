@@ -53,6 +53,12 @@ class Smart:
             self.reset_sync()
             self.sync()
 
+    def get_profile_url(self):
+        if self.user:
+            return "%s/login/%s?authkey=%s" % (Smart.SITE_URL, self.user["id"], self.user.get('authkey', ''))
+        else:
+            return None
+
     def smart_settings_changed(self):
         return self.parent.previous_options is None or \
                self.parent.previous_options.smart_enabled != self.parent.options.smart_enabled or \
@@ -133,6 +139,9 @@ class Smart:
             logger.exception("smart: Could not report %s as trash" % url)
 
     def report_file(self, filename, tag, async=True, upload_full_image=False):
+        if not self.is_smart_enabled():
+            return
+
         if not async:
             self._do_report_file(filename, tag, upload_full_image=upload_full_image)
         else:

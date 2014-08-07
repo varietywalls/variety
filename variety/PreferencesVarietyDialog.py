@@ -104,8 +104,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     msg = msg_dict[ver].strip()
                 elif "*" in msg_dict:
                     msg = msg_dict["*"].strip()
+
+                if '%SMART_PROFILE_URL%' in msg:
+                    profile_url = self.parent.smart.get_profile_url()
+                    msg = msg.replace('%SMART_PROFILE_URL%', profile_url) if profile_url else ""
             except Exception:
                 logger.exception("Could not parse status message")
+                msg = ""
 
         logger.info("Showing status message: %s" % msg)
         self.set_status_message(msg)
@@ -1189,10 +1194,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if self.parent.smart.user:
             self.ui.box_smart_user.set_visible(True)
             username = self.parent.smart.user.get("username")
-            self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s/login/%s?authkey=%s">%s</a>' % (
-                    Smart.SITE_URL,
-                    self.parent.smart.user["id"],
-                    self.parent.smart.user.get('authkey', ''),
+            self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s">%s</a>' % (
+                    self.parent.smart.get_profile_url(),
                     username or _('Anonymous')))
             self.ui.btn_login_register.set_label(_('Login or register') if not bool(username) else _('Switch user'))
             self.ui.smart_register_note.set_visible(not bool(username))
