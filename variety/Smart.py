@@ -262,16 +262,18 @@ class Smart:
 
                 # First upload local favorites that need uploading:
                 logger.info("sync: Uploading local favorites to server")
-                for name in os.listdir(self.parent.options.favorites_folder):
+
+                files = os.listdir(self.parent.options.favorites_folder)
+                files = [os.path.join(self.parent.options.favorites_folder, f) for f in files]
+                files = filter(lambda f: os.path.isfile(f) and Util.is_image(f), files)
+                files.sort(key=os.path.getmtime)
+
+                for path in files:
                     try:
                         if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
                             return
 
-                        time.sleep(0.1)
-
-                        path = os.path.join(self.parent.options.favorites_folder, name)
-                        if not Util.is_image(path):
-                            continue
+                        name = os.path.basename(path)
 
                         if path in syncdb.local:
                             info = syncdb.local[path]
