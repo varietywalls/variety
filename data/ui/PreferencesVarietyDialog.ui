@@ -1090,7 +1090,7 @@
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">start</property>
-                        <property name="label" translatable="yes">Data collection policy</property>
+                        <property name="label" translatable="yes">Privacy policy</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -1120,13 +1120,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="data_collection_label1">
+                      <object class="GtkLabel" id="sync_label2">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">&lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
+                        <property name="label" translatable="yes">If Smart Variety is enabled your favorite images will be publicly visible on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1137,11 +1137,79 @@
                         <property name="position">2</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="data_collection_label1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">&lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the privacy policy here.&lt;/a&gt; </property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="about_smart_box1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_right">15</property>
+                    <property name="margin_top">15</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label35">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="label" translatable="yes">VRTY.ORG</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="sync_label4">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">Explore everyone's favorite images and find great new sources at &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
