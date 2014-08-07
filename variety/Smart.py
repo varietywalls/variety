@@ -304,6 +304,10 @@ class Smart:
                             logger.info("sync: Uploading full image for existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False, upload_full_image=True)
                             time.sleep(1)
+                        elif "needs_reupload" in server_data["favorite"][imageid]:
+                            logger.info("sync: Server requested reupload of existing favorite %s" % path)
+                            self.report_file(path, "favorite", async=False)
+                            time.sleep(1)
 
                     except:
                         logger.exception("sync: Could not process file %s" % name)
