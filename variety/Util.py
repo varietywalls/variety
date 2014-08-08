@@ -180,8 +180,8 @@ class Util:
                     f.write(u"INFO:\n%s\n%s\n%s\n%s\n%s\n" % (
                             info["sourceName"],
                             info["sourceURL"],
-                            info["sourceLocation"],
-                            info["imageURL"],
+                            info.get("sourceLocation", ''),
+                            info.get("imageURL", ''),
                             VARIETY_INFO))
             except Exception:
                 logger.exception("Could not write url metadata for file " + filename)
@@ -213,9 +213,9 @@ class Util:
                     if len(lines) > 2 and lines[0].strip() == "INFO:":
                         info["sourceName"] = lines[1].strip().replace("Downloaded from ", "")  # TODO remove later on
                         info["sourceURL"] = lines[2].strip()
-                        if len(lines) > 3:
+                        if len(lines) > 3 and len(lines[3].strip()) > 0:
                             info["sourceLocation"] = lines[3].strip()
-                        if len(lines) > 4:
+                        if len(lines) > 4 and len(lines[4].strip()) > 0:
                             info["imageURL"] = lines[4].strip()
                         return info
                     else:
@@ -453,6 +453,14 @@ class Util:
         return pixbuf.save_to_bufferv('jpeg', [], [])[1]
 
     @staticmethod
+    def is_alive_and_image(url):
+        try:
+            u = Util.urlopen(url, head_request=True)
+            return u.info().get("content-type", "").startswith("image/")
+        except:
+            return False
+
+    @staticmethod
     def is_dead_or_not_image(url):
         if not url:
             return True
@@ -474,3 +482,33 @@ class Util:
             return True
         except:
             return False
+
+    @staticmethod
+    def guess_image_url(meta):
+        if 'imageURL' in meta:
+            return meta['imageURL']
+
+        try:
+            origin_url = meta['sourceURL']
+
+            if "wallbase.cc" in origin_url:
+                s = Util.html_soup(origin_url)
+                return s.find('img', 'wall')['src']
+
+            elif "flickr.com" in origin_url:
+                from variety.FlickrDownloader import API_KEY
+                photo_id = origin_url.split('/')[-1]
+                call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
+                       (API_KEY, photo_id)
+                resp = Util.fetch_json(call)
+                s = max(resp['sizes']['size'], key=lambda size: int(size['width']))
+                return s['source']
+
+            elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
+                return origin_url
+
+            return None
+        except:
+            return None
+
+

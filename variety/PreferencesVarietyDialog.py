@@ -112,7 +112,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 logger.exception("Could not parse status message")
                 msg = ""
 
-        logger.info("Showing status message: %s" % msg)
         self.set_status_message(msg)
 
     def set_status_message(self, msg):

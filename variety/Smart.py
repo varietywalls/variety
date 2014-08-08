@@ -163,23 +163,37 @@ class Smart:
                 return  # we only smart-report images coming from Variety online sources, not local images
 
             width, height = Util.get_size(filename)
+            origin_url = meta['sourceURL']
+            image_url = meta.get('imageURL', None)
+
+            # check for dead links and upload full image in that case (happens with old favorites):
+            if not upload_full_image and not image_url:
+                image_url = Util.guess_image_url(meta)
+                meta['imageURL'] = image_url
+                Util.write_metadata(filename, meta)
+
             image = {
                 'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 1024, 1024)),
                 'width': width,
                 'height': height,
                 'filename': os.path.basename(filename),
-                'origin_url': meta['sourceURL'],
+                'origin_url': origin_url,
                 'source_name': meta.get('sourceName', None),
                 'source_location': meta.get('sourceLocation', None),
-                'image_url': meta.get('imageURL', None)
+                'image_url': image_url
             }
 
-            # check for dead links and upload full image in that case (happens with old favorites):
-            if upload_full_image or (tag == 'favorite' and Util.is_dead_or_not_image(meta.get('imageURL', None))):
+            logger.info("smart: Reporting %s as '%s'" % (filename, tag))
+
+            if upload_full_image or (tag == 'favorite' and Util.is_dead_or_not_image(image_url)):
+                if upload_full_image:
+                    logger.info('smart: Including full image in upload per server request')
+                else:
+                    logger.info('smart: Including full image in upload as image link seems dead: %s, sourceURL: %s' %
+                                (image_url, origin_url))
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
-            logger.info("smart: Reporting %s as '%s'" % (filename, tag))
             try:
                 url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
                 result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})

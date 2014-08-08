@@ -146,6 +146,19 @@ class TestUtil(unittest.TestCase):
         self.assertFalse(Util.is_dead_or_not_image('https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg'))
         self.assertFalse(Util.is_dead_or_not_image('http://interfacelift.com/wallpaper/D98ef829/00899_rustedbolt_2560x1600.jpg'))
 
+    def test_guess_image_url(self):
+        self.assertEquals('http://wallpapers.wallbase.cc/rozne/wallpaper-2064088.jpg',
+                          Util.guess_image_url({'sourceURL': 'http://wallbase.cc/wallpaper/2064088'}))
+
+        self.assertEquals('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
+                          Util.guess_image_url({'sourceURL': 'https://www.flickr.com/photos/83646108@N00/4558166441'}))
+
+        self.assertEquals('https://farm5.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
+                          Util.guess_image_url({'sourceURL': 'http://www.flickr.com/photos/52821721@N00/4768189432'}))
+
+        self.assertEquals('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',
+                          Util.guess_image_url({'sourceURL': 'http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg'}))
+
 
 if __name__ == '__main__':
     unittest.main()
