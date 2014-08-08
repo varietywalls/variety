@@ -1108,7 +1108,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Smart and Sync apply only to images downloaded by Variety from the different online image sources. No data is collected for local-only images that might be private, and Sync does not work for such images.</property>
+                        <property name="label" translatable="yes">Smart and Sync apply only to images downloaded by Variety from the different online image sources. No data is collected for local-only images that might be private, and Sync does not work for such images. Your favorite images will be publicly visible on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1117,24 +1117,6 @@
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="sync_label2">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="halign">start</property>
-                        <property name="margin_left">15</property>
-                        <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">If Smart Variety is enabled your favorite images will be publicly visible on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
-                        <property name="use_markup">True</property>
-                        <property name="justify">fill</property>
-                        <property name="wrap">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -1152,7 +1134,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
@@ -1194,7 +1176,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Explore everyone's favorite images and find great new sources at &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
+                        <property name="label" translatable="yes">Explore everyone's favorite images and find great new image sources at &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>

@@ -85,6 +85,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
 
         user = {'username': self.ui.register_username.get_text(),
                 'password': self.ui.register_password.get_text(),
+                'password-confirm': self.ui.register_password_confirm.get_text(),
                 'email': self.ui.register_email.get_text()}
 
         # If the current user is anonymous, use its existing data, do not register a completely new user:

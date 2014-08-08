@@ -2114,50 +2114,64 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         fetch_thread.start()
 
     def process_variety_url(self, url):
-        logger.info('Processing variety url %s' % url)
+        try:
+            logger.info('Processing variety url %s' % url)
 
-        # make the url urlparse-friendly:
-        url = url.replace('variety://', 'http://')
-        url = url.replace('vrty://', 'http://')
+            # make the url urlparse-friendly:
+            url = url.replace('variety://', 'http://')
+            url = url.replace('vrty://', 'http://')
 
-        parts = urlparse.urlparse(url)
-        command = parts.netloc
-        args = urlparse.parse_qs(parts.query)
+            parts = urlparse.urlparse(url)
+            command = parts.netloc
+            args = urlparse.parse_qs(parts.query)
 
-        if command == 'facebook-auth':
-            if hasattr(self, 'facebook_helper') and self.facebook_helper:
-                fragments = urlparse.parse_qs(parts.fragment)
-                args.update(fragments)
-                self.facebook_helper.on_facebook_auth(args)
+            if command == 'facebook-auth':
+                if hasattr(self, 'facebook_helper') and self.facebook_helper:
+                    fragments = urlparse.parse_qs(parts.fragment)
+                    args.update(fragments)
+                    self.facebook_helper.on_facebook_auth(args)
 
-        elif command == 'add-source':
-            source_type = args['type'][0].lower()
-            if not source_type in Options.SourceType.str_to_type:
-                self.show_notification(_('Unsupported source type'),
-                                       _('Are you running the most recent version of Variety?'))
-                return
-            def _add():
-                newly_added = self.preferences_dialog.add_sources(Options.str_to_type(source_type), [args['location'][0]])
-                self.preferences_dialog.delayed_apply()
-                if newly_added == 1:
-                    self.show_notification(_('New image source added'))
+            elif command == 'add-source':
+                source_type = args['type'][0].lower()
+                if not source_type in Options.SourceType.str_to_type:
+                    self.show_notification(_('Unsupported source type'),
+                                           _('Are you running the most recent version of Variety?'))
+                    return
+                def _add():
+                    newly_added = self.preferences_dialog.add_sources(Options.str_to_type(source_type), [args['location'][0]])
+                    self.preferences_dialog.delayed_apply()
+                    if newly_added == 1:
+                        self.show_notification(_('New image source added'))
+                    else:
+                        self.show_notification(_('Image source already exists, enabling it'))
+                GObject.idle_add(_add)
+
+            elif command == 'set-wallpaper':
+                image = ImageFetcher.fetch(args["image_url"][0], self.options.fetched_folder,
+                                           source_url=args["origin_url"][0],
+                                           source_name=args.get("source_name", [None])[0],
+                                           source_location=args.get("source_location", [None])[0],
+                                           progress_reporter=self.show_notification,
+                                           verbose=True)
+                if image:
+                    self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
+                    self.set_wallpaper(image, False, False)
+
+            elif command == 'smart-login':
+                authkey = args["authkey"][0]
+                username = args["username"][0]
+                id = args["id"][0]
+                if not self.smart.user or self.smart.user['authkey'] != authkey:
+                    self.show_notification(_('Oops, invalid or outdated Smart login info received'))
                 else:
-                    self.show_notification(_('Image source already exists, enabling it'))
-            GObject.idle_add(_add)
-
-        elif command == 'set-wallpaper':
-            image = ImageFetcher.fetch(args["image_url"][0], self.options.fetched_folder,
-                                       source_url=args["origin_url"][0],
-                                       source_name=args.get("source_name", [None])[0],
-                                       source_location=args.get("source_location", [None])[0],
-                                       progress_reporter=self.show_notification,
-                                       verbose=True)
-            if image:
-                self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
-                self.set_wallpaper(image, False, False)
-
-        else:
-            self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
+                    self.show_notification(_('Logged in as %s') % username)
+                    self.smart.set_user({'id': id, 'authkey': authkey, 'username': username})
+            else:
+                self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
+        except:
+            self.show_notification(_('Could not process the given variety:// URL'),
+                                   _('Run with logging enabled to see details'))
+            logger.exception('Exception in process_variety_url')
 
     def get_desktop_wallpaper(self):
         try:

@@ -90,7 +90,8 @@ class Smart:
 
         self.user = user
         if self.parent.preferences_dialog:
-            self.parent.preferences_dialog.on_smart_user_updated()
+            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
+
         with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
             logger.info('smart: Updated smart user: %s' % self.user["id"])
