@@ -1051,11 +1051,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
                     r[0] = False
         elif not self.parent.smart.user:
-                def _create():
-                    self.parent.smart.new_user()
-                    GObject.idle_add(self.on_smart_user_updated)
-                timer = threading.Timer(0, _create)
-                timer.start()
+            self.parent.smart.load_user(create_if_missing=True)
 
     def on_destroy(self, widget = None):
         if self.dialog:

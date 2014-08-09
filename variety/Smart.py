@@ -50,7 +50,6 @@ class Smart:
     def reload(self):
         if self.smart_settings_changed():
             self.load_user(create_if_missing=False, force_reload=True)
-            self.reset_sync()
             self.sync()
 
     def get_profile_url(self):
@@ -72,7 +71,7 @@ class Smart:
     def new_user(self):
         logger.info('smart: Creating new smart user')
 
-        self.reset_sync()
+        self._reset_sync()
 
         self.user = Util.fetch_json(Smart.API_URL + '/newuser')
         if self.parent.preferences_dialog:
@@ -81,7 +80,7 @@ class Smart:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
             logger.info('smart: Created smart user: %s' % self.user["id"])
 
-    def reset_sync(self):
+    def _reset_sync(self):
         self.sync_hash = Util.random_hash()  #  stop current sync if running
         self.last_synced = 0
 
@@ -96,7 +95,6 @@ class Smart:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
             logger.info('smart: Updated smart user: %s' % self.user["id"])
 
-        self.reset_sync()
         self.sync()
 
     def load_user(self, create_if_missing=True, force_reload=False):
@@ -139,18 +137,17 @@ class Smart:
         except Exception:
             logger.exception("smart: Could not report %s as trash" % url)
 
-    def report_file(self, filename, tag, async=True, upload_full_image=False):
+    def report_file(self, filename, tag, async=True, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
 
-        if not async:
-            self._do_report_file(filename, tag, upload_full_image=upload_full_image)
-        else:
-            def _go():
-                self._do_report_file(filename, tag, upload_full_image=upload_full_image)
-            threading.Timer(0, _go).start()
+        def _go():
+            self._do_report_file(filename, tag, upload_full_image=upload_full_image, needs_reupload=needs_reupload)
 
-    def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False):
+        _go() if not async else threading.Timer(0, _go).start()
+
+
+    def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
 
@@ -162,8 +159,21 @@ class Smart:
             if not meta or not "sourceURL" in meta:
                 return  # we only smart-report images coming from Variety online sources, not local images
 
-            width, height = Util.get_size(filename)
             origin_url = meta['sourceURL']
+            report_url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
+
+            if not (upload_full_image or needs_reupload):
+                # Attempt quick-tagging using just the computed image ID - will only succeed if the image already exists on the server
+                try:
+                    logger.info("smart: Quick-reporting %s as '%s'" % (filename, tag))
+                    imageid = self.get_image_id(origin_url)
+                    result = Util.fetch(report_url, {'image': json.dumps({'id': imageid}), 'authkey': user['authkey']})
+                    logger.info("smart: Quick-reported, server returned: %s" % result)
+                    return
+                except:
+                    logger.info("smart: Image uknown to server, performing full report")
+
+            width, height = Util.get_size(filename)
             image_url = meta.get('imageURL', None)
 
             # check for dead links and upload full image in that case (happens with old favorites):
@@ -195,8 +205,7 @@ class Smart:
                     image['full_image'] = base64.b64encode(f.read())
 
             try:
-                url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
-                result = Util.fetch(url, {'image': json.dumps(image), 'authkey': user['authkey']})
+                result = Util.fetch(report_url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("smart: Reported, server returned: %s" % result)
                 return
             except HTTPError, e:
@@ -270,15 +279,14 @@ class Smart:
         if not self.is_smart_enabled():
             return
 
-        self.sync_hash = Util.random_hash()
+        self.load_user(create_if_missing=True)
+        self._reset_sync()
         current_sync_hash = self.sync_hash
 
         def _run():
             logger.info('sync: Started, hash %s' % current_sync_hash)
 
             try:
-                self.load_user(create_if_missing=True)
-
                 logger.info("sync: Fetching serverside data")
                 server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/user/' + self.user["id"] + '/sync'))
 
@@ -332,7 +340,7 @@ class Smart:
                             time.sleep(1)
                         elif "needs_reupload" in server_data["favorite"][imageid]:
                             logger.info("sync: Server requested reupload of existing favorite %s" % path)
-                            self.report_file(path, "favorite", async=False)
+                            self.report_file(path, "favorite", async=False, needs_reupload=True)
                             time.sleep(1)
 
                     except:
