@@ -290,7 +290,8 @@ class Smart:
             try:
                 logger.info("sync: Fetching serverside data")
                 try:
-                    server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/user/' + self.user["id"] + '/sync'))
+                    sync_url = '%s/user/%s/sync?authkey=%s' % (Smart.API_URL, self.user["id"], self.user["authkey"])
+                    server_data = AttrDict(Util.fetch_json(sync_url))
                 except HTTPError, e:
                     self.handle_user_http_error(e)
                     raise
