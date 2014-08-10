@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import GObject
+from gi.repository import GObject, Gdk
 import hashlib
 from urllib2 import HTTPError
 import io
@@ -127,12 +127,7 @@ class Smart:
                 return
 
             except HTTPError, e:
-                logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
-                if e.code in (403, 404):
-                    self.parent.show_notification(
-                        _('Your Smart Variety credentials are probably outdated. Please login again.'))
-                    self.new_user()
-                    self.parent.preferences_dialog.on_btn_login_register_clicked()
+                self.handle_user_http_error(e)
 
         except Exception:
             logger.exception("smart: Could not report %s as trash" % url)
@@ -146,6 +141,17 @@ class Smart:
 
         _go() if not async else threading.Timer(0, _go).start()
 
+    def handle_user_http_error(self, e):
+        logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
+        if e.code in (403, 404):
+            self.parent.show_notification(
+                _('Your Smart Variety credentials are probably outdated. Please login again.'))
+            def _go():
+                Gdk.threads_enter()
+                self.parent.preferences_dialog.on_btn_login_register_clicked()
+                Gdk.threads_leave()
+            threading.Timer(0.1, _go).start()
+            raise e
 
     def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
@@ -209,12 +215,7 @@ class Smart:
                 logger.info("smart: Reported, server returned: %s" % result)
                 return
             except HTTPError, e:
-                logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
-                if e.code in (403, 404):
-                    self.parent.show_notification(
-                        _('Your Smart Variety credentials are probably outdated. Please login again.'))
-                    self.new_user()
-                    self.parent.preferences_dialog.on_btn_login_register_clicked()
+                self.handle_user_http_error(e)
 
                 if attempt < 3:
                     self._do_report_file(filename, tag, attempt + 1)
@@ -288,7 +289,11 @@ class Smart:
 
             try:
                 logger.info("sync: Fetching serverside data")
-                server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/user/' + self.user["id"] + '/sync'))
+                try:
+                    server_data = AttrDict(Util.fetch_json(Smart.API_URL + '/user/' + self.user["id"] + '/sync'))
+                except HTTPError, e:
+                    self.handle_user_http_error(e)
+                    raise
 
                 syncdb = self.load_syncdb()
 

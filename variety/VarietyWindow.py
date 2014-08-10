@@ -176,7 +176,10 @@ class VarietyWindow(Gtk.Window):
         self.first_run()
         self.smart.first_run()
 
-        GObject.idle_add(self.create_preferences_dialog)
+        def _delayed():
+            self.create_preferences_dialog()
+            self.smart.reload()
+        GObject.timeout_add(1000, _delayed)
 
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
@@ -347,8 +350,6 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
-        self.smart.reload()
-
         GObject.idle_add(self.update_indicator_icon)
 
         self.prepare_download_folder()
@@ -454,6 +455,9 @@ class VarietyWindow(Gtk.Window):
             threading.Timer(0.1, self.refresh_wallpaper).start()
         else:
             threading.Timer(0.1, self.refresh_texts).start()
+
+        if self.preferences_dialog:
+            self.smart.reload()
 
         if self.events:
             for e in self.events:

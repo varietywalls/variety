@@ -285,7 +285,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.build_add_button_menu()
 
             self.update_status_message()
-            self.dialog = None
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
             def _finish_loading():
@@ -737,6 +736,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
         self.dialog.run()
+        self.dialog.destroy()
+        self.dialog = None
 
     def on_wn_dialog_okay(self, url, edited_row):
         if edited_row:
@@ -1054,7 +1055,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.parent.smart.load_user(create_if_missing=True)
 
     def on_destroy(self, widget = None):
-        if self.dialog:
+        if hasattr(self, "dialog") and self.dialog:
             try:
                 self.dialog.destroy()
             except Exception:
@@ -1169,11 +1170,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_copyto_changed()
 
     def on_btn_login_register_clicked(self, widget=None):
-        self.dialog = LoginOrRegisterDialog()
-        self.dialog.smart = self.parent.smart
-        self.dialog.run()
-        self.dialog.destroy()
-        self.dialog = None
+        login_dialog = LoginOrRegisterDialog()
+        login_dialog.smart = self.parent.smart
+        self.show_dialog(login_dialog)
 
     def on_smart_user_updated(self):
         sync_allowed = self.ui.smart_enabled.get_active() and \

@@ -6,6 +6,8 @@
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Smart Variety login</property>
+    <property name="modal">True</property>
+    <property name="destroy_with_parent">True</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
