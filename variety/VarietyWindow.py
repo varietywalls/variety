@@ -2138,11 +2138,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             logger.exception("Could not get current wallpaper")
             return None
 
-    def cleanup_old_wallpapers(self, folder, prefix, current_wallpaper=None):
+    def cleanup_old_wallpapers(self, folder, prefix, new_wallpaper=None):
         try:
+            current_wallpaper = self.get_desktop_wallpaper()
             for name in os.listdir(folder):
                 file = os.path.join(folder, name)
-                if file != current_wallpaper and file != self.post_filter_filename and\
+                if file != current_wallpaper and file != new_wallpaper and file != self.post_filter_filename and\
                    name.startswith(prefix) and name.endswith(".jpg"):
                     logger.debug("Removing old wallpaper %s" % file)
                     os.unlink(file)
