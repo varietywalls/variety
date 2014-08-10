@@ -697,6 +697,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = dialog
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
+        def _response(dialog, response_id):
+            if response_id == Gtk.ResponseType.DELETE_EVENT:
+                self.dialog.destroy()
+                self.dialog = None
+        self.dialog.connect('response', _response)
         self.dialog.run()
 
     def on_wn_dialog_okay(self, url, edited_row):
