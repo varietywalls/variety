@@ -1797,6 +1797,7 @@ class VarietyWindow(Gtk.Window):
         dialog.ui.continue_button.connect("clicked", _on_continue)
         self.dialogs.append(dialog)
         dialog.run()
+        dialog.destroy()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTROY_WITH_PARENT,
@@ -2313,6 +2314,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             self.dialogs.append(publish_dialog)
             response = publish_dialog.run()
+            publish_dialog.destroy()
             try:
                 self.dialogs.remove(publish_dialog)
             except:

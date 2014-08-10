@@ -577,10 +577,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddPanoramioDialog()
 
             self.dialog.set_edited_row(edited_row)
-
-            self.dialog.parent = self
-            self.dialog.set_transient_for(self)
-            self.dialog.run()
+            self.show_dialog(self.dialog)
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -697,12 +694,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = dialog
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
-        def _response(dialog, response_id):
-            if response_id == Gtk.ResponseType.DELETE_EVENT:
-                self.dialog.destroy()
-                self.dialog = None
-        self.dialog.connect('response', _response)
-        self.dialog.run()
+        response = self.dialog.run()
+        if response != Gtk.ResponseType.OK:
+            self.dialog.destroy()
+            self.dialog = None
 
     def on_wn_dialog_okay(self, url, edited_row):
         if edited_row:
