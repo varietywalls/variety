@@ -128,13 +128,26 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="login_error">
+                  <object class="GtkBox" id="box1">
+                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
-                    <property name="label">label</property>
-                    <attributes>
-                      <attribute name="foreground" value="#ffff00000000"/>
-                    </attributes>
+                    <child>
+                      <object class="GtkLabel" id="login_error">
+                        <property name="can_focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="label">label</property>
+                        <property name="wrap">True</property>
+                        <attributes>
+                          <attribute name="foreground" value="#ffff00000000"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -143,17 +156,42 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btn_login">
-                    <property name="label" translatable="yes">Login</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="width_request">80</property>
-                    <property name="height_request">30</property>
+                  <object class="GtkBox" id="box4">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can_focus">False</property>
                     <property name="halign">end</property>
-                    <property name="use_action_appearance">False</property>
-                    <signal name="clicked" handler="on_btn_login_clicked" swapped="no"/>
+                    <child>
+                      <object class="GtkSpinner" id="login_spinner">
+                        <property name="can_focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="margin_left">10</property>
+                        <property name="margin_right">5</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_login">
+                        <property name="label" translatable="yes">Login</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">80</property>
+                        <property name="height_request">30</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="halign">end</property>
+                        <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_btn_login_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -342,6 +380,7 @@
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
                     <property name="label">label</property>
+                    <property name="wrap">True</property>
                     <attributes>
                       <attribute name="foreground" value="#ffff00000000"/>
                     </attributes>
@@ -353,17 +392,42 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btn_register">
-                    <property name="label" translatable="yes">Register</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="width_request">80</property>
-                    <property name="height_request">30</property>
+                  <object class="GtkBox" id="box5">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can_focus">False</property>
                     <property name="halign">end</property>
-                    <property name="use_action_appearance">False</property>
-                    <signal name="clicked" handler="on_btn_register_clicked" swapped="no"/>
+                    <child>
+                      <object class="GtkSpinner" id="register_spinner">
+                        <property name="can_focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="margin_left">10</property>
+                        <property name="margin_right">5</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_register">
+                        <property name="label" translatable="yes">Register</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">80</property>
+                        <property name="height_request">30</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="halign">end</property>
+                        <property name="use_action_appearance">False</property>
+                        <signal name="clicked" handler="on_btn_register_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
