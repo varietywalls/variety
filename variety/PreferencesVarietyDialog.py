@@ -37,7 +37,6 @@ from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
-from variety.Smart import Smart
 
 from variety import _, _u
 
@@ -615,10 +614,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddPanoramioDialog()
 
             self.dialog.set_edited_row(edited_row)
-
-            self.dialog.parent = self
-            self.dialog.set_transient_for(self)
-            self.dialog.run()
+            self.show_dialog(self.dialog)
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -735,9 +731,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = dialog
         self.dialog.parent = self
         self.dialog.set_transient_for(self)
-        self.dialog.run()
-        self.dialog.destroy()
-        self.dialog = None
+        response = self.dialog.run()
+        if response != Gtk.ResponseType.OK:
+            self.dialog.destroy()
+            self.dialog = None
 
     def on_wn_dialog_okay(self, url, edited_row):
         if edited_row:

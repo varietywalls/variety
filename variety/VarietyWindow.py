@@ -1816,6 +1816,7 @@ class VarietyWindow(Gtk.Window):
         dialog.ui.continue_button.connect("clicked", _on_continue)
         self.dialogs.append(dialog)
         dialog.run()
+        dialog.destroy()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.DESTROY_WITH_PARENT,
@@ -2209,11 +2210,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             logger.exception("Could not get current wallpaper")
             return None
 
-    def cleanup_old_wallpapers(self, folder, prefix, current_wallpaper=None):
+    def cleanup_old_wallpapers(self, folder, prefix, new_wallpaper=None):
         try:
+            current_wallpaper = self.get_desktop_wallpaper()
             for name in os.listdir(folder):
                 file = os.path.join(folder, name)
-                if file != current_wallpaper and file != self.post_filter_filename and\
+                if file != current_wallpaper and file != new_wallpaper and file != self.post_filter_filename and\
                    name.startswith(prefix) and name.endswith(".jpg"):
                     logger.debug("Removing old wallpaper %s" % file)
                     os.unlink(file)
@@ -2345,7 +2347,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         file = self.current
         link = self.url
-        picture = self.image_url
+        picture = None
         caption = None
         quote_text = self.get_quote_text_for_publishing()
         if self.source_name:
@@ -2385,6 +2387,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             self.dialogs.append(publish_dialog)
             response = publish_dialog.run()
+            publish_dialog.destroy()
             try:
                 self.dialogs.remove(publish_dialog)
             except:
