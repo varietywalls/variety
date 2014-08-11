@@ -1175,6 +1175,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.show_dialog(login_dialog)
 
     def on_smart_user_updated(self):
+        self.update_status_message()
+
         sync_allowed = self.ui.smart_enabled.get_active() and \
                        self.parent.smart.user is not None and \
                        self.parent.smart.user.get("username") is not None
