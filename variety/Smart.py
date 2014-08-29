@@ -196,7 +196,9 @@ class Smart:
                 'origin_url': origin_url,
                 'source_name': meta.get('sourceName', None),
                 'source_location': meta.get('sourceLocation', None),
-                'image_url': image_url
+                'image_url': image_url,
+                'author': meta.get('author', None),
+                'author_url': meta.get('authorURL', None),
             }
 
             logger.info("smart: Reporting %s as '%s'" % (filename, tag))
