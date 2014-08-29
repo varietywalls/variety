@@ -411,8 +411,8 @@ class Smart:
 
                             path = ImageFetcher.fetch(image_data["download_url"], self.parent.options.favorites_folder,
                                                source_url=image_data["origin_url"],
-                                               source_name=image_data["sources"][0][0] if image_data.get("sources", []) else None,
-                                               source_location=image_data["sources"][0][1] if image_data.get("sources", []) else None,
+                                               source_name=image_data["sources"].values()[0][0] if image_data.get("sources", {}) else None,
+                                               source_location=image_data["sources"].values()[0][1] if image_data.get("sources", {}) else None,
                                                verbose=False)
                             if not path:
                                 raise Exception("Fetch failed")
