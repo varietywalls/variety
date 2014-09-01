@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import GObject, Gdk
+from gi.repository import GObject, Gdk, Gtk
 import hashlib
 from urllib2 import HTTPError
 import io
@@ -452,3 +452,26 @@ class Smart:
         last_synced = getattr(self, 'last_synced', 0)
         if time.time() - last_synced > 6 * 60 * 3600:
             self.sync()
+
+    def process_login_request(self, userid, username, authkey):
+        def _do_login():
+            self.parent.show_notification(_('Logged in as %s') % username)
+            self.set_user({'id': userid, 'authkey': authkey, 'username': username})
+
+        if self.user is not None and self.user.get('username') is not None and self.user['authkey'] != authkey:
+            def _go():
+                Gdk.threads_enter()
+                try:
+                    dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL,
+                                               _("Do you want to login to Smart Variety as %s?\nPlease confirm as a security measure.") % username)
+                    dialog.set_title(_("Variety Smart login, security confirmation"))
+                    response = dialog.run()
+                    dialog.destroy()
+                    if response == Gtk.ResponseType.OK:
+                        _do_login()
+                finally:
+                    Gdk.threads_leave()
+            threading.Timer(0.1, _go).start()
+
+        else:
+            _do_login()

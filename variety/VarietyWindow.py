@@ -2163,14 +2163,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.set_wallpaper(image, False, False)
 
             elif command == 'smart-login':
-                authkey = args["authkey"][0]
+                userid = args["id"][0]
                 username = args["username"][0]
-                id = args["id"][0]
-                if not self.smart.user or self.smart.user['authkey'] != authkey:
-                    self.show_notification(_('Oops, invalid or outdated Smart login info received'))
-                else:
-                    self.show_notification(_('Logged in as %s') % username)
-                    self.smart.set_user({'id': id, 'authkey': authkey, 'username': username})
+                authkey = args["authkey"][0]
+                self.smart.process_login_request(userid, username, authkey)
+
             else:
                 self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
         except:
