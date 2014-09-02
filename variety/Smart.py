@@ -457,6 +457,7 @@ class Smart:
         def _do_login():
             self.parent.show_notification(_('Logged in as %s') % username)
             self.set_user({'id': userid, 'authkey': authkey, 'username': username})
+            self.parent.preferences_dialog.close_login_register_dialog()
 
         if self.user is None or self.user['authkey'] != authkey:
             def _go():

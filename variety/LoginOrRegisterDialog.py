@@ -45,20 +45,23 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         self.smart = None
         self.ui = builder.get_ui(self)
 
+    def set_smart(self, smart):
+        self.smart = smart
+        if not self.smart.user:
+            self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
+        elif 'username' not in self.smart.user:
+            self.ui.register_link.set_uri('%s/user/%s/register?authkey=%s' %
+                                          (Smart.SITE_URL, self.smart.user['id'], self.smart.user['authkey']))
+        else:
+            self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
+            self.ui.register_link.set_visible(False)
+
     def show_login_error(self, msg):
         def _go():
             self.ui.login_error.set_text(msg)
             self.ui.login_error.set_visible(True)
             self.ui.login_spinner.set_visible(False)
             self.ui.login_spinner.stop()
-        GObject.idle_add(_go)
-
-    def show_register_error(self, msg):
-        def _go():
-            self.ui.register_error.set_text(msg)
-            self.ui.register_error.set_visible(True)
-            self.ui.register_spinner.set_visible(False)
-            self.ui.register_spinner.stop()
         GObject.idle_add(_go)
 
     def ajax(self, url, data, error_msg_handler):
@@ -88,36 +91,6 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             def _update():
                 if 'error' in result:
                     self.show_login_error(_(result['error']))
-                else:
-                    self.smart.set_user(result)
-                    self.destroy()
-            GObject.idle_add(_update)
-        threading.Timer(0.1, _go).start()
-
-    def on_btn_register_clicked(self, widget=None):
-        self.ui.register_error.set_visible(False)
-        self.ui.register_spinner.set_visible(True)
-        self.ui.register_spinner.start()
-
-        if self.ui.register_password.get_text() != self.ui.register_password_confirm.get_text():
-            self.show_register_error(_('Passwords must match'))
-            return
-
-        user = {'username': self.ui.register_username.get_text(),
-                'password': self.ui.register_password.get_text(),
-                'password-confirm': self.ui.register_password_confirm.get_text(),
-                'email': self.ui.register_email.get_text()}
-
-        # If the current user is anonymous, use its existing data, do not register a completely new user:
-        if self.smart.user.get("username") is None:
-            user.update({'id': self.smart.user['id'], 'authkey': self.smart.user['authkey']})
-
-        def _go():
-            result = self.ajax(Smart.API_URL + '/register', user, self.show_register_error)
-
-            def _update():
-                if 'error' in result:
-                    self.show_register_error(_(result['error']))
                 else:
                     self.smart.set_user(result)
                     self.destroy()

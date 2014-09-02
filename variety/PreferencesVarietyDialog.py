@@ -1168,8 +1168,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_btn_login_register_clicked(self, widget=None):
         login_dialog = LoginOrRegisterDialog()
-        login_dialog.smart = self.parent.smart
+        login_dialog.set_smart(self.parent.smart)
         self.show_dialog(login_dialog)
+
+    def close_login_register_dialog(self):
+        if self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
+            def _close():
+                self.dialog.destroy()
+                self.dialog = None
+            GObject.idle_add(_close)
 
     def on_smart_user_updated(self):
         self.update_status_message()
