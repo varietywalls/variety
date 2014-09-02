@@ -2168,6 +2168,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 authkey = args["authkey"][0]
                 self.smart.process_login_request(userid, username, authkey)
 
+            elif command == 'test-variety-link':
+                self.show_notification(_('It works!'), _('Yay, Variety links work. Great!'))
+
+
             else:
                 self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
         except:

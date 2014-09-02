@@ -458,13 +458,14 @@ class Smart:
             self.parent.show_notification(_('Logged in as %s') % username)
             self.set_user({'id': userid, 'authkey': authkey, 'username': username})
 
-        if self.user is not None and self.user.get('username') is not None and self.user['authkey'] != authkey:
+        if self.user is None or self.user['authkey'] != authkey:
             def _go():
                 Gdk.threads_enter()
                 try:
-                    dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL,
-                                               _("Do you want to login to Smart Variety as %s?\nPlease confirm as a security measure.") % username)
-                    dialog.set_title(_("Variety Smart login, security confirmation"))
+                    dialog = Gtk.MessageDialog(self.parent.preferences_dialog, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL)
+                    dialog.set_markup(_('Do you want to login to Smart Variety as <span font_weight="bold">%s</span>?') % username)
+                    dialog.set_title(_('Smart Variety login confirmation'))
+                    dialog.set_default_response(Gtk.ResponseType.OK)
                     response = dialog.run()
                     dialog.destroy()
                     if response == Gtk.ResponseType.OK:
