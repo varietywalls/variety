@@ -409,10 +409,15 @@ class Smart:
                             logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
+                            prefer_source_id = server_data["favorite"][imageid].get("source", None)
+                            source = image_data.get("sources", {}).get(prefer_source_id, None)
+                            if not source:
+                                source = image_data["sources"].values()[0] if image_data.get("sources", {}) else None
+
                             path = ImageFetcher.fetch(image_data["download_url"], self.parent.options.favorites_folder,
                                                source_url=image_data["origin_url"],
-                                               source_name=image_data["sources"].values()[0][0] if image_data.get("sources", {}) else None,
-                                               source_location=image_data["sources"].values()[0][1] if image_data.get("sources", {}) else None,
+                                               source_name=source[0] if source else None,
+                                               source_location=source[1] if source else None,
                                                verbose=False)
                             if not path:
                                 raise Exception("Fetch failed")
