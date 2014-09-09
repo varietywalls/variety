@@ -156,6 +156,12 @@ class Smart:
             threading.Timer(0.1, _go).start()
             raise e
 
+    @staticmethod
+    def fix_origin_url(origin_url):
+        if origin_url and '//picasaweb.google.com' in origin_url and '?' in origin_url:
+            origin_url = origin_url[:origin_url.rindex('?')]
+        return origin_url
+
     def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
@@ -168,7 +174,7 @@ class Smart:
             if not meta or not "sourceURL" in meta:
                 return  # we only smart-report images coming from Variety online sources, not local images
 
-            origin_url = meta['sourceURL']
+            origin_url = Smart.fix_origin_url(meta['sourceURL'])
             report_url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
 
             if not (upload_full_image or needs_reupload):
@@ -329,7 +335,8 @@ class Smart:
                             info = syncdb.local[path]
                         else:
                             info = {}
-                            source_url = Util.get_variety_source_url(path)
+                            meta = Util.read_metadata(path)
+                            source_url = Smart.fix_origin_url(None if meta is None else meta.get("sourceURL", None))
                             if source_url:
                                 info["sourceURL"] = source_url
                             syncdb.local[path] = info
@@ -385,6 +392,7 @@ class Smart:
                         if not imageid in local_trash:
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
                             self.parent.ban_url(image_data["origin_url"])
+                            time.sleep(1)
 
                     # Download locally-missing favorites from the server
                     to_sync = []

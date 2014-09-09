@@ -224,11 +224,6 @@ class Util:
                 return None
 
     @staticmethod
-    def get_variety_source_url(filename):
-        meta = Util.read_metadata(filename)
-        return None if meta is None else meta.get("sourceURL", None)
-
-    @staticmethod
     def set_rating(filename, rating):
         if rating is not None and (rating < -1 or rating > 5):
             raise ValueError("Rating should be between -1 and 5, or None")
