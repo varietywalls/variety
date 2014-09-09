@@ -70,7 +70,7 @@ DL_FOLDER_FILE = ".variety_download_folder"
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "http://smarturl.it/beta-server-options"
+    SERVERSIDE_OPTIONS_URL = "http://smarturl.it/variety-beta-options"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -1714,10 +1714,19 @@ class VarietyWindow(Gtk.Window):
 
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")
-        if not os.path.exists(fr_file):
-            with open(fr_file, "w") as f:
-                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-            self.show_welcome_dialog()
+        if os.path.exists(fr_file):
+            return
+        self.show_welcome_dialog()
+        if not self.running:
+            return
+        self.smart.show_notice_dialog(True)
+        if not self.running:
+            return
+        with open(fr_file, "w") as f:
+            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        if not self.running:
+            return
+        self.on_mnu_preferences_activate()
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
@@ -1811,7 +1820,6 @@ class VarietyWindow(Gtk.Window):
         def _on_continue(button):
             dialog.destroy()
             self.dialogs.remove(dialog)
-            self.on_mnu_preferences_activate(button)
 
         dialog.ui.continue_button.connect("clicked", _on_continue)
         self.dialogs.append(dialog)

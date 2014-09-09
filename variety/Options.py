@@ -232,6 +232,11 @@ class Options:
                 pass
 
             try:
+                self.stats_enabled = config["stats_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.facebook_show_dialog = config["facebook_show_dialog"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -497,6 +502,7 @@ class Options:
         self.smart_enabled = True
         self.smart_notice_shown = False
         self.sync_enabled = True
+        self.stats_enabled = True
 
         self.facebook_show_dialog = True
         self.facebook_message = ""
@@ -590,6 +596,7 @@ class Options:
             config["smart_enabled"] = str(self.smart_enabled)
             config["smart_notice_shown"] = str(self.smart_notice_shown)
             config["sync_enabled"] = str(self.sync_enabled)
+            config["stats_enabled"] = str(self.stats_enabled)
 
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = self.facebook_message

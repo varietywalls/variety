@@ -837,20 +837,51 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="smart_enabled">
-                        <property name="label" translatable="yes">Enable Smart Variety</property>
-                        <property name="use_action_appearance">False</property>
+                      <object class="GtkBox" id="box36">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_left">15</property>
-                        <property name="margin_top">7</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="xalign">0</property>
-                        <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="on_smart_enabled_toggled" swapped="no"/>
-                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkCheckButton" id="smart_enabled">
+                            <property name="label" translatable="yes">Enable Smart Variety</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">15</property>
+                            <property name="margin_top">7</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="on_smart_enabled_toggled" swapped="no"/>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label74">
+                            <property name="visible">True</property>
+                            <property name="sensitive">False</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">15</property>
+                            <property name="margin_top">7</property>
+                            <property name="label" translatable="yes">This is a beta feature that will take some time to mature and become truly "smart"</property>
+                            <attributes>
+                              <attribute name="style" value="italic"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -874,26 +905,6 @@
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label74">
-                        <property name="visible">True</property>
-                        <property name="sensitive">False</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_left">15</property>
-                        <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">(This is a beta feature that will take some time to mature and become truly "smart")</property>
-                        <attributes>
-                          <attribute name="style" value="italic"/>
-                          <attribute name="weight" value="normal"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
                       </packing>
                     </child>
                     <child>
@@ -947,6 +958,7 @@
                         <child>
                           <object class="GtkLabel" id="smart_register_note">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">end</property>
                             <property name="label" translatable="yes">Registration enables you to use the same profile on multiple machines or between OS reinstallations.</property>
@@ -964,7 +976,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">4</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>
@@ -1027,6 +1039,7 @@
                         <child>
                           <object class="GtkLabel" id="sync_login_note">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="halign">start</property>
                             <property name="margin_left">15</property>
@@ -1077,6 +1090,58 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkBox" id="about_smart_box2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">15</property>
+                    <property name="margin_right">15</property>
+                    <property name="margin_top">15</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label73">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="label" translatable="yes">Usage statistics</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="stats_enabled">
+                        <property name="label" translatable="yes">Help make Variety better by sending anonymous usage statistics</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="about_smart_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -1108,7 +1173,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Smart and Sync apply only to images downloaded by Variety from the different online image sources. No data is collected for local-only images that might be private, and Sync does not work for such images. Your favorite images will be publicly visible on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
+                        <property name="label" translatable="yes">Smart and Sync apply only to images downloaded by Variety from the different online image sources. No data is collected for local-only images that might be private, and Sync does not work for such images.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1141,7 +1206,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -1170,13 +1235,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="sync_label4">
+                      <object class="GtkLabel" id="vrty_label">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Explore everyone's favorite images and find great new image sources at &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;.</property>
+                        <property name="label">Explore everyone's favorite images and find great new image sources at &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt;. </property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1191,7 +1256,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>

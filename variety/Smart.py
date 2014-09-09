@@ -48,9 +48,12 @@ class Smart:
         self.user = None
 
     def reload(self):
-        if self.smart_settings_changed():
-            self.load_user(create_if_missing=False, force_reload=True)
-            self.sync()
+        try:
+            if self.smart_settings_changed():
+                self.load_user(create_if_missing=False, force_reload=True)
+                self.sync()
+        except:
+            logging.exception("Smart: Exception in reload:")
 
     def get_profile_url(self):
         if self.user:
@@ -226,19 +229,21 @@ class Smart:
         except Exception:
             logger.exception("smart: Could not report %s as '%s'" % (filename, tag))
 
-    def show_notice_dialog(self):
+    def show_notice_dialog(self, on_first_run=False):
         # Show Smart Variety notice
         dialog = SmartFeaturesNoticeDialog()
 
         def _on_ok(button):
-            self.parent.options.smart_enabled = dialog.ui.enabled.get_active()
+            self.parent.options.smart_enabled = dialog.ui.smart_enabled.get_active()
+            self.parent.options.stats_enabled = dialog.ui.stats_enabled.get_active()
             self.parent.options.smart_notice_shown = True
             if self.parent.options.smart_enabled:
                 for s in self.parent.options.sources:
                     if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
-                        self.parent.show_notification(_("New image sources"),
-                                                      _("Recommended and Latest Favorites image sources enabled"))
                         s[0] = True
+                        if not on_first_run:
+                            self.parent.show_notification(_("New image sources"),
+                                                          _("Recommended and Latest Favorites image sources enabled"))
             self.parent.options.write()
             self.parent.reload_config()
             dialog.destroy()
@@ -282,12 +287,17 @@ class Smart:
         if not self.is_smart_enabled():
             return
 
-        self.load_user(create_if_missing=True)
         self._reset_sync()
         current_sync_hash = self.sync_hash
 
         def _run():
             logger.info('sync: Started, hash %s' % current_sync_hash)
+
+            try:
+                self.load_user(create_if_missing=True)
+            except:
+                logging.exception("Sync: Could not load or create smart user")
+                return
 
             try:
                 logger.info("sync: Fetching serverside data")

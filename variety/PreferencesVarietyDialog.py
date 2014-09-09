@@ -93,6 +93,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
         self.reload()
 
+    def fill_smart_profile_url(self, msg):
+        if '%SMART_PROFILE_URL%' in msg:
+            profile_url = self.parent.smart.get_profile_url()
+            msg = msg.replace('%SMART_PROFILE_URL%', profile_url) if profile_url else ""
+        return msg
+
     def update_status_message(self):
         msg = ""
         if self.parent.server_options:
@@ -104,9 +110,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 elif "*" in msg_dict:
                     msg = msg_dict["*"].strip()
 
-                if '%SMART_PROFILE_URL%' in msg:
-                    profile_url = self.parent.smart.get_profile_url()
-                    msg = msg.replace('%SMART_PROFILE_URL%', profile_url) if profile_url else ""
+                msg = self.fill_smart_profile_url(msg)
             except Exception:
                 logger.exception("Could not parse status message")
                 msg = ""
@@ -175,6 +179,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.ui.smart_enabled.set_active(self.options.smart_enabled)
             self.ui.sync_enabled.set_active(self.options.sync_enabled)
+            self.ui.stats_enabled.set_active(self.options.stats_enabled)
 
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
@@ -868,6 +873,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.smart_enabled = self.ui.smart_enabled.get_active()
             if self.ui.sync_enabled.get_sensitive():
                 self.options.sync_enabled = self.ui.sync_enabled.get_active()
+            self.options.stats_enabled = self.ui.stats_enabled.get_active()
 
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -1201,6 +1207,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.smart_register_note.set_visible(not bool(username))
         else:
             self.ui.box_smart_user.set_visible(False)
+
+        self.ui.vrty_label.set_markup(
+            _("Explore everyone's favorite images and find great new image sources at <a href='https://vrty.org'>VRTY.ORG</a>. ") +
+            self.fill_smart_profile_url(_("View and manage <a href='%SMART_PROFILE_URL%'>your own profile</a>.")))
 
 
 
