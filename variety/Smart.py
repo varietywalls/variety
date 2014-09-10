@@ -52,8 +52,10 @@ class Smart:
             if self.smart_settings_changed():
                 self.load_user(create_if_missing=False, force_reload=True)
                 self.sync()
+            elif self.parent.previous_options.sources != self.parent.options.sources:
+                self.sync_sources(in_thread=True)
         except:
-            logging.exception("Smart: Exception in reload:")
+            logger.exception("Smart: Exception in reload:")
 
     def get_profile_url(self):
         if self.user:
@@ -71,35 +73,6 @@ class Smart:
         if not self.parent.options.smart_notice_shown:
             self.show_notice_dialog()
 
-    def new_user(self):
-        logger.info('smart: Creating new smart user')
-
-        self._reset_sync()
-
-        self.user = Util.fetch_json(Smart.API_URL + '/newuser')
-        if self.parent.preferences_dialog:
-            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
-        with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
-            json.dump(self.user, f, ensure_ascii=False, indent=2)
-            logger.info('smart: Created smart user: %s' % self.user["id"])
-
-    def _reset_sync(self):
-        self.sync_hash = Util.random_hash()  #  stop current sync if running
-        self.last_synced = 0
-
-    def set_user(self, user):
-        logger.info('smart: Setting new smart user')
-
-        self.user = user
-        if self.parent.preferences_dialog:
-            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
-
-        with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
-            json.dump(self.user, f, ensure_ascii=False, indent=2)
-            logger.info('smart: Updated smart user: %s' % self.user["id"])
-
-        self.sync()
-
     def load_user(self, create_if_missing=True, force_reload=False):
         if not self.user or force_reload:
             self.user = None
@@ -113,6 +86,34 @@ class Smart:
                 if create_if_missing:
                     logger.info('smart: Missing smart_user.json, creating new smart user')
                     self.new_user()
+
+    def new_user(self):
+        logger.info('smart: Creating new smart user')
+
+        self._reset_sync()
+
+        self.user = Util.fetch_json(Smart.API_URL + '/newuser')
+        self.save_user()
+        if self.parent.preferences_dialog:
+            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
+        logger.info('smart: Created smart user: %s' % self.user["id"])
+
+    def save_user(self):
+        with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
+            json.dump(self.user, f, ensure_ascii=False, indent=2)
+
+    def set_user(self, user):
+        logger.info('smart: Setting new smart user')
+
+        self.user = user
+        if self.parent.preferences_dialog:
+            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
+
+        with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
+            json.dump(self.user, f, ensure_ascii=False, indent=2)
+            logger.info('smart: Updated smart user: %s' % self.user["id"])
+
+        self.sync()
 
     def report_trash(self, origin_url):
         if not self.is_smart_enabled():
@@ -148,7 +149,7 @@ class Smart:
         logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
         if e.code in (403, 404):
             self.parent.show_notification(
-                _('Your Smart Variety credentials are probably outdated. Please login again.'))
+                _('Your Smart Variety credentials are probably outdated. Please login again.')) # TODO disable Smart, do not show login dialog
             def _go():
                 Gdk.threads_enter()
                 self.parent.preferences_dialog.on_btn_login_register_clicked()
@@ -289,6 +290,54 @@ class Smart:
                self.user is not None and self.user.get("username") is not None and \
                self.parent.options.sync_enabled
 
+    def sync_sources(self, in_thread=False):
+        if not self.is_smart_enabled():
+            return
+
+        def _run():
+            try:
+                logger.info("sync: Syncing image sources")
+
+                try:
+                    self.load_user(create_if_missing=True)
+                except:
+                    logger.exception("sync: Could not load or create smart user")
+                    return
+
+                sources = [{'enabled': s[0], 'type': Options.type_to_str(s[1]), 'location': s[2]}
+                           for s in self.parent.options.sources if s[1] in Options.SourceType.dl_types]
+
+                data = {'sources': sources}
+
+                if "machine" in self.user:
+                    data["machine"] = self.user["machine"]
+                else:
+                    data["machine_type"] = 'laptop' if os.path.exists('/sys/class/power_supply/') else 'pc'
+
+                try:
+                    sync_url = '%s/user/%s/sync-sources?authkey=%s' % (Smart.API_URL, self.user["id"], self.user["authkey"])
+                    server_data = AttrDict(Util.fetch_json(sync_url, {'data': json.dumps(data)}))
+                    self.user["machine"] = server_data["machine"]
+                    self.user["machine_label"] = server_data["machine_label"]
+                    self.save_user()
+                except HTTPError, e:
+                    self.handle_user_http_error(e)
+                    raise
+
+            except:
+                logger.exception("smart: Could not sync sources")
+
+        if in_thread:
+            sync_sources_thread = threading.Thread(target=_run)
+            sync_sources_thread.daemon = True
+            sync_sources_thread.start()
+        else:
+            _run()
+
+    def _reset_sync(self):
+        self.sync_hash = Util.random_hash()  #  stop current sync if running
+        self.last_synced = 0
+
     def sync(self):
         if not self.is_smart_enabled():
             return
@@ -302,8 +351,10 @@ class Smart:
             try:
                 self.load_user(create_if_missing=True)
             except:
-                logging.exception("Sync: Could not load or create smart user")
+                logger.exception("sync: Could not load or create smart user")
                 return
+
+            self.sync_sources(in_thread=False)
 
             try:
                 logger.info("sync: Fetching serverside data")
