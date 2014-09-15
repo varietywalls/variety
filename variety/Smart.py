@@ -71,7 +71,11 @@ class Smart:
 
     def first_run(self):
         if not self.parent.options.smart_notice_shown:
-            self.show_notice_dialog()
+            try:
+                Gdk.threads_enter()
+                self.show_notice_dialog()
+            finally:
+                Gdk.threads_leave()
 
     def load_user(self, create_if_missing=True, force_reload=False):
         if not self.user or force_reload:
@@ -151,9 +155,11 @@ class Smart:
             self.parent.show_notification(
                 _('Your Smart Variety credentials are probably outdated. Please login again.')) # TODO disable Smart, do not show login dialog
             def _go():
-                Gdk.threads_enter()
-                self.parent.preferences_dialog.on_btn_login_register_clicked()
-                Gdk.threads_leave()
+                try:
+                    Gdk.threads_enter()
+                    self.parent.preferences_dialog.on_btn_login_register_clicked()
+                finally:
+                    Gdk.threads_leave()
             threading.Timer(0.1, _go).start()
             raise e
 

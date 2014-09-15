@@ -1716,17 +1716,22 @@ class VarietyWindow(Gtk.Window):
         fr_file = os.path.join(self.config_folder, ".firstrun")
         if os.path.exists(fr_file):
             return
-        self.show_welcome_dialog()
-        if not self.running:
-            return
-        self.smart.show_notice_dialog(True)
-        if not self.running:
-            return
-        with open(fr_file, "w") as f:
-            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        if not self.running:
-            return
-        self.on_mnu_preferences_activate()
+
+        try:
+            Gdk.threads_enter()
+            self.show_welcome_dialog()
+            if not self.running:
+                return
+            self.smart.show_notice_dialog(True)
+            if not self.running:
+                return
+            with open(fr_file, "w") as f:
+                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            if not self.running:
+                return
+            self.on_mnu_preferences_activate()
+        finally:
+            Gdk.threads_leave()
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()

@@ -3,7 +3,8 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires welcome_dialog 1.0 -->
   <object class="WelcomeDialog" id="welcome_dialog">
-    <property name="width_request">640</property>
+    <property name="width_request">750</property>
+    <property name="height_request">520</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Welcome to Variety!</property>
@@ -14,6 +15,8 @@
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">750</property>
+        <property name="height_request">520</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">start</property>
@@ -22,9 +25,9 @@
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">25</property>
-            <property name="margin_top">60</property>
-            <property name="margin_bottom">15</property>
+            <property name="valign">end</property>
+            <property name="margin_right">15</property>
+            <property name="margin_bottom">10</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="continue_button">
@@ -51,18 +54,96 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="title">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
-            <property name="xpad">30</property>
-            <property name="ypad">20</property>
-            <property name="label" translatable="yes">Welcome to Variety!</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-              <attribute name="scale" value="1.5"/>
-            </attributes>
+            <property name="margin_left">25</property>
+            <property name="margin_right">25</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="title">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="ypad">20</property>
+                <property name="label" translatable="yes">Welcome to Variety!</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                  <attribute name="scale" value="1.5"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="message">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Variety is an automatic wallpaper changer. It rotates your desktop wallpaper on a regular basis using local images or images downloaded from various online sources. It runs quietly in the background - to control it, click this icon in your system tray:</property>
+                <property name="use_markup">True</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="image1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixbuf">../media/tray-screenshot.png</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="message2">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Variety is open-source software, created by Peter Levi, a software developer from Bulgaria. If you like it, please &lt;a href="http://peterlevi.com/variety/donate/"&gt;donate&lt;/a&gt;.</property>
+                <property name="use_markup">True</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="message3">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="margin_top">20</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Now please take some time to set your preferences on the following screens.</property>
+                <property name="use_markup">True</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -71,79 +152,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="message">
-            <property name="width_request">640</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
-            <property name="xpad">30</property>
-            <property name="label" translatable="yes">Variety is an automatic wallpaper changer. It rotates your desktop wallpaper on a regular basis using local images or images from various online sources. It runs quietly in the background - to control it, click this icon in your system tray:</property>
-            <property name="use_markup">True</property>
-            <property name="justify">fill</property>
-            <property name="wrap">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="image1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="pixbuf">../media/tray-screenshot.png</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="message2">
-            <property name="width_request">640</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
-            <property name="xpad">30</property>
-            <property name="label" translatable="yes">Variety is open-source software, created by Peter Levi, a software developer from Bulgaria. If you like it, please &lt;a href="http://peterlevi.com/variety/donate/"&gt;donate&lt;/a&gt;.</property>
-            <property name="use_markup">True</property>
-            <property name="justify">fill</property>
-            <property name="wrap">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="message3">
-            <property name="width_request">640</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
-            <property name="margin_top">10</property>
-            <property name="xalign">0</property>
-            <property name="xpad">30</property>
-            <property name="label" translatable="yes">Now please take some time to set your preferences on the following screens.</property>
-            <property name="use_markup">True</property>
-            <property name="justify">fill</property>
-            <property name="wrap">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">5</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkBox" id="kde_warning">
             <property name="can_focus">False</property>
+            <property name="margin_left">25</property>
+            <property name="margin_right">25</property>
             <property name="margin_top">40</property>
             <property name="orientation">vertical</property>
             <child>
@@ -151,7 +163,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="margin_left">30</property>
                 <property name="margin_bottom">10</property>
                 <property name="label" translatable="yes">KDE Users - Important, please read:</property>
                 <attributes>
@@ -171,8 +182,7 @@
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
-                <property name="xpad">30</property>
-                <property name="label" translatable="yes">You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper from inside a program - there is no API for this. To make Variety work, please read and follow &lt;a href="http://peterlevi.com/variety/2014/05/variety-and-kde/"&gt;the instructions here&lt;/a&gt;.</property>
+                <property name="label" translatable="yes">You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper from inside a program - there is no API for this. To make Variety work, &lt;a href="http://peterlevi.com/variety/2014/05/variety-and-kde/"&gt;please read and follow the instructions here&lt;/a&gt;.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -187,7 +197,7 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">6</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

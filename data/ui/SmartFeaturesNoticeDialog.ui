@@ -3,14 +3,18 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires smart_features_notice_dialog 1.0 -->
   <object class="SmartFeaturesNoticeDialog" id="smart_features_notice_dialog">
-    <property name="width_request">640</property>
+    <property name="width_request">750</property>
+    <property name="height_request">520</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Privacy settings</property>
+    <property name="window_position">center-always</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">750</property>
+        <property name="height_request">520</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -19,7 +23,8 @@
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">10</property>
+            <property name="margin_right">15</property>
+            <property name="margin_bottom">10</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btn_ok">
@@ -51,6 +56,8 @@
           <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">25</property>
+            <property name="margin_right">25</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
@@ -58,7 +65,6 @@
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
-                <property name="xpad">15</property>
                 <property name="ypad">20</property>
                 <property name="label" translatable="yes">Privacy settings. We kindly ask for some data.</property>
                 <attributes>
@@ -73,17 +79,63 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label73">
+              <object class="GtkBox" id="stats_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="xpad">15</property>
-                <property name="label" translatable="yes">Variety would like permission to collect data about the images you like or dislike and the online sources you have enabled. This data helps us provide better images for everyone. It also enables you to use some very exciting features: &lt;span font-weight="bold"&gt;synchronization of favorite images between computers and personalized image recommendations&lt;/span&gt;.
-
-The collected data is anonymous and applies only to images downloaded via Variety, no data is collected about images you already had in your local folders that might be private.</property>
-                <property name="use_markup">True</property>
-                <property name="justify">fill</property>
-                <property name="wrap">True</property>
+                <property name="margin_bottom">20</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="label" translatable="yes">Anonymous usage statistics</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">We would like to collect statistics about the way you use Variety. These are anonymous and help us improve Variety by understanding how you, the users, interact with it. Also included are general data about your OS version and monitor setup.</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="stats_enabled">
+                    <property name="label" translatable="yes">Help us make Variety better by sending anonymous usage statistics</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="margin_top">10</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -92,19 +144,15 @@ The collected data is anonymous and applies only to images downloaded via Variet
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="smart_enabled">
-                <property name="label" translatable="yes">Enable sync and recommendations by sending anonymous data about the images you like or dislike</property>
-                <property name="use_action_appearance">False</property>
+              <object class="GtkLabel" id="label4">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="margin_left">15</property>
-                <property name="margin_right">15</property>
-                <property name="margin_top">10</property>
-                <property name="use_action_appearance">False</property>
-                <property name="xalign">0</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="margin_bottom">10</property>
+                <property name="label" translatable="yes">Images you like or dislike</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -113,13 +161,13 @@ The collected data is anonymous and applies only to images downloaded via Variet
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label1">
+              <object class="GtkLabel" id="label73">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="margin_top">20</property>
-                <property name="xpad">15</property>
-                <property name="label" translatable="yes">We would also like to collect statistics about the way you use Variety - these are anonymous and help us improve Variety by understanding how you, the users, interact with it. These also include general data about your OS version and monitor setup.</property>
+                <property name="label" translatable="yes">We ask permission to receive data about the images you like and dislike and the online image sources you use. This helps us provide better images for everyone, enables some great features - &lt;span font-weight="normal"&gt;synchronization of favorites between computers and personalized recommendations&lt;/span&gt;, and helps us build &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; - a valuable resource for all users of Variety.
+
+Variety sends data only for images it downloaded, never for images you already had in your local folders that might be private.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -131,16 +179,13 @@ The collected data is anonymous and applies only to images downloaded via Variet
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="stats_enabled">
-                <property name="label" translatable="yes">Help us make Variety better by sending anonymous usage statistics</property>
+              <object class="GtkCheckButton" id="smart_enabled">
+                <property name="label" translatable="yes">Enable sync and recommendations by sending anonymous data about the images you like or dislike</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="margin_left">15</property>
-                <property name="margin_right">15</property>
                 <property name="margin_top">10</property>
-                <property name="margin_bottom">20</property>
                 <property name="use_action_appearance">False</property>
                 <property name="xalign">0</property>
                 <property name="active">True</property>
@@ -157,10 +202,9 @@ The collected data is anonymous and applies only to images downloaded via Variet
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="halign">start</property>
-                <property name="margin_left">15</property>
-                <property name="margin_right">15</property>
+                <property name="margin_top">20</property>
                 <property name="margin_bottom">20</property>
-                <property name="label" translatable="yes">Collected data is not shared with third parties. If you wish, you may later opt-in to make some of your favorite wallpapers public so other users can draw inspiration from you. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the data collection policy here.&lt;/a&gt; </property>
+                <property name="label" translatable="yes">Collected data is not shared with third parties. If you wish, you may later opt-in to make some of your favorite wallpapers public so other users can draw inspiration from you. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
