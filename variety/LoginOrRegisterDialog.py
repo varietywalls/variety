@@ -49,12 +49,19 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         self.smart = smart
         if not self.smart.user:
             self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
+            self.ui.register_link.set_visible(True)
+            self.ui.password_link.set_uri('%s/password-recovery' % Smart.SITE_URL)
+            self.ui.password_link.set_visible(True)
         elif 'username' not in self.smart.user:
             self.ui.register_link.set_uri('%s/user/%s/register?authkey=%s' %
                                           (Smart.SITE_URL, self.smart.user['id'], self.smart.user['authkey']))
+            self.ui.password_link.set_uri('%s/password-recovery' % Smart.SITE_URL)
+            self.ui.register_link.set_visible(True)
+            self.ui.password_link.set_visible(True)
         else:
             self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
             self.ui.register_link.set_visible(False)
+            self.ui.password_link.set_visible(False)
 
     def show_login_error(self, msg):
         def _go():
