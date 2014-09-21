@@ -153,7 +153,7 @@ class Smart:
         logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
         if e.code in (403, 404):
             self.parent.show_notification(
-                _('Your Smart Variety credentials are probably outdated. Please login again.')) # TODO disable Smart, do not show login dialog
+                _('Your Smart Variety credentials are probably outdated. Please login again.'))
             def _go():
                 try:
                     Gdk.threads_enter()
@@ -169,7 +169,20 @@ class Smart:
             origin_url = origin_url[:origin_url.rindex('?')]
         return origin_url
 
-    def _do_report_file(self, filename, tag, attempt=0, upload_full_image=False, needs_reupload=False):
+    def fill_missing_meta_info(self, filename, meta):
+        if 'imageURL' not in meta:
+            image_url = Util.guess_image_url(meta)
+            if image_url:
+                meta['imageURL'] = image_url
+                Util.write_metadata(filename, meta)
+
+        if 'sourceType' not in meta:
+            source_type = Util.guess_source_type(meta)
+            if source_type:
+                meta['sourceType'] = source_type
+                Util.write_metadata(filename, meta)
+
+    def _do_report_file(self, filename, tag, attempt=1, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
 
@@ -196,22 +209,19 @@ class Smart:
                     logger.info("smart: Image uknown to server, performing full report")
 
             width, height = Util.get_size(filename)
+
+            self.fill_missing_meta_info(filename, meta)
+
             image_url = meta.get('imageURL', None)
-
-            # check for dead links and upload full image in that case (happens with old favorites):
-            if not upload_full_image and not image_url:
-                image_url = Util.guess_image_url(meta)
-                meta['imageURL'] = image_url
-                Util.write_metadata(filename, meta)
-
             image = {
                 'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 1024, 1024)),
                 'width': width,
                 'height': height,
                 'filename': os.path.basename(filename),
                 'origin_url': origin_url,
-                'source_name': meta.get('sourceName', None),
+                'source_type': meta.get('sourceType', None),
                 'source_location': meta.get('sourceLocation', None),
+                'source_name': meta.get('sourceName', None),
                 'image_url': image_url,
                 'author': meta.get('author', None),
                 'author_url': meta.get('authorURL', None),
@@ -219,6 +229,7 @@ class Smart:
 
             logger.info("smart: Reporting %s as '%s'" % (filename, tag))
 
+            # check for dead links and upload full image in that case (happens with old favorites):
             if upload_full_image or (tag == 'favorite' and Util.is_dead_or_not_image(image_url)):
                 if upload_full_image:
                     logger.info('smart: Including full image in upload per server request')
@@ -235,7 +246,7 @@ class Smart:
             except HTTPError, e:
                 self.handle_user_http_error(e)
 
-                if attempt < 3:
+                if attempt == 1:
                     self._do_report_file(filename, tag, attempt + 1)
                 else:
                     logger.exception("smart: Could not report %s as '%s, server error code %s'" % (filename, tag, e.code))
@@ -490,9 +501,10 @@ class Smart:
                                 source = image_data["sources"].values()[0] if image_data.get("sources", {}) else None
 
                             path = ImageFetcher.fetch(image_data["download_url"], self.parent.options.favorites_folder,
-                                               source_url=image_data["origin_url"],
-                                               source_name=source[0] if source else None,
+                                               origin_url=image_data["origin_url"],
+                                               source_type=source[0] if source else None,
                                                source_location=source[1] if source else None,
+                                               source_name=source[2] if source else None,
                                                verbose=False)
                             if not path:
                                 raise Exception("Fetch failed")

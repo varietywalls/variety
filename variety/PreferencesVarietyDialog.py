@@ -738,7 +738,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.set_transient_for(self)
         response = self.dialog.run()
         if response != Gtk.ResponseType.OK:
-            self.dialog.destroy()
+            if self.dialog:
+                self.dialog.destroy()
             self.dialog = None
 
     def on_wn_dialog_okay(self, url, edited_row):

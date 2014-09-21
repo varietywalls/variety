@@ -23,8 +23,9 @@ from variety.Util import Util
 logger = logging.getLogger('variety')
 
 class Downloader(object):
-    def __init__(self, parent, name, location, is_refresher=False):
+    def __init__(self, parent, source_type, name, location, is_refresher=False):
         self.parent = parent
+        self.source_type = source_type
         self.name = name
         self.location = location
         self.is_refresher = is_refresher
@@ -52,7 +53,10 @@ class Downloader(object):
         return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
     def save_locally(self, origin_url, image_url,
-                     source_name=None, source_location=None, force_download=False, extra_metadata={}):
+                     source_type=None, source_location=None, source_name=None,
+                     force_download=False, extra_metadata={}):
+        if not source_type:
+            source_type = self.source_type
         if not source_name:
             source_name = self.name
         if not source_location:
@@ -90,6 +94,7 @@ class Downloader(object):
             return None
 
         metadata = {
+            "sourceType": source_type,
             "sourceName": source_name,
             "sourceLocation": source_location,
             "sourceURL": origin_url,

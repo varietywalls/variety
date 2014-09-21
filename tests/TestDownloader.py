@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 class TestDownloader(unittest.TestCase):
     def test_convert_url(self):
         self.assertEqual("wallpapers_net_some_category_html",
-            Downloader("", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
+            Downloader("", "", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
 
 if __name__ == '__main__':
     unittest.main()

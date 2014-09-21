@@ -38,6 +38,18 @@ VARIETY_INFO = "Downloaded by Variety wallpaper changer, http://peterlevi.com/va
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu/12.04 Chromium/25.0.1364.172 Chrome/25.0.1364.172 Safari/537.22"
 
+SOURCE_NAME_TO_TYPE = {
+    'wallbase.cc': 'wallbase',
+    'wallpapers.net': 'wn',
+    'desktoppr.co': 'desktoppr',
+    'nasa astro pic of the day': 'apod',
+    'opentopia.com': 'earth',
+    'fetched': 'fetched',
+    'recommended by variety': 'recommended',
+    'flickr': 'flickr',
+    'media rss': 'mediarss',
+}
+
 random.seed()
 logger = logging.getLogger('variety')
 
@@ -502,6 +514,23 @@ class Util:
             elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
                 return origin_url
 
+            return None
+        except:
+            return None
+
+    @staticmethod
+    def guess_source_type(meta):
+        try:
+            if 'sourceType' in meta:
+                return meta['sourceType']
+            elif 'sourceName' in meta:
+                source_name = meta['sourceName'].lower()
+                if source_name in SOURCE_NAME_TO_TYPE:
+                    return SOURCE_NAME_TO_TYPE[source_name]
+                else:
+                    source_location = meta.get('sourceLocation', '').lower()
+                    if source_location.startswith(('http://' + source_name, 'https://' + source_name)):
+                        return 'mediarss'
             return None
         except:
             return None

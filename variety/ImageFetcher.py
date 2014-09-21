@@ -45,7 +45,8 @@ class ImageFetcher:
             return False
 
     @staticmethod
-    def fetch(url, to_folder, source_url=None, source_name=None, source_location=None,
+    def fetch(url, to_folder, origin_url=None,
+              source_type=None, source_location=None, source_name=None,
               progress_reporter=lambda a, b: None, verbose=True):
         reported = verbose
         try:
@@ -117,8 +118,9 @@ class ImageFetcher:
                 os.unlink(filename)
                 return None
 
-            metadata = {"sourceName": source_name or "Fetched",
-                        "sourceURL": source_url or url,
+            metadata = {"sourceType": source_type or 'fetched',
+                        "sourceName": source_name or "Fetched",
+                        "sourceURL": origin_url or url,
                         "imageURL": url}
             if source_location:
                 metadata["sourceLocation"] = source_location

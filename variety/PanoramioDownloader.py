@@ -34,7 +34,7 @@ class PanoramioDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(PanoramioDownloader, self).__init__(parent, "Panoramio", location)
+        super(PanoramioDownloader, self).__init__(parent, "panoramio", "Panoramio", location)
         self.parse_location()
         self.last_fill_time = 0
         self.queue = []

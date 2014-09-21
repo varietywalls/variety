@@ -24,7 +24,7 @@ logger = logging.getLogger('variety')
 class DesktopprDownloader(Downloader.Downloader):
     def __init__(self, parent):
         super(DesktopprDownloader, self).__init__(
-            parent, "Desktoppr.co", "https://api.desktoppr.co/1/wallpapers/random")
+            parent, "desktoppr", "Desktoppr.co", "https://api.desktoppr.co/1/wallpapers/random")
 
     def convert_to_filename(self, url):
         return "Desktoppr"

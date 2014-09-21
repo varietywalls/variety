@@ -31,7 +31,7 @@ class FlickrDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(FlickrDownloader, self).__init__(parent, "Flickr", location)
+        super(FlickrDownloader, self).__init__(parent, "flickr", "Flickr", location)
         self.parse_location()
         self.queue = []
         self.last_fill_time = 0

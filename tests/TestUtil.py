@@ -142,14 +142,10 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_dead_or_not_image('http://vrty.org/'))
         self.assertTrue(Util.is_dead_or_not_image('http://www.google.com/dejkjdrelkjflkrejfjre'))
         self.assertFalse(Util.is_dead_or_not_image('http://upload.wikimedia.org/wikipedia/commons/5/53/Wikipedia-logo-en-big.png'))
-        self.assertFalse(Util.is_dead_or_not_image('http://wallpapers.wallbase.cc/rozne/wallpaper-1206472.jpg'))
         self.assertFalse(Util.is_dead_or_not_image('https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg'))
         self.assertFalse(Util.is_dead_or_not_image('http://interfacelift.com/wallpaper/D98ef829/00899_rustedbolt_2560x1600.jpg'))
 
     def test_guess_image_url(self):
-        self.assertEquals('http://wallpapers.wallbase.cc/rozne/wallpaper-2064088.jpg',
-                          Util.guess_image_url({'sourceURL': 'http://wallbase.cc/wallpaper/2064088'}))
-
         self.assertEquals('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
                           Util.guess_image_url({'sourceURL': 'https://www.flickr.com/photos/83646108@N00/4558166441'}))
 
@@ -159,6 +155,10 @@ class TestUtil(unittest.TestCase):
         self.assertEquals('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',
                           Util.guess_image_url({'sourceURL': 'http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg'}))
 
+    def test_guess_source_type(self):
+        self.assertEquals(None, Util.guess_source_type({}))
+        self.assertEquals('wn', Util.guess_source_type({'sourceName': 'Wallpapers.net'}))
+        self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'host.com', 'sourceLocation': 'http://host.com/rss'}))
 
 if __name__ == '__main__':
     unittest.main()

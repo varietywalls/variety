@@ -29,7 +29,7 @@ EARTH_FILENAME = "earth.jpg"
 class EarthDownloader(Downloader.Downloader):
     def __init__(self, parent):
         super(EarthDownloader, self).__init__(
-            parent, "Opentopia.com", EARTH_ORIGIN_URL, is_refresher=True)
+            parent, "earth", "Opentopia.com", EARTH_ORIGIN_URL, is_refresher=True)
 
     def convert_to_filename(self, url):
         return "Earth"

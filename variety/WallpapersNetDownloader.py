@@ -31,7 +31,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, category_url):
-        super(WallpapersNetDownloader, self).__init__(parent, "Wallpapers.net", category_url)
+        super(WallpapersNetDownloader, self).__init__(parent, "wn", "Wallpapers.net", category_url)
         self.host = "http://wallpapers.net/"
         self.last_fill_time = 0
         self.queue = []

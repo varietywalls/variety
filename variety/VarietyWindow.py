@@ -2166,9 +2166,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             elif command == 'set-wallpaper':
                 image = ImageFetcher.fetch(args["image_url"][0], self.options.fetched_folder,
-                                           source_url=args["origin_url"][0],
-                                           source_name=args.get("source_name", [None])[0],
+                                           origin_url=args["origin_url"][0],
+                                           source_type=args.get("source_type", [None])[0],
                                            source_location=args.get("source_location", [None])[0],
+                                           source_name=args.get("source_name", [None])[0],
                                            progress_reporter=self.show_notification,
                                            verbose=True)
                 if image:

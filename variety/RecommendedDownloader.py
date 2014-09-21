@@ -28,7 +28,7 @@ random.seed()
 
 class RecommendedDownloader(Downloader):
     def __init__(self, parent):
-        super(RecommendedDownloader, self).__init__(parent, "Recommended by Variety", "Recommended")
+        super(RecommendedDownloader, self).__init__(parent, "recommended", "Recommended by Variety", "Recommended")
         self.queue = []
 
     def download_one(self):
@@ -41,9 +41,9 @@ class RecommendedDownloader(Downloader):
             logger.info("Recommended queue still empty after fill request")
             return None
 
-        url, image_url, source_name, source_location = self.queue.pop()
+        url, image_url, source_type, source_location, source_name = self.queue.pop()
         logger.info("Recommended URL: " + url)
-        return self.save_locally(url, image_url, source_name, source_location)
+        return self.save_locally(url, image_url, source_type, source_location, source_name)
 
     def fill_queue(self):
         logger.info("Filling Recommended queue")
@@ -55,6 +55,8 @@ class RecommendedDownloader(Downloader):
                 continue
             if image.width and image.height and not self.parent.size_ok(image.width, image.height):
                 continue
-            self.queue.append((image.origin_url, image.image_url, image.sources[0][0], image.sources[0][1]))
+            source = image.sources.values()[0]
+            self.queue.append(
+                (image.origin_url, image.image_url, source[0], source[1], source[2]))
 
         logger.info("Recommended queue populated with %d URLs" % len(self.queue))
