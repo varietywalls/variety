@@ -195,14 +195,14 @@ class Smart:
                 return  # we only smart-report images coming from Variety online sources, not local images
 
             origin_url = Smart.fix_origin_url(meta['sourceURL'])
-            report_url = Smart.API_URL + '/tag/' + user['id'] + '/' + tag
 
             if not (upload_full_image or needs_reupload):
                 # Attempt quick-tagging using just the computed image ID - will only succeed if the image already exists on the server
                 try:
                     logger.info("smart: Quick-reporting %s as '%s'" % (filename, tag))
                     imageid = self.get_image_id(origin_url)
-                    result = Util.fetch(report_url, {'image': json.dumps({'id': imageid}), 'authkey': user['authkey']})
+                    report_url = Smart.API_URL + '/tag/%s/%s/+%s' % (user['id'], imageid, tag)
+                    result = Util.fetch(report_url, {'authkey': user['authkey']})
                     logger.info("smart: Quick-reported, server returned: %s" % result)
                     return
                 except:
@@ -239,6 +239,7 @@ class Smart:
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
+            report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], tag)
             try:
                 result = Util.fetch(report_url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("smart: Reported, server returned: %s" % result)
