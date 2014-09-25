@@ -23,6 +23,7 @@ from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.AttrDict import AttrDict
 from variety.ImageFetcher import ImageFetcher
+import platform
 
 from variety import _, _u
 
@@ -325,17 +326,15 @@ class Smart:
                 sources = [{'enabled': s[0], 'type': Options.type_to_str(s[1]), 'location': s[2]}
                            for s in self.parent.options.sources if s[1] in Options.SourceType.dl_types]
 
-                data = {'sources': sources}
+                data = {'sources': sources,  'machine_type': Util.get_os_name()}
 
-                if "machine" in self.user:
-                    data["machine"] = self.user["machine"]
-                else:
-                    data["machine_type"] = 'laptop' if os.path.exists('/sys/class/power_supply/') else 'pc'
+                if "machine_id" in self.user:
+                    data["machine_id"] = self.user["machine_id"]
 
                 try:
                     sync_url = '%s/user/%s/sync-sources?authkey=%s' % (Smart.API_URL, self.user["id"], self.user["authkey"])
                     server_data = AttrDict(Util.fetch_json(sync_url, {'data': json.dumps(data)}))
-                    self.user["machine"] = server_data["machine"]
+                    self.user["machine_id"] = server_data["machine_id"]
                     self.user["machine_label"] = server_data["machine_label"]
                     self.save_user()
                 except HTTPError, e:

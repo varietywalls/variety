@@ -32,6 +32,7 @@ from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf
 import inspect
 import subprocess
+import platform
 from variety import _u, _str
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, http://peterlevi.com/variety"
@@ -535,4 +536,7 @@ class Util:
         except:
             return None
 
+    @staticmethod
+    def get_os_name():
+        return ' '.join(platform.linux_distribution()[0:2])
 
