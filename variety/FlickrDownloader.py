@@ -236,3 +236,12 @@ class FlickrDownloader(Downloader.Downloader):
             except Exception:
                 logger.exception("Error parsing single flickr photo info:")
 
+    @staticmethod
+    def get_image_url(origin_url):
+        photo_id = origin_url.split('/')[-1]
+        call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
+               (API_KEY, photo_id)
+        resp = Util.fetch_json(call)
+        s = max(resp['sizes']['size'], key=lambda size: int(size['width']))
+        return s['source']
+

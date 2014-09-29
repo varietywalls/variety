@@ -504,13 +504,8 @@ class Util:
                 return s.find('img', 'wall')['src']
 
             elif "flickr.com" in origin_url:
-                from variety.FlickrDownloader import API_KEY
-                photo_id = origin_url.split('/')[-1]
-                call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
-                       (API_KEY, photo_id)
-                resp = Util.fetch_json(call)
-                s = max(resp['sizes']['size'], key=lambda size: int(size['width']))
-                return s['source']
+                from variety.FlickrDownloader import FlickrDownloader
+                return FlickrDownloader.get_image_url(origin_url)
 
             elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
                 return origin_url
