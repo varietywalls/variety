@@ -82,8 +82,9 @@ class Smart:
         if not self.user or force_reload:
             self.user = None
             try:
-                with open(os.path.join(self.parent.config_folder, 'smart_user.json')) as f:
-                    self.user = json.load(f)
+                with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), encoding='utf8') as f:
+                    data = f.read()
+                    self.user = AttrDict(json.loads(data))
                     if self.parent.preferences_dialog:
                         self.parent.preferences_dialog.on_smart_user_updated()
                     logger.info('smart: Loaded smart user: %s' % self.user["id"])
@@ -104,8 +105,8 @@ class Smart:
         logger.info('smart: Created smart user: %s' % self.user["id"])
 
     def save_user(self):
-        with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
-            json.dump(self.user, f, ensure_ascii=False, indent=2)
+        with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w', encoding='utf8') as f:
+            f.write(json.dumps(self.user, indent=4, ensure_ascii=False, encoding='utf8'))
 
     def set_user(self, user):
         logger.info('smart: Setting new smart user')
@@ -295,7 +296,7 @@ class Smart:
     def write_syncdb(self, syncdb):
         syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
         with io.open(syncdb_file, "w", encoding='utf8') as f:
-            f.write(json.dumps(syncdb.asdict(), indent=4, ensure_ascii=False))
+            f.write(json.dumps(syncdb.asdict(), indent=4, ensure_ascii=False, encoding='utf8'))
 
     @staticmethod
     def get_image_id(url):
