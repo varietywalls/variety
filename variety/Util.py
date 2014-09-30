@@ -183,22 +183,31 @@ class Util:
             m.read()
             m["Xmp.variety.info"] = VARIETY_INFO
             for k, v in info.items():
-                m["Xmp.variety." + k] = v
+                if k == 'author':
+                    m["Xmp.variety." + k] = v
+                    if not 'Xmp.dc.creator' in m:
+                        m['Xmp.dc.creator'] = [v]
+                if k == 'headline':
+                    m['Iptc.Application2.Headline'] = [v]
+                elif k == 'description':
+                    m['Xmp.dc.description'] = v
+                elif k == 'keywords':
+                    if isinstance(v, list):
+                        m['Iptc.Application2.Keywords'] = v
+                        m['Xmp.dc.subject'] = v
+                else:
+                    m["Xmp.variety." + k] = v
             m.write()
             return True
         except Exception:
-            # could not write metadata inside file, use txt instead
+            # could not write metadata inside file, use json txt instead
             try:
-                with io.open(filename + ".txt", "w", encoding='utf8') as f:
-                    f.write(u"INFO:\n%s\n%s\n%s\n%s\n%s\n" % (
-                            info["sourceName"],
-                            info["sourceURL"],
-                            info.get("sourceLocation", ''),
-                            info.get("imageURL", ''),
-                            VARIETY_INFO))
-            except Exception:
-                logger.exception("Could not write url metadata for file " + filename)
-            return False
+                with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
+                    f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
+                    return True
+            except Exception, e:
+                logger.exception("Could not write metadata for file " + filename)
+                return False
 
     @staticmethod
     def read_metadata(filename):
@@ -212,16 +221,38 @@ class Util:
             m.read()
 
             info = {}
-            keys = ["sourceName", "sourceLocation", "sourceURL", "imageURL", "author", "authorURL"]
+            keys = ["sourceName", "sourceLocation", "sourceURL", "sourceType", "imageURL", "author", "authorURL"]
             for k in keys:
                 if "Xmp.variety." + k in m:
-                    info[k] = m["Xmp.variety." + k].value
+                    info[k] = _u(m["Xmp.variety." + k].value)
+
+            try:
+                info['headline'] = _u(m['Iptc.Application2.Headline'].value[0])
+            except:
+                pass
+
+            try:
+                info['description'] = _u(m['Xmp.dc.description'].value.values()[0])
+            except:
+                pass
+
+            try:
+                info['keywords'] = map(_u, m['Iptc.Application2.Keywords'].value)
+            except:
+                pass
+
             return info
         except Exception, e:
-            # could not read metadata inside file, use txt instead
+            # could not read metadata inside file, try reading json metadata instead
             try:
-                with io.open(filename + ".txt", encoding='utf8') as f:
-                    lines = list(f)
+                with io.open(filename + '.metadata.json', encoding='utf8') as f:
+                    return json.loads(f.read())
+
+            except Exception:
+                # could not read json metadata, use txt instead # TODO: legacy support. Remove after some time has passed.
+                try:
+                    with io.open(filename + ".txt", encoding='utf8') as f:
+                        lines = list(f)
                     info = {}
                     if len(lines) > 2 and lines[0].strip() == "INFO:":
                         info["sourceName"] = lines[1].strip().replace("Downloaded from ", "")  # TODO remove later on
@@ -230,11 +261,18 @@ class Util:
                             info["sourceLocation"] = lines[3].strip()
                         if len(lines) > 4 and len(lines[4].strip()) > 0:
                             info["imageURL"] = lines[4].strip()
+                        if len(lines) > 5 and len(lines[5].strip()) > 0:
+                            info["sourceType"] = lines[5].strip()
+
+                        if Util.write_metadata(filename, info):
+                            logger.warning("Replacing txt image metadata with json-based: %s" % filename)
+                            os.unlink(filename + ".txt")
+
                         return info
                     else:
                         return None
-            except Exception:
-                return None
+                except Exception:
+                    return None
 
     @staticmethod
     def set_rating(filename, rating):

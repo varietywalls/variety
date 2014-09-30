@@ -37,9 +37,22 @@ class TestUtil(unittest.TestCase):
 
     def test_metadata(self):
         self.assertTrue(os.path.exists('test.jpg'))
-        info = {"sourceName": 'a', "sourceURL": 'b', "sourceLocation": 'c', "imageURL": 'd'}
-        Util.write_metadata('test.jpg', info)
+        info = {
+            'sourceURL': u'b',
+            'imageURL': u'd',
+            'sourceName': u'a',
+            'sourceLocation': u'c',
+            'sourceType': u'flickr',
+            'author': u'автор',
+            'authorURL': u'url',
+            'keywords': [u'дума1', u'дума2'],
+            'headline': u'проба1',
+            'description': u'проба2',
+        }
+        self.assertTrue(Util.write_metadata('test.jpg', info))
         self.assertEqual(info, Util.read_metadata('test.jpg'))
+
+        self.assertTrue(os.path.exists('test.svg'))
         Util.write_metadata('test.svg', info)
         self.assertEqual(info, Util.read_metadata('test.svg'))
 
