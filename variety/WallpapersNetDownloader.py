@@ -91,7 +91,18 @@ class WallpapersNetDownloader(Downloader.Downloader):
         src_url = self.host + max_res_link
         logger.info("Image src URL: " + src_url)
 
-        return self.save_locally(wallpaper_url, src_url)
+        extra_metadata = {}
+        try:
+            extra_metadata['headline'] = tree.findall('//h1')[0].text.replace('HD Wallpaper', '')
+        except:
+            pass
+        try:
+            extra_metadata['keywords'] = [x[1:].lower() for x in map(
+                lambda a: str(a.text), tree.findall('//div[@class="right"]//table//a')) if x.startswith('#')]
+        except:
+            pass
+
+        return self.save_locally(wallpaper_url, src_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
         self.last_fill_time = time.time()
