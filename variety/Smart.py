@@ -44,6 +44,15 @@ class Smart:
     SITE_URL = 'http://localhost:4000' if '--debug-smart' in sys.argv else 'https://vrty.org'
     API_URL = SITE_URL + '/api'
 
+    META_KEYS_MAP = {
+        'sourceURL': 'origin_url',
+        'imageURL': 'image_url',
+        'sourceType': 'source_type',
+        'sourceLocation': 'source_location',
+        'sourceName': 'source_name',
+        'authorURL': 'author_url'
+    }
+
     def __init__(self, parent):
         self.parent = parent
         self.user = None
@@ -221,13 +230,13 @@ class Smart:
                 'height': height,
                 'filename': os.path.basename(filename),
                 'origin_url': origin_url,
-                'source_type': meta.get('sourceType', None),
-                'source_location': meta.get('sourceLocation', None),
-                'source_name': meta.get('sourceName', None),
                 'image_url': image_url,
-                'author': meta.get('author', None),
-                'author_url': meta.get('authorURL', None),
             }
+
+            for key, value in meta.items():
+                server_key = Smart.META_KEYS_MAP.get(key, key)
+                if not server_key in image:
+                    image[server_key] = value
 
             logger.info("smart: Reporting %s as '%s'" % (filename, tag))
 
