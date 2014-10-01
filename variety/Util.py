@@ -191,6 +191,7 @@ class Util:
                     m['Iptc.Application2.Headline'] = [v]
                 elif k == 'description':
                     m['Xmp.dc.description'] = v
+                    m['Exif.Image.ImageDescription'] = v
                 elif k == 'keywords':
                     if isinstance(v, list):
                         m['Iptc.Application2.Keywords'] = v
@@ -227,6 +228,11 @@ class Util:
                     info[k] = _u(m["Xmp.variety." + k].value)
 
             try:
+                info['author'] = _u(m['Xmp.dc.creator'].value[0])
+            except:
+                pass
+
+            try:
                 info['headline'] = _u(m['Iptc.Application2.Headline'].value[0])
             except:
                 pass
@@ -234,14 +240,21 @@ class Util:
             try:
                 info['description'] = _u(m['Xmp.dc.description'].value.values()[0])
             except:
-                pass
+                try:
+                    info['description'] = _u(m['Exif.Image.ImageDescription'].value)
+                except:
+                    pass
 
             try:
                 info['keywords'] = map(_u, m['Iptc.Application2.Keywords'].value)
             except:
-                pass
+                try:
+                    info['keywords'] = map(_u, m['Xmp.dc.subject'].value)
+                except:
+                    pass
 
             return info
+
         except Exception, e:
             # could not read metadata inside file, try reading json metadata instead
             try:

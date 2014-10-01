@@ -149,7 +149,7 @@ class FlickrDownloader(Downloader.Downloader):
 
         urls = self.queue.pop()
         logger.info("Photo URL: " + urls[0])
-        return self.save_locally(urls[0], urls[1])
+        return self.save_locally(urls[0], urls[1], extra_metadata=urls[2])
 
     def fill_queue(self):
         self.last_fill_time = time.time()
@@ -173,7 +173,7 @@ class FlickrDownloader(Downloader.Downloader):
         page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
-        call = call + "&extras=o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
+        call = call + "&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
         resp = FlickrDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
@@ -231,8 +231,19 @@ class FlickrDownloader(Downloader.Downloader):
                     logger.debug("Small or non-landscape size/resolution")
                     continue
 
+                try:
+                    extra_metadata = {
+                        'author': ph['ownername'],
+                        'authorURL': 'https://www.flickr.com/photos/%s' % ph["owner"],
+                        'headline': ph['title'],
+                        'keywords': ph['tags'].split(' '),
+                        'description': ph['description']['_content']
+                    }
+                except:
+                    extra_metadata = {}
+
                 logger.debug("Appending to queue %s, %s" % (photo_url, image_file_url))
-                self.queue.append((photo_url, image_file_url))
+                self.queue.append((photo_url, image_file_url, extra_metadata))
             except Exception:
                 logger.exception("Error parsing single flickr photo info:")
 
