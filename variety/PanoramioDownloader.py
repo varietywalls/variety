@@ -82,7 +82,8 @@ class PanoramioDownloader(Downloader.Downloader):
         image = self.save_locally(photo["photo_url"],
                                  photo["photo_file_url"],
                                  extra_metadata={"author": photo["owner_name"],
-                                                 "authorURL": photo["owner_url"]})
+                                                 "authorURL": photo["owner_url"],
+                                                 "headline": photo["photo_title"]})
 
         # Uncomment to overlay Panoramio logo:
         # logo = os.path.join(varietyconfig.get_data_path(), 'panoramio/logo.png')
