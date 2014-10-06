@@ -140,7 +140,7 @@ class Smart:
 
             logger.info("smart: Reporting %s as trash" % origin_url)
             try:
-                url = Smart.API_URL + '/tag/' + user['id'] + '/trash'
+                url = Smart.API_URL + '/upload/' + user['id'] + '/trash'
                 result = Util.fetch(url, {'image': json.dumps({'origin_url': origin_url}), 'authkey': user['authkey']})
                 logger.info("smart: Reported, server returned: %s" % result)
                 return

@@ -1174,6 +1174,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_copyto_changed()
 
     def on_btn_login_register_clicked(self, widget=None):
+        if hasattr(self, 'dialog') and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
+            return
         login_dialog = LoginOrRegisterDialog()
         login_dialog.set_smart(self.parent.smart)
         self.show_dialog(login_dialog)
