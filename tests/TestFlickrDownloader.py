@@ -39,5 +39,24 @@ class TestFlickrDownloader(unittest.TestCase):
         self.assertEqual((False, "Group not found", None),
             FlickrDownloader.obtain_groupid("http://www.flickr.com/groups/bad_groupname_here_xxx/"))
 
+    def test_get_photo_id(self):
+        self.assertEqual('7527967456', FlickrDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456/'))
+        self.assertEqual('7527967456', FlickrDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456'))
+
+    def test_get_image_url(self):
+        self.assertEquals('https://farm9.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg',
+                          FlickrDownloader.get_image_url('https://www.flickr.com/photos/peter-levi/7527967456/'))
+
+    def test_get_extra_metadata(self):
+        expected = {
+            'headline': u'IMG_1924',
+            'keywords': [u'greece', u'greek', u'islands'],
+            'description': u'',
+            'authorURL': u'https://www.flickr.com/photos/93647178@N00',
+            'author': u'Peter Levi'
+        }
+        self.assertEquals(expected,
+                          FlickrDownloader.get_extra_metadata('https://www.flickr.com/photos/peter-levi/7527967456/'))
+
 if __name__ == '__main__':
     unittest.main()

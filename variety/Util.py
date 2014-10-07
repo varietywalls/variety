@@ -550,11 +550,7 @@ class Util:
         try:
             origin_url = meta['sourceURL']
 
-            if "wallbase.cc" in origin_url:
-                s = Util.html_soup(origin_url)
-                return s.find('img', 'wall')['src']
-
-            elif "flickr.com" in origin_url:
+            if "flickr.com" in origin_url:
                 from variety.FlickrDownloader import FlickrDownloader
                 return FlickrDownloader.get_image_url(origin_url)
 

@@ -248,11 +248,33 @@ class FlickrDownloader(Downloader.Downloader):
                 logger.exception("Error parsing single flickr photo info:")
 
     @staticmethod
+    def get_photo_id(origin_url):
+        if origin_url[-1] == '/':
+            origin_url = origin_url[:-1]
+        return origin_url.split('/')[-1]
+
+    @staticmethod
     def get_image_url(origin_url):
-        photo_id = origin_url.split('/')[-1]
+        photo_id = FlickrDownloader.get_photo_id(origin_url)
         call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
                (API_KEY, photo_id)
         resp = Util.fetch_json(call)
         s = max(resp['sizes']['size'], key=lambda size: int(size['width']))
         return s['source']
+
+    @staticmethod
+    def get_extra_metadata(origin_url):
+        photo_id = FlickrDownloader.get_photo_id(origin_url)
+        call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
+               (API_KEY, photo_id)
+        resp = Util.fetch_json(call)
+        ph = resp['photo']
+        extra_meta = {
+            'headline': ph['title']['_content'],
+            'description': ph['description']['_content'],
+            'author': ph['owner']['realname'],
+            'authorURL': 'https://www.flickr.com/photos/%s' % ph['owner']['nsid'],
+            'keywords': [x['_content'] for x in ph['tags']['tag']],
+        }
+        return extra_meta
 

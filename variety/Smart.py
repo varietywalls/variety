@@ -180,18 +180,32 @@ class Smart:
             origin_url = origin_url[:origin_url.rindex('?')]
         return origin_url
 
-    def fill_missing_meta_info(self, filename, meta):
-        if 'imageURL' not in meta:
-            image_url = Util.guess_image_url(meta)
-            if image_url:
-                meta['imageURL'] = image_url
-                Util.write_metadata(filename, meta)
+    @staticmethod
+    def fill_missing_meta_info(filename, meta):
+        try:
+            if 'imageURL' not in meta:
+                image_url = Util.guess_image_url(meta)
+                if image_url:
+                    meta['imageURL'] = image_url
+                    Util.write_metadata(filename, meta)
 
-        if 'sourceType' not in meta:
-            source_type = Util.guess_source_type(meta)
-            if source_type:
-                meta['sourceType'] = source_type
-                Util.write_metadata(filename, meta)
+            if 'sourceType' not in meta:
+                source_type = Util.guess_source_type(meta)
+                if source_type:
+                    meta['sourceType'] = source_type
+                    Util.write_metadata(filename, meta)
+
+            if 'headline' not in meta:
+                origin_url = meta['sourceURL']
+                if 'flickr.com' in origin_url:
+                    from variety.FlickrDownloader import FlickrDownloader
+                    extra_meta = FlickrDownloader.get_extra_metadata(origin_url)
+                    meta.update(extra_meta)
+                    Util.write_metadata(filename, meta)
+
+
+        except:
+            logger.exception('Could not fill missing meta-info')
 
     def _do_report_file(self, filename, tag, attempt=1, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
@@ -221,7 +235,7 @@ class Smart:
 
             width, height = Util.get_size(filename)
 
-            self.fill_missing_meta_info(filename, meta)
+            Smart.fill_missing_meta_info(filename, meta)
 
             image_url = meta.get('imageURL', None)
             image = {
