@@ -54,7 +54,6 @@ from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
-from variety.RecommendedDownloader import RecommendedDownloader
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util
@@ -513,7 +512,7 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.PANORAMIO:
             return PanoramioDownloader(self, location)
         elif type == Options.SourceType.RECOMMENDED:
-            return RecommendedDownloader(self)
+            return MediaRssDownloader(self, '%s/user/%s/recommended/feed' % (Smart.SITE_URL, self.smart.user["id"]))
         elif type == Options.SourceType.LATEST:
             return MediaRssDownloader(self, Smart.SITE_URL + '/feed')
         else:
