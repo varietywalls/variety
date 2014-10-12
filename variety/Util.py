@@ -41,6 +41,7 @@ USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Ge
 
 SOURCE_NAME_TO_TYPE = {
     'wallbase.cc': 'wallbase',
+    'wallhaven.cc': 'wallhaven',
     'wallpapers.net': 'wn',
     'desktoppr.co': 'desktoppr',
     'nasa astro pic of the day': 'apod',

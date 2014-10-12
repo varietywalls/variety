@@ -44,8 +44,9 @@ class Options:
         MEDIA_RSS = 10
         EARTH = 11
         PANORAMIO = 12
-        RECOMMENDED = 13
-        LATEST = 14
+        WALLHAVEN = 13
+        RECOMMENDED = 14
+        LATEST = 15
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -60,13 +61,14 @@ class Options:
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
             PANORAMIO: "panoramio",
+            WALLHAVEN: "wallhaven",
             RECOMMENDED: "recommended",
-            LATEST: "latest"
+            LATEST: "latest",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, RECOMMENDED, LATEST]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, WALLHAVEN, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0
@@ -485,7 +487,7 @@ class Options:
         self.fetched_folder = os.path.expanduser(u"~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+        self.clipboard_hosts = "alpha.wallhaven.cc,wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
 
         self.icon = "Light"
 
@@ -540,7 +542,7 @@ class Options:
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
-            [True, Options.SourceType.WALLBASE, "autumn"]
+            [True, Options.SourceType.WALLHAVEN, "nature"],
         ]
 
         self.filters = [

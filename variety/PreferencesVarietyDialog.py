@@ -37,6 +37,7 @@ from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
+from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u
 
@@ -65,6 +66,7 @@ EDITABLE_TYPES = [
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS,
     Options.SourceType.PANORAMIO,
+    Options.SourceType.WALLHAVEN,
 ]
 
 
@@ -326,6 +328,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Wallpapers.net"), self.on_add_wn_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
+            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
         ]
 
         for x in items:
@@ -613,6 +616,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLBASE:
                 self.dialog = AddWallbaseDialog()
+            elif type == Options.SourceType.WALLHAVEN:
+                self.dialog = AddWallhavenDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
             elif type == Options.SourceType.PANORAMIO:
@@ -729,6 +734,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_add_wallbase_clicked(self, widget=None):
         self.show_dialog(AddWallbaseDialog())
 
+    def on_add_wallhaven_clicked(self, widget=None):
+        self.show_dialog(AddWallhavenDialog())
+
     def on_add_panoramio_clicked(self, widget=None):
         self.show_dialog(AddPanoramioDialog())
 
@@ -768,6 +776,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
             edited_row[2] = wallbase_search
         else:
             self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
+        self.dialog = None
+
+    def on_wallhaven_dialog_okay(self, wallhaven_search, edited_row):
+        if edited_row:
+            edited_row[2] = wallhaven_search
+        else:
+            self.add_sources(Options.SourceType.WALLHAVEN, [wallhaven_search])
         self.dialog = None
 
     def on_panoramio_dialog_okay(self, panoramio_config, edited_row):
