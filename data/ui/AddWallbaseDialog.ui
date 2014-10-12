@@ -39,6 +39,25 @@
           </packing>
         </child>
         <child>
+          <object class="GtkLabel" id="label3">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="margin_bottom">20</property>
+            <property name="label" translatable="yes">Wallbase.cc is permanently down. Use Wallhaven.cc instead. Support for Wallbase.cc will be dropped completely in a future release, please remove or update your existing Wallbase sources.</property>
+            <property name="justify">fill</property>
+            <property name="wrap">True</property>
+            <attributes>
+              <attribute name="foreground" value="#ffff00000000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -55,7 +74,7 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -95,7 +114,7 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child internal-child="action_area">
@@ -142,7 +161,7 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="pack_type">end</property>
-            <property name="position">7</property>
+            <property name="position">8</property>
           </packing>
         </child>
         <child>
@@ -194,7 +213,7 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">11</property>
+            <property name="position">12</property>
           </packing>
         </child>
       </object>
@@ -204,11 +223,5 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
       <action-widget response="-5">btn_ok</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="radio_all"/>
-      <widget name="radio_text"/>
-      <widget name="radio_color"/>
-    </widgets>
-  </object>
+  <object class="GtkSizeGroup" id="sizegroup1"/>
 </interface>
