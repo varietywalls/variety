@@ -45,7 +45,7 @@
             <property name="halign">start</property>
             <property name="label" translatable="yes">&lt;a href="http://wallhaven.cc"&gt;Wallhaven.cc&lt;/a&gt; provides a variety of image search options. Below you can specify keywords to search for, or visit &lt;a href="http://wallhaven.cc"&gt;Wallhaven.cc&lt;/a&gt;, setup your search criteria there, ensure you like the results, and paste the full Wallhaven URL in the box.
 
-If you specify keywords, the most liked safe-for-work images that match any of the keywords will be used. 
+If you specify keywords, the most liked safe-for-work images that match all of the keywords will be used. 
 
 If you specify a Wallhaven URL, please choose the sorting criteria carefully - Variety regularly requests images, but uses only images from the first several hundred returned. Random or Date will mean this image source will have a longer "lifetime" till it is exhausted. Favorites will provide better images and Relevance will provide closer matches when searching for phrases or colors.</property>
             <property name="use_markup">True</property>
@@ -204,11 +204,5 @@ If you specify a Wallhaven URL, please choose the sorting criteria carefully - V
       <action-widget response="-5">btn_ok</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="radio_all"/>
-      <widget name="radio_text"/>
-      <widget name="radio_color"/>
-    </widgets>
-  </object>
+  <object class="GtkSizeGroup" id="sizegroup1"/>
 </interface>

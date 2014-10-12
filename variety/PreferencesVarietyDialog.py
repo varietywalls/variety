@@ -324,11 +324,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             (_("Folders"), self.on_add_folders_clicked),
             '-',
             (_("Flickr"), self.on_add_flickr_clicked),
+            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
+            # (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Panoramio"), self.on_add_panoramio_clicked),
-            (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Wallpapers.net"), self.on_add_wn_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
-            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
         ]
 
         for x in items:
