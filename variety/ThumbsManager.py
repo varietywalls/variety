@@ -20,6 +20,7 @@ import os
 
 import threading
 import logging
+import subprocess
 from variety.Util import Util
 from variety.ThumbsWindow import ThumbsWindow
 from variety_lib import varietyconfig
@@ -109,6 +110,27 @@ class ThumbsManager():
         def _open_folder(widget): self.parent.open_folder(widget, file)
         open_folder.connect("activate", _open_folder)
         menu.append(open_folder)
+
+        info = Util.read_metadata(file)
+        if info and "sourceURL" in info and "sourceName" in info:
+            url = info["sourceURL"]
+            source_name = info["sourceName"]
+            if "Fetched" in source_name:
+                label = _("Fetched: Show Origin")
+            else:
+                label = _("View at %s") % source_name
+
+            if len(label) > 50:
+                label = label[:50] + "..."
+
+            show_origin = Gtk.MenuItem(label)
+
+            def _show_origin(widget=None):
+                logger.info("Opening url: " + url)
+                subprocess.call(["xdg-open", url])
+
+            show_origin.connect("activate", _show_origin)
+            menu.append(show_origin)
 
         menu.append(Gtk.SeparatorMenuItem.new())
         rating_item  = Gtk.MenuItem(_("Set EXIF Rating"))
