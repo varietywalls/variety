@@ -143,7 +143,10 @@ class MediaRssDownloader(Downloader.Downloader):
                 try:
                     extra_metadata['headline'] = item.find("{0}title".format(MEDIA_NS)).text
                 except:
-                    pass
+                    try:
+                        extra_metadata['headline'] = item.find("title").text
+                    except:
+                        pass
 
                 try:
                     extra_metadata['description'] = item.find("{0}description".format(MEDIA_NS)).text
