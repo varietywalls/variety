@@ -1196,7 +1196,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.show_dialog(login_dialog)
 
     def close_login_register_dialog(self):
-        if self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
+        if hasattr(self, "dialog") and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
             def _close():
                 self.dialog.destroy()
                 self.dialog = None

@@ -29,7 +29,7 @@ import urllib
 import urllib2
 from urlparse import urlparse
 from DominantColors import DominantColors
-from gi.repository import Gdk, Pango, GdkPixbuf
+from gi.repository import Gdk, Pango, GdkPixbuf, GLib
 import inspect
 import subprocess
 import platform
@@ -582,4 +582,13 @@ class Util:
     @staticmethod
     def get_os_name():
         return ' '.join(platform.linux_distribution()[0:2])
+
+    # makes the Gtk thread execute the given callback.
+    @staticmethod
+    def add_mainloop_task(callback, *args):
+        def cb(args):
+            args[0](*args[1:])
+            return False
+        args= [callback]+list(args)
+        Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT, cb, args)
 

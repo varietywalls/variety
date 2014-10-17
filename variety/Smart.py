@@ -81,11 +81,7 @@ class Smart:
 
     def first_run(self):
         if not self.parent.options.smart_notice_shown:
-            try:
-                Gdk.threads_enter()
-                self.show_notice_dialog()
-            finally:
-                Gdk.threads_leave()
+            Util.add_mainloop_task(self.show_notice_dialog)
 
     def load_user(self, create_if_missing=True, force_reload=False):
         if not self.user or force_reload:
@@ -165,13 +161,7 @@ class Smart:
         if e.code in (403, 404):
             self.parent.show_notification(
                 _('Your Smart Variety credentials are probably outdated. Please login again.'))
-            def _go():
-                try:
-                    Gdk.threads_enter()
-                    self.parent.preferences_dialog.on_btn_login_register_clicked()
-                finally:
-                    Gdk.threads_leave()
-            threading.Timer(0.1, _go).start()
+            Util.add_mainloop_task(self.parent.preferences_dialog.on_btn_login_register_clicked)
             raise e
 
     @staticmethod
@@ -577,19 +567,15 @@ class Smart:
 
         if self.user is None or self.user['authkey'] != authkey:
             def _go():
-                Gdk.threads_enter()
-                try:
-                    dialog = Gtk.MessageDialog(self.parent.preferences_dialog, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL)
-                    dialog.set_markup(_('Do you want to login to Smart Variety as <span font_weight="bold">%s</span>?') % username)
-                    dialog.set_title(_('Smart Variety login confirmation'))
-                    dialog.set_default_response(Gtk.ResponseType.OK)
-                    response = dialog.run()
-                    dialog.destroy()
-                    if response == Gtk.ResponseType.OK:
-                        _do_login()
-                finally:
-                    Gdk.threads_leave()
-            threading.Timer(0.1, _go).start()
+                dialog = Gtk.MessageDialog(self.parent.preferences_dialog, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL)
+                dialog.set_markup(_('Do you want to login to Smart Variety as <span font_weight="bold">%s</span>?') % username)
+                dialog.set_title(_('Smart Variety login confirmation'))
+                dialog.set_default_response(Gtk.ResponseType.OK)
+                response = dialog.run()
+                dialog.destroy()
+                if response == Gtk.ResponseType.OK:
+                    _do_login()
+            Util.add_mainloop_task(_go)
 
         else:
             _do_login()

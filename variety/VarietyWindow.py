@@ -174,7 +174,6 @@ class VarietyWindow(Gtk.Window):
         self.dialogs = []
 
         self.first_run()
-        self.smart.first_run()
 
         def _delayed():
             self.create_preferences_dialog()
@@ -1717,10 +1716,10 @@ class VarietyWindow(Gtk.Window):
     def first_run(self):
         fr_file = os.path.join(self.config_folder, ".firstrun")
         if os.path.exists(fr_file):
+            self.smart.first_run()
             return
 
-        try:
-            Gdk.threads_enter()
+        def _go():
             self.show_welcome_dialog()
             if not self.running:
                 return
@@ -1731,9 +1730,9 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             if not self.running:
                 return
+
             self.on_mnu_preferences_activate()
-        finally:
-            Gdk.threads_leave()
+        Util.add_mainloop_task(_go)
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
