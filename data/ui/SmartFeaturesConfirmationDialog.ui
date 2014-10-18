@@ -6,7 +6,7 @@
     <property name="width_request">600</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Please enable Smart Variety</property>
+    <property name="title" translatable="yes">VRTY.ORG integration</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
@@ -59,7 +59,7 @@
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="ypad">10</property>
-                <property name="label" translatable="yes">This feature requires VRTY.ORG participation</property>
+                <property name="label" translatable="yes">This feature requires VRTY.ORG integration</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                   <attribute name="scale" value="1.3"/>
@@ -73,7 +73,7 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="smart_enabled">
-                <property name="label" translatable="yes">Participate in VRTY.ORG</property>
+                <property name="label" translatable="yes">Enable VRTY.ORG integration</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -97,7 +97,7 @@
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
                 <property name="margin_top">7</property>
-                <property name="label" translatable="yes">To enable this feature Variety needs permission to collect data about the images you like or dislike and the online sources you have enabled.
+                <property name="label" translatable="yes">For this feature Variety needs permission to collect data about the images you like or dislike and the online sources you have enabled.
 
 Collected data is anonymous by default and covers only images which Variety downloaded, never images you already had in your local folders that might be private.
 

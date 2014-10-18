@@ -514,9 +514,9 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.PANORAMIO:
             return PanoramioDownloader(self, location)
         elif type == Options.SourceType.RECOMMENDED:
-            return MediaRssDownloader(self, '%s/user/%s/recommended/feed' % (Smart.SITE_URL, self.smart.user["id"]))
+            return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
         elif type == Options.SourceType.LATEST:
-            return MediaRssDownloader(self, Smart.SITE_URL + '/feed')
+            return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
             raise Exception("Uknown downloader type")
 

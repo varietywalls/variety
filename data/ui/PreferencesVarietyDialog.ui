@@ -2020,7 +2020,7 @@
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkCheckButton" id="smart_enabled">
-                            <property name="label" translatable="yes">Participate in VRTY.ORG</property>
+                            <property name="label" translatable="yes">Enable VRTY.ORG integration</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -2076,7 +2076,7 @@
                         <property name="margin_top">7</property>
                         <property name="label" translatable="yes">&lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; helps connect Variety users with similar tastes and provides one-click ways to change your wallpaper, to add new image sources to Variety, and to follow other users' favorites.
 
-If you choose to participate, Variety will automatically build you a profile on VRTY.ORG with the images you like and dislike. You can then get personalized recommendations or synchronize favorites between computers.</property>
+If you choose to participate, Variety will build you a profile on VRTY.ORG with the images you like and dislike. This is required if you want to synchronize favorites between computers or get personalized recommendations.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
