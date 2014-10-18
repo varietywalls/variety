@@ -279,11 +279,10 @@ class Smart:
             self.parent.options.smart_notice_shown = True
             if self.parent.options.smart_enabled:
                 for s in self.parent.options.sources:
-                    if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
+                    if s[1] in (Options.SourceType.RECOMMENDED,):
                         s[0] = True
                         if not on_first_run:
-                            self.parent.show_notification(_("New image sources"),
-                                                          _("Recommended and Latest Favorites image sources enabled"))
+                            self.parent.show_notification(_("Recommended images source enabled"))
             self.parent.options.write()
             self.parent.reload_config()
             dialog.destroy()

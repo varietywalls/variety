@@ -400,8 +400,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
 
         # special case when enabling the Recommended or Latest downloader:
-        elif row[0] and row[1] in (Options.type_to_str(Options.SourceType.RECOMMENDED),
-                                   Options.type_to_str(Options.SourceType.LATEST)) and \
+        elif row[0] and row[1] in (Options.type_to_str(Options.SourceType.RECOMMENDED),) and \
                 not self.parent.options.smart_enabled:
 
             row[0] = False
@@ -1062,13 +1061,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_smart_user_updated()
         if not self.ui.smart_enabled.get_active():
             for s in self.parent.options.sources:
-                if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST) and s[0]:
-                    self.parent.show_notification(_("Disabling personalized VRTY.ORG sources"),
-                                                  _("Recommended and Latest favorites sources disabled"))
+                if s[1] in (Options.SourceType.RECOMMENDED,) and s[0]:
+                    self.parent.show_notification(_("Recommended images source disabled"))
                     s[0] = False
                     self.parent.options.write()
             for i, r in enumerate(self.ui.sources.get_model()):
-                if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST):
+                if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED,):
                     r[0] = False
         elif not self.parent.smart.user:
             self.parent.smart.load_user(create_if_missing=True)
