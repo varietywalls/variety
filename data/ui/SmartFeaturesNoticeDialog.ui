@@ -119,7 +119,7 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="stats_enabled">
-                    <property name="label" translatable="yes">Help us make Variety better by sending anonymous usage statistics</property>
+                    <property name="label" translatable="yes">Help make Variety better by sending anonymous usage statistics</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -165,7 +165,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="label" translatable="yes">We ask permission to receive data about the images you like and dislike and the online image sources you use. This helps us provide better images for everyone, enables some great features - &lt;span font-weight="normal"&gt;synchronization of favorites between computers and personalized recommendations&lt;/span&gt;, and helps us build &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; - a valuable resource for all users of Variety.
+                <property name="label" translatable="yes">We ask permission to receive data when you like or dislike an image which Variety downloaded, and when you change the online image sources you use. This data helps us provide better images for everyone and fuels &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; - a valuable resource for all users of Variety. It also enables some great features like synchronization of favorite images between computers and personalized recommendations.
 
 Variety sends data only for images it downloaded, never for images you already had in your local folders that might be private.</property>
                 <property name="use_markup">True</property>
@@ -176,6 +176,23 @@ Variety sends data only for images it downloaded, never for images you already h
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="data_collection_label1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">start</property>
+                <property name="margin_top">15</property>
+                <property name="label" translatable="yes">Collected data is not shared with third parties. If you wish, you may later make your favorite wallpapers public so other users can draw inspiration from you. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
+                <property name="use_markup">True</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -190,24 +207,6 @@ Variety sends data only for images it downloaded, never for images you already h
                 <property name="xalign">0</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="data_collection_label1">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="halign">start</property>
-                <property name="margin_top">20</property>
-                <property name="margin_bottom">20</property>
-                <property name="label" translatable="yes">Collected data is not shared with third parties. If you wish, you may later opt-in to make some of your favorite wallpapers public so other users can draw inspiration from you. &lt;a href='http://peterlevi.com/variety/smart-variety/'&gt;Read more details about the service and the data collection policy here.&lt;/a&gt; </property>
-                <property name="use_markup">True</property>
-                <property name="justify">fill</property>
-                <property name="wrap">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>

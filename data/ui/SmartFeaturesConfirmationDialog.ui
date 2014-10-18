@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires smart_features_confirmation_dialog 1.0 -->
   <object class="SmartFeaturesConfirmationDialog" id="smart_features_confirmation_dialog">
+    <property name="width_request">600</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Please enable Smart Variety</property>
@@ -58,7 +59,7 @@
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="ypad">10</property>
-                <property name="label" translatable="yes">This feature requires Smart Variety</property>
+                <property name="label" translatable="yes">This feature requires VRTY.ORG participation</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                   <attribute name="scale" value="1.3"/>
@@ -72,7 +73,7 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="smart_enabled">
-                <property name="label" translatable="yes">Enable Smart Variety</property>
+                <property name="label" translatable="yes">Participate in VRTY.ORG</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -98,9 +99,9 @@
                 <property name="margin_top">7</property>
                 <property name="label" translatable="yes">To enable this feature Variety needs permission to collect data about the images you like or dislike and the online sources you have enabled.
 
-The collected data is anonymous and applies only to images downloaded via Variety, no data is collected about images you already had in your local folders that might be private.
+Collected data is anonymous by default and covers only images which Variety downloaded, never images you already had in your local folders that might be private.
 
-Keeping this enabled will help Variety provide better pictures for everyone.</property>
+This data helps us provide better images for everyone and fuels &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; - a valuable resource for all users of Variety.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -109,25 +110,6 @@ Keeping this enabled will help Variety provide better pictures for everyone.</pr
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="label74">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="margin_top">10</property>
-                <property name="label" translatable="yes">(Please keep in mind this is an experimental feature that will take some time to mature and become truly "smart")</property>
-                <attributes>
-                  <attribute name="style" value="italic"/>
-                  <attribute name="weight" value="normal"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
               </packing>
             </child>
           </object>

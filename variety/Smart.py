@@ -160,7 +160,7 @@ class Smart:
         logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
         if e.code in (403, 404):
             self.parent.show_notification(
-                _('Your Smart Variety credentials are probably outdated. Please login again.'))
+                _('Your VRTY.ORG credentials are probably outdated. Please login again.'))
             Util.add_mainloop_task(self.parent.preferences_dialog.on_btn_login_register_clicked)
             raise e
 
@@ -568,8 +568,8 @@ class Smart:
         if self.user is None or self.user['authkey'] != authkey:
             def _go():
                 dialog = Gtk.MessageDialog(self.parent.preferences_dialog, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL)
-                dialog.set_markup(_('Do you want to login to Smart Variety as <span font_weight="bold">%s</span>?') % username)
-                dialog.set_title(_('Smart Variety login confirmation'))
+                dialog.set_markup(_('Do you want to login to VRTY.ORG as <span font_weight="bold">%s</span>?') % username)
+                dialog.set_title(_('VRTY.ORG login confirmation'))
                 dialog.set_default_response(Gtk.ResponseType.OK)
                 response = dialog.run()
                 dialog.destroy()

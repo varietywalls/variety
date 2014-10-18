@@ -1063,7 +1063,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if not self.ui.smart_enabled.get_active():
             for s in self.parent.options.sources:
                 if s[1] in (Options.SourceType.RECOMMENDED, Options.SourceType.LATEST) and s[0]:
-                    self.parent.show_notification(_("Disabling Smart sources"),
+                    self.parent.show_notification(_("Disabling personalized VRTY.ORG sources"),
                                                   _("Recommended and Latest favorites sources disabled"))
                     s[0] = False
                     self.parent.options.write()
@@ -1225,12 +1225,3 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.smart_register_note.set_visible(not bool(username))
         else:
             self.ui.box_smart_user.set_visible(False)
-
-        self.ui.vrty_label.set_markup(
-            _("Explore everyone's favorite images and find great new image sources at <a href='https://vrty.org'>VRTY.ORG</a>. ") +
-            self.fill_smart_profile_url(_("View and manage <a href='%SMART_PROFILE_URL%'>your own profile</a>.")))
-
-
-
-
-

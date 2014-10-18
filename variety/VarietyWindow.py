@@ -1962,7 +1962,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         parser.add_option(
             "--debug-smart", action="store_true", dest="debug_smart",
-            help="Debug Smart/Sync functionality by using local server")
+            help="Debug VRTY.ORG and sync functionality by using local server")
 
         options, args = parser.parse_args(arguments)
 
