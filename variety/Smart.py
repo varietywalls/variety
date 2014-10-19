@@ -147,12 +147,12 @@ class Smart:
         except Exception:
             logger.exception("smart: Could not report %s as trash" % url)
 
-    def report_file(self, filename, tag, async=True, upload_full_image=False, needs_reupload=False):
+    def report_file(self, filename, mark, async=True, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
 
         def _go():
-            self._do_report_file(filename, tag, upload_full_image=upload_full_image, needs_reupload=needs_reupload)
+            self._do_report_file(filename, mark, upload_full_image=upload_full_image, needs_reupload=needs_reupload)
 
         _go() if not async else threading.Timer(0, _go).start()
 
@@ -197,7 +197,7 @@ class Smart:
         except:
             logger.exception('Could not fill missing meta-info')
 
-    def _do_report_file(self, filename, tag, attempt=1, upload_full_image=False, needs_reupload=False):
+    def _do_report_file(self, filename, mark, attempt=1, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
             return
 
@@ -212,11 +212,11 @@ class Smart:
             origin_url = Smart.fix_origin_url(meta['sourceURL'])
 
             if not (upload_full_image or needs_reupload):
-                # Attempt quick-tagging using just the computed image ID - will only succeed if the image already exists on the server
+                # Attempt quick-markging using just the computed image ID - will only succeed if the image already exists on the server
                 try:
-                    logger.info("smart: Quick-reporting %s as '%s'" % (filename, tag))
+                    logger.info("smart: Quick-reporting %s as '%s'" % (filename, mark))
                     imageid = self.get_image_id(origin_url)
-                    report_url = Smart.API_URL + '/tag/%s/%s/+%s' % (user['id'], imageid, tag)
+                    report_url = Smart.API_URL + '/mark/%s/%s/+%s' % (user['id'], imageid, mark)
                     result = Util.fetch(report_url, {'authkey': user['authkey']})
                     logger.info("smart: Quick-reported, server returned: %s" % result)
                     return
@@ -242,10 +242,10 @@ class Smart:
                 if not server_key in image:
                     image[server_key] = value
 
-            logger.info("smart: Reporting %s as '%s'" % (filename, tag))
+            logger.info("smart: Reporting %s as '%s'" % (filename, mark))
 
             # check for dead links and upload full image in that case (happens with old favorites):
-            if upload_full_image or (tag == 'favorite' and Util.is_dead_or_not_image(image_url)):
+            if upload_full_image or (mark == 'favorite' and Util.is_dead_or_not_image(image_url)):
                 if upload_full_image:
                     logger.info('smart: Including full image in upload per server request')
                 else:
@@ -254,7 +254,7 @@ class Smart:
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
-            report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], tag)
+            report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], mark)
             try:
                 result = Util.fetch(report_url, {'image': json.dumps(image), 'authkey': user['authkey']})
                 logger.info("smart: Reported, server returned: %s" % result)
@@ -263,11 +263,11 @@ class Smart:
                 self.handle_user_http_error(e)
 
                 if attempt == 1:
-                    self._do_report_file(filename, tag, attempt + 1)
+                    self._do_report_file(filename, mark, attempt + 1)
                 else:
-                    logger.exception("smart: Could not report %s as '%s, server error code %s'" % (filename, tag, e.code))
+                    logger.exception("smart: Could not report %s as '%s, server error code %s'" % (filename, mark, e.code))
         except Exception:
-            logger.exception("smart: Could not report %s as '%s'" % (filename, tag))
+            logger.exception("smart: Could not report %s as '%s'" % (filename, mark))
 
     def show_notice_dialog(self, on_first_run=False):
         # Show Smart Variety notice
