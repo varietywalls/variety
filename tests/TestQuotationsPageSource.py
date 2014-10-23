@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 
 class TestQuotationsPageSource(unittest.TestCase):
     def test_get_random(self):
-        p = Jumble(["../plugins"])
+        p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
         q = source["plugin"].get_random()
@@ -32,16 +32,16 @@ class TestQuotationsPageSource(unittest.TestCase):
         self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
 
     def test_get_for_author(self):
-        p = Jumble(["../plugins"])
+        p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
-        q = source["plugin"].get_for_author("einstein")
+        q = source["plugin"].get_for_author("voltaire")
         self.assertTrue(len(q) > 0)
         self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
-        self.assertEqual("Albert Einstein", q[0]["author"])
+        self.assertEqual("Voltaire", q[0]["author"])
 
     def test_get_for_keyword(self):
-        p = Jumble(["../plugins"])
+        p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
         q = source["plugin"].get_for_keyword("funny")
