@@ -97,6 +97,7 @@
                     <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                     <property name="width_chars">30</property>
                   </object>
                   <packing>
@@ -112,6 +113,7 @@
                     <property name="can_focus">True</property>
                     <property name="visibility">False</property>
                     <property name="invisible_char">•</property>
+                    <property name="activates_default">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -181,6 +183,8 @@
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="can_default">True</property>
+                    <property name="has_default">True</property>
                     <property name="receives_default">True</property>
                     <property name="halign">end</property>
                     <property name="margin_left">5</property>
