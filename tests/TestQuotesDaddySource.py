@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 
 class TestQuotesDaddySource(unittest.TestCase):
     def test_get_random(self):
-        p = Jumble(["../plugins"])
+        p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="QuotesDaddySource")[0]
         q = source["plugin"].get_random()[0]

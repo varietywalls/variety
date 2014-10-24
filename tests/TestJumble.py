@@ -22,7 +22,7 @@ from jumble.Jumble import Jumble
 from jumble.IPlugin import IPlugin
 from variety.plugins.IQuoteSource import IQuoteSource
 
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+#sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 class P1(IPlugin):
     pass
@@ -33,8 +33,8 @@ class P2(IQuoteSource):
 
 class TestJumble(unittest.TestCase):
     def test_load(self):
-        p = Jumble(".")
+        p = Jumble(["../data/plugins"])
         p.load()
-        self.assertEqual(2, len(p.get_plugins()))
-        self.assertEqual(2, len(p.get_plugins(IPlugin)))
-        self.assertEqual(1, len(p.get_plugins(IQuoteSource)))
+        self.assertEqual(4, len(p.get_plugins()))
+        self.assertEqual(4, len(p.get_plugins(IPlugin)))
+        self.assertEqual(1, len(p.get_plugins(name="Goodreads")))

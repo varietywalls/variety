@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 
 class TestGoodreadsSource(unittest.TestCase):
     def test_get_for_author(self):
-        p = Jumble(["../plugins"])
+        p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="GoodreadsSource")[0]
         q = source["plugin"].get_for_author(u"Вежинов")
