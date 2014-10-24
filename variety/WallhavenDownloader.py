@@ -43,7 +43,7 @@ class WallhavenDownloader(Downloader.Downloader):
             self.url = self.location
         else:
             # interpret location as keywords
-            self.url = "http://alpha.wallhaven.cc/wallpaper/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % urllib.quote(self.location)
+            self.url = "http://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % urllib.quote(self.location)
 
     def search(self, page=None):
         url = self.url
