@@ -114,6 +114,12 @@ class WallhavenDownloader(Downloader.Downloader):
         except:
             pass
 
+        try:
+            purity = s.find('input', {'name': 'purity', 'checked': 'checked'})['id']
+            extra_metadata['sfwRating'] = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
+        except:
+            pass
+
         return self.save_locally(wallpaper_url, src_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):

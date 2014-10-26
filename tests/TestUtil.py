@@ -48,6 +48,7 @@ class TestUtil(unittest.TestCase):
             'keywords': [u'дума1', u'дума2'],
             'headline': u'проба1',
             'description': u'проба2',
+            'sfwRating': 50,
         }
         self.assertTrue(Util.write_metadata('test.jpg', info))
         self.assertEqual(info, Util.read_metadata('test.jpg'))
@@ -107,7 +108,7 @@ class TestUtil(unittest.TestCase):
         self.assertEquals("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
 
     def test_md5file(self):
-        self.assertEquals("f699a95fa27b20bb402997e104e64dfe", Util.md5file("test.jpg"))
+        self.assertEquals("09e0399cd580cdae81102e676802e3cb", Util.md5file("test.jpg"))
 
     def test_collapseuser(self):
         self.assertEquals("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))

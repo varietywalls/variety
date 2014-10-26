@@ -172,6 +172,8 @@ class Util:
                     if isinstance(v, list):
                         m['Iptc.Application2.Keywords'] = v
                         m['Xmp.dc.subject'] = v
+                elif k == 'sfwRating':
+                    m["Xmp.variety." + k] = str(v)
                 else:
                     m["Xmp.variety." + k] = v
             m.write()
@@ -202,6 +204,11 @@ class Util:
             for k in keys:
                 if "Xmp.variety." + k in m:
                     info[k] = _u(m["Xmp.variety." + k].value)
+
+            try:
+                info['sfwRating'] = int(m['Xmp.variety.sfwRating'].value)
+            except:
+                pass
 
             try:
                 info['author'] = _u(m['Xmp.dc.creator'].value[0])
