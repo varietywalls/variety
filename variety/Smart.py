@@ -50,7 +50,8 @@ class Smart:
         'sourceType': 'source_type',
         'sourceLocation': 'source_location',
         'sourceName': 'source_name',
-        'authorURL': 'author_url'
+        'authorURL': 'author_url',
+        'sfwRating': 'sfw_rating',
     }
 
     def __init__(self, parent):
