@@ -158,6 +158,8 @@ class TestUtil(unittest.TestCase):
         self.assertFalse(Util.is_dead_or_not_image('http://upload.wikimedia.org/wikipedia/commons/5/53/Wikipedia-logo-en-big.png'))
         self.assertFalse(Util.is_dead_or_not_image('https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg'))
         self.assertFalse(Util.is_dead_or_not_image('http://interfacelift.com/wallpaper/D98ef829/00899_rustedbolt_2560x1600.jpg'))
+        self.assertTrue(Util.is_dead_or_not_image('http://wallpapers.wallbase.cc/rozne/wallpaper-1227671.jpg'))
+        self.assertTrue(Util.is_dead_or_not_image('http://ns223506.ovh.net/rozne/a1b2/wallpaper-1996019.png'))
 
     def test_guess_image_url(self):
         self.assertEquals('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',

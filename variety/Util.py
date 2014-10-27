@@ -533,8 +533,12 @@ class Util:
             return True
 
         try:
-            if urlparse(url).netloc.startswith('interfacelift.com'):
+            host = urlparse(url).netloc
+            if host.startswith('interfacelift.com'):
                 return False
+
+            if 'wallbase.cc' in host or 'ns223506.ovh.net' in host:
+                return True
         except:
             return True
 
