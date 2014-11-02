@@ -392,6 +392,7 @@ class Smart:
                 try:
                     sync_url = '%s/user/%s/sync?authkey=%s' % (Smart.API_URL, self.user["id"], self.user["authkey"])
                     server_data = AttrDict(Util.fetch_json(sync_url))
+                    throttle_interval = int(server_data.throttle_interval) if server_data.throttle_interval else 1
                 except HTTPError, e:
                     self.handle_user_http_error(e)
                     raise
@@ -440,15 +441,15 @@ class Smart:
                         if not imageid in server_data["favorite"]:
                             logger.info("sync: Smart-reporting existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False)
-                            time.sleep(1)
+                            time.sleep(throttle_interval)
                         elif "upload_full_image" in server_data["favorite"][imageid]:
                             logger.info("sync: Uploading full image for existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False, upload_full_image=True)
-                            time.sleep(1)
+                            time.sleep(throttle_interval)
                         elif "needs_reupload" in server_data["favorite"][imageid]:
                             logger.info("sync: Server requested reupload of existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False, needs_reupload=True)
-                            time.sleep(1)
+                            time.sleep(throttle_interval)
 
                     except:
                         logger.exception("sync: Could not process file %s" % name)
@@ -461,7 +462,7 @@ class Smart:
                     imageid = self.get_image_id(url)
                     if not imageid in server_data["trash"]:
                         self.report_trash(url)
-                        time.sleep(1)
+                        time.sleep(throttle_interval)
 
                 # Perform server to local downloading only if Sync is enabled
                 if self.is_sync_enabled():
@@ -474,7 +475,7 @@ class Smart:
                         if not imageid in local_trash:
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
                             self.parent.ban_url(image_data["origin_url"])
-                            time.sleep(1)
+                            time.sleep(throttle_interval)
 
                     # Download locally-missing favorites from the server
                     to_sync = []
@@ -537,7 +538,7 @@ class Smart:
                                 return
 
                             self.write_syncdb(syncdb)
-                            time.sleep(1)
+                            time.sleep(throttle_interval)
 
                     if to_sync:
                         self.parent.show_notification(_("Sync"), _("Finished"))
