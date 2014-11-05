@@ -220,12 +220,22 @@ class Options:
                 pass
 
             try:
-                self.smart_enabled = config["smart_enabled"].lower() in TRUTH_VALUES
+                self.smart_notice_shown = config["smart_notice_shown"].lower() in TRUTH_VALUES
             except Exception:
                 pass
 
             try:
-                self.smart_notice_shown = config["smart_notice_shown"].lower() in TRUTH_VALUES
+                self.smart_register_shown = config["smart_register_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.stats_notice_shown = config["stats_notice_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.smart_enabled = config["smart_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
 
@@ -502,8 +512,11 @@ class Options:
         self.min_rating_enabled = False
         self.min_rating = 4
 
-        self.smart_enabled = True
         self.smart_notice_shown = False
+        self.smart_register_shown = False
+        self.stats_notice_shown = False
+
+        self.smart_enabled = True
         self.sync_enabled = True
         self.stats_enabled = True
 
@@ -596,8 +609,11 @@ class Options:
             config["min_rating_enabled"] = str(self.min_rating_enabled)
             config["min_rating"] = str(self.min_rating)
 
-            config["smart_enabled"] = str(self.smart_enabled)
             config["smart_notice_shown"] = str(self.smart_notice_shown)
+            config["smart_register_shown"] = str(self.smart_register_shown)
+            config["stats_notice_shown"] = str(self.stats_notice_shown)
+
+            config["smart_enabled"] = str(self.smart_enabled)
             config["sync_enabled"] = str(self.sync_enabled)
             config["stats_enabled"] = str(self.stats_enabled)
 

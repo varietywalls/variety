@@ -36,6 +36,7 @@ import logging
 import random
 import re
 import urlparse
+import webbrowser
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -514,7 +515,10 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.PANORAMIO:
             return PanoramioDownloader(self, location)
         elif type == Options.SourceType.RECOMMENDED:
-            return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
+            if self.smart.user:
+                return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
+            else:
+                raise Exception('No Smart user yet, not a problem')
         elif type == Options.SourceType.LATEST:
             return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
@@ -1479,14 +1483,14 @@ class VarietyWindow(Gtk.Window):
     def on_show_origin(self, widget=None):
         if self.url:
             logger.info("Opening url: " + self.url)
-            subprocess.call(["xdg-open", self.url])
+            webbrowser.open_new_tab(self.url)
         else:
             self.open_folder()
 
     def on_show_author(self, widget=None):
         if hasattr(self, "author_url") and self.author_url:
             logger.info("Opening url: " + self.author_url)
-            subprocess.call(["xdg-open", self.author_url])
+            webbrowser.open_new_tab(self.author_url)
 
     def get_source(self, file = None):
         if not file:
@@ -1713,25 +1717,44 @@ class VarietyWindow(Gtk.Window):
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
 
+    def show_usage_stats_notice(self):
+        if not self.options.stats_notice_shown and self.options.stats_enabled:
+            self.options.stats_notice_shown = True
+            self.options.write()
+            self.show_notification(
+                _('Anonymous usage statistics'),
+                _('Variety collects anonymous usage statistics. \n'
+                  'These help us make it better and are not shared with anyone. \n'
+                  'To read more or turn them off, go to "Sync and social"'))
+
     def first_run(self):
-        fr_file = os.path.join(self.config_folder, ".firstrun")
-        if os.path.exists(fr_file):
-            self.smart.first_run()
-            return
-
         def _go():
-            self.show_welcome_dialog()
-            if not self.running:
-                return
-            self.smart.show_notice_dialog(True)
-            if not self.running:
-                return
-            with open(fr_file, "w") as f:
-                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-            if not self.running:
-                return
+            fr_file = os.path.join(self.config_folder, ".firstrun")
+            first_run = not os.path.exists(fr_file)
+            if first_run:
+                self.show_welcome_dialog()
+                if not self.running:
+                    return
 
-            self.on_mnu_preferences_activate()
+            if not self.options.smart_notice_shown:
+                self.smart.show_notice_dialog()
+                if not self.running:
+                    return
+
+            if first_run:
+                with open(fr_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
+            if self.options.smart_enabled and not self.options.smart_register_shown and not self.smart.is_registered():
+                self.smart.show_register_dialog()
+                if not self.running:
+                    return
+
+            if first_run:
+                self.on_mnu_preferences_activate()
+
+            self.smart.sync()
+
         Util.add_mainloop_task(_go)
 
     def write_current_version(self):
@@ -2574,17 +2597,17 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def view_quote(self, widget=None):
         if self.quote and self.quote.get("link", None):
-            subprocess.call(["xdg-open", self.quote["link"]])
+            webbrowser.open_new_tab(self.quote["link"])
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
-            subprocess.call(["xdg-open", "http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["quote"].encode('utf8'))])
+            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["quote"].encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:
-            subprocess.call(["xdg-open", "http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["author"].encode('utf8'))])
+            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None

@@ -18,9 +18,11 @@ from gi.repository import GObject, Gdk, Gtk
 import hashlib
 from urllib2 import HTTPError
 import io
+import webbrowser
 from variety.Util import Util
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
+from variety.SmartRegisterDialog import SmartRegisterDialog
 from variety.AttrDict import AttrDict
 from variety.ImageFetcher import ImageFetcher
 import platform
@@ -59,6 +61,10 @@ class Smart:
         self.user = None
 
     def reload(self):
+        if not self.is_smart_enabled():
+            self._reset_sync()
+            return
+
         try:
             if self.smart_settings_changed():
                 self.load_user(create_if_missing=False, force_reload=True)
@@ -74,15 +80,17 @@ class Smart:
         else:
             return None
 
+    def get_register_url(self, source):
+        if self.user:
+            return '%s/user/%s/register?authkey=%s&source=%s' % (Smart.SITE_URL, self.user['id'], self.user['authkey'], source)
+        else:
+            return '%s/register?source=%s' % (Smart.SITE_URL, source)
+
     def smart_settings_changed(self):
         return self.parent.previous_options is None or \
                self.parent.previous_options.smart_enabled != self.parent.options.smart_enabled or \
                self.parent.previous_options.sync_enabled != self.parent.options.sync_enabled or \
                self.parent.previous_options.favorites_folder != self.parent.options.favorites_folder
-
-    def first_run(self):
-        if not self.parent.options.smart_notice_shown:
-            Util.add_mainloop_task(self.show_notice_dialog)
 
     def load_user(self, create_if_missing=True, force_reload=False):
         if not self.user or force_reload:
@@ -117,7 +125,14 @@ class Smart:
     def set_user(self, user):
         logger.info('smart: Setting new smart user')
 
+        # keep machine-dependent settings from current user
+        if self.user:
+            for key in ("machine_id", "machine_label"):
+                if key in self.user:
+                    user[key] = self.user[key]
+
         self.user = user
+
         if self.parent.preferences_dialog:
             GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
 
@@ -270,29 +285,43 @@ class Smart:
         except Exception:
             logger.exception("smart: Could not report %s as '%s'" % (filename, mark))
 
-    def show_notice_dialog(self, on_first_run=False):
+    def show_notice_dialog(self):
         # Show Smart Variety notice
         dialog = SmartFeaturesNoticeDialog()
 
         def _on_ok(button):
             self.parent.options.smart_enabled = dialog.ui.smart_enabled.get_active()
-            self.parent.options.stats_enabled = dialog.ui.stats_enabled.get_active()
+
             self.parent.options.smart_notice_shown = True
             if self.parent.options.smart_enabled:
                 for s in self.parent.options.sources:
                     if s[1] in (Options.SourceType.RECOMMENDED,):
                         s[0] = True
-                        if not on_first_run:
-                            self.parent.show_notification(_("Recommended images source enabled"))
+
             self.parent.options.write()
             self.parent.reload_config()
             dialog.destroy()
             self.parent.dialogs.remove(dialog)
-            self.sync()
 
         dialog.ui.btn_ok.connect("clicked", _on_ok)
         self.parent.dialogs.append(dialog)
         dialog.run()
+
+    def show_register_dialog(self):
+        dialog = SmartRegisterDialog()
+        self.parent.dialogs.append(dialog)
+        dialog.run()
+        result = dialog.result
+        dialog.destroy()
+        self.parent.dialogs.remove(dialog)
+        self.parent.options.smart_register_shown = True
+        self.parent.options.write()
+
+        if result == 'register':
+            self.load_user(create_if_missing=True)
+            webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
+        elif result == 'login':
+            self.parent.preferences_dialog.on_btn_login_register_clicked()
 
     def load_syncdb(self):
         logger.debug("sync: Loading syncdb")
@@ -318,10 +347,11 @@ class Smart:
     def is_smart_enabled(self):
         return self.parent.options.smart_notice_shown and self.parent.options.smart_enabled
 
+    def is_registered(self):
+        return self.user is not None and self.user.get("username") is not None
+
     def is_sync_enabled(self):
-        return self.is_smart_enabled() and \
-               self.user is not None and self.user.get("username") is not None and \
-               self.parent.options.sync_enabled
+        return self.is_smart_enabled() and self.is_registered() and self.parent.options.sync_enabled
 
     def sync_sources(self, in_thread=False):
         if not self.is_smart_enabled():

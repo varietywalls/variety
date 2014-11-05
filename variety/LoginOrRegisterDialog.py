@@ -53,8 +53,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
             self.ui.register_link.set_visible(True)
         elif 'username' not in self.smart.user:
-            self.ui.register_link.set_uri('%s/user/%s/register?authkey=%s' %
-                                          (Smart.SITE_URL, self.smart.user['id'], self.smart.user['authkey']))
+            self.ui.register_link.set_uri(self.smart.get_register_url('variety_login_dialog'))
             self.ui.register_link.set_visible(True)
 
     def show_login_error(self, msg):

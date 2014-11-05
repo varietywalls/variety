@@ -60,7 +60,7 @@
     </data>
   </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
-    <property name="width_request">750</property>
+    <property name="width_request">850</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Variety Preferences</property>
     <property name="window_position">center</property>
@@ -2000,7 +2000,7 @@
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkCheckButton" id="smart_enabled">
-                            <property name="label" translatable="yes">Enable VRTY.ORG integration</property>
+                            <property name="label" translatable="yes">Participate in VRTY.ORG</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -2054,9 +2054,7 @@
                         <property name="halign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">&lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; helps connect Variety users with similar tastes and provides super-convenient ways to change your wallpaper, to add new image sources to Variety, and to follow other users' favorites.
-
-If you choose to participate, Variety will build you a profile on VRTY.ORG with the images you like and dislike. This will let you synchronize favorites between computers and get personalized recommendations.</property>
+                        <property name="label" translatable="yes">&lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; connects Variety users with similar tastes and provides super-convenient ways to change your wallpaper, to add new image sources to Variety, and to follow other users' favorites. It is fueled by the favorite images of all participating users.</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -2121,7 +2119,7 @@ If you choose to participate, Variety will build you a profile on VRTY.ORG with 
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">end</property>
-                            <property name="label" translatable="yes">Registration enables you to use the same profile on multiple machines or between OS reinstallations.</property>
+                            <property name="label" translatable="yes">Registration enables cool features like synchronization of favorite images and sources between computers and personalized recommendations.</property>
                             <attributes>
                               <attribute name="style" value="italic"/>
                             </attributes>
@@ -2344,6 +2342,24 @@ If you choose to participate, Variety will build you a profile on VRTY.ORG with 
                         <property name="position">1</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="label35">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">These stats help us improve Variety by understanding how users interact with it. They also include general info about your OS version and monitor setup. Collected data is not shared with anyone.</property>
+                        <property name="use_markup">True</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2375,7 +2391,7 @@ If you choose to participate, Variety will build you a profile on VRTY.ORG with 
               <object class="GtkLabel" id="social_tab_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Sync and privacy</property>
+                <property name="label" translatable="yes">Sync and social</property>
               </object>
               <packing>
                 <property name="position">2</property>

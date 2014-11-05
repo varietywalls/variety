@@ -21,6 +21,7 @@ import os
 import threading
 import logging
 import subprocess
+import webbrowser
 from variety.Util import Util
 from variety.ThumbsWindow import ThumbsWindow
 from variety_lib import varietyconfig
@@ -127,7 +128,7 @@ class ThumbsManager():
 
             def _show_origin(widget=None):
                 logger.info("Opening url: " + url)
-                subprocess.call(["xdg-open", url])
+                webbrowser.open_new_tab(url)
 
             show_origin.connect("activate", _show_origin)
             menu.append(show_origin)

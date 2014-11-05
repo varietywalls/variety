@@ -800,6 +800,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.parent.trigger_download()
         self.on_destroy()
 
+        self.parent.show_usage_stats_notice()
+
     def on_save_clicked(self, widget):
         self.delayed_apply()
         self.close()
@@ -1203,9 +1205,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_smart_user_updated(self):
         self.update_status_message()
 
-        sync_allowed = self.ui.smart_enabled.get_active() and \
-                       self.parent.smart.user is not None and \
-                       self.parent.smart.user.get("username") is not None
+        sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart.is_registered()
         self.ui.sync_enabled.set_sensitive(sync_allowed)
         self.ui.sync_login_note.set_visible(not sync_allowed)
         if not sync_allowed:
