@@ -8,6 +8,7 @@
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">VRTY.ORG registration</property>
+    <property name="modal">True</property>
     <property name="window_position">center-always</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
@@ -23,60 +24,7 @@
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_right">15</property>
-            <property name="margin_bottom">10</property>
             <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="btn_anon">
-                <property name="label" translatable="yes">Participate anonymously</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_anonymous_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_login">
-                <property name="label">I'm registered, let me login</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_login_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-                <property name="non_homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_register">
-                <property name="label">Register</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_register_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">2</property>
-                <property name="non_homogeneous">True</property>
-              </packing>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -91,6 +39,7 @@
             <property name="can_focus">False</property>
             <property name="margin_left">25</property>
             <property name="margin_right">25</property>
+            <property name="vexpand">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
@@ -131,7 +80,7 @@
                 <property name="can_focus">True</property>
                 <property name="halign">start</property>
                 <property name="margin_top">10</property>
-                <property name="label" translatable="yes">Registration on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; enables some very nice features, such as synchronization of favorites between computers and personalized recommendations. It also ensures you will not lose your profile if you reinstall your OS.</property>
+                <property name="label" translatable="yes">Registration on &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; enables some very nice features of Variety, such as &lt;span weight="bold"&gt;synchronization&lt;/span&gt; of favorites between computers and &lt;span weight="bold"&gt;personalized recommendations&lt;/span&gt;. It also ensures you will not lose your profile if you reinstall your OS.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -176,6 +125,71 @@
                 <property name="position">4</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkBox" id="box2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkButton" id="btn_anon">
+                    <property name="label" translatable="yes">No, I will participate anonymously</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_action_appearance">False</property>
+                    <signal name="clicked" handler="on_anonymous_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btn_login">
+                    <property name="label">I'm registered, let me login</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_action_appearance">False</property>
+                    <signal name="clicked" handler="on_login_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLinkButton" id="btn_register">
+                    <property name="label" translatable="yes">Register here</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="has_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="relief">none</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">5</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -185,10 +199,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="0">btn_anon</action-widget>
-      <action-widget response="-6">btn_login</action-widget>
-      <action-widget response="-5">btn_register</action-widget>
-    </action-widgets>
   </object>
 </interface>

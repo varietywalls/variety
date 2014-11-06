@@ -1754,6 +1754,8 @@ class VarietyWindow(Gtk.Window):
 
             if first_run:
                 self.on_mnu_preferences_activate()
+            else:
+                self.show_usage_stats_notice()
 
             self.smart.sync()
 

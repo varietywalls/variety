@@ -314,19 +314,31 @@ class Smart:
             self.parent.options.write()
             return
 
-        dialog = SmartRegisterDialog()
-        self.parent.dialogs.append(dialog)
-        dialog.run()
-        result = dialog.result
-        dialog.destroy()
-        self.parent.dialogs.remove(dialog)
+        self.register_dialog = SmartRegisterDialog()
+
+        def _register_link(*args):
+            self.load_user(create_if_missing=True)
+            webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
+        self.register_dialog.ui.btn_register.connect('activate-link', _register_link)
+
+        self.parent.dialogs.append(self.register_dialog)
+
+        self.register_dialog.run()
+        result = self.register_dialog.result
+
+        try:
+            self.parent.dialogs.remove(self.register_dialog)
+        except:
+            pass
+        self.register_dialog.destroy()
+        self.register_dialog = None
+        if not self.parent.running:
+            return
+
         self.parent.options.smart_register_shown = True
         self.parent.options.write()
 
-        if result == 'register':
-            self.load_user(create_if_missing=True)
-            webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
-        elif result == 'login':
+        if result == 'login':
             self.parent.preferences_dialog.on_btn_login_register_clicked()
 
     def load_syncdb(self):
@@ -601,6 +613,11 @@ class Smart:
             self.parent.show_notification(_('Logged in as %s') % username)
             self.set_user({'id': userid, 'authkey': authkey, 'username': username})
             self.parent.preferences_dialog.close_login_register_dialog()
+            if hasattr(self, "register_dialog") and self.register_dialog:
+                def _close():
+                    self.register_dialog.result = 'logged'
+                    self.register_dialog.response(Gtk.ResponseType.OK)
+                GObject.idle_add(_close)
 
         if self.user is None or self.user['authkey'] != authkey:
             def _go():

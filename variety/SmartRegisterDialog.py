@@ -40,13 +40,11 @@ class SmartRegisterDialog(Gtk.Dialog):
 
     def on_anonymous_clicked(self, widget):
         self.result = "anonymous"
+        self.response(Gtk.ResponseType.CANCEL)
 
     def on_login_clicked(self, widget):
         self.result = "login"
-
-    def on_register_clicked(self, widget):
-        self.result = "register"
-
+        self.response(Gtk.ResponseType.OK)
 
 if __name__ == "__main__":
     dialog = SmartRegisterDialog()

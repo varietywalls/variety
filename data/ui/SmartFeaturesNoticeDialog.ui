@@ -8,6 +8,7 @@
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">VRTY.ORG</property>
+    <property name="modal">True</property>
     <property name="window_position">center-always</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
@@ -111,7 +112,24 @@
                 <property name="can_focus">True</property>
                 <property name="halign">start</property>
                 <property name="margin_top">15</property>
-                <property name="label" translatable="yes">It is fueled by the favorite images of all participating users, so we ask for your help in building this wonderful resource. This happens automatically, as you like or dislike images downloaded by Variety. Collected data is not shared with third parties, unless you opt-in to make your profile public. &lt;a href='http://peterlevi.com/variety/vrty-org/'&gt;Read more details about the service and the privacy policy here.&lt;/a&gt;</property>
+                <property name="label" translatable="yes">It is fueled by the favorite images of all participating users, and we ask for your help in building this wonderful resource. This happens automatically, as you like or dislike images downloaded by Variety. Collected data is not shared with third parties, unless you opt-in to make your profile public. &lt;a href='http://peterlevi.com/variety/vrty-org/'&gt;Read more details about the service and the privacy policy here.&lt;/a&gt;</property>
+                <property name="use_markup">True</property>
+                <property name="justify">fill</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="data_collection_label2">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">start</property>
+                <property name="margin_top">15</property>
+                <property name="label" translatable="yes">Participation is required for some features of Variety such as &lt;span weight="bold"&gt;synchronization of favorites between computers&lt;/span&gt;.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -138,7 +156,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">5</property>
+                <property name="position">6</property>
               </packing>
             </child>
           </object>
