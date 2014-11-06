@@ -44,6 +44,18 @@ class Indicator:
     def create_menu(self, window):
         self.menu = Gtk.Menu()
 
+        self.next_main = Gtk.MenuItem(_("_Next"))
+        self.next_main.set_use_underline(True)
+        self.next_main.connect("activate", window.next_wallpaper)
+        self.menu.append(self.next_main)
+
+        self.prev_main = Gtk.MenuItem(_("_Previous"))
+        self.prev_main.set_use_underline(True)
+        self.prev_main.connect("activate", window.prev_wallpaper)
+        self.menu.append(self.prev_main)
+
+        self.menu.append(Gtk.SeparatorMenuItem.new())
+
         self.file_label = Gtk.MenuItem(_("Current desktop wallpaper"))
         self.file_label.connect("activate", window.open_file)
         self.menu.append(self.file_label)
@@ -79,17 +91,17 @@ class Indicator:
 
         self.image_menu = Gtk.Menu()
 
-        self.prev = Gtk.MenuItem(_("_Previous"))
-        self.prev.set_use_underline(True)
-        self.prev.connect("activate", window.prev_wallpaper)
-        self.image_menu.append(self.prev)
-
         self.next = Gtk.MenuItem(_("_Next"))
         self.next.set_use_underline(True)
         self.next.connect("activate", window.next_wallpaper)
         self.image_menu.append(self.next)
 
-        self.fast_forward = Gtk.MenuItem(_("_Fast Forward"))
+        self.prev = Gtk.MenuItem(_("_Previous"))
+        self.prev.set_use_underline(True)
+        self.prev.connect("activate", window.prev_wallpaper)
+        self.image_menu.append(self.prev)
+
+        self.fast_forward = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward.set_use_underline(True)
         def _fast_forward(widget):
             window.next_wallpaper(widget, bypass_history=True)
@@ -97,15 +109,15 @@ class Indicator:
         self.image_menu.append(self.fast_forward)
 
         self.image_menu.append(Gtk.SeparatorMenuItem.new())
-
-        self.pause_resume = Gtk.MenuItem(_("Pause"))
-        self.pause_resume.connect("activate", window.on_pause_resume)
-        self.image_menu.append(self.pause_resume)
-
-        self.image_menu.append(Gtk.SeparatorMenuItem.new())
         self.scroll_tip = Gtk.MenuItem(_("Tip: Scroll wheel over icon\nfor Next and Previous"))
         self.scroll_tip.set_sensitive(False)
         self.image_menu.append(self.scroll_tip)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.pause_resume = Gtk.MenuItem(_("Pause on current"))
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.image_menu.append(self.pause_resume)
 
         self.image_item = Gtk.MenuItem(_("_Image"))
         self.image_item.set_use_underline(True)
@@ -143,15 +155,15 @@ class Indicator:
         #
         self.quotes_menu = Gtk.Menu()
 
-        self.prev_quote = Gtk.MenuItem(_("_Previous"))
-        self.prev_quote.set_use_underline(True)
-        self.prev_quote.connect("activate", window.prev_quote)
-        self.quotes_menu.append(self.prev_quote)
-
         self.next_quote = Gtk.MenuItem(_("_Next"))
         self.next_quote.set_use_underline(True)
         self.next_quote.connect("activate", window.next_quote)
         self.quotes_menu.append(self.next_quote)
+
+        self.prev_quote = Gtk.MenuItem(_("_Previous"))
+        self.prev_quote.set_use_underline(True)
+        self.prev_quote.connect("activate", window.prev_quote)
+        self.quotes_menu.append(self.prev_quote)
 
         self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
         self.fast_forward_quote.set_use_underline(True)
@@ -162,7 +174,7 @@ class Indicator:
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
-        self.quotes_pause_resume = Gtk.MenuItem(_("Pause"))
+        self.quotes_pause_resume = Gtk.MenuItem(_("Pause on current"))
         self.quotes_pause_resume.connect("activate", window.on_quotes_pause_resume)
         self.quotes_menu.append(self.quotes_pause_resume)
 

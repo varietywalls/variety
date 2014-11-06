@@ -308,6 +308,12 @@ class Smart:
         dialog.run()
 
     def show_register_dialog(self):
+        self.load_user(create_if_missing=False)
+        if self.is_registered():
+            self.parent.options.smart_register_shown = True
+            self.parent.options.write()
+            return
+
         dialog = SmartRegisterDialog()
         self.parent.dialogs.append(dialog)
         dialog.run()

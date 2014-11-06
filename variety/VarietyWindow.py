@@ -691,6 +691,8 @@ class VarietyWindow(Gtk.Window):
 
                 for i in xrange(5):    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
+                    self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
+                    self.ind.fast_forward.set_sensitive(self.position > 0)
                     self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
 
                     self.ind.focus.set_sensitive(image_source is not None)
@@ -731,7 +733,7 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.publish_fb.set_sensitive(self.url is not None)
 
-                    self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
+                    self.ind.pause_resume.set_label(_("Pause on current") if self.options.change_enabled else _("Resume regular changes"))
 
                     if self.options.quotes_enabled and self.quote is not None:
                         self.ind.quotes.set_visible(True)
@@ -745,7 +747,7 @@ class VarietyWindow(Gtk.Window):
                         if self.quotes_engine:
                             self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
 
-                        self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
+                        self.ind.quotes_pause_resume.set_label(_("Pause on current") if self.options.quotes_change_enabled else _("Resume regular changes"))
 
                         self.ind.quote_favorite.set_sensitive(quote_not_fav)
                         self.ind.quote_favorite.set_label(_("Save to Favorites") if quote_not_fav else _("Already in Favorites"))
@@ -1745,7 +1747,7 @@ class VarietyWindow(Gtk.Window):
                 with open(fr_file, "w") as f:
                     f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-            if self.options.smart_enabled and not self.options.smart_register_shown and not self.smart.is_registered():
+            if self.options.smart_enabled and not self.options.smart_register_shown:
                 self.smart.show_register_dialog()
                 if not self.running:
                     return
@@ -1929,11 +1931,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         parser.add_option(
             "--pause", action="store_true", dest="pause",
-            help=_("Pause"))
+            help=_("Pause on current image"))
 
         parser.add_option(
             "--resume", action="store_true", dest="resume",
-            help=_("Resume"))
+            help=_("Resume regular image changes"))
 
         parser.add_option(
             "--toggle-pause", action="store_true", dest="toggle_pause",
