@@ -586,6 +586,8 @@ class Util:
                     source_location = meta.get('sourceLocation', '').lower()
                     if source_location.startswith(('http://' + source_name, 'https://' + source_name)):
                         return 'mediarss'
+                    elif 'backend.deviantart.com' in source_location or '/rss' in source_location or '/feed' in source_location:
+                        return 'mediarss'
             return None
         except:
             return None

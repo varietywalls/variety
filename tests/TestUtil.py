@@ -175,6 +175,7 @@ class TestUtil(unittest.TestCase):
         self.assertEquals(None, Util.guess_source_type({}))
         self.assertEquals('wn', Util.guess_source_type({'sourceName': 'Wallpapers.net'}))
         self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'host.com', 'sourceLocation': 'http://host.com/rss'}))
+        self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'camelid.deviantart.com', 'sourceLocation': 'http://backend.deviantart.com/rss.xml?type=deviation&q=by%3ACamelid+sort%3Atime+meta%3Aall'}))
 
 if __name__ == '__main__':
     unittest.main()
