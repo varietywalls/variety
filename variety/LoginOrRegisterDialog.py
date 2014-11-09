@@ -48,13 +48,10 @@ class LoginOrRegisterDialog(Gtk.Dialog):
     def set_smart(self, smart):
         self.smart = smart
         self.ui.password_link.set_uri('%s/password-recovery' % Smart.SITE_URL)
-        self.ui.password_link.set_visible(True)
         if not self.smart.user or 'username' in self.smart.user:
             self.ui.register_link.set_uri('%s/register' % Smart.SITE_URL)
-            self.ui.register_link.set_visible(True)
-        elif 'username' not in self.smart.user:
+        else:
             self.ui.register_link.set_uri(self.smart.get_register_url('variety_login_dialog'))
-            self.ui.register_link.set_visible(True)
 
     def show_login_error(self, msg):
         def _go():
@@ -76,6 +73,9 @@ class LoginOrRegisterDialog(Gtk.Dialog):
             logger.exception('Connection error for ' + url)
             error_msg_handler(_('Could not connect to server'))
             raise
+
+    def on_btn_cancel_clicked(self, widget=None):
+        self.response(Gtk.ResponseType.CANCEL)
 
     def on_btn_login_clicked(self, widget=None):
         self.ui.login_error.set_visible(False)
