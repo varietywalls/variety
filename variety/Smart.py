@@ -19,13 +19,12 @@ import hashlib
 from urllib2 import HTTPError
 import io
 import webbrowser
-from variety.Util import Util
+from variety.Util import Util, throttle
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.SmartRegisterDialog import SmartRegisterDialog
 from variety.AttrDict import AttrDict
 from variety.ImageFetcher import ImageFetcher
-import platform
 
 from variety import _, _u
 
@@ -353,6 +352,7 @@ class Smart:
 
         return syncdb
 
+    @throttle(seconds=5, trailing_call=True)
     def write_syncdb(self, syncdb):
         syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
         with io.open(syncdb_file, "w", encoding='utf8') as f:
