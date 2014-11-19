@@ -324,7 +324,7 @@ class Indicator:
             icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
         elif icon == "Dark":
             icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
-        elif os.access(icon, os.R_OK) and Util.is_image(icon):
+        elif icon and os.access(icon, os.R_OK) and Util.is_image(icon):
             icon_path = icon
         else:
             icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")

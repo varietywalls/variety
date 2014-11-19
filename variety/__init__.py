@@ -19,7 +19,10 @@ gettext.textdomain('variety')
 
 
 def _u(s):
-    return unicode(s, 'utf8')
+    if isinstance(s, unicode):
+        return s
+    else:
+        return unicode(s, 'utf8')
 
 
 def _str(s):
