@@ -556,7 +556,7 @@ class VarietyWindow(Gtk.Window):
                 shutil.rmtree(folder)
             except Exception:
                 logger.exception("Could not delete download folder contents " + folder)
-            if Util.file_in(self.current, folder):
+            if self.current and Util.file_in(self.current, folder):
                 change_timer = threading.Timer(1, self.next_wallpaper)
                 change_timer.start()
 
@@ -616,6 +616,9 @@ class VarietyWindow(Gtk.Window):
             holder.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
             holder.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
         if favs_op is None:
+            holder.copy_to_favorites.set_visible(False)
+            holder.move_to_favorites.set_visible(False)
+        elif favs_op is "favorite":
             holder.copy_to_favorites.set_label(_("Already in Favorites"))
             holder.copy_to_favorites.set_visible(True)
             holder.move_to_favorites.set_visible(False)
@@ -639,14 +642,14 @@ class VarietyWindow(Gtk.Window):
         if auto_changed is None:
             auto_changed = self.auto_changed
 
-        logger.info("Setting file info to: " + file)
+        logger.info("Setting file info to: %s" % file)
         try:
             self.url = None
             self.image_url = None
             self.source_name = None
 
-            label = os.path.dirname(file).replace('_', '__')
-            info = Util.read_metadata(file)
+            label = os.path.dirname(file).replace('_', '__') if file else None
+            info = Util.read_metadata(file) if file else None
             if info and "sourceURL" in info and "sourceName" in info:
                 self.source_name = info["sourceName"]
                 if "Fetched" in self.source_name:
@@ -658,7 +661,7 @@ class VarietyWindow(Gtk.Window):
                 self.url = info["sourceURL"]
                 if "imageURL" in info:
                     self.image_url = info["imageURL"]
-            if len(label) > 50:
+            if label and len(label) > 50:
                 label = label[:50] + "..."
 
             author = None
@@ -673,7 +676,7 @@ class VarietyWindow(Gtk.Window):
             if not self.ind:
                 return
 
-            deleteable = os.access(file, os.W_OK) and not self.is_current_refreshable()
+            deleteable = bool(file) and os.access(file, os.W_OK) and not self.is_current_refreshable()
             favs_op = self.determine_favorites_operation(file)
             image_source = self.get_source(file)
 
@@ -693,17 +696,23 @@ class VarietyWindow(Gtk.Window):
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                     self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
                     self.ind.fast_forward.set_sensitive(self.position > 0)
-                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__'))
+
+                    self.ind.file_label.set_visible(bool(file))
+                    self.ind.file_label.set_sensitive(bool(file))
+                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("Unknown"))
 
                     self.ind.focus.set_sensitive(image_source is not None)
 
                     # delay enabling Trash if auto_changed
+                    self.ind.trash.set_visible(bool(file))
                     self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
-                    self.ind.show_origin.set_label(label)
+                    self.ind.show_origin.set_visible(bool(label))
                     self.ind.show_origin.set_sensitive(True)
+                    if label:
+                        self.ind.show_origin.set_label(label)
 
                     if not author:
                         self.ind.show_author.set_visible(False)
@@ -1045,6 +1054,10 @@ class VarietyWindow(Gtk.Window):
         CLOCK_ONLY = 3
 
     def set_wp_throttled(self, filename, delay=0.3, refresh_level=RefreshLevel.ALL):
+        if not filename:
+            logger.warning('set_wp_throttled: No wallpaper to set')
+            return
+
         self.thumbs_manager.mark_active(file=filename, position=self.position)
         if self.set_wp_timer:
             self.set_wp_timer.cancel()
@@ -1123,9 +1136,11 @@ class VarietyWindow(Gtk.Window):
         self.set_wp_throttled(self.current, refresh_level=VarietyWindow.RefreshLevel.TEXTS)
 
     def write_filtered_wallpaper_origin(self, filename):
+        if not filename:
+            return
         try:
             with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
-                f.write(filename)
+                f.write(_u(filename))
         except Exception:
             logger.exception("Cannot write wallpaper.jpg.txt")
 
@@ -1230,7 +1245,7 @@ class VarietyWindow(Gtk.Window):
                 self.set_desktop_wallpaper(to_set, filename, refresh_level)
                 self.current = filename
 
-                if self.options.icon == "Current":
+                if self.options.icon == "Current" and self.current:
                     def _set_icon_to_current():
                         if self.ind:
                             self.ind.set_icon(self.current)
@@ -1475,12 +1490,14 @@ class VarietyWindow(Gtk.Window):
     def open_folder(self, widget=None, file=None):
         if not file:
             file = self.current
-        subprocess.call(["xdg-open", os.path.dirname(file)])
+        if file:
+            subprocess.call(["xdg-open", os.path.dirname(file)])
 
     def open_file(self, widget=None, file=None):
         if not file:
             file = self.current
-        subprocess.call(["xdg-open", os.path.realpath(file)])
+        if file:
+            subprocess.call(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
@@ -1497,6 +1514,8 @@ class VarietyWindow(Gtk.Window):
     def get_source(self, file = None):
         if not file:
             file = self.current
+        if not file:
+            return None
 
         prioritized_sources = []
         prioritized_sources.extend(
@@ -1575,6 +1594,8 @@ class VarietyWindow(Gtk.Window):
         try:
             if not file:
                 file = self.current
+            if not file:
+                return
             if self.url:
                 self.ban_url(self.url)
 
@@ -1630,6 +1651,8 @@ class VarietyWindow(Gtk.Window):
         try:
             if not file:
                 file = self.current
+            if not file:
+                return
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
@@ -1641,6 +1664,8 @@ class VarietyWindow(Gtk.Window):
         try:
             if not file:
                 file = self.current
+            if not file:
+                return
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 operation = shutil.move if os.access(file, os.W_OK) else shutil.copy
                 ok = self.move_or_copy_file(file, self.options.favorites_folder, "favorites", operation)
@@ -1664,9 +1689,11 @@ class VarietyWindow(Gtk.Window):
     def determine_favorites_operation(self, file=None):
         if not file:
             file = self.current
+        if not file:
+            return None
 
         if self.is_in_favorites(file):
-            return None
+            return "favorite"
 
         if not os.access(file, os.W_OK):
             return "copy"
@@ -1714,7 +1741,8 @@ class VarietyWindow(Gtk.Window):
             if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
                 self.options.quotes_enabled = False
-                GObject.idle_add(lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS))
+                if self.current:
+                    GObject.idle_add(lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS))
 
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
@@ -2389,6 +2417,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             return
 
         file = self.current
+        if not file:
+            return
+
         link = self.url
         picture = None
         caption = None
