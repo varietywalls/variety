@@ -58,7 +58,7 @@ from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
-from variety.Util import Util
+from variety.Util import Util, throttle, debounce
 from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
@@ -156,9 +156,6 @@ class VarietyWindow(Gtk.Window):
 
         self.image_count = -1
         self.image_colors_cache = {}
-
-        self.wheel_timer = None
-        self.set_wp_timer = None
 
         self.smart = Smart(self)
 
@@ -1053,18 +1050,17 @@ class VarietyWindow(Gtk.Window):
         TEXTS = 2
         CLOCK_ONLY = 3
 
-    def set_wp_throttled(self, filename, delay=0.3, refresh_level=RefreshLevel.ALL):
+    def set_wp_throttled(self, filename, refresh_level=RefreshLevel.ALL):
         if not filename:
             logger.warning('set_wp_throttled: No wallpaper to set')
             return
 
+        print "Calling SET_WP_THROTTLED with %s, time: %s" % (filename, time.time())
         self.thumbs_manager.mark_active(file=filename, position=self.position)
-        if self.set_wp_timer:
-            self.set_wp_timer.cancel()
+
         def _do_set_wp():
             self.do_set_wp(filename, refresh_level)
-        self.set_wp_timer = threading.Timer(delay, _do_set_wp)
-        self.set_wp_timer.start()
+        threading.Timer(0.01, _do_set_wp).start()
 
     def build_imagemagick_filter_cmd(self, filename, target_file):
         if not self.filters:
@@ -1220,11 +1216,11 @@ class VarietyWindow(Gtk.Window):
         else:
             return os.path.normpath(option)
 
+    @throttle(seconds=1, trailing_call=True)
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
-        logger.info("Calling do_set_wp with " + filename)
+        print "Calling do_set_wp with %s, time: %s" % (filename, time.time())
+        logger.info("Calling do_set_wp with %s, time: %s" % (filename, time.time()))
         with self.do_set_wp_lock:
-            self.set_wp_timer = None
-
             try:
                 if not os.access(filename, os.R_OK):
                     logger.info("Missing file or bad permissions, will not use it: " + filename)
@@ -1268,22 +1264,18 @@ class VarietyWindow(Gtk.Window):
         return all_images[:count]
 
     def on_indicator_scroll(self, indicator, steps, direction):
+        self.on_indicator_scroll_throttled(indicator, steps, direction)
+
+    @debounce(seconds=0.3)
+    def on_indicator_scroll_throttled(self, indicator, steps, direction):
         if direction == Gdk.ScrollDirection.SMOOTH:
             return
 
-        if self.wheel_timer:
-            self.wheel_timer.cancel()
-
-        self.wheel_direction_forward = direction in [Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.LEFT]
-        self.wheel_timer = threading.Timer(0.3, self.handle_scroll)
-        self.wheel_timer.start()
-
-    def handle_scroll(self):
-        if self.wheel_direction_forward:
+        wheel_direction_forward = direction in [Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.LEFT]
+        if wheel_direction_forward:
             self.next_wallpaper(widget=self)
         else:
             self.prev_wallpaper(widget=self)
-        self.wheel_timer = None
 
     def prev_wallpaper(self, widget=None):
         self.auto_changed = widget is None
@@ -1375,7 +1367,7 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             logger.exception("Could not change wallpaper")
 
-    def set_wallpaper(self, img, throttle=True, auto_changed=False):
+    def set_wallpaper(self, img, auto_changed=False):
         logger.info("Calling set_wallpaper with " + img)
         if img == self.current and not self.is_current_refreshable():
             return
@@ -1391,10 +1383,7 @@ class VarietyWindow(Gtk.Window):
                 self.used = self.used[:1000]
             self.auto_changed = auto_changed
             self.last_change_time = time.time()
-            if throttle:
-                self.set_wp_throttled(img)
-            else:
-                self.set_wp_throttled(img, 0)
+            self.set_wp_throttled(img)
         else:
             logger.warning("set_wallpaper called with unaccessible image " + img)
 
@@ -1684,7 +1673,7 @@ class VarietyWindow(Gtk.Window):
                         self.current = new_file
                         if self.no_effects_on == file:
                             self.no_effects_on = new_file
-                        self.set_wp_throttled(new_file, delay=0)
+                        self.set_wp_throttled(new_file)
 
                     self.smart.report_file(new_file, 'favorite', async=True)
         except Exception:

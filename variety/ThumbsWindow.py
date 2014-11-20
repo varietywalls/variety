@@ -180,17 +180,18 @@ class ThumbsWindow(Gtk.Window):
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, self.breadth, 10000)
         except Exception:
             logger.warning("Could not create thumbnail for file %s. File may be missing or invalid." % file)
-            return
+            pixbuf = None
 
         try:
             if not gdk_thread:
                 Gdk.threads_enter()
 
-            image_size = pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
+            image_size = 0 if not pixbuf else pixbuf.get_width() if self.is_horizontal() else pixbuf.get_height()
 
             thumb = Gtk.Image()
-            thumb.set_from_pixbuf(pixbuf)
-#            thumb.set_from_icon_name("folder", Gtk.IconSize.MENU)
+            if pixbuf:
+                thumb.set_from_pixbuf(pixbuf)
+    #            thumb.set_from_icon_name("folder", Gtk.IconSize.MENU)
             thumb.set_visible(True)
 
             overlay = Gtk.Overlay()

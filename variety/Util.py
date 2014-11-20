@@ -82,7 +82,7 @@ class HeadRequest(urllib2.Request):
         return "HEAD"
 
 
-def debounce(wait):
+def debounce(seconds):
     """ Decorator that will postpone a functions execution until after wait seconds
         have elapsed since the last time it was invoked. """
     def decorator(fn):
@@ -93,7 +93,7 @@ def debounce(wait):
                 debounced.t.cancel()
             except(AttributeError):
                 pass
-            debounced.t = threading.Timer(wait, call_it)
+            debounced.t = threading.Timer(seconds, call_it)
             debounced.t.start()
         return debounced
     return decorator
