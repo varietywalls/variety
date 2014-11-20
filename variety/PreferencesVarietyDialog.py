@@ -969,60 +969,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 dialog.destroy()
 
     def update_autostart(self):
-        try:
-            content = (
-                "[Desktop Entry]\n"
-                "Name=Variety\n"
-                "Comment=Variety Wallpaper Changer\n"
-                "Icon=%s\n"
-                "Exec=%s\n"
-                "Terminal=false\n"
-                "Type=Application\n"
-                "X-GNOME-Autostart-Delay=20\n"
-            )
+        file = os.path.expanduser(u"~/.config/autostart/variety.desktop")
 
-            file = os.path.expanduser(u"~/.config/autostart/variety.desktop")
-
-            if not self.ui.autostart.get_active():
-                try:
-                    if os.path.exists(file):
-                        logger.info("Removing autostart entry")
-                        os.unlink(file)
-                except Exception:
-                    logger.exception("Could not remove autostart entry variety.desktop")
-            else:
-                if not os.path.exists(file):
-                    logger.info("Creating autostart entry")
-
-                    Util.makedirs(os.path.expanduser(u"~/.config/autostart/"))
-
-                    with open("/proc/%s/cmdline" % os.getpid()) as f:
-                        cmdline = f.read().strip()
-
-                    if cmdline.find("/opt/extras") >= 0:
-                        content = content % (
-                                  "/opt/extras.ubuntu.com/variety/share/variety/media/variety.svg",
-                                  "/opt/extras.ubuntu.com/variety/bin/variety")
-                    elif cmdline.find("/opt/") >= 0:
-                        content = content % (
-                                  "/opt/variety/share/variety/media/variety.svg",
-                                  "/opt/variety/bin/variety")
-                    else:
-                        content = content % (
-                                  "/usr/share/variety/media/variety.svg",
-                                  "/usr/bin/variety")
-
-                    with open(file, "w") as desktop_file:
-                        desktop_file.write(content)
-        except Exception, e:
-            logger.exception("Error while creating autostart desktop entry")
-            dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
-                _("An error occurred while creating the autostart desktop entry\n"
-                "Please run from a terminal with the -v flag and try again."))
-            dialog.set_title(_("Oops"))
-            dialog.run()
-            dialog.destroy()
+        if not self.ui.autostart.get_active():
+            try:
+                if os.path.exists(file):
+                    logger.info("Removing autostart entry")
+                    os.unlink(file)
+            except Exception:
+                logger.exception("Could not remove autostart entry variety.desktop")
+        else:
+            if not os.path.exists(file):
+                self.parent.create_autostart_entry()
 
 
     def on_change_enabled_toggled(self, widget = None):
