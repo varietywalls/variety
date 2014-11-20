@@ -1516,11 +1516,15 @@ class VarietyWindow(Gtk.Window):
 
         file_normpath = os.path.normpath(file)
         for s in prioritized_sources:
-            if s[1] == Options.SourceType.IMAGE:
-                if os.path.normpath(s[2]) == file_normpath:
+            try:
+                if s[1] == Options.SourceType.IMAGE:
+                    if os.path.normpath(s[2]) == file_normpath:
+                        return s
+                elif file_normpath.startswith(Util.folderpath(self.get_folder_of_source(s))):
                     return s
-            elif file_normpath.startswith(Util.folderpath(self.get_folder_of_source(s))):
-                return s
+            except Exception:
+                # probably exception while creating the downloader, ignore, continue searching
+                pass
 
         return None
 
@@ -1728,6 +1732,7 @@ class VarietyWindow(Gtk.Window):
         if not os.path.exists(fr_file):
             with open(fr_file, "w") as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            self.create_autostart_entry()
             self.show_welcome_dialog()
 
     def write_current_version(self):
@@ -1806,6 +1811,11 @@ class VarietyWindow(Gtk.Window):
 
                 upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
                 upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
+
+                # Upgrade the autostart entry, if there is one
+                if os.path.exists(os.path.expanduser(u"~/.config/autostart/variety.desktop")):
+                    logger.info('Updating Variety autostart desktop entry')
+                    self.create_autostart_entry()
 
         except Exception:
             logger.exception("Error during version upgrade. Continuing.")
@@ -2534,3 +2544,43 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None
         self.refresh_wallpaper()
+
+    def create_autostart_entry(self):
+        try:
+            logger.info("Creating autostart entry")
+
+            content = (
+                "[Desktop Entry]\n"
+                "Name=Variety\n"
+                "Comment=Variety Wallpaper Changer\n"
+                "Icon=%s\n"
+                'Exec=sh -c "/opt/extras.ubuntu.com/variety/bin/variety || /usr/bin/variety || /opt/variety/bin/variety"\n'
+                "Terminal=false\n"
+                "Type=Application\n"
+                "X-GNOME-Autostart-Delay=20\n"
+            )
+
+            Util.makedirs(os.path.expanduser(u"~/.config/autostart/"))
+
+            iconpaths = [
+                "/opt/extras.ubuntu.com/variety/share/variety/media/variety.svg",
+                "/usr/share/variety/media/variety.svg",
+                "/opt/variety/share/variety/media/variety.svg"
+            ]
+
+            for i in iconpaths:
+                if os.path.exists(i):
+                    content %= i
+                    break
+            else:
+                content %= 'variety'
+
+            path = os.path.expanduser(u"~/.config/autostart/variety.desktop")
+            with open(path, "w") as f:
+                f.write(content)
+        except:
+            logger.exception("Error while creating autostart desktop entry")
+            self.show_notification(_("Could not create autostart entry"),
+                _("An error occurred while creating the autostart desktop entry\n"
+                "Please run from a terminal with the -v flag and try again."))
+
