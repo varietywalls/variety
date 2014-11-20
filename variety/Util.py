@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import bs4
+from functools import wraps
 import hashlib
 import io
 import json
@@ -58,6 +59,65 @@ class LogMethodCalls(object):
         for attr in "__module__", "__name__", "__doc__":
             setattr(logcall, attr, getattr(self.func, attr))
         return logcall
+
+
+def debounce(seconds):
+    """ Decorator that will postpone a functions execution until after wait seconds
+        have elapsed since the last time it was invoked. """
+    def decorator(fn):
+        def debounced(*args, **kwargs):
+            def call_it():
+                fn(*args, **kwargs)
+            try:
+                debounced.t.cancel()
+            except(AttributeError):
+                pass
+            debounced.t = threading.Timer(seconds, call_it)
+            debounced.t.start()
+        return debounced
+    return decorator
+
+
+class throttle(object):
+    """
+    Decorator that prevents a function from being called more than once every time period. Allows for a trailing call.
+
+    To create a function that cannot be called more than once a minute:
+
+        @throttle(seconds=1)
+        def my_fun():
+            pass
+    """
+    def __init__(self, seconds=0, trailing_call=False):
+        """
+        seconds - throttle interval in seconds
+        trailing - if True, there will always be a call seconds after the last call
+        """
+        self.seconds = seconds
+        self.trailing_call = trailing_call
+        self.time_of_last_call = 0
+        self.timer = None
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            try:
+                self.timer.cancel()
+            except:
+                pass
+
+            def call_it():
+                self.time_of_last_call = time.time()
+                return fn(*args, **kwargs)
+
+            seconds_since_last_call = time.time() - self.time_of_last_call
+            if seconds_since_last_call >= self.seconds:
+                return call_it()
+            elif self.trailing_call:
+                self.timer = threading.Timer(self.seconds - seconds_since_last_call, call_it)
+                self.timer.start()
+
+        return wrapper
 
 
 class Util:

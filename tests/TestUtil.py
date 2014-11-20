@@ -18,7 +18,8 @@
 import sys
 import os.path
 import unittest
-from variety.Util import Util
+import time
+from variety.Util import Util, debounce, throttle
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -139,6 +140,74 @@ class TestUtil(unittest.TestCase):
         resp = Util.urlopen("//google.com")
         self.assertTrue(len(resp.read()) > 0)
 
+
+    def test_debounce(self):
+        """ Test that the increment function is being debounced. The counter should only be incremented once 10 seconds after the last call to the function """
+        count = [0]
+
+        @debounce(0.3)
+        def increment():
+            count[0] += 1
+
+        self.assertTrue(count[0] == 0)
+        increment()
+        increment()
+        time.sleep(0.2)
+        self.assertTrue(count[0]== 0)
+        increment()
+        increment()
+        increment()
+        increment()
+        self.assertTrue(count[0] == 0)
+        time.sleep(0.3)
+        self.assertTrue(count[0] == 1)
+
+
+    def test_throttle_no_trailing(self):
+        count = [0]
+
+        @throttle(seconds=0.3)
+        def increment():
+            count[0] += 1
+
+        self.assertTrue(count[0] == 0)
+        increment()
+        self.assertTrue(count[0] == 1)
+        increment()
+        self.assertTrue(count[0] == 1)
+        time.sleep(0.2)
+        increment()
+        self.assertTrue(count[0] == 1)
+        time.sleep(0.2)
+        increment()
+        self.assertTrue(count[0] == 2)
+        increment()
+        self.assertTrue(count[0] == 2)
+        time.sleep(0.31)
+        self.assertTrue(count[0] == 2)
+
+    def test_throttle_with_trailing(self):
+        count = [0]
+
+        @throttle(seconds=0.3, trailing_call=True)
+        def increment():
+            count[0] += 1
+
+        self.assertTrue(count[0] == 0)
+        increment()
+        self.assertTrue(count[0] == 1)
+        increment()
+        self.assertTrue(count[0] == 1)
+        time.sleep(0.2)
+        increment()
+        self.assertTrue(count[0] == 1)
+        time.sleep(0.2)
+        increment()
+        self.assertTrue(count[0] == 2)
+        increment()
+        self.assertTrue(count[0] == 2)
+        time.sleep(0.31)
+        self.assertTrue(count[0] == 3)
 
 if __name__ == '__main__':
     unittest.main()
