@@ -80,13 +80,22 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     ## Get the current number of virtual desktops
     desk_x_count=$(enlightenment_remote -desktops-get | awk '{print $1}')
     desk_y_count=$(enlightenment_remote -desktops-get | awk '{print $2}')
+    
+    ## Get the current number of screens
+    screen_count=1
+    # If xrandr is available use it to get screen desk_x_count
+    if command -v xrandr >/dev/null 2>&1; then
+        screen_count=$(xrandr -q | grep ' connected' | wc -l)
+    fi
 
     ## Set the wallpaper for each virtual desktop
     for ((x=0; x<$desk_x_count; x++)); do
         for ((y=0; y<$desk_y_count; y++)); do
-            # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
-            # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
-            enlightenment_remote -desktop-bg-add 0 0 "$x" "$y" "$OFILE.edj"&
+            for ((z=0; z<$screen_count; z++)); do
+                # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
+                # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
+                enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj"&
+            done
         done
     done
 
