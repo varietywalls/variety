@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_wallpapers_net_category_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddWallpapersNetCategoryDialog" id="add_wallpapers_net_category_dialog">
     <property name="width_request">500</property>
     <property name="can_focus">False</property>
@@ -80,7 +80,7 @@ Specific resolution: &lt;a href="http://www.wallpapers.net/2560x1440-wallpapers_
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="url">
+              <object class="GtkEntry" id="query">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
@@ -102,7 +102,7 @@ Specific resolution: &lt;a href="http://www.wallpapers.net/2560x1440-wallpapers_
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
+          <object class="GtkButtonBox" id="buttonbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>

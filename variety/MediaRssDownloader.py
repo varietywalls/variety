@@ -61,7 +61,7 @@ class MediaRssDownloader(Downloader.Downloader):
                      if MediaRssDownloader.is_valid_content(x)]
             return len(walls) > 0
         except Exception:
-            logger.exception("Error while validating URL, proabably not a MediaRSS feed")
+            logger.exception("Error while validating URL, probably not a MediaRSS feed")
             return False
 
     def download_one(self):

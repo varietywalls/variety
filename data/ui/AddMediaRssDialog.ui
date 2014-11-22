@@ -72,7 +72,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="url">
+              <object class="GtkEntry" id="query">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
@@ -151,7 +151,7 @@
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
+          <object class="GtkButtonBox" id="buttonbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>

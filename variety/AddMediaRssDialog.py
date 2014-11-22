@@ -14,92 +14,32 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import Gtk, Gdk # pylint: disable=E0611
-import threading
+from gi.repository import Gtk # pylint: disable=E0611
+from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
 from variety.MediaRssDownloader import MediaRssDownloader
 
 from variety_lib.helpers import get_builder
 
-from variety import _, _u
+from variety import _
 
-class AddMediaRssDialog(Gtk.Dialog):
+
+class AddMediaRssDialog(AbstractAddByQueryDialog):
     __gtype_name__ = "AddMediaRssDialog"
 
     def __new__(cls):
-        """Special static method that's automatically called by Python when 
-        constructing a new instance of this class.
-        
-        Returns a fully instantiated AddMediaRssDialog object.
-        """
         builder = get_builder('AddMediaRssDialog')
         new_object = builder.get_object('add_media_rss_dialog')
         new_object.finish_initializing(builder)
         return new_object
 
-    def finish_initializing(self, builder):
-        """Called when we're finished initializing.
-
-        finish_initalizing should be called after parsing the ui definition
-        and creating a AddMediaRssDialog object with it in order to
-        finish initializing the start of the new AddMediaRssDialog
-        instance.
-        """
-        # Get a reference to the builder and set up the signals.
-        self.builder = builder
-        self.ui = builder.get_ui(self)
-        self.edited_row = None
-
-    def set_edited_row(self, edited_row):
-        self.edited_row = edited_row
-        self.ui.url.set_text(self.edited_row[2])
-
-    def on_btn_ok_clicked(self, widget, data=None):
-        """The user has elected to save the changes.
-
-        Called before the dialog returns Gtk.ResponseType.OK from run().
-        """
-        if not len(self.ui.url.get_text().strip()):
-            self.destroy()
-        else:
-            threading.Timer(0.1, self.ok_thread).start()
-
-    def ok_thread(self):
-        try:
-            Gdk.threads_enter()
-            self.ui.message.set_visible(True)
-            self.ui.url.set_sensitive(False)
-            self.ui.spinner.set_visible(True)
-            self.ui.spinner.start()
-            self.ui.error.set_label("")
-        finally:
-            Gdk.threads_leave()
-
-        url = self.ui.url.get_text().strip()
+    def validate(self, url):
         if not url.startswith("http://") and not url.startswith("https://"):
             url = "http://" + url
         valid = MediaRssDownloader.validate(url)
+        return url, None if valid else _("This does not seem to be a valid Media RSS feed URL or there is no content there.")
 
-        try:
-            Gdk.threads_enter()
-            if not valid:
-                self.ui.error.set_label(_("This does not seem to be a valid Media RSS feed URL or there is no content there."))
-                self.ui.spinner.stop()
-                self.ui.url.set_sensitive(True)
-                self.ui.message.set_visible(False)
-                self.ui.spinner.set_visible(False)
-                self.ui.url.grab_focus()
-            else:
-                self.parent.on_mediarss_dialog_okay(url, self.edited_row)
-                self.destroy()
-        finally:
-            Gdk.threads_leave()
-
-    def on_btn_cancel_clicked(self, widget, data=None):
-        """The user has elected cancel changes.
-
-        Called before the dialog returns Gtk.ResponseType.CANCEL for run()
-        """
-        self.destroy()
+    def commit(self, final_url):
+        self.parent.on_mediarss_dialog_okay(final_url, self.edited_row)
 
 
 if __name__ == "__main__":
