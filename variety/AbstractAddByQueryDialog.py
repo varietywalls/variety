@@ -29,7 +29,7 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
     def commit(self, final_query):
         """
         Performs the actions to really add a valid query or URL to Variety
-        Example: self.parent.on_wallhaven_dialog_okay(final_query, self.edited_row)
+        Example: self.parent.on_add_dialog_okay(Options.SourceType.XYZ, final_query, self.edited_row)
         """
         raise NotImplementedError()
 

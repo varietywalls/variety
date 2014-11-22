@@ -49,6 +49,7 @@ from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
+from variety.RedditDownloader import RedditDownloader
 from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
@@ -498,6 +499,8 @@ class VarietyWindow(Gtk.Window):
             return WallbaseDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
+        elif type == Options.SourceType.REDDIT:
+            return RedditDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         elif type == Options.SourceType.PANORAMIO:

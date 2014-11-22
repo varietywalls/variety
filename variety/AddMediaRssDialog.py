@@ -17,6 +17,7 @@
 from gi.repository import Gtk # pylint: disable=E0611
 from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
 from variety.MediaRssDownloader import MediaRssDownloader
+from variety.Options import Options
 
 from variety_lib.helpers import get_builder
 
@@ -39,7 +40,7 @@ class AddMediaRssDialog(AbstractAddByQueryDialog):
         return url, None if valid else _("This does not seem to be a valid Media RSS feed URL or there is no content there.")
 
     def commit(self, final_url):
-        self.parent.on_mediarss_dialog_okay(final_url, self.edited_row)
+        self.parent.on_add_dialog_okay(Options.SourceType.MEDIA_RSS, final_url, self.edited_row)
 
 
 if __name__ == "__main__":

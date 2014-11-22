@@ -16,6 +16,7 @@
 
 from gi.repository import Gtk # pylint: disable=E0611
 from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
+from variety.Options import Options
 from variety.WallhavenDownloader import WallhavenDownloader
 
 from variety_lib.helpers import get_builder
@@ -38,7 +39,7 @@ class AddWallhavenDialog(AbstractAddByQueryDialog):
 
     def commit(self, final_query):
         if len(final_query):
-            self.parent.on_wallhaven_dialog_okay(final_query, self.edited_row)
+            self.parent.on_add_dialog_okay(Options.SourceType.WALLHAVEN, final_query, self.edited_row)
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@
 
 from gi.repository import Gtk, Gdk # pylint: disable=E0611
 from variety.FlickrDownloader import FlickrDownloader
+from variety.Options import Options
 
 from variety_lib.helpers import get_builder
 
@@ -152,7 +153,7 @@ class AddFlickrDialog(Gtk.Dialog):
                         break
             else:
                 if len(search):
-                    self.parent.on_flickr_dialog_okay(search, self.edited_row)
+                    self.parent.on_add_dialog_okay(Options.SourceType.FLICKR, search, self.edited_row)
                 self.destroy()
 
         finally:

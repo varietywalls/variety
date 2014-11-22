@@ -17,6 +17,7 @@ import json
 
 import logging
 from gi.repository import Gtk, WebKit, GObject # pylint: disable=E0611
+from variety.Options import Options
 from variety_lib.helpers import get_builder
 from variety import _, _u
 from variety_lib import varietyconfig
@@ -70,7 +71,7 @@ class AddPanoramioDialog(Gtk.Dialog):
     def on_js_action(self, action, argument):
         if action == 'location':
             location = argument
-            self.parent.on_panoramio_dialog_okay(location, self.edited_row)
+            self.parent.on_add_dialog_okay(Options.SourceType.PANORAMIO, location, self.edited_row)
             self.destroy()
 
     def load_map(self):

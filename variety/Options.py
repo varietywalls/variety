@@ -45,6 +45,7 @@ class Options:
         EARTH = 11
         PANORAMIO = 12
         WALLHAVEN = 13
+        REDDIT = 14
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -60,11 +61,12 @@ class Options:
             EARTH: "earth",
             PANORAMIO: "panoramio",
             WALLHAVEN: "wallhaven",
+            REDDIT: "reddit",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, WALLHAVEN]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, WALLHAVEN, REDDIT]
 
     class LightnessMode:
         DARK = 0
