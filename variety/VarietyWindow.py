@@ -50,6 +50,7 @@ from variety.DominantColors import DominantColors
 from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
+from variety.RedditDownloader import RedditDownloader
 from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
@@ -507,6 +508,8 @@ class VarietyWindow(Gtk.Window):
             return WallbaseDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
+        elif type == Options.SourceType.REDDIT:
+            return RedditDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         elif type == Options.SourceType.PANORAMIO:
@@ -738,6 +741,7 @@ class VarietyWindow(Gtk.Window):
                     self.ind.selector.handler_unblock(self.ind.selector_handler_id)
 
                     self.ind.publish_fb.set_sensitive(self.url is not None)
+                    self.ind.google_image.set_sensitive(self.image_url is not None)
 
                     self.ind.pause_resume.set_label(_("Pause on current") if self.options.change_enabled else _("Resume regular changes"))
 
@@ -1055,7 +1059,6 @@ class VarietyWindow(Gtk.Window):
             logger.warning('set_wp_throttled: No wallpaper to set')
             return
 
-        print "Calling SET_WP_THROTTLED with %s, time: %s" % (filename, time.time())
         self.thumbs_manager.mark_active(file=filename, position=self.position)
 
         def _do_set_wp():
@@ -1218,7 +1221,6 @@ class VarietyWindow(Gtk.Window):
 
     @throttle(seconds=1, trailing_call=True)
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
-        print "Calling do_set_wp with %s, time: %s" % (filename, time.time())
         logger.info("Calling do_set_wp with %s, time: %s" % (filename, time.time()))
         with self.do_set_wp_lock:
             try:
@@ -2642,6 +2644,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         if self.quote and self.quote["author"]:
             url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
             webbrowser.open_new_tab(url)
+
+    def google_image_search(self, widget=None):
+        if self.image_url:
+            subprocess.call(["xdg-open", "https://www.google.com/searchbyimage?safe=off&image_url=" +
+                      urllib.quote_plus(self.image_url.encode('utf8'))])
 
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None

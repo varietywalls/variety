@@ -45,6 +45,7 @@ class Options:
         EARTH = 11
         PANORAMIO = 12
         WALLHAVEN = 13
+        REDDIT = 14
         RECOMMENDED = 19
         LATEST = 20
 
@@ -62,6 +63,7 @@ class Options:
             EARTH: "earth",
             PANORAMIO: "panoramio",
             WALLHAVEN: "wallhaven",
+            REDDIT: "reddit",
             RECOMMENDED: "recommended",
             LATEST: "latest",
         }
@@ -69,7 +71,7 @@ class Options:
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
         dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
-                    PANORAMIO, WALLHAVEN, RECOMMENDED, LATEST]
+                    PANORAMIO, WALLHAVEN, REDDIT, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0

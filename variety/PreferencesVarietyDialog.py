@@ -33,6 +33,7 @@ from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialo
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
+from variety.AddRedditDialog import AddRedditDialog
 from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
@@ -67,6 +68,7 @@ EDITABLE_TYPES = [
     Options.SourceType.MEDIA_RSS,
     Options.SourceType.PANORAMIO,
     Options.SourceType.WALLHAVEN,
+    Options.SourceType.REDDIT,
 ]
 
 
@@ -328,6 +330,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             # (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Panoramio"), self.on_add_panoramio_clicked),
             (_("Wallpapers.net"), self.on_add_wn_clicked),
+            (_("Reddit"), self.on_add_reddit_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
 
@@ -617,6 +620,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddWallbaseDialog()
             elif type == Options.SourceType.WALLHAVEN:
                 self.dialog = AddWallhavenDialog()
+            elif type == Options.SourceType.REDDIT:
+                self.dialog = AddRedditDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
             elif type == Options.SourceType.PANORAMIO:
@@ -727,6 +732,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_add_mediarss_clicked(self, widget=None):
         self.show_dialog(AddMediaRssDialog())
 
+    def on_add_reddit_clicked(self, widget=None):
+        self.show_dialog(AddRedditDialog())
+
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
 
@@ -749,46 +757,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog.destroy()
             self.dialog = None
 
-    def on_wn_dialog_okay(self, url, edited_row):
+    def on_add_dialog_okay(self, source_type, location, edited_row):
         if edited_row:
-            edited_row[2] = url
+            edited_row[2] = location
         else:
-            self.add_sources(Options.SourceType.WN, [url])
-        self.dialog = None
-
-    def on_mediarss_dialog_okay(self, url, edited_row):
-        if edited_row:
-            edited_row[2] = url
-        else:
-            self.add_sources(Options.SourceType.MEDIA_RSS, [url])
-        self.dialog = None
-
-    def on_flickr_dialog_okay(self, flickr_search, edited_row):
-        if edited_row:
-            edited_row[2] = flickr_search
-        else:
-            self.add_sources(Options.SourceType.FLICKR, [flickr_search])
-        self.dialog = None
-
-    def on_wallbase_dialog_okay(self, wallbase_search, edited_row):
-        if edited_row:
-            edited_row[2] = wallbase_search
-        else:
-            self.add_sources(Options.SourceType.WALLBASE, [wallbase_search])
-        self.dialog = None
-
-    def on_wallhaven_dialog_okay(self, wallhaven_search, edited_row):
-        if edited_row:
-            edited_row[2] = wallhaven_search
-        else:
-            self.add_sources(Options.SourceType.WALLHAVEN, [wallhaven_search])
-        self.dialog = None
-
-    def on_panoramio_dialog_okay(self, panoramio_config, edited_row):
-        if edited_row:
-            edited_row[2] = panoramio_config
-        else:
-            self.add_sources(Options.SourceType.PANORAMIO, [panoramio_config])
+            self.add_sources(source_type, [location])
         self.dialog = None
 
     def close(self):

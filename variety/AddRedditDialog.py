@@ -15,36 +15,42 @@
 ### END LICENSE
 
 from gi.repository import Gtk # pylint: disable=E0611
+from variety.RedditDownloader import RedditDownloader
 from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
 from variety.Options import Options
 
 from variety_lib.helpers import get_builder
-from variety.WallpapersNetDownloader import WallpapersNetDownloader
 
 from variety import _
 
 
-class AddWallpapersNetCategoryDialog(AbstractAddByQueryDialog):
-    __gtype_name__ = "AddWallpapersNetCategoryDialog"
+class AddRedditDialog(AbstractAddByQueryDialog):
+    __gtype_name__ = "AddRedditDialog"
 
     def __new__(cls):
-        builder = get_builder('AddWallpapersNetCategoryDialog')
-        new_object = builder.get_object('add_wallpapers_net_category_dialog')
+        builder = get_builder('AddRedditDialog')
+        new_object = builder.get_object('add_reddit_dialog')
         new_object.finish_initializing(builder)
         return new_object
 
-    def validate(self, url):
-        if not url.startswith("http://"):
-            url = "http://" + url
-        valid = WallpapersNetDownloader.validate(url)
-        return url, None if valid else _("Could not find wallpapers there. Please check the URL.")
+    def validate(self, query):
+        if not '/' in query:
+            query = 'http://www.reddit.com/r/%s' % query
+        else:
+            if not query.startswith("http://") and not query.startswith("https://"):
+                query = "http://" + query
+            if not '//reddit.com' in query and not '//www.reddit.com' in query:
+                return query, False, _("This does not seem to be a valid Reddit URL")
 
-    def commit(self, url):
-        if url:
-            self.parent.on_add_dialog_okay(Options.SourceType.WN, url, self.edited_row)
+        valid = RedditDownloader.validate(query)
+        return query, None if valid else _("We could not find any image submissions there.")
+
+    def commit(self, final_url):
+        if final_url:
+            self.parent.on_add_dialog_okay(Options.SourceType.REDDIT, final_url, self.edited_row)
 
 
 if __name__ == "__main__":
-    dialog = AddWallpapersNetCategoryDialog()
+    dialog = AddRedditDialog()
     dialog.show()
     Gtk.main()
