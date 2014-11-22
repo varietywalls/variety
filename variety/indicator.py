@@ -126,6 +126,12 @@ class Indicator:
         self.no_effects_handler_id = self.no_effects.connect("toggled", _toggle_no_effects)
         self.image_menu.append(self.no_effects)
 
+        self.google_image = Gtk.MenuItem(_("Google Image Search"))
+        self.google_image.connect("activate", window.google_image_search)
+        self.image_menu.append(self.google_image)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+
         self.publish_fb = Gtk.MenuItem(_("Share on Facebook"))
         self.publish_fb.connect("activate", window.publish_on_facebook)
         self.image_menu.append(self.publish_fb)
