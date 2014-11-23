@@ -29,7 +29,7 @@ __all__ = [
 # files). By default, this is ../data, relative your trunk layout
 __variety_data_directory__ = '../data/'
 __license__ = 'GPL-3'
-__version__ = '0.4.20'
+__version__ = '0.4.21'
 
 import os
 
