@@ -29,7 +29,7 @@ class WallhavenDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(WallhavenDownloader, self).__init__(parent, "Wallhaven.cc", location)
+        super(WallhavenDownloader, self).__init__(parent, "wallhaven", "Wallhaven.cc", location)
         self.parse_location()
         self.last_fill_time = 0
         self.queue = []

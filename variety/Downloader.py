@@ -23,8 +23,9 @@ from variety.Util import Util
 logger = logging.getLogger('variety')
 
 class Downloader(object):
-    def __init__(self, parent, name, location, is_refresher=False):
+    def __init__(self, parent, source_type, name, location, is_refresher=False):
         self.parent = parent
+        self.source_type = source_type
         self.name = name
         self.location = location
         self.is_refresher = is_refresher
@@ -51,9 +52,15 @@ class Downloader(object):
     def is_in_favorites(self, url):
         return self.parent and os.path.exists(os.path.join(self.parent.options.favorites_folder, Util.get_local_name(url)))
 
-    def save_locally(self, origin_url, image_url, origin_name=None, force_download=False, extra_metadata={}):
-        if not origin_name:
-            origin_name = self.name
+    def save_locally(self, origin_url, image_url,
+                     source_type=None, source_location=None, source_name=None,
+                     force_download=False, extra_metadata={}):
+        if not source_type:
+            source_type = self.source_type
+        if not source_name:
+            source_name = self.name
+        if not source_location:
+            source_location = self.location
 
         if not force_download and origin_url in self.parent.banned:
             logger.info("URL " + origin_url + " is banned, skip downloading")
@@ -73,13 +80,23 @@ class Downloader(object):
             logger.info("File already exists, skip downloading")
             return None
 
-        data = Util.fetch(image_url)
-        with open(local_filename, 'wb') as f:
-            f.write(data)
+        try:
+            data = Util.fetch(image_url)
+            with open(local_filename, 'wb') as f:
+                f.write(data)
+        except Exception, e:
+            logger.info("Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
+            raise e
+
+        if not Util.is_image(local_filename, check_contents=True):
+            logger.info("Downloaded data was not an image, image URL might be outdated")
+            os.unlink(local_filename)
+            return None
 
         metadata = {
-            "sourceName": origin_name,
-            "sourceLocation": self.location,
+            "sourceType": source_type,
+            "sourceName": source_name,
+            "sourceLocation": source_location,
             "sourceURL": origin_url,
             "imageURL": image_url
         }

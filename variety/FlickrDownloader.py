@@ -31,7 +31,7 @@ class FlickrDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(FlickrDownloader, self).__init__(parent, "Flickr", location)
+        super(FlickrDownloader, self).__init__(parent, "flickr", "Flickr", location)
         self.parse_location()
         self.queue = []
         self.last_fill_time = 0
@@ -149,7 +149,7 @@ class FlickrDownloader(Downloader.Downloader):
 
         urls = self.queue.pop()
         logger.info("Photo URL: " + urls[0])
-        return self.save_locally(urls[0], urls[1])
+        return self.save_locally(urls[0], urls[1], extra_metadata=urls[2])
 
     def fill_queue(self):
         self.last_fill_time = time.time()
@@ -173,7 +173,7 @@ class FlickrDownloader(Downloader.Downloader):
         page = random.randint(1, pages)
         logger.info("%d pages in the search results, using page %d" % (pages, page))
 
-        call = call + "&extras=o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
+        call = call + "&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
         resp = FlickrDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
@@ -231,8 +231,50 @@ class FlickrDownloader(Downloader.Downloader):
                     logger.debug("Small or non-landscape size/resolution")
                     continue
 
+                try:
+                    extra_metadata = {
+                        'author': ph['ownername'],
+                        'authorURL': 'https://www.flickr.com/photos/%s' % ph["owner"],
+                        'headline': ph['title'],
+                        'keywords': ph['tags'].split(' '),
+                        'description': ph['description']['_content']
+                    }
+                except:
+                    extra_metadata = {}
+
                 logger.debug("Appending to queue %s, %s" % (photo_url, image_file_url))
-                self.queue.append((photo_url, image_file_url))
+                self.queue.append((photo_url, image_file_url, extra_metadata))
             except Exception:
                 logger.exception("Error parsing single flickr photo info:")
+
+    @staticmethod
+    def get_photo_id(origin_url):
+        if origin_url[-1] == '/':
+            origin_url = origin_url[:-1]
+        return origin_url.split('/')[-1]
+
+    @staticmethod
+    def get_image_url(origin_url):
+        photo_id = FlickrDownloader.get_photo_id(origin_url)
+        call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
+               (API_KEY, photo_id)
+        resp = Util.fetch_json(call)
+        s = max(resp['sizes']['size'], key=lambda size: int(size['width']))
+        return s['source']
+
+    @staticmethod
+    def get_extra_metadata(origin_url):
+        photo_id = FlickrDownloader.get_photo_id(origin_url)
+        call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
+               (API_KEY, photo_id)
+        resp = Util.fetch_json(call)
+        ph = resp['photo']
+        extra_meta = {
+            'headline': ph['title']['_content'],
+            'description': ph['description']['_content'],
+            'author': ph['owner']['realname'],
+            'authorURL': 'https://www.flickr.com/photos/%s' % ph['owner']['nsid'],
+            'keywords': [x['_content'] for x in ph['tags']['tag']],
+        }
+        return extra_meta
 

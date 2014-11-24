@@ -26,7 +26,7 @@ random.seed()
 
 class APODDownloader(Downloader.Downloader):
     def __init__(self, parent):
-        super(APODDownloader, self).__init__(parent, "NASA Astro Pic of the Day", "nasa_apod")
+        super(APODDownloader, self).__init__(parent, "apod", "NASA Astro Pic of the Day", "nasa_apod")
         self.queue = []
         self.root = "http://apod.nasa.gov/apod/"
 

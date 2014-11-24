@@ -140,6 +140,16 @@ class TestUtil(unittest.TestCase):
         resp = Util.urlopen("//google.com")
         self.assertTrue(len(resp.read()) > 0)
 
+    def test_get_size(self):
+        self.assertEquals((32, 32), Util.get_size('test.jpg'))
+        self.assertRaises(Exception, lambda: Util.get_size('fake_image.jpg'))
+
+    def test_is_image(self):
+        self.assertTrue(Util.is_image('test.jpg'))
+        self.assertTrue(Util.is_image('test.jpg', check_contents=True))
+        self.assertTrue(Util.is_image('fake_image.jpg'))
+        self.assertFalse(Util.is_image('fake_image.jpg', check_contents=True))
+
 
     def test_debounce(self):
         """ Test that the increment function is being debounced. The counter should only be incremented once 10 seconds after the last call to the function """

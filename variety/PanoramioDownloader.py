@@ -34,7 +34,7 @@ class PanoramioDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(PanoramioDownloader, self).__init__(parent, "Panoramio", location)
+        super(PanoramioDownloader, self).__init__(parent, "panoramio", "Panoramio", location)
         self.parse_location()
         self.last_fill_time = 0
         self.queue = []
@@ -82,7 +82,8 @@ class PanoramioDownloader(Downloader.Downloader):
         image = self.save_locally(photo["photo_url"],
                                  photo["photo_file_url"],
                                  extra_metadata={"author": photo["owner_name"],
-                                                 "authorURL": photo["owner_url"]})
+                                                 "authorURL": photo["owner_url"],
+                                                 "headline": photo["photo_title"]})
 
         # Uncomment to overlay Panoramio logo:
         # logo = os.path.join(varietyconfig.get_data_path(), 'panoramio/logo.png')

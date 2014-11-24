@@ -29,7 +29,7 @@ random.seed()
 
 class RedditDownloader(Downloader.Downloader):
     def __init__(self, parent, url):
-        super(RedditDownloader, self).__init__(parent, "Reddit", url)
+        super(RedditDownloader, self).__init__(parent, "reddit", "Reddit", url)
         self.queue = []
 
     def convert_to_filename(self, url):

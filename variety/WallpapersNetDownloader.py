@@ -31,7 +31,7 @@ class WallpapersNetDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, category_url):
-        super(WallpapersNetDownloader, self).__init__(parent, "Wallpapers.net", category_url)
+        super(WallpapersNetDownloader, self).__init__(parent, "wn", "Wallpapers.net", category_url)
         self.host = "http://wallpapers.net/"
         self.last_fill_time = 0
         self.queue = []
@@ -91,7 +91,18 @@ class WallpapersNetDownloader(Downloader.Downloader):
         src_url = self.host + max_res_link
         logger.info("Image src URL: " + src_url)
 
-        return self.save_locally(wallpaper_url, src_url)
+        extra_metadata = {}
+        try:
+            extra_metadata['headline'] = tree.findall('//h1')[0].text.replace('HD Wallpaper', '')
+        except:
+            pass
+        try:
+            extra_metadata['keywords'] = [x[1:].lower() for x in map(
+                lambda a: str(a.text), tree.findall('//div[@class="right"]//table//a')) if x.startswith('#')]
+        except:
+            pass
+
+        return self.save_locally(wallpaper_url, src_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
         self.last_fill_time = time.time()

@@ -29,7 +29,7 @@ class WallbaseDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(WallbaseDownloader, self).__init__(parent, "Wallbase.cc", location)
+        super(WallbaseDownloader, self).__init__(parent, "wallbase", "Wallbase.cc", location)
         self.parse_location()
         self.last_fill_time = 0
         self.queue = []

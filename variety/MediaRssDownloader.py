@@ -27,10 +27,11 @@ logger = logging.getLogger('variety')
 random.seed()
 
 MEDIA_NS = "{http://search.yahoo.com/mrss/}"
+VARIETY_NS = "{http://vrty.org/}"
 
 class MediaRssDownloader(Downloader.Downloader):
     def __init__(self, parent, url):
-        super(MediaRssDownloader, self).__init__(parent, "Media RSS", url)
+        super(MediaRssDownloader, self).__init__(parent, "mediarss", "Media RSS", url)
         self.queue = []
 
     def convert_to_filename(self, url):
@@ -74,10 +75,11 @@ class MediaRssDownloader(Downloader.Downloader):
             logger.info("MediaRSS queue empty after fill")
             return None
 
-        origin_url, image_url = self.queue.pop()
+        origin_url, image_url, source_type, source_location, source_name, extra_metadata = self.queue.pop()
         parse = urlparse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
-        return self.save_locally(origin_url, image_url, origin_name=host)
+        return self.save_locally(origin_url, image_url, source_type or 'mediarss',
+                                 source_location, source_name or host, extra_metadata=extra_metadata)
 
     @staticmethod
     def picasa_hack(feed_url):
@@ -124,15 +126,51 @@ class MediaRssDownloader(Downloader.Downloader):
                 else:
                     content = item.find("{0}content".format(MEDIA_NS))
 
-                if MediaRssDownloader.is_valid_content(content):
-                    self.process_content(origin_url, content)
+                if not MediaRssDownloader.is_valid_content(content):
+                    continue
+
+                source_name = None
+                source_location = None
+                source_type = None
+                variety_source = item.find("{0}source".format(VARIETY_NS))
+                if variety_source is not None:
+                    source_name = variety_source.attrib.get('name', None)
+                    source_location = variety_source.attrib.get('location', None)
+                    source_type = variety_source.attrib.get('type', None)
+
+                extra_metadata = {}
+
+                try:
+                    extra_metadata['headline'] = item.find("{0}title".format(MEDIA_NS)).text
+                except:
+                    try:
+                        extra_metadata['headline'] = item.find("title").text
+                    except:
+                        pass
+
+                try:
+                    extra_metadata['description'] = item.find("{0}description".format(MEDIA_NS)).text
+                except:
+                    pass
+
+                try:
+                    extra_metadata['author'] = item.find("{0}credit".format(MEDIA_NS)).text
+                except:
+                    pass
+
+                try:
+                    extra_metadata['keywords'] = map(lambda k: k.strip(), item.find("{0}keywords".format(MEDIA_NS)).text.split(','))
+                except:
+                    pass
+
+                self.process_content(origin_url, content, source_type, source_location, source_name, extra_metadata)
             except Exception:
                 logger.exception("Could not process an item in the Media RSS feed")
 
         random.shuffle(self.queue)
         logger.info("MediaRSS queue populated with %d URLs" % len(self.queue))
 
-    def process_content(self, origin_url, content):
+    def process_content(self, origin_url, content, source_type=None, source_location=None, source_name=None, extra_metadata={}):
         try:
             logger.debug("Checking origin_url " + origin_url)
 
@@ -162,7 +200,8 @@ class MediaRssDownloader(Downloader.Downloader):
                 logger.debug("Small or non-landscape size/resolution")
                 return
 
-            logger.debug("Appending to queue %s, %s" % (origin_url, image_file_url))
-            self.queue.append((origin_url, image_file_url))
+            logger.debug("Appending to queue %s, %s, %s, %s, %s" %
+                         (origin_url, image_file_url, source_type, source_location, source_name))
+            self.queue.append((origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
         except Exception:
             logger.exception("Error parsing single MediaRSS image info:")
