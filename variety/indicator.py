@@ -171,7 +171,7 @@ class Indicator:
         self.prev_quote.connect("activate", window.prev_quote)
         self.quotes_menu.append(self.prev_quote)
 
-        self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward_quote = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward_quote.set_use_underline(True)
         def _fast_forward_quote(widget):
             window.next_quote(widget, bypass_history=True)
