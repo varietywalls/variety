@@ -109,15 +109,15 @@ class Indicator:
         self.image_menu.append(self.fast_forward)
 
         self.image_menu.append(Gtk.SeparatorMenuItem.new())
-
-        self.pause_resume = Gtk.MenuItem(_("Pause"))
-        self.pause_resume.connect("activate", window.on_pause_resume)
-        self.image_menu.append(self.pause_resume)
-
-        self.image_menu.append(Gtk.SeparatorMenuItem.new())
         self.scroll_tip = Gtk.MenuItem(_("Tip: Scroll wheel over icon\nfor Next and Previous"))
         self.scroll_tip.set_sensitive(False)
         self.image_menu.append(self.scroll_tip)
+
+        self.image_menu.append(Gtk.SeparatorMenuItem.new())
+
+        self.pause_resume = Gtk.MenuItem(_("Pause on current"))
+        self.pause_resume.connect("activate", window.on_pause_resume)
+        self.image_menu.append(self.pause_resume)
 
         self.image_item = Gtk.MenuItem(_("_Image"))
         self.image_item.set_use_underline(True)
@@ -161,15 +161,15 @@ class Indicator:
         #
         self.quotes_menu = Gtk.Menu()
 
-        self.prev_quote = Gtk.MenuItem(_("_Previous"))
-        self.prev_quote.set_use_underline(True)
-        self.prev_quote.connect("activate", window.prev_quote)
-        self.quotes_menu.append(self.prev_quote)
-
         self.next_quote = Gtk.MenuItem(_("_Next"))
         self.next_quote.set_use_underline(True)
         self.next_quote.connect("activate", window.next_quote)
         self.quotes_menu.append(self.next_quote)
+
+        self.prev_quote = Gtk.MenuItem(_("_Previous"))
+        self.prev_quote.set_use_underline(True)
+        self.prev_quote.connect("activate", window.prev_quote)
+        self.quotes_menu.append(self.prev_quote)
 
         self.fast_forward_quote = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward_quote.set_use_underline(True)
@@ -180,7 +180,7 @@ class Indicator:
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 
-        self.quotes_pause_resume = Gtk.MenuItem(_("Pause"))
+        self.quotes_pause_resume = Gtk.MenuItem(_("Pause on current"))
         self.quotes_pause_resume.connect("activate", window.on_quotes_pause_resume)
         self.quotes_menu.append(self.quotes_pause_resume)
 
