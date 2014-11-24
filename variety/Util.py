@@ -193,7 +193,6 @@ class Util:
             format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)
             return bool(format)
 
-
     @staticmethod
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):
         count = 0
