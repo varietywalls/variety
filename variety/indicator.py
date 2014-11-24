@@ -101,7 +101,7 @@ class Indicator:
         self.prev.connect("activate", window.prev_wallpaper)
         self.image_menu.append(self.prev)
 
-        self.fast_forward = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward.set_use_underline(True)
         def _fast_forward(widget):
             window.next_wallpaper(widget, bypass_history=True)
@@ -171,7 +171,7 @@ class Indicator:
         self.next_quote.connect("activate", window.next_quote)
         self.quotes_menu.append(self.next_quote)
 
-        self.fast_forward_quote = Gtk.MenuItem(_("_Fast Forward"))
+        self.fast_forward_quote = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward_quote.set_use_underline(True)
         def _fast_forward_quote(widget):
             window.next_quote(widget, bypass_history=True)

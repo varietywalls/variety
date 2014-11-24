@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import io
-import urlparse
 
 from variety import _, _u
 import subprocess
@@ -36,6 +35,8 @@ import time
 import logging
 import random
 import re
+import urlparse
+import webbrowser
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -100,7 +101,6 @@ class VarietyWindow(Gtk.Window):
 
         self.about = None
         self.preferences_dialog = None
-
         self.ind = None
 
         try:
@@ -679,6 +679,8 @@ class VarietyWindow(Gtk.Window):
                 for i in xrange(5):    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                     self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
+                    self.ind.fast_forward.set_sensitive(self.position > 0)
+
                     self.ind.file_label.set_visible(bool(file))
                     self.ind.file_label.set_sensitive(bool(file))
                     self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("Unknown"))
@@ -725,7 +727,7 @@ class VarietyWindow(Gtk.Window):
                     self.ind.publish_fb.set_sensitive(self.url is not None)
                     self.ind.google_image.set_sensitive(self.image_url is not None)
 
-                    self.ind.pause_resume.set_label(_("Pause") if self.options.change_enabled else _("Resume"))
+                    self.ind.pause_resume.set_label(_("Pause on current") if self.options.change_enabled else _("Resume regular changes"))
 
                     if self.options.quotes_enabled and self.quote is not None:
                         self.ind.quotes.set_visible(True)
@@ -739,7 +741,7 @@ class VarietyWindow(Gtk.Window):
                         if self.quotes_engine:
                             self.ind.prev_quote.set_sensitive(self.quotes_engine.has_previous())
 
-                        self.ind.quotes_pause_resume.set_label(_("Pause") if self.options.quotes_change_enabled else _("Resume"))
+                        self.ind.quotes_pause_resume.set_label(_("Pause on current") if self.options.quotes_change_enabled else _("Resume regular changes"))
 
                         self.ind.quote_favorite.set_sensitive(quote_not_fav)
                         self.ind.quote_favorite.set_label(_("Save to Favorites") if quote_not_fav else _("Already in Favorites"))
@@ -1444,8 +1446,8 @@ class VarietyWindow(Gtk.Window):
                     ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
 
                 return ok
-        except Exception, err:
-            logger.exception("Error in image_ok:")
+        except Exception:
+            logger.exception("Error in image_ok for file %s" % img)
             return False
 
     def size_ok(self, width, height, fuzziness=0):
@@ -1475,14 +1477,14 @@ class VarietyWindow(Gtk.Window):
     def on_show_origin(self, widget=None):
         if self.url:
             logger.info("Opening url: " + self.url)
-            subprocess.call(["xdg-open", self.url])
+            webbrowser.open_new_tab(self.url)
         else:
             self.open_folder()
 
     def on_show_author(self, widget=None):
         if hasattr(self, "author_url") and self.author_url:
             logger.info("Opening url: " + self.author_url)
-            subprocess.call(["xdg-open", self.author_url])
+            webbrowser.open_new_tab(self.author_url)
 
     def get_source(self, file = None):
         if not file:
@@ -1604,7 +1606,7 @@ class VarietyWindow(Gtk.Window):
         try:
             self.banned.add(url)
             with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
-                f.write(_u(self.url) + "\n")
+                f.write(_u(url) + "\n")
         except Exception:
             logger.exception("Could not ban URL")
 
@@ -1905,11 +1907,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         parser.add_option(
             "--pause", action="store_true", dest="pause",
-            help=_("Pause"))
+            help=_("Pause on current image"))
 
         parser.add_option(
             "--resume", action="store_true", dest="resume",
-            help=_("Resume"))
+            help=_("Resume regular image changes"))
 
         parser.add_option(
             "--toggle-pause", action="store_true", dest="toggle_pause",
@@ -2521,22 +2523,22 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def view_quote(self, widget=None):
         if self.quote and self.quote.get("link", None):
-            subprocess.call(["xdg-open", self.quote["link"]])
+            webbrowser.open_new_tab(self.quote["link"])
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
-            subprocess.call(["xdg-open", "http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["quote"].encode('utf8'))])
+            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["quote"].encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:
-            subprocess.call(["xdg-open", "http://google.com/search?q=" +
-                      urllib.quote_plus(self.quote["author"].encode('utf8'))])
+            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def google_image_search(self, widget=None):
         if self.image_url:
-            subprocess.call(["xdg-open", "https://www.google.com/searchbyimage?safe=off&image_url=" +
-                      urllib.quote_plus(self.image_url.encode('utf8'))])
+            url = "https://www.google.com/searchbyimage?safe=off&image_url=" + urllib.quote_plus(self.image_url.encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None
