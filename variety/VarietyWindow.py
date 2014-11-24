@@ -2647,8 +2647,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def google_image_search(self, widget=None):
         if self.image_url:
-            subprocess.call(["xdg-open", "https://www.google.com/searchbyimage?safe=off&image_url=" +
-                      urllib.quote_plus(self.image_url.encode('utf8'))])
+            url = "https://www.google.com/searchbyimage?safe=off&image_url=" + urllib.quote_plus(self.image_url.encode('utf8'))
+            webbrowser.open_new_tab(url)
 
     def toggle_no_effects(self, no_effects):
         self.no_effects_on = self.current if no_effects else None

@@ -20,7 +20,6 @@ import os
 
 import threading
 import logging
-import subprocess
 import webbrowser
 from variety.Util import Util
 from variety.ThumbsWindow import ThumbsWindow
