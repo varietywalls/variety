@@ -120,7 +120,6 @@ fi
 
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
-gsettings set com.canonical.unity-greeter background "$WP"
 if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" ]; then
     gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
