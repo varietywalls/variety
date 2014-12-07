@@ -29,7 +29,7 @@ import pyexiv2
 import urllib
 import urllib2
 from DominantColors import DominantColors
-from gi.repository import Gdk, Pango, GdkPixbuf
+from gi.repository import Gdk, Pango, GdkPixbuf, GLib
 import inspect
 import subprocess
 from variety import _u, _str
@@ -535,8 +535,8 @@ class Util:
     @staticmethod
     def get_xdg_pictures_folder():
         try:
-            return _u(subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0])
-        except Exception:
+            return GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES)
+        except:
             logger.exception("Could not get path to Pictures folder")
             return os.path.expanduser(u'~/Pictures')
 
