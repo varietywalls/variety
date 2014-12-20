@@ -1016,7 +1016,11 @@ class VarietyWindow(Gtk.Window):
                         os.unlink(file)
                         self.download_folder_size -= files[i][1]
                         try:
-                            os.unlink(file + ".txt")
+                            os.unlink(file + '.metadata.json')
+                        except Exception:
+                            pass
+                        try:
+                            os.unlink(file + '.txt')
                         except Exception:
                             pass
                     except Exception:
