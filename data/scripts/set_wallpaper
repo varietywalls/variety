@@ -99,11 +99,17 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
         done
     done
 
-    # Remove all Variety wallpapers, but the current one
-    # Delay cleanup to wait for all changes otherwise you see artifacts
-    sleep 30
+    # Remove all Variety wallpapers, but the current one and the previous one
+    #   as we are calling enlightenment_remote asynchronously, if the previous wallpaper hasn't been
+    #   replaced yet then the wallpaper will get set back to the theme one causing ugly artifacts
+    LAST_WALLPAPER_FILE="$HOME/.config/variety/.enlightenment_last_wallpaper.txt"
 
-    find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
+    if [ -e $LAST_WALLPAPER_FILE ]; then
+        find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v $(cat $LAST_WALLPAPER_FILE) | xargs rm
+    else
+        find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
+    fi
+    echo "$OFILE.edj" > $LAST_WALLPAPER_FILE 
     exit 0
 fi
 
