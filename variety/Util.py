@@ -556,8 +556,8 @@ class Util:
     @staticmethod
     def get_xdg_pictures_folder():
         try:
-            return _u(subprocess.check_output(['xdg-user-dir', 'PICTURES']).split('\n')[0])
-        except Exception:
+            return GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES)
+        except:
             logger.exception("Could not get path to Pictures folder")
             return os.path.expanduser(u'~/Pictures')
 
@@ -665,3 +665,6 @@ class Util:
         args= [callback]+list(args)
         Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT, cb, args)
 
+    @staticmethod
+    def is_unity():
+        return os.getenv('XDG_CURRENT_DESKTOP', '').lower() == 'unity'

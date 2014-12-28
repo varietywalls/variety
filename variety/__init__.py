@@ -19,6 +19,8 @@ gettext.textdomain('variety')
 
 
 def _u(s):
+    if s is None:
+        return s
     if isinstance(s, unicode):
         return s
     else:
@@ -26,6 +28,8 @@ def _u(s):
 
 
 def _str(s):
+    if s is None:
+        return s
     if isinstance(s, unicode):
         return s.encode('utf8')
     else:

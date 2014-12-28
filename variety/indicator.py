@@ -44,17 +44,18 @@ class Indicator:
     def create_menu(self, window):
         self.menu = Gtk.Menu()
 
-        self.next_main = Gtk.MenuItem(_("_Next"))
-        self.next_main.set_use_underline(True)
-        self.next_main.connect("activate", window.next_wallpaper)
-        self.menu.append(self.next_main)
+        if not Util.is_unity():
+            self.next_main = Gtk.MenuItem(_("_Next"))
+            self.next_main.set_use_underline(True)
+            self.next_main.connect("activate", window.next_wallpaper)
+            self.menu.append(self.next_main)
 
-        self.prev_main = Gtk.MenuItem(_("_Previous"))
-        self.prev_main.set_use_underline(True)
-        self.prev_main.connect("activate", window.prev_wallpaper)
-        self.menu.append(self.prev_main)
+            self.prev_main = Gtk.MenuItem(_("_Previous"))
+            self.prev_main.set_use_underline(True)
+            self.prev_main.connect("activate", window.prev_wallpaper)
+            self.menu.append(self.prev_main)
 
-        self.menu.append(Gtk.SeparatorMenuItem.new())
+            self.menu.append(Gtk.SeparatorMenuItem.new())
 
         self.file_label = Gtk.MenuItem(_("Current desktop wallpaper"))
         self.file_label.connect("activate", window.open_file)
