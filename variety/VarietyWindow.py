@@ -970,14 +970,19 @@ class VarietyWindow(Gtk.Window):
         if not os.path.exists(dl.target_folder):
             dl.download_one()
 
+    def register_downloaded_file(self, file):
+        if not self.downloaded or self.downloaded[0] != file:
+            self.downloaded.insert(0, file)
+            self.downloaded = self.downloaded[:100]
+            self.refresh_thumbs_downloads(file)
+
+            if file.startswith(self.options.download_folder):
+                self.download_folder_size += os.path.getsize(file)
+
     def download_one_from(self, downloader):
         file = downloader.download_one()
         if file:
-            if not self.downloaded or self.downloaded[0] != file:
-                self.downloaded.insert(0, file)
-                self.downloaded = self.downloaded[:100]
-                self.refresh_thumbs_downloads(file)
-                self.download_folder_size += os.path.getsize(file)
+            self.register_downloaded_file(file)
 
             if downloader.is_refresher or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
@@ -2103,8 +2108,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                         file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
 
                     if file:
-                        self.downloaded.insert(0, file)
-                        self.refresh_thumbs_downloads(file)
+                        self.register_downloaded_file(file)
                         with self.prepared_lock:
                             logger.info("Adding fetched file %s to used queue immediately after current file" % file)
 
