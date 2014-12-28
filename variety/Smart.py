@@ -572,6 +572,8 @@ class Smart:
                             if not path:
                                 raise Exception("Fetch failed")
 
+                            self.parent.register_downloaded_file(path)
+
                             syncdb.remote[imageid] = {"success": True}
                             syncdb.local[path] = {'sourceURL': image_data["origin_url"]}
 
