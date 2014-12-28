@@ -552,3 +552,7 @@ class Util:
                 yield f(element)
             except Exception:
                 continue
+
+    @staticmethod
+    def is_unity():
+        return os.getenv('XDG_CURRENT_DESKTOP', '').lower() == 'unity'

@@ -679,7 +679,8 @@ class VarietyWindow(Gtk.Window):
 
                 for i in xrange(5):    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
-                    self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
+                    if getattr(self.ind, 'prev_main', None):
+                        self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
                     self.ind.fast_forward.set_sensitive(self.position > 0)
 
                     self.ind.file_label.set_visible(bool(file))
