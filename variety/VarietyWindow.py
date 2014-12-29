@@ -2232,11 +2232,24 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 GObject.idle_add(_add)
 
             elif command == 'set-wallpaper':
-                image = ImageFetcher.fetch(args["image_url"][0], self.options.fetched_folder,
-                                           origin_url=args["origin_url"][0],
-                                           source_type=args.get("source_type", [None])[0],
-                                           source_location=args.get("source_location", [None])[0],
-                                           source_name=args.get("source_name", [None])[0],
+                if "id" in args:
+                    image_data = Util.fetch_json(Smart.API_URL + '/image/' + args["id"][0])
+                    image_url, origin_url, source_type, source_location, source_name, extra_metadata = \
+                        Smart.extract_fetch_data(image_data)
+                else:
+                    image_url = args["image_url"][0]
+                    origin_url = args["origin_url"][0]
+                    source_type = args.get("source_type", [None])[0]
+                    source_location = args.get("source_location", [None])[0]
+                    source_name = args.get("source_name", [None])[0]
+                    extra_metadata = {}
+
+                image = ImageFetcher.fetch(image_url, self.options.fetched_folder,
+                                           origin_url=origin_url,
+                                           source_type=source_type,
+                                           source_location=source_location,
+                                           source_name=source_name,
+                                           extra_metadata=extra_metadata,
                                            progress_reporter=self.show_notification,
                                            verbose=True)
                 if image:

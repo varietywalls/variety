@@ -47,6 +47,7 @@ class ImageFetcher:
     @staticmethod
     def fetch(url, to_folder, origin_url=None,
               source_type=None, source_location=None, source_name=None,
+              extra_metadata={},
               progress_reporter=lambda a, b: None, verbose=True):
         reported = verbose
         try:
@@ -124,6 +125,7 @@ class ImageFetcher:
                         "imageURL": url}
             if source_location:
                 metadata["sourceLocation"] = source_location
+            metadata.update(extra_metadata)
             Util.write_metadata(filename, metadata)
 
             logger.info("Fetched %s to %s." % (url, filename))

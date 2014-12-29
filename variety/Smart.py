@@ -635,3 +635,28 @@ class Smart:
 
         else:
             _do_login()
+
+    @staticmethod
+    def extract_fetch_data(json_image_data):
+        image = AttrDict(json_image_data)
+        origin_url = image.origin_url
+        image_url, source_type, source_location, source_name, extra_metadata = None, None, None, None, {}
+
+        if image.download_url:
+            image_url = image.download_url
+
+        if image.sources:
+            source = image.sources.values()[0]
+            source_type = source[0]
+            source_location = source[1]
+            source_name = image.origin_name
+
+        if image.author and image.author_url:
+            extra_metadata['author'] = image.author
+            extra_metadata['authorURL'] = image.author_url
+
+        for key in ("keywords", "headline", "description", "sfw_rating"):
+            if key in image and image[key] is not None:
+                extra_metadata[key] = image[key]
+
+        return image_url, origin_url, source_type, source_location, source_name, extra_metadata
