@@ -651,7 +651,7 @@ class Smart:
             source = image.sources.values()[0]
             source_type = source[0]
             source_location = source[1]
-            source_name = image.origin_name
+            source_name = image.origin_name or source[2]
 
         if image.author and image.author_url:
             extra_metadata['author'] = image.author
@@ -663,7 +663,7 @@ class Smart:
             extra_metadata['headline'] = image.headline
         if image.description:
             extra_metadata['description'] = image.description
-        if image.sfw_rating:
+        if "sfw_rating" in image and image.sfw_rating is not None:
             extra_metadata['sfwRating'] = image.sfw_rating
 
         return image_url, origin_url, source_type, source_location, source_name, extra_metadata
