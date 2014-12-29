@@ -560,14 +560,16 @@ class Smart:
 
                             prefer_source_id = server_data["favorite"][imageid].get("source", None)
                             source = image_data.get("sources", {}).get(prefer_source_id, None)
-                            if not source:
-                                source = image_data["sources"].values()[0] if image_data.get("sources", {}) else None
 
-                            path = ImageFetcher.fetch(image_data["download_url"], self.parent.options.favorites_folder,
-                                               origin_url=image_data["origin_url"],
-                                               source_type=source[0] if source else None,
-                                               source_location=source[1] if source else None,
-                                               source_name=source[2] if source else None,
+                            image_url, origin_url, source_type, source_location, source_name, extra_metadata = \
+                                Smart.extract_fetch_data(image_data)
+
+                            path = ImageFetcher.fetch(image_url, self.parent.options.favorites_folder,
+                                               origin_url=origin_url,
+                                               source_type=source[0] if source else source_type,
+                                               source_location=source[1] if source else source_location,
+                                               source_name=source[2] if source else source_name,
+                                               extra_metadata=extra_metadata,
                                                verbose=False)
                             if not path:
                                 raise Exception("Fetch failed")
@@ -655,8 +657,13 @@ class Smart:
             extra_metadata['author'] = image.author
             extra_metadata['authorURL'] = image.author_url
 
-        for key in ("keywords", "headline", "description", "sfw_rating"):
-            if key in image and image[key] is not None:
-                extra_metadata[key] = image[key]
+        if image.keywords and isinstance(image.keywords, list):
+            extra_metadata['keywords'] = image.keywords
+        if image.headline:
+            extra_metadata['headline'] = image.headline
+        if image.description:
+            extra_metadata['description'] = image.description
+        if image.sfw_rating:
+            extra_metadata['sfwRating'] = image.sfw_rating
 
         return image_url, origin_url, source_type, source_location, source_name, extra_metadata
