@@ -316,7 +316,13 @@ class Smart:
         self.register_dialog = SmartRegisterDialog()
 
         def _register_link(*args):
-            self.load_user(create_if_missing=True)
+            try:
+                self.load_user(create_if_missing=True)
+            except IOError:
+                self.parent.show_notification(_('Could not connect'),
+                                              _('Oosp, we could not connect to VRTY.ORG. Server might be down.\n\n'
+                                                'Please wait a couple of minutes and try again or register later '
+                                                'from the "Sync and social" page in Preferences.'))
             webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
         self.register_dialog.ui.btn_register.connect('activate-link', _register_link)
 
