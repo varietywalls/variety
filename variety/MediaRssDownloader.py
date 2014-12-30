@@ -154,7 +154,12 @@ class MediaRssDownloader(Downloader.Downloader):
                     pass
 
                 try:
-                    extra_metadata['author'] = item.find("{0}credit".format(MEDIA_NS)).text
+                    author = item.find("{0}author".format(VARIETY_NS))
+                    if author is not None:
+                        extra_metadata['author'] = author.attrib.get('name', None)
+                        extra_metadata['authorURL'] = author.attrib.get('url', None)
+                    else:
+                        extra_metadata['author'] = item.find("{0}credit".format(MEDIA_NS)).text
                 except:
                     pass
 
