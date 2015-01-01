@@ -58,6 +58,7 @@ class Smart:
     def __init__(self, parent):
         self.parent = parent
         self.user = None
+        self.load_user_lock = threading.Lock()
 
     def reload(self):
         if not self.is_smart_enabled():
@@ -92,30 +93,35 @@ class Smart:
                self.parent.previous_options.favorites_folder != self.parent.options.favorites_folder
 
     def load_user(self, create_if_missing=True, force_reload=False):
-        if not self.user or force_reload:
-            self.user = None
-            try:
-                with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), encoding='utf8') as f:
-                    data = f.read()
-                    self.user = AttrDict(json.loads(data))
-                    if self.parent.preferences_dialog:
-                        self.parent.preferences_dialog.on_smart_user_updated()
-                    logger.info('smart: Loaded smart user: %s' % self.user["id"])
-            except IOError:
-                if create_if_missing:
-                    logger.info('smart: Missing smart_user.json, creating new smart user')
-                    self.new_user()
+        with self.load_user_lock:
+            if not self.user or force_reload:
+                self.user = None
+                try:
+                    with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), encoding='utf8') as f:
+                        data = f.read()
+                        self.user = AttrDict(json.loads(data))
+                        if self.parent.preferences_dialog:
+                            self.parent.preferences_dialog.on_smart_user_updated()
+                        logger.info('smart: Loaded smart user: %s' % self.user["id"])
+                except IOError:
+                    if create_if_missing:
+                        logger.info('smart: Missing smart_user.json, creating new smart user')
+                        self.new_user()
 
     def new_user(self):
-        logger.info('smart: Creating new smart user')
+        try:
+            logger.info('smart: Creating new smart user')
 
-        self._reset_sync()
+            self._reset_sync()
 
-        self.user = Util.fetch_json(Smart.API_URL + '/newuser')
-        self.save_user()
-        if self.parent.preferences_dialog:
-            GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
-        logger.info('smart: Created smart user: %s' % self.user["id"])
+            self.user = Util.fetch_json(Smart.API_URL + '/newuser')
+            self.save_user()
+            if self.parent.preferences_dialog:
+                GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
+            logger.info('smart: Created smart user: %s' % self.user["id"])
+        except:
+            logging.error('smart: Error creating new smart user')
+            raise
 
     def save_user(self):
         with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w', encoding='utf8') as f:
@@ -316,14 +322,26 @@ class Smart:
         self.register_dialog = SmartRegisterDialog()
 
         def _register_link(*args):
-            try:
-                self.load_user(create_if_missing=True)
-            except IOError:
-                self.parent.show_notification(_('Could not connect'),
-                                              _('Oosp, we could not connect to VRTY.ORG. Server might be down.\n\n'
-                                                'Please wait a couple of minutes and try again or register later '
-                                                'from the "Sync and social" page in Preferences.'))
-            webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
+            self.register_dialog.ui.register_error.set_visible(False)
+            self.register_dialog.ui.register_spinner.set_visible(True)
+            self.register_dialog.ui.register_spinner.start()
+
+            def _register():
+                error = False
+                try:
+                    self.load_user(create_if_missing=True)
+                    webbrowser.open_new_tab(self.get_register_url('variety_register_dialog'))
+                except IOError:
+                    error = True
+                finally:
+                    def _stop_spinner():
+                        self.register_dialog.ui.register_spinner.set_visible(False)
+                        self.register_dialog.ui.register_spinner.stop()
+                        self.register_dialog.ui.register_error.set_visible(error)
+                    GObject.idle_add(_stop_spinner)
+
+            threading.Timer(1, _register).start()
+
         self.register_dialog.ui.btn_register.connect('activate-link', _register_link)
 
         self.parent.dialogs.append(self.register_dialog)

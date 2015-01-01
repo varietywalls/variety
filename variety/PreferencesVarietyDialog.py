@@ -1002,7 +1002,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED,):
                     r[0] = False
         elif not self.parent.smart.user:
-            self.parent.smart.load_user(create_if_missing=True)
+            def _f():
+                self.parent.smart.load_user(create_if_missing=True)
+            threading.Timer(1, _f).start()
 
     def on_destroy(self, widget = None):
         if hasattr(self, "dialog") and self.dialog:
@@ -1145,6 +1147,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.sync_enabled.set_active(self.options.sync_enabled)
 
         if self.parent.smart.user:
+            self.ui.box_smart_connecting.set_visible(False)
             self.ui.box_smart_user.set_visible(True)
             username = self.parent.smart.user.get("username")
             self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s">%s</a>' % (
@@ -1153,4 +1156,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.btn_login_register.set_label(_('Login or register') if not bool(username) else _('Switch user'))
             self.ui.smart_register_note.set_visible(not bool(username))
         else:
-            self.ui.box_smart_user.set_visible(False)
+            if not self.ui.smart_enabled.get_active():
+                self.ui.box_smart_connecting.set_visible(False)
+                self.ui.box_smart_user.set_visible(False)
+            else:
+                def _create_user():
+                    def _start():
+                        self.ui.smart_spinner.set_visible(True)
+                        self.ui.smart_spinner.start()
+                        self.ui.smart_connect_error.set_visible(False)
+                        self.ui.box_smart_connecting.set_visible(True)
+                    GObject.idle_add(_start)
+
+                    try:
+                        self.parent.smart.load_user(create_if_missing=True)
+                        self.on_smart_user_updated()
+                    except IOError:
+                        def _fail():
+                            self.ui.smart_spinner.set_visible(False)
+                            self.ui.smart_connect_error.set_visible(True)
+                        GObject.idle_add(_fail)
+                threading.Timer(1, _create_user).start()
+
