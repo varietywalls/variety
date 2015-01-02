@@ -63,6 +63,7 @@ from variety.Util import Util, throttle, debounce
 from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
+from variety.Smart import Smart
 from variety import indicator
 
 
@@ -71,7 +72,7 @@ DL_FOLDER_FILE = ".variety_download_folder"
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-0421"
+    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-050"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -158,6 +159,8 @@ class VarietyWindow(Gtk.Window):
         self.image_count = -1
         self.image_colors_cache = {}
 
+        self.smart = Smart(self)
+
         self.reload_config()
         self.load_last_change_time()
 
@@ -172,7 +175,10 @@ class VarietyWindow(Gtk.Window):
 
         self.first_run()
 
-        GObject.idle_add(self.create_preferences_dialog)
+        def _delayed():
+            self.create_preferences_dialog()
+            self.smart.reload()
+        GObject.timeout_add(1000, _delayed)
 
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
@@ -449,6 +455,9 @@ class VarietyWindow(Gtk.Window):
         else:
             threading.Timer(0.1, self.refresh_texts).start()
 
+        if self.preferences_dialog:
+            self.smart.reload()
+
         if self.events:
             for e in self.events:
                 e.set()
@@ -506,6 +515,13 @@ class VarietyWindow(Gtk.Window):
             return MediaRssDownloader(self, location)
         elif type == Options.SourceType.PANORAMIO:
             return PanoramioDownloader(self, location)
+        elif type == Options.SourceType.RECOMMENDED:
+            if self.smart.user:
+                return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
+            else:
+                raise Exception('No Smart user yet, not a problem')
+        elif type == Options.SourceType.LATEST:
+            return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
             raise Exception("Uknown downloader type")
 
@@ -1594,6 +1610,8 @@ class VarietyWindow(Gtk.Window):
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
+                self.smart.report_file(file, 'trash', async=False)
+
                 command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
                 logger.info("Running trash command %s" % command)
                 result = os.system(command.encode('utf8'))
@@ -1644,6 +1662,7 @@ class VarietyWindow(Gtk.Window):
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
+                self.smart.report_file(file, 'favorite', async=True)
         except Exception:
             logger.exception("Exception in copy_to_favorites")
 
@@ -1668,6 +1687,8 @@ class VarietyWindow(Gtk.Window):
                         if self.no_effects_on == file:
                             self.no_effects_on = new_file
                         self.set_wp_throttled(new_file)
+
+                    self.smart.report_file(new_file, 'favorite', async=True)
         except Exception:
             logger.exception("Exception in move_to_favorites")
 
@@ -1732,13 +1753,48 @@ class VarietyWindow(Gtk.Window):
             Util.start_force_exit_thread(15)
             GObject.idle_add(Gtk.main_quit)
 
+    def show_usage_stats_notice(self):
+        if not self.options.stats_notice_shown and self.options.stats_enabled:
+            self.options.stats_notice_shown = True
+            self.options.write()
+            self.show_notification(
+                _('Anonymous usage statistics'),
+                _('Variety collects anonymous usage statistics. \n'
+                  'These help us make it better and are not shared with anyone. \n'
+                  'To read more or turn them off, go to "Sync and social"'))
+
     def first_run(self):
-        fr_file = os.path.join(self.config_folder, ".firstrun")
-        if not os.path.exists(fr_file):
-            with open(fr_file, "w") as f:
-                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-            self.create_autostart_entry()
-            self.show_welcome_dialog()
+        def _go():
+            fr_file = os.path.join(self.config_folder, ".firstrun")
+            first_run = not os.path.exists(fr_file)
+            if first_run:
+                self.show_welcome_dialog()
+                if not self.running:
+                    return
+
+            if not self.options.smart_notice_shown:
+                self.smart.show_notice_dialog()
+                if not self.running:
+                    return
+
+            if first_run:
+                with open(fr_file, "w") as f:
+                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
+            if self.options.smart_enabled and not self.options.smart_register_shown:
+                self.smart.show_register_dialog()
+                if not self.running:
+                    return
+
+            if first_run:
+                self.create_autostart_entry()
+                self.on_mnu_preferences_activate()
+            else:
+                self.show_usage_stats_notice()
+
+            self.smart.sync()
+
+        Util.add_mainloop_task(_go)
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
@@ -1837,7 +1893,6 @@ class VarietyWindow(Gtk.Window):
         def _on_continue(button):
             dialog.destroy()
             self.dialogs.remove(dialog)
-            self.on_mnu_preferences_activate(button)
 
         dialog.ui.continue_button.connect("clicked", _on_continue)
         self.dialogs.append(dialog)
@@ -1972,6 +2027,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                    "Example: 'variety --set-option icon Dark --set-option clock_enabled True'. "
                    "USE WITH CAUTION: You are changing the settings file directly in an unguarded way."))
 
+        parser.add_option(
+            "--debug-smart", action="store_true", dest="debug_smart",
+            help="Debug VRTY.ORG and sync functionality by using local server")
+
         options, args = parser.parse_args(arguments)
 
         if report_errors:
@@ -2002,7 +2061,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if args:
                 logger.info("Treating free arguments as urls: " + str(args))
-                self.process_urls(args)
+                if not initial_run:
+                    self.process_urls(args)
+                else:
+                    def _process_urls():
+                        self.process_urls(args)
+                    GObject.timeout_add(5000, _process_urls)
+
 
             if options.set_options:
                 try:
@@ -2105,7 +2170,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                                local_name + "\n" + _("Press Next to see it"),
                                                icon=file)
                     else:
-                        file = ImageFetcher.fetch(self, url, self.options.fetched_folder, verbose)
+                        file = ImageFetcher.fetch(url, self.options.fetched_folder,
+                                                  progress_reporter=self.show_notification, verbose=verbose)
+                        if file:
+                            self.show_notification(_("Fetched"), os.path.basename(file) + "\n" + _("Press Next to see it"), icon=file)
 
                     if file:
                         self.register_downloaded_file(file)
@@ -2131,24 +2199,80 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         fetch_thread.start()
 
     def process_variety_url(self, url):
-        logger.info('Processing variety url %s' % url)
+        try:
+            logger.info('Processing variety url %s' % url)
 
-        # make the url urlparse-friendly:
-        url = url.replace('variety://', 'http://')
-        url = url.replace('vrty://', 'http://')
+            # make the url urlparse-friendly:
+            url = url.replace('variety://', 'http://')
+            url = url.replace('vrty://', 'http://')
 
-        parts = urlparse.urlparse(url)
-        command = parts.netloc
-        args = urlparse.parse_qs(parts.query)
+            parts = urlparse.urlparse(url)
+            command = parts.netloc
+            args = urlparse.parse_qs(parts.query)
 
-        if command == 'facebook-auth':
-            if hasattr(self, 'facebook_helper') and self.facebook_helper:
-                fragments = urlparse.parse_qs(parts.fragment)
-                args.update(fragments)
-                self.facebook_helper.on_facebook_auth(args)
+            if command == 'facebook-auth':
+                if hasattr(self, 'facebook_helper') and self.facebook_helper:
+                    fragments = urlparse.parse_qs(parts.fragment)
+                    args.update(fragments)
+                    self.facebook_helper.on_facebook_auth(args)
 
-        else:
-            self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
+            elif command == 'add-source':
+                source_type = args['type'][0].lower()
+                if not source_type in Options.SourceType.str_to_type:
+                    self.show_notification(_('Unsupported source type'),
+                                           _('Are you running the most recent version of Variety?'))
+                    return
+                def _add():
+                    newly_added = self.preferences_dialog.add_sources(Options.str_to_type(source_type), [args['location'][0]])
+                    self.preferences_dialog.delayed_apply()
+                    if newly_added == 1:
+                        self.show_notification(_('New image source added'))
+                    else:
+                        self.show_notification(_('Image source already exists, enabling it'))
+                GObject.idle_add(_add)
+
+            elif command == 'set-wallpaper':
+                if "id" in args:
+                    image_data = Util.fetch_json(Smart.API_URL + '/image/' + args["id"][0])
+                    image_url, origin_url, source_type, source_location, source_name, extra_metadata = \
+                        Smart.extract_fetch_data(image_data)
+                else:
+                    image_url = args["image_url"][0]
+                    origin_url = args["origin_url"][0]
+                    source_type = args.get("source_type", [None])[0]
+                    source_location = args.get("source_location", [None])[0]
+                    source_name = args.get("source_name", [None])[0]
+                    extra_metadata = {}
+
+                image = ImageFetcher.fetch(image_url, self.options.fetched_folder,
+                                           origin_url=origin_url,
+                                           source_type=source_type,
+                                           source_location=source_location,
+                                           source_name=source_name,
+                                           extra_metadata=extra_metadata,
+                                           progress_reporter=self.show_notification,
+                                           verbose=True)
+                if image:
+                    self.register_downloaded_file(image)
+                    self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
+                    self.set_wallpaper(image, False)
+
+            elif command == 'smart-login':
+                userid = args["id"][0]
+                username = args["username"][0]
+                authkey = args["authkey"][0]
+                self.smart.process_login_request(userid, username, authkey)
+
+            elif command == 'test-variety-link':
+                self.show_notification(_('It works!'), _('Yay, Variety links work. Great!'))
+
+
+            else:
+                self.show_notification(_('Unsupported command'), _('Are you running the most recent version of Variety?'))
+        except:
+            self.show_notification(_('Could not process the given variety:// URL'),
+                                   _('Run with logging enabled to see details'))
+            logger.exception('Exception in process_variety_url')
 
     def get_desktop_wallpaper(self):
         try:

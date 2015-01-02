@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_wallhaven_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_wallhaven_dialog 1.0 -->
   <object class="AddWallhavenDialog" id="add_wallhaven_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>

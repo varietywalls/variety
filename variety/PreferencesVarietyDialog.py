@@ -16,7 +16,7 @@
 
 # This is the preferences dialog.
 
-from gi.repository import Gio, Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
 import io
 import stat
 
@@ -36,6 +36,8 @@ from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
 from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
+from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
+from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u
@@ -55,6 +57,8 @@ UNREMOVEABLE_TYPES = [
     Options.SourceType.DESKTOPPR,
     Options.SourceType.APOD,
     Options.SourceType.EARTH,
+    Options.SourceType.RECOMMENDED,
+    Options.SourceType.LATEST,
 ]
 
 EDITABLE_TYPES = [
@@ -93,6 +97,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
         self.reload()
 
+    def fill_smart_profile_url(self, msg):
+        if '%SMART_PROFILE_URL%' in msg:
+            profile_url = self.parent.smart.get_profile_url()
+            msg = msg.replace('%SMART_PROFILE_URL%', profile_url) if profile_url else ""
+        return msg
+
     def update_status_message(self):
         msg = ""
         if self.parent.server_options:
@@ -103,10 +113,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     msg = msg_dict[ver].strip()
                 elif "*" in msg_dict:
                     msg = msg_dict["*"].strip()
+
+                msg = self.fill_smart_profile_url(msg)
             except Exception:
                 logger.exception("Could not parse status message")
+                msg = ""
 
-        logger.info("Showing status message: %s" % msg)
         self.set_status_message(msg)
 
     def set_status_message(self, msg):
@@ -168,6 +180,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.favorites_operations.set_active(3)
 
             self.favorites_operations = self.options.favorites_operations
+
+            self.ui.smart_enabled.set_active(self.options.smart_enabled)
+            self.ui.sync_enabled.set_active(self.options.sync_enabled)
+            self.ui.stats_enabled.set_active(self.options.stats_enabled)
 
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
@@ -259,6 +275,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 logger.warning("Missing ui/changes.txt file")
 
+            self.on_smart_user_updated()
+
             self.on_change_enabled_toggled()
             self.on_download_enabled_toggled()
             self.on_sources_selection_changed()
@@ -275,7 +293,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.build_add_button_menu()
 
             self.update_status_message()
-            self.dialog = None
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
             def _finish_loading():
@@ -384,6 +401,24 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     _("World Sunlight Map enabled"),
                     _("Using the World Sunlight Map requires both downloading and changing "
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
+
+        # special case when enabling the Recommended or Latest downloader:
+        elif row[0] and row[1] in (Options.type_to_str(Options.SourceType.RECOMMENDED),) and \
+                not self.parent.options.smart_enabled:
+
+            row[0] = False
+            self.dialog = SmartFeaturesConfirmationDialog()
+            def _on_ok(button):
+                self.parent.options.smart_enabled = self.dialog.ui.smart_enabled.get_active()
+                self.parent.options.write()
+                self.ui.smart_enabled.set_active(self.parent.options.smart_enabled)
+                if self.parent.options.smart_enabled:
+                    row[0] = True
+
+            self.dialog.ui.btn_ok.connect("clicked", _on_ok)
+            self.dialog.run()
+            self.dialog.destroy()
+            self.dialog = None
 
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:
@@ -498,19 +533,25 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 else:
                     existing[self.model_row_to_source(r)[2]] = r, i
 
+        newly_added = 0
         for f in locations:
             if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
+            elif type in UNREMOVEABLE_TYPES:
+                f = list(existing.keys())[0] if existing else None  # reuse the already existing location, do not add another one
 
             if not f in existing:
                 self.ui.sources.get_model().append(self.source_to_model_row([True, type, f]))
                 self.ui.sources.get_selection().select_path(len(self.ui.sources.get_model()) - 1)
                 self.ui.sources.scroll_to_cell(len(self.ui.sources.get_model()) - 1, None, False, 0, 0)
+                newly_added += 1
             else:
                 logger.info("Source already exists, activating it: " + f)
                 existing[f][0][0] = True
                 self.ui.sources.get_selection().select_path(existing[f][1])
                 self.ui.sources.scroll_to_cell(existing[f][1], None, False, 0, 0)
+
+        return newly_added
 
     def focus_source_and_image(self, source, image):
         self.ui.notebook.set_current_page(0)
@@ -712,7 +753,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog.set_transient_for(self)
         response = self.dialog.run()
         if response != Gtk.ResponseType.OK:
-            self.dialog.destroy()
+            if self.dialog:
+                self.dialog.destroy()
             self.dialog = None
 
     def on_add_dialog_okay(self, source_type, location, edited_row):
@@ -730,6 +772,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.hide()
         self.parent.trigger_download()
         self.on_destroy()
+
+        self.parent.show_usage_stats_notice()
 
     def on_save_clicked(self, widget):
         self.delayed_apply()
@@ -815,6 +859,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             elif self.ui.favorites_operations.get_active() == 3:
                 # will be set in the favops editor dialog
                 pass
+
+            self.options.smart_enabled = self.ui.smart_enabled.get_active()
+            if self.ui.sync_enabled.get_sensitive():
+                self.options.sync_enabled = self.ui.sync_enabled.get_active()
+            self.options.stats_enabled = self.ui.stats_enabled.get_active()
 
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -941,8 +990,24 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
 
+    def on_smart_enabled_toggled(self, widget=None):
+        self.on_smart_user_updated()
+        if not self.ui.smart_enabled.get_active():
+            for s in self.parent.options.sources:
+                if s[1] in (Options.SourceType.RECOMMENDED,) and s[0]:
+                    self.parent.show_notification(_("Recommended images source disabled"))
+                    s[0] = False
+                    self.parent.options.write()
+            for i, r in enumerate(self.ui.sources.get_model()):
+                if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED,):
+                    r[0] = False
+        elif not self.parent.smart.user:
+            def _f():
+                self.parent.smart.load_user(create_if_missing=True)
+            threading.Timer(1, _f).start()
+
     def on_destroy(self, widget = None):
-        if self.dialog:
+        if hasattr(self, "dialog") and self.dialog:
             try:
                 self.dialog.destroy()
             except Exception:
@@ -1055,3 +1120,61 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 _("Could not adjust permissions"),
                 _('You may try manually running this command:\nsudo chmod %s "%s"') % (mode, folder))
         self.on_copyto_changed()
+
+    def on_btn_login_register_clicked(self, widget=None):
+        if hasattr(self, 'dialog') and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
+            return
+        login_dialog = LoginOrRegisterDialog()
+        login_dialog.set_smart(self.parent.smart)
+        self.show_dialog(login_dialog)
+
+    def close_login_register_dialog(self):
+        if hasattr(self, "dialog") and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
+            def _close():
+                self.dialog.destroy()
+                self.dialog = None
+            GObject.idle_add(_close)
+
+    def on_smart_user_updated(self):
+        self.update_status_message()
+
+        sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart.is_registered()
+        self.ui.sync_enabled.set_sensitive(sync_allowed)
+        self.ui.sync_login_note.set_visible(not sync_allowed)
+        if not sync_allowed:
+            self.ui.sync_enabled.set_active(False)
+        else:
+            self.ui.sync_enabled.set_active(self.options.sync_enabled)
+
+        if self.parent.smart.user:
+            self.ui.box_smart_connecting.set_visible(False)
+            self.ui.box_smart_user.set_visible(True)
+            username = self.parent.smart.user.get("username")
+            self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s">%s</a>' % (
+                    self.parent.smart.get_profile_url(),
+                    username or _('Anonymous')))
+            self.ui.btn_login_register.set_label(_('Login or register') if not bool(username) else _('Switch user'))
+            self.ui.smart_register_note.set_visible(not bool(username))
+        else:
+            if not self.ui.smart_enabled.get_active():
+                self.ui.box_smart_connecting.set_visible(False)
+                self.ui.box_smart_user.set_visible(False)
+            else:
+                def _create_user():
+                    def _start():
+                        self.ui.smart_spinner.set_visible(True)
+                        self.ui.smart_spinner.start()
+                        self.ui.smart_connect_error.set_visible(False)
+                        self.ui.box_smart_connecting.set_visible(True)
+                    GObject.idle_add(_start)
+
+                    try:
+                        self.parent.smart.load_user(create_if_missing=True)
+                        self.on_smart_user_updated()
+                    except IOError:
+                        def _fail():
+                            self.ui.smart_spinner.set_visible(False)
+                            self.ui.smart_connect_error.set_visible(True)
+                        GObject.idle_add(_fail)
+                threading.Timer(1, _create_user).start()
+

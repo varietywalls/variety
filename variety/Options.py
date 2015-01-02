@@ -46,6 +46,8 @@ class Options:
         PANORAMIO = 12
         WALLHAVEN = 13
         REDDIT = 14
+        RECOMMENDED = 19
+        LATEST = 20
 
         type_to_str = {
             FAVORITES: "favorites",
@@ -62,11 +64,14 @@ class Options:
             PANORAMIO: "panoramio",
             WALLHAVEN: "wallhaven",
             REDDIT: "reddit",
+            RECOMMENDED: "recommended",
+            LATEST: "latest",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH, PANORAMIO, WALLHAVEN, REDDIT]
+        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
+                    PANORAMIO, WALLHAVEN, REDDIT, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0
@@ -217,6 +222,36 @@ class Options:
                 pass
 
             try:
+                self.smart_notice_shown = config["smart_notice_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.smart_register_shown = config["smart_register_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.stats_notice_shown = config["stats_notice_shown"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.smart_enabled = config["smart_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.sync_enabled = config["sync_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.stats_enabled = config["stats_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.facebook_show_dialog = config["facebook_show_dialog"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -359,6 +394,10 @@ class Options:
 
             self.parse_autosources()
 
+            for s in self.sources:
+                if s[1] in (Options.SourceType.RECOMMENDED,) and not self.smart_enabled:
+                    s[0] = False
+
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
@@ -475,6 +514,14 @@ class Options:
         self.min_rating_enabled = False
         self.min_rating = 4
 
+        self.smart_notice_shown = False
+        self.smart_register_shown = False
+        self.stats_notice_shown = False
+
+        self.smart_enabled = True
+        self.sync_enabled = True
+        self.stats_enabled = True
+
         self.facebook_show_dialog = True
         self.facebook_message = ""
 
@@ -563,6 +610,14 @@ class Options:
             config["lightness_mode"] = str(self.lightness_mode)
             config["min_rating_enabled"] = str(self.min_rating_enabled)
             config["min_rating"] = str(self.min_rating)
+
+            config["smart_notice_shown"] = str(self.smart_notice_shown)
+            config["smart_register_shown"] = str(self.smart_register_shown)
+            config["stats_notice_shown"] = str(self.stats_notice_shown)
+
+            config["smart_enabled"] = str(self.smart_enabled)
+            config["sync_enabled"] = str(self.sync_enabled)
+            config["stats_enabled"] = str(self.stats_enabled)
 
             config["facebook_show_dialog"] = str(self.facebook_show_dialog)
             config["facebook_message"] = self.facebook_message

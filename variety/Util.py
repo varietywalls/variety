@@ -28,15 +28,31 @@ import time
 import pyexiv2
 import urllib
 import urllib2
+from urlparse import urlparse
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib
 import inspect
 import subprocess
+import platform
 from variety import _u, _str
+
 
 VARIETY_INFO = "Downloaded by Variety wallpaper changer, http://peterlevi.com/variety"
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu/12.04 Chromium/25.0.1364.172 Chrome/25.0.1364.172 Safari/537.22"
+
+SOURCE_NAME_TO_TYPE = {
+    'wallbase.cc': 'wallbase',
+    'wallhaven.cc': 'wallhaven',
+    'wallpapers.net': 'wn',
+    'desktoppr.co': 'desktoppr',
+    'nasa astro pic of the day': 'apod',
+    'opentopia.com': 'earth',
+    'fetched': 'fetched',
+    'recommended by variety': 'recommended',
+    'flickr': 'flickr',
+    'media rss': 'mediarss',
+}
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -59,6 +75,11 @@ class LogMethodCalls(object):
         for attr in "__module__", "__name__", "__doc__":
             setattr(logcall, attr, getattr(self.func, attr))
         return logcall
+
+
+class HeadRequest(urllib2.Request):
+    def get_method(self):
+        return "HEAD"
 
 
 def debounce(seconds):
@@ -394,13 +415,13 @@ class Util:
         return f
 
     @staticmethod
-    def urlopen(url, data=None):
+    def urlopen(url, data=None, head_request=False):
         if url.startswith('//'):
             url = 'http:' + url
-        request = urllib2.Request(url)
+        request = urllib2.Request(url) if not head_request else HeadRequest(url)
         request.add_header('User-Agent', USER_AGENT)
         request.add_header('Cache-Control', 'max-age=0')
-        return urllib2.urlopen(request, data=data, timeout=20)
+        return urllib2.urlopen(request, data=urllib.urlencode(data) if data else None, timeout=20)
 
     @staticmethod
     def fetch(url, data=None):
@@ -552,6 +573,97 @@ class Util:
                 yield f(element)
             except Exception:
                 continue
+
+    @staticmethod
+    def get_thumbnail_data(image, width, height):
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(image, width, height)
+        return pixbuf.save_to_bufferv('jpeg', [], [])[1]
+
+    @staticmethod
+    def is_alive_and_image(url):
+        try:
+            u = Util.urlopen(url, head_request=True)
+            return u.info().get("content-type", "").startswith("image/")
+        except:
+            return False
+
+    @staticmethod
+    def is_dead_or_not_image(url):
+        if not url:
+            return True
+
+        try:
+            host = urlparse(url).netloc
+            if host.startswith('interfacelift.com'):
+                return False
+
+            if 'wallbase.cc' in host or 'ns223506.ovh.net' in host:
+                return True
+        except:
+            return True
+
+        try:
+            u = Util.urlopen(url, head_request=True)
+            return not u.info().get("content-type", "").startswith("image/")
+        except urllib2.HTTPError, e:
+            if e.code in (403, 404):
+                return True
+            return False
+        except ValueError:  # not a valid URL
+            return True
+        except:
+            return False
+
+    @staticmethod
+    def guess_image_url(meta):
+        if 'imageURL' in meta:
+            return meta['imageURL']
+
+        try:
+            origin_url = meta['sourceURL']
+
+            if "flickr.com" in origin_url:
+                from variety.FlickrDownloader import FlickrDownloader
+                return FlickrDownloader.get_image_url(origin_url)
+
+            elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
+                return origin_url
+
+            return None
+        except:
+            return None
+
+    @staticmethod
+    def guess_source_type(meta):
+        try:
+            if 'sourceType' in meta:
+                return meta['sourceType']
+            elif 'sourceName' in meta:
+                source_name = meta['sourceName'].lower()
+                if source_name in SOURCE_NAME_TO_TYPE:
+                    return SOURCE_NAME_TO_TYPE[source_name]
+                else:
+                    source_location = meta.get('sourceLocation', '').lower()
+                    if source_location.startswith(('http://' + source_name, 'https://' + source_name)):
+                        return 'mediarss'
+                    elif 'backend.deviantart.com' in source_location or '/rss' in source_location or '/feed' in source_location:
+                        return 'mediarss'
+            return None
+        except:
+            return None
+
+    @staticmethod
+    def get_os_name():
+        return ' '.join(platform.linux_distribution()[0:2])
+
+    # makes the Gtk thread execute the given callback.
+    @staticmethod
+    def add_mainloop_task(callback, *args):
+        def cb(args):
+            args[0](*args[1:])
+            return False
+        args= [callback]+list(args)
+        Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT, cb, args)
 
     @staticmethod
     def is_unity():

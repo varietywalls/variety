@@ -16,6 +16,7 @@
 import os
 
 import logging
+from urllib2 import HTTPError
 import urlparse
 from variety.Util import Util
 from PIL import Image
@@ -26,7 +27,6 @@ logger = logging.getLogger('variety')
 
 
 class ImageFetcher:
-
     @staticmethod
     def url_ok(url, use_whitelist, hosts_whitelist):
         try:
@@ -45,16 +45,19 @@ class ImageFetcher:
             return False
 
     @staticmethod
-    def fetch(parent, url, to, verbose = True):
+    def fetch(url, to_folder, origin_url=None,
+              source_type=None, source_location=None, source_name=None,
+              extra_metadata={},
+              progress_reporter=lambda a, b: None, verbose=True):
         reported = verbose
         try:
-            logger.info("Trying to fetch URL %s to %s " % (url, to))
+            logger.info("Trying to fetch URL %s to %s " % (url, to_folder))
             if verbose:
-                parent.show_notification(_("Fetching"), url)
+                progress_reporter(_("Fetching"), url)
 
             if url.startswith('javascript:'):
                 if verbose:
-                    parent.show_notification(_("Not an image"), url)
+                    progress_reporter(_("Not an image"), url)
                 return None
 
             if url.find('://') < 0:
@@ -65,14 +68,14 @@ class ImageFetcher:
             if not "content-type" in info:
                 logger.info("Uknown content-type for url " + url)
                 if verbose:
-                    parent.show_notification(_("Not an image"), url)
+                    progress_reporter(_("Not an image"), url)
                 return None
 
             ct = info["content-type"]
             if not ct.startswith("image/"):
                 logger.info("Unsupported content-type for url " + url + ": " + ct)
                 if verbose:
-                    parent.show_notification(_("Not an image"), url)
+                    progress_reporter(_("Not an image"), url)
                 return None
 
             local_name = Util.get_local_name(url)
@@ -82,22 +85,22 @@ class ImageFetcher:
                 if cd_name:
                     local_name = cd_name
 
-            filename = os.path.join(to, local_name)
+            filename = os.path.join(to_folder, local_name)
             if os.path.exists(filename):
                 m = Util.read_metadata(filename)
                 if m and m.get("imageURL") == url:
                     logger.info("Local file already exists (%s)" % filename)
-                    parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
                     return filename
                 else:
-                    logger.info("File with same name already exists, but from different imageURL; renaming new download")
+                    logger.info(
+                        "File with same name already exists, but from different imageURL; renaming new download")
                     filename = Util.find_unique_name(filename)
                     local_name = os.path.basename(filename)
 
             logger.info("Fetching to " + filename)
             if not reported:
                 reported = True
-                parent.show_notification(_("Fetching"), url)
+                progress_reporter(_("Fetching"), url)
 
             data = u.read()
             with open(filename, 'wb') as f:
@@ -106,29 +109,40 @@ class ImageFetcher:
             try:
                 img = Image.open(filename)
             except Exception:
-                parent.show_notification(_("Not an image"), url)
+                progress_reporter(_("Not an image"), url)
                 os.unlink(filename)
                 return None
 
             if img.size[0] < 400 or img.size[1] < 400:
                 # too small - delete and do not use
-                parent.show_notification(_("Image too small, ignoring it"), url)
+                progress_reporter(_("Image too small, ignoring it"), url)
                 os.unlink(filename)
                 return None
 
-            Util.write_metadata(filename, {"sourceName": "Fetched", "sourceURL": url, "imageURL": url})
+            metadata = {"sourceType": source_type or 'fetched',
+                        "sourceName": source_name or "Fetched",
+                        "sourceURL": origin_url or url,
+                        "imageURL": url}
+            if source_location:
+                metadata["sourceLocation"] = source_location
+            metadata.update(extra_metadata)
+            Util.write_metadata(filename, metadata)
 
             logger.info("Fetched %s to %s." % (url, filename))
-            parent.show_notification(_("Fetched"), local_name + "\n" + _("Press Next to see it"), icon=filename)
 
             return filename
 
-        except Exception:
+        except Exception, e:
             logger.exception("Fetch failed for URL " + url)
             if reported:
-                parent.show_notification(
-                    _("Fetch failed for some reason"),
-                    _("To get more information, please run Variety from terminal with -v option and retry the action"))
+                if isinstance(e, HTTPError) and e.code in (403, 404):
+                    progress_reporter(
+                        _("Sorry, got %s error...") % str(e.code),
+                        _("This means the link is no longer valid"))
+                else:
+                    progress_reporter(
+                        _("Fetch failed for some reason"),
+                        _("To get more information, please run Variety from terminal with -v option and retry the action"))
             return None
 
     @staticmethod

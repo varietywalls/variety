@@ -229,7 +229,7 @@ class Indicator:
         self.quotes_preferences = Gtk.MenuItem(_("Preferences..."))
         self.quotes_preferences.set_use_underline(True)
         def _quotes_prefs(widget=None):
-            window.preferences_dialog.ui.notebook.set_current_page(2)
+            window.preferences_dialog.ui.notebook.set_current_page(1)
             window.on_mnu_preferences_activate()
         self.quotes_preferences.connect("activate", _quotes_prefs)
         self.quotes_menu.append(self.quotes_preferences)
