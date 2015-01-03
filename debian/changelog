@@ -1,8 +1,106 @@
+variety (0.4.20) precise; urgency=low
+
+  * Bumping version to 0.4.20
+  * set_wallpaper: Do not call the XFCE-related code when xfconf-query
+    is not present
+  * Another Unicode-related fix (logging with -vvv was throwing Unicode-
+    related errors)
+  * Another Unicode-related fix
+  * Another Unicode-related fix
+
+ -- Peter Levi <peter@plpc>  Sat, 03 Jan 2015 02:37:29 +0200
+
+variety (0.4.19ubuntu1) precise; urgency=low
+
+  * 
+
+ -- Peter Levi <peter@peter>  Thu, 17 Jul 2014 15:46:32 +0300
+
+variety (0.4.19) precise; urgency=low
+
+  * Fix to Facebook first run dialog. Added latest translations.
+  * Separate Author entry in menu for images from Panoramio
+  * Bumped version to 0.4.19
+  * Merged with trunk
+  * Save author when dowloading from Panoramio
+  * Panoramio support: added search box
+  * Panoramio support, initial drop
+  * Thumbs: show 100, not 200 images, reduces CPU spike period
+  * Menu: merged Playback and Image submenus
+  * Facebook sharing: Updated text of first time dialog
+  * Facebook sharing updates, bugfix
+  * Polishing updates to Facebook publishing. Easy way to include quote
+    with image.
+  * Facebook authentication uses variety:// redirects, not internal
+    Webkit windows
+  * More explicit Unicode handling. Tackle unicode encode/decode errors
+    by working with unicode internally for filepaths, options, etc.
+  * Minor update to indicator icon
+  * Use 22px png for the indicator, not svg - works better in XFCE and
+    Gnome
+  * Minor fix related to clipboard monitoring hosts
+  * Removed preferences for Facebook and Rating menuitems, not needed
+    anymore
+  * Added support for Enlightenment
+  * Streamlining the menu, TODO: remove preferences for Facebook and
+    Rating menuitems
+  * Menuitem and command option to show thumbsbar for manual wallpaper
+    selection
+  * Fixing Wallpapers.net support
+  * Update Flickr calls to use https (Flickr closed non-SSL API access)
+  * Cinnamon: Fix for reverting scaling mode to Zoom on every WP change
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 15 Jul 2014 09:02:16 +0300
+
+variety (0.4.18ubuntu1) precise; urgency=low
+
+  * 
+
+ -- Peter Levi <peter@plpc>  Tue, 15 Jul 2014 01:32:31 +0300
+
+variety (0.4.18) precise; urgency=low
+
+  * Adding latest translations
+  * Bumping version to 0.4.18
+  * Note about KDE updated in tips and tricks
+  * Changes to KDE support. Added more translations.
+  * Fix support of XFCE (4.10 changed the way wallpapers are set)
+  * Fix 'Desktop manager not active' bug caused by pcmanfm - run it only
+    when LXDE active
+  * Merge
+  * Fixed an https-related problem with Flickr (Bug #1305370)
+  * Fixes in the changelog for some build experiments
+  * Streamlined the image-searching code
+  * Local files quotes plugin was getting perplexed by Windows line
+    endings
+  * Add missing Texts.py
+  * Some slight chnages to texts, Bulgarian transaltion updated
+  * Bitcoin donate link
+  * Translatable image source descriptions
+  * Translatable filter names
+  * Translatable tips and tricks
+  * More fixes to saving quotes to Favorites
+  * Configurable location of quotes favorites file
+  * Saving favorite quotes: use % for delimiter, as in the fortune file
+    format
+  * Proper fix for bad unicode characters in quotes from
+    TheQuotationsPage
+  * Options to save quotes to favorites and view the saved favorites
+  * Replace some more bad unicode characters in quotes from
+    TheQuotationsPage
+  * Replace some bad unicode characters in quotes from TheQuotationsPage
+  * Ignore error when GSettings lookup fails
+  * Creating ubuntu package
+  * Bugfix: Wallpapers.net downloader was failing when there were
+    subcategories on the page
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Fri, 09 May 2014 11:35:52 +0300
+
 variety (0.4.17ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Fri, 02 Jan 2015 22:49:53 +0200
+ -- Peter Levi <peter@peter>  Fri, 09 May 2014 11:32:53 +0300
 
 variety (0.4.17) precise; urgency=low
 
@@ -39,7 +137,7 @@ variety (0.4.15ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Tue, 24 Sep 2013 23:43:57 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 24 Sep 2013 23:43:57 +0300
 
 variety (0.4.15) precise; urgency=low
 
@@ -84,13 +182,13 @@ variety (0.4.14) precise; urgency=low
   * Fix exception when deleting to Trash
   * Updated changes.txt
 
- -- Peter Levi <peter@plpc>  Tue, 11 Jun 2013 23:22:32 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 11 Jun 2013 23:22:32 +0300
 
 variety (0.4.13ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@peter>  Tue, 11 Jun 2013 09:31:09 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 11 Jun 2013 09:31:09 +0300
 
 variety (0.4.13) precise; urgency=low
 
@@ -153,7 +251,7 @@ variety (0.4.12ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Thu, 14 Feb 2013 16:32:46 +0200
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 14 Feb 2013 16:32:46 +0200
 
 variety (0.4.12) precise; urgency=low
 
@@ -206,7 +304,7 @@ variety (0.4.11ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Mon, 26 Nov 2012 23:54:26 +0200
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 26 Nov 2012 23:54:26 +0200
 
 variety (0.4.11) precise; urgency=low
 
@@ -260,7 +358,7 @@ variety (0.4.9ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Tue, 11 Sep 2012 00:04:04 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 11 Sep 2012 00:04:04 +0300
 
 variety (0.4.9) precise; urgency=low
 
@@ -291,7 +389,7 @@ variety (0.4.8ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@peter>  Mon, 03 Sep 2012 17:20:48 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 03 Sep 2012 17:20:48 +0300
 
 variety (0.4.8) precise; urgency=low
 
@@ -312,7 +410,7 @@ variety (0.4.7ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Sat, 18 Aug 2012 16:39:10 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 18 Aug 2012 16:39:10 +0300
 
 variety (0.4.7) precise; urgency=low
 
@@ -322,13 +420,13 @@ variety (0.4.7) precise; urgency=low
   * Updated get/set wallpaper scripts, tested on XFCE, LXDE, MATE
   * Persist history between runs
 
- -- Peter Levi <peter@peter>  Fri, 17 Aug 2012 18:55:15 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Fri, 17 Aug 2012 18:55:15 +0300
 
 variety (0.4.6ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Wed, 15 Aug 2012 09:01:52 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 15 Aug 2012 09:01:52 +0300
 
 variety (0.4.6) precise; urgency=low
 
@@ -342,13 +440,13 @@ variety (0.4.6) precise; urgency=low
   * Write more comprehensive origin metadata to downloaded images
   * Make indicator icon stand out better with Radiance theme
 
- -- Peter Levi <peter@peter>  Wed, 15 Aug 2012 16:13:08 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 15 Aug 2012 16:13:08 +0300
 
 variety (0.4.5ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Mon, 13 Aug 2012 10:33:29 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Mon, 13 Aug 2012 10:33:29 +0300
 
 variety (0.4.5) precise; urgency=low
 
@@ -379,7 +477,7 @@ variety (0.4.4ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Sat, 11 Aug 2012 14:39:48 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 11 Aug 2012 14:39:48 +0300
 
 variety (0.4.4) precise; urgency=low
 
@@ -397,7 +495,7 @@ variety (0.4.3ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Sun, 05 Aug 2012 23:30:04 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 05 Aug 2012 23:30:04 +0300
 
 variety (0.4.3) precise; urgency=low
 
@@ -425,7 +523,7 @@ variety (0.4.1ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Fri, 03 Aug 2012 02:05:34 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Fri, 03 Aug 2012 02:05:34 +0300
 
 variety (0.4.1) precise; urgency=low
 
@@ -469,14 +567,14 @@ variety (0.4) precise; urgency=low
     download the image
   * Merged quickly changes for 0.3.15
 
- -- Peter Levi <peter@peter>  Thu, 02 Aug 2012 17:49:53 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 02 Aug 2012 17:49:53 +0300
 
 variety (0.3.15) precise; urgency=low
 
   * Bug fixed: update_indicator was failing on the first run (at
     startup)
 
- -- Peter Levi <peter@plpc>  Tue, 31 Jul 2012 22:46:45 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 31 Jul 2012 22:46:45 +0300
 
 variety (0.3.14) precise; urgency=low
 
@@ -526,7 +624,7 @@ variety (0.3.10ubuntu1) precise; urgency=low
 
   * 
 
- -- Peter Levi <peter@plpc>  Thu, 12 Jul 2012 17:01:35 +0300
+ -- Peter Levi <peterlevi@peterlevi.com>  Thu, 12 Jul 2012 17:01:35 +0300
 
 variety (0.3.10) precise; urgency=low
 

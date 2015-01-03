@@ -59,6 +59,7 @@ class Smart:
         self.parent = parent
         self.user = None
         self.load_user_lock = threading.Lock()
+        self.load_user(create_if_missing=False)
 
     def reload(self):
         if not self.is_smart_enabled():
