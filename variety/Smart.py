@@ -339,6 +339,7 @@ class Smart:
                         self.register_dialog.ui.register_spinner.set_visible(False)
                         self.register_dialog.ui.register_spinner.stop()
                         self.register_dialog.ui.register_error.set_visible(error)
+                        self.register_dialog.ui.register_message.set_visible(not error)
                     GObject.idle_add(_stop_spinner)
 
             threading.Timer(1, _register).start()

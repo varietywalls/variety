@@ -329,4 +329,10 @@
       <widget name="label3"/>
     </widgets>
   </object>
+  <object class="GtkSizeGroup" id="sizegroup2">
+    <widgets>
+      <widget name="register_link"/>
+      <widget name="password_link"/>
+    </widgets>
+  </object>
 </interface>
