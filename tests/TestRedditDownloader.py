@@ -35,7 +35,7 @@ class TestRedditDownloader(unittest.TestCase):
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/top/?sort=top&t=week'))
 
     def test_validate(self):
-        self.assertTrue(RedditDownloader.validate('http://www.reddit.comthro/r/comics'))
+        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics/'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/top?sort=top&t=week'))

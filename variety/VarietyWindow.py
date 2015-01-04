@@ -1610,24 +1610,26 @@ class VarietyWindow(Gtk.Window):
                     _("Cannot delete"),
                     _("You don't have permissions to delete %s to Trash.") % file)
             else:
-                self.smart.report_file(file, 'trash', async=False)
+                if self.current == file:
+                    self.next_wallpaper(widget)
 
-                command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
-                logger.info("Running trash command %s" % command)
-                result = os.system(command.encode('utf8'))
-                if result == 0:
-                    if self.current == file:
-                        self.next_wallpaper(widget)
+                self.remove_from_queues(file)
+                self.prepare_event.set()
 
-                    self.remove_from_queues(file)
-                    self.prepare_event.set()
+                self.thumbs_manager.remove_image(file)
 
-                    self.thumbs_manager.remove_image(file)
-                else:
-                    logger.error("Trash resulted in error code %d" % result)
-                    self.show_notification(
-                        _("Cannot delete"),
-                        _("Probably there is no utility for moving to Trash?\nPlease install trash-cli or gvfs-bin or konquerer."))
+                def _go():
+                    self.smart.report_file(file, 'trash', async=False)
+
+                    command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
+                    logger.info("Running trash command %s" % command)
+                    result = os.system(command.encode('utf8'))
+                    if result != 0:
+                        logger.error("Trash resulted in error code %d" % result)
+                        self.show_notification(
+                            _("Cannot delete"),
+                            _("Probably there is no utility for moving to Trash?\nPlease install trash-cli or gvfs-bin or konquerer."))
+                threading.Timer(0, _go).start()
         except Exception:
             logger.exception("Exception in move_to_trash")
 
