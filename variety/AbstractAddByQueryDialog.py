@@ -54,7 +54,7 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
         if not len(self.ui.query.get_text().strip()):
             self.destroy()
         else:
-            threading.Timer(0.1, self.ok_thread).start()
+            threading.Timer(0, self.ok_thread).start()
 
     def on_btn_cancel_clicked(self, widget, data=None):
         self.destroy()

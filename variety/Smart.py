@@ -342,7 +342,7 @@ class Smart:
                         self.register_dialog.ui.register_message.set_visible(not error)
                     GObject.idle_add(_stop_spinner)
 
-            threading.Timer(1, _register).start()
+            threading.Timer(0, _register).start()
 
         self.register_dialog.ui.btn_register.connect('activate-link', _register_link)
 

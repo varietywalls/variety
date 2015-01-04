@@ -1004,7 +1004,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         elif not self.parent.smart.user:
             def _f():
                 self.parent.smart.load_user(create_if_missing=True)
-            threading.Timer(1, _f).start()
+            threading.Timer(0, _f).start()
 
     def on_destroy(self, widget = None):
         if hasattr(self, "dialog") and self.dialog:
@@ -1176,5 +1176,5 @@ class PreferencesVarietyDialog(PreferencesDialog):
                             self.ui.smart_spinner.set_visible(False)
                             self.ui.smart_connect_error.set_visible(True)
                         GObject.idle_add(_fail)
-                threading.Timer(1, _create_user).start()
+                threading.Timer(0, _create_user).start()
 

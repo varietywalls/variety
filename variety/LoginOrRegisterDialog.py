@@ -95,7 +95,7 @@ class LoginOrRegisterDialog(Gtk.Dialog):
                     self.smart.set_user(result)
                     self.destroy()
             GObject.idle_add(_update)
-        threading.Timer(0.1, _go).start()
+        threading.Timer(0, _go).start()
 
 
 if __name__ == "__main__":

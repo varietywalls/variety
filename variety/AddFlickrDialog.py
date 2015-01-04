@@ -88,7 +88,7 @@ class AddFlickrDialog(Gtk.Dialog):
 
         Called before the dialog returns Gtk.ResponseType.OK from run().
         """
-        threading.Timer(0.1, self.ok_thread).start()
+        threading.Timer(0, self.ok_thread).start()
 
     def show_spinner(self):
         try:

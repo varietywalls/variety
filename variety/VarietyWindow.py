@@ -558,7 +558,7 @@ class VarietyWindow(Gtk.Window):
             except Exception:
                 logger.exception("Could not delete download folder contents " + folder)
             if self.current and Util.file_in(self.current, folder):
-                change_timer = threading.Timer(1, self.next_wallpaper)
+                change_timer = threading.Timer(0, self.next_wallpaper)
                 change_timer.start()
 
     def load_banned(self):
@@ -1074,7 +1074,7 @@ class VarietyWindow(Gtk.Window):
 
         def _do_set_wp():
             self.do_set_wp(filename, refresh_level)
-        threading.Timer(0.01, _do_set_wp).start()
+        threading.Timer(0, _do_set_wp).start()
 
     def build_imagemagick_filter_cmd(self, filename, target_file):
         if not self.filters:
