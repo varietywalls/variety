@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-03 02:37+0200\n"
+"POT-Creation-Date: 2015-01-04 11:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -851,40 +851,40 @@ msgstr ""
 msgid "We could not find any image submissions there."
 msgstr ""
 
-#: ../variety/Smart.py:184
+#: ../variety/Smart.py:185
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
 
-#: ../variety/Smart.py:574 ../variety/Smart.py:620
+#: ../variety/Smart.py:576 ../variety/Smart.py:622
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr ""
 
-#: ../variety/Smart.py:575
+#: ../variety/Smart.py:577
 #, python-format
 msgid "Fetching %d images"
 msgstr ""
 
-#: ../variety/Smart.py:575
+#: ../variety/Smart.py:577
 msgid "Fetching 1 image"
 msgstr ""
 
-#: ../variety/Smart.py:620
+#: ../variety/Smart.py:622
 msgid "Finished"
 msgstr ""
 
-#: ../variety/Smart.py:641
+#: ../variety/Smart.py:643
 #, python-format
 msgid "Logged in as %s"
 msgstr ""
 
-#: ../variety/Smart.py:653
+#: ../variety/Smart.py:655
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr ""
 
-#: ../variety/Smart.py:654
+#: ../variety/Smart.py:656
 msgid "VRTY.ORG login confirmation"
 msgstr ""
 
@@ -1102,14 +1102,13 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
-msgid "VRTY.ORG"
+msgid "Variety - VRTY.ORG"
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
 msgid ""
-"<span font=\"14\" weight=\"bold\">Clouds are great, join ours at <a href="
-"\"https://vrty.org\">VRTY.ORG</a>!</span>"
+"<span font=\"14\" weight=\"bold\">Introducing <a href=\"https://vrty.org"
+"\">VRTY.ORG</a>! Wanna take part?</span>"
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
@@ -1122,12 +1121,11 @@ msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
-"It is fueled by the favorite images of all participating users, and we ask "
-"for your help in building this wonderful resource. This happens "
-"automatically, as you like or dislike images downloaded by Variety. "
-"Collected data is not shared with third parties, unless you opt-in to make "
-"your profile public. <a href='http://peterlevi.com/variety/vrty-org/'>Read "
-"more details about the service and the privacy policy here.</a>"
+"You don't have to do anything to participate. Your profile is built "
+"automatically, as you like or dislike images downloaded by Variety, and is "
+"not shared with third parties, unless you opt-in to make it public. <a "
+"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
+"service and the privacy policy here.</a>"
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
@@ -1495,6 +1493,10 @@ msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Effects"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+msgid "VRTY.ORG"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:75
@@ -2002,7 +2004,7 @@ msgid "Use current quote"
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:1
-msgid "VRTY.ORG registration"
+msgid "Variety - VRTY.ORG registration"
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:2
@@ -2011,11 +2013,12 @@ msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:3
 msgid ""
-"Registration on <a href=\"https://vrty.org\">VRTY.ORG</a> enables some very "
-"nice features of Variety, such as <span weight=\"bold\">synchronization</"
-"span> of favorites between computers and <span weight=\"bold\">personalized "
-"recommendations</span>. It also ensures you will not lose your profile if "
-"you reinstall your OS."
+"You may participate in <a href=\"https://vrty.org\">VRTY.ORG</a> "
+"anonymously, but registration enables some very nice features, such as <span "
+"weight=\"bold\">synchronization</span> of favorites between computers and "
+"<span weight=\"bold\">personalized recommendations</span>. It also ensures "
+"you will not lose your profile and favorite wallpapers if you reinstall your "
+"OS."
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:4
@@ -2037,10 +2040,16 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:7
-msgid "I will participate anonymously"
+msgid ""
+"Please continue the registration and follow the instructions in the browser "
+"tab we opened."
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:8
+msgid "I will participate anonymously"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:9
 msgid "Register here"
 msgstr ""
 
