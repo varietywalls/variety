@@ -1,0 +1,13 @@
+=== modified file 'variety.desktop.in'
+--- variety.desktop.in	2014-07-07 17:41:24 +0000
++++ variety.desktop.in	2014-10-25 23:43:59 +0000
+@@ -8,7 +8,7 @@
+ Terminal=false
+ Type=Application
+ StartupNotify=false
+-Actions=Next;Previous;PauseResume;History;Preferences
++Actions=Next;Previous;PauseResume;History;Preferences;
+ 
+ [Desktop Action Next]
+ Exec=/opt/extras.ubuntu.com/variety/bin/variety --next
+

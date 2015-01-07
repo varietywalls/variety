@@ -1,0 +1,78 @@
+=== modified file 'variety/AddMediaRssDialog.py'
+--- variety/AddMediaRssDialog.py	2014-07-06 19:33:36 +0000
++++ variety/AddMediaRssDialog.py	2014-11-21 13:58:43 +0000
+@@ -53,6 +53,12 @@
+         self.edited_row = edited_row
+         self.ui.url.set_text(self.edited_row[2])
+ 
++    def validate(self, url):
++        if not url.startswith("http://") and not url.startswith("https://"):
++            url = "http://" + url
++        valid = MediaRssDownloader.validate(url)
++        return url, valid, _("This does not seem to be a valid Media RSS feed URL or there is no content there.")
++
+     def on_btn_ok_clicked(self, widget, data=None):
+         """The user has elected to save the changes.
+ 
+@@ -75,14 +81,13 @@
+             Gdk.threads_leave()
+ 
+         url = self.ui.url.get_text().strip()
+-        if not url.startswith("http://") and not url.startswith("https://"):
+-            url = "http://" + url
+-        valid = MediaRssDownloader.validate(url)
++
++        url, valid, invalid_msg = self.validate(url)
+ 
+         try:
+             Gdk.threads_enter()
+             if not valid:
+-                self.ui.error.set_label(_("This does not seem to be a valid Media RSS feed URL or there is no content there."))
++                self.ui.error.set_label(invalid_msg)
+                 self.ui.spinner.stop()
+                 self.ui.url.set_sensitive(True)
+                 self.ui.message.set_visible(False)
+
+=== modified file 'variety/MediaRssDownloader.py'
+--- variety/MediaRssDownloader.py	2013-02-14 14:42:49 +0000
++++ variety/MediaRssDownloader.py	2014-11-21 14:15:25 +0000
+@@ -61,7 +61,7 @@
+                      if MediaRssDownloader.is_valid_content(x)]
+             return len(walls) > 0
+         except Exception:
+-            logger.exception("Error while validating URL, proabably not a MediaRSS feed")
++            logger.exception("Error while validating URL, probably not a MediaRSS feed")
+             return False
+ 
+     def download_one(self):
+
+=== modified file 'variety/PreferencesVarietyDialog.py'
+--- variety/PreferencesVarietyDialog.py	2014-11-20 11:35:36 +0000
++++ variety/PreferencesVarietyDialog.py	2014-11-21 14:15:25 +0000
+@@ -33,6 +33,7 @@
+ from variety.AddFlickrDialog import AddFlickrDialog
+ from variety.AddWallbaseDialog import AddWallbaseDialog
+ from variety.AddMediaRssDialog import AddMediaRssDialog
++from variety.AddRedditDialog import AddRedditDialog
+ from variety.AddPanoramioDialog import AddPanoramioDialog
+ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
+ from variety.AddWallhavenDialog import AddWallhavenDialog
+@@ -311,6 +312,7 @@
+             # (_("Wallbase.cc"), self.on_add_wallbase_clicked),
+             (_("Panoramio"), self.on_add_panoramio_clicked),
+             (_("Wallpapers.net"), self.on_add_wn_clicked),
++            (_("Reddit"), self.on_add_reddit_clicked),
+             (_("Media RSS"), self.on_add_mediarss_clicked),
+         ]
+ 
+@@ -686,6 +688,9 @@
+     def on_add_mediarss_clicked(self, widget=None):
+         self.show_dialog(AddMediaRssDialog())
+ 
++    def on_add_reddit_clicked(self, widget=None):
++        self.show_dialog(AddRedditDialog())
++
+     def on_add_flickr_clicked(self, widget=None):
+         self.show_dialog(AddFlickrDialog())
+ 
+
