@@ -1,3 +1,72 @@
+variety (0.5.0) precise; urgency=low
+
+  * Smart: updated again some texts
+  * Removed some unnecessary delays in Timer calls
+  * Trashing was slow due to smart-reporting: update queues and
+    wallpaper first, report and delete in an outer thread afterwards
+  * Added TestRedditDownloader
+  * Initial registration screen: Register link instructs user to look
+    for a new browser tab
+  * Smart: updated some welcome screens texts
+  * Smart: try to load user in init to avoid exception related to
+    creating RecommendedDownloader
+  * Updated variety.pot
+  * Bumped version to 0.5.0
+  * Merged variety-smart branch, preparing for 0.5.0 release
+  * MediaRSS: use variety:author info when present
+  * Merged in Simotek's Enlightenment related fix
+  * Minor refactor: added VarietyWindow.register_downloaded_file
+  * Show Next and Previous in main menu only in non-Unity DEs (Unity
+    supports indicator scroll, no need for them there)
+  * Make sure to delete metadata json when purging downloaded folder
+  * Unicode: Make _u and _str transparent for None
+  * Util.get_xdg_pictures_folder uses
+    GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES), not
+    subprocess call to xdg-user-dir
+  * Merge in multi-screen Enlightenment-related changes from Simotek
+  * set_wallpaper: Do not call unity-greeter gsettings command, it is
+    causing issues on some machines
+  * Use another server options URL, specific for the current version.
+  * Merge changes to indicator.py from variety-smart
+  * Merged in some changes from variety-smart
+  * Merged in updates to Downloaders from the variety-smart branch
+  * Next and previous options in main menu
+  * Bumping the version number to 0.4.21
+  * Added forgotten RedditDownloader.py
+  * Added support for Reddit as an image source
+  * Refactored out some duplicate code in AddXXXDialogs, added
+    AbstractAddByQueryDialog
+  * Option to search image with Google Image Search
+  * More structured throttling of do_set_wp and scroll handling. Fix to
+    ThumbsWindow when showing bad file
+  * Autostart desktop file: use bash || command to run Variety wherever
+    it is located. Create autostart entry on first run. Update it on
+    every version upgrade
+  * Minor fix to the desktop file
+  * Ensure Variety starts and works OK when there is no wallpaper image
+  * Fetch and save in EXIF SFW rating from Wallhaven
+  * Update to Wallhaven search
+  * Fixed some failing tests
+  * Removed some outdated quotes-related tests
+  * View at... option in right-click thumbnail menu as well
+  * Updates related to Wallbase->Wallhaven change, not possible anymore
+    to add Wallbase sources
+  * Wallbase -> Wallhaven update to default sources
+  * Adding Wallhaven.cc support
+  * Merging changes to reading/writing metadata from variety-smart
+  * Bugfix: do not remove delete wallpaper file in
+    cleanup_old_wallpapers()
+  * Faceboook sharing: do not include link to full image, let Facebook
+    choose image itself
+  * Bugfix: Make sure all dialogs require just one click on the X button
+    to close
+  * Bugfix: Add image source dialogs required two clicks on the X button
+    to close
+  * Use proper origin URL for Desktoppr images
+  * Fix Unicode error related to non-ascii font names
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 07 Jan 2015 09:34:19 +0200
+
 variety (0.4.20) precise; urgency=low
 
   * Bumping version to 0.4.20
