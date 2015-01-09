@@ -59,7 +59,10 @@ class Smart:
         self.parent = parent
         self.user = None
         self.load_user_lock = threading.Lock()
-        self.load_user(create_if_missing=False)
+        try:
+            self.load_user(create_if_missing=False)
+        except:
+            logger.exception("Smart: Cound not load user during init")
 
     def reload(self):
         if not self.is_smart_enabled():
@@ -100,7 +103,14 @@ class Smart:
                 try:
                     with io.open(os.path.join(self.parent.config_folder, 'smart_user.json'), encoding='utf8') as f:
                         data = f.read()
-                        self.user = AttrDict(json.loads(data))
+                        try:
+                            self.user = AttrDict(json.loads(data))
+                        except:
+                            logger.exception("Smart: Could not json-parse smart_user.json. Broken file? "
+                                             "Please report this error to peterlevi@peterlevi.com. Thanks.")
+                            self.parent.show_notification(_("Your smart_user.json config file appears broken. "
+                                                          "You may have to login again to VRTY.ORG."))
+                            raise IOError("Could not json-parse smart_user.json")
                         if self.parent.preferences_dialog:
                             self.parent.preferences_dialog.on_smart_user_updated()
                         logger.info('smart: Loaded smart user: %s' % self.user["id"])

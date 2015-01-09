@@ -1135,7 +1135,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = None
             GObject.idle_add(_close)
 
-    def on_smart_user_updated(self):
+    def on_smart_user_updated(self, create_user_attempts=0):
         self.update_status_message()
 
         sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart.is_registered()
@@ -1159,7 +1159,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if not self.ui.smart_enabled.get_active():
                 self.ui.box_smart_connecting.set_visible(False)
                 self.ui.box_smart_user.set_visible(False)
-            else:
+            elif create_user_attempts == 0:
                 def _create_user():
                     def _start():
                         self.ui.smart_spinner.set_visible(True)
@@ -1170,11 +1170,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
                     try:
                         self.parent.smart.load_user(create_if_missing=True)
-                        self.on_smart_user_updated()
+                        self.on_smart_user_updated(create_user_attempts + 1)
                     except IOError:
                         def _fail():
                             self.ui.smart_spinner.set_visible(False)
                             self.ui.smart_connect_error.set_visible(True)
                         GObject.idle_add(_fail)
+                    finally:
+                        def _stop():
+                            self.ui.smart_spinner.set_visible(False)
+                        GObject.idle_add(_stop)
                 threading.Timer(0, _create_user).start()
 
