@@ -305,21 +305,27 @@ class Smart:
         # Show Smart Variety notice
         dialog = SmartFeaturesNoticeDialog()
 
-        def _on_ok(button):
-            self.parent.options.smart_enabled = dialog.ui.smart_enabled.get_active()
-
+        def _done():
             self.parent.options.smart_notice_shown = True
-            if self.parent.options.smart_enabled:
-                for s in self.parent.options.sources:
-                    if s[1] in (Options.SourceType.RECOMMENDED,):
-                        s[0] = True
-
             self.parent.options.write()
             self.parent.reload_config()
             dialog.destroy()
             self.parent.dialogs.remove(dialog)
 
+        def _on_ok(button):
+            self.parent.options.smart_enabled = dialog.ui.smart_enabled.get_active()
+            if self.parent.options.smart_enabled:
+                for s in self.parent.options.sources:
+                    if s[1] in (Options.SourceType.RECOMMENDED,):
+                        s[0] = True
+            _done()
+
+        def _on_close_button(*args):
+            self.parent.options.smart_enabled = False
+            _done()
+
         dialog.ui.btn_ok.connect("clicked", _on_ok)
+        dialog.connect("delete-event", _on_close_button)
         self.parent.dialogs.append(dialog)
         dialog.run()
 
