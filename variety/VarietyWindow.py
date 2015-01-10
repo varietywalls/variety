@@ -1565,7 +1565,11 @@ class VarietyWindow(Gtk.Window):
             if file != to:
                 operation(file, to)
             try:
-                operation(file + ".txt", to)
+                operation(file + '.metadata.json', to)
+            except Exception:
+                pass
+            try:
+                operation(file + '.txt', to)
             except Exception:
                 pass
             logger.info(("Moved %s to %s" if is_move else "Copied %s to %s") % (file, to))
