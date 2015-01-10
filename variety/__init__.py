@@ -16,6 +16,8 @@
 
 import gettext
 gettext.textdomain('variety')
+import os
+import sys
 
 
 def _u(s):
@@ -35,15 +37,38 @@ def _str(s):
     else:
         return str(s)
 
+
 def _(text):
     # TODO: We use locale instead of gettext because of the way Quikcly deploys to extras
     # TODO: use gettext.gettext below when we stop using extras deployment
     from locale import gettext as _
     return _u(_(text))
 
-import os
-import sys
+
+def safe_print(text, ascii_text=None):
+    """
+    Python's print throws UnicodeEncodeError if the terminal encoding is borked. This version tries print, then logging, then printing the ascii text when one is present.
+    If does not throw exceptions even if it fails.
+    :param text: Text to print, str or unicode, possibly with non-ascii symbols in it
+    :param ascii_text: optional. Original untranslated ascii version of the text when present.
+    """
+    try:
+        print(text)
+    except: # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
+        try:
+            logging.getLogger("variety").error('Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
+            if ascii_text:
+                try:
+                    print ascii_text
+                    return
+                except:
+                    pass
+            logging.getLogger("variety").warning(text)
+        except:
+            pass
+
 # # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
+# Still, generally considerd bad practice, may cause some deep hidden errors, as various Python stuff depends on it
 # reload(sys)
 # sys.setdefaultencoding('UTF8')
 
@@ -89,7 +114,8 @@ def check_quit():
         return
 
     logging.getLogger("variety").info("Terminating signal received, quitting...")
-    print _("Terminating signal received, quitting...")
+    safe_print(_("Terminating signal received, quitting..."),
+               "Terminating signal received, quitting...")
 
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
@@ -122,11 +148,12 @@ def main():
     if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
             arguments = ["--preferences"]
-        print _("Variety is already running. Sending the command to the running instance.")
+        safe_print(_("Variety is already running. Sending the command to the running instance."),
+                   "Variety is already running. Sending the command to the running instance.")
         method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
         result = method(arguments)
         if result:
-            print result
+            safe_print(result)
         return
 
     # Run the application.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-05 01:36+0200\n"
+"POT-Creation-Date: 2015-01-10 13:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,12 +52,12 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: ../variety/LoginOrRegisterDialog.py:69
+#: ../variety/LoginOrRegisterDialog.py:80
 #, python-format
 msgid "Oops, server returned error (%s)"
 msgstr ""
 
-#: ../variety/LoginOrRegisterDialog.py:74
+#: ../variety/LoginOrRegisterDialog.py:85
 msgid "Could not connect to server"
 msgstr ""
 
@@ -851,40 +851,46 @@ msgstr ""
 msgid "We could not find any image submissions there."
 msgstr ""
 
-#: ../variety/Smart.py:185
+#: ../variety/Smart.py:111
+msgid ""
+"Your smart_user.json config file appears broken. You may have to login again "
+"to VRTY.ORG."
+msgstr ""
+
+#: ../variety/Smart.py:195
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
 
-#: ../variety/Smart.py:576 ../variety/Smart.py:622
+#: ../variety/Smart.py:592 ../variety/Smart.py:638
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr ""
 
-#: ../variety/Smart.py:577
+#: ../variety/Smart.py:593
 #, python-format
 msgid "Fetching %d images"
 msgstr ""
 
-#: ../variety/Smart.py:577
+#: ../variety/Smart.py:593
 msgid "Fetching 1 image"
 msgstr ""
 
-#: ../variety/Smart.py:622
+#: ../variety/Smart.py:638
 msgid "Finished"
 msgstr ""
 
-#: ../variety/Smart.py:643
+#: ../variety/Smart.py:659
 #, python-format
 msgid "Logged in as %s"
 msgstr ""
 
-#: ../variety/Smart.py:655
+#: ../variety/Smart.py:671
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr ""
 
-#: ../variety/Smart.py:656
+#: ../variety/Smart.py:672
 msgid "VRTY.ORG login confirmation"
 msgstr ""
 
@@ -1035,11 +1041,11 @@ msgstr ""
 msgid "Fetches quotes from TheQuotationsPage.com"
 msgstr ""
 
-#: ../variety/__init__.py:92
+#: ../variety/__init__.py:98
 msgid "Terminating signal received, quitting..."
 msgstr ""
 
-#: ../variety/__init__.py:125
+#: ../variety/__init__.py:131
 msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr ""
