@@ -1,3 +1,18 @@
+variety (0.5.1) precise; urgency=low
+
+  * Bumping version to 0.5.1
+  * SafeLogger wraps all logging in lambda calls to avoid
+    UnicodeDecodeErrors in building log messages
+  * Add a No, thanks button to the VRTY.ORG invitation screen
+  * Minor fix to move_or_copy_file to handle outer metadata.json files
+  * Use safe_print to avoid UnicodeEncodeError when printing messages on
+    badly configured terminals
+  * VRTY.ORG invitation screen: Closing with X button or Esc is
+    interpreted as Don't participate
+  * Do not fail to start when smart_user.json is broken
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 11 Jan 2015 22:17:01 +0200
+
 variety (0.5.0ubuntu1) precise; urgency=low
 
   * 
