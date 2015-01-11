@@ -320,12 +320,13 @@ class Smart:
                         s[0] = True
             _done()
 
-        def _on_close_button(*args):
+        def _on_no(*args):
             self.parent.options.smart_enabled = False
             _done()
 
         dialog.ui.btn_ok.connect("clicked", _on_ok)
-        dialog.connect("delete-event", _on_close_button)
+        dialog.ui.btn_no.connect("clicked", _on_no)
+        dialog.connect("delete-event", _on_no)
         self.parent.dialogs.append(dialog)
         dialog.run()
 
