@@ -42,7 +42,7 @@ class RedditDownloader(Downloader.Downloader):
 
     @staticmethod
     def validate(url):
-        logger.info("Validating Reddit url " + url)
+        logger.info(lambda: "Validating Reddit url " + url)
         try:
             if not url.startswith("http://") and not url.startswith("https://"):
                 url = "http://" + url
@@ -54,24 +54,24 @@ class RedditDownloader(Downloader.Downloader):
             dl.fill_queue()
             return len(dl.queue) > 0
         except Exception:
-            logger.exception("Error while validating URL, probably no image posts for this URL")
+            logger.exception(lambda: "Error while validating URL, probably no image posts for this URL")
             return False
 
     def download_one(self):
-        logger.info("Downloading an image from Reddit, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from Reddit, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()
         if not self.queue:
-            logger.info("Reddit queue empty after fill")
+            logger.info(lambda: "Reddit queue empty after fill")
             return None
 
         origin_url, image_url, extra_metadata = self.queue.pop()
         return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
-        logger.info("Reddit URL: " + self.location)
+        logger.info(lambda: "Reddit URL: " + self.location)
 
         json_url = RedditDownloader.build_json_url(self.location)
         s = Util.fetch_json(json_url)
@@ -89,7 +89,7 @@ class RedditDownloader(Downloader.Downloader):
                         extra_metadata['sfwRating'] = 0
                     self.queue.append((src_url, image_url, extra_metadata))
             except Exception:
-                logger.exception("Could not process an item in the Reddit json result")
+                logger.exception(lambda: "Could not process an item in the Reddit json result")
 
         random.shuffle(self.queue)
-        logger.info("Reddit queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "Reddit queue populated with %d URLs" % len(self.queue))

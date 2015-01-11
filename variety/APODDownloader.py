@@ -36,17 +36,17 @@ class APODDownloader(Downloader.Downloader):
         return BeautifulSoup(content, "xml") if xml else BeautifulSoup(content)
 
     def download_one(self):
-        logger.info("Downloading an image from NASA's Astro Pic of the Day, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from NASA's Astro Pic of the Day, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()
         if not self.queue:
-            logger.info("APOD Queue still empty after fill request - probably nothing more to download")
+            logger.info(lambda: "APOD Queue still empty after fill request - probably nothing more to download")
             return None
 
         url = self.queue.pop()
-        logger.info("APOD URL: " + url)
+        logger.info(lambda: "APOD URL: " + url)
 
         s = self.fetch(url)
         img_url = None
@@ -54,18 +54,18 @@ class APODDownloader(Downloader.Downloader):
             link = s.find("img").parent["href"]
             if link.startswith("image/"):
                 img_url = self.root + link
-                logger.info("Image URL: " + img_url)
+                logger.info(lambda: "Image URL: " + img_url)
         except Exception:
             pass
 
         if img_url:
             return self.save_locally(url, img_url)
         else:
-            logger.info("No image url found for this APOD URL")
+            logger.info(lambda: "No image url found for this APOD URL")
             return None
 
     def fill_queue(self):
-        logger.info("Filling APOD queue from Archive")
+        logger.info(lambda: "Filling APOD queue from Archive")
 
         s = self.fetch("http://apod.nasa.gov/apod/archivepix.html")
         urls = [self.root + x["href"] for x in s.findAll("a") if x["href"].startswith("ap") and x["href"].endswith(".html")]
@@ -78,10 +78,10 @@ class APODDownloader(Downloader.Downloader):
         self.queue.extend(urls[:10])
         self.queue = list(reversed(self.queue))
 
-        logger.info("APOD queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "APOD queue populated with %d URLs" % len(self.queue))
 
     def fill_queue_from_rss(self):
-        logger.info("Filling APOD queue from RSS")
+        logger.info(lambda: "Filling APOD queue from RSS")
 
         s = self.fetch(self.location, xml=True)
         urls = [_str(x.find("link").contents[0]) for x in s.findAll("item")]
@@ -89,4 +89,4 @@ class APODDownloader(Downloader.Downloader):
 
         self.queue.extend(urls)
 
-        logger.info("APOD queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "APOD queue populated with %d URLs" % len(self.queue))

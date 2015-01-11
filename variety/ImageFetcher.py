@@ -51,7 +51,7 @@ class ImageFetcher:
               progress_reporter=lambda a, b: None, verbose=True):
         reported = verbose
         try:
-            logger.info("Trying to fetch URL %s to %s " % (url, to_folder))
+            logger.info(lambda: "Trying to fetch URL %s to %s " % (url, to_folder))
             if verbose:
                 progress_reporter(_("Fetching"), url)
 
@@ -66,14 +66,14 @@ class ImageFetcher:
             u = Util.urlopen(url)
             info = u.info()
             if not "content-type" in info:
-                logger.info("Uknown content-type for url " + url)
+                logger.info(lambda: "Uknown content-type for url " + url)
                 if verbose:
                     progress_reporter(_("Not an image"), url)
                 return None
 
             ct = info["content-type"]
             if not ct.startswith("image/"):
-                logger.info("Unsupported content-type for url " + url + ": " + ct)
+                logger.info(lambda: "Unsupported content-type for url " + url + ": " + ct)
                 if verbose:
                     progress_reporter(_("Not an image"), url)
                 return None
@@ -89,15 +89,15 @@ class ImageFetcher:
             if os.path.exists(filename):
                 m = Util.read_metadata(filename)
                 if m and m.get("imageURL") == url:
-                    logger.info("Local file already exists (%s)" % filename)
+                    logger.info(lambda: "Local file already exists (%s)" % filename)
                     return filename
                 else:
-                    logger.info(
+                    logger.info(lambda:
                         "File with same name already exists, but from different imageURL; renaming new download")
                     filename = Util.find_unique_name(filename)
                     local_name = os.path.basename(filename)
 
-            logger.info("Fetching to " + filename)
+            logger.info(lambda: "Fetching to " + filename)
             if not reported:
                 reported = True
                 progress_reporter(_("Fetching"), url)
@@ -128,12 +128,12 @@ class ImageFetcher:
             metadata.update(extra_metadata)
             Util.write_metadata(filename, metadata)
 
-            logger.info("Fetched %s to %s." % (url, filename))
+            logger.info(lambda: "Fetched %s to %s." % (url, filename))
 
             return filename
 
         except Exception, e:
-            logger.exception("Fetch failed for URL " + url)
+            logger.exception(lambda: "Fetch failed for URL " + url)
             if reported:
                 if isinstance(e, HTTPError) and e.code in (403, 404):
                     progress_reporter(

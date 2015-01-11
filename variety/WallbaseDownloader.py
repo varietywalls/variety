@@ -89,12 +89,12 @@ class WallbaseDownloader(Downloader.Downloader):
         if start_from:
             url = url.replace('?', '/%d?' % start_from, 1)
 
-        logger.info("Performing wallbase search: url=%s" % url)
+        logger.info(lambda: "Performing wallbase search: url=%s" % url)
         return Util.html_soup(url)
 
     @staticmethod
     def validate(location):
-        logger.info("Validating Wallbase location " + location)
+        logger.info(lambda: "Validating Wallbase location " + location)
         try:
             s = WallbaseDownloader(None, location).search()
             wall = s.find("div", "thumbnail")
@@ -103,46 +103,46 @@ class WallbaseDownloader(Downloader.Downloader):
             link = wall.find("img", "file")
             return link is not None
         except Exception:
-            logger.exception("Error while validating wallbase search")
+            logger.exception(lambda: "Error while validating wallbase search")
             return False
 
     def download_one(self):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("wallbase", 0, 0)
 
         if time.time() - WallbaseDownloader.last_download_time < min_download_interval:
-            logger.info("Minimal interval between Wallbase downloads is %d, skip this attempt" % min_download_interval)
+            logger.info(lambda: "Minimal interval between Wallbase downloads is %d, skip this attempt" % min_download_interval)
             return None
 
-        logger.info("Downloading an image from Wallbase.cc, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from Wallbase.cc, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info("Wallbase queue empty, but minimal interval between fill attempts is %d, "
+                logger.info(lambda: "Wallbase queue empty, but minimal interval between fill attempts is %d, "
                             "will try again later" % min_fill_queue_interval)
                 return None
 
             self.fill_queue()
 
         if not self.queue:
-            logger.info("Wallbase queue still empty after fill request")
+            logger.info(lambda: "Wallbase queue still empty after fill request")
             return None
 
         WallbaseDownloader.last_download_time = time.time()
 
         wallpaper_url = self.queue.pop()
-        logger.info("Wallpaper URL: " + wallpaper_url)
+        logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
         src_url = s.find('img', 'wall')['src']
-        logger.info("Image src URL: " + src_url)
+        logger.info(lambda: "Image src URL: " + src_url)
 
         return self.save_locally(wallpaper_url, src_url)
 
     def fill_queue(self):
         self.last_fill_time = time.time()
 
-        logger.info("Filling wallbase queue: " + self.location)
+        logger.info(lambda: "Filling wallbase queue: " + self.location)
 
         start_from = None
         not_random = not "order=random" in self.url
@@ -155,7 +155,7 @@ class WallbaseDownloader(Downloader.Downloader):
         thumbs = s.find_all('div', 'thumbnail')
 
         if start_from and not thumbs:  # oops, no results - probably too few matches, use the first page of results
-            logger.info("Nothing found when using start index %d, rerun with no start index" % start_from)
+            logger.info(lambda: "Nothing found when using start index %d, rerun with no start index" % start_from)
             s = self.search()
             thumbs = s.find_all('div', 'thumbnail')
 
@@ -176,7 +176,7 @@ class WallbaseDownloader(Downloader.Downloader):
                     continue
                 self.queue.append(link)
             except Exception:
-                logger.debug("Missing link for thumbnail")
+                logger.debug(lambda: "Missing link for thumbnail")
 
         random.shuffle(self.queue)
 
@@ -185,4 +185,4 @@ class WallbaseDownloader(Downloader.Downloader):
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 
-        logger.info("Wallbase queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "Wallbase queue populated with %d URLs" % len(self.queue))

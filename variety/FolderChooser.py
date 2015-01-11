@@ -74,11 +74,11 @@ class FolderChooser:
                     if self.on_change:
                         self.on_change()
                 except Exception:
-                    logger.exception("Exception during FolderChooser on_change:")
+                    logger.exception(lambda: "Exception during FolderChooser on_change:")
         finally:
             if self.chooser:
                 try:
                     self.chooser.destroy()
                     self.chooser = None
                 except Exception:
-                    logger.exception("Exception during FolderChooser destroying:")
+                    logger.exception(lambda: "Exception during FolderChooser destroying:")

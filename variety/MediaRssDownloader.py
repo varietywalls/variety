@@ -52,7 +52,7 @@ class MediaRssDownloader(Downloader.Downloader):
 
     @staticmethod
     def validate(url):
-        logger.info("Validating MediaRSS url " + url)
+        logger.info(lambda: "Validating MediaRSS url " + url)
         try:
             if not url.startswith("http://") and not url.startswith("https://"):
                 url = "http://" + url
@@ -62,17 +62,17 @@ class MediaRssDownloader(Downloader.Downloader):
                      if MediaRssDownloader.is_valid_content(x)]
             return len(walls) > 0
         except Exception:
-            logger.exception("Error while validating URL, probably not a MediaRSS feed")
+            logger.exception(lambda: "Error while validating URL, probably not a MediaRSS feed")
             return False
 
     def download_one(self):
-        logger.info("Downloading an image from MediaRSS, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from MediaRSS, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             self.fill_queue()
         if not self.queue:
-            logger.info("MediaRSS queue empty after fill")
+            logger.info(lambda: "MediaRSS queue empty after fill")
             return None
 
         origin_url, image_url, source_type, source_location, source_name, extra_metadata = self.queue.pop()
@@ -86,15 +86,15 @@ class MediaRssDownloader(Downloader.Downloader):
         """ Picasa hack - by default Picasa's RSS feeds link to low-resolution images.
         Add special parameter to request the full-resolution instead:"""
         if feed_url.find("://picasaweb.") > 0:
-            logger.info("Picasa hack to get full resolution images: add imgmax=d to the feed URL")
+            logger.info(lambda: "Picasa hack to get full resolution images: add imgmax=d to the feed URL")
             feed_url = feed_url.replace("&imgmax=", "&imgmax_disabled=")
             feed_url += "&imgmax=d"
-            logger.info("Final Picasa feed URL: " + feed_url)
+            logger.info(lambda: "Final Picasa feed URL: " + feed_url)
 
         return feed_url
 
     def fill_queue(self):
-        logger.info("MediaRSS URL: " + self.location)
+        logger.info(lambda: "MediaRSS URL: " + self.location)
         feed_url = self.location
         feed_url = MediaRssDownloader.picasa_hack(feed_url)
 
@@ -170,27 +170,27 @@ class MediaRssDownloader(Downloader.Downloader):
 
                 self.process_content(origin_url, content, source_type, source_location, source_name, extra_metadata)
             except Exception:
-                logger.exception("Could not process an item in the Media RSS feed")
+                logger.exception(lambda: "Could not process an item in the Media RSS feed")
 
         random.shuffle(self.queue)
-        logger.info("MediaRSS queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "MediaRSS queue populated with %d URLs" % len(self.queue))
 
     def process_content(self, origin_url, content, source_type=None, source_location=None, source_name=None, extra_metadata={}):
         try:
-            logger.debug("Checking origin_url " + origin_url)
+            logger.debug(lambda: "Checking origin_url " + origin_url)
 
             if self.parent and origin_url in self.parent.banned:
-                logger.debug("In banned, skipping")
+                logger.debug(lambda: "In banned, skipping")
                 return
 
             image_file_url = content.attrib["url"]
 
             if self.is_in_downloaded(image_file_url):
-                logger.debug("Already in downloaded")
+                logger.debug(lambda: "Already in downloaded")
                 return
 
             if self.is_in_favorites(image_file_url):
-                logger.debug("Already in favorites")
+                logger.debug(lambda: "Already in favorites")
                 return
 
             width = None
@@ -202,11 +202,11 @@ class MediaRssDownloader(Downloader.Downloader):
                 pass
 
             if self.parent and width and height and not self.parent.size_ok(width, height):
-                logger.debug("Small or non-landscape size/resolution")
+                logger.debug(lambda: "Small or non-landscape size/resolution")
                 return
 
-            logger.debug("Appending to queue %s, %s, %s, %s, %s" %
+            logger.debug(lambda: "Appending to queue %s, %s, %s, %s, %s" %
                          (origin_url, image_file_url, source_type, source_location, source_name))
             self.queue.append((origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
         except Exception:
-            logger.exception("Error parsing single MediaRSS image info:")
+            logger.exception(lambda: "Error parsing single MediaRSS image info:")

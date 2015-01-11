@@ -66,7 +66,7 @@ class LocalFilesSource(IQuoteSource):
 
     def load(self, path):
         try:
-            logger.info("Loading quotes file %s" % path)
+            logger.info(lambda: "Loading quotes file %s" % path)
             with open(path, 'rU') as f:
                 s = f.read().decode('utf-8', errors='ignore')
                 for q in re.split(r'(^\.$|^%$)', s, flags=re.MULTILINE):
@@ -79,9 +79,9 @@ class LocalFilesSource(IQuoteSource):
                             author = parts[1].strip() if len(parts) > 1 else None
                             self.quotes.append({"quote": quote, "author": author, "sourceName": os.path.basename(path)})
                     except Exception:
-                        logger.debug('Could not process local quote %s' % q)
+                        logger.debug(lambda: 'Could not process local quote %s' % q)
         except Exception:
-            logger.exception("Could not load quotes file %s" % path)
+            logger.exception(lambda: "Could not load quotes file %s" % path)
 
     def get_random(self):
         return self.quotes

@@ -51,7 +51,7 @@ class WallhavenDownloader(Downloader.Downloader):
         if page:
             url = url + ("&" if "?" in self.url else "?") + "page=" + str(page)
 
-        logger.info("Performing wallhaven search: url=%s" % url)
+        logger.info(lambda: "Performing wallhaven search: url=%s" % url)
 
         soup = Util.html_soup(url)
 
@@ -65,7 +65,7 @@ class WallhavenDownloader(Downloader.Downloader):
 
     @staticmethod
     def validate(location):
-        logger.info("Validating Wallhaven location " + location)
+        logger.info(lambda: "Validating Wallhaven location " + location)
         try:
             s, count = WallhavenDownloader(None, location).search()
             wall = s.find("figure", {"class": "thumb"})
@@ -74,39 +74,39 @@ class WallhavenDownloader(Downloader.Downloader):
             link = wall.find("a", {"class": "preview"})
             return link is not None
         except Exception:
-            logger.exception("Error while validating wallhaven search")
+            logger.exception(lambda: "Error while validating wallhaven search")
             return False
 
     def download_one(self):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("wallhaven", 0, 0)
 
         if time.time() - WallhavenDownloader.last_download_time < min_download_interval:
-            logger.info("Minimal interval between Wallhaven downloads is %d, skip this attempt" % min_download_interval)
+            logger.info(lambda: "Minimal interval between Wallhaven downloads is %d, skip this attempt" % min_download_interval)
             return None
 
-        logger.info("Downloading an image from Wallhaven.cc, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from Wallhaven.cc, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info("Wallhaven queue empty, but minimal interval between fill attempts is %d, "
+                logger.info(lambda: "Wallhaven queue empty, but minimal interval between fill attempts is %d, "
                             "will try again later" % min_fill_queue_interval)
                 return None
 
             self.fill_queue()
 
         if not self.queue:
-            logger.info("Wallhaven queue still empty after fill request")
+            logger.info(lambda: "Wallhaven queue still empty after fill request")
             return None
 
         WallhavenDownloader.last_download_time = time.time()
 
         wallpaper_url = self.queue.pop()
-        logger.info("Wallpaper URL: " + wallpaper_url)
+        logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
         src_url = s.find('img', id='wallpaper')['src']
-        logger.info("Image src URL: " + src_url)
+        logger.info(lambda: "Image src URL: " + src_url)
 
         extra_metadata = {}
         try:
@@ -125,7 +125,7 @@ class WallhavenDownloader(Downloader.Downloader):
     def fill_queue(self):
         self.last_fill_time = time.time()
 
-        logger.info("Filling wallhaven queue: " + self.location)
+        logger.info(lambda: "Filling wallhaven queue: " + self.location)
 
         not_random = not "sorting=random" in self.url
         if not_random:
@@ -134,7 +134,7 @@ class WallhavenDownloader(Downloader.Downloader):
                 count = 300
             pages = min(count, 300) / 24 + 1
             page = random.randint(1, pages)
-            logger.info('%s wallpapers in result, using page %s' % (count, page))
+            logger.info(lambda: '%s wallpapers in result, using page %s' % (count, page))
             s, count = self.search(page=page)
         else:
             s, count = self.search()
@@ -157,7 +157,7 @@ class WallhavenDownloader(Downloader.Downloader):
                     continue
                 self.queue.append(link)
             except Exception:
-                logger.debug("Missing link for thumbnail")
+                logger.debug(lambda: "Missing link for thumbnail")
 
         random.shuffle(self.queue)
 
@@ -166,4 +166,4 @@ class WallhavenDownloader(Downloader.Downloader):
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 
-        logger.info("Wallhaven queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "Wallhaven queue populated with %d URLs" % len(self.queue))

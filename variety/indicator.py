@@ -316,26 +316,26 @@ class Indicator:
         self.visible = visible
         if visible:
             if self.indicator:
-                logger.info("Showing indicator icon")
+                logger.info(lambda: "Showing indicator icon")
                 self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
             if self.status_icon:
-                logger.info("Showing status icon")
+                logger.info(lambda: "Showing status icon")
                 self.status_icon.set_visible(True)
         else:
             if self.indicator:
-                logger.info("Hiding indicator icon")
+                logger.info(lambda: "Hiding indicator icon")
                 self.indicator.set_status(AppIndicator3.IndicatorStatus.PASSIVE)
             if self.status_icon:
-                logger.info("Hiding status icon")
+                logger.info(lambda: "Hiding status icon")
                 self.status_icon.set_visible(False)
 
     def set_icon(self, icon):
         if icon == "Light" and Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME):
             if self.indicator:
-                logger.info("Showing indicator icon %s from GTK theme" % THEME_ICON_NAME)
+                logger.info(lambda: "Showing indicator icon %s from GTK theme" % THEME_ICON_NAME)
                 self.indicator.set_icon(THEME_ICON_NAME)
             if self.status_icon:
-                logger.info("Showing status icon %s from GTK theme" % THEME_ICON_NAME)
+                logger.info(lambda: "Showing status icon %s from GTK theme" % THEME_ICON_NAME)
                 self.status_icon.set_from_icon_name(THEME_ICON_NAME)
             return
 
@@ -349,10 +349,10 @@ class Indicator:
             icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
 
         if self.indicator:
-            logger.info("Showing indicator icon image: " + icon_path)
+            logger.info(lambda: "Showing indicator icon image: " + icon_path)
             self.indicator.set_icon(icon_path)
         if self.status_icon:
-            logger.info("Showing status icon image: " + icon_path)
+            logger.info(lambda: "Showing status icon image: " + icon_path)
             self.status_icon.set_from_file(icon_path)
 
     def get_visible(self):

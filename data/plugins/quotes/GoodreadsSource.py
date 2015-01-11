@@ -58,7 +58,7 @@ class GoodreadsSource(IQuoteSource):
         return self.get_for_keyword(random.choice(KEYWORDS))[:4]
 
     def get_for_author(self, author):
-        logger.info("Fetching quotes from Goodreads for author=%s" % author)
+        logger.info(lambda: "Fetching quotes from Goodreads for author=%s" % author)
 
         url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % author)
         soup = Util.html_soup(url)
@@ -73,7 +73,7 @@ class GoodreadsSource(IQuoteSource):
         return self.get_from_soup(url, soup)
 
     def get_for_keyword(self, keyword):
-        logger.info("Fetching quotes from Goodreads for keyword=%s" % keyword)
+        logger.info(lambda: "Fetching quotes from Goodreads for keyword=%s" % keyword)
 
         url = iri2uri(u"http://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s" % keyword)
         soup = Util.html_soup(url)
@@ -88,11 +88,11 @@ class GoodreadsSource(IQuoteSource):
         return self.get_from_soup(url, soup)
 
     def get_from_soup(self, url, soup):
-        logger.info("Used Goodreads url %s" % url)
+        logger.info(lambda: "Used Goodreads url %s" % url)
         quotes = []
 
         for div in soup.find_all('div', 'quoteText'):
-            logger.debug("Parsing quote for div\n%s" % div)
+            logger.debug(lambda: "Parsing quote for div\n%s" % div)
             try:
                 quote_text = u""
                 first_a = div.find('a')
@@ -113,9 +113,9 @@ class GoodreadsSource(IQuoteSource):
                     author = re.match(r'(\n\s+)+((.*)$)', quote_text, re.MULTILINE)
                 quotes.append({"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link})
             except Exception:
-                logger.exception("Could not extract Goodreads quote")
+                logger.exception(lambda: "Could not extract Goodreads quote")
 
         if not quotes:
-            logger.warning("Goodreads: no quotes found at %s" % url)
+            logger.warning(lambda: "Goodreads: no quotes found at %s" % url)
 
         return quotes

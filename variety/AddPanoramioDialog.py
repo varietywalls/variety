@@ -62,7 +62,7 @@ class AddPanoramioDialog(Gtk.Dialog):
         return 'file://' + urllib.pathname2url(path)
 
     def js(self, command):
-        logger.debug('Panoramio: js(%s)' % command)
+        logger.debug(lambda: 'Panoramio: js(%s)' % command)
         if hasattr(self, "web_view_loaded"):
             GObject.idle_add(lambda: self.web_view.execute_script(command))
         else:
@@ -82,7 +82,7 @@ class AddPanoramioDialog(Gtk.Dialog):
 
         def nav(wv, command):
             if command:
-                logger.info('Received command: ' + command)
+                logger.info(lambda: 'Received command: ' + command)
                 command = command[command.index('|') + 1:]
                 index = command.index(':')
                 action = command[:index]

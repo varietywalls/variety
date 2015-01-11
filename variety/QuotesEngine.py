@@ -41,12 +41,12 @@ class QuotesEngine:
                 try:
                     p["plugin"].deactivate()
                 except Exception:
-                    logger.exception("Error deactivating %s" % name)
+                    logger.exception(lambda: "Error deactivating %s" % name)
             else:
                 try:
                     p["plugin"].activate()
                 except Exception:
-                    logger.exception("Error activating %s" % name)
+                    logger.exception(lambda: "Error activating %s" % name)
 
         self.plugins = self.parent.jumble.get_plugins(IQuoteSource, active=True)
 
@@ -59,7 +59,7 @@ class QuotesEngine:
         if self.started or not self.parent.options.quotes_enabled:
             return
 
-        logger.info("Starting QuotesEngine")
+        logger.info(lambda: "Starting QuotesEngine")
 
         self.update_plugins()
 
@@ -154,7 +154,7 @@ class QuotesEngine:
 
     def on_options_updated(self, clear_prepared=True):
         if clear_prepared:
-            logger.info("Quotes: clearing prepared and updating plugins")
+            logger.info(lambda: "Quotes: clearing prepared and updating plugins")
             with self.prepared_lock:
                 self.prepared = []
             self.update_plugins()
@@ -162,7 +162,7 @@ class QuotesEngine:
         self.change_event.set()
 
     def regular_change_thread(self):
-        logger.info("Quotes regular change thread running")
+        logger.info(lambda: "Quotes regular change thread running")
 
         while self.running:
             try:
@@ -181,20 +181,20 @@ class QuotesEngine:
                     return
                 if not self.parent.options.quotes_change_enabled:
                     continue
-                logger.info("Quotes regular_change changes quote")
+                logger.info(lambda: "Quotes regular_change changes quote")
                 self.last_change_time = time.time()
                 self.parent.quote = self.change_quote()
                 self.parent.refresh_texts()
             except Exception:
-                logger.exception("Exception in regular_change_thread")
+                logger.exception(lambda: "Exception in regular_change_thread")
 
     def prepare_thread(self):
-        logger.info("Quotes prepare thread running")
+        logger.info(lambda: "Quotes prepare thread running")
 
         while self.running:
             try:
                 while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
-                    logger.info("Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
+                    logger.info(lambda: "Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
                     quote = self.get_one_quote()
                     if quote:
                         with self.prepared_lock:
@@ -209,7 +209,7 @@ class QuotesEngine:
                     return
 
             except Exception:
-                logger.exception("Error in quotes prepare thread:")
+                logger.exception(lambda: "Error in quotes prepare thread:")
 
             self.prepare_event.wait()
             self.prepare_event.clear()
@@ -278,13 +278,13 @@ class QuotesEngine:
                             cached[q["quote"]] = q
 
                 except Exception:
-                    logger.exception("Exception in quote plugin")
+                    logger.exception(lambda: "Exception in quote plugin")
                     plugins.remove(plugin)
                     error_plugins.append(plugin)
                     continue
 
             if not cached:
-                logger.warning("No quotes for '%s' for plugin %s" % (search, plugin_name))
+                logger.warning(lambda: "No quotes for '%s' for plugin %s" % (search, plugin_name))
                 plugins.remove(plugin)
                 continue
 

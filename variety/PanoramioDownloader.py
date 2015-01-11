@@ -51,29 +51,29 @@ class PanoramioDownloader(Downloader.Downloader):
 
     def search(self, _from, _to):
         url = PanoramioDownloader.API_URL % (_from, _to, self.minx, self.miny, self.maxx, self.maxy)
-        logger.info("Performing Panoramio API call: url=%s" % url)
+        logger.info(lambda: "Performing Panoramio API call: url=%s" % url)
         return Util.fetch_json(url)
 
     def download_one(self):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("panoramio", 0, 0)
 
         if time.time() - PanoramioDownloader.last_download_time < min_download_interval:
-            logger.info("Minimal interval between Panoramio downloads is %d, skip this attempt" % min_download_interval)
+            logger.info(lambda: "Minimal interval between Panoramio downloads is %d, skip this attempt" % min_download_interval)
             return None
 
-        logger.info("Downloading an image from Panoramio, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from Panoramio, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info("Panoramio queue empty, but minimal interval between fill attempts is %d, "
+                logger.info(lambda: "Panoramio queue empty, but minimal interval between fill attempts is %d, "
                             "will try again later" % min_fill_queue_interval)
                 return None
 
             self.fill_queue()
 
         if not self.queue:
-            logger.info("Panoramio queue still empty after fill request")
+            logger.info(lambda: "Panoramio queue still empty after fill request")
             return None
 
         PanoramioDownloader.last_download_time = time.time()
@@ -95,7 +95,7 @@ class PanoramioDownloader(Downloader.Downloader):
     def fill_queue(self):
         self.last_fill_time = time.time()
 
-        logger.info("Filling Panoramio queue: " + self.location)
+        logger.info(lambda: "Filling Panoramio queue: " + self.location)
 
         total_count = int(self.search(0, 0)["count"])
         _from = random.randint(0, max(0, total_count - 100))
@@ -123,4 +123,4 @@ class PanoramioDownloader(Downloader.Downloader):
             self.queue = self.queue[:len(self.queue)//2]
             # only use randomly half the images - if we ever hit the same page again, we'll still have what to download
 
-        logger.info("Panoramio queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "Panoramio queue populated with %d URLs" % len(self.queue))

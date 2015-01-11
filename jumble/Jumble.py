@@ -40,7 +40,7 @@ class Jumble:
             name = os.path.splitext(f)[0]
             info = imp.find_module(name, [location])
             try:
-                logger.info("Jumble loading module in %s from %s" % (name, path))
+                logger.info(lambda: "Jumble loading module in %s from %s" % (name, path))
                 yield imp.load_module(name, *info), path
             except Exception:
                 logging.exception("Could not load plugin module %s" % path)
@@ -58,7 +58,7 @@ class Jumble:
         """
         Loads all plugins from the plugin folders, without activating them
         """
-        logger.info("Jumble loading")
+        logger.info(lambda: "Jumble loading")
         self.plugins = []
         for cls, path in self._walk_plugin_classes():
             try:
@@ -73,7 +73,7 @@ class Jumble:
 
             try:
                 plugin = cls()
-                logger.info("Jumble found plugin class: %s: %s" % (str(cls), str(info)))
+                logger.info(lambda: "Jumble found plugin class: %s: %s" % (str(cls), str(info)))
 
                 plugin.jumble = self
                 plugin.path = os.path.realpath(path)

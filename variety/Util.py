@@ -180,10 +180,10 @@ class Util:
     def makedirs(path):
         try:
             if not os.path.isdir(path):
-                logger.info("Creating folder %s" % path)
+                logger.info(lambda: "Creating folder %s" % path)
                 os.makedirs(path)
         except OSError:
-            logger.exception("Could not makedirs for %s" % path)
+            logger.exception(lambda: "Could not makedirs for %s" % path)
 
     @staticmethod
     def is_image(filename, check_contents=False):
@@ -216,11 +216,11 @@ class Util:
                             if filter_func(filename):
                                 count += 1
                                 if count > max_files:
-                                    logger.info("More than %d files in the folders, stop listing" % max_files)
+                                    logger.info(lambda: "More than %d files in the folders, stop listing" % max_files)
                                     return
                                 yield os.path.join(root, filename)
                 except Exception:
-                    logger.exception("Cold not walk folder " + folder)
+                    logger.exception(lambda: "Cold not walk folder " + folder)
 
     @staticmethod
     def start_force_exit_thread(delay):
@@ -270,7 +270,7 @@ class Util:
                     f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
                     return True
             except Exception, e:
-                logger.exception("Could not write metadata for file " + filename)
+                logger.exception(lambda: "Could not write metadata for file " + filename)
                 return False
 
     @staticmethod
@@ -346,7 +346,7 @@ class Util:
                             info["sourceType"] = lines[5].strip()
 
                         if Util.write_metadata(filename, info):
-                            logger.warning("Replacing txt image metadata with json-based: %s" % filename)
+                            logger.warning(lambda: "Replacing txt image metadata with json-based: %s" % filename)
                             os.unlink(filename + ".txt")
 
                         return info
@@ -464,7 +464,7 @@ class Util:
             scaledw = iw * scaledh / ih
             hoffset = int((scaledw - float(scaledh) * screen_ratio) / 2)
 
-        logger.info("Trimmed offsets debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
+        logger.info(lambda: "Trimmed offsets debug info: w:%d, h:%d, ratio:%f, iw:%d, ih:%d, scw:%d, sch:%d, ho:%d, vo:%d" % (
             screen_w, screen_h, screen_ratio, iw, ih, scaledw, scaledh, hoffset, voffset))
         return hoffset, voffset
 
@@ -546,7 +546,7 @@ class Util:
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
             return query_info.get_attribute_object("standard::icon").get_names()[0]
         except Exception:
-            logger.exception("Exception while obtaining folder icon for %s:" % path)
+            logger.exception(lambda: "Exception while obtaining folder icon for %s:" % path)
             return "folder"
 
     @staticmethod
@@ -558,12 +558,12 @@ class Util:
         try:
             return GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES)
         except:
-            logger.exception("Could not get path to Pictures folder")
+            logger.exception(lambda: "Could not get path to Pictures folder")
             return os.path.expanduser(u'~/Pictures')
 
     @staticmethod
     def superuser_exec(*command_args):
-        logger.warning("Executing as superuser: %s" % _str(command_args))
+        logger.warning(lambda: "Executing as superuser: %s" % _str(command_args))
         subprocess.check_call(["pkexec"] + list(command_args))
 
     @staticmethod

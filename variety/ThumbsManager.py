@@ -126,7 +126,7 @@ class ThumbsManager():
             show_origin = Gtk.MenuItem(label)
 
             def _show_origin(widget=None):
-                logger.info("Opening url: " + url)
+                logger.info(lambda: "Opening url: " + url)
                 webbrowser.open_new_tab(url)
 
             show_origin.connect("activate", _show_origin)
@@ -194,7 +194,7 @@ class ThumbsManager():
                     Util.set_rating(file, rating)
                     main_window.on_rating_changed(file)
                 except Exception:
-                    logger.exception("Could not set EXIF rating")
+                    logger.exception(lambda: "Could not set EXIF rating")
                     main_window.show_notification(_("Could not set EXIF rating"))
             return _set_rating
 
@@ -237,14 +237,14 @@ class ThumbsManager():
             self.show(self.images, gdk_thread=True, screen=self.screen, type=self.type, folders=self.folders)
 
     def set_position(self, position):
-        logger.info("Setting thumbs position " + str(position))
+        logger.info(lambda: "Setting thumbs position " + str(position))
         options = self.load_options()
         options.position = ThumbsManager.POSITIONS[position]
         self.save_options(options)
         self.repaint()
 
     def set_size(self, size):
-        logger.info("Setting thumbs size " + str(size))
+        logger.info(lambda: "Setting thumbs size " + str(size))
         options = self.load_options()
         options.breadth = size
         self.save_options(options)
@@ -305,7 +305,7 @@ class ThumbsManager():
                 if len(self.images) > 0:
                     self.initialize_thumbs_window(gdk_thread=gdk_thread)
             except Exception:
-                logger.exception("Could not create thumbs window:")
+                logger.exception(lambda: "Could not create thumbs window:")
 
     def initialize_thumbs_window(self, gdk_thread=False):
         try:
@@ -318,7 +318,7 @@ class ThumbsManager():
                 icon = varietyconfig.get_data_file("media", "variety.svg")
                 self.thumbs_window.set_icon_from_file(icon)
             except Exception:
-                logger.exception("Could not set thumbs window icon")
+                logger.exception(lambda: "Could not set thumbs window icon")
 
             if self.type == "history":
                 title = _("Variety History")
@@ -350,14 +350,14 @@ class ThumbsManager():
                 s = config["thumbs_position"].lower()
                 options.position = ThumbsManager.POSITIONS[s]
             except Exception:
-                logger.exception("Missing or bad thumbs_position option in ui.conf")
+                logger.exception(lambda: "Missing or bad thumbs_position option in ui.conf")
 
             try:
                 options.breadth = int(config["thumbs_size"])
             except Exception:
-                logger.exception("Missing or bad thumbs_size option in ui.conf")
+                logger.exception(lambda: "Missing or bad thumbs_size option in ui.conf")
         except Exception:
-            logger.exception("Could not read ui.conf")
+            logger.exception(lambda: "Could not read ui.conf")
 
         return options
 
@@ -369,9 +369,9 @@ class ThumbsManager():
                 config["thumbs_size"] = options.breadth
                 config.write()
             except Exception:
-                logger.exception("Missing or bad thumbs_position option in ui.conf")
+                logger.exception(lambda: "Missing or bad thumbs_position option in ui.conf")
         except Exception:
-            logger.exception("Could not save ui.conf")
+            logger.exception(lambda: "Could not save ui.conf")
 
 
     def hide(self, gdk_thread=False, force=True, keep_settings=False):

@@ -15,6 +15,7 @@
 ### END LICENSE
 
 import gettext
+import logging
 gettext.textdomain('variety')
 import os
 import sys
@@ -66,6 +67,31 @@ def safe_print(text, ascii_text=None):
             logging.getLogger("variety").warning(text)
         except:
             pass
+
+
+class SafeLogger(logging.Logger):
+    """
+    Fixes UnicodeDecodeErrors errors in logging calls:
+    Accepts lambda instead of string messages. Catches errors when evaluatiating the passed lambda.
+    """
+    def makeRecord(self, name, level, fn, lno, msg, args, exc_info, func=None, extra=None):
+        try:
+            new_msg = msg if isinstance(msg, basestring) else msg()
+        except:
+            locale_info = 'Unknown'
+            try:
+                import os
+                locale_info = 'Terminal encoding=%s, LANG=%s, LANGUAGE=%s' % (
+                    sys.stdout.encoding, os.getenv('LANG'), os.getenv('LANGUAGE'))
+                logging.getLogger("variety").exception('Errors while logging. Locale info: %s' % locale_info)
+                # TODO gather and log more info here
+            except:
+                pass
+            new_msg = 'Errors while logging. Locale info: %s' % locale_info
+
+        return super(SafeLogger, self).makeRecord(name, level, fn, lno, new_msg, args, exc_info, func, extra)
+
+logging.setLoggerClass(SafeLogger)
 
 # # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
 # Still, generally considerd bad practice, may cause some deep hidden errors, as various Python stuff depends on it

@@ -183,13 +183,13 @@ class VarietyWindow(Gtk.Window):
     def on_mnu_about_activate(self, widget, data=None):
         """Display the about box for variety."""
         if self.about is not None:
-            logger.debug('show existing about_dialog')
+            logger.debug(lambda: 'show existing about_dialog')
             self.about.set_keep_above(True)
             self.about.present()
             self.about.set_keep_above(False)
             self.about.present()
         else:
-            logger.debug('create new about dialog')
+            logger.debug(lambda: 'create new about dialog')
             self.about = AboutVarietyDialog() # pylint: disable=E1102
             self.about.run()
             self.about.destroy()
@@ -202,11 +202,11 @@ class VarietyWindow(Gtk.Window):
 
     def create_preferences_dialog(self):
         if not self.preferences_dialog:
-            logger.debug('create new preferences_dialog')
+            logger.debug(lambda: 'create new preferences_dialog')
             self.preferences_dialog = PreferencesVarietyDialog(parent=self) # pylint: disable=E1102
 
             def _on_preferences_dialog_destroyed(widget, data=None):
-                logger.debug('on_preferences_dialog_destroyed')
+                logger.debug(lambda: 'on_preferences_dialog_destroyed')
                 self.preferences_dialog = None
             self.preferences_dialog.connect('destroy', _on_preferences_dialog_destroyed)
 
@@ -219,13 +219,13 @@ class VarietyWindow(Gtk.Window):
         """Display the preferences window for variety."""
         if self.preferences_dialog is not None:
             if self.preferences_dialog.get_visible():
-                logger.debug('bring to front existing and visible preferences_dialog')
+                logger.debug(lambda: 'bring to front existing and visible preferences_dialog')
                 self.preferences_dialog.set_keep_above(True)
                 self.preferences_dialog.present()
                 self.preferences_dialog.set_keep_above(False)
                 self.preferences_dialog.present()
             else:
-                logger.debug('reload and show existing but non-visible preferences_dialog')
+                logger.debug(lambda: 'reload and show existing but non-visible preferences_dialog')
                 self.preferences_dialog.reload()
                 self.preferences_dialog.show()
         else:
@@ -241,12 +241,12 @@ class VarietyWindow(Gtk.Window):
                     os.path.join(self.config_folder, "variety_latest_default.conf"))
 
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
-            logger.info("Missing config file, copying it from " +
+            logger.info(lambda: "Missing config file, copying it from " +
                         varietyconfig.get_data_file("config", "variety.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
 
         if not os.path.exists(os.path.join(self.config_folder, "ui.conf")):
-            logger.info("Missing ui.conf file, copying it from " +
+            logger.info(lambda: "Missing ui.conf file, copying it from " +
                         varietyconfig.get_data_file("config", "ui.conf"))
             shutil.copy(varietyconfig.get_data_file("config", "ui.conf"), self.config_folder)
 
@@ -257,12 +257,12 @@ class VarietyWindow(Gtk.Window):
         Util.makedirs(self.scripts_folder)
 
         if not os.path.exists(os.path.join(self.scripts_folder, "set_wallpaper")):
-            logger.info("Missing set_wallpaper file, copying it from " +
+            logger.info(lambda: "Missing set_wallpaper file, copying it from " +
                         varietyconfig.get_data_file("scripts", "set_wallpaper"))
             shutil.copy(varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder)
 
         if not os.path.exists(os.path.join(self.scripts_folder, "get_wallpaper")):
-            logger.info("Missing get_wallpaper file, copying it from " +
+            logger.info(lambda: "Missing get_wallpaper file, copying it from " +
                         varietyconfig.get_data_file("scripts", "get_wallpaper"))
             shutil.copy(varietyconfig.get_data_file("scripts", "get_wallpaper"), self.scripts_folder)
 
@@ -278,14 +278,14 @@ class VarietyWindow(Gtk.Window):
         pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
         if not os.path.exists(pencil_tile_filename):
             def _generate_pencil_tile():
-                logger.info("Missing pencil_tile.png file, generating it " +
+                logger.info(lambda: "Missing pencil_tile.png file, generating it " +
                             varietyconfig.get_data_file("media", "pencil_tile.png"))
                 try:
                     os.system(
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
                         "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename.encode('utf8'))
                 except Exception:
-                    logger.exception("Could not generate pencil_tile.png")
+                    logger.exception(lambda: "Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
 
     def register_clipboard(self):
@@ -295,7 +295,7 @@ class VarietyWindow(Gtk.Window):
                     return
 
                 text = clipboard.wait_for_text()
-                logger.debug("Clipboard: %s" % text)
+                logger.debug(lambda: "Clipboard: %s" % text)
                 if not text:
                     return
 
@@ -303,18 +303,18 @@ class VarietyWindow(Gtk.Window):
                          ImageFetcher.url_ok(url, self.options.clipboard_use_whitelist, self.options.clipboard_hosts)]
 
                 if valid:
-                    logger.info("Received clipboard URLs: " + str(valid))
+                    logger.info(lambda: "Received clipboard URLs: " + str(valid))
                     self.process_urls(valid, verbose=False)
             except Exception:
-                logger.exception("Exception when processing clipboard:")
+                logger.exception(lambda: "Exception when processing clipboard:")
 
         self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
         self.clipboard.connect("owner-change", clipboard_changed)
 
     def log_options(self):
-        logger.info("Loaded options:")
+        logger.info(lambda: "Loaded options:")
         for k, v in sorted(self.options.__dict__.items()):
-            logger.info("%s = %s" % (k, v))
+            logger.info(lambda: "%s = %s" % (k, v))
 #        pprint(self.options.__dict__, indent=0)
 
     def get_real_download_folder(self):
@@ -372,7 +372,7 @@ class VarietyWindow(Gtk.Window):
         self.download_folder_size = -1
 
         if self.size_options_changed():
-            logger.info("Size/landscape settings changed - purging downloaders cache")
+            logger.info(lambda: "Size/landscape settings changed - purging downloaders cache")
             self.create_downloaders_cache()
 
         for s in self.options.sources:
@@ -387,12 +387,12 @@ class VarietyWindow(Gtk.Window):
                 self.downloaders.append(self.downloaders_cache[type][location])
             else:
                 try:
-                    logger.info("Creating new downloader for type %d, location %s" % (type, location))
+                    logger.info(lambda: "Creating new downloader for type %d, location %s" % (type, location))
                     dlr = self.create_downloader(type, location)
                     self.downloaders_cache[type][location] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
-                    logger.exception("Could not create Downloader for type %d, location %s" % (type, location))
+                    logger.exception(lambda: "Could not create Downloader for type %d, location %s" % (type, location))
 
         for downloader in self.downloaders:
             downloader.update_download_folder()
@@ -412,7 +412,7 @@ class VarietyWindow(Gtk.Window):
         # clean prepared - they are outdated
         if self.should_clear_prepared():
             self.filters_warning_shown = False
-            logger.info("Clearing prepared queue")
+            logger.info(lambda: "Clearing prepared queue")
             with self.prepared_lock:
                 self.prepared_cleared = True
                 self.prepared = []
@@ -420,7 +420,7 @@ class VarietyWindow(Gtk.Window):
                 self.prepare_event.set()
             self.image_count = -1
         else:
-            logger.info("No need to clear prepared queue")
+            logger.info(lambda: "No need to clear prepared queue")
 
         self.start_clock_thread()
 
@@ -553,10 +553,10 @@ class VarietyWindow(Gtk.Window):
             if should_repaint:
                 self.thumbs_manager.repaint()
             try:
-                logger.info("Deleting recursively folder " + folder)
+                logger.info(lambda: "Deleting recursively folder " + folder)
                 shutil.rmtree(folder)
             except Exception:
-                logger.exception("Could not delete download folder contents " + folder)
+                logger.exception(lambda: "Could not delete download folder contents " + folder)
             if self.current and Util.file_in(self.current, folder):
                 change_timer = threading.Timer(0, self.next_wallpaper)
                 change_timer.start()
@@ -568,7 +568,7 @@ class VarietyWindow(Gtk.Window):
                 for line in f:
                     self.banned.add(line.strip())
         except Exception:
-            logger.info("Missing or invalid banned URLs list, no URLs will be banned")
+            logger.info(lambda: "Missing or invalid banned URLs list, no URLs will be banned")
 
     def start_clock_thread(self):
         if not self.clock_thread and self.options.clock_enabled:
@@ -643,7 +643,7 @@ class VarietyWindow(Gtk.Window):
         if auto_changed is None:
             auto_changed = self.auto_changed
 
-        logger.info("Setting file info to: %s" % file)
+        logger.info(lambda: "Setting file info to: %s" % file)
         try:
             self.url = None
             self.image_url = None
@@ -789,10 +789,10 @@ class VarietyWindow(Gtk.Window):
                 GObject.timeout_add(2000, update_file_operations)
 
         except Exception:
-            logger.exception("Error updating file info")
+            logger.exception(lambda: "Error updating file info")
 
     def regular_change_thread(self):
-        logger.info("regular_change thread running")
+        logger.info(lambda: "regular_change thread running")
 
         if self.options.change_on_start:
             self.change_event.wait(5) # wait for prepare thread to prepare some images first
@@ -810,22 +810,22 @@ class VarietyWindow(Gtk.Window):
                     if self.options.change_enabled:
                         self.change_event.wait(max(0, wait_more))
                     else:
-                        logger.info("regular_change: waiting till user resumes")
+                        logger.info(lambda: "regular_change: waiting till user resumes")
                         self.change_event.wait()
                     self.change_event.clear()
                 if not self.running:
                     return
                 if not self.options.change_enabled:
                     continue
-                logger.info("regular_change changes wallpaper")
+                logger.info(lambda: "regular_change changes wallpaper")
                 self.auto_changed = True
                 self.last_change_time = time.time()
                 self.change_wallpaper()
             except Exception:
-                logger.exception("Exception in regular_change_thread")
+                logger.exception(lambda: "Exception in regular_change_thread")
 
     def clock_thread_method(self):
-        logger.info("clock thread running")
+        logger.info(lambda: "clock thread running")
 
         last_minute = -1
         while self.running:
@@ -842,12 +842,12 @@ class VarietyWindow(Gtk.Window):
                 time.sleep(1)
                 minute = int(time.strftime("%M", time.localtime()))
                 if minute != last_minute:
-                    logger.info("clock_thread updates wallpaper")
+                    logger.info(lambda: "clock_thread updates wallpaper")
                     self.auto_changed = False
                     self.refresh_clock()
                     last_minute = minute
             except Exception:
-                logger.exception("Exception in clock_thread")
+                logger.exception(lambda: "Exception in clock_thread")
 
     def find_images(self):
         self.prepared_cleared = False
@@ -870,7 +870,7 @@ class VarietyWindow(Gtk.Window):
                             with self.prepared_lock:
                                 self.prepared.append(img)
                 except Exception:
-                    logger.exception("Excepion while testing image_ok on file " + img)
+                    logger.exception(lambda: "Excepion while testing image_ok on file " + img)
 
         with self.prepared_lock:
             if self.prepared_cleared:
@@ -879,7 +879,7 @@ class VarietyWindow(Gtk.Window):
 
             self.prepared.extend(found)
             if not self.prepared and images:
-                logger.info("Prepared buffer still empty after search, appending some non-ok image")
+                logger.info(lambda: "Prepared buffer still empty after search, appending some non-ok image")
                 self.prepared.append(images[random.randint(0, len(images) - 1)])
 
             # remove duplicates
@@ -890,7 +890,7 @@ class VarietyWindow(Gtk.Window):
             self.trigger_download()
 
         if len(found) <= 5 and len(images) >= max(20, 10 * len(found)) and found.issubset(set(self.used[:10])):
-            logger.warning("Too few images found: %d out of %d" % (len(found), len(images)))
+            logger.warning(lambda: "Too few images found: %d out of %d" % (len(found), len(images)))
             if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
                 self.filters_warning_shown = True
                 self.show_notification(
@@ -898,18 +898,18 @@ class VarietyWindow(Gtk.Window):
                     _("Variety is finding too few images that match your image filtering criteria"))
 
     def prepare_thread(self):
-        logger.info("Prepare thread running")
+        logger.info(lambda: "Prepare thread running")
         while self.running:
             try:
-                logger.info("Prepared buffer contains %s images" % len(self.prepared))
+                logger.info(lambda: "Prepared buffer contains %s images" % len(self.prepared))
                 if self.image_count < 0 or len(self.prepared) <= min(10, self.image_count // 2):
-                    logger.info("Preparing some images")
+                    logger.info(lambda: "Preparing some images")
                     self.find_images()
                     if not self.running:
                         return
-                    logger.info("After search prepared buffer contains %s images" % len(self.prepared))
+                    logger.info(lambda: "After search prepared buffer contains %s images" % len(self.prepared))
             except Exception:
-                logger.exception("Error in prepare thread:")
+                logger.exception(lambda: "Error in prepare thread:")
 
             self.prepare_event.wait()
             self.prepare_event.clear()
@@ -920,13 +920,13 @@ class VarietyWindow(Gtk.Window):
         while self.running:
             try:
                 attempts += 1
-                logger.info("Fetching server options from %s" % VarietyWindow.SERVERSIDE_OPTIONS_URL)
+                logger.info(lambda: "Fetching server options from %s" % VarietyWindow.SERVERSIDE_OPTIONS_URL)
                 self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
-                logger.info("Fetched server options: %s" % str(self.server_options))
+                logger.info(lambda: "Fetched server options: %s" % str(self.server_options))
                 if self.preferences_dialog:
                     self.preferences_dialog.update_status_message()
             except Exception:
-                logger.exception("Could not fetch Variety serverside options")
+                logger.exception(lambda: "Could not fetch Variety serverside options")
                 if attempts < 5:
                     # the first several attempts may easily fail if Variety is run on startup, try again soon:
                     time.sleep(30)
@@ -972,11 +972,11 @@ class VarietyWindow(Gtk.Window):
                             dl.download_one()
 
             except Exception:
-                logger.exception("Could not download wallpaper:")
+                logger.exception(lambda: "Could not download wallpaper:")
 
     def trigger_download(self):
         if self.downloaders:
-            logger.info("Triggering one download")
+            logger.info(lambda: "Triggering one download")
             self.last_dl_time = 0
             self.dl_event.set()
 
@@ -1002,7 +1002,7 @@ class VarietyWindow(Gtk.Window):
 
             if downloader.is_refresher or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
-                logger.info("Adding downloaded file %s to prepared_from_downloads queue" % file)
+                logger.info(lambda: "Adding downloaded file %s to prepared_from_downloads queue" % file)
                 with self.prepared_lock:
                     self.prepared_from_downloads.append(file)
             else:
@@ -1015,11 +1015,11 @@ class VarietyWindow(Gtk.Window):
 
         if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
             self.download_folder_size = self.get_folder_size(self.real_download_folder)
-            logger.info("Refreshed download folder size: %d mb", self.download_folder_size / (1024.0 * 1024.0))
+            logger.info(lambda: "Refreshed download folder size: %d mb", self.download_folder_size / (1024.0 * 1024.0))
 
         mb_quota = self.options.quota_size * 1024 * 1024
         if self.download_folder_size > 0.95 * mb_quota:
-            logger.info("Purging oldest files from download folder %s, current size: %d mb" %
+            logger.info(lambda: "Purging oldest files from download folder %s, current size: %d mb" %
                         (self.real_download_folder, int(self.download_folder_size / (1024.0 * 1024.0))))
             files = []
             for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
@@ -1033,7 +1033,7 @@ class VarietyWindow(Gtk.Window):
                 file = files[i][0]
                 if file != self.current:
                     try:
-                        logger.debug("Deleting old file in downloaded: " + file)
+                        logger.debug(lambda: "Deleting old file in downloaded: " + file)
                         self.remove_from_queues(file)
                         os.unlink(file)
                         self.download_folder_size -= files[i][1]
@@ -1046,7 +1046,7 @@ class VarietyWindow(Gtk.Window):
                         except Exception:
                             pass
                     except Exception:
-                        logger.exception("Could not delete some file while purging download folder: " + file)
+                        logger.exception(lambda: "Could not delete some file while purging download folder: " + file)
                 i += 1
             self.prepare_event.set()
 
@@ -1067,7 +1067,7 @@ class VarietyWindow(Gtk.Window):
 
     def set_wp_throttled(self, filename, refresh_level=RefreshLevel.ALL):
         if not filename:
-            logger.warning('set_wp_throttled: No wallpaper to set')
+            logger.warning(lambda: 'set_wp_throttled: No wallpaper to set')
             return
 
         self.thumbs_manager.mark_active(file=filename, position=self.position)
@@ -1088,14 +1088,14 @@ class VarietyWindow(Gtk.Window):
         h = Gdk.Screen.get_default().get_height()
         cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
 
-        logger.info("Applying filter: " + filter)
+        logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + ' '
 
         cmd = cmd + ' "' + target_file + '"'
         cmd = cmd.replace("%FILEPATH%", filename)
         cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
 
-        logger.info("ImageMagick filter cmd: " + cmd)
+        logger.info(lambda: "ImageMagick filter cmd: " + cmd)
         return cmd.encode('utf-8')
 
     def build_imagemagick_clock_cmd(self, filename, target_file):
@@ -1113,10 +1113,10 @@ class VarietyWindow(Gtk.Window):
 
         # Note: time.strftime does not support Unicode format, so the encode/decode cycle
         clock_filter = time.strftime(clock_filter.encode('utf8'), time.localtime()).decode('utf8') # this should always be called last
-        logger.info("Applying clock filter: " + clock_filter)
+        logger.info(lambda: "Applying clock filter: " + clock_filter)
 
         cmd += clock_filter + u' "' + target_file + '"'
-        logger.info("ImageMagick clock cmd: " + cmd)
+        logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode('utf-8')
 
     def replace_clock_filter_fonts(self, clock_filter):
@@ -1152,7 +1152,7 @@ class VarietyWindow(Gtk.Window):
             with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
                 f.write(_u(filename))
         except Exception:
-            logger.exception("Cannot write wallpaper.jpg.txt")
+            logger.exception(lambda: "Cannot write wallpaper.jpg.txt")
 
     def apply_filters(self, to_set, refresh_level):
         try:
@@ -1170,14 +1170,14 @@ class VarietyWindow(Gtk.Window):
                             to_set = target_file
                             self.post_filter_filename = to_set
                         else:
-                            logger.warning(
+                            logger.warning(lambda:
                                 "Could not execute filter convert command. " \
                                 "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
                 else:
                     to_set = self.post_filter_filename
             return to_set
         except Exception:
-            logger.exception('Could not apply filters:')
+            logger.exception(lambda: 'Could not apply filters:')
             return to_set
 
     def apply_quote(self, to_set):
@@ -1188,7 +1188,7 @@ class VarietyWindow(Gtk.Window):
                 to_set = quote_outfile
             return to_set
         except Exception:
-            logger.exception('Could not apply quote:')
+            logger.exception(lambda: 'Could not apply quote:')
             return to_set
 
     def apply_clock(self, to_set):
@@ -1200,12 +1200,12 @@ class VarietyWindow(Gtk.Window):
                 if result == 0: #success
                     to_set = target_file
                 else:
-                    logger.warning(
+                    logger.warning(lambda:
                         "Could not execute clock convert command. " \
                         "Missing ImageMagick or bad filter defined? Resultcode: %d" % result)
             return to_set
         except Exception:
-            logger.exception('Could not apply clock:')
+            logger.exception(lambda: 'Could not apply clock:')
             return to_set
 
     def apply_copyto_operation(self, to_set):
@@ -1218,7 +1218,7 @@ class VarietyWindow(Gtk.Window):
                 os.chmod(target_file, 0o644) # Read permissions for everyone, write - for the current user
                 to_set = target_file
             except Exception:
-                logger.exception(
+                logger.exception(lambda:
                     "Could not copy file %s to copyto folder %s. "\
                     "Using it from original locations, so LightDM might not be able to use it." % (to_set, folder))
         return to_set
@@ -1232,11 +1232,11 @@ class VarietyWindow(Gtk.Window):
 
     @throttle(seconds=1, trailing_call=True)
     def do_set_wp(self, filename, refresh_level=RefreshLevel.ALL):
-        logger.info("Calling do_set_wp with %s, time: %s" % (filename, time.time()))
+        logger.info(lambda: "Calling do_set_wp with %s, time: %s" % (filename, time.time()))
         with self.do_set_wp_lock:
             try:
                 if not os.access(filename, os.R_OK):
-                    logger.info("Missing file or bad permissions, will not use it: " + filename)
+                    logger.info(lambda: "Missing file or bad permissions, will not use it: " + filename)
                     return
 
                 self.write_filtered_wallpaper_origin(filename)
@@ -1265,7 +1265,7 @@ class VarietyWindow(Gtk.Window):
                     self.save_last_change_time()
                     self.save_history()
             except Exception:
-                logger.exception("Error while setting wallpaper")
+                logger.exception(lambda: "Error while setting wallpaper")
 
     def list_images(self):
         return Util.list_files(self.individual_images, self.folders, Util.is_image, max_files=10000)
@@ -1320,7 +1320,7 @@ class VarietyWindow(Gtk.Window):
             self.position = position
             self.set_wp_throttled(self.used[self.position])
         else:
-            logger.warning("Invalid position passed to move_to_history_position, %d, used len is %d" % (position, len(self.used)))
+            logger.warning(lambda: "Invalid position passed to move_to_history_position, %d, used len is %d" % (position, len(self.used)))
 
     def show_notification(self, title, message="", icon=None, important=False):
         if not icon:
@@ -1357,14 +1357,14 @@ class VarietyWindow(Gtk.Window):
                         break
 
             if not img:
-                logger.info("No images yet in prepared buffer, using some random image")
+                logger.info(lambda: "No images yet in prepared buffer, using some random image")
                 self.prepare_event.set()
                 rnd_images = self.select_random_images(3)
                 rnd_images = [f for f in rnd_images if f != self.current or self.is_current_refreshable()]
                 img = rnd_images[0] if rnd_images else None
 
             if not img:
-                logger.info("No images found")
+                logger.info(lambda: "No images found")
                 if not self.auto_changed:
                     if self.has_real_downloaders():
                         msg = _("Please add more image sources or wait for some downloads")
@@ -1378,10 +1378,10 @@ class VarietyWindow(Gtk.Window):
 
             self.set_wallpaper(img, auto_changed=self.auto_changed)
         except Exception:
-            logger.exception("Could not change wallpaper")
+            logger.exception(lambda: "Could not change wallpaper")
 
     def set_wallpaper(self, img, auto_changed=False):
-        logger.info("Calling set_wallpaper with " + img)
+        logger.info(lambda: "Calling set_wallpaper with " + img)
         if img == self.current and not self.is_current_refreshable():
             return
         if os.access(img, os.R_OK):
@@ -1398,7 +1398,7 @@ class VarietyWindow(Gtk.Window):
             self.last_change_time = time.time()
             self.set_wp_throttled(img)
         else:
-            logger.warning("set_wallpaper called with unaccessible image " + img)
+            logger.warning(lambda: "set_wallpaper called with unaccessible image " + img)
 
     def refresh_thumbs_history(self, added_image, at_front=False):
         if self.thumbs_manager.is_showing("history"):
@@ -1467,14 +1467,14 @@ class VarietyWindow(Gtk.Window):
                     elif self.options.lightness_mode == Options.LightnessMode.LIGHT:
                         ok = ok and lightness > 180 - fuzziness * 6
                     else:
-                        logger.warning("Unknown lightness mode: %d", self.options.lightness_mode)
+                        logger.warning(lambda: "Unknown lightness mode: %d", self.options.lightness_mode)
 
                 if self.options.desired_color_enabled and self.options.desired_color:
                     ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
 
                 return ok
         except Exception:
-            logger.exception("Error in image_ok for file %s" % img)
+            logger.exception(lambda: "Error in image_ok for file %s" % img)
             return False
 
     def size_ok(self, width, height, fuzziness=0):
@@ -1503,14 +1503,14 @@ class VarietyWindow(Gtk.Window):
 
     def on_show_origin(self, widget=None):
         if self.url:
-            logger.info("Opening url: " + self.url)
+            logger.info(lambda: "Opening url: " + self.url)
             webbrowser.open_new_tab(self.url)
         else:
             self.open_folder()
 
     def on_show_author(self, widget=None):
         if hasattr(self, "author_url") and self.author_url:
-            logger.info("Opening url: " + self.author_url)
+            logger.info(lambda: "Opening url: " + self.author_url)
             webbrowser.open_new_tab(self.author_url)
 
     def get_source(self, file = None):
@@ -1533,7 +1533,9 @@ class VarietyWindow(Gtk.Window):
         prioritized_sources.extend(
             s for s in self.options.sources if s not in prioritized_sources)
 
-        assert len(prioritized_sources) == len(self.options.sources)
+        if len(prioritized_sources) != len(self.options.sources):
+            logger.error(lambda: 'len(prioritized_sources) != len(self.options.sources): %d, %d, %s, %s' %
+                                 (len(prioritized_sources), len(self.options.sources), prioritized_sources, self.options.sources))
 
         file_normpath = os.path.normpath(file)
         for s in prioritized_sources:
@@ -1572,7 +1574,7 @@ class VarietyWindow(Gtk.Window):
                 operation(file + '.txt', to)
             except Exception:
                 pass
-            logger.info(("Moved %s to %s" if is_move else "Copied %s to %s") % (file, to))
+            logger.info(lambda: ("Moved %s to %s" if is_move else "Copied %s to %s") % (file, to))
             #self.show_notification(("Moved %s to %s" if is_move else "Copied %s to %s") % (os.path.basename(file), to_name))
             return True
         except Exception as err:
@@ -1583,11 +1585,11 @@ class VarietyWindow(Gtk.Window):
                         #self.show_notification(op, op + " " + os.path.basename(file) + " to " + to_name)
                         return True
                     except Exception:
-                        logger.exception("Cannot unlink " + file)
+                        logger.exception(lambda: "Cannot unlink " + file)
                 else:
                     return True
 
-            logger.exception("Could not move/copy to " + to)
+            logger.exception(lambda: "Could not move/copy to " + to)
             if is_move:
                 msg = _("Could not move to %s. You probably don't have permissions to move this file.") % to
             else:
@@ -1626,16 +1628,16 @@ class VarietyWindow(Gtk.Window):
                     self.smart.report_file(file, 'trash', async=False)
 
                     command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
-                    logger.info("Running trash command %s" % command)
+                    logger.info(lambda: "Running trash command %s" % command)
                     result = os.system(command.encode('utf8'))
                     if result != 0:
-                        logger.error("Trash resulted in error code %d" % result)
+                        logger.error(lambda: "Trash resulted in error code %d" % result)
                         self.show_notification(
                             _("Cannot delete"),
                             _("Probably there is no utility for moving to Trash?\nPlease install trash-cli or gvfs-bin or konquerer."))
                 threading.Timer(0, _go).start()
         except Exception:
-            logger.exception("Exception in move_to_trash")
+            logger.exception(lambda: "Exception in move_to_trash")
 
     def ban_url(self, url):
         try:
@@ -1643,7 +1645,7 @@ class VarietyWindow(Gtk.Window):
             with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
                 f.write(_u(url) + "\n")
         except Exception:
-            logger.exception("Could not ban URL")
+            logger.exception(lambda: "Could not ban URL")
 
     def remove_from_queues(self, file):
         self.position = max(0, self.position - sum(1 for f in self.used[:self.position] if f == file))
@@ -1670,7 +1672,7 @@ class VarietyWindow(Gtk.Window):
                 self.update_indicator(auto_changed=False)
                 self.smart.report_file(file, 'favorite', async=True)
         except Exception:
-            logger.exception("Exception in copy_to_favorites")
+            logger.exception(lambda: "Exception in copy_to_favorites")
 
     def move_to_favorites(self, widget=None, file=None):
         try:
@@ -1696,7 +1698,7 @@ class VarietyWindow(Gtk.Window):
 
                     self.smart.report_file(new_file, 'favorite', async=True)
         except Exception:
-            logger.exception("Exception in move_to_favorites")
+            logger.exception(lambda: "Exception in move_to_favorites")
 
     def determine_favorites_operation(self, file=None):
         if not file:
@@ -1730,7 +1732,7 @@ class VarietyWindow(Gtk.Window):
         return "copy"
 
     def on_quit(self, widget=None):
-        logger.info("Quitting")
+        logger.info(lambda: "Quitting")
         if self.running:
             self.running = False
 
@@ -1739,7 +1741,7 @@ class VarietyWindow(Gtk.Window):
                     if d:
                         d.destroy()
                 except Exception:
-                    logger.exception("Could not destroy dialog")
+                    logger.exception(lambda: "Could not destroy dialog")
 
             for e in self.events:
                 e.set()
@@ -1748,7 +1750,7 @@ class VarietyWindow(Gtk.Window):
                 if self.quotes_engine:
                     self.quotes_engine.quit()
             except Exception:
-                logger.exception("Could not stop quotes engine")
+                logger.exception(lambda: "Could not stop quotes engine")
 
             if self.options.clock_enabled or self.options.quotes_enabled:
                 self.options.clock_enabled = False
@@ -1804,7 +1806,7 @@ class VarietyWindow(Gtk.Window):
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
-        logger.info("Writing current version %s to .version" % current_version)
+        logger.info(lambda: "Writing current version %s to .version" % current_version)
         with open(os.path.join(self.config_folder, ".version"), "w") as f:
             f.write(current_version)
 
@@ -1823,43 +1825,43 @@ class VarietyWindow(Gtk.Window):
                 except Exception:
                     last_version = "0.4.12" # this is the last release that did not have the .version file
 
-            logger.info("Last run version was %s or earlier, current version is %s" % (last_version, current_version))
+            logger.info(lambda: "Last run version was %s or earlier, current version is %s" % (last_version, current_version))
 
             if Util.compare_versions(last_version, "0.4.13") < 0:
-                logger.info("Performing upgrade to 0.4.13")
+                logger.info(lambda: "Performing upgrade to 0.4.13")
                 try:
                     # mark the current download folder as a valid download folder
                     options = Options()
                     options.read()
-                    logger.info("Writing %s to current download folder %s" % (DL_FOLDER_FILE, options.download_folder))
+                    logger.info(lambda: "Writing %s to current download folder %s" % (DL_FOLDER_FILE, options.download_folder))
                     Util.makedirs(options.download_folder)
                     dl_folder_file = os.path.join(options.download_folder, DL_FOLDER_FILE)
                     if not os.path.exists(dl_folder_file):
                         with open(dl_folder_file, "w") as f:
                             f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                 except Exception:
-                    logger.exception("Could not create %s in download folder" % DL_FOLDER_FILE)
+                    logger.exception(lambda: "Could not create %s in download folder" % DL_FOLDER_FILE)
 
             if Util.compare_versions(last_version, "0.4.14") < 0:
-                logger.info("Performing upgrade to 0.4.14")
+                logger.info(lambda: "Performing upgrade to 0.4.14")
 
                 # Current wallpaper is now stored in wallpaper subfolder, remove old artefacts:
                 walltxt = os.path.join(self.config_folder, "wallpaper.jpg.txt")
                 if os.path.exists(walltxt):
                     try:
-                        logger.info("Moving %s to %s" % (walltxt, self.wallpaper_folder))
+                        logger.info(lambda: "Moving %s to %s" % (walltxt, self.wallpaper_folder))
                         shutil.move(walltxt, self.wallpaper_folder)
                     except Exception:
-                        logger.exception("Could not move wallpaper.jpg.txt")
+                        logger.exception(lambda: "Could not move wallpaper.jpg.txt")
 
                 for suffix in ("filter", "clock", "quote"):
                     file = os.path.join(self.config_folder, "wallpaper-%s.jpg" % suffix)
                     try:
                         if os.path.exists(file):
-                            logger.info("Deleting unneeded file " + file)
+                            logger.info(lambda: "Deleting unneeded file " + file)
                             os.unlink(file)
                     except Exception:
-                        logger.warning("Could not delete %s, no worries" % file)
+                        logger.warning(lambda: "Could not delete %s, no worries" % file)
 
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
@@ -1870,27 +1872,27 @@ class VarietyWindow(Gtk.Window):
                     try:
                         script_file = os.path.join(self.scripts_folder, script)
                         if not os.path.exists(script_file) or Util.md5file(script_file) in outdated_md5:
-                            logger.info("Outdated %s file, copying it from %s" %
+                            logger.info(lambda: "Outdated %s file, copying it from %s" %
                                         (script, varietyconfig.get_data_file("scripts", script)))
                             shutil.copy(varietyconfig.get_data_file("scripts", script), self.scripts_folder)
                     except Exception:
-                        logger.exception("Could not upgrade script " + script)
+                        logger.exception(lambda: "Could not upgrade script " + script)
 
                 upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
                 upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
 
                 # Upgrade the autostart entry, if there is one
                 if os.path.exists(os.path.expanduser(u"~/.config/autostart/variety.desktop")):
-                    logger.info('Updating Variety autostart desktop entry')
+                    logger.info(lambda: 'Updating Variety autostart desktop entry')
                     self.create_autostart_entry()
 
         except Exception:
-            logger.exception("Error during version upgrade. Continuing.")
+            logger.exception(lambda: "Error during version upgrade. Continuing.")
 
     def show_welcome_dialog(self):
         dialog = WelcomeDialog()
         if os.environ.get('KDE_FULL_SESSION') == 'true':
-            logger.info("KDE detected")
+            logger.info(lambda: "KDE detected")
             kde_wp_folder = os.path.join(Util.get_xdg_pictures_folder(), "variety-wallpaper")
             Util.makedirs(kde_wp_folder)
             shutil.copy(varietyconfig.get_data_file("media", "wallpaper-kde.jpg"), kde_wp_folder)
@@ -2057,7 +2059,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
     def process_command(self, arguments, initial_run):
         try:
             arguments = [unicode(arg) for arg in arguments]
-            logger.info("Received command: " + str(arguments))
+            logger.info(lambda: "Received command: " + str(arguments))
 
             options, args = self.parse_options(arguments, report_errors=False)
 
@@ -2066,7 +2068,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 return
 
             if args:
-                logger.info("Treating free arguments as urls: " + str(args))
+                logger.info(lambda: "Treating free arguments as urls: " + str(args))
                 if not initial_run:
                     self.process_urls(args)
                 else:
@@ -2081,7 +2083,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     if not initial_run:
                         self.reload_config()
                 except Exception:
-                    logger.exception("Could not read/write configuration:")
+                    logger.exception(lambda: "Could not read/write configuration:")
 
             def _process_command():
                 if not initial_run:
@@ -2132,12 +2134,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             return self.current if options.show_current else ""
         except Exception:
-            logger.exception("Could not process passed command")
+            logger.exception(lambda: "Could not process passed command")
 
     def update_indicator_icon(self):
         if self.options.icon != "None":
             if self.ind is None:
-                logger.info("Creating indicator")
+                logger.info(lambda: "Creating indicator")
                 self.ind, self.indicator, self.status_icon = indicator.new_application_indicator(self)
             else:
                 self.ind.set_visible(True)
@@ -2184,7 +2186,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     if file:
                         self.register_downloaded_file(file)
                         with self.prepared_lock:
-                            logger.info("Adding fetched file %s to used queue immediately after current file" % file)
+                            logger.info(lambda: "Adding fetched file %s to used queue immediately after current file" % file)
 
                             try:
                                 if self.used[self.position] != file and (self.position <= 0 or self.used[self.position - 1] != file):
@@ -2198,7 +2200,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                 self.position += 1
 
             except Exception:
-                logger.exception("Exception in process_urls")
+                logger.exception(lambda: "Exception in process_urls")
 
         fetch_thread = threading.Thread(target=fetch)
         fetch_thread.daemon = True
@@ -2206,7 +2208,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def process_variety_url(self, url):
         try:
-            logger.info('Processing variety url %s' % url)
+            logger.info(lambda: 'Processing variety url %s' % url)
 
             # make the url urlparse-friendly:
             url = url.replace('variety://', 'http://')
@@ -2278,7 +2280,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         except:
             self.show_notification(_('Could not process the given variety:// URL'),
                                    _('Run with logging enabled to see details'))
-            logger.exception('Exception in process_variety_url')
+            logger.exception(lambda: 'Exception in process_variety_url')
 
     def get_desktop_wallpaper(self):
         try:
@@ -2287,15 +2289,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             file = None
 
             if os.access(script, os.X_OK):
-                logger.debug("Running get_wallpaper script")
+                logger.debug(lambda: "Running get_wallpaper script")
                 try:
                     output = subprocess.check_output(script).strip()
                     if output:
                         file = _u(output)
                 except subprocess.CalledProcessError:
-                    logger.exception("Exception when calling get_wallpaper script")
+                    logger.exception(lambda: "Exception when calling get_wallpaper script")
             else:
-                logger.warning("get_wallpaper script is missing or not executable: " + script)
+                logger.warning(lambda: "get_wallpaper script is missing or not executable: " + script)
 
             if not file and self.gsettings:
                 file = self.gsettings.get_string('picture-uri')
@@ -2309,7 +2311,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             file = file.replace("file://", "")
             return file
         except Exception:
-            logger.exception("Could not get current wallpaper")
+            logger.exception(lambda: "Could not get current wallpaper")
             return None
 
     def cleanup_old_wallpapers(self, folder, prefix, new_wallpaper=None):
@@ -2319,25 +2321,25 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 file = os.path.join(folder, name)
                 if file != current_wallpaper and file != new_wallpaper and file != self.post_filter_filename and\
                    name.startswith(prefix) and name.endswith(".jpg"):
-                    logger.debug("Removing old wallpaper %s" % file)
+                    logger.debug(lambda: "Removing old wallpaper %s" % file)
                     os.unlink(file)
         except Exception:
-            logger.exception("Cannot remove all old wallpaper files from %s:" % folder)
+            logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
         if os.access(script, os.X_OK):
             auto = "manual" if not self.auto_changed else \
                 ("auto" if refresh_level == VarietyWindow.RefreshLevel.ALL else "refresh")
-            logger.debug("Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
+            logger.debug(lambda: "Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
                 subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])
             except subprocess.CalledProcessError, e:
                 if e.returncode == 124:
-                    logger.error("Timeout while running set_wallpaper script, killed")
-                logger.exception("Exception when calling set_wallpaper script: %d" % e.returncode)
+                    logger.error(lambda: "Timeout while running set_wallpaper script, killed")
+                logger.exception(lambda: "Exception when calling set_wallpaper script: %d" % e.returncode)
         else:
-            logger.error("set_wallpaper script is missing or not executable: " + script)
+            logger.error(lambda: "set_wallpaper script is missing or not executable: " + script)
             if self.gsettings:
                 self.gsettings.set_string('picture-uri', "file://" + wallpaper)
                 self.gsettings.apply()
@@ -2386,15 +2388,15 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 with open(os.path.join(self.config_folder, ".last_change_time")) as f:
                     self.last_change_time = float(f.read().strip())
                     if self.last_change_time > now:
-                        logger.warning("Persisted last_change_time after current time, setting to current time")
+                        logger.warning(lambda: "Persisted last_change_time after current time, setting to current time")
                         self.last_change_time = now
-                logger.info("Change interval >= 6 hours, using persisted last_change_time " + str(self.last_change_time))
-                logger.info("Still to wait: %d seconds" % max(0, self.options.change_interval - (time.time() - self.last_change_time)))
+                logger.info(lambda: "Change interval >= 6 hours, using persisted last_change_time " + str(self.last_change_time))
+                logger.info(lambda: "Still to wait: %d seconds" % max(0, self.options.change_interval - (time.time() - self.last_change_time)))
             except Exception:
-                logger.info("Could not read last change time, setting it to current time")
+                logger.info(lambda: "Could not read last change time, setting it to current time")
                 self.last_change_time = now
         else:
-            logger.info("Change interval < 6 hours, ignore persisted last_change_time, " \
+            logger.info(lambda: "Change interval < 6 hours, ignore persisted last_change_time, " \
                         "wait initially the whole interval: " + str(self.options.change_interval))
 
     def save_history(self):
@@ -2407,7 +2409,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 for file in to_save:
                     f.write(file + "\n")
         except Exception:
-            logger.exception("Could not save history")
+            logger.exception(lambda: "Could not save history")
 
     def load_history(self):
         self.used = []
@@ -2424,7 +2426,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 elif i <= self.position:
                     self.position = max(0, self.position - 1)
         except Exception:
-            logger.warning("Could not load history file, continuing without it, no worries")
+            logger.warning(lambda: "Could not load history file, continuing without it, no worries")
 
         current = self.get_desktop_wallpaper()
         if current:
@@ -2435,7 +2437,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), encoding='utf8') as f:
                         current = f.read().strip()
                 except Exception:
-                    logger.exception("Cannot read wallpaper.jpg.txt")
+                    logger.exception(lambda: "Cannot read wallpaper.jpg.txt")
 
         self.current = current
         if self.current and (self.position >= len(self.used) or current != self.used[self.position]):
@@ -2444,7 +2446,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def publish_on_facebook(self, widget):
         if not self.url:
-            logger.warning("publish_on_facebook called with no current URL")
+            logger.warning(lambda: "publish_on_facebook called with no current URL")
             return
 
         file = self.current
@@ -2460,7 +2462,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         else:
             caption = "Via Variety Wallpaper Changer"
 
-        logger.info("Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
+        logger.info(lambda: "Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
         message = self.options.facebook_message
         if message == u'<current_quote>':
@@ -2531,7 +2533,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def publish_quote_on_facebook(self, widget):
         if not self.quote:
-            logger.warning("publish_quote_on_facebook called with no current quote")
+            logger.warning(lambda: "publish_quote_on_facebook called with no current quote")
             return
 
         if self.facebook_firstrun():
@@ -2618,7 +2620,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 with io.open(self.options.quotes_favorites_file, encoding='utf8') as f:
                     self.quote_favorites_contents = f.read()
         except Exception:
-            logger.exception("Could not load favorite quotes file %s" % self.options.quotes_favorites_file)
+            logger.exception(lambda: "Could not load favorite quotes file %s" % self.options.quotes_favorites_file)
             self.quote_favorites_contents = ''
 
     def current_quote_to_text(self):
@@ -2640,7 +2642,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 else:
                     self.show_notification(_("Already in Favorites"))
             except Exception:
-                logger.exception("Could not save quote to favorites")
+                logger.exception(lambda: "Could not save quote to favorites")
                 self.show_notification("Oops, something went wrong when trying to save the quote to the favorites file")
 
     def quote_view_favorites(self, widget=None):
@@ -2686,7 +2688,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def create_autostart_entry(self):
         try:
-            logger.info("Creating autostart entry")
+            logger.info(lambda: "Creating autostart entry")
 
             content = (
                 "[Desktop Entry]\n"
@@ -2718,7 +2720,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             with open(path, "w") as f:
                 f.write(content)
         except:
-            logger.exception("Error while creating autostart desktop entry")
+            logger.exception(lambda: "Error while creating autostart desktop entry")
             self.show_notification(_("Could not create autostart entry"),
                 _("An error occurred while creating the autostart desktop entry\n"
                 "Please run from a terminal with the -v flag and try again."))

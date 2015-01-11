@@ -33,7 +33,7 @@ class ThumbsWindow(Gtk.Window):
     TOP = 4
 
     def __init__(self, screen=None, position=BOTTOM, breadth=120):
-        logger.debug("Creating thumb window %s, %d" % (str(self), time.time()))
+        logger.debug(lambda: "Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
 
         self.running = True
@@ -127,7 +127,7 @@ class ThumbsWindow(Gtk.Window):
         autoscroll_thread.start()
 
     def _thumbs_thread(self):
-        logger.debug("Starting thumb thread %s, %d" % (str(self), time.time()))
+        logger.debug(lambda: "Starting thumb thread %s, %d" % (str(self), time.time()))
         try:
             self.total_width = 0
             shown = False
@@ -145,7 +145,7 @@ class ThumbsWindow(Gtk.Window):
                     try:
                         Gdk.threads_enter()
                         self.set_default_size(10, 10)
-                        logger.debug("Showing thumb window %s, %d" % (str(self), time.time()))
+                        logger.debug(lambda: "Showing thumb window %s, %d" % (str(self), time.time()))
                         self.show_all()
                         if self.position == ThumbsWindow.BOTTOM:
                             self.move(self.screen_width // 2, self.screen_height - self.breadth)
@@ -170,7 +170,7 @@ class ThumbsWindow(Gtk.Window):
                 self.image_count = i
 
         except Exception:
-            logger.exception("Error while creating thumbs:")
+            logger.exception(lambda: "Error while creating thumbs:")
 
     def add_image(self, file, gdk_thread=False, at_front=False):
         try:
@@ -179,7 +179,7 @@ class ThumbsWindow(Gtk.Window):
             else:
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, self.breadth, 10000)
         except Exception:
-            logger.warning("Could not create thumbnail for file %s. File may be missing or invalid." % file)
+            logger.warning(lambda: "Could not create thumbnail for file %s. File may be missing or invalid." % file)
             pixbuf = None
 
         try:
@@ -286,7 +286,7 @@ class ThumbsWindow(Gtk.Window):
 
     def mark_active(self, file=None, position=None):
         def _mark():
-            logger.debug("Marking file %s, position %s" % (file, str(position)))
+            logger.debug(lambda: "Marking file %s, position %s" % (file, str(position)))
 
             self.active_file = file
             self.active_position = position
@@ -341,7 +341,7 @@ class ThumbsWindow(Gtk.Window):
             return self.total_width < self.screen_width + with_reserve
 
     def destroy(self, widget=False):
-        logger.debug("Destroying thumb window %s, %d" % (str(self), time.time()))
+        logger.debug(lambda: "Destroying thumb window %s, %d" % (str(self), time.time()))
         self.running = False
         self.autoscroll_event.set()
         super(ThumbsWindow, self).destroy()

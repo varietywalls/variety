@@ -43,7 +43,7 @@ class QuotesDaddySource(IQuoteSource):
         bs = Util.xml_soup(url)
         item = bs.find("item")
         if not item:
-            logger.warning("Could not find quotes for URL " + url)
+            logger.warning(lambda: "Could not find quotes for URL " + url)
             return None
         link = item.find("link").contents[0].strip()
         s = item.find("description").contents[0]

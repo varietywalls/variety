@@ -63,7 +63,7 @@ class Downloader(object):
             source_location = self.location
 
         if not force_download and origin_url in self.parent.banned:
-            logger.info("URL " + origin_url + " is banned, skip downloading")
+            logger.info(lambda: "URL " + origin_url + " is banned, skip downloading")
             return None
 
         try:
@@ -72,12 +72,12 @@ class Downloader(object):
             pass
 
         local_filename = self.get_local_filename(image_url)
-        logger.info("Origin URL: " + origin_url)
-        logger.info("Image URL: " + image_url)
-        logger.info("Local name: " + local_filename)
+        logger.info(lambda: "Origin URL: " + origin_url)
+        logger.info(lambda: "Image URL: " + image_url)
+        logger.info(lambda: "Local name: " + local_filename)
 
         if not force_download and os.path.exists(local_filename):
-            logger.info("File already exists, skip downloading")
+            logger.info(lambda: "File already exists, skip downloading")
             return None
 
         try:
@@ -85,11 +85,11 @@ class Downloader(object):
             with open(local_filename, 'wb') as f:
                 f.write(data)
         except Exception, e:
-            logger.info("Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
+            logger.info(lambda: "Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
             raise e
 
         if not Util.is_image(local_filename, check_contents=True):
-            logger.info("Downloaded data was not an image, image URL might be outdated")
+            logger.info(lambda: "Downloaded data was not an image, image URL might be outdated")
             os.unlink(local_filename)
             return None
 
@@ -103,7 +103,7 @@ class Downloader(object):
         metadata.update(extra_metadata)
         Util.write_metadata(local_filename, metadata)
 
-        logger.info("Download complete")
+        logger.info(lambda: "Download complete")
         return local_filename
 
     def parse_server_options(self, key, default_min_download_interval, default_min_fill_queue_interval):
@@ -111,23 +111,23 @@ class Downloader(object):
         min_fill_queue_interval = default_min_fill_queue_interval
 
         try:
-            logger.info("%s: parsing serverside options" % self.name)
+            logger.info(lambda: "%s: parsing serverside options" % self.name)
             options = self.parent.server_options[key]
-            logger.info("%s serverside options: %s" % (self.name, str(options)))
+            logger.info(lambda: "%s serverside options: %s" % (self.name, str(options)))
         except Exception:
-            logger.exception("Could not parse %s serverside options, using defaults %d, %d" % (
+            logger.exception(lambda: "Could not parse %s serverside options, using defaults %d, %d" % (
                 self.name, min_download_interval, min_fill_queue_interval))
             return min_download_interval, min_fill_queue_interval
 
         try:
             min_download_interval = int(options["min_download_interval"])
         except Exception:
-            logger.exception("Bad or missing min_download_interval")
+            logger.exception(lambda: "Bad or missing min_download_interval")
 
         try:
             min_fill_queue_interval = int(options["min_fill_queue_interval"])
         except Exception:
-            logger.exception("Bad or missing min_fill_queue_interval")
+            logger.exception(lambda: "Bad or missing min_fill_queue_interval")
 
         return min_download_interval, min_fill_queue_interval
 

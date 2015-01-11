@@ -116,7 +116,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
                 msg = self.fill_smart_profile_url(msg)
             except Exception:
-                logger.exception("Could not parse status message")
+                logger.exception(lambda: "Could not parse status message")
                 msg = ""
 
         self.set_status_message(msg)
@@ -129,7 +129,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def reload(self):
         try:
-            logger.info("Reloading preferences dialog")
+            logger.info(lambda: "Reloading preferences dialog")
 
             self.loading = True
 
@@ -273,7 +273,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 with io.open(get_data_file("ui/changes.txt")) as f:
                     self.ui.changes_buffer.set_text(f.read())
             except Exception:
-                logger.warning("Missing ui/changes.txt file")
+                logger.warning(lambda: "Missing ui/changes.txt file")
 
             self.on_smart_user_updated()
 
@@ -452,7 +452,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if result < minimum:
                     result = minimum
         except Exception:
-            logger.exception("Could not understand interval")
+            logger.exception(lambda: "Could not understand interval")
         return result
 
     def get_change_interval(self):
@@ -546,7 +546,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.sources.scroll_to_cell(len(self.ui.sources.get_model()) - 1, None, False, 0, 0)
                 newly_added += 1
             else:
-                logger.info("Source already exists, activating it: " + f)
+                logger.info(lambda: "Source already exists, activating it: " + f)
                 existing[f][0][0] = True
                 self.ui.sources.get_selection().select_path(existing[f][1])
                 self.ui.sources.scroll_to_cell(existing[f][1], None, False, 0, 0)
@@ -724,7 +724,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     self.parent.update_indicator(is_gtk_thread=False, auto_changed=False)
 
         except Exception:
-            logger.exception("Could not create thumbs window:")
+            logger.exception(lambda: "Could not create thumbs window:")
 
     def on_add_wn_clicked(self, widget=None):
         self.show_dialog(AddWallpapersNetCategoryDialog())
@@ -798,7 +798,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def apply(self):
         try:
-            logger.info("Applying preferences")
+            logger.info(lambda: "Applying preferences")
 
             self.options = Options()
             self.options.read()
@@ -816,7 +816,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if self.options.quota_size < 50:
                     self.options.quota_size = 50
             except Exception:
-                logger.exception("Could not understand quota size")
+                logger.exception(lambda: "Could not understand quota size")
 
             if os.access(self.dl_chooser.get_folder(), os.W_OK):
                 self.options.download_folder = self.dl_chooser.get_folder()
@@ -932,7 +932,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.update_autostart()
         except Exception:
             if self.parent.running:
-                logger.exception("Error while applying preferences")
+                logger.exception(lambda: "Error while applying preferences")
                 dialog = Gtk.MessageDialog(self, Gtk.DialogFlags.MODAL,
                     Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
                     "An error occurred while saving preferences.\n"
@@ -947,10 +947,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if not self.ui.autostart.get_active():
             try:
                 if os.path.exists(file):
-                    logger.info("Removing autostart entry")
+                    logger.info(lambda: "Removing autostart entry")
                     os.unlink(file)
             except Exception:
-                logger.exception("Could not remove autostart entry variety.desktop")
+                logger.exception(lambda: "Could not remove autostart entry variety.desktop")
         else:
             if not os.path.exists(file):
                 self.parent.create_autostart_entry()
@@ -1115,7 +1115,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         try:
             Util.superuser_exec("chmod", mode, folder)
         except Exception:
-            logger.exception("Could not adjust copyto folder permissions")
+            logger.exception(lambda: "Could not adjust copyto folder permissions")
             self.parent.show_notification(
                 _("Could not adjust permissions"),
                 _('You may try manually running this command:\nsudo chmod %s "%s"') % (mode, folder))

@@ -76,12 +76,12 @@ class LoginOrRegisterDialog(Gtk.Dialog):
         try:
             return Util.fetch_json(url, data)
         except urllib2.HTTPError, e:
-            logger.exception('HTTPError for ' + url)
+            logger.exception(lambda: 'HTTPError for ' + url)
             error_msg_handler(_('Oops, server returned error (%s)') % e.code)
             raise
 
         except urllib2.URLError:
-            logger.exception('Connection error for ' + url)
+            logger.exception(lambda: 'Connection error for ' + url)
             error_msg_handler(_('Could not connect to server'))
             raise
 

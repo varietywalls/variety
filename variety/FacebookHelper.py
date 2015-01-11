@@ -83,7 +83,7 @@ class FacebookHelper:
         self.load_token()
 
     def authorize(self, on_success=None, on_failure=None):
-        logger.info("Authorizing for Facebook")
+        logger.info(lambda: "Authorizing for Facebook")
 
         self.token = ''
         self.token_expire = ''
@@ -116,12 +116,12 @@ class FacebookHelper:
                 self.parent.show_notification(_("Authorization successful"), _("Publishing..."))
                 self.on_success(self, self.token)
         except Exception:
-            logger.exception("Facebook auth failed")
+            logger.exception(lambda: "Facebook auth failed")
             if self.on_failure:
                 self.on_failure(self, "authorize", _("Authorization failed"))
 
     def load_token(self):
-        logger.info("Loading token from file")
+        logger.info(lambda: "Loading token from file")
         try:
             with open(self.token_file, 'r') as token_file:
                 self.token = token_file.read().strip()
@@ -138,13 +138,13 @@ class FacebookHelper:
             self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
                          on_success=on_success, on_failure=on_failure, attempts=attempts + 1)
 
-        logger.info("Publishing to Faceboook, attempt %d" % attempts)
+        logger.info(lambda: "Publishing to Faceboook, attempt %d" % attempts)
         if not self.token:
-            logger.info("No auth token, loading from file")
+            logger.info(lambda: "No auth token, loading from file")
             self.load_token()
 
         if not self.token:
-            logger.info("Still no token, trying to authorize")
+            logger.info(lambda: "Still no token, trying to authorize")
             self.authorize(on_success=republish, on_failure=on_failure)
             return
 
@@ -156,7 +156,7 @@ class FacebookHelper:
         if caption: m["caption"] = caption
         if description: m["description"] = description
 
-        logger.info("Publish properties: " + str(m))
+        logger.info(lambda: "Publish properties: " + str(m))
 
         m["access_token"] = self.token
         try:
@@ -167,20 +167,20 @@ class FacebookHelper:
 
         response = json.loads(content)
 
-        logger.info("Response: %s" % content)
+        logger.info(lambda: "Response: %s" % content)
 
         if "error" in response:
-            logger.warning("Could not publish to Facebook, error message %s" % response["error"]["message"])
+            logger.warning(lambda: "Could not publish to Facebook, error message %s" % response["error"]["message"])
             code = response["error"].get("code", -1)
             if attempts < 2 and code in [190, 200]:  # 190 is invalid token, 200 means no permission to publish
-                logger.info("Code %d, trying to reauthorize" % code)
+                logger.info(lambda: "Code %d, trying to reauthorize" % code)
                 self.authorize(on_success=republish, on_failure=on_failure)
                 return
             else:
                 # Facebook would sometimes return an error on the first try, but succeed on the next,
                 # so retry a couple of times
                 if attempts < 3:
-                    logger.info("Retrying to publish")
+                    logger.info(lambda: "Retrying to publish")
                     republish()
                 else:
                     on_failure(self, "publish", "Facebook message:\n%s" % response["error"]["message"])

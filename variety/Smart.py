@@ -62,7 +62,7 @@ class Smart:
         try:
             self.load_user(create_if_missing=False)
         except:
-            logger.exception("Smart: Cound not load user during init")
+            logger.exception(lambda: "Smart: Cound not load user during init")
 
     def reload(self):
         if not self.is_smart_enabled():
@@ -76,7 +76,7 @@ class Smart:
             elif self.parent.previous_options.sources != self.parent.options.sources:
                 self.sync_sources(in_thread=True)
         except:
-            logger.exception("Smart: Exception in reload:")
+            logger.exception(lambda: "Smart: Exception in reload:")
 
     def get_profile_url(self):
         if self.user:
@@ -106,22 +106,22 @@ class Smart:
                         try:
                             self.user = AttrDict(json.loads(data))
                         except:
-                            logger.exception("Smart: Could not json-parse smart_user.json. Broken file? "
+                            logger.exception(lambda: "Smart: Could not json-parse smart_user.json. Broken file? "
                                              "Please report this error to peterlevi@peterlevi.com. Thanks.")
                             self.parent.show_notification(_("Your smart_user.json config file appears broken. "
                                                           "You may have to login again to VRTY.ORG."))
                             raise IOError("Could not json-parse smart_user.json")
                         if self.parent.preferences_dialog:
                             self.parent.preferences_dialog.on_smart_user_updated()
-                        logger.info('smart: Loaded smart user: %s' % self.user["id"])
+                        logger.info(lambda: 'smart: Loaded smart user: %s' % self.user["id"])
                 except IOError:
                     if create_if_missing:
-                        logger.info('smart: Missing smart_user.json, creating new smart user')
+                        logger.info(lambda: 'smart: Missing smart_user.json, creating new smart user')
                         self.new_user()
 
     def new_user(self):
         try:
-            logger.info('smart: Creating new smart user')
+            logger.info(lambda: 'smart: Creating new smart user')
 
             self._reset_sync()
 
@@ -129,7 +129,7 @@ class Smart:
             self.save_user()
             if self.parent.preferences_dialog:
                 GObject.idle_add(self.parent.preferences_dialog.on_smart_user_updated)
-            logger.info('smart: Created smart user: %s' % self.user["id"])
+            logger.info(lambda: 'smart: Created smart user: %s' % self.user["id"])
         except:
             logging.error('smart: Error creating new smart user')
             raise
@@ -139,7 +139,7 @@ class Smart:
             f.write(json.dumps(self.user, indent=4, ensure_ascii=False, encoding='utf8'))
 
     def set_user(self, user):
-        logger.info('smart: Setting new smart user')
+        logger.info(lambda: 'smart: Setting new smart user')
 
         # keep machine-dependent settings from current user
         if self.user:
@@ -154,7 +154,7 @@ class Smart:
 
         with open(os.path.join(self.parent.config_folder, 'smart_user.json'), 'w') as f:
             json.dump(self.user, f, ensure_ascii=False, indent=2)
-            logger.info('smart: Updated smart user: %s' % self.user["id"])
+            logger.info(lambda: 'smart: Updated smart user: %s' % self.user["id"])
 
         self.sync()
 
@@ -166,18 +166,18 @@ class Smart:
             self.load_user()
             user = self.user
 
-            logger.info("smart: Reporting %s as trash" % origin_url)
+            logger.info(lambda: "smart: Reporting %s as trash" % origin_url)
             try:
                 url = Smart.API_URL + '/upload/' + user['id'] + '/trash'
                 result = Util.fetch(url, {'image': json.dumps({'origin_url': origin_url}), 'authkey': user['authkey']})
-                logger.info("smart: Reported, server returned: %s" % result)
+                logger.info(lambda: "smart: Reported, server returned: %s" % result)
                 return
 
             except HTTPError, e:
                 self.handle_user_http_error(e)
 
         except Exception:
-            logger.exception("smart: Could not report %s as trash" % url)
+            logger.exception(lambda: "smart: Could not report %s as trash" % url)
 
     def report_file(self, filename, mark, async=True, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
@@ -189,7 +189,7 @@ class Smart:
         _go() if not async else threading.Timer(0, _go).start()
 
     def handle_user_http_error(self, e):
-        logger.error("smart: Server returned %d, potential reason - server failure?" % e.code)
+        logger.error(lambda: "smart: Server returned %d, potential reason - server failure?" % e.code)
         if e.code in (403, 404):
             self.parent.show_notification(
                 _('Your VRTY.ORG credentials are probably outdated. Please login again.'))
@@ -227,7 +227,7 @@ class Smart:
 
 
         except:
-            logger.exception('Could not fill missing meta-info')
+            logger.exception(lambda: 'Could not fill missing meta-info')
 
     def _do_report_file(self, filename, mark, attempt=1, upload_full_image=False, needs_reupload=False):
         if not self.is_smart_enabled():
@@ -246,14 +246,14 @@ class Smart:
             if not (upload_full_image or needs_reupload):
                 # Attempt quick-markging using just the computed image ID - will only succeed if the image already exists on the server
                 try:
-                    logger.info("smart: Quick-reporting %s as '%s'" % (filename, mark))
+                    logger.info(lambda: "smart: Quick-reporting %s as '%s'" % (filename, mark))
                     imageid = self.get_image_id(origin_url)
                     report_url = Smart.API_URL + '/mark/%s/%s/+%s' % (user['id'], imageid, mark)
                     result = Util.fetch(report_url, {'authkey': user['authkey']})
-                    logger.info("smart: Quick-reported, server returned: %s" % result)
+                    logger.info(lambda: "smart: Quick-reported, server returned: %s" % result)
                     return
                 except:
-                    logger.info("smart: Image uknown to server, performing full report")
+                    logger.info(lambda: "smart: Image uknown to server, performing full report")
 
             width, height = Util.get_size(filename)
 
@@ -274,14 +274,14 @@ class Smart:
                 if not server_key in image:
                     image[server_key] = value
 
-            logger.info("smart: Reporting %s as '%s'" % (filename, mark))
+            logger.info(lambda: "smart: Reporting %s as '%s'" % (filename, mark))
 
             # check for dead links and upload full image in that case (happens with old favorites):
             if upload_full_image or (mark == 'favorite' and Util.is_dead_or_not_image(image_url)):
                 if upload_full_image:
-                    logger.info('smart: Including full image in upload per server request')
+                    logger.info(lambda: 'smart: Including full image in upload per server request')
                 else:
-                    logger.info('smart: Including full image in upload as image link seems dead: %s, sourceURL: %s' %
+                    logger.info(lambda: 'smart: Including full image in upload as image link seems dead: %s, sourceURL: %s' %
                                 (image_url, origin_url))
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
@@ -289,7 +289,7 @@ class Smart:
             report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], mark)
             try:
                 result = Util.fetch(report_url, {'image': json.dumps(image), 'authkey': user['authkey']})
-                logger.info("smart: Reported, server returned: %s" % result)
+                logger.info(lambda: "smart: Reported, server returned: %s" % result)
                 return
             except HTTPError, e:
                 self.handle_user_http_error(e)
@@ -297,9 +297,9 @@ class Smart:
                 if attempt == 1:
                     self._do_report_file(filename, mark, attempt + 1)
                 else:
-                    logger.exception("smart: Could not report %s as '%s, server error code %s'" % (filename, mark, e.code))
+                    logger.exception(lambda: "smart: Could not report %s as '%s, server error code %s'" % (filename, mark, e.code))
         except Exception:
-            logger.exception("smart: Could not report %s as '%s'" % (filename, mark))
+            logger.exception(lambda: "smart: Could not report %s as '%s'" % (filename, mark))
 
     def show_notice_dialog(self):
         # Show Smart Variety notice
@@ -384,7 +384,7 @@ class Smart:
             self.parent.preferences_dialog.on_btn_login_register_clicked()
 
     def load_syncdb(self):
-        logger.debug("sync: Loading syncdb")
+        logger.debug(lambda: "sync: Loading syncdb")
         syncdb_file = os.path.join(self.parent.config_folder, 'syncdb.json')
         try:
             with io.open(syncdb_file, encoding='utf8') as f:
@@ -420,12 +420,12 @@ class Smart:
 
         def _run():
             try:
-                logger.info("sync: Syncing image sources")
+                logger.info(lambda: "sync: Syncing image sources")
 
                 try:
                     self.load_user(create_if_missing=True)
                 except:
-                    logger.exception("sync: Could not load or create smart user")
+                    logger.exception(lambda: "sync: Could not load or create smart user")
                     return
 
                 sources = [{'enabled': s[0], 'type': Options.type_to_str(s[1]), 'location': s[2]}
@@ -447,7 +447,7 @@ class Smart:
                     raise
 
             except:
-                logger.exception("smart: Could not sync sources")
+                logger.exception(lambda: "smart: Could not sync sources")
 
         if in_thread:
             sync_sources_thread = threading.Thread(target=_run)
@@ -468,18 +468,18 @@ class Smart:
         current_sync_hash = self.sync_hash
 
         def _run():
-            logger.info('sync: Started, hash %s' % current_sync_hash)
+            logger.info(lambda: 'sync: Started, hash %s' % current_sync_hash)
 
             try:
                 self.load_user(create_if_missing=True)
             except:
-                logger.exception("sync: Could not load or create smart user")
+                logger.exception(lambda: "sync: Could not load or create smart user")
                 return
 
             self.sync_sources(in_thread=False)
 
             try:
-                logger.info("sync: Fetching serverside data")
+                logger.info(lambda: "sync: Fetching serverside data")
                 try:
                     sync_url = '%s/user/%s/sync?authkey=%s' % (Smart.API_URL, self.user["id"], self.user["authkey"])
                     server_data = AttrDict(Util.fetch_json(sync_url))
@@ -491,7 +491,7 @@ class Smart:
                 syncdb = self.load_syncdb()
 
                 # First upload local favorites that need uploading:
-                logger.info("sync: Uploading local favorites to server")
+                logger.info(lambda: "sync: Uploading local favorites to server")
 
                 files = os.listdir(self.parent.options.favorites_folder)
                 files = [os.path.join(self.parent.options.favorites_folder, f) for f in files]
@@ -525,28 +525,28 @@ class Smart:
                             self.write_syncdb(syncdb)
 
                         if imageid in server_data["ignore"]:
-                            logger.warning('sync: Skipping upload of %s as it is has been deleted from your profile. '
+                            logger.warning(lambda: 'sync: Skipping upload of %s as it is has been deleted from your profile. '
                                            'To undo this visit: %s' % (name, Smart.SITE_URL + '/image/' + imageid))
                             continue
 
                         if not imageid in server_data["favorite"]:
-                            logger.info("sync: Smart-reporting existing favorite %s" % path)
+                            logger.info(lambda: "sync: Smart-reporting existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False)
                             time.sleep(throttle_interval)
                         elif "upload_full_image" in server_data["favorite"][imageid]:
-                            logger.info("sync: Uploading full image for existing favorite %s" % path)
+                            logger.info(lambda: "sync: Uploading full image for existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False, upload_full_image=True)
                             time.sleep(throttle_interval)
                         elif "needs_reupload" in server_data["favorite"][imageid]:
-                            logger.info("sync: Server requested reupload of existing favorite %s" % path)
+                            logger.info(lambda: "sync: Server requested reupload of existing favorite %s" % path)
                             self.report_file(path, "favorite", async=False, needs_reupload=True)
                             time.sleep(throttle_interval)
 
                     except:
-                        logger.exception("sync: Could not process file %s" % name)
+                        logger.exception(lambda: "sync: Could not process file %s" % name)
 
                 # Upload locally trashed URLs
-                logger.info("sync: Uploading local banned URLs to server")
+                logger.info(lambda: "sync: Uploading local banned URLs to server")
                 for url in self.parent.banned:
                     if not self.is_smart_enabled() or current_sync_hash != self.sync_hash:
                         return
@@ -572,13 +572,13 @@ class Smart:
                     to_sync = []
                     for imageid in server_data["favorite"]:
                         if imageid in server_data["ignore"]:
-                            logger.warning('sync: Skipping download of %s as it is has been deleted from your profile. '
+                            logger.warning(lambda: 'sync: Skipping download of %s as it is has been deleted from your profile. '
                                            'To undo this visit: %s' % (imageid, Smart.SITE_URL + '/image/' + imageid))
                             continue
 
                         if imageid in server_data["trash"]:
                              # do not download favorites that have later been trashed
-                            logger.info('sync: Skipping download of %s as it is also in trash. ' % imageid)
+                            logger.info(lambda: 'sync: Skipping download of %s as it is also in trash. ' % imageid)
                             continue
 
                         if imageid in syncdb.remote:
@@ -598,7 +598,7 @@ class Smart:
                             return
 
                         try:
-                            logger.info("sync: Downloading locally-missing favorite image %s" % imageid)
+                            logger.info(lambda: "sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
                             prefer_source_id = server_data["favorite"][imageid].get("source", None)
@@ -623,7 +623,7 @@ class Smart:
                             syncdb.local[path] = {'sourceURL': image_data["origin_url"]}
 
                         except:
-                            logger.exception("sync: Could not fetch favorite image %s" % imageid)
+                            logger.exception(lambda: "sync: Could not fetch favorite image %s" % imageid)
                             syncdb.remote[imageid] = syncdb.remote[imageid] or {}
                             syncdb.remote[imageid].setdefault("error", 0)
                             syncdb.remote[imageid]["error"] += 1
@@ -640,7 +640,7 @@ class Smart:
 
                 self.last_synced = time.time()
             except:
-                logger.exception('sync: Error')
+                logger.exception(lambda: 'sync: Error')
             finally:
                 self.syncing = False
 

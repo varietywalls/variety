@@ -56,13 +56,13 @@ class FlickrDownloader(Downloader.Downloader):
 
     @staticmethod
     def fetch(call):
-        logger.info("Making flickr API call: " + call)
+        logger.info(lambda: "Making flickr API call: " + call)
         return Util.fetch_json(call)
 
     @staticmethod
     def obtain_userid(url):
         try:
-            logger.info("Fetching flickr user_id from URL: " + url)
+            logger.info(lambda: "Fetching flickr user_id from URL: " + url)
 
             call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
@@ -71,19 +71,19 @@ class FlickrDownloader(Downloader.Downloader):
             resp = FlickrDownloader.fetch(call)
 
             if resp["stat"] == "ok":
-                logger.info("Found " + resp["user"]["id"])
+                logger.info(lambda: "Found " + resp["user"]["id"])
                 return True, "ok", resp["user"]["id"]
             else:
-                logger.info("Oops " + resp["message"])
+                logger.info(lambda: "Oops " + resp["message"])
                 return False, resp["message"], None
         except Exception, e:
-            logger.exception("Exception while checking Flickr user")
+            logger.exception(lambda: "Exception while checking Flickr user")
             return False, "Exception while checking user. Please run with -v and check log.", None
 
     @staticmethod
     def obtain_groupid(url):
         try:
-            logger.info("Fetching flickr group_id from URL: " + url)
+            logger.info(lambda: "Fetching flickr group_id from URL: " + url)
 
             call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
@@ -92,13 +92,13 @@ class FlickrDownloader(Downloader.Downloader):
             resp = FlickrDownloader.fetch(call)
 
             if resp["stat"] == "ok":
-                logger.info("Found " + resp["group"]["id"])
+                logger.info(lambda: "Found " + resp["group"]["id"])
                 return True, "ok", resp["group"]["id"]
             else:
-                logger.info("Oops " + resp["message"])
+                logger.info(lambda: "Oops " + resp["message"])
                 return False, resp["message"], None
         except Exception, e:
-            logger.exception("Exception while checking Flickr group")
+            logger.exception(lambda: "Exception while checking Flickr group")
             return False, "Exception while checking group. Please run with -v and check log.", None
 
     @staticmethod
@@ -107,7 +107,7 @@ class FlickrDownloader(Downloader.Downloader):
             dl = FlickrDownloader(None, search)
             return dl.count_results()
         except Exception:
-            logger.exception("Exception while counting Flickr results")
+            logger.exception(lambda: "Exception while counting Flickr results")
             return 0
 
     def count_results(self):
@@ -127,34 +127,34 @@ class FlickrDownloader(Downloader.Downloader):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("flickr", 60, 600)
 
         if time.time() - FlickrDownloader.last_download_time < min_download_interval:
-            logger.info("Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
+            logger.info(lambda: "Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
             return None
 
-        logger.info("Downloading an image from Flickr, " + self.location)
-        logger.info("Queue size: %d" % len(self.queue))
+        logger.info(lambda: "Downloading an image from Flickr, " + self.location)
+        logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
             if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info("Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
+                logger.info(lambda: "Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
                             min_fill_queue_interval)
                 return None
 
             self.fill_queue()
 
         if not self.queue:
-            logger.info("Flickr queue empty after fill - too restrictive search parameters or image size preference?")
+            logger.info(lambda: "Flickr queue empty after fill - too restrictive search parameters or image size preference?")
             return None
 
         FlickrDownloader.last_download_time = time.time()
 
         urls = self.queue.pop()
-        logger.info("Photo URL: " + urls[0])
+        logger.info(lambda: "Photo URL: " + urls[0])
         return self.save_locally(urls[0], urls[1], extra_metadata=urls[2])
 
     def fill_queue(self):
         self.last_fill_time = time.time()
 
-        logger.info("Filling Flickr download queue: " + self.location)
+        logger.info(lambda: "Filling Flickr download queue: " + self.location)
 
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
                "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
@@ -171,7 +171,7 @@ class FlickrDownloader(Downloader.Downloader):
             return
 
         page = random.randint(1, pages)
-        logger.info("%d pages in the search results, using page %d" % (pages, page))
+        logger.info(lambda: "%d pages in the search results, using page %d" % (pages, page))
 
         call = call + "&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
         resp = FlickrDownloader.fetch(call)
@@ -191,44 +191,44 @@ class FlickrDownloader(Downloader.Downloader):
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 
-        logger.info("Flickr queue populated with %d URLs" % len(self.queue))
+        logger.info(lambda: "Flickr queue populated with %d URLs" % len(self.queue))
 
     def process_photos_in_response(self, resp, size_suffix, used):
-        logger.info("Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
+        logger.info(lambda: "Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
         for ph in resp["photos"]["photo"]:
             try:
                 photo_url = "https://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
-                logger.debug("Checking photo_url " + photo_url)
+                logger.debug(lambda: "Checking photo_url " + photo_url)
 
                 if self.parent and photo_url in self.parent.banned:
-                    logger.debug("In banned, skipping")
+                    logger.debug(lambda: "In banned, skipping")
                     continue
                 if photo_url in used:
-                    logger.debug("Already added or checked, skipping")
+                    logger.debug(lambda: "Already added or checked, skipping")
                     continue
 
                 if "url_" + size_suffix in ph:
                     width = int(ph["width_" + size_suffix])
                     height = int(ph["height_" + size_suffix])
                     image_file_url = ph["url_" + size_suffix]
-                    logger.debug("Image url: " + image_file_url)
+                    logger.debug(lambda: "Image url: " + image_file_url)
                 else:
-                    logger.debug("Missing size " + size_suffix)
+                    logger.debug(lambda: "Missing size " + size_suffix)
                     continue
 
                 # add to used now - if one of the checks below fails, we don't want the lower resolutions either
                 used.add(photo_url)
 
                 if self.is_in_downloaded(image_file_url):
-                    logger.debug("Already in downloaded")
+                    logger.debug(lambda: "Already in downloaded")
                     continue
 
                 if self.is_in_favorites(image_file_url):
-                    logger.debug("Already in favorites")
+                    logger.debug(lambda: "Already in favorites")
                     continue
 
                 if self.parent and not self.parent.size_ok(width, height):
-                    logger.debug("Small or non-landscape size/resolution")
+                    logger.debug(lambda: "Small or non-landscape size/resolution")
                     continue
 
                 try:
@@ -242,10 +242,10 @@ class FlickrDownloader(Downloader.Downloader):
                 except:
                     extra_metadata = {}
 
-                logger.debug("Appending to queue %s, %s" % (photo_url, image_file_url))
+                logger.debug(lambda: "Appending to queue %s, %s" % (photo_url, image_file_url))
                 self.queue.append((photo_url, image_file_url, extra_metadata))
             except Exception:
-                logger.exception("Error parsing single flickr photo info:")
+                logger.exception(lambda: "Error parsing single flickr photo info:")
 
     @staticmethod
     def get_photo_id(origin_url):

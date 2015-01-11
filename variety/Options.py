@@ -390,7 +390,7 @@ class Options:
                     try:
                         self.sources.append(Options.parse_source(v))
                     except Exception:
-                        logger.exception("Cannot parse source: " + v)
+                        logger.exception(lambda: "Cannot parse source: " + v)
 
             self.parse_autosources()
 
@@ -405,16 +405,16 @@ class Options:
                     try:
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
-                        logger.exception("Cannot parse filter: " + str(v))
+                        logger.exception(lambda: "Cannot parse filter: " + str(v))
 
             self.parse_autofilters()
 
             if needs_writing:
-                logger.info("Some outdated settings were updated, writing the changes")
+                logger.info(lambda: "Some outdated settings were updated, writing the changes")
                 self.write()
 
         except Exception:
-            logger.exception("Could not read configuration:")
+            logger.exception(lambda: "Could not read configuration:")
 
     def fix_outdated(self, config):
         changed = False
@@ -423,7 +423,7 @@ class Options:
                 current_hash = hashlib.md5(config[key]).hexdigest()
                 if current_hash in outdated_hashes:
                     # entry is outdated: delete it and use the default
-                    logger.warning("Option " + key + " has an outdated value, using the new default")
+                    logger.warning(lambda: "Option " + key + " has an outdated value, using the new default")
                     changed = True
                     del config[key]
         return changed
@@ -440,9 +440,9 @@ class Options:
                             continue
                         self.sources.append(s)
                     except Exception:
-                        logger.exception("Cannot parse source in sources.txt: " + line)
+                        logger.exception(lambda: "Cannot parse source in sources.txt: " + line)
         except Exception:
-            logger.exception("Cannot open sources.txt")
+            logger.exception(lambda: "Cannot open sources.txt")
 
     def parse_autofilters(self):
         try:
@@ -455,9 +455,9 @@ class Options:
                         if not s[1].lower() in [f[1].lower() for f in self.filters]:
                             self.filters.append(s)
                     except Exception:
-                        logger.exception("Cannot parse filter in filters.txt: " + line)
+                        logger.exception(lambda: "Cannot parse filter in filters.txt: " + line)
         except Exception:
-            logger.exception("Cannot open filters.txt")
+            logger.exception(lambda: "Cannot open filters.txt")
 
     @staticmethod
     def parse_source(v):
@@ -657,7 +657,7 @@ class Options:
             config.write()
 
         except Exception:
-            logger.exception("Could not write configuration:")
+            logger.exception(lambda: "Could not write configuration:")
 
     @staticmethod
     def set_options(opts):
@@ -672,7 +672,7 @@ class Options:
         try:
             config.reload()
         except DuplicateError:
-            logger.warning("Duplicate keys in config file, please fix this")
+            logger.warning(lambda: "Duplicate keys in config file, please fix this")
         return config
 
 if __name__ == "__main__":

@@ -70,10 +70,10 @@ class QuotationsPageSource(IQuoteSource):
 
                 quotes.append({"quote": quote, "author": author, "sourceName": "TheQuotationsPage.com", "link": link})
             except Exception:
-                logger.warning("Could not get or parse quote: %s" % quote)
+                logger.warning(lambda: "Could not get or parse quote: %s" % quote)
 
         if not quotes:
-            logger.warning("QuotationsPage: no quotes found at %s" % url)
+            logger.warning(lambda: "QuotationsPage: no quotes found at %s" % url)
 
         return quotes
 
@@ -89,7 +89,7 @@ class QuotationsPageSource(IQuoteSource):
             iri2uri((u"http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
 
     def get_for_search_url(self, url):
-        logger.info("Fetching quotes from Goodreads for search url=%s" % url)
+        logger.info(lambda: "Fetching quotes from Goodreads for search url=%s" % url)
         html = Util.fetch(url)
         try:
             page = random.randint(1, int(re.findall('Page 1 of (\d+)', html)[0]))
@@ -98,7 +98,7 @@ class QuotationsPageSource(IQuoteSource):
         except Exception:
             pass # probably just one page
 
-        logger.info("Used QuotationsPage url %s" % url)
+        logger.info(lambda: "Used QuotationsPage url %s" % url)
 
         r = r'.*<dl>(.*)</dl>.*'
         if re.match(r, html, flags=re.M | re.S):
