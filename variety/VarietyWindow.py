@@ -72,7 +72,7 @@ DL_FOLDER_FILE = ".variety_download_folder"
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-050"
+    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-051"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
