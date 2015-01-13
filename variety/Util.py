@@ -556,9 +556,12 @@ class Util:
     @staticmethod
     def get_xdg_pictures_folder():
         try:
-            return GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES)
+            pics_folder = GLib.get_user_special_dir(GLib.USER_DIRECTORY_PICTURES)
+            if not pics_folder:
+                raise Exception("Could not get path to Pictures folder. Defaulting to ~/Pictures.")
+            return pics_folder
         except:
-            logger.exception(lambda: "Could not get path to Pictures folder")
+            logger.exception(lambda: "Could not get path to Pictures folder. Defaulting to ~/Pictures.")
             return os.path.expanduser(u'~/Pictures')
 
     @staticmethod
