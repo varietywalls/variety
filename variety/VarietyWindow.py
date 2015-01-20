@@ -1944,7 +1944,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         parser = VarietyOptionParser(usage=usage, version="%%prog %s" % varietyconfig.get_version(), report_errors=report_errors)
 
         parser.add_option(
-            "-v", "--verbose", action="count", dest="verbose",
+            "-v", "--verbose", action="count", dest="verbose", default=1,
             help=_("Show logging messages (-vv shows even finer debugging messages, -vvv debugs variety_lib too)"))
 
         parser.add_option(
