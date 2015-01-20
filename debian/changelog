@@ -1,3 +1,12 @@
+variety (0.5.2) precise; urgency=low
+
+  * Bumping version to 0.5.2
+  * More logging by default, no need for -v argument
+  * Missing XDG directory definitions were causing Variety to fail.
+    Fixed now.
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Tue, 20 Jan 2015 12:07:04 +0200
+
 variety (0.5.1ubuntu1) precise; urgency=low
 
   * 
