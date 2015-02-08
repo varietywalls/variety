@@ -115,7 +115,7 @@ class WallhavenDownloader(Downloader.Downloader):
             pass
 
         try:
-            purity = s.find('input', {'name': 'purity', 'checked': 'checked'})['id']
+            purity = s.find('div', 'sidebar-content').find('label', 'purity').text.lower()
             extra_metadata['sfwRating'] = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
         except:
             pass
