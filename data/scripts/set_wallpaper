@@ -158,8 +158,10 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
     pcmanfm --set-wallpaper "$WP" 2> /dev/null
 fi
 
-# Feh - commented, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
-# feh --bg-scale "$WP" 2> /dev/null
+# i3-wm. Use Feh only for i3, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
+if [ "$XDG_CURRENT_DESKTOP" == "i3" ]; then
+   feh --bg-fill "$WP" 2> /dev/null
+fi
 
 # MATE after 1.6
 gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
