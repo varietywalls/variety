@@ -158,7 +158,12 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
     pcmanfm --set-wallpaper "$WP" 2> /dev/null
 fi
 
-# i3-wm. Use Feh only for i3, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
+# LXQT/PCmanFM-Qt
+if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
+    pcmanfm-qt --set-wallpaper "$WP" 2&gt; /dev/null
+fi
+
+# i3-wm/Feh. Use Feh only for i3, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
 if [ "$XDG_CURRENT_DESKTOP" == "i3" ]; then
    feh --bg-fill "$WP" 2> /dev/null
 fi
