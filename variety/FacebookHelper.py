@@ -68,7 +68,7 @@ class FacebookHelper:
         saved to token_file.
     """
 
-    def __init__(self, parent, token_file, app_key='368780939859975', scope='publish_stream'):
+    def __init__(self, parent, token_file, app_key='368780939859975', scope='publish_actions'):
         """ Constructor. Creates the GTK+ app and adds the WebKit widget
             @param app_key Application key ID (Public).
 
