@@ -80,7 +80,7 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     ## Get the current number of virtual desktops
     desk_x_count=$(enlightenment_remote -desktops-get | awk '{print $1}')
     desk_y_count=$(enlightenment_remote -desktops-get | awk '{print $2}')
-    
+
     ## Get the current number of screens
     screen_count=1
     # If xrandr is available use it to get screen desk_x_count
@@ -109,7 +109,7 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     else
         find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
-    echo "$OFILE.edj" > $LAST_WALLPAPER_FILE 
+    echo "$OFILE.edj" > $LAST_WALLPAPER_FILE
     exit 0
 fi
 
@@ -158,9 +158,9 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
     pcmanfm --set-wallpaper "$WP" 2> /dev/null
 fi
 
-# LXQT/PCmanFM-Qt
+# LXQt/PCmanFM-qt
 if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
-    pcmanfm-qt --set-wallpaper "$WP" 2&gt; /dev/null
+    pcmanfm-qt --set-wallpaper "$WP" 2> /dev/null
 fi
 
 # i3-wm/Feh. Use Feh only for i3, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)

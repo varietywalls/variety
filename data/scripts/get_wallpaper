@@ -19,6 +19,10 @@ elif [ "$desktop" == "xubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
 elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
         grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
 
+# LXQt/PCmanFM-qt
+elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
+        grep wallpaper=/ ~/.config/pcmanfm-qt/lxqt/settings.conf | sed -e 's/wallpaper=//g'
+
 # MATE
 elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
         version=`mate-about -v | sed s/MATE\ Desktop\ Environment\ //`
