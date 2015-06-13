@@ -11,26 +11,26 @@ StartupNotify=false
 Actions=Next;Previous;PauseResume;History;Preferences;
 
 [Desktop Action Next]
-Exec=/opt/extras.ubuntu.com/variety/bin/variety --next
+Exec=variety --next
 _Name=Next
 OnlyShowIn=Unity;
 
 [Desktop Action Previous]
-Exec=/opt/extras.ubuntu.com/variety/bin/variety --previous
+Exec=variety --previous
 _Name=Previous
 OnlyShowIn=Unity;
 
 [Desktop Action PauseResume]
-Exec=/opt/extras.ubuntu.com/variety/bin/variety --toggle-pause
+Exec=variety --toggle-pause
 _Name=Pause / Resume
 OnlyShowIn=Unity;
 
 [Desktop Action History]
-Exec=/opt/extras.ubuntu.com/variety/bin/variety --history
+Exec=variety --history
 _Name=History
 OnlyShowIn=Unity;
 
 [Desktop Action Preferences]
-Exec=/opt/extras.ubuntu.com/variety/bin/variety --preferences
+Exec=variety --preferences
 _Name=Preferences
 OnlyShowIn=Unity;

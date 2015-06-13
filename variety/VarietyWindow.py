@@ -2694,27 +2694,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 "[Desktop Entry]\n"
                 "Name=Variety\n"
                 "Comment=Variety Wallpaper Changer\n"
-                "Icon=%s\n"
-                'Exec=sh -c "/opt/extras.ubuntu.com/variety/bin/variety || /usr/bin/variety || /opt/variety/bin/variety"\n'
+                "Icon=variety\n"
+                "Exec=variety\n"
                 "Terminal=false\n"
                 "Type=Application\n"
                 "X-GNOME-Autostart-Delay=20\n"
             )
 
             Util.makedirs(os.path.expanduser(u"~/.config/autostart/"))
-
-            iconpaths = [
-                "/opt/extras.ubuntu.com/variety/share/variety/media/variety.svg",
-                "/usr/share/variety/media/variety.svg",
-                "/opt/variety/share/variety/media/variety.svg"
-            ]
-
-            for i in iconpaths:
-                if os.path.exists(i):
-                    content %= i
-                    break
-            else:
-                content %= 'variety'
 
             path = os.path.expanduser(u"~/.config/autostart/variety.desktop")
             with open(path, "w") as f:

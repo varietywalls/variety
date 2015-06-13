@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-08 19:58+0200\n"
+"POT-Creation-Date: 2015-06-13 18:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -375,7 +375,7 @@ msgid "Already in Favorites"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:627 ../variety/ThumbsManager.py:144
-#: ../variety/indicator.py:75
+#: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
 msgstr ""
 
@@ -385,7 +385,7 @@ msgstr ""
 
 #. both
 #: ../variety/VarietyWindow.py:636
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134 ../variety/indicator.py:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134 ../variety/indicator.py:81
 msgid "Move to Favorites"
 msgstr ""
 
@@ -409,7 +409,7 @@ msgid "Author: %s"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:748 ../variety/VarietyWindow.py:762
-#: ../variety/indicator.py:119 ../variety/indicator.py:184
+#: ../variety/indicator.py:120 ../variety/indicator.py:185
 msgid "Pause on current"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgstr ""
 msgid "Resume regular changes"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:765 ../variety/indicator.py:190
+#: ../variety/VarietyWindow.py:765 ../variety/indicator.py:191
 msgid "Save to Favorites"
 msgstr ""
 
@@ -702,11 +702,11 @@ msgstr ""
 msgid "Could not publish"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2724
+#: ../variety/VarietyWindow.py:2711
 msgid "Could not create autostart entry"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2725
+#: ../variety/VarietyWindow.py:2712
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
@@ -1920,15 +1920,15 @@ msgstr ""
 msgid "Show Containing Folder"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:136 ../variety/indicator.py:155
+#: ../variety/ThumbsManager.py:136 ../variety/indicator.py:156
 msgid "Set EXIF Rating"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:160 ../variety/indicator.py:86
+#: ../variety/ThumbsManager.py:160 ../variety/indicator.py:87
 msgid "Delete to _Trash"
 msgstr ""
 
-#: ../variety/ThumbsManager.py:167 ../variety/indicator.py:130
+#: ../variety/ThumbsManager.py:167 ../variety/indicator.py:131
 msgid "Where is it from?"
 msgstr ""
 
@@ -1998,8 +1998,8 @@ msgstr ""
 msgid "Variety - Publish to Facebook"
 msgstr ""
 
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:148
-#: ../variety/indicator.py:222
+#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:149
+#: ../variety/indicator.py:223
 msgid "Share on Facebook"
 msgstr ""
 
@@ -2106,91 +2106,91 @@ msgid ""
 "Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
 
-#: ../variety/indicator.py:48 ../variety/indicator.py:95
-#: ../variety/indicator.py:165
+#: ../variety/indicator.py:49 ../variety/indicator.py:96
+#: ../variety/indicator.py:166
 msgid "_Next"
 msgstr ""
 
-#: ../variety/indicator.py:53 ../variety/indicator.py:100
-#: ../variety/indicator.py:170
+#: ../variety/indicator.py:54 ../variety/indicator.py:101
+#: ../variety/indicator.py:171
 msgid "_Previous"
 msgstr ""
 
-#: ../variety/indicator.py:60
+#: ../variety/indicator.py:61
 msgid "Current desktop wallpaper"
 msgstr ""
 
-#: ../variety/indicator.py:64
+#: ../variety/indicator.py:65
 msgid "Show origin"
 msgstr ""
 
-#: ../variety/indicator.py:105 ../variety/indicator.py:175
+#: ../variety/indicator.py:106 ../variety/indicator.py:176
 msgid "_Next, skipping forward history"
 msgstr ""
 
-#: ../variety/indicator.py:113
+#: ../variety/indicator.py:114
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
 
-#: ../variety/indicator.py:123
+#: ../variety/indicator.py:124
 msgid "_Image"
 msgstr ""
 
-#: ../variety/indicator.py:134
+#: ../variety/indicator.py:135
 msgid "Show without effects"
 msgstr ""
 
-#: ../variety/indicator.py:142
+#: ../variety/indicator.py:143
 msgid "Google Image Search"
 msgstr ""
 
-#: ../variety/indicator.py:195
+#: ../variety/indicator.py:196
 msgid "View Favorites..."
 msgstr ""
 
-#: ../variety/indicator.py:202
+#: ../variety/indicator.py:203
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: ../variety/indicator.py:212
+#: ../variety/indicator.py:213
 msgid "Google Quote"
 msgstr ""
 
-#: ../variety/indicator.py:217
+#: ../variety/indicator.py:218
 msgid "Google Author"
 msgstr ""
 
-#: ../variety/indicator.py:229 ../variety/indicator.py:270
+#: ../variety/indicator.py:230 ../variety/indicator.py:271
 msgid "Preferences..."
 msgstr ""
 
-#: ../variety/indicator.py:237
+#: ../variety/indicator.py:238
 msgid "Turn off"
 msgstr ""
 
-#: ../variety/indicator.py:243
+#: ../variety/indicator.py:244
 msgid "_Quote"
 msgstr ""
 
-#: ../variety/indicator.py:250
+#: ../variety/indicator.py:251
 msgid "_History"
 msgstr ""
 
-#: ../variety/indicator.py:256
+#: ../variety/indicator.py:257
 msgid "_Wallpaper Selector"
 msgstr ""
 
-#: ../variety/indicator.py:262
+#: ../variety/indicator.py:263
 msgid "Recent _Downloads"
 msgstr ""
 
-#: ../variety/indicator.py:274
+#: ../variety/indicator.py:275
 msgid "About"
 msgstr ""
 
-#: ../variety/indicator.py:278
+#: ../variety/indicator.py:279
 msgid "Quit"
 msgstr ""
 

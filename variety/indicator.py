@@ -22,6 +22,7 @@ import threading
 from variety.Util import Util
 
 THEME_ICON_NAME = "variety-indicator"
+THEME_ICON_NAME_DARK = "variety-indicator-dark"
 
 try:
     from gi.repository import AppIndicator3 # pylint: disable=E0611
@@ -330,19 +331,26 @@ class Indicator:
                 self.status_icon.set_visible(False)
 
     def set_icon(self, icon):
-        if icon == "Light" and Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME):
+        def set_from_theme_icon(name):
             if self.indicator:
-                logger.info(lambda: "Showing indicator icon %s from GTK theme" % THEME_ICON_NAME)
-                self.indicator.set_icon(THEME_ICON_NAME)
+                logger.info(lambda: "Showing indicator icon %s from GTK theme" % name)
+                self.indicator.set_icon(name)
             if self.status_icon:
-                logger.info(lambda: "Showing status icon %s from GTK theme" % THEME_ICON_NAME)
-                self.status_icon.set_from_icon_name(THEME_ICON_NAME)
-            return
+                logger.info(lambda: "Showing status icon %s from GTK theme" % name)
+                self.status_icon.set_from_icon_name(name)
 
         if icon == "Light":
-            icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
+            if Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME):
+                set_from_theme_icon(THEME_ICON_NAME)
+                return
+            else:
+                icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
         elif icon == "Dark":
-            icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
+            if Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME_DARK):
+                set_from_theme_icon(THEME_ICON_NAME_DARK)
+                return
+            else:
+                icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
         elif icon and os.access(icon, os.R_OK) and Util.is_image(icon):
             icon_path = icon
         else:
@@ -357,6 +365,7 @@ class Indicator:
 
     def get_visible(self):
         return self.visible
+
 
 def new_application_indicator(window):
     ind = Indicator(window)
