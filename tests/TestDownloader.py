@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from variety.Downloader import Downloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.Downloader import Downloader
+
 
 class TestDownloader(unittest.TestCase):
     def test_convert_url(self):

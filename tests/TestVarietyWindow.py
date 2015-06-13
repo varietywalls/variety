@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from variety.VarietyWindow import VarietyWindow
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.VarietyWindow import VarietyWindow
+
 
 class TestVarietyWindow(unittest.TestCase):
     def test_replace_clock_filter_offsets(self):

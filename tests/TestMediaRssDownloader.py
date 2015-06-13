@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from variety.MediaRssDownloader import MediaRssDownloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.MediaRssDownloader import MediaRssDownloader
+
 
 class TestFlickrDownloader(unittest.TestCase):
     def test_validate_deviantart(self):

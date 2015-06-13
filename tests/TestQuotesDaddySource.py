@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from jumble.Jumble import Jumble
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from jumble.Jumble import Jumble
+
 
 class TestQuotesDaddySource(unittest.TestCase):
     def test_get_random(self):

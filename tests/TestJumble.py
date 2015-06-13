@@ -18,11 +18,13 @@
 import sys
 import os.path
 import unittest
+
+sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
 from jumble.Jumble import Jumble
 from jumble.IPlugin import IPlugin
 from variety.plugins.IQuoteSource import IQuoteSource
 
-#sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 class P1(IPlugin):
     pass

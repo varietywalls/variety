@@ -18,9 +18,10 @@
 import sys
 import os.path
 import unittest
-from variety.RedditDownloader import RedditDownloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.RedditDownloader import RedditDownloader
 
 
 class TestRedditDownloader(unittest.TestCase):
@@ -38,7 +39,7 @@ class TestRedditDownloader(unittest.TestCase):
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics/'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/'))
-        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/top?sort=top&t=week'))
+        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/top?sort=top&t=month'))
         self.assertFalse(RedditDownloader.validate('http://www.reddit.com/r/bestof/'))
         self.assertFalse(RedditDownloader.validate('http://www.reddit.com/r/dhkjregfhjregfjfdrejh/'))
         self.assertFalse(RedditDownloader.validate('http://www.notreddit.com/r/dhkjregfhjregfjfdrejh/'))

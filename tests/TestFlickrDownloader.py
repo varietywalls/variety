@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from variety.FlickrDownloader import FlickrDownloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.FlickrDownloader import FlickrDownloader
+
 
 class TestFlickrDownloader(unittest.TestCase):
     def test_obtain_userid_ok(self):

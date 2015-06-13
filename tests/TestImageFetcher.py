@@ -18,9 +18,11 @@
 import sys
 import os.path
 import unittest
-from variety.ImageFetcher import ImageFetcher
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.ImageFetcher import ImageFetcher
+
 
 class TestImageFetcher(unittest.TestCase):
     def test_extract_from_cd(self):

@@ -19,9 +19,11 @@ import sys
 import os.path
 import unittest
 import time
-from variety.Util import Util, debounce, throttle
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+from variety.Util import Util, debounce, throttle
+
 
 class TestUtil(unittest.TestCase):
     def test_get_local_name(self):
