@@ -151,6 +151,11 @@ class Util:
         return cls
 
     @staticmethod
+    def sanitize_filename(filename):
+        valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
+        return ''.join(c if c in valid_chars else '_' for c in filename)
+
+    @staticmethod
     def get_local_name(url):
         filename = url[url.rfind('/') + 1:]
         index = filename.find('?')
@@ -162,8 +167,7 @@ class Util:
 
         filename = urllib.unquote_plus(filename)
 
-        valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
-        filename = ''.join(c if c in valid_chars else '_' for c in filename)
+        filename = Util.sanitize_filename(filename)
 
         if len(filename) > 200:
             filename = filename[:190] + filename[-10:]

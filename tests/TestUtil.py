@@ -26,6 +26,9 @@ from variety.Util import Util, debounce, throttle
 
 
 class TestUtil(unittest.TestCase):
+    def test_sanitize_filename(self):
+        self.assertEqual("i_m____g_.jpg", Util.sanitize_filename("i?m?*%^g_.jpg"))
+
     def test_get_local_name(self):
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg?a=b"))
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg#x"))

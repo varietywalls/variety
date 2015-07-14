@@ -62,7 +62,7 @@ class UnsplashDownloader(Downloader.Downloader):
             try:
                 image_url = self.location + item.find_all('a')[0]['href']
                 origin_url = image_url.replace('/download', '')
-                filename = os.path.join(self.target_folder, image_url.split('/')[-2] + '.jpg')
+                filename = os.path.join(self.target_folder, Util.sanitize_filename(image_url.split('/')[-2] + '.jpg'))
                 extra_metadata = {
                     'sourceType': 'unsplash',
                     'sfwRating': 100,
