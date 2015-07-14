@@ -47,6 +47,7 @@ class Options:
         WALLHAVEN = 13
         REDDIT = 14
         BING = 15
+        UNSPLASH = 16
         RECOMMENDED = 19
         LATEST = 20
 
@@ -66,6 +67,7 @@ class Options:
             WALLHAVEN: "wallhaven",
             REDDIT: "reddit",
             BING: "bing",
+            UNSPLASH: "unsplash",
             RECOMMENDED: "recommended",
             LATEST: "latest",
         }
@@ -73,7 +75,7 @@ class Options:
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
         dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
-                    PANORAMIO, WALLHAVEN, REDDIT, BING, RECOMMENDED, LATEST]
+                    PANORAMIO, WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0
@@ -558,6 +560,7 @@ class Options:
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
             [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
             [True, Options.SourceType.BING, "Bing Photo of the Day"],
+            [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],

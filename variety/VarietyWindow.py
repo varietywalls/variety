@@ -52,6 +52,7 @@ from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
+from variety.UnsplashDownloader import UnsplashDownloader
 from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
@@ -514,6 +515,8 @@ class VarietyWindow(Gtk.Window):
             return RedditDownloader(self, location)
         elif type == Options.SourceType.BING:
             return BingDownloader(self)
+        elif type == Options.SourceType.UNSPLASH:
+            return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         elif type == Options.SourceType.PANORAMIO:

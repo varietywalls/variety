@@ -36,7 +36,8 @@ SOURCES = {
     "latest": ("Latest favorites by the other users of Variety.", _("Latest favorites by the other users of Variety.")),
     "desktoppr": ("Random wallpapers from Desktoppr.co", _("Random wallpapers from Desktoppr.co")),
     "apod": ("NASA's Astronomy Picture of the Day", _("NASA's Astronomy Picture of the Day")),
-    "earth": ("World Sunlight Map - live wallpaper from Opentopia.com", _("World Sunlight Map - live wallpaper from Opentopia.com"))
+    "bing": ("Bing Photo of the Day", _("Bing Photo of the Day")),
+    "unsplash": ("High-resolution photos from Unsplash.com", _("High-resolution photos from Unsplash.com")),
 }
 
 TIPS = [

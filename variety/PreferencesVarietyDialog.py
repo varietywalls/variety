@@ -56,6 +56,7 @@ UNREMOVEABLE_TYPES = [
     Options.SourceType.FETCHED,
     Options.SourceType.DESKTOPPR,
     Options.SourceType.BING,
+    Options.SourceType.UNSPLASH,
     Options.SourceType.APOD,
     Options.SourceType.EARTH,
     Options.SourceType.RECOMMENDED,

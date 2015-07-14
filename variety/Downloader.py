@@ -54,7 +54,7 @@ class Downloader(object):
 
     def save_locally(self, origin_url, image_url,
                      source_type=None, source_location=None, source_name=None,
-                     force_download=False, extra_metadata={}):
+                     force_download=False, extra_metadata={}, local_filename=None):
         if not source_type:
             source_type = self.source_type
         if not source_name:
@@ -71,7 +71,8 @@ class Downloader(object):
         except Exception:
             pass
 
-        local_filename = self.get_local_filename(image_url)
+        if not local_filename:
+            local_filename = self.get_local_filename(image_url)
         logger.info(lambda: "Origin URL: " + origin_url)
         logger.info(lambda: "Image URL: " + image_url)
         logger.info(lambda: "Local name: " + local_filename)
