@@ -390,6 +390,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_markup" translatable="yes">Edit the selected source</property>
                                 <property name="tooltip_text" translatable="yes">Edit the selected source</property>
+                                <property name="margin_top">2</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_edit_source_clicked" swapped="no"/>
@@ -410,6 +411,7 @@
                                 <property name="has_tooltip">True</property>
                                 <property name="tooltip_markup" translatable="yes">Remove selected image sources</property>
                                 <property name="tooltip_text" translatable="yes">Remove selected image sources</property>
+                                <property name="margin_top">2</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_remove_sources_clicked" swapped="no"/>
@@ -429,6 +431,7 @@
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_markup" translatable="yes">Enable the selected sources and disable all others</property>
                                 <property name="tooltip_text" translatable="yes">Enable the selected sources and disable all others</property>
+                                <property name="margin_top">2</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <signal name="clicked" handler="on_use_clicked" swapped="no"/>
@@ -2058,6 +2061,7 @@
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
+                        <property name="max_width_chars">130</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2173,6 +2177,7 @@
                             <property name="can_focus">False</property>
                             <property name="halign">end</property>
                             <property name="label" translatable="yes">Registration enables cool features like synchronization of favorite images and sources between computers and personalized recommendations.</property>
+                            <property name="max_width_chars">130</property>
                             <attributes>
                               <attribute name="style" value="italic"/>
                             </attributes>
@@ -2286,6 +2291,7 @@
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
+                        <property name="max_width_chars">130</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2336,6 +2342,7 @@
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
+                        <property name="max_width_chars">130</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2406,6 +2413,7 @@
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
+                        <property name="max_width_chars">130</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2573,6 +2581,7 @@
 To show the icon in the launcher choose About or Preferences. You may wish to lock it there for easy drag-and-drop access.</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
+                        <property name="max_width_chars">130</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -3457,6 +3466,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="use_markup">True</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="max_width_chars">130</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3967,6 +3977,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   <object class="GtkLabel" id="label31">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
                     <property name="margin_left">30</property>
                     <property name="margin_right">30</property>
                     <property name="label" translatable="yes">I am developing Variety in my spare time, which usually means the late hours after my kids go to bed. Any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to continue working actively on it.
@@ -3975,6 +3986,7 @@ Thank you,
 Peter Levi</property>
                     <property name="justify">fill</property>
                     <property name="wrap">True</property>
+                    <property name="max_width_chars">130</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -3986,13 +3998,14 @@ Peter Levi</property>
                   <object class="GtkLinkButton" id="linkbutton4">
                     <property name="label" translatable="yes">Donate via PayPal</property>
                     <property name="use_action_appearance">False</property>
-                    <property name="height_request">35</property>
+                    <property name="height_request">50</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
                     <property name="margin_left">25</property>
+                    <property name="margin_right">25</property>
+                    <property name="margin_top">10</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
                     <property name="xalign">0</property>
@@ -4008,10 +4021,11 @@ Peter Levi</property>
                   <object class="GtkLabel" id="label33">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">start</property>
+                    <property name="halign">end</property>
                     <property name="margin_left">30</property>
                     <property name="margin_right">30</property>
-                    <property name="label" translatable="yes">For Bitcoin and other payment methods please go to &lt;a href="http://peterlevi.com/variety/"&gt;Variety's website&lt;/a&gt;.</property>
+                    <property name="margin_top">50</property>
+                    <property name="label" translatable="yes">&lt;i&gt;For Bitcoin and other payment methods please go to &lt;a href="http://peterlevi.com/variety/"&gt;Variety's website&lt;/a&gt;.&lt;/i&gt;</property>
                     <property name="use_markup">True</property>
                     <property name="wrap">True</property>
                   </object>
