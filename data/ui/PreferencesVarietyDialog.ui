@@ -59,11 +59,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">850</property>
     <property name="can_focus">False</property>
@@ -303,9 +298,6 @@
                                     <child>
                                       <object class="GtkTreeViewColumn" id="enabled">
                                         <property name="title" translatable="yes">Enabled</property>
-                                        <property name="clickable">True</property>
-                                        <property name="sort_indicator">True</property>
-                                        <property name="sort_column_id">0</property>
                                         <child>
                                           <object class="GtkCellRendererToggle" id="sources_enabled_checkbox_renderer"/>
                                           <attributes>
@@ -317,9 +309,6 @@
                                     <child>
                                       <object class="GtkTreeViewColumn" id="treeviewcolumn1">
                                         <property name="title" translatable="yes">Type</property>
-                                        <property name="clickable">True</property>
-                                        <property name="sort_indicator">True</property>
-                                        <property name="sort_column_id">1</property>
                                         <child>
                                           <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                           <attributes>
@@ -331,9 +320,6 @@
                                     <child>
                                       <object class="GtkTreeViewColumn" id="treeviewcolumn2">
                                         <property name="title" translatable="yes">Location</property>
-                                        <property name="clickable">True</property>
-                                        <property name="sort_indicator">True</property>
-                                        <property name="sort_column_id">2</property>
                                         <child>
                                           <object class="GtkCellRendererText" id="cellrenderertext4"/>
                                           <attributes>
@@ -4126,6 +4112,11 @@ Peter Levi</property>
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
