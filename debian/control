@@ -31,7 +31,8 @@ Depends: ${misc:Depends},
  yelp,
  imagemagick,
  python-lxml,
- python-gi-cairo
+ python-gi-cairo,
+ python-requests
 Description: Wallpaper changer, downloader and manager
  Variety changes the desktop wallpaper regularly, using local or
  automatically downloaded images. Variety sits conveniently as an
