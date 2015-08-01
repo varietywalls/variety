@@ -251,7 +251,11 @@ class Smart:
                     report_url = Smart.API_URL + '/mark/%s/%s/+%s' % (user['id'], imageid, mark)
                     result = Util.fetch(report_url, {'authkey': user['authkey']})
                     logger.info(lambda: "smart: Quick-reported, server returned: %s" % result)
-                    return
+                    if 'needs_reupload' in result:
+                        logger.info(lambda: "smart: Server requested full image data, "
+                                            "performing full report")
+                    else:
+                        return
                 except:
                     logger.info(lambda: "smart: Image uknown to server, performing full report")
 
