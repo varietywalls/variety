@@ -96,6 +96,7 @@
                 <property name="margin_right">20</property>
                 <property name="label" translatable="yes">Publish a link to the current wallpaper on Facebook. Include this text along with the link (or just leave empty):</property>
                 <property name="single_line_mode">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>

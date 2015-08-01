@@ -84,6 +84,7 @@
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -101,6 +102,7 @@
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -118,6 +120,7 @@
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -138,6 +141,7 @@
                     <property name="use_markup">True</property>
                     <property name="justify">fill</property>
                     <property name="wrap">True</property>
+                    <property name="max_width_chars">130</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -153,6 +157,7 @@
                     <property name="label" translatable="yes">Please continue the registration and follow the instructions in the browser tab we opened.</property>
                     <property name="use_markup">True</property>
                     <property name="wrap">True</property>
+                    <property name="max_width_chars">130</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

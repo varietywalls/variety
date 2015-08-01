@@ -47,6 +47,7 @@
             <property name="label" translatable="yes">Wallbase.cc is permanently down. Use Wallhaven.cc instead. Support for Wallbase.cc will be dropped completely in a future release, please remove or update your existing Wallbase sources.</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
+            <property name="max_width_chars">130</property>
             <attributes>
               <attribute name="foreground" value="#ffff00000000"/>
             </attributes>
@@ -70,6 +71,7 @@ If you specify a Wallbase URL, please choose the sorting criteria carefully - Va
             <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
+            <property name="max_width_chars">130</property>
           </object>
           <packing>
             <property name="expand">False</property>

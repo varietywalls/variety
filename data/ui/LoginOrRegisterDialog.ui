@@ -198,6 +198,7 @@
                 <property name="margin_top">7</property>
                 <property name="label" translatable="yes">Tip: You can also login to &lt;a href="https://vrty.org"&gt;VRTY.ORG&lt;/a&gt; in a browser and click the link &lt;span weight="bold"&gt;"Trigger Variety login"&lt;/span&gt; in your profile.</property>
                 <property name="use_markup">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires add_flickr_dialog 1.0 -->
   <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires add_flickr_dialog 1.0 -->
   <object class="AddFlickrDialog" id="add_flickr_dialog">
     <property name="width_request">650</property>
     <property name="can_focus">False</property>
@@ -102,6 +102,7 @@
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
+                <property name="max_width_chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
