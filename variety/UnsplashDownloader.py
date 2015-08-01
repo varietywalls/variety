@@ -77,6 +77,7 @@ class UnsplashDownloader(Downloader.Downloader):
                 self.queue.append((origin_url, final_image_url, extra_metadata, filename))
             except:
                 logger.exception(lambda: "Could not process an item from Unsplash")
+                raise
 
         random.shuffle(self.queue)
         logger.info(lambda: "Unsplash populated with %d URLs" % len(self.queue))

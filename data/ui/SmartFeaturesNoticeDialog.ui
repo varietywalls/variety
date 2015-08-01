@@ -44,7 +44,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_ok">
-                <property name="label">Continue</property>
+                <property name="label" translatable="yes">Continue</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

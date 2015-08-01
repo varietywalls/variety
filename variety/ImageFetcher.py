@@ -66,7 +66,7 @@ class ImageFetcher:
             u = Util.urlopen(url)
             info = u.info()
             if not "content-type" in info:
-                logger.info(lambda: "Uknown content-type for url " + url)
+                logger.info(lambda: "Unknown content-type for url " + url)
                 if verbose:
                     progress_reporter(_("Not an image"), url)
                 return None

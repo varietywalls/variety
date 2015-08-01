@@ -40,9 +40,9 @@ def _str(s):
 
 
 def _(text):
-    # TODO: We use locale instead of gettext because of the way Quikcly deploys to extras
-    # TODO: use gettext.gettext below when we stop using extras deployment
-    from locale import gettext as _
+    # Use "from locale import gettext" if we are deploying to /opt/extras
+    # Use "from gettext import gettext" when using standard Debian deployment
+    from gettext import gettext as _
     return _u(_(text))
 
 

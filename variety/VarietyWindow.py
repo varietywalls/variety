@@ -529,7 +529,7 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.LATEST:
             return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
-            raise Exception("Uknown downloader type")
+            raise Exception("Unknown downloader type")
 
     def get_folder_of_source(self, source):
         type = source[1]
@@ -707,7 +707,7 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.file_label.set_visible(bool(file))
                     self.ind.file_label.set_sensitive(bool(file))
-                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("Unknown"))
+                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("\Unknown"))
 
                     self.ind.focus.set_sensitive(image_source is not None)
 

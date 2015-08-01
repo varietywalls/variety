@@ -257,7 +257,7 @@ class Smart:
                     else:
                         return
                 except:
-                    logger.info(lambda: "smart: Image uknown to server, performing full report")
+                    logger.info(lambda: "smart: Image unknown to server, performing full report")
 
             width, height = Util.get_size(filename)
 
