@@ -42,6 +42,7 @@ SOURCES = {
 
 TIPS = [
     _("If you use KDE, you need to perform some actions before Variety will work. Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"),
+    _("You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."),
     _("If you want to run custom commands every time the wallpaper changes or if you use an alternative desktop environment, please edit the scripts in ~/.config/variety/scripts. There are examples there for various desktop environments."),
     _("Variety can be controlled from the command line and you can use this to define keyboard shortcuts for the operations you use most often. Run \"variety --help\" to see all available commands."),
     _("You can drop image links or files on the launcher icon to download them and use them as wallpapers. For quicker downloading from a specific site, you can also use clipboard monitoring (see \"Manual downloading\" tab)."),
@@ -51,6 +52,5 @@ TIPS = [
     _("To enable desktop notifications when the wallpaper changes, uncomment the two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."),
     _("Variety's indicator icon is themeable - if you you choose the \"Light\" option for the icon, Variety will first check if the current GTK theme has an icon named \"variety-indicator\" and will use it instead of the bundled light icon."),
     _("When you choose to save quotes to Favorites, these are by default saved to ~/.config/variety/favorite_quotes.txt. This file is compatible with Variety's local files quote source. If you want to use it - copy it to ~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote source. This file is also compatible with the Unix fortune utility."),
-    _("You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."),
 ]
 
