@@ -707,7 +707,7 @@ class VarietyWindow(Gtk.Window):
 
                     self.ind.file_label.set_visible(bool(file))
                     self.ind.file_label.set_sensitive(bool(file))
-                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("\Unknown"))
+                    self.ind.file_label.set_label(os.path.basename(file).replace('_', '__') if file else _("Unknown"))
 
                     self.ind.focus.set_sensitive(image_source is not None)
 
