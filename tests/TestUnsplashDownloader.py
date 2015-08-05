@@ -25,10 +25,13 @@ from variety.UnsplashDownloader import UnsplashDownloader
 
 
 class TestUnsplashDownloader(unittest.TestCase):
-    def test_fill_queue(self):
+    def test_unsplash_downloader(self):
         dl = UnsplashDownloader(None)
+        dl.target_folder = '/tmp/variety/'
         dl.fill_queue()
         self.assertTrue(len(dl.queue) > 0)
+
+        dl.download_one()
 
 if __name__ == '__main__':
     unittest.main()

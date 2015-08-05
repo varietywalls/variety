@@ -62,7 +62,7 @@ class Downloader(object):
         if not source_location:
             source_location = self.location
 
-        if not force_download and origin_url in self.parent.banned:
+        if not force_download and self.parent and origin_url in self.parent.banned:
             logger.info(lambda: "URL " + origin_url + " is banned, skip downloading")
             return None
 

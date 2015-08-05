@@ -13,17 +13,11 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-from datetime import datetime
 import os
-
 import random
-import urlparse
-
 import logging
-import re
 from variety import Downloader
 from variety.Util import Util
-import requests
 
 logger = logging.getLogger('variety')
 
@@ -70,11 +64,7 @@ class UnsplashDownloader(Downloader.Downloader):
                     'authorURL': self.location + item.find_all('a')[1]['href'],
                 }
 
-                redirect_url = requests.head(image_url).headers['Location']
-                final_image_url = redirect_url.replace('https://', 'http://')
-                # disable https for this specific call - it fails on 12.04 with an SSL related error:
-                # URLError: <urlopen error [Errno 1] _ssl.c:504: error:14077410:SSL routines:SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure>.
-                self.queue.append((origin_url, final_image_url, extra_metadata, filename))
+                self.queue.append((origin_url, image_url, extra_metadata, filename))
             except:
                 logger.exception(lambda: "Could not process an item from Unsplash")
                 raise
