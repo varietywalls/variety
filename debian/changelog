@@ -1,3 +1,42 @@
+variety (0.5.4) precise; urgency=low
+
+  * Updated setup.py to not change icon paths in desktop file
+  * Remove requests dependency for UnsplashDownloader
+  * Remove requests dependency for UnsplashDownloader
+  * More localization-related fixes
+  * Fix UI of all dialogs to prevent labels from maximizing them
+    horizontally
+  * Localization-related fixes. Updated translations.
+  * Minor update to changes and tips info
+  * Smart: updated report_file to heed needs_reupload response
+  * Bumping version number to 0.5.4
+  * Updated dependencies in debian/control to include python-requests
+  * Disable sorting of Images table by clicking in header
+  * UI cosmetics on non-Unity: Add some spacing between buttons next to
+    Images table
+  * Fix UI of PreferencesVarietyDialog to prevent labels from maximizing
+    it horizontally
+  * Use explicit python2 hashbangs in all scripts, as Ubuntu will be
+    moving to Python 3 as default
+  * Removed some unnecessary junk files
+  * Unsplash: sanitize filenames of downloaded images, just in case some
+    unexpected char pops up there in the future
+  * Added support for Unsplash.com
+  * Added Bing Photo of the Day image source
+  * Update tests to run on local modules, not global Variety modules
+  * Simplify Donate tab in Preferences
+  * Small change to bin/variety to facilitate local testing when Variety
+    is installed in the classic Debian way
+  * Preparing to move Variety to a classic Debian-style package: Icons
+  * Fixed Facebook publishing: use publish_actions scope
+  * Fixes to LXQt support (thanks to Erik Nelson)
+  * Add out-of-the-box support for LXQt (Thanks to panfren)
+  * Better detection of images coming from MediaRSS feeds when
+    sourceType is missing
+  * Out-of-the-box support for i3-wm
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Wed, 05 Aug 2015 23:01:43 +0300
+
 variety (0.5.3ubuntu1) precise; urgency=low
 
   * 
