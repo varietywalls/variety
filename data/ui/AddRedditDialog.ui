@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires add_reddit_dialog 1.0 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="AddRedditDialog" id="add_reddit_dialog">
     <property name="width_request">700</property>
     <property name="can_focus">False</property>
@@ -47,7 +47,7 @@
             <property name="label" translatable="yes">Enter the name of a subreddit or paste the full URL of a subreddit or a &lt;a href="http://reddit.com"&gt;Reddit&lt;/a&gt; user. You may specify sort order and time period if you wish. Variety will use posts to direct images or to Imgur pages within the first 100 submissions returned by Reddit.
 
 Example: You may specify simply 'comics' or &lt;a href="http://www.reddit.com/r/comics"&gt;http://www.reddit.com/r/comics&lt;/a&gt;
-Example: Top posts from the month: &lt;a href="http://www.reddit.com/r/comics/top/?sort=top&amp;amp;t=month"&gt;http://www.reddit.com/r/comics/top/sort=top&amp;amp;t=month&lt;/a&gt;</property>
+Example: Top posts from the month: &lt;a href="http://www.reddit.com/r/comics/top/?sort=top&amp;amp;t=month"&gt;http://www.reddit.com/r/comics/top/?sort=top&amp;amp;t=month&lt;/a&gt;</property>
             <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
