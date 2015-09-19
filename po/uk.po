@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
 "PO-Revision-Date: 2015-01-22 16:36+0000\n"
 "Last-Translator: Микола Ткач <Stuartlittle1970@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 10:20+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -865,7 +865,7 @@ msgstr "Не можу знайти там зображень. Перевірте
 msgid "Welcome to Variety!"
 msgstr "Ласкаво просимо до Variety!"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Далі"
 
@@ -1010,37 +1010,37 @@ msgstr ""
 "Ваші облікові дані на VRTY.ORG ймовірно застаріли. Будь ласка, увійдіть "
 "знову."
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "Синхронізація"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr "Завантажено зображень: %d"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr "Завантажено 1 зображення"
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
 msgstr "Завершено"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "Авторизовано як %s"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr ""
 "Ви бажаєте увійти на VRTY.ORG як <span font_weight=\"bold\">%s</span>?"
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
 msgstr "Підтвердити вхід на VRTY.ORG"
 
@@ -1104,15 +1104,19 @@ msgstr "Випадкові шпалери з Desktoppr.co"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "NASA: астрономічне фото дня"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr ""
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1121,7 +1125,14 @@ msgstr ""
 "Variety запрацює. Будь ласка, прочитайте тут: "
 "http://peterlevi.com/variety/2014/05/variety-and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Ви можете змінювати шпалери прокручуванням коліща миші на індикаторі."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1133,7 +1144,7 @@ msgstr ""
 "відредагуйте скрипти у ~/.config/variety/scripts. Приклади для різних "
 "робочих середовищ поміщені теж там."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -1143,7 +1154,7 @@ msgstr ""
 "клавіші для дій що часто використовуються. Запустіть «variety --help», аби "
 "побачити усі доступні команди."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1154,7 +1165,7 @@ msgstr ""
 "швидкого завантаження зі специфічних сайтів, Ви також можете використовувати "
 "стеження за буфером обміну (див. вкладку «Ручне завантаження»)."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
@@ -1164,7 +1175,7 @@ msgstr ""
 "ненав’язливі, але, у той же час, барвисті шпалери, подібні стандартним в "
 "Ubuntu."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1176,7 +1187,7 @@ msgstr ""
 "існуючими, як прикладом. Будь-який фільтр — усього лише набір опцій для "
 "команди перетворення з ImageMagick."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1192,7 +1203,7 @@ msgstr ""
 "«об’єднаного» перегляду ескізів. Зверніть увагу, що перегляд мініатюр "
 "обмежений декількома сотнями випадково вибраних зображень."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -1200,7 +1211,7 @@ msgstr ""
 "Для вмикання сповіщень при зміні шпалер розкоментуйте два останні рядки у "
 "файлі ~/.config/variety/scripts/set_wallpaper."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1211,7 +1222,7 @@ msgstr ""
 "вигляд, то Variety перш перевірить, чи є у поточній GTK-темі піктограма "
 "«variety-indicator», й використає її замість вбудованої."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1224,13 +1235,6 @@ msgstr ""
 "джерелом цитат Variety. Якщо бажаєте його використовувати, скопіюйте у "
 "~/.config/variety/pluginconfig/quotes/ та залучіть локальне джерело цитат. "
 "Цей файл також сумісний з Unix-утилітою fortune."
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-"Ви можете змінювати шпалери прокручуванням коліща миші на індикаторі."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1337,7 +1341,7 @@ msgstr "Variety - VRTY.ORG"
 msgid "No, thanks"
 msgstr "Ні, дякую"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
@@ -1345,7 +1349,7 @@ msgstr ""
 "<span font=\"14\" weight=\"bold\">Введення <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Бажаєте прийняти участь?</span>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1357,7 +1361,7 @@ msgstr ""
 "щоб знайти та додати нові джерела зображень до Variety і простежити за "
 "Вибраним інших користувачів."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1371,7 +1375,7 @@ msgstr ""
 "<a href='http://peterlevi.com/variety/vrty-org/'>Більш докладну інформацію "
 "про сервіс й політику конфіденційності читайте тут.</a>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
@@ -1379,7 +1383,7 @@ msgstr ""
 "Участь є обов'язковою для деяких функцій Variety таких як <span "
 "weight=\"bold\">синхронізація Вибраного між комп'ютерами</span>."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
 msgstr "Прийняти участь у VRTY.ORG"
@@ -2412,6 +2416,10 @@ msgid "I will participate anonymously"
 msgstr "Я буду брати участь анонімно"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "Реєстрація тут"
 

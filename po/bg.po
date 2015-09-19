@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
-"PO-Revision-Date: 2015-08-01 14:07+0000\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
+"PO-Revision-Date: 2015-08-02 13:45+0000\n"
 "Last-Translator: Peter Levi <Unknown>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 14:08+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -98,7 +98,7 @@ msgstr "ОК"
 
 #: ../data/ui/AddWallhavenDialog.ui.h:1
 msgid "Variety - add Wallhaven.cc image source"
-msgstr "Variety - добавяне на Wallhaven.cc като източник за картинки"
+msgstr "Variety - добавяне на Wallhaven.cc като източник"
 
 #: ../data/ui/AddWallhavenDialog.ui.h:2
 #: ../variety/PreferencesVarietyDialog.py:331
@@ -134,10 +134,10 @@ msgstr ""
 "\n"
 "Ако зададете Wallhaven URL, моля подберете внимателно критерия за сортиране -"
 " Variety регулярно дърпа нови картинки, но използва само първите стотина "
-"картинки от търсенете. Сортиране \"Random\" или по \"Date\" означава, че "
-"този източник ще се изчерпи по-бавно. Сортиране по \"Favorites\" осигурява "
-"по-качествени картинки, а \"Relevance\" ще връща по-точни резултати при "
-"търсене за фраза или по цвят."
+"картинки от търсенето. Сортиране \"Random\" или по \"Date\" означава, че "
+"този източник ще има по-дълъг \"живот\" преди да се изчерпи. Сортиране по "
+"\"Favorites\" осигурява по-качествени картинки, а \"Relevance\" ще връща по-"
+"точни резултати при търсене на фраза или по цвят."
 
 #: ../data/ui/AddWallhavenDialog.ui.h:8 ../data/ui/AddWallbaseDialog.ui.h:9
 msgid "Enter keywords or paste URL here: "
@@ -864,7 +864,7 @@ msgstr "Не намерих никакви картинки. Моля прове
 msgid "Welcome to Variety!"
 msgstr "Добре дошли във Variety!"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Напред"
 
@@ -933,7 +933,7 @@ msgid ""
 msgstr ""
 "Въведете името на събредита или копирайте пълния URL на събредит или <a "
 "href=\"http://reddit.com\">Reddit</a> потребител. Може да зададете критерий "
-"за сортиране и времеви период. Variety ще използва постове, които сочат "
+"за сортиране и времеви период. Variety ще използва публикации, които сочат "
 "директно към картинки или към страници в Imgur в рамките на първите 100 "
 "резултата, върнати от Reddit.\n"
 "\n"
@@ -1007,30 +1007,30 @@ msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
 "Данните Ви за вход във VRTY.ORG вероятно са стари. Моля влезте отново."
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "Синхронизиранe"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr "Изтегляме %d картинки"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr "Изтегляме 1 картинка"
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
 msgstr "Готово"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "Влезли сте с потребител %s"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
@@ -1038,7 +1038,7 @@ msgstr ""
 "Искате ли да се логнете във VRTY.ORG като <span "
 "font_weight=\"bold\">%s</span>?"
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
 msgstr "Потвърждение за логин във VRTY.ORG"
 
@@ -1092,9 +1092,7 @@ msgstr ""
 
 #: ../variety/Texts.py:36
 msgid "Latest favorites by the other users of Variety."
-msgstr ""
-"Картинки, които най-скоро са били маркирани като любими от другите "
-"потребители на Variety"
+msgstr "Най-новите любими картинки на другите потребители на Variety"
 
 #: ../variety/Texts.py:37
 msgid "Random wallpapers from Desktoppr.co"
@@ -1104,15 +1102,21 @@ msgstr "Случайно избрани тапети от Desktoppr.co"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "НАСА: Астрономическа смимка на деня"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+"World Sunlight Map - Карта на осветеността на Земята от Слънцето, променяща "
+"се през деня"
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr "Bing Фото на деня"
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr "Фотографии с висока резолюция от Unsplash.com"
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1121,7 +1125,15 @@ msgstr ""
 "няма да работи. Моля прочетете тук: "
 "http://peterlevi.com/variety/2014/05/variety-and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Можете да сменяте тапета като въртите колелцето на мишката нагоре или надолу "
+"върху индикаторната икона."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1132,7 +1144,7 @@ msgstr ""
 "използвате работна среда, която не се поддържа по подразбиране, можете да "
 "редактирате скриптовете в ~/.config/variety/scripts."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -1143,7 +1155,7 @@ msgstr ""
 "ползвате най-често. Пуснете \"variety --help\", за да видите списък с "
 "достъпните команди."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1154,7 +1166,7 @@ msgstr ""
 "включите и опцията за наблюдение на клипборда (вижте таба \"Ръчно "
 "изтегляне\")."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
@@ -1164,7 +1176,7 @@ msgstr ""
 "абстрактно-изглеждащи и ненатрапчиви тапети, подобни на стандартния тапет на "
 "Убунту."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1176,7 +1188,7 @@ msgstr ""
 "съществуващите филтри като пример. Всеки филтър е набор от опции, които да "
 "се подадат към командата convert на ImageMagick."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1192,7 +1204,7 @@ msgstr ""
 "Имайте предвид, че лентата с картинка е ограничена до няколкостотин случайно "
 "подбрани картинки от източниците."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -1200,7 +1212,7 @@ msgstr ""
 "За да получавате нотификации когато тапета се сменя, разкоментирайте двете "
 "линии на края на  ~/.config/variety/scripts/set_wallpaper."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1212,7 +1224,7 @@ msgstr ""
 "текущата GTK тема има икона с име  \"variety-indicator\" преди да използва "
 "стандартната си икона."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1226,14 +1238,6 @@ msgstr ""
 "копирайте го в ~/.config/variety/pluginconfig/quotes/ и активирайте плъгина "
 "за цитати от локални файлове. Освен това този файл е съвместим с Unix "
 "приложението fortune."
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-"Можете да сменяте тапета като въртите колелцето на мишката нагоре или надолу "
-"върху индикаторната икона."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1339,7 +1343,7 @@ msgstr "Variety - VRTY.ORG"
 msgid "No, thanks"
 msgstr "Не, благодаря"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
@@ -1347,7 +1351,7 @@ msgstr ""
 "<span font=\"14\" weight=\"bold\">Запознайте се с <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Искате ли да се включите?</span>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1359,7 +1363,7 @@ msgstr ""
 "тапета, за намиране и добавяне на нови източници на картинки и за абониране "
 "за любимите картинки на други потребители."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1373,7 +1377,7 @@ msgstr ""
 "публичен. <a href='http://peterlevi.com/variety/vrty-org/'>Прочетете още за "
 "услугата и политиката за поверителност.</a>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
@@ -1382,7 +1386,7 @@ msgstr ""
 "weight=\"bold\">синхронизиране на любимите Ви картинки между компютрите "
 "Ви</span>."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
 msgstr "Участвайте във VRTY.ORG"
@@ -1429,6 +1433,19 @@ msgid ""
 "# You should have received a copy of the GNU General Public License along \n"
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
+"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
+"# This program is free software: you can redistribute it and/or modify it \n"
+"# under the terms of the GNU General Public License version 3, as published "
+"\n"
+"# by the Free Software Foundation.\n"
+"# \n"
+"# This program is distributed in the hope that it will be useful, but \n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"# \n"
+"# You should have received a copy of the GNU General Public License along \n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:1
 msgid "Variety - add Wallpapers.net category"
@@ -2406,6 +2423,10 @@ msgid "I will participate anonymously"
 msgstr "Ще участвам анонимно"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr "Регистриран съм, Вход"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "Регистрирайте се тук"
 

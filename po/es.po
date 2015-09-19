@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
 "PO-Revision-Date: 2015-01-28 04:57+0000\n"
 "Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 10:20+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -834,7 +834,7 @@ msgstr "No se pudieron encontrar fondos allí. Compruebe la dirección URL."
 msgid "Welcome to Variety!"
 msgstr "Le damos la bienvenida a Variety."
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Continuar"
 
@@ -958,37 +958,37 @@ msgstr ""
 "Sus datos de acceso de VRTY.ORG están probablemente desactualizados. Acceda "
 "de nuevo."
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "Sincronizar"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr "Obteniendo %d imágenes"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr "Obteniendo 1 imagen"
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
 msgstr "Finalizado"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "Sesión iniciada como %s"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr ""
 "¿Quiere acceder a VRTY.ORG como <span font_weight=\"bold\">%s</span>?"
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
 msgstr "Confirmación de acceso a VRTY.ORG"
 
@@ -1050,15 +1050,19 @@ msgstr "Fondos aleatorios de Desktoppr.co"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "Imagen astronómica del día de la NASA"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr ""
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1066,7 +1070,15 @@ msgstr ""
 "Si utiliza KDE necesitará realizar algunas acciones antes para que Variety "
 "funcione. Consulte: http://peterlevi.com/variety/2014/05/variety-and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Puede cambiar de fondo ubicando el puntero del ratón sobre el icono "
+"indicador y usando la rueda de desplazamiento."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1077,7 +1089,7 @@ msgstr ""
 "escritorio diferente, edite las secuencias de órdenes ubicadas en "
 "~/.config/variety/scripts, donde encontrará ejemplos para varios entornos."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -1087,7 +1099,7 @@ msgstr ""
 "para establecer las combinaciones de teclas que más utiliza. Ejecute "
 "«variety --help» para ver todas las órdenes."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1098,14 +1110,14 @@ msgstr ""
 "puede utilizar el monitoreo de portapapeles (vea la pestaña «Descarga "
 "manual»)."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1113,7 +1125,7 @@ msgid ""
 "ImageMagick's convert command."
 msgstr ""
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1123,13 +1135,13 @@ msgid ""
 "several hundred randomly selected images."
 msgstr ""
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
 msgstr ""
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1137,7 +1149,7 @@ msgid ""
 "light icon."
 msgstr ""
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1145,14 +1157,6 @@ msgid ""
 "~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
 "source. This file is also compatible with the Unix fortune utility."
 msgstr ""
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-"Puede cambiar de fondo ubicando el puntero del ratón sobre el icono "
-"indicador y usando la rueda de desplazamiento."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1249,7 +1253,7 @@ msgstr "Variety – VRTY.ORG"
 msgid "No, thanks"
 msgstr "No, gracias"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
@@ -1257,7 +1261,7 @@ msgstr ""
 "<span font=\"14\" weight=\"bold\">Presentamos <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>. ¿Quiere ser parte?</span>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1265,7 +1269,7 @@ msgid ""
 "favorites."
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1274,13 +1278,13 @@ msgid ""
 "service and the privacy policy here.</a>"
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
 msgstr "Participar en VRTY.ORG"
@@ -2269,6 +2273,10 @@ msgid "I will participate anonymously"
 msgstr "Participaré anónimamente"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "Regístrese aquí"
 

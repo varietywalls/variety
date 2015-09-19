@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
-"PO-Revision-Date: 2015-06-19 17:05+0000\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
+"PO-Revision-Date: 2015-08-08 16:19+0000\n"
 "Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 10:20+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -429,7 +429,7 @@ msgstr "Abgerufen: Herkunft anzeigen"
 #: ../variety/ThumbsManager.py:121
 #, python-format
 msgid "View at %s"
-msgstr "Unter %s anzeigen"
+msgstr "Auf %s anzeigen"
 
 #: ../variety/VarietyWindow.py:710
 msgid "Unknown"
@@ -532,8 +532,8 @@ msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
-"Wird einen Editor mit der Konfigurationsdatei öffnen und die Änderungen "
-"anwenden, nachdem Sie den Editor geschlossen haben."
+"Wird eine Textbearbeitung mit der Konfigurationsdatei öffnen und die "
+"Änderungen anwenden, nachdem Sie die Textbearbeitung geschlossen haben."
 
 #: ../variety/VarietyWindow.py:1944
 msgid ""
@@ -734,11 +734,11 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:2271
 msgid "Fetched and applied"
-msgstr ""
+msgstr "Abgerufen und angewendet"
 
 #: ../variety/VarietyWindow.py:2281
 msgid "It works!"
-msgstr ""
+msgstr "Es funktioniert!"
 
 #: ../variety/VarietyWindow.py:2281
 msgid "Yay, Variety links work. Great!"
@@ -834,7 +834,7 @@ msgstr ""
 msgid "Welcome to Variety!"
 msgstr "Willkommen zu Variety"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Fortsetzen"
 
@@ -949,38 +949,38 @@ msgstr ""
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "Synchronisierung"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr ""
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr ""
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
-msgstr ""
+msgstr "Fertiggestellt"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "Angemeldet als %s"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr ""
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
-msgstr ""
+msgstr "VRTY.ORG-Anmeldebestätigung"
 
 #: ../variety/Texts.py:20
 msgid "Keep original"
@@ -1040,15 +1040,19 @@ msgstr "Zufällige Hintergrundbilder von Desktoppr.co"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "NASAs Astronomiebild des Tages"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr ""
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1057,7 +1061,15 @@ msgstr ""
 "funktioniert. Bitte lesen Sie: http://peterlevi.com/variety/2014/05/variety-"
 "and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Das Hintergrundbild kann,  durch rollen über dem Anzeigensymbol, vor und "
+"zurück gewechselt werden."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1070,17 +1082,17 @@ msgstr ""
 "~/.config/variety/scripts. Dort befinden sich Beispiele für unterschiedliche "
 "Arbeitsumgebungen."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
-"Variety kann von der Kommandozeile aus gesteuert werden. Damit ist es "
-"möglich, für Aktionen, die man am meisten nutzt, Tastenkürzel festzulegen. "
+"Variety kann von der Befehlszeile aus gesteuert werden. Damit ist es "
+"möglich, für Aktionen, die man am meisten benutzt, Tastenkürzel festzulegen. "
 "Mit »variety --help« wird eine Liste aller verfügbaren Befehle angezeigt."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1092,14 +1104,17 @@ msgstr ""
 "Überwachung der Zwischenablage aktiviert werden (siehe Reiter »Manuelles "
 "Herunterladen«)."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
+"Das Anwenden eines starken Unschärfefilters ist ein großartiger Weg, um "
+"abstrakt und unaufdringlich auszusehen und doch farbenfrohe "
+"Hintergrundbilder zu haben. Ähnlich dem Standardhintergrund von Ubuntu."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1107,11 +1122,11 @@ msgid ""
 "ImageMagick's convert command."
 msgstr ""
 "Eigene Filter hinzuzufügen ist einfach: ~/.config/variety/variety.conf in "
-"einem Editor öffnen und die vorhandenen Filter als Vorlage benutzen. Jeder "
-"Filter ist bloß eine Zeile von Optionen, die an ImageMagicks "
+"einer Textbearbeitung öffnen und die vorhandenen Filter als Vorlage "
+"benutzen. Jeder Filter ist bloß eine Zeile von Optionen, die an ImageMagicks "
 "Konvertierungsbefehl übergeben werden."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1121,7 +1136,7 @@ msgid ""
 "several hundred randomly selected images."
 msgstr ""
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -1130,7 +1145,7 @@ msgstr ""
 "zwei Zeilen am Ende von ~/.config/variety/scripts/set_wallpaper "
 "auskommentiert werden."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1142,7 +1157,7 @@ msgstr ""
 "GTK-Thema ein Symbol mit dem Namen »variety-indicator« gibt und dieses "
 "nutzen, anstatt des mitgelieferten hellen Symbols."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1154,14 +1169,6 @@ msgstr ""
 "unter ~/.config/variety/favorite_quotes.txt gespeichert. Diese Datei ist "
 "kompatibel zu Varietys Quelle für Zitate aus lokalen Dateien. Die Datei ist "
 "ebenfalls kompatibel mit den Unix-Glückskeks-Hilfsmitteln."
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-"Das Hintergrundbild kann,  durch rollen über dem Anzeigensymbol, vor und "
-"zurück gewechselt werden."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1254,19 +1261,19 @@ msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
 msgid "Variety - VRTY.ORG"
-msgstr ""
+msgstr "Variety - VRTY.ORG"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
 msgid "No, thanks"
-msgstr ""
+msgstr "Nein Danke"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1274,7 +1281,7 @@ msgid ""
 "favorites."
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1283,16 +1290,16 @@ msgid ""
 "service and the privacy policy here.</a>"
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
 msgstr ""
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
-msgstr ""
+msgstr "In VRTY.ORG teilnehmen"
 
 #: ../data/plugins/quotes/QuotesDaddySource.py:31
 msgid ""
@@ -1567,7 +1574,7 @@ msgstr "Rechts"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "Vertical position: "
-msgstr "Vertikale Position: "
+msgstr "Senkrechte Position: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Top "
@@ -1625,7 +1632,7 @@ msgstr "Kürzeste Zeitspanne beträgt zehn Sekunden"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "Regular change"
-msgstr "Regulärer Wechsel"
+msgstr "Regelmäßiger Wechsel"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Clock"
@@ -1720,7 +1727,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "Privacy policy"
-msgstr ""
+msgstr "Datenschutzerklärung"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid ""
@@ -1827,7 +1834,7 @@ msgstr "Farbe"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Are dark or light:"
-msgstr "Sind Dunkel oder Hell:"
+msgstr "Sind dunkel oder hell:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgctxt "Color option - images that are dark or light"
@@ -1922,9 +1929,9 @@ msgid ""
 "from the launcher quicklist. Run \"variety --help\" to see all available "
 "commands."
 msgstr ""
-"Wenn das Symbol nicht angezeigt wird, kann Variety von der Kommandozeile "
-"oder von der Schnellwahl des Starters aus gesteuert werden. Um alle "
-"möglichen Kommandos zu sehen »variety --help« ausführen."
+"Wenn das Symbol nicht angezeigt wird, kann Variety von der Befehlszeile oder "
+"von der Schnellwahl des Starters aus gesteuert werden. Um alle möglichen "
+"Befehle zu sehen bitte »variety --help« ausführen."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Favorites Operations"
@@ -1971,6 +1978,12 @@ msgid ""
 "not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
 "multiuser systems."
 msgstr ""
+"<b>Privatsphärenwarnung:</b> Um das Hintergrundbild anzuzeigen benötigt "
+"LightDM Leserechte für das Bild. Mit dieser Option wird Variety die Bilder "
+"in einen öffentlichen Ordner kopieren und es für alle lesbar machen. Die "
+"Vorgabe ist ~/Bilder, falls Ihr Persönlicher Ordner nicht verschlüsselt ist, "
+"ansonsten /usr/share/backgrounds. Bitte mit Sorgfalt auf "
+"Mehrbenutzersystemen verwenden."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Copy wallpaper image files to this folder: "
@@ -2076,7 +2089,7 @@ msgstr "Legitimierung erfolgreich"
 
 #: ../variety/FacebookHelper.py:116
 msgid "Publishing..."
-msgstr ""
+msgstr "Veröffentlichung läuft …"
 
 #: ../variety/FacebookHelper.py:121
 msgid "Authorization failed"
@@ -2256,6 +2269,10 @@ msgid "I will participate anonymously"
 msgstr ""
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "Hier registrieren"
 

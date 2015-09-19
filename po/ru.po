@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
-"PO-Revision-Date: 2015-07-21 05:23+0000\n"
-"Last-Translator: CyberTailor <CyberTailor@gmail.com>\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
+"PO-Revision-Date: 2015-08-24 11:54+0000\n"
+"Last-Translator: Rodion R. <rodikr2005@yandex.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 10:20+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -237,16 +237,15 @@ msgstr "Удалить источники и загруженные файлы"
 
 #: ../variety/PreferencesVarietyDialog.py:403
 msgid "World Sunlight Map enabled"
-msgstr "Карта солнечного света на планете включена"
+msgstr "Включена карта освещённости Земли Солнцем"
 
 #: ../variety/PreferencesVarietyDialog.py:404
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr ""
-"Использование карты солнечного света требует одновременного включения опций "
-"автоматического скачивания и обновления не реже чем раз в 30 минут. Опции "
-"включатся автоматически."
+"Карта освещённости требует загрузки и смены с интервалом 30 минут или "
+"меньше. Настройки скорректированы автоматически."
 
 #: ../variety/PreferencesVarietyDialog.py:489
 msgid "Add Images"
@@ -865,7 +864,7 @@ msgstr "Не могу найти там изображений. Проверьт
 msgid "Welcome to Variety!"
 msgstr "Добро пожаловать в Variety!"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -1004,36 +1003,36 @@ msgstr ""
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr "Данные для входа на сайт VRTY.ORG устарели. Перезайдите."
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "Синхронизация"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr "Загружено изображений: %d"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr "Загружено 1 изображение"
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
 msgstr "Завершено"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "Авторизовано как %s"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr "Выполнить вход на VRTY.ORG как <span font_weight=\"bold\">%s</span>?"
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
 msgstr "Подтверждение логина для VRTY.ORG"
 
@@ -1097,15 +1096,19 @@ msgstr "Случайные обои с Desktoppr.co"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "NASA: астрономическое фото дня"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr "Карта освещённости Земли Солнцем — живые обои с Die.net"
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr "Фото дня от Bing"
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr "Фото высокого разрешения из Unsplash.com"
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1114,7 +1117,13 @@ msgstr ""
 "Variety начнёт работать. Пожалуйста, прочтите здесь: "
 "http://peterlevi.com/variety/2014/05/variety-and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr "Вы можете менять обои прокруткой колеса мыши на индикаторе."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1126,7 +1135,7 @@ msgstr ""
 "отредактируйте скрипты в ~/.config/variety/scripts. Примеры для различных "
 "рабочих сред помещены там же."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -1136,7 +1145,7 @@ msgstr ""
 "клавиши для часто используемых операций. Запустите «variety --help», чтобы "
 "увидеть все доступные команды."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1147,7 +1156,7 @@ msgstr ""
 "загрузки со специфичных сайтов, вы также можете использовать слежение за "
 "буфером обмена (см. вкладку «Ручная загрузка»)."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
@@ -1157,7 +1166,7 @@ msgstr ""
 "абстрактные, ненавязчивые, но, в то же время, красочные обои, подобные "
 "стандартным в Ubuntu."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1169,7 +1178,7 @@ msgstr ""
 "существующими, как примером. Любой фильтр — всего лишь набор опций для "
 "команды преобразования из ImageMagick."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1186,7 +1195,7 @@ msgstr ""
 "просмотр миниатюр ограничен несколькими сотнями случайно выбранных "
 "изображений."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -1194,7 +1203,7 @@ msgstr ""
 "Для включения уведомлений при смене обоев раскомментируйте две последние "
 "строки в файле ~/.config/variety/scripts/set_wallpaper."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1205,7 +1214,7 @@ msgstr ""
 "то Variety сперва проверит, есть ли в текущей GTK-теме значок «variety-"
 "indicator», и использует его вместо встроенного."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1218,12 +1227,6 @@ msgstr ""
 "источником цитат Variety. Если хотите его использовать, скопируйте в "
 "~/.config/variety/pluginconfig/quotes/ и задействуйте локальный источник "
 "цитат. Этот файл также совсестим с Unix-утилитой fortune."
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr "Вы можете менять обои прокруткой колеса мыши на индикаторе."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1244,15 +1247,15 @@ msgstr "Копировать или переместить в Избранные
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
 msgid "Reset to Default"
-msgstr "Сбросить установки"
+msgstr "Сбросить настройки"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
 msgid ""
 "Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
 "menu depending on the image location:"
 msgstr ""
-"Выберите, предпочитаете вы видеть в меню «Копировать в Избранные» или "
-"«Переместить в Избранные» в зависимости от расположения изображения:"
+"Выберите отображение в меню «Копировать в Избранные» или «Переместить в "
+"Избранные» в зависимости от расположения изображения:"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
 msgid ""
@@ -1329,7 +1332,7 @@ msgstr "Variety — VRTY.ORG"
 msgid "No, thanks"
 msgstr "Нет, спасибо"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
@@ -1337,7 +1340,7 @@ msgstr ""
 "<span font=\"14\" weight=\"bold\">Представляем <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Желаете присоединиться?</span>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1349,7 +1352,7 @@ msgstr ""
 "находить и добавлять новые источники изображений в Variety и следовать "
 "избранным других пользователей."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1362,7 +1365,7 @@ msgstr ""
 "не является публичным. <a href='http://peterlevi.com/variety/vrty-"
 "org/'>Ознакомиться с правилами сервиса и политикой приватности.</a>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
@@ -1370,7 +1373,7 @@ msgstr ""
 "Участие необходимо для таких опций Variety как, например, <span "
 "weight=\"bold\">синхронизация избранного между компьютерами</span>."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
 msgstr "Участвовать в VRTY.ORG"
@@ -1974,7 +1977,7 @@ msgstr "Содержат этот цвет: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgid "(Takes effect after some initial searching)"
-msgstr "(Вступает в силу после некоторых первоначальных поисков)"
+msgstr "(Применяется после первоначального поиска)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgid "Rating"
@@ -2408,6 +2411,10 @@ msgid "I will participate anonymously"
 msgstr "Я буду участвовать анонимно"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr "Я зарегистрирован, дайте войти"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "Зарегистрируйтесь здесь"
 
@@ -2492,8 +2499,8 @@ msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
-"Совет: перелистывайте обои,\n"
-"прокручивая колёсико мыши на индикаторе"
+"Совет: прокручивайте обои вперёд и назад\n"
+"колесом мыши на индикаторе программы"
 
 #: ../variety/indicator.py:124
 msgid "_Image"
@@ -2517,11 +2524,11 @@ msgstr "Копировать в буфер обмена"
 
 #: ../variety/indicator.py:213
 msgid "Google Quote"
-msgstr "Погуглить цитату"
+msgstr "Искать цитату в Google"
 
 #: ../variety/indicator.py:218
 msgid "Google Author"
-msgstr "Погуглить автора"
+msgstr "Искать автора в Google"
 
 #: ../variety/indicator.py:230 ../variety/indicator.py:271
 msgid "Preferences..."

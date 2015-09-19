@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-07-19 16:49+0300\n"
+"POT-Creation-Date: 2015-08-05 21:15+0300\n"
 "PO-Revision-Date: 2015-05-15 13:34+0000\n"
 "Last-Translator: M.W.Park <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-01 10:20+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
+"X-Generator: Launchpad (build 17746)\n"
 "Language: Occitan (post 1500); Provençal\n"
 "X-Loco-Source-Locale: ms_MY\n"
 "X-Loco-Parser: loco_parse_po\n"
@@ -826,7 +826,7 @@ msgstr "여기서 배경화면을 찾을 수 없습니다. URL을 확인하십�
 msgid "Welcome to Variety!"
 msgstr "버라이어티에 오신 걸 환영합니다!"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "계속"
 
@@ -959,36 +959,36 @@ msgstr "당신의 smart_user.json 설정 파일이 올바르지 않은듯합니�
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr "당신의 VRTY.ORG 자격 증명이 오래된 것 같습니다. 다시 로그인하십시오."
 
-#: ../variety/Smart.py:593 ../variety/Smart.py:639
+#: ../variety/Smart.py:597 ../variety/Smart.py:643
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Sync"
 msgstr "동기화"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 #, python-format
 msgid "Fetching %d images"
 msgstr "%d개의 이미지를 불러오는 중입니다"
 
-#: ../variety/Smart.py:594
+#: ../variety/Smart.py:598
 msgid "Fetching 1 image"
 msgstr "한 개의 이미지를 불러오는 중입니다"
 
-#: ../variety/Smart.py:639
+#: ../variety/Smart.py:643
 msgid "Finished"
 msgstr "완료되었습니다"
 
-#: ../variety/Smart.py:660
+#: ../variety/Smart.py:664
 #, python-format
 msgid "Logged in as %s"
 msgstr "%s로 로그인되었습니다"
 
-#: ../variety/Smart.py:672
+#: ../variety/Smart.py:676
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
 msgstr "당신은 <span font_weight=\"bold\">%s</span>로 VRTY.ORG에 로그인하시는 걸 원하십니까?"
 
-#: ../variety/Smart.py:673
+#: ../variety/Smart.py:677
 msgid "VRTY.ORG login confirmation"
 msgstr "VRTY.ORG 로그인 확인"
 
@@ -1050,15 +1050,19 @@ msgstr "Desktoppr.co에서 무작위 배경화면을 불러옵니다"
 msgid "NASA's Astronomy Picture of the Day"
 msgstr "나사의 오늘의 천체 사진"
 
-#: ../variety/Texts.py:39
+#: ../variety/Texts.py:40
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:41
 msgid "Bing Photo of the Day"
 msgstr ""
 
-#: ../variety/Texts.py:40
+#: ../variety/Texts.py:42
 msgid "High-resolution photos from Unsplash.com"
 msgstr ""
 
-#: ../variety/Texts.py:44
+#: ../variety/Texts.py:46
 msgid ""
 "If you use KDE, you need to perform some actions before Variety will work. "
 "Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
@@ -1066,7 +1070,13 @@ msgstr ""
 "만약 당신이 KDE를 사용하신다면, 당신은 버라이어티가 실행되도록 만들기 이전에 몇몇 동작을 취하셔야 합니다. 여기로 들어가셔서 "
 "읽으십시오: http://peterlevi.com/variety/2014/05/variety-and-kde/"
 
-#: ../variety/Texts.py:45
+#: ../variety/Texts.py:47
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr "당신은 지표 아이콘 위에서 마우스 휠을 스크롤 하시는 걸로 배경화면을 앞뒤로 바꾸실 수 있습니다."
+
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -1076,7 +1086,7 @@ msgstr ""
 "만약 당신이 매번 배경화면이 바뀌도록 하는 사용자 설정 명령어를 사용하고 싶거나 다른 데스크톱 환경을 사용하고 싶다면, "
 "~/.config/variety/scripts에서 스크립트를 편집하십시오. 여기에는 여러 데스크톱 환경을 위한 예시가 있습니다."
 
-#: ../variety/Texts.py:46
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -1085,7 +1095,7 @@ msgstr ""
 "버라이어티는 명령 줄 인터페이스로 제어할 수 있으며 당신은 이를 이용하여 주로 가장 많이 사용할 명령을 키보드 단축키로 지정할 수 "
 "있습니다. \"variety --help\"를 실행해서 모든 유효한 명령어를 보십시오."
 
-#: ../variety/Texts.py:47
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -1094,7 +1104,7 @@ msgstr ""
 "당신은 이미지 링크 혹은 파일을 런처 아이콘에 내려놓는 걸로 내려받기 및 배경화면으로 사용하실 수 있습니다. 특정 사이트로부터 더 빠르게 "
 "내려받으시려면, 클립 보드 관리를 사용할 수 있습니다(\"수동 내려받기\" 탭을 보십시오)."
 
-#: ../variety/Texts.py:48
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
@@ -1103,7 +1113,7 @@ msgstr ""
 "강한 흐린 필터를 적용하는 것은 추상적인 분위기와 튀지 않게 만들면서도, 우분투에 있는 기본 배경화면과 같은 화려한 배경화면을 제공해주는 "
 "훌륭한 방법입니다."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -1113,7 +1123,7 @@ msgstr ""
 "당신만의 사용자 설정 필터를 추가하는 건 쉬운 일입니다: ~/.config/variety/variety.conf를 편집기로 여셔서 기존에 "
 "있는 필터를 예시로써 사용하십시오. 모든 필터는 이미지매직의 변환 명령어로 넘겨져야 할 한 줄의 선택 사항일 뿐입니다."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -1127,7 +1137,7 @@ msgstr ""
 "모든 이미지 소스를 \"합쳐진\" 섬네일로 보기로 설정할 수 있습니다. 이 섬네일로 보기는 무작위로 선택된 백여 개의 이미지 제한을 "
 "가지고 있으므로 유의하십시오."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -1135,7 +1145,7 @@ msgstr ""
 "바탕화면 알림을 사용하시려면 배경화면이 바뀔 때, ~/.config/variety/scripts/set_wallpaper의 밑에 있는 두 "
 "줄을 제거하십시오."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -1146,7 +1156,7 @@ msgstr ""
 "처음으로 현재 GTK 테마가 \"버라이어티-지표\"라는 이름의 아이콘을 가졌는지를 확인하고 기본으로 있는 밝음 아이콘 대신에 이 아이콘을 "
 "사용할 것입니다."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -1158,12 +1168,6 @@ msgstr ""
 "저장됩니다. 이 파일은 버라이어티의 로컬 파일 명언 소스와 호환이 됩니다. 만약 당신이 이것을 사용하고 싶다면 - 이것을 "
 "~/.config/variety/pluginconfig/quotes/에 복사하시고 로컬 파일 명언 소스를 사용하십시오. 이 파일은 "
 "마찬가지로 유닉스 포천 프로그램과 호환이 됩니다."
-
-#: ../variety/Texts.py:54
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr "당신은 지표 아이콘 위에서 마우스 휠을 스크롤 하시는 걸로 배경화면을 앞뒤로 바꾸실 수 있습니다."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
@@ -1273,7 +1277,7 @@ msgstr "버라이어티 - VRTY.ORG"
 msgid "No, thanks"
 msgstr "고맙지만, 사양합니다"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
@@ -1281,7 +1285,7 @@ msgstr ""
 "<a href=\"https://vrty.org\">VRTY.ORG를 <span font=\"14\" "
 "weight=\"bold\">소개합니다</a>! 참여하고 싶습니까?</span>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1292,7 +1296,7 @@ msgstr ""
 "배경화면을 아주-편리하게 바꾸는 방법을 제공하며, 버라이어티에 새로운 이미지 소스를 찾으시거나 추가하실 수 있고, 다른 사용자의 "
 "즐겨찾기를 따르실 수 있습니다."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
 "Participation takes no effort - your profile will be built automatically, as "
 "you like or dislike images downloaded by Variety. Your profile will not be "
@@ -1305,7 +1309,7 @@ msgstr ""
 "않습니다. <a href='http://peterlevi.com/variety/vrty-org/'>여기에 들어가셔서 이 서비스에 관한 더 "
 "자세한 사항과 개인 정보 보호 정책을 읽으십시오.</a>"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
@@ -1313,7 +1317,7 @@ msgstr ""
 "<span weight=\"bold\">컴퓨터들 사이에서 즐겨찾기를 동기화합니다</span>와 같은 버라이어티의 몇몇 기능은 참여가 "
 "요구됩니다."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Participate in VRTY.ORG"
 msgstr "VRTY.ORG에 참여합니다"
@@ -2314,6 +2318,10 @@ msgid "I will participate anonymously"
 msgstr "익명으로 참여할 것입니다"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
 msgstr "여기서 회원 가입을 하십시오"
 
