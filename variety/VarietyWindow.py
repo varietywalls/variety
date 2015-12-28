@@ -2718,3 +2718,5 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 _("An error occurred while creating the autostart desktop entry\n"
                 "Please run from a terminal with the -v flag and try again."))
 
+    def on_start_slideshow(self, widget=None):
+        subprocess.call(["variety-slideshow",])

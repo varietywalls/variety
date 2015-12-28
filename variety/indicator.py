@@ -268,6 +268,12 @@ class Indicator:
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
+        self.slideshow = Gtk.MenuItem(_("Start Slideshow"))
+        self.slideshow.connect("activate", window.on_start_slideshow)
+        self.menu.append(self.slideshow)
+
+        self.menu.append(Gtk.SeparatorMenuItem.new())
+
         self.preferences = Gtk.MenuItem(_("Preferences..."))
         self.preferences.connect("activate", window.on_mnu_preferences_activate)
         self.menu.append(self.preferences)

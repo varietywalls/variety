@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-20 00:27+0300\n"
+"POT-Creation-Date: 2015-12-28 20:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1090,6 +1090,14 @@ msgid ""
 "\tOthers:Both"
 msgstr ""
 
+#: ../variety-slideshow.desktop.in.h:1
+msgid "Variety Slideshow"
+msgstr ""
+
+#: ../variety-slideshow.desktop.in.h:2
+msgid "Nice!"
+msgstr ""
+
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
 msgid "VRTY.ORG integration"
 msgstr ""
@@ -2163,7 +2171,7 @@ msgstr ""
 msgid "Google Author"
 msgstr ""
 
-#: ../variety/indicator.py:230 ../variety/indicator.py:271
+#: ../variety/indicator.py:230 ../variety/indicator.py:277
 msgid "Preferences..."
 msgstr ""
 
@@ -2187,11 +2195,15 @@ msgstr ""
 msgid "Recent _Downloads"
 msgstr ""
 
-#: ../variety/indicator.py:275
+#: ../variety/indicator.py:271
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../variety/indicator.py:281
 msgid "About"
 msgstr ""
 
-#: ../variety/indicator.py:279
+#: ../variety/indicator.py:285
 msgid "Quit"
 msgstr ""
 
