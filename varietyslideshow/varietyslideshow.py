@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
 import sys
 
 from gi.repository import GtkClutter
@@ -25,12 +24,16 @@ from gi.repository import Gtk, Gdk, GObject, Clutter, GLib, GdkPixbuf, Cogl
 
 Gtk.init(sys.argv)
 
+import json
+import io
 from multiprocessing import Process, Queue
 import logging
 import optparse
 import os
 import random
 import time
+
+from variety.AttrDict import AttrDict
 
 IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.bmp')
 
@@ -60,33 +63,60 @@ class VarietySlideshow(Gtk.Window):
                 i + 1, screen.get_monitor_plug_name(i), geo.width, geo.height)
         return result
 
+    def load_options(self):
+        if '--defaults' in sys.argv:
+            self.options = AttrDict()
+            return
+
+        try:
+            with io.open(os.path.expanduser(u'~/.config/variety/variety_slideshow.json'), encoding='utf8') as f:
+                self.options = AttrDict(json.loads(f.read()))
+        except:
+            self.options = AttrDict()
+
+    def save_options(self):
+        try:
+            try:
+                os.makedirs(os.path.expanduser(u'~/.config/variety/'))
+            except:
+                pass
+            with io.open(os.path.expanduser(u'~/.config/variety/variety_slideshow.json'), 'w', encoding='utf8') as f:
+                f.write(json.dumps(self.options, indent=4, ensure_ascii=False, encoding='utf8'))
+        except:
+            logging.exception(u'Could not save options:')
+
     def parse_options(self):
         """Support for command line options"""
         usage = """%prog [options] [list of images and/or image folders]
-Starts a slideshow using the given images and/or image folders"""
+Starts a slideshow using the given images and/or image folders. Options are automatically saved, and reused next time you start the slideshow."""
         parser = optparse.OptionParser(usage=usage)
 
-        parser.add_option("-s", "--seconds", action="store", type="float", dest="seconds", default=SECONDS,
+        parser.add_option("-s", "--seconds", action="store", type="float", dest="seconds",
+                          default=self.options.get("seconds", SECONDS),
                           help="Interval in seconds between image changes.\n"
                                "Default is %s.\n"
                                "Float, at least 0.1." % SECONDS)
-        parser.add_option("--fade", action="store", type="float", dest="fade", default=FADE,
+        parser.add_option("--fade", action="store", type="float", dest="fade",
+                          default=self.options.get("fade", FADE),
                           help="Fade duration, as a fraction of the interval.\n"
-                               "Default is 0.4, i.e. 0.4 * 4 = 1.6 seconds.\n"
+                               "Default is 0.4, i.e. 0.4 * 6 = 2.4 seconds.\n"
                                "Float, between 0 and 1.\n"
                                "0 disables fade.")
-        parser.add_option("--zoom", action="store", type="float", dest="zoom", default=ZOOM,
+        parser.add_option("--zoom", action="store", type="float", dest="zoom",
+                          default=self.options.get("zoom", ZOOM),
                           help="How much to zoom in or out images, as a ratio of their size.\n"
                                "Default is %s.\n"
                                "Float, at least 0.\n"
                                "0 disables zoom." % ZOOM)
-        parser.add_option("--pan", action="store", type="float", dest="pan", default=PAN,
+        parser.add_option("--pan", action="store", type="float", dest="pan",
+                          default=self.options.get("pan", PAN),
                           help="How much to pan images sideways, as a ratio of screen size.\n"
                                "Default is %s.\n"
                                "Float, at least 0.\n"
                                "0 disables pan." % PAN)
 
-        parser.add_option("--sort", action="store", type="string", dest="sort", default="random",
+        parser.add_option("--sort", action="store", type="string", dest="sort",
+                          default=self.options.get("sort", "random"),
                           help="""
 In what order to cycle the files. Possible values are:
 random - random order (Default);
@@ -94,31 +124,44 @@ keep - keep order, specified on the commandline (only useful when specifying fil
 name - sort by folder name, then by filename;
 date - sort by file date;""")
 
-        parser.add_option("--asc", "--ascending", action="store_true", dest="ascending",
-                          help="Use ascending sort order (this is the default)")
+        parser.add_option("--order", action="store", dest="sort_order",
+                          default=self.options.get("sort_order", "asc"),
+                          help="Sort order: asc/ascending (this is the default), or desc/descending")
 
-        parser.add_option("--desc", "--descending", action="store_true", dest="descending",
-                          help="Use descending sort order")
-
-        parser.add_option("--monitor", action="store", type="int", dest="monitor", default=1,
+        parser.add_option("--monitor", action="store", type="int", dest="monitor",
+                          default=self.options.get("monitor", 1),
                           help="On which monitor to run - 1, 2, etc. up to the number of monitors.\n" + self.current_monitors_help())
 
-        parser.add_option("--mode", action="store", dest="mode", default="fullscreen",
+        parser.add_option("--mode", action="store", dest="mode",
+                          default=self.options.get("mode", "fullscreen"),
                           help="Window mode: possible values are 'fullscreen', 'maximized', 'desktop', 'window' and 'undecorated'. "
                                "Default is fullscreen.")
 
-        parser.add_option("--title", action="store", type="string", dest="title", default='Variety Slideshow',
+        parser.add_option("--title", action="store", type="string", dest="title",
+                          default=self.options.get("title", "Variety Slideshow"),
                           help="Window title")
 
-        self.options, args = parser.parse_args(sys.argv)
+        parser.add_option("--defaults", action="store_true", dest="defaults",
+                          help="Do not load saved options, use defaults instead. "
+                               "You can still specify commandline parameters to override them.")
+
+
+        cmd_options, args = parser.parse_args(sys.argv)
+        self.options.update(vars(cmd_options))
+        if 'defaults' in self.options:
+            del self.options['defaults']
+        if len(args) > 1:
+            self.options.files_and_folders = args[1:]
+        if 'files_and_folders' not in self.options:
+            self.options.files_and_folders = ['/usr/share/backgrounds/']
 
         if self.options.seconds < 0.1:
             parser.error("Seconds should be at least 0.1")
-        self.options.interval = self.options.seconds * 1000
+        self.interval = self.options.seconds * 1000
 
         if self.options.fade < 0 or self.options.fade > 1:
             parser.error("Fade should be between 0 and 1")
-        self.options.fade_time = self.options.interval * self.options.fade
+        self.fade_time = self.interval * self.options.fade
 
         if self.options.zoom < 0:
             parser.error("Zoom should be at least 0")
@@ -131,11 +174,6 @@ date - sort by file date;""")
             parser.error("Window mode: possible values are "
                          "'fullscreen', 'maximized', 'desktop', 'window' and 'undecorated'")
 
-        self.files_and_folders = args[1:]
-
-        if not self.files_and_folders:
-            self.files_and_folders.append('/usr/share/backgrounds/')
-
         self.parser = parser
 
     def prepare_file_queues(self):
@@ -144,7 +182,7 @@ date - sort by file date;""")
         self.error_files = set()
         self.cursor = 0
 
-        for arg in self.files_and_folders:
+        for arg in self.options.files_and_folders:
             path = os.path.abspath(os.path.expanduser(arg))
             if is_image(path):
                 self.files.append(path)
@@ -169,7 +207,7 @@ date - sort by file date;""")
         else:
             random.shuffle(self.files)
 
-        if self.options.descending:
+        if self.options.sort_order.lower().startswith('desc'):
             self.files.reverse()
 
     def get_next_file(self):
@@ -242,7 +280,9 @@ date - sort by file date;""")
     def run(self):
         self.running = True
 
-        self.parse_options()
+        self.load_options()  # loads from config file
+        self.parse_options()    # parses the command-line arguments, these take precedence over the saved config
+        self.save_options()
         self.prepare_file_queues()
 
         self.set_title(self.options.title)
@@ -280,7 +320,6 @@ date - sort by file date;""")
             self.maximize()
             self.set_decorated(False)
             self.set_keep_below(True)
-            self.set_skip_taskbar_hint(True)
         elif self.options.mode == 'undecorated':
             self.set_decorated(False)
 
@@ -336,7 +375,7 @@ date - sort by file date;""")
             self.prev_texture = self.texture
             self.texture = self.next_texture
 
-            self.next_timeout = GObject.timeout_add(int(self.options.interval), self.next, priority=GLib.PRIORITY_HIGH)
+            self.next_timeout = GObject.timeout_add(int(self.interval), self.next, priority=GLib.PRIORITY_HIGH)
             self.prepare_next_data()
         except:
             logging.exception('Oops, exception in next, rescheduling:')
@@ -418,7 +457,7 @@ date - sort by file date;""")
         # start animating to target size
         texture.save_easing_state()
         texture.set_easing_mode(Clutter.AnimationMode.LINEAR)
-        texture.set_easing_duration(self.options.interval + self.options.fade_time)
+        texture.set_easing_duration(self.interval + self.fade_time)
         texture.set_size(*target_size)
         texture.set_position(*target_position)
 
@@ -426,7 +465,7 @@ date - sort by file date;""")
         texture.set_reactive(visible)
         texture.save_easing_state()
         texture.set_easing_mode(Clutter.AnimationMode.EASE_OUT_SINE if visible else Clutter.AnimationMode.EASE_IN_SINE)
-        texture.set_easing_duration(self.options.fade_time)
+        texture.set_easing_duration(self.fade_time)
         texture.set_opacity(255 if visible else 0)
         if visible:
             self.stage.raise_child(texture, None)

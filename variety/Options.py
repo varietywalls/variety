@@ -387,6 +387,71 @@ class Options:
             except Exception:
                 pass
 
+
+            try:
+                self.slideshow_favorites_enabled = config["slideshow_favorites_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_downloads_enabled = config["slideshow_downloads_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_custom_enabled = config["slideshow_custom_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_custom_folder = os.path.expanduser(
+                    config["slideshow_custom_folder"] or Util.get_xdg_pictures_folder())
+            except Exception:
+                pass
+
+            try:
+                slideshow_sort_order = config["slideshow_sort_order"]
+                if slideshow_sort_order in ["Random", "Name, asc", "Name, desc", "Date, asc", "Date, desc"]:
+                    self.slideshow_sort_order = slideshow_sort_order
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_monitor = config["slideshow_monitor"]
+            except Exception:
+                pass
+
+            try:
+                slideshow_mode = config["slideshow_mode"]
+                if slideshow_mode in ["Fullscreen", "Desktop", "Maximized", "Window"]:
+                    self.slideshow_mode = slideshow_mode
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_seconds = float(config["slideshow_seconds"])
+                self.slideshow_seconds = max(0.5, self.slideshow_seconds)
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_fade = float(config["slideshow_fade"])
+                self.slideshow_fade = max(0, min(1, self.slideshow_fade))
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_zoom = float(config["slideshow_zoom"])
+                self.slideshow_zoom = max(0, min(1, self.slideshow_zoom))
+            except Exception:
+                pass
+
+            try:
+                self.slideshow_pan = float(config["slideshow_pan"])
+                self.slideshow_pan = max(0, min(1, self.slideshow_pan))
+            except Exception:
+                pass
+
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
@@ -553,6 +618,17 @@ class Options:
         self.quotes_vpos = 40
         self.quotes_favorites_file = os.path.expanduser(u"~/.config/variety/favorite_quotes.txt")
 
+        self.slideshow_favorites_enabled = True
+        self.slideshow_downloads_enabled = True
+        self.slideshow_custom_enabled = False
+        self.slideshow_custom_folder = Util.get_xdg_pictures_folder()
+        self.slideshow_sort_order = "Random"
+        self.slideshow_monitor = "All"
+        self.slideshow_mode = "Fullscreen"
+        self.slideshow_seconds = 6
+        self.slideshow_fade = 0.4
+        self.slideshow_zoom = 0.2
+        self.slideshow_pan = 0.05
 
         self.sources = [
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
@@ -651,6 +727,18 @@ class Options:
             config["quotes_hpos"] = str(self.quotes_hpos)
             config["quotes_vpos"] = str(self.quotes_vpos)
             config["quotes_favorites_file"] = Util.collapseuser(self.quotes_favorites_file)
+
+            config["slideshow_favorites_enabled"] = str(self.slideshow_favorites_enabled)
+            config["slideshow_downloads_enabled"] = str(self.slideshow_downloads_enabled)
+            config["slideshow_custom_enabled"] = str(self.slideshow_custom_enabled)
+            config["slideshow_custom_folder"] = Util.collapseuser(self.slideshow_custom_folder)
+            config["slideshow_sort_order"] = self.slideshow_sort_order
+            config["slideshow_monitor"] = self.slideshow_monitor
+            config["slideshow_mode"] = self.slideshow_mode
+            config["slideshow_seconds"] = str(self.slideshow_seconds)
+            config["slideshow_fade"] = str(self.slideshow_fade)
+            config["slideshow_zoom"] = str(self.slideshow_zoom)
+            config["slideshow_pan"] = str(self.slideshow_pan)
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
