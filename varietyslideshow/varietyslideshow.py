@@ -145,6 +145,9 @@ date - sort by file date;""")
                           help="Do not load saved options, use defaults instead. "
                                "You can still specify commandline parameters to override them.")
 
+        parser.add_option("--quit-on-motion", action="store_true", dest="quit_on_motion",
+                          help="Should mouse motion stop the slideshow, like a screensaver?")
+
 
         cmd_options, args = parser.parse_args(sys.argv)
         self.options.update(vars(cmd_options))
@@ -193,6 +196,14 @@ date - sort by file date;""")
                         full_path = os.path.join(root, filename)
                         if is_image(full_path):
                             self.files.append(full_path)
+                        if len(self.files) > 2000:
+                            break
+                    else:
+                        continue
+                    break
+                else:
+                    continue
+                break
 
         if not self.files:
             self.parser.error('You should specify some files or folders')
@@ -238,7 +249,7 @@ date - sort by file date;""")
                 self.quit()
 
         def on_motion(*args):
-            if self.current_mode == 'fullscreen' and not self.mode_was_changed:
+            if self.options.quit_on_motion and self.current_mode == 'fullscreen' and not self.mode_was_changed:
                 self.quit()
 
         def on_key_press(widget, event):

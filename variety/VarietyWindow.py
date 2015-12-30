@@ -2749,6 +2749,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if not folders:
                     folders.append(self.options.favorites_folder)
 
+                if not list(Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1, randomize=False)):
+                    self.show_notification(_('No images'), _('There are no images in the slideshow folders'))
+                    return
+
                 args += folders
 
                 if self.options.slideshow_monitor.lower() != 'all':
