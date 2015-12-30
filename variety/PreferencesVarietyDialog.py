@@ -230,6 +230,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
             self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
 
+            self.ui.slideshow_sources_enabled.set_active(self.options.slideshow_sources_enabled)
             self.ui.slideshow_favorites_enabled.set_active(self.options.slideshow_favorites_enabled)
             self.ui.slideshow_downloads_enabled.set_active(self.options.slideshow_downloads_enabled)
             self.ui.slideshow_custom_enabled.set_active(self.options.slideshow_custom_enabled)
@@ -972,6 +973,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             for f in self.options.filters:
                 f[0] = self.filter_name_to_checkbox[f[1]].get_active()
 
+            self.options.slideshow_sources_enabled = self.ui.slideshow_sources_enabled.get_active()
             self.options.slideshow_favorites_enabled = self.ui.slideshow_favorites_enabled.get_active()
             self.options.slideshow_downloads_enabled = self.ui.slideshow_downloads_enabled.get_active()
             self.options.slideshow_custom_enabled = self.ui.slideshow_custom_enabled.get_active()

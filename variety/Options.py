@@ -387,6 +387,10 @@ class Options:
             except Exception:
                 pass
 
+            try:
+                self.slideshow_sources_enabled = config["slideshow_sources_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
 
             try:
                 self.slideshow_favorites_enabled = config["slideshow_favorites_enabled"].lower() in TRUTH_VALUES
@@ -618,6 +622,7 @@ class Options:
         self.quotes_vpos = 40
         self.quotes_favorites_file = os.path.expanduser(u"~/.config/variety/favorite_quotes.txt")
 
+        self.slideshow_sources_enabled = True
         self.slideshow_favorites_enabled = True
         self.slideshow_downloads_enabled = True
         self.slideshow_custom_enabled = False
@@ -728,6 +733,7 @@ class Options:
             config["quotes_vpos"] = str(self.quotes_vpos)
             config["quotes_favorites_file"] = Util.collapseuser(self.quotes_favorites_file)
 
+            config["slideshow_sources_enabled"] = str(self.slideshow_sources_enabled)
             config["slideshow_favorites_enabled"] = str(self.slideshow_favorites_enabled)
             config["slideshow_downloads_enabled"] = str(self.slideshow_downloads_enabled)
             config["slideshow_custom_enabled"] = str(self.slideshow_custom_enabled)
