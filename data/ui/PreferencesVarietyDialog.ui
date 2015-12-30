@@ -59,6 +59,26 @@
       </row>
     </data>
   </object>
+  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="quotes_width_adjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="PreferencesVarietyDialog" id="preferences_variety_dialog">
     <property name="width_request">850</property>
     <property name="can_focus">False</property>
@@ -2371,19 +2391,6 @@
                             <property name="can_focus">False</property>
                             <property name="margin_bottom">5</property>
                             <child>
-                              <object class="GtkLabel" id="label80">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Fade duration, as a fraction of the interval </property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkLabel" id="label84">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -2393,7 +2400,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
@@ -2438,19 +2445,6 @@
                             <property name="can_focus">False</property>
                             <property name="margin_bottom">5</property>
                             <child>
-                              <object class="GtkLabel" id="label81">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Zoom amount, as a ratio of image size</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkLabel" id="label86">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -2460,7 +2454,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
@@ -2504,19 +2498,6 @@
                             <property name="can_focus">False</property>
                             <property name="margin_bottom">5</property>
                             <child>
-                              <object class="GtkLabel" id="label82">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Pan amount, as a ratio of screen size </property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkLabel" id="label87">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -2526,7 +2507,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
@@ -4785,26 +4766,6 @@ Peter Levi</property>
       <action-widget response="-7">save</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkAdjustment" id="quotes_bg_opacity_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_hpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_vpos_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="quotes_width_adjustment">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="GtkSizeGroup" id="sizegroup_customize_combos">
     <widgets>
       <widget name="icon"/>
@@ -4886,14 +4847,11 @@ Peter Levi</property>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_slideshow_labels">
     <widgets>
+      <widget name="slideshow_custom_enabled"/>
       <widget name="label34"/>
       <widget name="label75"/>
       <widget name="label77"/>
       <widget name="label79"/>
-      <widget name="slideshow_custom_enabled"/>
-      <widget name="label80"/>
-      <widget name="label81"/>
-      <widget name="label82"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_slideshow_scale_labels">
