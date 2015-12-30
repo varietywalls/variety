@@ -1008,7 +1008,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.slideshow_seconds = max(0.5, float(self.ui.slideshow_seconds.get_value()))
             self.options.slideshow_fade = max(0, min(1, float(self.ui.slideshow_fade.get_value())))
             self.options.slideshow_zoom = max(0, min(1, float(self.ui.slideshow_zoom.get_value())))
-            self.options.slideshow_pan = max(0, min(1, float(self.ui.slideshow_pan.get_value())))
+            self.options.slideshow_pan = max(0, min(0.2, float(self.ui.slideshow_pan.get_value())))
 
             self.options.write()
 

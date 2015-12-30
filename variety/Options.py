@@ -452,7 +452,7 @@ class Options:
 
             try:
                 self.slideshow_pan = float(config["slideshow_pan"])
-                self.slideshow_pan = max(0, min(1, self.slideshow_pan))
+                self.slideshow_pan = max(0, min(0.20, self.slideshow_pan))
             except Exception:
                 pass
 
