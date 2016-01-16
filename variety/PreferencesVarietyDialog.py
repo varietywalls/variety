@@ -98,6 +98,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
         self.slideshow_custom_chooser = FolderChooser(self.ui.slideshow_custom_chooser, self.delayed_apply)
+
+        try:
+            from varietyslideshow import varietyslideshow
+        except:
+            self.ui.notebook.remove_page(2)
+
         self.reload()
 
     def fill_smart_profile_url(self, msg):

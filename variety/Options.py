@@ -624,7 +624,7 @@ class Options:
 
         self.slideshow_sources_enabled = True
         self.slideshow_favorites_enabled = True
-        self.slideshow_downloads_enabled = True
+        self.slideshow_downloads_enabled = False
         self.slideshow_custom_enabled = False
         self.slideshow_custom_folder = Util.get_xdg_pictures_folder()
         self.slideshow_sort_order = "Random"

@@ -266,11 +266,18 @@ class Indicator:
         self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
         self.menu.append(self.downloads)
 
-        self.menu.append(Gtk.SeparatorMenuItem.new())
+        try:
+            from varietyslideshow import varietyslideshow
+        except:
+            logger.warning('Variety Slideshow is not installed. '
+                           'Install it with "sudo apt-get install variety-slideshow", '
+                           'read more here: http://peterlevi.com/variety/slideshow/')
+        else:
+            self.menu.append(Gtk.SeparatorMenuItem.new())
 
-        self.slideshow = Gtk.MenuItem(_("Start Slideshow"))
-        self.slideshow.connect("activate", window.on_start_slideshow)
-        self.menu.append(self.slideshow)
+            self.slideshow = Gtk.MenuItem(_("Start Slideshow"))
+            self.slideshow.connect("activate", window.on_start_slideshow)
+            self.menu.append(self.slideshow)
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
