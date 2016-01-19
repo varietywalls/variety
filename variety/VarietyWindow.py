@@ -2460,7 +2460,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             return
 
         link = self.url
-        picture = None
+        picture = self.image_url
         caption = None
         quote_text = self.get_quote_text_for_publishing()
         if self.source_name:
