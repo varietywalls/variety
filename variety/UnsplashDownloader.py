@@ -25,6 +25,8 @@ random.seed()
 
 
 class UnsplashDownloader(Downloader.Downloader):
+    CLIENT_ID = '072e5048dfcb73a8d9ad59fcf402471518ff8df725df462b0c4fa665f466515a'
+
     def __init__(self, parent):
         super(UnsplashDownloader, self).__init__(parent, "unsplash", "Unsplash.com", "https://unsplash.com")
         self.queue = []
@@ -46,22 +48,28 @@ class UnsplashDownloader(Downloader.Downloader):
         return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata, local_filename=filename)
 
     def fill_queue(self):
-        page = random.randint(1, 400)
-        url = 'https://unsplash.com/filter?page=' + str(page)
+        page = random.randint(1, 250)
+        url = 'https://api.unsplash.com/photos/?page=%d&per_page=30&client_id=%s' % (page, UnsplashDownloader.CLIENT_ID)
         logger.info(lambda: "Filling Unsplash queue from " + url)
 
-        s = Util.html_soup(url)
-
-        for item in s.find_all('div', 'photo-description'):
+        data = Util.fetch_json(url)
+        for item in data:
             try:
-                image_url = self.location + item.find_all('a')[0]['href']
-                origin_url = image_url.replace('/download', '')
+                width = item['width']
+                height = item['height']
+                if self.parent and not self.parent.size_ok(width, height):
+                    continue
+
+                image_url = item['links']['download']
+                origin_url = item['links']['html']
+
                 filename = os.path.join(self.target_folder, Util.sanitize_filename(image_url.split('/')[-2] + '.jpg'))
                 extra_metadata = {
                     'sourceType': 'unsplash',
                     'sfwRating': 100,
-                    'author': item.find_all('a')[1].contents[0],
-                    'authorURL': self.location + item.find_all('a')[1]['href'],
+                    'author': item['user']['name'],
+                    'authorURL': item['user']['links']['html'],
+                    'keywords': [cat['title'].lower().strip() for cat in item['categories']]
                 }
 
                 self.queue.append((origin_url, image_url, extra_metadata, filename))
