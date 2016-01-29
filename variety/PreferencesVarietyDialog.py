@@ -97,6 +97,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.fav_chooser = FolderChooser(self.ui.favorites_folder_chooser, self.on_favorites_changed)
         self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
+        self.slideshow_custom_chooser = FolderChooser(self.ui.slideshow_custom_chooser, self.delayed_apply)
+
+        try:
+            from varietyslideshow import varietyslideshow
+        except:
+            self.ui.notebook.remove_page(2)
+
         self.reload()
 
     def fill_smart_profile_url(self, msg):
@@ -228,6 +235,54 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.quotes_width.set_value(self.options.quotes_width)
             self.ui.quotes_hpos.set_value(self.options.quotes_hpos)
             self.ui.quotes_vpos.set_value(self.options.quotes_vpos)
+
+            self.ui.slideshow_sources_enabled.set_active(self.options.slideshow_sources_enabled)
+            self.ui.slideshow_favorites_enabled.set_active(self.options.slideshow_favorites_enabled)
+            self.ui.slideshow_downloads_enabled.set_active(self.options.slideshow_downloads_enabled)
+            self.ui.slideshow_custom_enabled.set_active(self.options.slideshow_custom_enabled)
+            self.slideshow_custom_chooser.set_folder(os.path.expanduser(self.options.slideshow_custom_folder))
+
+            if self.options.slideshow_sort_order == "Random":
+                self.ui.slideshow_sort_order.set_active(0)
+            elif self.options.slideshow_sort_order == "Name, asc":
+                self.ui.slideshow_sort_order.set_active(1)
+            elif self.options.slideshow_sort_order == "Name, desc":
+                self.ui.slideshow_sort_order.set_active(2)
+            elif self.options.slideshow_sort_order == "Date, asc":
+                self.ui.slideshow_sort_order.set_active(3)
+            elif self.options.slideshow_sort_order == "Date, desc":
+                self.ui.slideshow_sort_order.set_active(4)
+            else:
+                self.ui.slideshow_sort_order.set_active(0)
+
+            self.ui.slideshow_monitor.remove_all()
+            self.ui.slideshow_monitor.append_text(_('All'))
+
+            screen = Gdk.Screen.get_default()
+            for i in range(0, screen.get_n_monitors()):
+                geo = screen.get_monitor_geometry(i)
+                self.ui.slideshow_monitor.append_text('%d - %s, %dx%d' % (i + 1, screen.get_monitor_plug_name(i), geo.width, geo.height))
+            self.ui.slideshow_monitor.set_active(0)
+            try:
+                self.ui.slideshow_monitor.set_active(int(self.options.slideshow_monitor))
+            except:
+                self.ui.slideshow_monitor.set_active(0)
+
+            if self.options.slideshow_mode == "Fullscreen":
+                self.ui.slideshow_mode.set_active(0)
+            elif self.options.slideshow_mode == "Desktop":
+                self.ui.slideshow_mode.set_active(1)
+            elif self.options.slideshow_mode == "Maximized":
+                self.ui.slideshow_mode.set_active(2)
+            elif self.options.slideshow_mode == "Window":
+                self.ui.slideshow_mode.set_active(3)
+            else:
+                self.ui.slideshow_mode.set_active(0)
+
+            self.ui.slideshow_seconds.set_value(self.options.slideshow_seconds)
+            self.ui.slideshow_fade.set_value(self.options.slideshow_fade)
+            self.ui.slideshow_zoom.set_value(self.options.slideshow_zoom)
+            self.ui.slideshow_pan.set_value(self.options.slideshow_pan)
 
             self.ui.sources.get_model().clear()
             for s in self.options.sources:
@@ -924,6 +979,43 @@ class PreferencesVarietyDialog(PreferencesDialog):
             for f in self.options.filters:
                 f[0] = self.filter_name_to_checkbox[f[1]].get_active()
 
+            self.options.slideshow_sources_enabled = self.ui.slideshow_sources_enabled.get_active()
+            self.options.slideshow_favorites_enabled = self.ui.slideshow_favorites_enabled.get_active()
+            self.options.slideshow_downloads_enabled = self.ui.slideshow_downloads_enabled.get_active()
+            self.options.slideshow_custom_enabled = self.ui.slideshow_custom_enabled.get_active()
+            if os.access(self.slideshow_custom_chooser.get_folder(), os.R_OK):
+                self.options.slideshow_custom_folder = self.slideshow_custom_chooser.get_folder()
+
+            if self.ui.slideshow_sort_order.get_active() == 0:
+                self.options.slideshow_sort_order = "Random"
+            elif self.ui.slideshow_sort_order.get_active() == 1:
+                self.options.slideshow_sort_order = "Name, asc"
+            elif self.ui.slideshow_sort_order.get_active() == 2:
+                self.options.slideshow_sort_order = "Name, desc"
+            elif self.ui.slideshow_sort_order.get_active() == 3:
+                self.options.slideshow_sort_order = "Date, asc"
+            elif self.ui.slideshow_sort_order.get_active() == 4:
+                self.options.slideshow_sort_order = "Date, desc"
+
+            if self.ui.slideshow_monitor.get_active() == 0:
+                self.options.slideshow_monitor = "All"
+            else:
+                self.options.slideshow_monitor = self.ui.slideshow_monitor.get_active()
+
+            if self.ui.slideshow_mode.get_active() == 0:
+                self.options.slideshow_mode = "Fullscreen"
+            elif self.ui.slideshow_mode.get_active() == 1:
+                self.options.slideshow_mode = "Desktop"
+            elif self.ui.slideshow_mode.get_active() == 2:
+                self.options.slideshow_mode = "Maximized"
+            elif self.ui.slideshow_mode.get_active() == 3:
+                self.options.slideshow_mode = "Window"
+
+            self.options.slideshow_seconds = max(0.5, float(self.ui.slideshow_seconds.get_value()))
+            self.options.slideshow_fade = max(0, min(1, float(self.ui.slideshow_fade.get_value())))
+            self.options.slideshow_zoom = max(0, min(1, float(self.ui.slideshow_zoom.get_value())))
+            self.options.slideshow_pan = max(0, min(0.2, float(self.ui.slideshow_pan.get_value())))
+
             self.options.write()
 
             if not self.parent.running:
@@ -1184,3 +1276,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                         GObject.idle_add(_stop)
                 threading.Timer(0, _create_user).start()
 
+    def on_btn_slideshow_reset_clicked(self, widget=None):
+        self.ui.slideshow_seconds.set_value(6)
+        self.ui.slideshow_fade.set_value(0.4)
+        self.ui.slideshow_zoom.set_value(0.2)
+        self.ui.slideshow_pan.set_value(0.05)
+
+    def on_btn_slideshow_start_clicked(self, widget=None):
+        self.apply()
+        self.parent.on_start_slideshow()

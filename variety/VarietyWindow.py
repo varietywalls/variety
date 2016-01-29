@@ -2719,3 +2719,71 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 _("An error occurred while creating the autostart desktop entry\n"
                 "Please run from a terminal with the -v flag and try again."))
 
+    def on_start_slideshow(self, widget=None):
+        def _go():
+            try:
+                if self.options.slideshow_mode.lower() != 'window':
+                    subprocess.call(['killall', '-9', 'variety-slideshow'])
+
+                args = ["variety-slideshow"]
+                args += ['--seconds', str(self.options.slideshow_seconds)]
+                args += ['--fade', str(self.options.slideshow_fade)]
+                args += ['--zoom', str(self.options.slideshow_zoom)]
+                args += ['--pan', str(self.options.slideshow_pan)]
+                if ',' in self.options.slideshow_sort_order.lower():
+                    sort = self.options.slideshow_sort_order.lower().split(',')[0]
+                    order = self.options.slideshow_sort_order.lower().split(',')[1]
+                else:
+                    sort = self.options.slideshow_sort_order.lower()
+                    order = 'asc'
+                args += ['--sort', sort]
+                args += ['--order', order]
+                args += ['--mode', self.options.slideshow_mode.lower()]
+
+                images = []
+                folders = []
+                if self.options.slideshow_sources_enabled:
+                    for source in self.options.sources:
+                        if source[0]:
+                            type = source[1]
+                            location = source[2]
+
+                            if type == Options.SourceType.IMAGE:
+                                images.append(location)
+                            else:
+                                folder = self.get_folder_of_source(source)
+                                if folder:
+                                    folders.append(folder)
+
+                if self.options.slideshow_favorites_enabled:
+                    folders.append(self.options.favorites_folder)
+                if self.options.slideshow_downloads_enabled:
+                    folders.append(self.options.download_folder)
+                if self.options.slideshow_custom_enabled and os.path.isdir(self.options.slideshow_custom_folder):
+                    folders.append(self.options.slideshow_custom_folder)
+
+                if not images and not folders:
+                    folders.append(self.options.favorites_folder)
+
+                if not list(Util.list_files(files=images, folders=folders, filter_func=Util.is_image, max_files=1, randomize=False)):
+                    self.show_notification(_('No images'), _('There are no images in the slideshow folders'))
+                    return
+
+                args += images
+                args += folders
+
+                if self.options.slideshow_monitor.lower() != 'all':
+                    try:
+                        args += ['--monitor', str(int(self.options.slideshow_monitor))]
+                    except:
+                        pass
+                    subprocess.Popen(args)
+                else:
+                    screen = Gdk.Screen.get_default()
+                    for i in range(0, screen.get_n_monitors()):
+                        new_args = list(args)
+                        new_args += ['--monitor', str(i + 1)]
+                        subprocess.Popen(new_args)
+            except:
+                logger.exception('Could not start slideshow:')
+        threading.Thread(target=_go).start()

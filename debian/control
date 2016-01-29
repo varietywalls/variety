@@ -16,14 +16,15 @@ Depends: ${misc:Depends},
  gir1.2-notify-0.7,
  python-configobj,
  python-pyexiv2,
- python-pycurl,
  gir1.2-gtk-3.0,
  python-dbus,
  gir1.2-pango-1.0,
  gir1.2-glib-2.0,
- python-imaging,
+ python-pycurl,
+ python-pil,
  python-cairo,
  gir1.2-gdkpixbuf-2.0,
+ variety-slideshow,
  python-lxml,
  python-bs4,
  gir1.2-webkit-3.0,
@@ -32,6 +33,7 @@ Depends: ${misc:Depends},
  imagemagick,
  python-lxml,
  python-gi-cairo
+Recommends: variety-slideshow
 Description: Wallpaper changer, downloader and manager
  Variety changes the desktop wallpaper regularly, using local or
  automatically downloaded images. Variety sits conveniently as an
