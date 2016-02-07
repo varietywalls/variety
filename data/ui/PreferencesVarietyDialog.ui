@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.16.1 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.2"/>
   <!-- interface-requires preferences_variety_dialog 1.0 -->
   <object class="GtkTextBuffer" id="changes_buffer"/>
   <object class="GtkTextBuffer" id="clipboard_hosts_buffer">
@@ -80,6 +80,7 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkSizeGroup" id="sizegroup_slideshow_scale_labels"/>
   <object class="GtkAdjustment" id="slideshow_fade_adjustment">
     <property name="upper">1</property>
     <property name="step_increment">0.050000000000000003</property>
@@ -324,7 +325,7 @@
                             <child>
                               <object class="GtkScrolledWindow" id="sources_scrolled_window">
                                 <property name="width_request">250</property>
-                                <property name="height_request">200</property>
+                                <property name="height_request">160</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
@@ -481,9 +482,6 @@
                                 <property name="fill">True</property>
                                 <property name="position">3</property>
                               </packing>
-                            </child>
-                            <child>
-                              <placeholder/>
                             </child>
                           </object>
                           <packing>
@@ -765,7 +763,7 @@
                             <property name="valign">start</property>
                             <property name="margin_left">30</property>
                             <property name="margin_right">20</property>
-                            <property name="margin_bottom">20</property>
+                            <property name="margin_bottom">15</property>
                             <property name="hexpand">True</property>
                             <child>
                               <object class="GtkLabel" id="label7">
@@ -1049,7 +1047,7 @@
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="margin_left">10</property>
-                                    <property name="font">Bitstream Charter 30</property>
+                                    <property name="font">Sans 12</property>
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <signal name="font-set" handler="delayed_apply" swapped="no"/>
@@ -1867,7 +1865,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
-                                    <property name="font">Bitstream Charter 80</property>
+                                    <property name="font">Sans 12</property>
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <signal name="font-set" handler="delayed_apply" swapped="no"/>
@@ -1910,7 +1908,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
-                                    <property name="font">Bitstream Charter 30</property>
+                                    <property name="font">Sans 12</property>
                                     <property name="preview_text">Neither success, nor failure, are final.</property>
                                     <property name="show_preview_entry">False</property>
                                     <signal name="font-set" handler="delayed_apply" swapped="no"/>
@@ -2035,7 +2033,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="halign">start</property>
-                            <property name="margin_bottom">4</property>
+                            <property name="margin_bottom">2</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="delayed_apply" swapped="no"/>
@@ -2054,7 +2052,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="halign">start</property>
-                            <property name="margin_bottom">4</property>
+                            <property name="margin_bottom">2</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                           </object>
@@ -2202,7 +2200,7 @@
                         <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
-                        <property name="margin_top">20</property>
+                        <property name="margin_top">15</property>
                         <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Screen</property>
                         <attributes>
@@ -2317,7 +2315,6 @@
                   <object class="GtkBox" id="box44">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_bottom">20</property>
                     <property name="vexpand">True</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -2327,7 +2324,7 @@
                         <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
-                        <property name="margin_top">20</property>
+                        <property name="margin_top">15</property>
                         <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Dynamics</property>
                         <attributes>
@@ -2401,16 +2398,57 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkBox" id="box52">
+                          <object class="GtkBox" id="box57">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_bottom">5</property>
+                            <property name="spacing">40</property>
                             <child>
-                              <object class="GtkLabel" id="label84">
+                              <object class="GtkBox" id="box52">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Quick fade </property>
+                                <property name="margin_bottom">5</property>
+                                <child>
+                                  <object class="GtkLabel" id="label84">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Quick fade </property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScale" id="slideshow_fade">
+                                    <property name="width_request">100</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="adjustment">slideshow_fade_adjustment</property>
+                                    <property name="fill_level">1</property>
+                                    <property name="round_digits">1</property>
+                                    <property name="draw_value">False</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="padding">10</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label85">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Slow fade</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2419,32 +2457,109 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkScale" id="slideshow_fade">
-                                <property name="width_request">100</property>
+                              <object class="GtkBox" id="box53">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">slideshow_fade_adjustment</property>
-                                <property name="fill_level">1</property>
-                                <property name="round_digits">1</property>
-                                <property name="draw_value">False</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_bottom">5</property>
+                                <child>
+                                  <object class="GtkLabel" id="label86">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Less zoom</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScale" id="slideshow_zoom">
+                                    <property name="width_request">100</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="adjustment">slideshow_zoom_adjustment</property>
+                                    <property name="fill_level">1</property>
+                                    <property name="draw_value">False</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="padding">10</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label88">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">More zoom</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="padding">10</property>
-                                <property name="position">2</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="label85">
+                              <object class="GtkBox" id="box54">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Slow fade</property>
+                                <property name="margin_bottom">5</property>
+                                <child>
+                                  <object class="GtkLabel" id="label87">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Less pan</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScale" id="slideshow_pan">
+                                    <property name="width_request">100</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="adjustment">slideshow_pan_adjustment</property>
+                                    <property name="fill_level">1</property>
+                                    <property name="draw_value">False</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="padding">10</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label89">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">More pan</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -2452,112 +2567,6 @@
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="box53">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_bottom">5</property>
-                            <child>
-                              <object class="GtkLabel" id="label86">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Less zoom</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkScale" id="slideshow_zoom">
-                                <property name="width_request">100</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">slideshow_zoom_adjustment</property>
-                                <property name="fill_level">1</property>
-                                <property name="draw_value">False</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="padding">10</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label88">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">More zoom</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="box54">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_bottom">5</property>
-                            <child>
-                              <object class="GtkLabel" id="label87">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Less pan</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkScale" id="slideshow_pan">
-                                <property name="width_request">100</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">slideshow_pan_adjustment</property>
-                                <property name="fill_level">1</property>
-                                <property name="draw_value">False</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="padding">10</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label89">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">More pan</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">3</property>
                           </packing>
                         </child>
                         <child>
@@ -2573,7 +2582,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">4</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </object>
@@ -3099,21 +3108,6 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox" id="about_smart_box1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_left">15</property>
-                    <property name="margin_right">15</property>
-                    <property name="margin_top">15</property>
-                    <property name="orientation">vertical</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>
@@ -4845,13 +4839,6 @@ Peter Levi</property>
       <widget name="label75"/>
       <widget name="label77"/>
       <widget name="label79"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup_slideshow_scale_labels">
-    <widgets>
-      <widget name="label84"/>
-      <widget name="label86"/>
-      <widget name="label87"/>
     </widgets>
   </object>
 </interface>
