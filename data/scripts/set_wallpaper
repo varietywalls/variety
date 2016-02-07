@@ -158,6 +158,12 @@ if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" 
     gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
 
+# Deepin
+gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
+if [ "`gsettings get com.deepin.wrap.gnome.desktop.background picture-options`" == "'none'" ]; then
+    gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
+fi
+
 # XFCE
 command -v xfconf-query >/dev/null 2>&1
 rc=$?
