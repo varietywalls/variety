@@ -80,7 +80,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup_slideshow_scale_labels"/>
   <object class="GtkAdjustment" id="slideshow_fade_adjustment">
     <property name="upper">1</property>
     <property name="step_increment">0.050000000000000003</property>
@@ -325,7 +324,7 @@
                             <child>
                               <object class="GtkScrolledWindow" id="sources_scrolled_window">
                                 <property name="width_request">250</property>
-                                <property name="height_request">160</property>
+                                <property name="height_request">200</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
@@ -2401,7 +2400,7 @@
                           <object class="GtkBox" id="box57">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="spacing">40</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="box52">
                                 <property name="visible">True</property>
@@ -2422,7 +2421,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkScale" id="slideshow_fade">
-                                    <property name="width_request">100</property>
+                                    <property name="width_request">140</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="adjustment">slideshow_fade_adjustment</property>
@@ -2476,7 +2475,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkScale" id="slideshow_zoom">
-                                    <property name="width_request">100</property>
+                                    <property name="width_request">140</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="adjustment">slideshow_zoom_adjustment</property>
@@ -2529,7 +2528,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkScale" id="slideshow_pan">
-                                    <property name="width_request">100</property>
+                                    <property name="width_request">140</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="adjustment">slideshow_pan_adjustment</property>
@@ -4839,6 +4838,13 @@ Peter Levi</property>
       <widget name="label75"/>
       <widget name="label77"/>
       <widget name="label79"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup_slideshow_scale_labels">
+    <widgets>
+      <widget name="label84"/>
+      <widget name="label86"/>
+      <widget name="label87"/>
     </widgets>
   </object>
 </interface>
