@@ -82,7 +82,6 @@ class UnsplashDownloader(Downloader.Downloader):
         response = Util.urlopen(url)
         if int(response.headers['X-Ratelimit-Remaining']) < 100:
             UnsplashDownloader.rate_limiting_started_time = time.time()
-        return #TODO remove
 
         data = json.loads(response.read())
         for item in data:
