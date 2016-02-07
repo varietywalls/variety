@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-08-05 21:15+0300\n"
+"POT-Creation-Date: 2016-01-29 10:57+0200\n"
 "PO-Revision-Date: 2015-01-28 04:57+0000\n"
 "Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
-"X-Generator: Launchpad (build 17746)\n"
+"X-Launchpad-Export-Date: 2016-02-07 20:28+0000\n"
+"X-Generator: Launchpad (build 17908)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -75,7 +75,7 @@ msgstr "Variety – Añadir Panoramio como origen de imágenes"
 
 #. (_("Wallbase.cc"), self.on_add_wallbase_clicked),
 #: ../data/ui/AddPanoramioDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:333
+#: ../variety/PreferencesVarietyDialog.py:388
 msgid "Panoramio"
 msgstr "Panoramio"
 
@@ -87,8 +87,8 @@ msgstr ""
 msgid "Choose a folder"
 msgstr "Seleccione una carpeta"
 
-#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:490
-#: ../variety/PreferencesVarietyDialog.py:514
+#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:545
+#: ../variety/PreferencesVarietyDialog.py:569
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -101,7 +101,7 @@ msgid "Variety - add Wallhaven.cc image source"
 msgstr "Variety – Añadir Wallhaven.cc como origen de imágenes"
 
 #: ../data/ui/AddWallhavenDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:331
+#: ../variety/PreferencesVarietyDialog.py:386
 msgid "Wallhaven.cc"
 msgstr "Wallhaven.cc"
 
@@ -176,57 +176,228 @@ msgstr "No se pudieron encontrar citas"
 msgid "Maybe you are searching for something very obscure?"
 msgstr "¿Quizá está buscando algo muy oculto?"
 
-#: ../variety/PreferencesVarietyDialog.py:327
-#: ../variety/PreferencesVarietyDialog.py:496
+#: ../variety/Texts.py:20
+msgid "Keep original"
+msgstr "Mantener el original"
+
+#: ../variety/Texts.py:21
+msgid "Grayscale"
+msgstr "Escala de grises"
+
+#: ../variety/Texts.py:22
+msgid "Heavy blur"
+msgstr "Desenfoque duro"
+
+#: ../variety/Texts.py:23
+msgid "Soft blur"
+msgstr "Desenfoque suave"
+
+#: ../variety/Texts.py:24
+msgid "Oil painting"
+msgstr "Pintura al óleo"
+
+#: ../variety/Texts.py:25
+msgid "Pencil sketch"
+msgstr "Dibujo a lápiz"
+
+#: ../variety/Texts.py:26
+msgid "Pointilism"
+msgstr "Puntillismo"
+
+#: ../variety/Texts.py:27
+msgid "Pixellate"
+msgstr "Pixelar"
+
+#: ../variety/Texts.py:31
+msgid "The Favorites folder"
+msgstr "Carpeta de Favoritos"
+
+#: ../variety/Texts.py:32
+msgid "The Fetched folder"
+msgstr "La carpeta Obtenidos"
+
+#: ../variety/Texts.py:35
+msgid ""
+"Recommended by Variety. Adapts to your taste as you mark images as favorite "
+"or trash."
+msgstr ""
+
+#: ../variety/Texts.py:37
+msgid ""
+"Latest favorites by the other users of Variety. [May contain NSFW images]"
+msgstr ""
+
+#: ../variety/Texts.py:38
+msgid "Random wallpapers from Desktoppr.co"
+msgstr "Fondos aleatorios de Desktoppr.co"
+
+#: ../variety/Texts.py:39
+msgid "NASA's Astronomy Picture of the Day"
+msgstr "Imagen astronómica del día de la NASA"
+
+#: ../variety/Texts.py:41
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:42
+msgid "Bing Photo of the Day"
+msgstr ""
+
+#: ../variety/Texts.py:43
+msgid "High-resolution photos from Unsplash.com"
+msgstr ""
+
+#: ../variety/Texts.py:47
+msgid ""
+"If you use KDE, you need to perform some actions before Variety will work. "
+"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
+msgstr ""
+"Si utiliza KDE necesitará realizar algunas acciones antes para que Variety "
+"funcione. Consulte: http://peterlevi.com/variety/2014/05/variety-and-kde/"
+
+#: ../variety/Texts.py:48
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Puede cambiar de fondo ubicando el puntero del ratón sobre el icono "
+"indicador y usando la rueda de desplazamiento."
+
+#: ../variety/Texts.py:49
+msgid ""
+"If you want to run custom commands every time the wallpaper changes or if "
+"you use an alternative desktop environment, please edit the scripts in "
+"~/.config/variety/scripts. There are examples there for various desktop "
+"environments."
+msgstr ""
+"Para ejecutar órdenes al cambiar de fondo o si utiliza un entorno de "
+"escritorio diferente, edite las secuencias de órdenes ubicadas en "
+"~/.config/variety/scripts, donde encontrará ejemplos para varios entornos."
+
+#: ../variety/Texts.py:50
+msgid ""
+"Variety can be controlled from the command line and you can use this to "
+"define keyboard shortcuts for the operations you use most often. Run "
+"\"variety --help\" to see all available commands."
+msgstr ""
+"Es posible controlar Variety desde la consola; puede usar esta funcionalidad "
+"para establecer las combinaciones de teclas que más utiliza. Ejecute "
+"«variety --help» para ver todas las órdenes."
+
+#: ../variety/Texts.py:51
+msgid ""
+"You can drop image links or files on the launcher icon to download them and "
+"use them as wallpapers. For quicker downloading from a specific site, you "
+"can also use clipboard monitoring (see \"Manual downloading\" tab)."
+msgstr ""
+"Puede arrastrar y soltar enlaces o imágenes en el icono del lanzador para "
+"establecerlos como fondo. Para descargar rápidamente desde un sitio web, "
+"puede utilizar el monitoreo de portapapeles (vea la pestaña «Descarga "
+"manual»)."
+
+#: ../variety/Texts.py:52
+msgid ""
+"Applying a heavy blurring filter is a great way to get abstract-looking and "
+"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
+"in Ubuntu."
+msgstr ""
+
+#: ../variety/Texts.py:53
+msgid ""
+"Adding your own custom filters is quite easy: open "
+"~/.config/variety/variety.conf in an editor and use the existing filters as "
+"an example. Every filter is just a line of options to be passed to "
+"ImageMagick's convert command."
+msgstr ""
+
+#: ../variety/Texts.py:54
+msgid ""
+"When you select an image source, its images are displayed in a window at the "
+"bottom of the screen. Click an image there to set is as wallpaper. Right-"
+"click to close the window, to modify its appearance or to perform file "
+"operations. You can select multiple image sources to create a \"merged\" "
+"thumbnail view of all of them. Please mind that thumbnail view is limited to "
+"several hundred randomly selected images."
+msgstr ""
+
+#: ../variety/Texts.py:55
+msgid ""
+"To enable desktop notifications when the wallpaper changes, uncomment the "
+"two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
+msgstr ""
+
+#: ../variety/Texts.py:56
+msgid ""
+"Variety's indicator icon is themeable - if you you choose the \"Light\" "
+"option for the icon, Variety will first check if the current GTK theme has "
+"an icon named \"variety-indicator\" and will use it instead of the bundled "
+"light icon."
+msgstr ""
+
+#: ../variety/Texts.py:57
+msgid ""
+"When you choose to save quotes to Favorites, these are by default saved to "
+"~/.config/variety/favorite_quotes.txt. This file is compatible with "
+"Variety's local files quote source. If you want to use it - copy it to "
+"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
+"source. This file is also compatible with the Unix fortune utility."
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:259
+msgid "All"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:382
+#: ../variety/PreferencesVarietyDialog.py:551
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr "Imágenes"
 
-#: ../variety/PreferencesVarietyDialog.py:328
+#: ../variety/PreferencesVarietyDialog.py:383
 msgid "Folders"
 msgstr "Carpetas"
 
-#: ../variety/PreferencesVarietyDialog.py:330
+#: ../variety/PreferencesVarietyDialog.py:385
 #: ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr "Flickr"
 
-#: ../variety/PreferencesVarietyDialog.py:334
+#: ../variety/PreferencesVarietyDialog.py:389
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
 msgid "Wallpapers.net"
 msgstr "Wallpapers.net"
 
-#: ../variety/PreferencesVarietyDialog.py:335
+#: ../variety/PreferencesVarietyDialog.py:390
 #: ../data/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
 msgstr "Reddit"
 
-#: ../variety/PreferencesVarietyDialog.py:336
+#: ../variety/PreferencesVarietyDialog.py:391
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr "RSS del medio"
 
-#: ../variety/PreferencesVarietyDialog.py:361
+#: ../variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source, keep the files"
 msgstr "Quitar el origen, mantener los archivos"
 
-#: ../variety/PreferencesVarietyDialog.py:362
+#: ../variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources, keep the files"
 msgstr "Quitar los orígenes, mantener los archivos"
 
-#: ../variety/PreferencesVarietyDialog.py:369
+#: ../variety/PreferencesVarietyDialog.py:424
 msgid "Remove the source and delete the downloaded files"
 msgstr "Quitar el origen y eliminar los archivos descargados"
 
-#: ../variety/PreferencesVarietyDialog.py:370
+#: ../variety/PreferencesVarietyDialog.py:425
 msgid "Remove the sources and delete the downloaded files"
 msgstr "Quitar los orígenes y eliminar los archivos descargados"
 
-#: ../variety/PreferencesVarietyDialog.py:403
+#: ../variety/PreferencesVarietyDialog.py:458
 msgid "World Sunlight Map enabled"
 msgstr "Mapamundi de luz solar activado"
 
-#: ../variety/PreferencesVarietyDialog.py:404
+#: ../variety/PreferencesVarietyDialog.py:459
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
@@ -235,51 +406,51 @@ msgstr ""
 "cambio a intervalos de 30 minutos o menos. Se ha ajustado la configuración "
 "automáticamente."
 
-#: ../variety/PreferencesVarietyDialog.py:489
+#: ../variety/PreferencesVarietyDialog.py:544
 msgid "Add Images"
 msgstr "Añadir imágenes"
 
-#: ../variety/PreferencesVarietyDialog.py:490
-#: ../variety/PreferencesVarietyDialog.py:514
+#: ../variety/PreferencesVarietyDialog.py:545
+#: ../variety/PreferencesVarietyDialog.py:569
 msgid "Add"
 msgstr "Añadir"
 
-#: ../variety/PreferencesVarietyDialog.py:512
+#: ../variety/PreferencesVarietyDialog.py:567
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
 "Añadir carpetas – Solo añada las carpetas raíz, las subcarpetas se buscarán "
 "recursivamente"
 
-#: ../variety/PreferencesVarietyDialog.py:648
-#: ../variety/PreferencesVarietyDialog.py:661
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../variety/PreferencesVarietyDialog.py:703
+#: ../variety/PreferencesVarietyDialog.py:716
+#: ../data/ui/PreferencesVarietyDialog.ui.h:168
 msgid "Edit..."
 msgstr "Editar…"
 
-#: ../variety/PreferencesVarietyDialog.py:655
+#: ../variety/PreferencesVarietyDialog.py:710
 msgid "View Image"
 msgstr "Ver imagen"
 
-#: ../variety/PreferencesVarietyDialog.py:658
+#: ../variety/PreferencesVarietyDialog.py:713
 msgid "Open Folder"
 msgstr "Abrir carpeta"
 
-#: ../variety/PreferencesVarietyDialog.py:1000
+#: ../variety/PreferencesVarietyDialog.py:1092
 msgid "Recommended images source disabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1028
-#: ../variety/PreferencesVarietyDialog.py:1047
-#: ../variety/PreferencesVarietyDialog.py:1055
+#: ../variety/PreferencesVarietyDialog.py:1120
+#: ../variety/PreferencesVarietyDialog.py:1139
+#: ../variety/PreferencesVarietyDialog.py:1147
 msgid "No write permissions"
 msgstr "Sin permisos de escritura"
 
-#: ../variety/PreferencesVarietyDialog.py:1035
+#: ../variety/PreferencesVarietyDialog.py:1127
 msgid "Limit disabled"
 msgstr "Límite desactivado"
 
-#: ../variety/PreferencesVarietyDialog.py:1036
+#: ../variety/PreferencesVarietyDialog.py:1128
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
@@ -287,16 +458,16 @@ msgstr ""
 "Al cambiar la carpeta de descarga, el límite de tamaño se desactiva "
 "automáticamente para prevenir la pérdida de datos accidental."
 
-#: ../variety/PreferencesVarietyDialog.py:1042
+#: ../variety/PreferencesVarietyDialog.py:1134
 #, python-format
 msgid "Actual download folder: %s "
 msgstr "Carpeta de descargas real: %s "
 
-#: ../variety/PreferencesVarietyDialog.py:1122
+#: ../variety/PreferencesVarietyDialog.py:1214
 msgid "Could not adjust permissions"
 msgstr "No se pudieron ajustar los permisos"
 
-#: ../variety/PreferencesVarietyDialog.py:1123
+#: ../variety/PreferencesVarietyDialog.py:1215
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
@@ -305,20 +476,20 @@ msgstr ""
 "Puede probar a ejecutar esta orden:\n"
 "sudo chmod %s \"%s\""
 
-#: ../variety/PreferencesVarietyDialog.py:1155
+#: ../variety/PreferencesVarietyDialog.py:1247
 msgid "Logged in as: "
 msgstr "Se accedió como: "
 
-#: ../variety/PreferencesVarietyDialog.py:1157
+#: ../variety/PreferencesVarietyDialog.py:1249
 msgid "Anonymous"
 msgstr "Anónimo"
 
-#: ../variety/PreferencesVarietyDialog.py:1158
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../variety/PreferencesVarietyDialog.py:1250
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Login or register"
 msgstr "Acceder o registrarse"
 
-#: ../variety/PreferencesVarietyDialog.py:1158
+#: ../variety/PreferencesVarietyDialog.py:1250
 msgid "Switch user"
 msgstr "Cambiar de usuario"
 
@@ -403,87 +574,87 @@ msgstr ""
 "Este no parece ser el URL de un canal RSS de medios válido, o no hay "
 "contenido en él."
 
-#: ../variety/VarietyWindow.py:629 ../variety/VarietyWindow.py:771
-#: ../variety/VarietyWindow.py:2649
+#: ../variety/VarietyWindow.py:630 ../variety/VarietyWindow.py:772
+#: ../variety/VarietyWindow.py:2650
 msgid "Already in Favorites"
 msgstr "Ya está en Favoritos"
 
-#: ../variety/VarietyWindow.py:633 ../variety/ThumbsManager.py:144
+#: ../variety/VarietyWindow.py:634 ../variety/ThumbsManager.py:144
 #: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
 msgstr "Copiar en _Favoritos"
 
-#: ../variety/VarietyWindow.py:634 ../variety/ThumbsManager.py:151
+#: ../variety/VarietyWindow.py:635 ../variety/ThumbsManager.py:151
 msgid "Move to _Favorites"
 msgstr "Mover a _Favoritos"
 
 #. both
-#: ../variety/VarietyWindow.py:642
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134 ../variety/indicator.py:81
+#: ../variety/VarietyWindow.py:643
+#: ../data/ui/PreferencesVarietyDialog.ui.h:165 ../variety/indicator.py:81
 msgid "Move to Favorites"
 msgstr "Mover a Favoritos"
 
-#: ../variety/VarietyWindow.py:664 ../variety/ThumbsManager.py:119
+#: ../variety/VarietyWindow.py:665 ../variety/ThumbsManager.py:119
 msgid "Fetched: Show Origin"
 msgstr "Obtenidos: Mostrar origen"
 
-#: ../variety/VarietyWindow.py:666 ../variety/VarietyWindow.py:761
+#: ../variety/VarietyWindow.py:667 ../variety/VarietyWindow.py:762
 #: ../variety/ThumbsManager.py:121
 #, python-format
 msgid "View at %s"
 msgstr "Ver en %s"
 
-#: ../variety/VarietyWindow.py:710
+#: ../variety/VarietyWindow.py:711
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../variety/VarietyWindow.py:731
+#: ../variety/VarietyWindow.py:732
 #, python-format
 msgid "Author: %s"
 msgstr "Autor: %s"
 
-#: ../variety/VarietyWindow.py:754 ../variety/VarietyWindow.py:768
+#: ../variety/VarietyWindow.py:755 ../variety/VarietyWindow.py:769
 #: ../variety/indicator.py:120 ../variety/indicator.py:185
 msgid "Pause on current"
 msgstr "Pausar en el actual"
 
-#: ../variety/VarietyWindow.py:754 ../variety/VarietyWindow.py:768
+#: ../variety/VarietyWindow.py:755 ../variety/VarietyWindow.py:769
 msgid "Resume regular changes"
 msgstr "Reanudar cambios periódicos"
 
-#: ../variety/VarietyWindow.py:771 ../variety/indicator.py:191
+#: ../variety/VarietyWindow.py:772 ../variety/indicator.py:191
 msgid "Save to Favorites"
 msgstr "Guardar en Favoritos"
 
-#: ../variety/VarietyWindow.py:903
+#: ../variety/VarietyWindow.py:904
 msgid "Filtering too strict?"
 msgstr "¿El filtrado es demasiado estricto?"
 
-#: ../variety/VarietyWindow.py:904
+#: ../variety/VarietyWindow.py:905
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
 "Variety encontró muy pocas imágenes en la búsqueda que coincidan con sus "
 "criterios de filtrado de imágenes."
 
-#: ../variety/VarietyWindow.py:1376
+#: ../variety/VarietyWindow.py:1377
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
 "Añada más orígenes de imágenes o espere a que se completen algunas descargas"
 
-#: ../variety/VarietyWindow.py:1378
+#: ../variety/VarietyWindow.py:1379
 msgid "Please add more image sources"
 msgstr "Añada más orígenes de imágenes"
 
-#: ../variety/VarietyWindow.py:1379
+#: ../variety/VarietyWindow.py:1380
 msgid "No more wallpapers"
 msgstr "No hay más fondos"
 
-#: ../variety/VarietyWindow.py:1565
+#: ../variety/VarietyWindow.py:1566
 msgid "Current wallpaper is not in the image sources"
 msgstr "El fondo actual no está en los orígenes de imágenes"
 
-#: ../variety/VarietyWindow.py:1600
+#: ../variety/VarietyWindow.py:1601
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
@@ -491,7 +662,7 @@ msgstr ""
 "No se pudo mover a %s. Probablemente no tenga permisos para mover este "
 "archivo."
 
-#: ../variety/VarietyWindow.py:1602
+#: ../variety/VarietyWindow.py:1603
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
@@ -499,16 +670,16 @@ msgstr ""
 "No se pudo copiar a %s. Probablemente no tenga permisos para copiar este "
 "archivo."
 
-#: ../variety/VarietyWindow.py:1622 ../variety/VarietyWindow.py:1642
+#: ../variety/VarietyWindow.py:1623 ../variety/VarietyWindow.py:1643
 msgid "Cannot delete"
 msgstr "No se puede eliminar"
 
-#: ../variety/VarietyWindow.py:1623
+#: ../variety/VarietyWindow.py:1624
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr "No tiene permisos para mover %s a la papelera."
 
-#: ../variety/VarietyWindow.py:1643
+#: ../variety/VarietyWindow.py:1644
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
@@ -516,11 +687,11 @@ msgstr ""
 "Probablemente no hay ninguna herramienta para mover a la papelera.\n"
 "Instale trash-cli, gvfs-bin o konquerer."
 
-#: ../variety/VarietyWindow.py:1775
+#: ../variety/VarietyWindow.py:1776
 msgid "Anonymous usage statistics"
 msgstr "Estadísticas de uso anónimas"
 
-#: ../variety/VarietyWindow.py:1776
+#: ../variety/VarietyWindow.py:1777
 msgid ""
 "Variety collects anonymous usage statistics. \n"
 "These help us make it better and are not shared with anyone. \n"
@@ -531,7 +702,7 @@ msgstr ""
 "Para obtener más información o para desactivarlas, vaya a «Sincronización y "
 "funciones sociales»."
 
-#: ../variety/VarietyWindow.py:1919
+#: ../variety/VarietyWindow.py:1920
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
@@ -539,7 +710,7 @@ msgstr ""
 "Se abrirá un editor con el archivo de configuración; aplique los cambios "
 "después de guardar y cerrar el editor."
 
-#: ../variety/VarietyWindow.py:1944
+#: ../variety/VarietyWindow.py:1945
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -557,7 +728,7 @@ msgstr ""
 "\n"
 "Para establecer un fondo específico: %prog /una/imagen/local.jpg --next"
 
-#: ../variety/VarietyWindow.py:1954
+#: ../variety/VarietyWindow.py:1955
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
@@ -565,11 +736,11 @@ msgstr ""
 "Mostrar mensajes de registro (-vv muestra mejores mensajes de depuración, -"
 "vvv depura variety_lib también)"
 
-#: ../variety/VarietyWindow.py:1958
+#: ../variety/VarietyWindow.py:1959
 msgid "Make the running instance quit"
 msgstr "Salir de la instancia en ejecución"
 
-#: ../variety/VarietyWindow.py:1962
+#: ../variety/VarietyWindow.py:1963
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
@@ -577,19 +748,19 @@ msgstr ""
 "Mostrar la ubicación del fondo actual. Solo se utiliza cuando la aplicación "
 "ya está en ejecución."
 
-#: ../variety/VarietyWindow.py:1966
+#: ../variety/VarietyWindow.py:1967
 msgid "Show Next wallpaper"
 msgstr "Mostrar el siguiente fondo"
 
-#: ../variety/VarietyWindow.py:1970
+#: ../variety/VarietyWindow.py:1971
 msgid "Show Previous wallpaper"
 msgstr "Mostrar el fondo anterior"
 
-#: ../variety/VarietyWindow.py:1974
+#: ../variety/VarietyWindow.py:1975
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "Mostrar el siguiente fondo, omitiendo el histórico"
 
-#: ../variety/VarietyWindow.py:1978
+#: ../variety/VarietyWindow.py:1979
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
@@ -597,7 +768,7 @@ msgstr ""
 "Mover el fondo actual a la papelera. Solo se utiliza cuando la aplicación ya "
 "está en ejecución."
 
-#: ../variety/VarietyWindow.py:1982
+#: ../variety/VarietyWindow.py:1983
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -605,7 +776,7 @@ msgstr ""
 "Copiar el fondo actual a favoritos. Solo se utiliza cuando la aplicación ya "
 "está en ejecución."
 
-#: ../variety/VarietyWindow.py:1986
+#: ../variety/VarietyWindow.py:1987
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -613,57 +784,57 @@ msgstr ""
 "Mover el fondo actual a favoritos. Solo se utiliza cuando la aplicación ya "
 "está en ejecución."
 
-#: ../variety/VarietyWindow.py:1990
+#: ../variety/VarietyWindow.py:1991
 msgid "Pause on current image"
 msgstr "Pausar en la imagen actual"
 
-#: ../variety/VarietyWindow.py:1994
+#: ../variety/VarietyWindow.py:1995
 msgid "Resume regular image changes"
 msgstr "Reanudar cambios periódicos de imagen"
 
-#: ../variety/VarietyWindow.py:1998
+#: ../variety/VarietyWindow.py:1999
 msgid "Toggle Pause/Resume state"
 msgstr "Pausar/reanudar"
 
-#: ../variety/VarietyWindow.py:2002
+#: ../variety/VarietyWindow.py:2003
 msgid "Show Next quote"
 msgstr "Ver la cita siguiente"
 
-#: ../variety/VarietyWindow.py:2006
+#: ../variety/VarietyWindow.py:2007
 msgid "Show Previous quote"
 msgstr "Ver la cita anterior"
 
-#: ../variety/VarietyWindow.py:2010
+#: ../variety/VarietyWindow.py:2011
 msgid "Show Next quote, skipping the forward history"
 msgstr "Mostrar la siguiente cita, omitiendo el histórico"
 
-#: ../variety/VarietyWindow.py:2014
+#: ../variety/VarietyWindow.py:2015
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "Pausar/reanudar citas"
 
-#: ../variety/VarietyWindow.py:2018
+#: ../variety/VarietyWindow.py:2019
 msgid "Save the current quote to Favorites"
 msgstr "Guardar la cita actual en Favoritos"
 
-#: ../variety/VarietyWindow.py:2022
+#: ../variety/VarietyWindow.py:2023
 msgid "Toggle History display"
 msgstr "Mostrar/ocultar historial"
 
-#: ../variety/VarietyWindow.py:2026
+#: ../variety/VarietyWindow.py:2027
 msgid "Toggle Recent Downloads display"
 msgstr "Mostrar/ocultar descargas recientes"
 
-#: ../variety/VarietyWindow.py:2030
+#: ../variety/VarietyWindow.py:2031
 msgid "Show Preferences dialog"
 msgstr "Mostrar el diálogo Preferencias"
 
-#: ../variety/VarietyWindow.py:2034
+#: ../variety/VarietyWindow.py:2035
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2038
+#: ../variety/VarietyWindow.py:2039
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -678,20 +849,20 @@ msgstr ""
 "clock_enabled True». ÚSELO CON PRECAUCIÓN: está modificando el archivo de "
 "configuración directamente, sin ningún tipo de protección."
 
-#: ../variety/VarietyWindow.py:2052
+#: ../variety/VarietyWindow.py:2053
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 "las opciones --next/--fast-forward y --previous son mutualmente excluyentes"
 
-#: ../variety/VarietyWindow.py:2055
+#: ../variety/VarietyWindow.py:2056
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "las opciones --trash y --favorite son mutualmente excluyentes"
 
-#: ../variety/VarietyWindow.py:2058
+#: ../variety/VarietyWindow.py:2059
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "las opciones --pause y --resume son mutualmente excluyentes"
 
-#: ../variety/VarietyWindow.py:2061
+#: ../variety/VarietyWindow.py:2062
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
@@ -699,89 +870,89 @@ msgstr ""
 "las opciones --quotes-next/--quotes-fast-forward y --quotes-previous son "
 "mutualmente excluyentes"
 
-#: ../variety/VarietyWindow.py:2178 ../variety/ImageFetcher.py:60
+#: ../variety/VarietyWindow.py:2179 ../variety/ImageFetcher.py:60
 #: ../variety/ImageFetcher.py:71 ../variety/ImageFetcher.py:78
 #: ../variety/ImageFetcher.py:112
 msgid "Not an image"
 msgstr "No es una imagen"
 
-#: ../variety/VarietyWindow.py:2183
+#: ../variety/VarietyWindow.py:2184
 msgid "Added to queue"
 msgstr "Añadido a la cola"
 
-#: ../variety/VarietyWindow.py:2184 ../variety/VarietyWindow.py:2190
+#: ../variety/VarietyWindow.py:2185 ../variety/VarietyWindow.py:2191
 msgid "Press Next to see it"
 msgstr "Pulse Siguiente para verlo"
 
-#: ../variety/VarietyWindow.py:2190
+#: ../variety/VarietyWindow.py:2191
 msgid "Fetched"
 msgstr "Obtenidos"
 
-#: ../variety/VarietyWindow.py:2236
+#: ../variety/VarietyWindow.py:2237
 msgid "Unsupported source type"
 msgstr "El origen no es compatible"
 
-#: ../variety/VarietyWindow.py:2237 ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2238 ../variety/VarietyWindow.py:2286
 msgid "Are you running the most recent version of Variety?"
 msgstr "¿Está utilizando la versión más reciente de Variety?"
 
-#: ../variety/VarietyWindow.py:2243
+#: ../variety/VarietyWindow.py:2244
 msgid "New image source added"
 msgstr "Se añadió un origen de imágenes nuevo"
 
-#: ../variety/VarietyWindow.py:2245
+#: ../variety/VarietyWindow.py:2246
 msgid "Image source already exists, enabling it"
 msgstr "El origen de imágenes ya existe. Activándolo"
 
-#: ../variety/VarietyWindow.py:2271
+#: ../variety/VarietyWindow.py:2272
 msgid "Fetched and applied"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2281
+#: ../variety/VarietyWindow.py:2282
 msgid "It works!"
 msgstr "¡Funciona!"
 
-#: ../variety/VarietyWindow.py:2281
+#: ../variety/VarietyWindow.py:2282
 msgid "Yay, Variety links work. Great!"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2286
 msgid "Unsupported command"
 msgstr "No se admite la orden"
 
-#: ../variety/VarietyWindow.py:2287
+#: ../variety/VarietyWindow.py:2288
 msgid "Could not process the given variety:// URL"
 msgstr "No se pudo procesar el URL variety:// dado"
 
-#: ../variety/VarietyWindow.py:2288
+#: ../variety/VarietyWindow.py:2289
 msgid "Run with logging enabled to see details"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2487
+#: ../variety/VarietyWindow.py:2488
 msgid "Do not ask anymore, always use the current quote"
 msgstr "No preguntar de nuevo y usar siempre la cita actual"
 
-#: ../variety/VarietyWindow.py:2490 ../data/ui/FacebookPublishDialog.ui.h:5
+#: ../variety/VarietyWindow.py:2491 ../data/ui/FacebookPublishDialog.ui.h:5
 msgid "Do not ask anymore, always use the text above"
 msgstr "No preguntar de nuevo, siempre usar el texto anterior"
 
-#: ../variety/VarietyWindow.py:2522 ../variety/VarietyWindow.py:2551
+#: ../variety/VarietyWindow.py:2523 ../variety/VarietyWindow.py:2552
 msgid "Published"
 msgstr "Publicado"
 
-#: ../variety/VarietyWindow.py:2522 ../variety/VarietyWindow.py:2551
+#: ../variety/VarietyWindow.py:2523 ../variety/VarietyWindow.py:2552
 msgid "You may open your Facebook feed to see the post"
 msgstr "Puede abrir «Novedades» en Facebook para ver la publicación"
 
-#: ../variety/VarietyWindow.py:2525 ../variety/VarietyWindow.py:2554
+#: ../variety/VarietyWindow.py:2526 ../variety/VarietyWindow.py:2555
 msgid "Could not publish"
 msgstr "No se pudo publicar"
 
-#: ../variety/VarietyWindow.py:2717
+#: ../variety/VarietyWindow.py:2718
 msgid "Could not create autostart entry"
 msgstr "No se pudo crear la entrada de inicio automático"
 
-#: ../variety/VarietyWindow.py:2718
+#: ../variety/VarietyWindow.py:2719
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
@@ -790,12 +961,20 @@ msgstr ""
 "Ejecute el programa desde la terminal con el parámetro -v e inténtelo de "
 "nuevo."
 
+#: ../variety/VarietyWindow.py:2769
+msgid "No images"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2769
+msgid "There are no images in the slideshow folders"
+msgstr ""
+
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
 msgstr "Variety – Compartir en Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:169
 msgid "Facebook Sharing"
 msgstr "Compartir en Facebook"
 
@@ -890,7 +1069,7 @@ msgid ""
 "href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
 "Example: Top posts from the month: <a "
 "href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
-"reddit.com/r/comics/top/sort=top&amp;t=month</a>"
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:7
@@ -959,7 +1138,7 @@ msgstr ""
 "de nuevo."
 
 #: ../variety/Smart.py:597 ../variety/Smart.py:643
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgid "Sync"
 msgstr "Sincronizar"
 
@@ -992,172 +1171,6 @@ msgstr ""
 msgid "VRTY.ORG login confirmation"
 msgstr "Confirmación de acceso a VRTY.ORG"
 
-#: ../variety/Texts.py:20
-msgid "Keep original"
-msgstr "Mantener el original"
-
-#: ../variety/Texts.py:21
-msgid "Grayscale"
-msgstr "Escala de grises"
-
-#: ../variety/Texts.py:22
-msgid "Heavy blur"
-msgstr "Desenfoque duro"
-
-#: ../variety/Texts.py:23
-msgid "Soft blur"
-msgstr "Desenfoque suave"
-
-#: ../variety/Texts.py:24
-msgid "Oil painting"
-msgstr "Pintura al óleo"
-
-#: ../variety/Texts.py:25
-msgid "Pencil sketch"
-msgstr "Dibujo a lápiz"
-
-#: ../variety/Texts.py:26
-msgid "Pointilism"
-msgstr "Puntillismo"
-
-#: ../variety/Texts.py:27
-msgid "Pixellate"
-msgstr "Pixelar"
-
-#: ../variety/Texts.py:31
-msgid "The Favorites folder"
-msgstr "Carpeta de Favoritos"
-
-#: ../variety/Texts.py:32
-msgid "The Fetched folder"
-msgstr "La carpeta Obtenidos"
-
-#: ../variety/Texts.py:35
-msgid ""
-"Recommended by Variety. Adapts to your taste as you mark images as favorite "
-"or trash."
-msgstr ""
-
-#: ../variety/Texts.py:36
-msgid "Latest favorites by the other users of Variety."
-msgstr "Los favoritos más recientes de otros usuarios de Variety."
-
-#: ../variety/Texts.py:37
-msgid "Random wallpapers from Desktoppr.co"
-msgstr "Fondos aleatorios de Desktoppr.co"
-
-#: ../variety/Texts.py:38
-msgid "NASA's Astronomy Picture of the Day"
-msgstr "Imagen astronómica del día de la NASA"
-
-#: ../variety/Texts.py:40
-msgid "World Sunlight Map - live wallpaper from Die.net"
-msgstr ""
-
-#: ../variety/Texts.py:41
-msgid "Bing Photo of the Day"
-msgstr ""
-
-#: ../variety/Texts.py:42
-msgid "High-resolution photos from Unsplash.com"
-msgstr ""
-
-#: ../variety/Texts.py:46
-msgid ""
-"If you use KDE, you need to perform some actions before Variety will work. "
-"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
-msgstr ""
-"Si utiliza KDE necesitará realizar algunas acciones antes para que Variety "
-"funcione. Consulte: http://peterlevi.com/variety/2014/05/variety-and-kde/"
-
-#: ../variety/Texts.py:47
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-"Puede cambiar de fondo ubicando el puntero del ratón sobre el icono "
-"indicador y usando la rueda de desplazamiento."
-
-#: ../variety/Texts.py:48
-msgid ""
-"If you want to run custom commands every time the wallpaper changes or if "
-"you use an alternative desktop environment, please edit the scripts in "
-"~/.config/variety/scripts. There are examples there for various desktop "
-"environments."
-msgstr ""
-"Para ejecutar órdenes al cambiar de fondo o si utiliza un entorno de "
-"escritorio diferente, edite las secuencias de órdenes ubicadas en "
-"~/.config/variety/scripts, donde encontrará ejemplos para varios entornos."
-
-#: ../variety/Texts.py:49
-msgid ""
-"Variety can be controlled from the command line and you can use this to "
-"define keyboard shortcuts for the operations you use most often. Run "
-"\"variety --help\" to see all available commands."
-msgstr ""
-"Es posible controlar Variety desde la consola; puede usar esta funcionalidad "
-"para establecer las combinaciones de teclas que más utiliza. Ejecute "
-"«variety --help» para ver todas las órdenes."
-
-#: ../variety/Texts.py:50
-msgid ""
-"You can drop image links or files on the launcher icon to download them and "
-"use them as wallpapers. For quicker downloading from a specific site, you "
-"can also use clipboard monitoring (see \"Manual downloading\" tab)."
-msgstr ""
-"Puede arrastrar y soltar enlaces o imágenes en el icono del lanzador para "
-"establecerlos como fondo. Para descargar rápidamente desde un sitio web, "
-"puede utilizar el monitoreo de portapapeles (vea la pestaña «Descarga "
-"manual»)."
-
-#: ../variety/Texts.py:51
-msgid ""
-"Applying a heavy blurring filter is a great way to get abstract-looking and "
-"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
-"in Ubuntu."
-msgstr ""
-
-#: ../variety/Texts.py:52
-msgid ""
-"Adding your own custom filters is quite easy: open "
-"~/.config/variety/variety.conf in an editor and use the existing filters as "
-"an example. Every filter is just a line of options to be passed to "
-"ImageMagick's convert command."
-msgstr ""
-
-#: ../variety/Texts.py:53
-msgid ""
-"When you select an image source, its images are displayed in a window at the "
-"bottom of the screen. Click an image there to set is as wallpaper. Right-"
-"click to close the window, to modify its appearance or to perform file "
-"operations. You can select multiple image sources to create a \"merged\" "
-"thumbnail view of all of them. Please mind that thumbnail view is limited to "
-"several hundred randomly selected images."
-msgstr ""
-
-#: ../variety/Texts.py:54
-msgid ""
-"To enable desktop notifications when the wallpaper changes, uncomment the "
-"two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
-msgstr ""
-
-#: ../variety/Texts.py:55
-msgid ""
-"Variety's indicator icon is themeable - if you you choose the \"Light\" "
-"option for the icon, Variety will first check if the current GTK theme has "
-"an icon named \"variety-indicator\" and will use it instead of the bundled "
-"light icon."
-msgstr ""
-
-#: ../variety/Texts.py:56
-msgid ""
-"When you choose to save quotes to Favorites, these are by default saved to "
-"~/.config/variety/favorite_quotes.txt. This file is compatible with "
-"Variety's local files quote source. If you want to use it - copy it to "
-"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
-"source. This file is also compatible with the Unix fortune utility."
-msgstr ""
-
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
 msgstr "Obtiene citas de TheQuotationsPage.com"
@@ -1171,53 +1184,6 @@ msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr ""
 "Variety ya se está ejecutando. Enviando la orden a la instancia en ejecución."
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
-msgid "Copy to Favorites vs. Move to Favorites"
-msgstr "Copiar a favoritos o mover a favoritos"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
-msgid "Reset to Default"
-msgstr "Restablecer valores predeterminados"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
-msgid ""
-"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
-"menu depending on the image location:"
-msgstr ""
-"Seleccione si prefiere «Copiar a favoritos» o «Mover a favoritos» en el "
-"menú, dependiendo de la ubicación de la imagen:"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
-msgid ""
-"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
-"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
-"folder path.\n"
-"Order is important. When an image is shown, the first folder in this list "
-"which contains the image will determine which operations will be shown in "
-"Variety's menu. 'Others' matches any file and should be last in the list.\n"
-"\n"
-"Example:\n"
-"\tDownloaded:Copy\n"
-"\tFetched:Move\n"
-"\t/pics/RandomImages:Move\n"
-"\t/pics/OrganizedAlbums:Copy\n"
-"\tOthers:Both"
-msgstr ""
-"Introduzca una entrada por línea, cada una con con forma <Carpeta>: <copiar, "
-"mover o ambos>, donde «Carpeta» puede ser Descargados, Obtenidos, Otros o "
-"una ruta de carpeta específica.\n"
-"El orden es importante. Cuando se muestra una imagen, la primera carpeta de "
-"esta lista que contiene la imagen determinará las operaciones que se "
-"mostrarán en el menú de Variety. «Otros» coincide con cualquier archivo y "
-"debería ser el último de la lista.\n"
-"\n"
-"Ejemplo:\n"
-"\tDescargados:Copiar\n"
-"\tObtenidos:Mover\n"
-"\t/fotos/ImágenesAlAzar:Mover\n"
-"\t/fotos/ÁlbumesOrganizados:Copiar\n"
-"\tOtros:Ambos"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
 msgid "VRTY.ORG integration"
@@ -1285,7 +1251,7 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Participate in VRTY.ORG"
 msgstr "Participar en VRTY.ORG"
 
@@ -1681,14 +1647,138 @@ msgid "Effects"
 msgstr "Efectos"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:73
+msgid "Images for slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+msgid "Favorite images"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+msgid "Images in all enabled image sources"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+msgid "All images in the Downloads folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+msgid "Custom folder (includes images in subfolders) "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+msgid "Order of images in slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+msgid "Random"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+msgid "By name, A to Z"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+msgid "By name, Z to A"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+msgid "By date, oldest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+msgid "By date, newest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+msgid "Screen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+msgid "Run on monitor"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+msgid "Window mode for the slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+msgid "Fullscreen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+msgid "Desktop (stays below other windows)"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+msgid "Maximized window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+msgid "Normal window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+msgid "Dynamics"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+msgid "Interval between image changes "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+msgid " seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+msgid "Quick fade "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+msgid "Slow fade"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+msgid "Less zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+msgid "More zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+msgid "Less pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+msgid "More pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+msgid "Changes on this page take effect after the slideshow is restarted"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+msgid "Start slideshow now"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+msgid "Slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "VRTY.ORG"
 msgstr "VRTY.ORG"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid "VRTY.ORG is in beta and will take some time to mature"
 msgstr "VRTY.ORG está en fase beta y le tomará algo de tiempo madurar"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1696,37 +1786,37 @@ msgid ""
 "It is fueled by the favorite images of all participating users."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid ""
 "Could not create user - no connection to VRTY.ORG. We will try again later."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgid ""
 "Registration enables cool features like synchronization of favorite images "
 "and sources between computers and personalized recommendations."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgid "Synchronize favorite images between computers"
 msgstr "Sincronizar imágenes favoritas en varios equipos"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgid "Requires VRTY.ORG enabled and logged in."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgid ""
 "Your favorite images from other computers will be automatically downloaded "
 "to this computer. You need to be logged in with the same VRTY.ORG user "
 "everywhere. Sync will not delete any images."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgid "Privacy policy"
 msgstr "Política de privacidad"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid ""
 "Variety sends data only for images it downloaded, never for images you "
 "already had in your local folders that might be private, and Sync does not "
@@ -1736,38 +1826,38 @@ msgid ""
 "service and the privacy policy here.</a>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Usage statistics"
 msgstr "Estadísticas de uso"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Help make Variety better by sending anonymous usage statistics"
 msgstr "Ayude a mejorar Variety al enviar estadísticas anónimas de uso"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid ""
 "These stats help us improve Variety by understanding how users interact with "
 "it. They also include general info about your OS version and monitor setup. "
 "Collected data is not shared with anyone."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Sync and social"
 msgstr "Sincronización y funciones sociales"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Fetch folder"
 msgstr "Carpeta Obtenidos"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Save manually downloaded wallpapers to "
 msgstr "Guardar los fondos descargados manualmente en "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Drag and drop"
 msgstr "Arrastrar y soltar"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1781,151 +1871,151 @@ msgstr ""
 "Para mostrar el icono en el lanzador, elija Acerca de o Preferencias. Para "
 "facilitar el acceso a esta función, ancle el icono en el lanzador."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Clipboard monitoring"
 msgstr "Monitoreo del portapapeles"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr "Detectar URL de imágenes en el portapapeles y obtenerlas"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "But fetch only when the URL host is one of these:"
 msgstr "Pero solo obtenerlas cuando el sitio de la URL sea uno de estos:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid "Manual downloading"
 msgstr "Descarga manual"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "When possible use images that:"
 msgstr "Siempre que sea posible usar imágenes que:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100 ../variety/ThumbsManager.py:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131 ../variety/ThumbsManager.py:98
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Have landscape orientation"
 msgstr "Tienen orientación horizontal"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Are big at least "
 msgstr "Tienen por lo menos "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "50"
 msgstr "50"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "80"
 msgstr "80"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "100"
 msgstr "100"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "% de la resolución de la pantalla"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Color"
 msgstr "Color"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Are dark or light:"
 msgstr "Son oscuras o claras:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "Oscuras"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "Claras"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Contain this color: "
 msgstr "Contienen este color: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "(Takes effect after some initial searching)"
 msgstr "(Será efectivo después de realizar algunas búsquedas)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Rating"
 msgstr "Valoración"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid "Have EXIF rating at least "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:147
 msgid "1"
 msgstr "1"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:148
 msgid "2"
 msgstr "2"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "3"
 msgstr "3"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "4"
 msgstr "4"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:120
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid "5"
 msgstr "5"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../data/ui/PreferencesVarietyDialog.ui.h:152
 msgid "Color and size"
 msgstr "Color y tamaño"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "Indicator Icon"
 msgstr "Icono del indicador"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+#: ../data/ui/PreferencesVarietyDialog.ui.h:154
 msgid "Indicator icon:"
 msgstr "Icono del indicador:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:155
 msgctxt "Icon option"
 msgid "Light"
 msgstr "Claro"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:156
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "Oscuro"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:157
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Usar el fondo actual"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:158
 msgctxt "Icon option"
 msgid "Custom image..."
 msgstr "Imagen personalizada…"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:159
 msgctxt "Icon option"
 msgid "None"
 msgstr "Ninguna"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:160
 msgid "Select an icon"
 msgstr "Seleccione un icono"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:161
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -1935,43 +2025,43 @@ msgstr ""
 "órdenes o desde la lista rápida del lanzador. Ejecute «variety --help» para "
 "ver todas las órdenes disponibles."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:162
 msgid "Favorites Operations"
 msgstr "Operaciones de favoritos"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:163
 msgid "Favorites operations to show in main menu:"
 msgstr "Operaciones de favoritos a mostrar en el menú principal:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:164
 msgid "Copy to Favorites"
 msgstr "Copiar a favoritos"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:166
 msgid "Both Copy and Move"
 msgstr "Copiar y mover"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:167
 msgid "Depends on folder..."
 msgstr "Depende de la carpeta…"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:170
 msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 "Mostrar diálogo para personalizar la entrada de Facebook antes de publicarla"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:171
 msgid "Login Screen Support"
 msgstr "Compatibilidad con pantalla de acceso"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:172
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr ""
 "Asegúrese de que los fondos establecidos por Variety se usarán en la "
 "pantalla de inicio de sesión"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:173
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -1987,34 +2077,34 @@ msgstr ""
 "~/Imágenes si su carpeta personal no está cifrada, y /usr/share/backgrounds "
 "si lo está. Úselo con cuidado en sistemas multiusuario."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:174
 msgid "Copy wallpaper image files to this folder: "
 msgstr "Copiar las imágenes de fondo en esta carpeta: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+#: ../data/ui/PreferencesVarietyDialog.ui.h:175
 msgid "Reset to default"
 msgstr "Restaurar al valor predeterminado"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+#: ../data/ui/PreferencesVarietyDialog.ui.h:176
 msgid "Still doesn't work?"
 msgstr "¿Sigue sin funcionar?"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+#: ../data/ui/PreferencesVarietyDialog.ui.h:177
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
 msgstr ""
 "Parece que su carpeta personal está cifrada. No funcionarán las subcarpetas."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:147
+#: ../data/ui/PreferencesVarietyDialog.ui.h:178
 msgid "You don't have write permissions for this folder."
 msgstr "No tiene permisos de escritura para esta carpeta."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:148
+#: ../data/ui/PreferencesVarietyDialog.ui.h:179
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr "LigthDM no tiene permisos para leer los archivos de esta carpeta."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:149
+#: ../data/ui/PreferencesVarietyDialog.ui.h:180
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
@@ -2022,39 +2112,39 @@ msgstr ""
 "Variety puede ajustar los permisos, pero deberá proporcionarle privilegios "
 "de superusuario."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:181
 msgid "Customize"
 msgstr "Personalizar"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:151
+#: ../data/ui/PreferencesVarietyDialog.ui.h:182
 msgid "Tips and tricks"
 msgstr "Consejos y trucos"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:152
+#: ../data/ui/PreferencesVarietyDialog.ui.h:183
 msgid "Recent changes"
 msgstr "Cambios recientes"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:153
+#: ../data/ui/PreferencesVarietyDialog.ui.h:184
 msgid "Visit website"
 msgstr "Visitar el sitio web"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+#: ../data/ui/PreferencesVarietyDialog.ui.h:185
 msgid "Report a bug or request a feature"
 msgstr "Informar de un error o pedir una característica"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:155
+#: ../data/ui/PreferencesVarietyDialog.ui.h:186
 msgid "Send feedback"
 msgstr "Enviar comentarios"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:156
+#: ../data/ui/PreferencesVarietyDialog.ui.h:187
 msgid "Donate to Variety"
 msgstr "Done a Variety"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:157
+#: ../data/ui/PreferencesVarietyDialog.ui.h:188
 msgid "Donate via PayPal"
 msgstr "Donar con PayPal"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:158
+#: ../data/ui/PreferencesVarietyDialog.ui.h:189
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -2072,13 +2162,13 @@ msgstr ""
 "Gracias,\n"
 "Peter Levi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:162
+#: ../data/ui/PreferencesVarietyDialog.ui.h:193
 msgid ""
 "<i>For Bitcoin and other payment methods please go to <a "
 "href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:163
+#: ../data/ui/PreferencesVarietyDialog.ui.h:194
 msgid "Donate"
 msgstr "Donar"
 
@@ -2392,7 +2482,7 @@ msgstr "Cita de Google"
 msgid "Google Author"
 msgstr "Autor de Google"
 
-#: ../variety/indicator.py:230 ../variety/indicator.py:271
+#: ../variety/indicator.py:230 ../variety/indicator.py:284
 msgid "Preferences..."
 msgstr "Preferencias…"
 
@@ -2416,13 +2506,64 @@ msgstr "Selector de _fondos"
 msgid "Recent _Downloads"
 msgstr "_Descargas recientes"
 
-#: ../variety/indicator.py:275
+#: ../variety/indicator.py:278
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../variety/indicator.py:288
 msgid "About"
 msgstr "Acerca de"
 
-#: ../variety/indicator.py:279
+#: ../variety/indicator.py:292
 msgid "Quit"
 msgstr "Salir"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr "Copiar a favoritos o mover a favoritos"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
+msgid "Reset to Default"
+msgstr "Restablecer valores predeterminados"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
+"menu depending on the image location:"
+msgstr ""
+"Seleccione si prefiere «Copiar a favoritos» o «Mover a favoritos» en el "
+"menú, dependiendo de la ubicación de la imagen:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
+"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
+"folder path.\n"
+"Order is important. When an image is shown, the first folder in this list "
+"which contains the image will determine which operations will be shown in "
+"Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
+"Introduzca una entrada por línea, cada una con con forma <Carpeta>: <copiar, "
+"mover o ambos>, donde «Carpeta» puede ser Descargados, Obtenidos, Otros o "
+"una ruta de carpeta específica.\n"
+"El orden es importante. Cuando se muestra una imagen, la primera carpeta de "
+"esta lista que contiene la imagen determinará las operaciones que se "
+"mostrarán en el menú de Variety. «Otros» coincide con cualquier archivo y "
+"debería ser el último de la lista.\n"
+"\n"
+"Ejemplo:\n"
+"\tDescargados:Copiar\n"
+"\tObtenidos:Mover\n"
+"\t/fotos/ImágenesAlAzar:Mover\n"
+"\t/fotos/ÁlbumesOrganizados:Copiar\n"
+"\tOtros:Ambos"
 
 #: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:103
 msgid "Fetching"

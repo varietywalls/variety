@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-08-05 21:15+0300\n"
+"POT-Creation-Date: 2016-01-29 10:57+0200\n"
 "PO-Revision-Date: 2014-07-15 23:54+0000\n"
 "Last-Translator: kaiman <kaigfm@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-09-19 20:48+0000\n"
-"X-Generator: Launchpad (build 17746)\n"
+"X-Launchpad-Export-Date: 2016-02-07 20:28+0000\n"
+"X-Generator: Launchpad (build 17908)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -72,7 +72,7 @@ msgstr ""
 
 #. (_("Wallbase.cc"), self.on_add_wallbase_clicked),
 #: ../data/ui/AddPanoramioDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:333
+#: ../variety/PreferencesVarietyDialog.py:388
 msgid "Panoramio"
 msgstr ""
 
@@ -84,8 +84,8 @@ msgstr ""
 msgid "Choose a folder"
 msgstr "选择一个文件夹"
 
-#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:490
-#: ../variety/PreferencesVarietyDialog.py:514
+#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:545
+#: ../variety/PreferencesVarietyDialog.py:569
 msgid "Cancel"
 msgstr "取消"
 
@@ -98,7 +98,7 @@ msgid "Variety - add Wallhaven.cc image source"
 msgstr ""
 
 #: ../data/ui/AddWallhavenDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:331
+#: ../variety/PreferencesVarietyDialog.py:386
 msgid "Wallhaven.cc"
 msgstr ""
 
@@ -170,120 +170,277 @@ msgstr ""
 msgid "Maybe you are searching for something very obscure?"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:327
-#: ../variety/PreferencesVarietyDialog.py:496
+#: ../variety/Texts.py:20
+msgid "Keep original"
+msgstr "保持原始"
+
+#: ../variety/Texts.py:21
+msgid "Grayscale"
+msgstr "灰度"
+
+#: ../variety/Texts.py:22
+msgid "Heavy blur"
+msgstr ""
+
+#: ../variety/Texts.py:23
+msgid "Soft blur"
+msgstr ""
+
+#: ../variety/Texts.py:24
+msgid "Oil painting"
+msgstr "油画"
+
+#: ../variety/Texts.py:25
+msgid "Pencil sketch"
+msgstr ""
+
+#: ../variety/Texts.py:26
+msgid "Pointilism"
+msgstr ""
+
+#: ../variety/Texts.py:27
+msgid "Pixellate"
+msgstr ""
+
+#: ../variety/Texts.py:31
+msgid "The Favorites folder"
+msgstr ""
+
+#: ../variety/Texts.py:32
+msgid "The Fetched folder"
+msgstr ""
+
+#: ../variety/Texts.py:35
+msgid ""
+"Recommended by Variety. Adapts to your taste as you mark images as favorite "
+"or trash."
+msgstr ""
+
+#: ../variety/Texts.py:37
+msgid ""
+"Latest favorites by the other users of Variety. [May contain NSFW images]"
+msgstr ""
+
+#: ../variety/Texts.py:38
+msgid "Random wallpapers from Desktoppr.co"
+msgstr ""
+
+#: ../variety/Texts.py:39
+msgid "NASA's Astronomy Picture of the Day"
+msgstr ""
+
+#: ../variety/Texts.py:41
+msgid "World Sunlight Map - live wallpaper from Die.net"
+msgstr ""
+
+#: ../variety/Texts.py:42
+msgid "Bing Photo of the Day"
+msgstr ""
+
+#: ../variety/Texts.py:43
+msgid "High-resolution photos from Unsplash.com"
+msgstr ""
+
+#: ../variety/Texts.py:47
+msgid ""
+"If you use KDE, you need to perform some actions before Variety will work. "
+"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
+msgstr ""
+
+#: ../variety/Texts.py:48
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+
+#: ../variety/Texts.py:49
+msgid ""
+"If you want to run custom commands every time the wallpaper changes or if "
+"you use an alternative desktop environment, please edit the scripts in "
+"~/.config/variety/scripts. There are examples there for various desktop "
+"environments."
+msgstr ""
+
+#: ../variety/Texts.py:50
+msgid ""
+"Variety can be controlled from the command line and you can use this to "
+"define keyboard shortcuts for the operations you use most often. Run "
+"\"variety --help\" to see all available commands."
+msgstr ""
+
+#: ../variety/Texts.py:51
+msgid ""
+"You can drop image links or files on the launcher icon to download them and "
+"use them as wallpapers. For quicker downloading from a specific site, you "
+"can also use clipboard monitoring (see \"Manual downloading\" tab)."
+msgstr ""
+
+#: ../variety/Texts.py:52
+msgid ""
+"Applying a heavy blurring filter is a great way to get abstract-looking and "
+"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
+"in Ubuntu."
+msgstr ""
+
+#: ../variety/Texts.py:53
+msgid ""
+"Adding your own custom filters is quite easy: open "
+"~/.config/variety/variety.conf in an editor and use the existing filters as "
+"an example. Every filter is just a line of options to be passed to "
+"ImageMagick's convert command."
+msgstr ""
+
+#: ../variety/Texts.py:54
+msgid ""
+"When you select an image source, its images are displayed in a window at the "
+"bottom of the screen. Click an image there to set is as wallpaper. Right-"
+"click to close the window, to modify its appearance or to perform file "
+"operations. You can select multiple image sources to create a \"merged\" "
+"thumbnail view of all of them. Please mind that thumbnail view is limited to "
+"several hundred randomly selected images."
+msgstr ""
+
+#: ../variety/Texts.py:55
+msgid ""
+"To enable desktop notifications when the wallpaper changes, uncomment the "
+"two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
+msgstr ""
+
+#: ../variety/Texts.py:56
+msgid ""
+"Variety's indicator icon is themeable - if you you choose the \"Light\" "
+"option for the icon, Variety will first check if the current GTK theme has "
+"an icon named \"variety-indicator\" and will use it instead of the bundled "
+"light icon."
+msgstr ""
+
+#: ../variety/Texts.py:57
+msgid ""
+"When you choose to save quotes to Favorites, these are by default saved to "
+"~/.config/variety/favorite_quotes.txt. This file is compatible with "
+"Variety's local files quote source. If you want to use it - copy it to "
+"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
+"source. This file is also compatible with the Unix fortune utility."
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:259
+msgid "All"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:382
+#: ../variety/PreferencesVarietyDialog.py:551
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr "图片"
 
-#: ../variety/PreferencesVarietyDialog.py:328
+#: ../variety/PreferencesVarietyDialog.py:383
 msgid "Folders"
 msgstr "文件夹"
 
-#: ../variety/PreferencesVarietyDialog.py:330
+#: ../variety/PreferencesVarietyDialog.py:385
 #: ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:334
+#: ../variety/PreferencesVarietyDialog.py:389
 #: ../data/ui/AddWallpapersNetCategoryDialog.ui.h:2
 msgid "Wallpapers.net"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:335
+#: ../variety/PreferencesVarietyDialog.py:390
 #: ../data/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:336
+#: ../variety/PreferencesVarietyDialog.py:391
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:361
+#: ../variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source, keep the files"
 msgstr "从源里移除，但保留文件"
 
-#: ../variety/PreferencesVarietyDialog.py:362
+#: ../variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources, keep the files"
 msgstr "从源里移除，但保留文件"
 
-#: ../variety/PreferencesVarietyDialog.py:369
+#: ../variety/PreferencesVarietyDialog.py:424
 msgid "Remove the source and delete the downloaded files"
 msgstr "移除源，并且删除已下载文件"
 
-#: ../variety/PreferencesVarietyDialog.py:370
+#: ../variety/PreferencesVarietyDialog.py:425
 msgid "Remove the sources and delete the downloaded files"
 msgstr "移除源，并且删除已下载文件"
 
-#: ../variety/PreferencesVarietyDialog.py:403
+#: ../variety/PreferencesVarietyDialog.py:458
 msgid "World Sunlight Map enabled"
 msgstr "启用世界鸟瞰地图"
 
-#: ../variety/PreferencesVarietyDialog.py:404
+#: ../variety/PreferencesVarietyDialog.py:459
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr "世界鸟瞰地图下载间隔要求不大于30分钟。配置之前是自动调整的"
 
-#: ../variety/PreferencesVarietyDialog.py:489
+#: ../variety/PreferencesVarietyDialog.py:544
 msgid "Add Images"
 msgstr "添加图片"
 
-#: ../variety/PreferencesVarietyDialog.py:490
-#: ../variety/PreferencesVarietyDialog.py:514
+#: ../variety/PreferencesVarietyDialog.py:545
+#: ../variety/PreferencesVarietyDialog.py:569
 msgid "Add"
 msgstr "添加"
 
-#: ../variety/PreferencesVarietyDialog.py:512
+#: ../variety/PreferencesVarietyDialog.py:567
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr "增加文件夹-只需要添加顶层文件夹，子文件夹会自动添加"
 
-#: ../variety/PreferencesVarietyDialog.py:648
-#: ../variety/PreferencesVarietyDialog.py:661
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../variety/PreferencesVarietyDialog.py:703
+#: ../variety/PreferencesVarietyDialog.py:716
+#: ../data/ui/PreferencesVarietyDialog.ui.h:168
 msgid "Edit..."
 msgstr "编辑..."
 
-#: ../variety/PreferencesVarietyDialog.py:655
+#: ../variety/PreferencesVarietyDialog.py:710
 msgid "View Image"
 msgstr "浏览图像"
 
-#: ../variety/PreferencesVarietyDialog.py:658
+#: ../variety/PreferencesVarietyDialog.py:713
 msgid "Open Folder"
 msgstr "打开文件夹"
 
-#: ../variety/PreferencesVarietyDialog.py:1000
+#: ../variety/PreferencesVarietyDialog.py:1092
 msgid "Recommended images source disabled"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1028
-#: ../variety/PreferencesVarietyDialog.py:1047
-#: ../variety/PreferencesVarietyDialog.py:1055
+#: ../variety/PreferencesVarietyDialog.py:1120
+#: ../variety/PreferencesVarietyDialog.py:1139
+#: ../variety/PreferencesVarietyDialog.py:1147
 msgid "No write permissions"
 msgstr "没有写权限"
 
-#: ../variety/PreferencesVarietyDialog.py:1035
+#: ../variety/PreferencesVarietyDialog.py:1127
 msgid "Limit disabled"
 msgstr "限制取消"
 
-#: ../variety/PreferencesVarietyDialog.py:1036
+#: ../variety/PreferencesVarietyDialog.py:1128
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
 msgstr "自动修改下载文件夹关闭大小限制， 防止意外的数据丢失"
 
-#: ../variety/PreferencesVarietyDialog.py:1042
+#: ../variety/PreferencesVarietyDialog.py:1134
 #, python-format
 msgid "Actual download folder: %s "
 msgstr "实际下载文件夹：%s "
 
-#: ../variety/PreferencesVarietyDialog.py:1122
+#: ../variety/PreferencesVarietyDialog.py:1214
 msgid "Could not adjust permissions"
 msgstr "不能修改权限"
 
-#: ../variety/PreferencesVarietyDialog.py:1123
+#: ../variety/PreferencesVarietyDialog.py:1215
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
@@ -292,20 +449,20 @@ msgstr ""
 "你需要手动运行命令：\n"
 "sudo chmod %s \"%s\""
 
-#: ../variety/PreferencesVarietyDialog.py:1155
+#: ../variety/PreferencesVarietyDialog.py:1247
 msgid "Logged in as: "
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1157
+#: ../variety/PreferencesVarietyDialog.py:1249
 msgid "Anonymous"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1158
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../variety/PreferencesVarietyDialog.py:1250
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid "Login or register"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:1158
+#: ../variety/PreferencesVarietyDialog.py:1250
 msgid "Switch user"
 msgstr ""
 
@@ -376,105 +533,105 @@ msgid ""
 "there."
 msgstr "输入不是一个合法的RSS链接或者RSS链接里面没有内容"
 
-#: ../variety/VarietyWindow.py:629 ../variety/VarietyWindow.py:771
-#: ../variety/VarietyWindow.py:2649
+#: ../variety/VarietyWindow.py:630 ../variety/VarietyWindow.py:772
+#: ../variety/VarietyWindow.py:2650
 msgid "Already in Favorites"
 msgstr "收藏夹中已存在"
 
-#: ../variety/VarietyWindow.py:633 ../variety/ThumbsManager.py:144
+#: ../variety/VarietyWindow.py:634 ../variety/ThumbsManager.py:144
 #: ../variety/indicator.py:76
 msgid "Copy to _Favorites"
 msgstr "拷贝到收藏夹(_F)"
 
-#: ../variety/VarietyWindow.py:634 ../variety/ThumbsManager.py:151
+#: ../variety/VarietyWindow.py:635 ../variety/ThumbsManager.py:151
 msgid "Move to _Favorites"
 msgstr "移动到收藏夹(_F)"
 
 #. both
-#: ../variety/VarietyWindow.py:642
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134 ../variety/indicator.py:81
+#: ../variety/VarietyWindow.py:643
+#: ../data/ui/PreferencesVarietyDialog.ui.h:165 ../variety/indicator.py:81
 msgid "Move to Favorites"
 msgstr "移动到收藏夹"
 
-#: ../variety/VarietyWindow.py:664 ../variety/ThumbsManager.py:119
+#: ../variety/VarietyWindow.py:665 ../variety/ThumbsManager.py:119
 msgid "Fetched: Show Origin"
 msgstr "抓到数据"
 
-#: ../variety/VarietyWindow.py:666 ../variety/VarietyWindow.py:761
+#: ../variety/VarietyWindow.py:667 ../variety/VarietyWindow.py:762
 #: ../variety/ThumbsManager.py:121
 #, python-format
 msgid "View at %s"
 msgstr "在%s浏览"
 
-#: ../variety/VarietyWindow.py:710
+#: ../variety/VarietyWindow.py:711
 msgid "Unknown"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:731
+#: ../variety/VarietyWindow.py:732
 #, python-format
 msgid "Author: %s"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:754 ../variety/VarietyWindow.py:768
+#: ../variety/VarietyWindow.py:755 ../variety/VarietyWindow.py:769
 #: ../variety/indicator.py:120 ../variety/indicator.py:185
 msgid "Pause on current"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:754 ../variety/VarietyWindow.py:768
+#: ../variety/VarietyWindow.py:755 ../variety/VarietyWindow.py:769
 msgid "Resume regular changes"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:771 ../variety/indicator.py:191
+#: ../variety/VarietyWindow.py:772 ../variety/indicator.py:191
 msgid "Save to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:903
+#: ../variety/VarietyWindow.py:904
 msgid "Filtering too strict?"
 msgstr "匹配规则过于严格？"
 
-#: ../variety/VarietyWindow.py:904
+#: ../variety/VarietyWindow.py:905
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr "Varity用您目前的图片规则匹配到的图片太少"
 
-#: ../variety/VarietyWindow.py:1376
+#: ../variety/VarietyWindow.py:1377
 msgid "Please add more image sources or wait for some downloads"
 msgstr "请增加更多的图片源或者等待下载结束"
 
-#: ../variety/VarietyWindow.py:1378
+#: ../variety/VarietyWindow.py:1379
 msgid "Please add more image sources"
 msgstr "请增加更多的图片源"
 
-#: ../variety/VarietyWindow.py:1379
+#: ../variety/VarietyWindow.py:1380
 msgid "No more wallpapers"
 msgstr "没有更多的桌面图片"
 
-#: ../variety/VarietyWindow.py:1565
+#: ../variety/VarietyWindow.py:1566
 msgid "Current wallpaper is not in the image sources"
 msgstr "当前的桌面图片不在图片源中"
 
-#: ../variety/VarietyWindow.py:1600
+#: ../variety/VarietyWindow.py:1601
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr "不能移动到 %s。你可能没有相应的权限移动该文件。"
 
-#: ../variety/VarietyWindow.py:1602
+#: ../variety/VarietyWindow.py:1603
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr "不能复制到 %s。你可能没有相应的权限复制该文件。"
 
-#: ../variety/VarietyWindow.py:1622 ../variety/VarietyWindow.py:1642
+#: ../variety/VarietyWindow.py:1623 ../variety/VarietyWindow.py:1643
 msgid "Cannot delete"
 msgstr "无法删除"
 
-#: ../variety/VarietyWindow.py:1623
+#: ../variety/VarietyWindow.py:1624
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr "你没有权限删除 %s 到回收站。"
 
-#: ../variety/VarietyWindow.py:1643
+#: ../variety/VarietyWindow.py:1644
 msgid ""
 "Probably there is no utility for moving to Trash?\n"
 "Please install trash-cli or gvfs-bin or konquerer."
@@ -482,24 +639,24 @@ msgstr ""
 "可能没有删除工具？\n"
 "请安装trash-cli, gvfs-bin或者konquerer."
 
-#: ../variety/VarietyWindow.py:1775
+#: ../variety/VarietyWindow.py:1776
 msgid "Anonymous usage statistics"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1776
+#: ../variety/VarietyWindow.py:1777
 msgid ""
 "Variety collects anonymous usage statistics. \n"
 "These help us make it better and are not shared with anyone. \n"
 "To read more or turn them off, go to \"Sync and social\""
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1919
+#: ../variety/VarietyWindow.py:1920
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr "将要打开文本编辑器编辑配置文件。在您保存关闭文本编辑器后应用更改"
 
-#: ../variety/VarietyWindow.py:1944
+#: ../variety/VarietyWindow.py:1945
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -510,103 +667,103 @@ msgid ""
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1954
+#: ../variety/VarietyWindow.py:1955
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr "显示日志消息(-vv 显示更详细的debug消息, -vvv 用来debug varity的库文件"
 
-#: ../variety/VarietyWindow.py:1958
+#: ../variety/VarietyWindow.py:1959
 msgid "Make the running instance quit"
 msgstr "让运行中的实例退出"
 
-#: ../variety/VarietyWindow.py:1962
+#: ../variety/VarietyWindow.py:1963
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr "打印当前桌面图片地址。 只有当Variety运行时可用"
 
-#: ../variety/VarietyWindow.py:1966
+#: ../variety/VarietyWindow.py:1967
 msgid "Show Next wallpaper"
 msgstr "显示下一壁纸"
 
-#: ../variety/VarietyWindow.py:1970
+#: ../variety/VarietyWindow.py:1971
 msgid "Show Previous wallpaper"
 msgstr "显示前一壁纸"
 
-#: ../variety/VarietyWindow.py:1974
+#: ../variety/VarietyWindow.py:1975
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "显示下一张壁纸， 跳过前一壁纸历史"
 
-#: ../variety/VarietyWindow.py:1978
+#: ../variety/VarietyWindow.py:1979
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr "删除当前壁纸。程序运行时可用"
 
-#: ../variety/VarietyWindow.py:1982
+#: ../variety/VarietyWindow.py:1983
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "拷贝当前壁纸到Favorites."
 
-#: ../variety/VarietyWindow.py:1986
+#: ../variety/VarietyWindow.py:1987
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr "剪切当前壁纸到Favorites."
 
-#: ../variety/VarietyWindow.py:1990
+#: ../variety/VarietyWindow.py:1991
 msgid "Pause on current image"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1994
+#: ../variety/VarietyWindow.py:1995
 msgid "Resume regular image changes"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:1998
+#: ../variety/VarietyWindow.py:1999
 msgid "Toggle Pause/Resume state"
 msgstr "切换 暂停/继续 状态"
 
-#: ../variety/VarietyWindow.py:2002
+#: ../variety/VarietyWindow.py:2003
 msgid "Show Next quote"
 msgstr "显示下一箴言"
 
-#: ../variety/VarietyWindow.py:2006
+#: ../variety/VarietyWindow.py:2007
 msgid "Show Previous quote"
 msgstr "显示前一箴言"
 
-#: ../variety/VarietyWindow.py:2010
+#: ../variety/VarietyWindow.py:2011
 msgid "Show Next quote, skipping the forward history"
 msgstr "显示下一箴言，跳过向前显示历史"
 
-#: ../variety/VarietyWindow.py:2014
+#: ../variety/VarietyWindow.py:2015
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "切换箴言 暂停/继续 状态"
 
-#: ../variety/VarietyWindow.py:2018
+#: ../variety/VarietyWindow.py:2019
 msgid "Save the current quote to Favorites"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2022
+#: ../variety/VarietyWindow.py:2023
 msgid "Toggle History display"
 msgstr "切换历史显示"
 
-#: ../variety/VarietyWindow.py:2026
+#: ../variety/VarietyWindow.py:2027
 msgid "Toggle Recent Downloads display"
 msgstr "切换最近下载现实"
 
-#: ../variety/VarietyWindow.py:2030
+#: ../variety/VarietyWindow.py:2031
 msgid "Show Preferences dialog"
 msgstr "现实首选项对话框"
 
-#: ../variety/VarietyWindow.py:2034
+#: ../variety/VarietyWindow.py:2035
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2038
+#: ../variety/VarietyWindow.py:2039
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -615,118 +772,126 @@ msgid ""
 "file directly in an unguarded way."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2052
+#: ../variety/VarietyWindow.py:2053
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr "选项 --next/--fast-forward 和 --previous 是互斥的"
 
-#: ../variety/VarietyWindow.py:2055
+#: ../variety/VarietyWindow.py:2056
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "选项 --trash 和 --favorite 是互斥的"
 
-#: ../variety/VarietyWindow.py:2058
+#: ../variety/VarietyWindow.py:2059
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "选项 --parse 和 --resume 是互斥的"
 
-#: ../variety/VarietyWindow.py:2061
+#: ../variety/VarietyWindow.py:2062
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr "选项 --qutoes-next/--quotes-fast-forward 和 --quotes-previous 是互斥的"
 
-#: ../variety/VarietyWindow.py:2178 ../variety/ImageFetcher.py:60
+#: ../variety/VarietyWindow.py:2179 ../variety/ImageFetcher.py:60
 #: ../variety/ImageFetcher.py:71 ../variety/ImageFetcher.py:78
 #: ../variety/ImageFetcher.py:112
 msgid "Not an image"
 msgstr "不是一个图像"
 
-#: ../variety/VarietyWindow.py:2183
+#: ../variety/VarietyWindow.py:2184
 msgid "Added to queue"
 msgstr "加入队列"
 
-#: ../variety/VarietyWindow.py:2184 ../variety/VarietyWindow.py:2190
+#: ../variety/VarietyWindow.py:2185 ../variety/VarietyWindow.py:2191
 msgid "Press Next to see it"
 msgstr "点击下一步查看"
 
-#: ../variety/VarietyWindow.py:2190
+#: ../variety/VarietyWindow.py:2191
 msgid "Fetched"
 msgstr "获取完毕"
 
-#: ../variety/VarietyWindow.py:2236
+#: ../variety/VarietyWindow.py:2237
 msgid "Unsupported source type"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2237 ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2238 ../variety/VarietyWindow.py:2286
 msgid "Are you running the most recent version of Variety?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2243
+#: ../variety/VarietyWindow.py:2244
 msgid "New image source added"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2245
+#: ../variety/VarietyWindow.py:2246
 msgid "Image source already exists, enabling it"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2271
+#: ../variety/VarietyWindow.py:2272
 msgid "Fetched and applied"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2281
+#: ../variety/VarietyWindow.py:2282
 msgid "It works!"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2281
+#: ../variety/VarietyWindow.py:2282
 msgid "Yay, Variety links work. Great!"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2285
+#: ../variety/VarietyWindow.py:2286
 msgid "Unsupported command"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2287
+#: ../variety/VarietyWindow.py:2288
 msgid "Could not process the given variety:// URL"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2288
+#: ../variety/VarietyWindow.py:2289
 msgid "Run with logging enabled to see details"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2487
+#: ../variety/VarietyWindow.py:2488
 msgid "Do not ask anymore, always use the current quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2490 ../data/ui/FacebookPublishDialog.ui.h:5
+#: ../variety/VarietyWindow.py:2491 ../data/ui/FacebookPublishDialog.ui.h:5
 msgid "Do not ask anymore, always use the text above"
 msgstr "总是用上面的文字不再提问"
 
-#: ../variety/VarietyWindow.py:2522 ../variety/VarietyWindow.py:2551
+#: ../variety/VarietyWindow.py:2523 ../variety/VarietyWindow.py:2552
 msgid "Published"
 msgstr "已发布"
 
-#: ../variety/VarietyWindow.py:2522 ../variety/VarietyWindow.py:2551
+#: ../variety/VarietyWindow.py:2523 ../variety/VarietyWindow.py:2552
 msgid "You may open your Facebook feed to see the post"
 msgstr "您可以打开您的Facebook feed来查看发布"
 
-#: ../variety/VarietyWindow.py:2525 ../variety/VarietyWindow.py:2554
+#: ../variety/VarietyWindow.py:2526 ../variety/VarietyWindow.py:2555
 msgid "Could not publish"
 msgstr "不能发布"
 
-#: ../variety/VarietyWindow.py:2717
+#: ../variety/VarietyWindow.py:2718
 msgid "Could not create autostart entry"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2718
+#: ../variety/VarietyWindow.py:2719
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr "创建autostart desktop entry错误. 请从控制台重新运行程序（增加-v选项）"
+
+#: ../variety/VarietyWindow.py:2769
+msgid "No images"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2769
+msgid "There are no images in the slideshow folders"
+msgstr ""
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
 msgstr "Variety - 分享到Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:169
 msgid "Facebook Sharing"
 msgstr "Facebook分享"
 
@@ -816,7 +981,7 @@ msgid ""
 "href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
 "Example: Top posts from the month: <a "
 "href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
-"reddit.com/r/comics/top/sort=top&amp;t=month</a>"
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:7
@@ -872,7 +1037,7 @@ msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
 
 #: ../variety/Smart.py:597 ../variety/Smart.py:643
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgid "Sync"
 msgstr ""
 
@@ -904,158 +1069,6 @@ msgstr ""
 msgid "VRTY.ORG login confirmation"
 msgstr ""
 
-#: ../variety/Texts.py:20
-msgid "Keep original"
-msgstr "保持原始"
-
-#: ../variety/Texts.py:21
-msgid "Grayscale"
-msgstr "灰度"
-
-#: ../variety/Texts.py:22
-msgid "Heavy blur"
-msgstr ""
-
-#: ../variety/Texts.py:23
-msgid "Soft blur"
-msgstr ""
-
-#: ../variety/Texts.py:24
-msgid "Oil painting"
-msgstr "油画"
-
-#: ../variety/Texts.py:25
-msgid "Pencil sketch"
-msgstr ""
-
-#: ../variety/Texts.py:26
-msgid "Pointilism"
-msgstr ""
-
-#: ../variety/Texts.py:27
-msgid "Pixellate"
-msgstr ""
-
-#: ../variety/Texts.py:31
-msgid "The Favorites folder"
-msgstr ""
-
-#: ../variety/Texts.py:32
-msgid "The Fetched folder"
-msgstr ""
-
-#: ../variety/Texts.py:35
-msgid ""
-"Recommended by Variety. Adapts to your taste as you mark images as favorite "
-"or trash."
-msgstr ""
-
-#: ../variety/Texts.py:36
-msgid "Latest favorites by the other users of Variety."
-msgstr ""
-
-#: ../variety/Texts.py:37
-msgid "Random wallpapers from Desktoppr.co"
-msgstr ""
-
-#: ../variety/Texts.py:38
-msgid "NASA's Astronomy Picture of the Day"
-msgstr ""
-
-#: ../variety/Texts.py:40
-msgid "World Sunlight Map - live wallpaper from Die.net"
-msgstr ""
-
-#: ../variety/Texts.py:41
-msgid "Bing Photo of the Day"
-msgstr ""
-
-#: ../variety/Texts.py:42
-msgid "High-resolution photos from Unsplash.com"
-msgstr ""
-
-#: ../variety/Texts.py:46
-msgid ""
-"If you use KDE, you need to perform some actions before Variety will work. "
-"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
-msgstr ""
-
-#: ../variety/Texts.py:47
-msgid ""
-"You can change the wallpaper back and forth by scrolling the mouse wheel on "
-"top of the indicator icon."
-msgstr ""
-
-#: ../variety/Texts.py:48
-msgid ""
-"If you want to run custom commands every time the wallpaper changes or if "
-"you use an alternative desktop environment, please edit the scripts in "
-"~/.config/variety/scripts. There are examples there for various desktop "
-"environments."
-msgstr ""
-
-#: ../variety/Texts.py:49
-msgid ""
-"Variety can be controlled from the command line and you can use this to "
-"define keyboard shortcuts for the operations you use most often. Run "
-"\"variety --help\" to see all available commands."
-msgstr ""
-
-#: ../variety/Texts.py:50
-msgid ""
-"You can drop image links or files on the launcher icon to download them and "
-"use them as wallpapers. For quicker downloading from a specific site, you "
-"can also use clipboard monitoring (see \"Manual downloading\" tab)."
-msgstr ""
-
-#: ../variety/Texts.py:51
-msgid ""
-"Applying a heavy blurring filter is a great way to get abstract-looking and "
-"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
-"in Ubuntu."
-msgstr ""
-
-#: ../variety/Texts.py:52
-msgid ""
-"Adding your own custom filters is quite easy: open "
-"~/.config/variety/variety.conf in an editor and use the existing filters as "
-"an example. Every filter is just a line of options to be passed to "
-"ImageMagick's convert command."
-msgstr ""
-
-#: ../variety/Texts.py:53
-msgid ""
-"When you select an image source, its images are displayed in a window at the "
-"bottom of the screen. Click an image there to set is as wallpaper. Right-"
-"click to close the window, to modify its appearance or to perform file "
-"operations. You can select multiple image sources to create a \"merged\" "
-"thumbnail view of all of them. Please mind that thumbnail view is limited to "
-"several hundred randomly selected images."
-msgstr ""
-
-#: ../variety/Texts.py:54
-msgid ""
-"To enable desktop notifications when the wallpaper changes, uncomment the "
-"two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
-msgstr ""
-
-#: ../variety/Texts.py:55
-msgid ""
-"Variety's indicator icon is themeable - if you you choose the \"Light\" "
-"option for the icon, Variety will first check if the current GTK theme has "
-"an icon named \"variety-indicator\" and will use it instead of the bundled "
-"light icon."
-msgstr ""
-
-#: ../variety/Texts.py:56
-msgid ""
-"When you choose to save quotes to Favorites, these are by default saved to "
-"~/.config/variety/favorite_quotes.txt. This file is compatible with "
-"Variety's local files quote source. If you want to use it - copy it to "
-"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
-"source. This file is also compatible with the Unix fortune utility."
-msgstr ""
-
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
 msgstr "从 QuotationsPage.com 获取箴言"
@@ -1068,37 +1081,6 @@ msgstr "收到退出信号，正在退出"
 msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr "Variey正在运行. 发送命令到正在运行的实例"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
-msgid "Copy to Favorites vs. Move to Favorites"
-msgstr ""
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
-msgid "Reset to Default"
-msgstr "重置为默认值"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
-msgid ""
-"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
-"menu depending on the image location:"
-msgstr ""
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
-msgid ""
-"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
-"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
-"folder path.\n"
-"Order is important. When an image is shown, the first folder in this list "
-"which contains the image will determine which operations will be shown in "
-"Variety's menu. 'Others' matches any file and should be last in the list.\n"
-"\n"
-"Example:\n"
-"\tDownloaded:Copy\n"
-"\tFetched:Move\n"
-"\t/pics/RandomImages:Move\n"
-"\t/pics/OrganizedAlbums:Copy\n"
-"\tOthers:Both"
-msgstr ""
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
 msgid "VRTY.ORG integration"
@@ -1164,7 +1146,7 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Participate in VRTY.ORG"
 msgstr ""
 
@@ -1528,14 +1510,138 @@ msgid "Effects"
 msgstr "特效"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:73
-msgid "VRTY.ORG"
+msgid "Images for slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+msgid "Favorite images"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:75
-msgid "VRTY.ORG is in beta and will take some time to mature"
+msgid "Images in all enabled image sources"
 msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:76
+msgid "All images in the Downloads folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+msgid "Custom folder (includes images in subfolders) "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+msgid "Order of images in slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+msgid "Random"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+msgid "By name, A to Z"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+msgid "By name, Z to A"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+msgid "By date, oldest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+msgid "By date, newest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+msgid "Screen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+msgid "Run on monitor"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+msgid "Window mode for the slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+msgid "Fullscreen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+msgid "Desktop (stays below other windows)"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+msgid "Maximized window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+msgid "Normal window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+msgid "Dynamics"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+msgid "Interval between image changes "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+msgid " seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+msgid "Quick fade "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+msgid "Slow fade"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+msgid "Less zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+msgid "More zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+msgid "Less pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+msgid "More pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+msgid "Changes on this page take effect after the slideshow is restarted"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+msgid "Start slideshow now"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+msgid "Slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+msgid "VRTY.ORG"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+msgid "VRTY.ORG is in beta and will take some time to mature"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid ""
 "<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
 "similar tastes and provides super-convenient ways to change your wallpaper, "
@@ -1543,37 +1649,37 @@ msgid ""
 "It is fueled by the favorite images of all participating users."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid ""
 "Could not create user - no connection to VRTY.ORG. We will try again later."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgid ""
 "Registration enables cool features like synchronization of favorite images "
 "and sources between computers and personalized recommendations."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgid "Synchronize favorite images between computers"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
 msgid "Requires VRTY.ORG enabled and logged in."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgid ""
 "Your favorite images from other computers will be automatically downloaded "
 "to this computer. You need to be logged in with the same VRTY.ORG user "
 "everywhere. Sync will not delete any images."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgid "Privacy policy"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid ""
 "Variety sends data only for images it downloaded, never for images you "
 "already had in your local folders that might be private, and Sync does not "
@@ -1583,38 +1689,38 @@ msgid ""
 "service and the privacy policy here.</a>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Usage statistics"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid "Help make Variety better by sending anonymous usage statistics"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid ""
 "These stats help us improve Variety by understanding how users interact with "
 "it. They also include general info about your OS version and monitor setup. "
 "Collected data is not shared with anyone."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Sync and social"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid "Fetch folder"
 msgstr "存放获取图片的文件夹"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Save manually downloaded wallpapers to "
 msgstr "手动保存下载的壁纸到 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Drag and drop"
 msgstr "拖放"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1623,151 +1729,151 @@ msgid ""
 "to lock it there for easy drag-and-drop access."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid "Clipboard monitoring"
 msgstr "监视剪贴板"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr "监视剪贴板中图片的URL并获取它们"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "But fetch only when the URL host is one of these:"
 msgstr "仅获取下面网站之一的图片"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid "Manual downloading"
 msgstr "手动下载"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "When possible use images that:"
 msgstr "用到图片之处："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100 ../variety/ThumbsManager.py:98
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131 ../variety/ThumbsManager.py:98
 msgid "Size"
 msgstr "大小"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "Have landscape orientation"
 msgstr "保持景观取向"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Are big at least "
 msgstr "大小至少是 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "50"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "80"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "100"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "% 的屏幕分辨率"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
 msgid "Color"
 msgstr "颜色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 msgid "Are dark or light:"
 msgstr "暗或亮："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "暗色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "加亮"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgid "Contain this color: "
 msgstr "包括该色彩： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgid "(Takes effect after some initial searching)"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Rating"
 msgstr "评分"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid "Have EXIF rating at least "
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:147
 msgid "1"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:148
 msgid "2"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "3"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "4"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:120
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid "5"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../data/ui/PreferencesVarietyDialog.ui.h:152
 msgid "Color and size"
 msgstr "色彩与尺寸"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "Indicator Icon"
 msgstr "指示器图标"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+#: ../data/ui/PreferencesVarietyDialog.ui.h:154
 msgid "Indicator icon:"
 msgstr "指示器图标："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:155
 msgctxt "Icon option"
 msgid "Light"
 msgstr "加亮"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:156
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "暗色"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:157
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "用当前壁纸"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:158
 msgctxt "Icon option"
 msgid "Custom image..."
 msgstr "定制图片"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:159
 msgctxt "Icon option"
 msgid "None"
 msgstr "无"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:160
 msgid "Select an icon"
 msgstr "选择图标"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:161
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -1775,40 +1881,40 @@ msgid ""
 msgstr ""
 "当图标隐藏时，可以通过命令或启动器图标的上下文菜单中控制Variety。运行\"variety --help\" 可以看到所有可用的命令。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:162
 msgid "Favorites Operations"
 msgstr "收藏夹操作"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:163
 msgid "Favorites operations to show in main menu:"
 msgstr "在主菜单显示收藏夹操作"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:164
 msgid "Copy to Favorites"
 msgstr "拷贝到收藏夹"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:166
 msgid "Both Copy and Move"
 msgstr "拷贝且移动"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:167
 msgid "Depends on folder..."
 msgstr "依赖文件夹..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:170
 msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:171
 msgid "Login Screen Support"
 msgstr "登录屏支持"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:172
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr "确认登录屏壁纸由Variety设置"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:173
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -1818,71 +1924,71 @@ msgid ""
 "multiuser systems."
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:174
 msgid "Copy wallpaper image files to this folder: "
 msgstr "复制壁纸图片到该文件夹： "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+#: ../data/ui/PreferencesVarietyDialog.ui.h:175
 msgid "Reset to default"
 msgstr "重置为默认设置"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+#: ../data/ui/PreferencesVarietyDialog.ui.h:176
 msgid "Still doesn't work?"
 msgstr "还不能工作？"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+#: ../data/ui/PreferencesVarietyDialog.ui.h:177
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
 msgstr "貌似你的主文件夹被加密了，因此其中的文件夹不能使用。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:147
+#: ../data/ui/PreferencesVarietyDialog.ui.h:178
 msgid "You don't have write permissions for this folder."
 msgstr "你没有这个文件夹的写权限："
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:148
+#: ../data/ui/PreferencesVarietyDialog.ui.h:179
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr "该文件夹没有赋予LightDM读文件的权限"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:149
+#: ../data/ui/PreferencesVarietyDialog.ui.h:180
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
 msgstr "Variety能够调整权限，但你必须提供超级用户的权限。"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:181
 msgid "Customize"
 msgstr "自定义"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:151
+#: ../data/ui/PreferencesVarietyDialog.ui.h:182
 msgid "Tips and tricks"
 msgstr "提示和窍门"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:152
+#: ../data/ui/PreferencesVarietyDialog.ui.h:183
 msgid "Recent changes"
 msgstr "最近切换"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:153
+#: ../data/ui/PreferencesVarietyDialog.ui.h:184
 msgid "Visit website"
 msgstr "浏览网站"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+#: ../data/ui/PreferencesVarietyDialog.ui.h:185
 msgid "Report a bug or request a feature"
 msgstr "报告BUG或申请特性"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:155
+#: ../data/ui/PreferencesVarietyDialog.ui.h:186
 msgid "Send feedback"
 msgstr "发送反馈"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:156
+#: ../data/ui/PreferencesVarietyDialog.ui.h:187
 msgid "Donate to Variety"
 msgstr "捐赠 Variety"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:157
+#: ../data/ui/PreferencesVarietyDialog.ui.h:188
 msgid "Donate via PayPal"
 msgstr "通过PayPal捐赠"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:158
+#: ../data/ui/PreferencesVarietyDialog.ui.h:189
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -1893,13 +1999,13 @@ msgid ""
 "Peter Levi"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:162
+#: ../data/ui/PreferencesVarietyDialog.ui.h:193
 msgid ""
 "<i>For Bitcoin and other payment methods please go to <a "
 "href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:163
+#: ../data/ui/PreferencesVarietyDialog.ui.h:194
 msgid "Donate"
 msgstr "捐赠"
 
@@ -2180,7 +2286,7 @@ msgstr ""
 msgid "Google Author"
 msgstr ""
 
-#: ../variety/indicator.py:230 ../variety/indicator.py:271
+#: ../variety/indicator.py:230 ../variety/indicator.py:284
 msgid "Preferences..."
 msgstr "首选项..."
 
@@ -2204,13 +2310,48 @@ msgstr ""
 msgid "Recent _Downloads"
 msgstr "最近下载(_D)"
 
-#: ../variety/indicator.py:275
+#: ../variety/indicator.py:278
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../variety/indicator.py:288
 msgid "About"
 msgstr "关于"
 
-#: ../variety/indicator.py:279
+#: ../variety/indicator.py:292
 msgid "Quit"
 msgstr "退出"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
+msgid "Reset to Default"
+msgstr "重置为默认值"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
+"menu depending on the image location:"
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
+"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
+"folder path.\n"
+"Order is important. When an image is shown, the first folder in this list "
+"which contains the image will determine which operations will be shown in "
+"Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
 
 #: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:103
 msgid "Fetching"
