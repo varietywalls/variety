@@ -23,6 +23,7 @@ from variety.Util import Util
 from variety_lib import varietyconfig
 
 import logging
+from variety import _str
 
 logger = logging.getLogger('variety')
 
@@ -493,7 +494,7 @@ class Options:
         changed = False
         for key, outdated_hashes in Options.OUTDATED_HASHES.items():
             if key in config:
-                current_hash = hashlib.md5(config[key]).hexdigest()
+                current_hash = hashlib.md5(_str(config[key])).hexdigest()
                 if current_hash in outdated_hashes:
                     # entry is outdated: delete it and use the default
                     logger.warning(lambda: "Option " + key + " has an outdated value, using the new default")
