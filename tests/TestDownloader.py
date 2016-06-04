@@ -29,7 +29,7 @@ setup_test_logging()
 from variety.Downloader import Downloader
 
 def test_download_one_for(test_case, dl):
-    dl.target_folder = '/tmp/variety/%s' % type(dl)
+    dl.target_folder = '/tmp/variety/%s' % dl.__class__.__name__
     shutil.rmtree(dl.target_folder, ignore_errors=True)
     for _ in xrange(5):
         f = dl.download_one()

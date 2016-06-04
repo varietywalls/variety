@@ -13,11 +13,9 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import json
 import os
 import random
 import logging
-import requests
 
 import time
 
@@ -80,8 +78,7 @@ class UnsplashDownloader(Downloader.Downloader):
         url = 'https://api.unsplash.com/photos/?page=%d&per_page=30&client_id=%s' % (page, UnsplashDownloader.CLIENT_ID)
         logger.info(lambda: "Filling Unsplash queue from " + url)
 
-        r = requests.get(url, allow_redirects=True)
-        r.raise_for_status()
+        r = Util.request(url)
         if int(r.headers.get('X-Ratelimit-Remaining', 1000000)) < 100:
             UnsplashDownloader.rate_limiting_started_time = time.time()
 

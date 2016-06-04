@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
+import shutil
 import sys
 import os.path
 import unittest
+
+from variety import Util
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -25,6 +27,22 @@ from variety.ImageFetcher import ImageFetcher
 
 
 class TestImageFetcher(unittest.TestCase):
+    def test_fetch(self):
+        target_folder = '/tmp/variety/ImageFetcher'
+        shutil.rmtree(target_folder, ignore_errors=True)
+        os.makedirs(target_folder)
+        for url in ["http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-207261.jpg",
+                    "http://unsplash.com/photos/7EqQ1s3wIAI/download",
+                    "https://www.bing.com/az/hprichbg/rb/CabodeGata_EN-US11322608653_1920x1080.jpg",
+                    "http://a.desktopprassets.com/wallpapers/07865fb0cb575e82fe43d3e1b634f6e2309e2114/foto_alese45.jpg",
+                    ]:
+            f = ImageFetcher.fetch(url, target_folder, verbose=False)
+            self.assertIsNotNone(f)
+            self.assertTrue(os.path.isfile(f))
+            self.assertTrue(Util.is_image(f, check_contents=False))
+            self.assertTrue(Util.is_image(f, check_contents=True))
+            self.assertNotEqual('download', f)
+
     def test_extract_from_cd(self):
         self.assertEqual("img.jpg", ImageFetcher.extract_filename_from_content_disposition("attachment; filename=img.jpg"))
         self.assertEqual("img.jpg", ImageFetcher.extract_filename_from_content_disposition("attachment; filename='img.jpg'"))

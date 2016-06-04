@@ -151,7 +151,7 @@ class Util:
         return ''.join(c if c in valid_chars else '_' for c in filename)
 
     @staticmethod
-    def get_local_name(url):
+    def get_local_name(url, ensure_image=True):
         filename = url[url.rfind('/') + 1:]
         index = filename.find('?')
         if index > 0:
@@ -166,6 +166,10 @@ class Util:
 
         if len(filename) > 200:
             filename = filename[:190] + filename[-10:]
+
+        if ensure_image and not Util.is_image(filename):
+            filename += '.jpg'
+
         return filename
 
     @staticmethod
@@ -429,7 +433,6 @@ class Util:
                              stream=stream,
                              allow_redirects=True)
         r.raise_for_status()
-        print r.headers.get('content-type')
         return r
 
     @staticmethod
