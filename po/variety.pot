@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-07 22:46+0200\n"
+"POT-Creation-Date: 2016-06-04 13:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -781,8 +781,8 @@ msgid ""
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2179 ../variety/ImageFetcher.py:60
-#: ../variety/ImageFetcher.py:71 ../variety/ImageFetcher.py:78
-#: ../variety/ImageFetcher.py:112
+#: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
+#: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr ""
 
@@ -2335,29 +2335,29 @@ msgid ""
 "\tOthers:Both"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:103
+#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
 msgid "Fetching"
 msgstr ""
 
 #. too small - delete and do not use
-#: ../variety/ImageFetcher.py:118
+#: ../variety/ImageFetcher.py:116
 msgid "Image too small, ignoring it"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:140
+#: ../variety/ImageFetcher.py:138
 #, python-format
 msgid "Sorry, got %s error..."
 msgstr ""
 
-#: ../variety/ImageFetcher.py:141
+#: ../variety/ImageFetcher.py:139
 msgid "This means the link is no longer valid"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:144
+#: ../variety/ImageFetcher.py:142
 msgid "Fetch failed for some reason"
 msgstr ""
 
-#: ../variety/ImageFetcher.py:145
+#: ../variety/ImageFetcher.py:143
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
