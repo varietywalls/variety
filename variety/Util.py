@@ -418,22 +418,32 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False):
+    def request(url, data=None, stream=False, method=None):
         if url.startswith('//'):
             url = 'http:' + url
         headers = {
             'User-Agent': USER_AGENT,
             'Cache-Control': 'max-age=0'
         }
-        method = 'POST' if data else 'GET'
-        r = requests.request(method=method,
-                             url=url,
-                             data=data,
-                             headers=headers,
-                             stream=stream,
-                             allow_redirects=True)
-        r.raise_for_status()
-        return r
+        method = method if method else 'POST' if data else 'GET'
+        try:
+            r = requests.request(method=method,
+                                 url=url,
+                                 data=data,
+                                 headers=headers,
+                                 stream=stream,
+                                 allow_redirects=True)
+            r.raise_for_status()
+            return r
+        except requests.exceptions.SSLError:
+            logger.exception('SSL Error for url %s:' % url)
+            try:
+                from variety.VarietyWindow import VarietyWindow
+                VarietyWindow.get_instance().fix_ssl_dependencies()
+            except Exception:
+                pass
+            raise
+
 
     @staticmethod
     def request_write_to(r, f):
@@ -606,8 +616,7 @@ class Util:
     @staticmethod
     def is_alive_and_image(url):
         try:
-            r = requests.head(url, allow_redirects=True)
-            r.raise_for_status()
+            r = Util.request(url, method='head')
             return r.headers.get('content-type', '').startswith('image/')
         except Exception:
             return False
@@ -628,8 +637,7 @@ class Util:
             return True
 
         try:
-            r = requests.head(url, allow_redirects=True)
-            r.raise_for_status()
+            r = Util.request(url, method='head')
             return not r.headers.get('content-type', '').startswith('image/')
         except requests.exceptions.RequestException:
             return True
@@ -691,3 +699,4 @@ class Util:
     @staticmethod
     def is_unity():
         return os.getenv('XDG_CURRENT_DESKTOP', '').lower() == 'unity'
+

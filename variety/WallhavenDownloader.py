@@ -40,10 +40,11 @@ class WallhavenDownloader(Downloader.Downloader):
     def parse_location(self):
         if self.location.startswith(('http://', 'https://')):
             # location is an URL, use it
-            self.url = self.location
+            self.url = self.location.replace('http://', 'https://')
         else:
             # interpret location as keywords
-            self.url = "http://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % urllib.quote(self.location)
+            self.url = "https://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
+                       urllib.quote(self.location)
 
     def search(self, page=None):
         url = self.url

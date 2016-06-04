@@ -98,8 +98,12 @@ class VarietyWindow(Gtk.Window):
         "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
     }
 
+    @classmethod
+    def get_instance(cls):
+        return VarietyWindow.instance
+
     def __init__(self):
-        pass
+        VarietyWindow.instance = self
 
     def start(self, cmdoptions):
         self.running = True
@@ -2787,3 +2791,81 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             except:
                 logger.exception('Could not start slideshow:')
         threading.Thread(target=_go).start()
+
+    def fix_ssl_dependencies(self):
+        if getattr(self, 'ssl_error_shown', False):
+            return
+        self.ssl_error_shown = True
+
+        def _disable_wallhaven_sources(notify=True):
+            for s in self.options.sources:
+                if s[1] in (Options.SourceType.WALLHAVEN,) and s[0]:
+                    s[0] = False
+                self.options.write()
+            if notify:
+                self.show_notification(_("Wallhaven image sources disabled"),
+                                       _('Please google "Python SNI SSL error" '
+                                         'if you want to fix the problem yourself.'))
+
+        def _go():
+            dialog = Gtk.MessageDialog(self.preferences_dialog,
+                                       Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO)
+            dialog.set_markup(_('There are SSL incompatibilities between your version of Python and some https '
+                                'sites like Wallhaven. '
+                                'You can <a href="https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/">read more about the issue here</a>.'
+                                '\n\nDo you want to install the Python dependencies required to fix this problem? '
+                                '\nThis operation will ask for superuser privileges. '))
+            dialog.set_title(_('SSL error'))
+            dialog.set_default_response(Gtk.ResponseType.YES)
+            self.dialogs.append(dialog)
+            response = dialog.run()
+            dialog.destroy()
+            try:
+                self.dialogs.remove(dialog)
+            except:
+                pass
+            if response == Gtk.ResponseType.YES:
+                def _do_fix():
+                    install_log_path = '/var/log/variety_install_ssl_deps.log'
+                    working = True
+
+                    def _poll():
+                        while working:
+                            try:
+                                with open(install_log_path) as f:
+                                    if 'Installing' in f.read():
+                                        self.show_notification(
+                                            _('Installing...'),
+                                            _('Installation will take a minute or two. Please be patient. '
+                                              'Log file is at %s' % install_log_path))
+                                        return
+                                    else:
+                                        time.sleep(0.2)
+                            except:
+                                time.sleep(0.2)
+
+                    _poll_thread = threading.Thread(target=_poll)
+                    _poll_thread.daemon = True
+                    _poll_thread.start()
+
+                    try:
+                        script = varietyconfig.get_data_file("scripts", "install_ssl_deps.sh")
+                        subprocess.check_call(["pkexec", "bash", script])
+                        self.show_notification(_('Dependencies were installed. Please restart Variety now.'),
+                                               _( 'If SSL errors persist, you will have to google for '
+                                                  '"Python SNI SSL error" and seek another solution.'))
+                    except Exception:
+                        self.show_notification(_('Failure. Wallhaven sources disabled.'),
+                                               _('SSL-related dependencies were not installed successfully. '
+                                                 'Please see %s or google "Python SNI SSL error" '
+                                                 'and seek another solution.') % install_log_path)
+                        _disable_wallhaven_sources(notify=False)
+                    finally:
+                        working = False
+
+                threading.Timer(0, _do_fix).start()
+            else:
+                _disable_wallhaven_sources()
+
+        Util.add_mainloop_task(_go)
+
