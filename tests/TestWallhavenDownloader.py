@@ -14,33 +14,25 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import shutil
+
 import sys
 import os.path
 import unittest
-
-from tests import setup_test_logging
-from variety import Util
+from TestDownloader import test_download_one_for
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-setup_test_logging()
+from variety.WallhavenDownloader import WallhavenDownloader
 
-from variety.Downloader import Downloader
 
-def test_download_one_for(test_case, dl):
-    dl.target_folder = '/tmp/variety/%s' % dl.__class__.__name__
-    shutil.rmtree(dl.target_folder, ignore_errors=True)
-    for _ in xrange(5):
-        f = dl.download_one()
-        if f and os.path.isfile(f) and Util.is_image(f, check_contents=True):
-            return
-    test_case.fail("Tried download_one 5 times, all failed")
+class TestWallhavenDownloader(unittest.TestCase):
+    def test_download_one(self):
+        test_download_one_for(self, WallhavenDownloader(None, "landscape"))
 
-class TestDownloader(unittest.TestCase):
-    def test_convert_url(self):
-        self.assertEqual("wallpapers_net_some_category_html",
-            Downloader("", "", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
+    def test_fill_queue(self):
+        dl = WallhavenDownloader(None, "nature")
+        dl.fill_queue()
+        self.assertTrue(len(dl.queue) > 0)
 
 if __name__ == '__main__':
     unittest.main()

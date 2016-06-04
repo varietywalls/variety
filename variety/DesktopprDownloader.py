@@ -32,8 +32,7 @@ class DesktopprDownloader(Downloader.Downloader):
     def download_one(self):
         logger.info(lambda: "Downloading a random image from desktoppr.co")
 
-        content = Util.fetch(self.location)
-        response = json.loads(content)
+        response = Util.fetch_json(self.location)
 
         if response["response"]["review_state"] != "safe":
             logger.info(lambda: "Non-safe image returned by Desktoppr, skipping")

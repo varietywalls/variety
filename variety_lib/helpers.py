@@ -51,7 +51,7 @@ class NullHandler(logging.Handler):
     def emit(self, record):
         pass
 
-def set_up_logging(opts):
+def set_up_logging(verbose):
     # add a handler to prevent basicConfig
     root = logging.getLogger()
     null_handler = NullHandler()
@@ -79,12 +79,12 @@ def set_up_logging(opts):
     lib_logger.addHandler(lib_logger_sh)
 
     # Set the logging level to show debug messages.
-    if opts.verbose:
+    if verbose:
         logger.setLevel(logging.INFO)
         logger.debug('logging enabled')
-    if opts.verbose > 1:
+    if verbose > 1:
         logger.setLevel(logging.DEBUG)
-    if opts.verbose > 2:
+    if verbose > 2:
         lib_logger.setLevel(logging.DEBUG)
 
 def get_help_uri(page=None):

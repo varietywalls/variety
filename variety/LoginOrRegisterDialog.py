@@ -17,7 +17,7 @@
 from gi.repository import Gtk, GObject  # pylint: disable=E0611
 import logging
 import threading
-import urllib2
+import requests
 from variety.Util import Util
 from variety.Smart import Smart
 from variety_lib.helpers import get_builder
@@ -75,12 +75,12 @@ class LoginOrRegisterDialog(Gtk.Dialog):
     def ajax(self, url, data, error_msg_handler):
         try:
             return Util.fetch_json(url, data)
-        except urllib2.HTTPError, e:
+        except requests.exceptions.HTTPError, e:
             logger.exception(lambda: 'HTTPError for ' + url)
-            error_msg_handler(_('Oops, server returned error (%s)') % e.code)
+            error_msg_handler(_('Oops, server returned error (%s)') % e.response.status_code)
             raise
 
-        except urllib2.URLError:
+        except requests.exceptions.RequestException:
             logger.exception(lambda: 'Connection error for ' + url)
             error_msg_handler(_('Could not connect to server'))
             raise

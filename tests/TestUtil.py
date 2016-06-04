@@ -30,6 +30,7 @@ class TestUtil(unittest.TestCase):
         self.assertEqual("i_m____g_.jpg", Util.sanitize_filename("i?m?*%^g_.jpg"))
 
     def test_get_local_name(self):
+        self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img?a=b"))
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg?a=b"))
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg#x"))
         self.assertEqual("img.jpg", Util.get_local_name("http://example.com/a/img.jpg?a=b#x"))
@@ -141,9 +142,9 @@ class TestUtil(unittest.TestCase):
             return i
         self.assertEquals([20,30], list(Util.safe_map(f, [1,5,20,10,30,4])))
 
-    def test_urlopen(self):
-        resp = Util.urlopen("//google.com")
-        self.assertTrue(len(resp.read()) > 0)
+    def test_fetch(self):
+        resp = Util.fetch("//google.com")
+        self.assertTrue(len(resp) > 0)
 
     def test_get_size(self):
         self.assertEquals((32, 32), Util.get_size('test.jpg'))
@@ -184,24 +185,25 @@ class TestUtil(unittest.TestCase):
         self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'camelid.deviantart.com', 'sourceLocation': 'http://backend.deviantart.com/rss.xml?type=deviation&q=by%3ACamelid+sort%3Atime+meta%3Aall'}))
 
     def test_debounce(self):
-        """ Test that the increment function is being debounced. The counter should only be incremented once 10 seconds after the last call to the function """
+        """ Test that the increment function is being debounced.
+        The counter should only be incremented once 10 seconds after the last call to the function """
         count = [0]
 
-        @debounce(0.3)
+        @debounce(0.6)
         def increment():
             count[0] += 1
 
         self.assertTrue(count[0] == 0)
         increment()
         increment()
-        time.sleep(0.2)
+        time.sleep(0.4)
         self.assertTrue(count[0]== 0)
         increment()
         increment()
         increment()
         increment()
         self.assertTrue(count[0] == 0)
-        time.sleep(0.3)
+        time.sleep(0.6)
         self.assertTrue(count[0] == 1)
 
 

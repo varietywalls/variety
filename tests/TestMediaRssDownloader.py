@@ -19,12 +19,17 @@ import sys
 import os.path
 import unittest
 
+from tests.TestDownloader import test_download_one_for
+
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 from variety.MediaRssDownloader import MediaRssDownloader
 
 
-class TestFlickrDownloader(unittest.TestCase):
+class TestMediaRssDownloader(unittest.TestCase):
+    def test_download_one(self):
+        test_download_one_for(self, MediaRssDownloader(None, "https://vrty.org/user/~peterlevi/rss"))
+
     def test_validate_deviantart(self):
         self.assertTrue(MediaRssDownloader.validate("http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
 
