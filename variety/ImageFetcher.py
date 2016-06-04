@@ -16,7 +16,8 @@
 import os
 
 import logging
-from urllib2 import HTTPError
+import requests
+from requests.exceptions import HTTPError
 import urlparse
 from variety.Util import Util
 from PIL import Image
@@ -63,15 +64,15 @@ class ImageFetcher:
             if url.find('://') < 0:
                 url = "file://" + url
 
-            u = Util.urlopen(url)
-            info = u.info()
-            if not "content-type" in info:
+            r = requests.get(url, stream=True, allow_redirects=True)
+            r.raise_for_error()
+            if not "content-type" in r.headers:
                 logger.info(lambda: "Unknown content-type for url " + url)
                 if verbose:
                     progress_reporter(_("Not an image"), url)
                 return None
 
-            ct = info["content-type"]
+            ct = r.headers["content-type"]
             if not ct.startswith("image/"):
                 logger.info(lambda: "Unsupported content-type for url " + url + ": " + ct)
                 if verbose:
@@ -79,8 +80,8 @@ class ImageFetcher:
                 return None
 
             local_name = Util.get_local_name(url)
-            if "content-disposition" in info:
-                cd = info["content-disposition"]
+            if "content-disposition" in r.headers:
+                cd = r.headers["content-disposition"]
                 cd_name = ImageFetcher.extract_filename_from_content_disposition(cd)
                 if cd_name:
                     local_name = cd_name
@@ -102,9 +103,8 @@ class ImageFetcher:
                 reported = True
                 progress_reporter(_("Fetching"), url)
 
-            data = u.read()
             with open(filename, 'wb') as f:
-                f.write(data)
+                Util.request_write_to(r, f)
 
             try:
                 img = Image.open(filename)
@@ -135,9 +135,9 @@ class ImageFetcher:
         except Exception, e:
             logger.exception(lambda: "Fetch failed for URL " + url)
             if reported:
-                if isinstance(e, HTTPError) and e.code in (403, 404):
+                if isinstance(e, HTTPError) and e.response.status_code in (403, 404):
                     progress_reporter(
-                        _("Sorry, got %s error...") % str(e.code),
+                        _("Sorry, got %s error...") % str(e.response.code),
                         _("This means the link is no longer valid"))
                 else:
                     progress_reporter(

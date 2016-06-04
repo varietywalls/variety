@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import bs4
+import requests
 from functools import wraps
 import hashlib
 import io
@@ -27,7 +28,6 @@ import threading
 import time
 import pyexiv2
 import urllib
-import urllib2
 from urlparse import urlparse
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib
@@ -75,11 +75,6 @@ class LogMethodCalls(object):
         for attr in "__module__", "__name__", "__doc__":
             setattr(logcall, attr, getattr(self.func, attr))
         return logcall
-
-
-class HeadRequest(urllib2.Request):
-    def get_method(self):
-        return "HEAD"
 
 
 def debounce(seconds):
@@ -419,29 +414,48 @@ class Util:
         return f
 
     @staticmethod
-    def urlopen(url, data=None, head_request=False):
+    def request(url, data=None, stream=False):
         if url.startswith('//'):
             url = 'http:' + url
-        request = urllib2.Request(url) if not head_request else HeadRequest(url)
-        request.add_header('User-Agent', USER_AGENT)
-        request.add_header('Cache-Control', 'max-age=0')
-        return urllib2.urlopen(request, data=urllib.urlencode(data) if data else None, timeout=20)
+        headers = {
+            'User-Agent': USER_AGENT,
+            'Cache-Control': 'max-age=0'
+        }
+        method = 'POST' if data else 'GET'
+        r = requests.request(method=method,
+                             url=url,
+                             data=data,
+                             headers=headers,
+                             stream=stream,
+                             allow_redirects=True)
+        r.raise_for_status()
+        print r.headers.get('content-type')
+        return r
+
+    @staticmethod
+    def request_write_to(r, f):
+        for chunk in r.iter_content(1024):
+            f.write(chunk)
 
     @staticmethod
     def fetch(url, data=None):
-        return Util.urlopen(url, data).read()
+        return Util.request(url, data).text
+
+    @staticmethod
+    def fetch_bytes(url, data=None):
+        return Util.request(url, data).content
 
     @staticmethod
     def fetch_json(url, data=None):
-        return json.loads(Util.fetch(url, data))
+        return Util.request(url, data).json()
 
     @staticmethod
     def html_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.urlopen(url, data).read())
+        return bs4.BeautifulSoup(Util.fetch(url, data))
 
     @staticmethod
     def xml_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.urlopen(url, data).read(), "xml")
+        return bs4.BeautifulSoup(Util.fetch(url, data), "xml")
 
     @staticmethod
     def folderpath(folder):
@@ -589,9 +603,10 @@ class Util:
     @staticmethod
     def is_alive_and_image(url):
         try:
-            u = Util.urlopen(url, head_request=True)
-            return u.info().get("content-type", "").startswith("image/")
-        except:
+            r = requests.head(url, allow_redirects=True)
+            r.raise_for_status()
+            return r.headers.get('content-type', '').startswith('image/')
+        except Exception:
             return False
 
     @staticmethod
@@ -610,13 +625,10 @@ class Util:
             return True
 
         try:
-            u = Util.urlopen(url, head_request=True)
-            return not u.info().get("content-type", "").startswith("image/")
-        except urllib2.HTTPError, e:
-            if e.code in (403, 404):
-                return True
-            return False
-        except ValueError:  # not a valid URL
+            r = requests.head(url, allow_redirects=True)
+            r.raise_for_status()
+            return not r.headers.get('content-type', '').startswith('image/')
+        except requests.exceptions.RequestException:
             return True
         except:
             return False

@@ -181,7 +181,7 @@ def main():
 
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
-    set_up_logging(options)
+    set_up_logging(options.verbose)
     monkeypatch_ssl()
 
     if options.verbose > 2:

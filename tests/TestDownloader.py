@@ -14,15 +14,28 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
+import shutil
 import sys
 import os.path
 import unittest
 
+from tests import setup_test_logging
+from variety import Util
+
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
+
+setup_test_logging()
 
 from variety.Downloader import Downloader
 
+def test_download_one_for(test_case, dl):
+    dl.target_folder = '/tmp/variety/%s' % type(dl)
+    shutil.rmtree(dl.target_folder, ignore_errors=True)
+    for _ in xrange(5):
+        f = dl.download_one()
+        if f and os.path.isfile(f) and Util.is_image(f, check_contents=True):
+            return
+    test_case.fail("Tried download_one 5 times, all failed")
 
 class TestDownloader(unittest.TestCase):
     def test_convert_url(self):

@@ -82,9 +82,9 @@ class Downloader(object):
             return None
 
         try:
-            data = Util.fetch(image_url)
+            r = Util.request(image_url, stream=True)
             with open(local_filename, 'wb') as f:
-                f.write(data)
+                Util.request_write_to(r, f)
         except Exception, e:
             logger.info(lambda: "Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
             raise e

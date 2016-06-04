@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from bs4 import BeautifulSoup
 import random
 import logging
 from variety import Downloader, _str
@@ -31,9 +30,8 @@ class APODDownloader(Downloader.Downloader):
         self.root = "http://apod.nasa.gov/apod/"
 
     @staticmethod
-    def fetch(url, xml = False):
-        content = Util.fetch(url)
-        return BeautifulSoup(content, "xml") if xml else BeautifulSoup(content)
+    def fetch(url, xml=False):
+        return Util.xml_soup(url) if xml else Util.html_soup(url)
 
     def download_one(self):
         logger.info(lambda: "Downloading an image from NASA's Astro Pic of the Day, " + self.location)

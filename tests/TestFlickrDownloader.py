@@ -19,12 +19,18 @@ import sys
 import os.path
 import unittest
 
+from tests.TestDownloader import test_download_one_for
+
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 from variety.FlickrDownloader import FlickrDownloader
 
 
 class TestFlickrDownloader(unittest.TestCase):
+    def test_download_one(self):
+        test_download_one_for(self,
+                              FlickrDownloader(None, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"))
+
     def test_obtain_userid_ok(self):
         self.assertEqual((True, "ok", "34388055@N08"),
             FlickrDownloader.obtain_userid("http://www.flickr.com/photos/camillelacroix/"))

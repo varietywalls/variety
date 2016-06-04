@@ -18,6 +18,7 @@
 import sys
 import os.path
 import unittest
+from TestDownloader import test_download_one_for
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -25,6 +26,9 @@ from variety.BingDownloader import BingDownloader
 
 
 class TestBingDownloader(unittest.TestCase):
+    def test_download_one(self):
+        test_download_one_for(self, BingDownloader(None))
+
     def test_fill_queue(self):
         dl = BingDownloader(None)
         dl.fill_queue()

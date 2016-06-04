@@ -16,7 +16,7 @@
 
 from gi.repository import GObject, Gdk, Gtk
 import hashlib
-from urllib2 import HTTPError
+from requests.exceptions import HTTPError, RequestException
 import io
 import webbrowser
 from variety.Util import Util, throttle
@@ -190,7 +190,7 @@ class Smart:
 
     def handle_user_http_error(self, e):
         logger.error(lambda: "smart: Server returned %d, potential reason - server failure?" % e.code)
-        if e.code in (403, 404):
+        if e.response.code in (403, 404):
             self.parent.show_notification(
                 _('Your VRTY.ORG credentials are probably outdated. Please login again.'))
             Util.add_mainloop_task(self.parent.preferences_dialog.on_btn_login_register_clicked)

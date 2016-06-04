@@ -18,29 +18,17 @@
 import sys
 import os.path
 import unittest
-
-from tests.TestDownloader import test_download_one_for
+from TestDownloader import test_download_one_for
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from variety.MediaRssDownloader import MediaRssDownloader
+from variety.PanoramioDownloader import PanoramioDownloader
 
 
-class TestMediaRssDownloader(unittest.TestCase):
+class TestPanoramioDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, MediaRssDownloader(None, "https://vrty.org/user/~peterlevi/rss"))
-
-    def test_validate_deviantart(self):
-        self.assertTrue(MediaRssDownloader.validate("http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
-
-    def test_validate_picasa(self):
-        self.assertTrue(MediaRssDownloader.validate("https://picasaweb.google.com/data/feed/base/user/111758109475195528754/albumid/5731259484758046113?alt=rss&kind=photo&hl=bg"))
-
-    def test_validate_non_media_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
-
-    def test_validate_non_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://google.com"))
+        test_download_one_for(self, PanoramioDownloader(
+            None, '{"zoom":1,"center":{"lat":0,"lng":20},"minx":-180,"miny":-83.82994542398042,"maxx":180,"maxy":83.82994542398042}'))
 
 if __name__ == '__main__':
     unittest.main()

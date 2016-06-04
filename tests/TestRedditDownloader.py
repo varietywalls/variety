@@ -19,12 +19,17 @@ import sys
 import os.path
 import unittest
 
+from tests.TestDownloader import test_download_one_for
+
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 from variety.RedditDownloader import RedditDownloader
 
 
 class TestRedditDownloader(unittest.TestCase):
+    def test_download_one(self):
+        test_download_one_for(self, RedditDownloader(None, 'http://www.reddit.com/r/AutumnPorn/'))
+
     def test_build_json_url(self):
         self.assertEquals('http://www.reddit.com/r/comics/.json?limit=100',
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/'))
