@@ -32,7 +32,8 @@ Depends: ${misc:Depends},
  yelp,
  imagemagick,
  python-lxml,
- python-gi-cairo
+ python-gi-cairo,
+ python-pip
 Recommends: variety-slideshow
 Suggests: feh
 Description: Wallpaper changer, downloader and manager

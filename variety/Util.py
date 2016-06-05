@@ -700,3 +700,10 @@ class Util:
     def is_unity():
         return os.getenv('XDG_CURRENT_DESKTOP', '').lower() == 'unity'
 
+    @staticmethod
+    def start_daemon(target):
+        daemon_thread = threading.Thread(target=target)
+        daemon_thread.daemon = True
+        daemon_thread.start()
+        return daemon_thread
+

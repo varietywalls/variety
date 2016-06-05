@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-04 21:44+0300\n"
+"POT-Creation-Date: 2016-06-05 12:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -876,17 +876,17 @@ msgstr ""
 msgid "There are no images in the slideshow folders"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2806
+#: ../variety/VarietyWindow.py:2808
 msgid "Wallhaven image sources disabled"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2807
+#: ../variety/VarietyWindow.py:2809
 msgid ""
 "Please google \"Python SNI SSL error\" if you want to fix the problem "
 "yourself."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2813
+#: ../variety/VarietyWindow.py:2815
 msgid ""
 "There are SSL incompatibilities between your version of Python and some "
 "https sites like Wallhaven. You can <a href=\"https://stackoverflow.com/"
@@ -898,35 +898,35 @@ msgid ""
 "This operation will ask for superuser privileges. "
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2818
-msgid "SSL error"
+#: ../variety/VarietyWindow.py:2820
+msgid "Variety - SSL error. Install dependencies?"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2838
+#: ../variety/VarietyWindow.py:2841
 msgid "Installing..."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2839
+#: ../variety/VarietyWindow.py:2842
 #, python-format
 msgid ""
 "Installation will take a minute or two. Please be patient. Log file is at %s"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2854
+#: ../variety/VarietyWindow.py:2855
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2855
+#: ../variety/VarietyWindow.py:2856
 msgid ""
 "If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
 "and seek another solution."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2858
+#: ../variety/VarietyWindow.py:2859
 msgid "Failure. Wallhaven sources disabled."
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2859
+#: ../variety/VarietyWindow.py:2860
 #, python-format
 msgid ""
 "SSL-related dependencies were not installed successfully. Please see %s or "

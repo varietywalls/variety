@@ -2793,8 +2793,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         threading.Thread(target=_go).start()
 
     def fix_ssl_dependencies(self):
+        if not self.options.stats_notice_shown:
+            return  # Suggest fix after we've dealt with the other onboarding stuff
         if getattr(self, 'ssl_error_shown', False):
-            return
+            return  # Suggest fixing only once per run
         self.ssl_error_shown = True
 
         def _disable_wallhaven_sources(notify=True):
@@ -2815,7 +2817,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                 'You can <a href="https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/">read more about the issue here</a>.'
                                 '\n\nDo you want to install the Python dependencies required to fix this problem? '
                                 '\nThis operation will ask for superuser privileges. '))
-            dialog.set_title(_('SSL error'))
+            dialog.set_title(_('Variety - SSL error. Install dependencies?'))
             dialog.set_default_response(Gtk.ResponseType.YES)
             self.dialogs.append(dialog)
             response = dialog.run()
@@ -2830,7 +2832,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     working = True
 
                     def _poll():
-                        while working:
+                        start = time.time()
+                        while working and time.time() - start < 600:    # max 10 minutes of polling
                             try:
                                 with open(install_log_path) as f:
                                     if 'Installing' in f.read():
@@ -2840,13 +2843,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                               'Log file is at %s' % install_log_path))
                                         return
                                     else:
-                                        time.sleep(0.2)
+                                        time.sleep(0.3)
                             except:
-                                time.sleep(0.2)
+                                time.sleep(0.3)
 
-                    _poll_thread = threading.Thread(target=_poll)
-                    _poll_thread.daemon = True
-                    _poll_thread.start()
+                    Util.start_daemon(_poll)
 
                     try:
                         script = varietyconfig.get_data_file("scripts", "install_ssl_deps.sh")
