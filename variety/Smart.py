@@ -265,13 +265,15 @@ class Smart:
 
             image_url = meta.get('imageURL', None)
             image = {
-                'thumbnail': base64.b64encode(Util.get_thumbnail_data(filename, 1024, 1024)),
                 'width': width,
                 'height': height,
                 'filename': os.path.basename(filename),
                 'origin_url': origin_url,
                 'image_url': image_url,
             }
+
+            if mark == 'favorite':
+                image['thumbnail'] = base64.b64encode(Util.get_thumbnail_data(filename, 1024, 1024))
 
             for key, value in meta.items():
                 server_key = Smart.META_KEYS_MAP.get(key, key)
