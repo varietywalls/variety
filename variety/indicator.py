@@ -19,6 +19,8 @@
 from gi.repository import Gtk # pylint: disable=E0611
 import os
 import threading
+
+from variety.Smart import Smart
 from variety.Util import Util
 
 THEME_ICON_NAME = "variety-indicator"
@@ -39,6 +41,7 @@ logger = logging.getLogger('variety')
 
 class Indicator:
     def __init__(self, window):
+        self.parent = window
         self.create_menu(window)
         self.create_indicator(window)
 
@@ -161,6 +164,15 @@ class Indicator:
         # self.image_item.set_submenu(self.image_menu)
         # self.menu.append(self.image_item)
         #
+        self.sfw_menu = Gtk.Menu()
+        self.sfw_menu.set_sensitive(False)
+        threading.Timer(0, self.populate_sfw_menu).start()
+
+        self.sfw_menu_item = Gtk.MenuItem(_("Report NSFW image"))
+        self.sfw_menu_item.set_use_underline(True)
+        self.sfw_menu_item.set_submenu(self.sfw_menu)
+        self.menu.append(self.sfw_menu_item)
+
         self.quotes_menu = Gtk.Menu()
 
         self.next_quote = Gtk.MenuItem(_("_Next"))
@@ -378,6 +390,37 @@ class Indicator:
 
     def get_visible(self):
         return self.visible
+
+    def populate_sfw_menu(self):
+        self.rating_items = []
+        sfw_ratings = Smart.get_all_sfw_ratings()
+
+        def _gui_update():
+            def _add_menuitem(rating):
+                menuitem = Gtk.MenuItem(_(rating['label_long']))
+                menuitem.set_visible(True)
+
+                def _rate(*args, **kwargs):
+                    self.parent.report_sfw_rating(file=None, rating=rating['rating'])
+
+                menuitem.connect("activate", _rate)
+                self.sfw_menu.append(menuitem)
+                self.rating_items.append(menuitem)
+            map(_add_menuitem, reversed(sfw_ratings))
+
+            separator = Gtk.SeparatorMenuItem.new()
+            separator.set_visible(True)
+            self.sfw_menu.append(separator)
+
+            self.safe_mode = Gtk.CheckMenuItem(_("_Safe mode"))
+            self.safe_mode.set_visible(True)
+            self.safe_mode.set_active(self.parent.options.safe_mode)
+            self.safe_mode.set_use_underline(True)
+            self.safe_mode_handler_id = self.safe_mode.connect("toggled", self.parent.on_safe_mode_toggled)
+            self.sfw_menu.append(self.safe_mode)
+
+            self.parent.update_indicator()
+        Util.add_mainloop_task(_gui_update)
 
 
 def new_application_indicator(window):

@@ -150,6 +150,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
             self.ui.change_on_start.set_active(self.options.change_on_start)
+            self.ui.safe_mode.set_active(self.options.safe_mode)
 
             self.ui.download_enabled.set_active(self.options.download_enabled)
             self.set_download_interval(self.options.download_interval)
@@ -863,6 +864,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.change_enabled = self.ui.change_enabled.get_active()
             self.options.change_on_start = self.ui.change_on_start.get_active()
             self.options.change_interval = self.get_change_interval()
+            self.options.safe_mode = self.ui.safe_mode.get_active()
 
             self.options.download_enabled = self.ui.download_enabled.get_active()
             self.options.download_interval = self.get_download_interval()

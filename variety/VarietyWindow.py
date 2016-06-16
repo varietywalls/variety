@@ -720,6 +720,15 @@ class VarietyWindow(Gtk.Window):
                     self.ind.trash.set_visible(bool(file))
                     self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
+                    self.ind.sfw_menu_item.set_visible(self.url is not None)
+                    if hasattr(self.ind, 'safe_mode'):
+                        self.ind.safe_mode.handler_block(self.ind.safe_mode_handler_id)
+                        self.ind.safe_mode.set_active(self.options.safe_mode)
+                        self.ind.safe_mode.handler_unblock(self.ind.safe_mode_handler_id)
+                    if hasattr(self.ind, 'rating_items'):
+                        for item in self.ind.rating_items:
+                            item.set_sensitive(self.url is not None)
+
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
@@ -1672,6 +1681,17 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
+    def report_sfw_rating(self, file, rating):
+        try:
+            if not file:
+                file = self.current
+            if not file:
+                return
+            Util.write_metadata(file, {'sfwRating': rating})
+            self.smart.report_sfw_rating(file, rating, async=True)
+        except Exception:
+            logger.exception(lambda: "Exception in report_sfw_rating")
+
     def copy_to_favorites(self, widget=None, file=None):
         try:
             if not file:
@@ -1942,6 +1962,18 @@ class VarietyWindow(Gtk.Window):
         self.options.write()
         self.update_indicator(auto_changed=False)
         self.change_event.set()
+
+    def on_safe_mode_toggled(self, widget=None, safe_mode=None):
+        if safe_mode is None:
+            self.options.safe_mode = not self.options.safe_mode
+        else:
+            self.options.safe_mode = safe_mode
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.safe_mode.set_active(self.options.safe_mode)
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
 
     @staticmethod
     def parse_options(arguments, report_errors=True):
