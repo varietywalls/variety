@@ -289,6 +289,10 @@ class Indicator:
         self.about.connect("activate", window.on_mnu_about_activate)
         self.menu.append(self.about)
 
+        self.donate = Gtk.MenuItem(_("Donate"))
+        self.donate.connect("activate", window.on_mnu_donate_activate)
+        self.menu.append(self.donate)
+
         self.quit = Gtk.MenuItem(_("Quit"))
         self.quit.connect("activate",window.on_quit)
         self.menu.append(self.quit)
