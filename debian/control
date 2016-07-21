@@ -25,7 +25,6 @@ Depends: ${misc:Depends},
  python-pil,
  python-cairo,
  gir1.2-gdkpixbuf-2.0,
- python-lxml,
  python-bs4,
  gir1.2-webkit-3.0,
  gir1.2-appindicator3-0.1,
@@ -41,6 +40,6 @@ Description: Wallpaper changer, downloader and manager
  automatically downloaded images. Variety sits conveniently as an
  indicator in the panel and can be easily paused and resumed. The mouse
  wheel can be used to scroll wallpapers back and forthVariety can fetch
- wallpapers from Flickr, Wallbase.cc, Wallpapers.net, NASA Astronomy
- Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa,
- deviantART or any other place are also supported.
+ wallpapers from Flickr, Wallhaven.cc, NASA Astronomy Picture of the Day,
+ Desktoppr.co. Media RSS feeds from Picasa, deviantART or any other place
+ are also supported.

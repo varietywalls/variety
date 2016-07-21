@@ -29,7 +29,6 @@ from variety_lib import varietyconfig
 from variety_lib.varietyconfig import get_data_file
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
-from variety.AddWallpapersNetCategoryDialog import AddWallpapersNetCategoryDialog
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
@@ -64,7 +63,6 @@ UNREMOVEABLE_TYPES = [
 ]
 
 EDITABLE_TYPES = [
-    Options.SourceType.WN,
     Options.SourceType.WALLBASE,
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS,
@@ -386,7 +384,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
             # (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Panoramio"), self.on_add_panoramio_clicked),
-            (_("Wallpapers.net"), self.on_add_wn_clicked),
             (_("Reddit"), self.on_add_reddit_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
@@ -669,9 +666,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         elif type == Options.SourceType.FETCHED:
             subprocess.call(["xdg-open", self.parent.options.fetched_folder])
         elif type in EDITABLE_TYPES:
-            if type == Options.SourceType.WN:
-                self.dialog = AddWallpapersNetCategoryDialog()
-            elif type == Options.SourceType.FLICKR:
+            if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLBASE:
                 self.dialog = AddWallbaseDialog()
@@ -782,9 +777,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
-
-    def on_add_wn_clicked(self, widget=None):
-        self.show_dialog(AddWallpapersNetCategoryDialog())
 
     def on_add_mediarss_clicked(self, widget=None):
         self.show_dialog(AddMediaRssDialog())

@@ -48,7 +48,6 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
-from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
@@ -517,8 +516,6 @@ class VarietyWindow(Gtk.Window):
             return APODDownloader(self)
         elif type == Options.SourceType.EARTH:
             return EarthDownloader(self)
-        elif type == Options.SourceType.WN:
-            return WallpapersNetDownloader(self, location)
         elif type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLBASE:
