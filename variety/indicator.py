@@ -286,7 +286,7 @@ class Indicator:
         self.menu.append(self.preferences)
 
         self.about = Gtk.MenuItem(_("About"))
-        self.about.connect("activate",window.on_mnu_about_activate)
+        self.about.connect("activate", window.on_mnu_about_activate)
         self.menu.append(self.about)
 
         self.quit = Gtk.MenuItem(_("Quit"))
