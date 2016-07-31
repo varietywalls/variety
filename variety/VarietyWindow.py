@@ -1694,8 +1694,20 @@ class VarietyWindow(Gtk.Window):
                 file = self.current
             if not file:
                 return
+
+            try:
+                if self.options.safe_mode and rating <= 50:
+                    if self.current == file:
+                        self.next_wallpaper(self.ind.rating)
+                    self.remove_from_queues(file)
+                    self.prepare_event.set()
+                    self.thumbs_manager.remove_image(file)
+            except:
+                logger.exception(lambda: 'Error in report_sfw_rating:')
+
             Util.write_metadata(file, {'sfwRating': rating})
             self.smart.report_sfw_rating(file, rating, async=True)
+            self.show_notification('Thanks for reporing!', 'This makes Variety better for everyone')
         except Exception:
             logger.exception(lambda: "Exception in report_sfw_rating")
 
