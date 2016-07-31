@@ -730,6 +730,7 @@ class VarietyWindow(Gtk.Window):
                     if hasattr(self.ind, 'safe_mode'):
                         self.ind.safe_mode.handler_block(self.ind.safe_mode_handler_id)
                         self.ind.safe_mode.set_active(self.options.safe_mode)
+                        self.ind.safe_mode.set_label(_('Safe mode: On') if self.options.safe_mode else _('Enable safe mode'))
                         self.ind.safe_mode.handler_unblock(self.ind.safe_mode_handler_id)
                     if hasattr(self.ind, 'rating_items'):
                         for item in self.ind.rating_items:

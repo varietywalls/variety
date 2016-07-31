@@ -401,13 +401,17 @@ class Indicator:
 
         def _gui_update():
             def _add_menuitem(rating):
-                menuitem = Gtk.MenuItem(_(rating['label_long']))
+                menuitem = Gtk.ImageMenuItem(_(rating['label_long']))
                 menuitem.set_visible(True)
 
                 def _rate(*args, **kwargs):
                     self.parent.report_sfw_rating(file=None, rating=rating['rating'])
 
                 menuitem.connect("activate", _rate)
+                menuitem.set_always_show_image(True)
+                image = Gtk.Image()
+                image.set_from_file(varietyconfig.get_data_file("media", "sfw-%s.svg" % rating['rating']))
+                menuitem.set_image(image)
                 self.sfw_menu.append(menuitem)
                 self.rating_items.append(menuitem)
             map(_add_menuitem, reversed(sfw_ratings))

@@ -636,6 +636,9 @@ class Smart:
                             logger.info(lambda: "sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
+                            if 'sfw_rating' in image_data and image_data['swf_rating'] < 100:
+                                logger.info(lambda: "sync: Skipping download of non-safe favorite image %s" % imageid)
+
                             prefer_source_id = server_data["favorite"][imageid].get("source", None)
                             source = image_data.get("sources", {}).get(prefer_source_id, None)
 

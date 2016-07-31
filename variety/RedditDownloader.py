@@ -87,6 +87,8 @@ class RedditDownloader(Downloader.Downloader):
                     extra_metadata = {'sourceType': 'reddit'}
                     if data['over_18']:
                         extra_metadata['sfwRating'] = 0
+                        if self.parent.options.safe_mode:
+                            continue
                     self.queue.append((src_url, image_url, extra_metadata))
             except Exception:
                 logger.exception(lambda: "Could not process an item in the Reddit json result")

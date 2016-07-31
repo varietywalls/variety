@@ -117,7 +117,13 @@ class WallhavenDownloader(Downloader.Downloader):
 
         try:
             purity = s.find('div', 'sidebar-content').find('label', 'purity').text.lower()
-            extra_metadata['sfwRating'] = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
+            sfw_rating = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
+            extra_metadata['sfwRating'] = sfw_rating
+
+            if sfw_rating < 100 and self.parent.options.safe_mode:
+                logger.info(lambda: "Skipping non-safe download from Wallhaven. "
+                                    "Is the source %s suitable for Safe mode?" % self.location)
+                return None
         except:
             pass
 
