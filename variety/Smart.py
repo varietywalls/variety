@@ -202,8 +202,8 @@ class Smart:
         _go() if not async else threading.Timer(0, _go).start()
 
     def handle_user_http_error(self, e):
-        logger.error(lambda: "smart: Server returned %d, potential reason - server failure?" % e.code)
-        if e.response.code in (403, 404):
+        logger.error(lambda: "smart: Server returned %d, potential reason - server failure?" % e.response.status_code)
+        if e.response.status_code in (403, 404):
             self.parent.show_notification(
                 _('Your VRTY.ORG credentials are probably outdated. Please login again.'))
             Util.add_mainloop_task(self.parent.preferences_dialog.on_btn_login_register_clicked)
@@ -332,7 +332,7 @@ class Smart:
                     self._do_report_file(filename, mark, sfw_rating, attempt + 1)
                 else:
                     logger.exception(lambda: "smart: Could not report %s as mark '%s', rating '%s', server error code %s'" % (
-                        filename, mark, sfw_rating, e.code))
+                        filename, mark, sfw_rating, e.response.status_code))
         except Exception:
             logger.exception(lambda: "smart: Could not report %s as mark '%s', rating '%s'" % (filename, mark, sfw_rating))
 

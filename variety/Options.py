@@ -37,7 +37,6 @@ class Options:
         FOLDER = 2
         FAVORITES = 3
         FETCHED = 4
-        WN = 5
         DESKTOPPR = 6
         FLICKR = 7
         APOD = 8
@@ -57,7 +56,6 @@ class Options:
             FETCHED: "fetched",
             IMAGE: "image",
             FOLDER: "folder",
-            WN: "wn",
             DESKTOPPR: "desktoppr",
             FLICKR: "flickr",
             APOD: "apod",
@@ -75,7 +73,7 @@ class Options:
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [WN, DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
+        dl_types = [DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
                     PANORAMIO, WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
 
     class LightnessMode:
@@ -653,7 +651,6 @@ class Options:
             [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
-            [True, Options.SourceType.WN, "http://wallpapers.net/nature-desktop-wallpapers.html"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
             [True, Options.SourceType.WALLHAVEN, "nature"],
         ]

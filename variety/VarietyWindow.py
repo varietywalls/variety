@@ -23,6 +23,7 @@ from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
 
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
+
 Notify.init("Variety")
 
 from variety_lib import varietyconfig
@@ -47,7 +48,6 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
-from variety.WallpapersNetDownloader import WallpapersNetDownloader
 from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
@@ -70,6 +70,9 @@ from variety import indicator
 
 
 DL_FOLDER_FILE = ".variety_download_folder"
+
+DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DHQUELMQRQW46&lc=BG&item_name=' \
+             'Variety%20Wallpaper%20Changer&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted'
 
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
@@ -201,6 +204,11 @@ class VarietyWindow(Gtk.Window):
             self.about.run()
             self.about.destroy()
             self.about = None
+
+    def on_mnu_donate_activate(self, widget, data=None):
+        self.preferences_dialog.ui.notebook.set_current_page(8)
+        self.on_mnu_preferences_activate()
+        webbrowser.open_new_tab(DONATE_URL)
 
     def get_preferences_dialog(self):
         if not self.preferences_dialog:
@@ -508,8 +516,6 @@ class VarietyWindow(Gtk.Window):
             return APODDownloader(self)
         elif type == Options.SourceType.EARTH:
             return EarthDownloader(self)
-        elif type == Options.SourceType.WN:
-            return WallpapersNetDownloader(self, location)
         elif type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLBASE:

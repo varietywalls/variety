@@ -135,7 +135,7 @@ class ImageFetcher:
             if reported:
                 if isinstance(e, HTTPError) and e.response.status_code in (403, 404):
                     progress_reporter(
-                        _("Sorry, got %s error...") % str(e.response.code),
+                        _("Sorry, got %s error...") % str(e.response.status_code),
                         _("This means the link is no longer valid"))
                 else:
                     progress_reporter(
