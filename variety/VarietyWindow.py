@@ -38,6 +38,7 @@ import random
 import re
 import urlparse
 import webbrowser
+from PIL import Image as PILImage
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -1466,40 +1467,52 @@ class VarietyWindow(Gtk.Window):
                 if rating is None or rating <= 0 or rating < self.options.min_rating:
                     return False
 
-            if not self.options.desired_color_enabled and not self.options.lightness_enabled:
-                if not self.options.use_landscape_enabled and not self.options.min_size_enabled:
-                    return True
+            if self.options.use_landscape_enabled or self.options.min_size_enabled:
+                if img in self.image_colors_cache:
+                    width = self.image_colors_cache[img][3]
+                    height = self.image_colors_cache[img][4]
                 else:
-                    if img in self.image_colors_cache:
-                        width = self.image_colors_cache[img][3]
-                        height = self.image_colors_cache[img][4]
-                    else:
-                        dom = DominantColors(img)
-                        width = dom.get_width()
-                        height = dom.get_height()
+                    i = PILImage.open(img)
+                    width = i.size[0]
+                    height = i.size[1]
 
-                    return self.size_ok(width, height, fuzziness)
-            else:
+                if not self.size_ok(width, height, fuzziness):
+                    return False
+
+            if self.options.desired_color_enabled or self.options.lightness_enabled:
                 if not img in self.image_colors_cache:
                     dom = DominantColors(img, False)
                     self.image_colors_cache[img] = dom.get_dominant_colors()
                 colors = self.image_colors_cache[img]
 
-                ok = self.size_ok(colors[3], colors[4], fuzziness)
-
                 if self.options.lightness_enabled:
                     lightness = colors[2]
                     if self.options.lightness_mode == Options.LightnessMode.DARK:
-                        ok = ok and lightness < 75 + fuzziness * 6
+                        if lightness >= 75 + fuzziness * 6:
+                            return False
                     elif self.options.lightness_mode == Options.LightnessMode.LIGHT:
-                        ok = ok and lightness > 180 - fuzziness * 6
+                        if lightness <= 180 - fuzziness * 6:
+                            return False
                     else:
                         logger.warning(lambda: "Unknown lightness mode: %d", self.options.lightness_mode)
 
-                if self.options.desired_color_enabled and self.options.desired_color:
-                    ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
+                if self.options.desired_color_enabled and self.options.desired_color \
+                        and not DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2):
+                    return False
 
-                return ok
+            if self.options.safe_mode:
+                try:
+                    info = Util.read_metadata(img)
+                    if info.get('sfwRating', 100) < 100:
+                        return False
+                    sfw_rating = Smart.get_sfw_rating(info['sourceURL'])
+                    if sfw_rating is not None and sfw_rating < 100:
+                        return False
+                except Exception:
+                    pass
+
+            return True
+
         except Exception:
             logger.exception(lambda: "Error in image_ok for file %s" % img)
             return False

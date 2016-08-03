@@ -19,7 +19,7 @@ import hashlib
 from requests.exceptions import HTTPError, RequestException
 import io
 import webbrowser
-from variety.Util import Util, throttle
+from variety.Util import Util, throttle, cache
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.SmartRegisterDialog import SmartRegisterDialog
@@ -754,10 +754,14 @@ class Smart:
         return Util.fetch_json(Smart.API_URL + '/all-sfw-ratings').values()[0]
 
     @classmethod
+    @cache(ttl_seconds=1800)
     def get_sfw_rating(cls, origin_url):
         try:
+            logger.debug('Checking SFW rating for image origin URL %s' % origin_url)
             imageid = Smart.get_image_id(origin_url)
             info = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
-            return int(info['sfw_rating'])
+            rating = int(info['sfw_rating'])
+            logger.debug('Rating is: %s' % rating)
+            return rating
         except Exception, e:
             return None
