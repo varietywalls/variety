@@ -164,6 +164,19 @@ class MediaRssDownloader(Downloader.Downloader):
                     pass
 
                 try:
+                    sfw = item.find("{0}sfw_info".format(VARIETY_NS))
+                    if sfw is not None:
+                        rating = int(sfw.attrib.get('rating', None))
+                        extra_metadata['sfwRating'] = rating
+
+                        if self.parent.options.safe_mode and rating < 100:
+                            logger.info(lambda: "Skipping non-safe download from VRTY MediaRss feed. "
+                                                "Is the source %s suitable for Safe mode?" % self.location)
+                            continue
+                except:
+                    pass
+
+                try:
                     extra_metadata['keywords'] = map(lambda k: k.strip(), item.find("{0}keywords".format(MEDIA_NS)).text.split(','))
                 except:
                     pass
