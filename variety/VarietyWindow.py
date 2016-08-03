@@ -1707,7 +1707,7 @@ class VarietyWindow(Gtk.Window):
 
             Util.write_metadata(file, {'sfwRating': rating})
             self.smart.report_sfw_rating(file, rating, async=True)
-            self.show_notification('Thanks for reporing!', 'This makes Variety better for everyone')
+            self.show_notification('Thanks for reporting!', 'This makes Variety better for everyone')
         except Exception:
             logger.exception(lambda: "Exception in report_sfw_rating")
 

@@ -752,3 +752,12 @@ class Smart:
     @classmethod
     def get_all_sfw_ratings(cls):
         return Util.fetch_json(Smart.API_URL + '/all-sfw-ratings').values()[0]
+
+    @classmethod
+    def get_sfw_rating(cls, origin_url):
+        try:
+            imageid = Smart.get_image_id(origin_url)
+            info = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
+            return int(info['sfw_rating'])
+        except Exception, e:
+            return None

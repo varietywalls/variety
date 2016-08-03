@@ -18,6 +18,8 @@ import os
 import string
 import re
 import logging
+from variety.Smart import Smart
+
 from variety.Util import Util
 
 logger = logging.getLogger('variety')
@@ -80,6 +82,13 @@ class Downloader(object):
         if not force_download and os.path.exists(local_filename):
             logger.info(lambda: "File already exists, skip downloading")
             return None
+
+        if self.parent.options.safe_mode:
+            sfw_rating = Smart.get_sfw_rating(origin_url)
+            if sfw_rating is not None and sfw_rating < 100:
+                logger.info(lambda: "Skipping non-safe download %s. Is the source %s:%s "
+                                    "suitable for Safe mode?" % (origin_url, source_type, self.location))
+                return None
 
         try:
             r = Util.request(image_url, stream=True)
