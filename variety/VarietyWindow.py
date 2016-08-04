@@ -427,14 +427,7 @@ class VarietyWindow(Gtk.Window):
 
         # clean prepared - they are outdated
         if self.should_clear_prepared():
-            self.filters_warning_shown = False
-            logger.info(lambda: "Clearing prepared queue")
-            with self.prepared_lock:
-                self.prepared_cleared = True
-                self.prepared = []
-                self.prepared_from_downloads = []
-                self.prepare_event.set()
-            self.image_count = -1
+            self.clear_prepared_queue()
         else:
             logger.info(lambda: "No need to clear prepared queue")
 
@@ -478,6 +471,16 @@ class VarietyWindow(Gtk.Window):
             for e in self.events:
                 e.set()
 
+    def clear_prepared_queue(self):
+        self.filters_warning_shown = False
+        logger.info(lambda: "Clearing prepared queue")
+        with self.prepared_lock:
+            self.prepared_cleared = True
+            self.prepared = []
+            self.prepared_from_downloads = []
+            self.prepare_event.set()
+        self.image_count = -1
+
     def should_clear_prepared(self):
         return self.previous_options and (
                [s for s in self.previous_options.sources if s[0]] != [s for s in self.options.sources if s[0]] or \
@@ -487,6 +490,8 @@ class VarietyWindow(Gtk.Window):
         if not self.previous_options:
             return False
         if self.size_options_changed():
+            return True
+        if self.previous_options.safe_mode != self.options.safe_mode:
             return True
         if self.previous_options.desired_color_enabled != self.options.desired_color_enabled or \
             self.previous_options.desired_color != self.options.desired_color:
@@ -2006,6 +2011,7 @@ class VarietyWindow(Gtk.Window):
 
         self.options.write()
         self.update_indicator(auto_changed=False)
+        self.clear_prepared_queue()
 
     @staticmethod
     def parse_options(arguments, report_errors=True):
