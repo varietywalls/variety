@@ -1510,6 +1510,11 @@ class VarietyWindow(Gtk.Window):
                     info = Util.read_metadata(img)
                     if info.get('sfwRating', 100) < 100:
                         return False
+
+                    blacklisted = set(k.lower() for k in info.get('keywords', [])) & Smart.get_safe_mode_keyword_blacklist()
+                    if len(blacklisted) > 0:
+                        return False
+
                     sfw_rating = Smart.get_sfw_rating(info['sourceURL'])
                     if sfw_rating is not None and sfw_rating < 100:
                         return False

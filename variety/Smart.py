@@ -599,7 +599,7 @@ class Smart:
                         if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
                             return
                         if not imageid in local_trash:
-                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '?action_source=sync')
                             self.parent.ban_url(image_data["origin_url"])
                             time.sleep(throttle_interval)
 
@@ -759,9 +759,20 @@ class Smart:
         try:
             logger.debug('Checking SFW rating for image origin URL %s' % origin_url)
             imageid = Smart.get_image_id(origin_url)
-            info = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
+            info = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '?action_source=get_sfw_rating')
             rating = int(info['sfw_rating'])
             logger.debug('Rating is: %s' % rating)
             return rating
         except Exception, e:
             return None
+
+    @classmethod
+    @cache(ttl_seconds=1800)
+    def get_safe_mode_keyword_blacklist(cls):
+        try:
+            logger.debug('Fethcing safe mode keywords blacklist')
+            blacklisted = set(Util.fetch_json(Smart.API_URL + '/safe-mode-blacklisted-tags').keys())
+            logger.info('Safe mode blacklisted keywords: %s' % str(blacklisted))
+            return blacklisted
+        except Exception, e:
+            return set()

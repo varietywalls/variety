@@ -19,6 +19,8 @@ import urlparse
 import xml.etree.ElementTree as ET
 
 import logging
+from variety.Smart import Smart
+
 from variety import Downloader
 from variety.Util import Util
 
