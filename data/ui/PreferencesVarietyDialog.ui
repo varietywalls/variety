@@ -372,7 +372,6 @@
                             <child>
                               <object class="GtkScrolledWindow" id="sources_scrolled_window">
                                 <property name="width_request">250</property>
-                                <property name="height_request">0</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
@@ -2051,7 +2050,7 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">10</property>
-                        <property name="margin_bottom">7</property>
+                        <property name="margin_bottom">3</property>
                         <property name="label" translatable="yes">Images for slideshow</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -2248,7 +2247,6 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">15</property>
-                        <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Screen</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -2372,7 +2370,6 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">15</property>
-                        <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Dynamics</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -4749,7 +4746,6 @@ Peter Levi</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_right">5</property>
-            <property name="margin_top">10</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="save">
