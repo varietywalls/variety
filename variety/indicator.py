@@ -166,9 +166,10 @@ class Indicator:
         #
         self.sfw_menu = Gtk.Menu()
         self.sfw_menu.set_sensitive(False)
-        threading.Timer(0, self.populate_sfw_menu).start()
+        threading.Timer(2, self.populate_sfw_menu).start()
 
         self.sfw_menu_item = Gtk.MenuItem(_("Report NSFW image"))
+        self.sfw_menu_item.set_sensitive(False)
         self.sfw_menu_item.set_use_underline(True)
         self.sfw_menu_item.set_submenu(self.sfw_menu)
         self.menu.append(self.sfw_menu_item)
@@ -396,39 +397,44 @@ class Indicator:
         return self.visible
 
     def populate_sfw_menu(self):
-        self.rating_items = []
-        sfw_ratings = Smart.get_all_sfw_ratings()
+        try:
+            self.rating_items = []
+            sfw_ratings = Smart.get_all_sfw_ratings()
 
-        def _gui_update():
-            def _add_menuitem(rating):
-                menuitem = Gtk.ImageMenuItem(_(rating['label_long']))
-                menuitem.set_visible(True)
+            def _gui_update():
+                def _add_menuitem(rating):
+                    menuitem = Gtk.ImageMenuItem(_(rating['label_long']))
+                    menuitem.set_visible(True)
 
-                def _rate(*args, **kwargs):
-                    self.parent.report_sfw_rating(file=None, rating=rating['rating'])
+                    def _rate(*args, **kwargs):
+                        self.parent.report_sfw_rating(file=None, rating=rating['rating'])
 
-                menuitem.connect("activate", _rate)
-                menuitem.set_always_show_image(True)
-                image = Gtk.Image()
-                image.set_from_file(varietyconfig.get_data_file("media", "sfw-%s.svg" % rating['rating']))
-                menuitem.set_image(image)
-                self.sfw_menu.append(menuitem)
-                self.rating_items.append(menuitem)
-            map(_add_menuitem, reversed(sfw_ratings))
+                    menuitem.connect("activate", _rate)
+                    menuitem.set_always_show_image(True)
+                    image = Gtk.Image()
+                    image.set_from_file(varietyconfig.get_data_file("media", "sfw-%s.svg" % rating['rating']))
+                    menuitem.set_image(image)
+                    self.sfw_menu.append(menuitem)
+                    self.rating_items.append(menuitem)
+                map(_add_menuitem, reversed(sfw_ratings))
 
-            separator = Gtk.SeparatorMenuItem.new()
-            separator.set_visible(True)
-            self.sfw_menu.append(separator)
+                separator = Gtk.SeparatorMenuItem.new()
+                separator.set_visible(True)
+                self.sfw_menu.append(separator)
 
-            self.safe_mode = Gtk.CheckMenuItem(_("_Safe mode"))
-            self.safe_mode.set_visible(True)
-            self.safe_mode.set_active(self.parent.options.safe_mode)
-            self.safe_mode.set_use_underline(True)
-            self.safe_mode_handler_id = self.safe_mode.connect("toggled", self.parent.on_safe_mode_toggled)
-            self.sfw_menu.append(self.safe_mode)
+                self.safe_mode = Gtk.CheckMenuItem(_("_Safe mode"))
+                self.safe_mode.set_visible(True)
+                self.safe_mode.set_active(self.parent.options.safe_mode)
+                self.safe_mode.set_use_underline(True)
+                self.safe_mode_handler_id = self.safe_mode.connect("toggled", self.parent.on_safe_mode_toggled)
+                self.sfw_menu.append(self.safe_mode)
 
-            self.parent.update_indicator()
-        Util.add_mainloop_task(_gui_update)
+                self.sfw_menu_item.set_sensitive(True)
+
+                self.parent.update_indicator()
+            Util.add_mainloop_task(_gui_update)
+        except Exception:
+            logger.exception(lambda: 'Oops, could not populate NSFW menu:')
 
 
 def new_application_indicator(window):

@@ -636,7 +636,7 @@ class Smart:
                             logger.info(lambda: "sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
 
-                            if 'sfw_rating' in image_data and image_data['swf_rating'] < 100:
+                            if 'sfw_rating' in image_data and image_data['sfw_rating'] < 100:
                                 logger.info(lambda: "sync: Skipping download of non-safe favorite image %s" % imageid)
 
                             prefer_source_id = server_data["favorite"][imageid].get("source", None)
@@ -751,7 +751,44 @@ class Smart:
 
     @classmethod
     def get_all_sfw_ratings(cls):
-        return Util.fetch_json(Smart.API_URL + '/all-sfw-ratings').values()[0]
+        try:
+            return Util.fetch_json(Smart.API_URL + '/all-sfw-ratings').values()[0]
+        except:
+            # Do not fail, fallback to some decent default
+            return [
+                {
+                    "rating": 100,
+                    "bg": "#74A300",
+                    "label_short": "Safe",
+                    "label_long": "Safe in any context",
+                    "fg": "white",
+                    "min_rating": 95
+                },
+                {
+                    "rating": 80,
+                    "bg": "#A09200",
+                    "label_short": "Mild",
+                    "label_long": "Mild, mostly safe",
+                    "fg": "white",
+                    "min_rating": 75
+                },
+                {
+                    "rating": 50,
+                    "bg": "#E5BE20",
+                    "label_short": "Sketchy",
+                    "label_long": "Sketchy, not safe in many contexts",
+                    "fg": "white",
+                    "min_rating": 40
+                },
+                {
+                    "rating": 0,
+                    "bg": "#CF1F00",
+                    "label_short": "Not safe",
+                    "label_long": "Definitely NSFW",
+                    "fg": "white",
+                    "min_rating": 0
+                }
+            ]
 
     @classmethod
     @cache(ttl_seconds=1800)
