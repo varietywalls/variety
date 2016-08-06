@@ -67,6 +67,7 @@ from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety.Smart import Smart
+from variety.Stats import Stats
 from variety import indicator
 
 
@@ -130,6 +131,7 @@ class VarietyWindow(Gtk.Window):
         self.quote = None
         self.quote_favorites_contents = ''
         self.clock_thread = None
+        self.reporting_thread = None
 
         self.prepare_config_folder()
         self.perform_upgrade()
@@ -432,6 +434,7 @@ class VarietyWindow(Gtk.Window):
             logger.info(lambda: "No need to clear prepared queue")
 
         self.start_clock_thread()
+        self.start_reporting_thread()
 
         if self.options.quotes_enabled:
             if not self.quotes_engine:
@@ -600,6 +603,12 @@ class VarietyWindow(Gtk.Window):
             self.clock_thread = threading.Thread(target=self.clock_thread_method)
             self.clock_thread.daemon = True
             self.clock_thread.start()
+
+    def start_reporting_thread(self):
+        if not self.reporting_thread and self.options.stats_enabled:
+            self.reporting_thread = threading.Thread(target=self.reporting_thread_method)
+            self.reporting_thread.daemon = True
+            self.reporting_thread.start()
 
     def start_threads(self):
         self.change_event = threading.Event()
@@ -966,6 +975,23 @@ class VarietyWindow(Gtk.Window):
                     continue
 
             time.sleep(3600 * 24) # Update once daily
+
+    def reporting_thread_method(self):
+        time.sleep(20)
+        attempts = 0
+        while self.running:
+            try:
+                attempts += 1
+                if self.options.stats_enabled:
+                    self.smart.stats_report_config()
+            except Exception:
+                logger.exception("Stats: Could not report config")
+                if attempts < 3:
+                    # the first several attempts may easily fail if Variety is run on startup, try again soon:
+                    time.sleep(30)
+                    continue
+
+            time.sleep(3600)  # Report once per hour
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher) > 0

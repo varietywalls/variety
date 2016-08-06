@@ -13,14 +13,17 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
+import string
 from gi.repository import GObject, Gdk, Gtk
 import hashlib
 from requests.exceptions import HTTPError, RequestException
 import io
 import webbrowser
+import re
+
 from variety.Util import Util, throttle, cache
 from variety.Options import Options
+from variety.Stats import Stats
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.SmartRegisterDialog import SmartRegisterDialog
 from variety.AttrDict import AttrDict
@@ -440,6 +443,10 @@ class Smart:
     def get_image_id(url):
         return base64.urlsafe_b64encode(hashlib.md5(url).digest())[:10].replace('-', 'a').replace('_', 'b').lower()
 
+    @staticmethod
+    def random_id():
+        return ''.join([random.choice(string.ascii_lowercase + string.digits) for _ in range(10)])
+
     def is_smart_enabled(self):
         return self.parent.options.smart_notice_shown and self.parent.options.smart_enabled
 
@@ -813,3 +820,26 @@ class Smart:
             return blacklisted
         except Exception, e:
             return set()
+
+    def stats_report_config(self):
+        logger.info(lambda: "Stats: Reporting config anonymously")
+
+        try:
+            with open(os.path.join(self.parent.config_folder, ".statsid")) as f:
+                statsid = f.read().strip()
+        except Exception:
+            statsid = None
+
+        if not statsid or not re.match(r"^([0-9A-Za-z]{10})$", statsid):
+            # Generate and use a random id for reporting anonynous stats:
+            statsid = Smart.random_id()
+            with open(os.path.join(self.parent.config_folder, ".statsid"), "w") as f:
+                f.write(statsid)
+
+        try:
+            data = {"config": json.dumps(Stats.get_sanitized_config(self.parent))}
+            res = Util.fetch_json(Smart.API_URL + '/stats/%s/report-config' % statsid, data=data)
+            logger.info(lambda: "Stats: config reported, server response: %s" % str(res))
+        except Exception:
+            raise
+
