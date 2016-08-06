@@ -312,6 +312,54 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkBox" id="box58">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_bottom">10</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkCheckButton" id="safe_mode">
+                            <property name="label" translatable="yes">Safe mode. Avoid NSFW and sketchy images</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_left">30</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label81">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_right">25</property>
+                            <property name="label" translatable="yes">&lt;i&gt;Experimental feature. Relies on community ratings. &lt;a href="http://peterlevi.com/variety/2016/08/introducing-safe-mode/"&gt;Read more here&lt;/a&gt;&lt;/i&gt;</property>
+                            <property name="use_markup">True</property>
+                            <property name="ellipsize">middle</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="sources_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -324,7 +372,6 @@
                             <child>
                               <object class="GtkScrolledWindow" id="sources_scrolled_window">
                                 <property name="width_request">250</property>
-                                <property name="height_request">200</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="margin_left">30</property>
@@ -493,7 +540,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
@@ -2003,7 +2050,7 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">10</property>
-                        <property name="margin_bottom">7</property>
+                        <property name="margin_bottom">3</property>
                         <property name="label" translatable="yes">Images for slideshow</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -2200,7 +2247,6 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">15</property>
-                        <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Screen</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -2324,7 +2370,6 @@
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
                         <property name="margin_top">15</property>
-                        <property name="margin_bottom">5</property>
                         <property name="label" translatable="yes">Dynamics</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -4343,7 +4388,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                 </child>
                 <child>
                   <object class="GtkScrolledWindow" id="tips_scrolled_window">
-                    <property name="height_request">100</property>
+                    <property name="height_request">80</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
@@ -4701,7 +4746,6 @@ Peter Levi</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_right">5</property>
-            <property name="margin_top">10</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="save">

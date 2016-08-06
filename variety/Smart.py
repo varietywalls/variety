@@ -19,7 +19,7 @@ import hashlib
 from requests.exceptions import HTTPError, RequestException
 import io
 import webbrowser
-from variety.Util import Util, throttle
+from variety.Util import Util, throttle, cache
 from variety.Options import Options
 from variety.SmartFeaturesNoticeDialog import SmartFeaturesNoticeDialog
 from variety.SmartRegisterDialog import SmartRegisterDialog
@@ -56,6 +56,7 @@ class Smart:
     }
 
     def __init__(self, parent):
+        Smart.instance = self
         self.parent = parent
         self.user = None
         self.load_user_lock = threading.Lock()
@@ -63,6 +64,10 @@ class Smart:
             self.load_user(create_if_missing=False)
         except:
             logger.exception(lambda: "Smart: Cound not load user during init")
+
+    @classmethod
+    def get_instance(cls):
+        return Smart.instance
 
     def reload(self):
         if not self.is_smart_enabled():
@@ -184,7 +189,15 @@ class Smart:
             return
 
         def _go():
-            self._do_report_file(filename, mark, upload_full_image=upload_full_image, needs_reupload=needs_reupload)
+            self._do_report_file(filename, mark=mark, sfw_rating=None,
+                                 upload_full_image=upload_full_image, needs_reupload=needs_reupload, allow_anon=False)
+
+        _go() if not async else threading.Timer(0, _go).start()
+
+    def report_sfw_rating(self, filename, sfw_rating, async=True):
+        def _go():
+            self._do_report_file(filename, mark=None, sfw_rating=sfw_rating,
+                                 upload_full_image=False, needs_reupload=False, allow_anon=True)
 
         _go() if not async else threading.Timer(0, _go).start()
 
@@ -229,12 +242,13 @@ class Smart:
         except:
             logger.exception(lambda: 'Could not fill missing meta-info')
 
-    def _do_report_file(self, filename, mark, attempt=1, upload_full_image=False, needs_reupload=False):
-        if not self.is_smart_enabled():
+    def _do_report_file(self, filename, mark, sfw_rating, attempt=1,
+                        upload_full_image=False, needs_reupload=False, allow_anon=False):
+        if not allow_anon and not self.is_smart_enabled():
             return
 
         try:
-            self.load_user()
+            self.load_user(create_if_missing=not allow_anon)
             user = self.user
 
             meta = Util.read_metadata(filename)
@@ -243,13 +257,16 @@ class Smart:
 
             origin_url = Smart.fix_origin_url(meta['sourceURL'])
 
-            if not (upload_full_image or needs_reupload):
+            if mark and not (upload_full_image or needs_reupload):
                 # Attempt quick-markging using just the computed image ID - will only succeed if the image already exists on the server
                 try:
                     logger.info(lambda: "smart: Quick-reporting %s as '%s'" % (filename, mark))
                     imageid = self.get_image_id(origin_url)
                     report_url = Smart.API_URL + '/mark/%s/%s/+%s' % (user['id'], imageid, mark)
-                    result = Util.fetch(report_url, {'authkey': user['authkey']})
+                    result = Util.fetch(report_url, {
+                        'authkey': user['authkey'],
+                        'action_source': 'Linux Client, ' + mark
+                    })
                     logger.info(lambda: "smart: Quick-reported, server returned: %s" % result)
                     if 'needs_reupload' in result:
                         logger.info(lambda: "smart: Server requested full image data, "
@@ -280,7 +297,10 @@ class Smart:
                 if not server_key in image:
                     image[server_key] = value
 
-            logger.info(lambda: "smart: Reporting %s as '%s'" % (filename, mark))
+            if sfw_rating is not None:
+                image['sfw_rating'] = sfw_rating
+
+            logger.info(lambda: "smart: Reporting %s as mark '%s', sfw rating %s" % (filename, mark, sfw_rating))
 
             # check for dead links and upload full image in that case (happens with old favorites):
             if upload_full_image or (mark == 'favorite' and Util.is_dead_or_not_image(image_url)):
@@ -292,21 +312,29 @@ class Smart:
                 with open(filename, 'r') as f:
                     image['full_image'] = base64.b64encode(f.read())
 
-            report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], mark)
+            if mark:
+                report_url = Smart.API_URL + '/upload/%s/%s' % (user['id'], mark)
+            else:
+                report_url = Smart.API_URL + '/upload/%s' % (user['id'] if user else '-anonymous')
+
             try:
-                result = Util.fetch(report_url, {'image': json.dumps(image), 'authkey': user['authkey']})
+                result = Util.fetch(report_url, {
+                    'image': json.dumps(image),
+                    'authkey': user['authkey'] if user else None,
+                    'action_source': 'Linux Client, ' + ('SFW Rating' if sfw_rating is not None else mark)
+                })
                 logger.info(lambda: "smart: Reported, server returned: %s" % result)
                 return
             except HTTPError, e:
                 self.handle_user_http_error(e)
 
                 if attempt == 1:
-                    self._do_report_file(filename, mark, attempt + 1)
+                    self._do_report_file(filename, mark, sfw_rating, attempt + 1)
                 else:
-                    logger.exception(lambda: "smart: Could not report %s as '%s, server error code %s'" % (
-                        filename, mark, e.response.status_code))
+                    logger.exception(lambda: "smart: Could not report %s as mark '%s', rating '%s', server error code %s'" % (
+                        filename, mark, sfw_rating, e.response.status_code))
         except Exception:
-            logger.exception(lambda: "smart: Could not report %s as '%s'" % (filename, mark))
+            logger.exception(lambda: "smart: Could not report %s as mark '%s', rating '%s'" % (filename, mark, sfw_rating))
 
     def show_notice_dialog(self):
         # Show Smart Variety notice
@@ -571,7 +599,7 @@ class Smart:
                         if not self.is_sync_enabled() or current_sync_hash != self.sync_hash:
                             return
                         if not imageid in local_trash:
-                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
+                            image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '?action_source=sync')
                             self.parent.ban_url(image_data["origin_url"])
                             time.sleep(throttle_interval)
 
@@ -607,6 +635,9 @@ class Smart:
                         try:
                             logger.info(lambda: "sync: Downloading locally-missing favorite image %s" % imageid)
                             image_data = Util.fetch_json(Smart.API_URL + '/image/' + imageid)
+
+                            if 'sfw_rating' in image_data and image_data['sfw_rating'] < 100:
+                                logger.info(lambda: "sync: Skipping download of non-safe favorite image %s" % imageid)
 
                             prefer_source_id = server_data["favorite"][imageid].get("source", None)
                             source = image_data.get("sources", {}).get(prefer_source_id, None)
@@ -717,3 +748,68 @@ class Smart:
             extra_metadata['sfwRating'] = image.sfw_rating
 
         return image_url, origin_url, source_type, source_location, source_name, extra_metadata
+
+    @classmethod
+    def get_all_sfw_ratings(cls):
+        try:
+            return Util.fetch_json(Smart.API_URL + '/all-sfw-ratings').values()[0]
+        except:
+            # Do not fail, fallback to some decent default
+            return [
+                {
+                    "rating": 100,
+                    "bg": "#74A300",
+                    "label_short": "Safe",
+                    "label_long": "Safe in any context",
+                    "fg": "white",
+                    "min_rating": 95
+                },
+                {
+                    "rating": 80,
+                    "bg": "#A09200",
+                    "label_short": "Mild",
+                    "label_long": "Mild, mostly safe",
+                    "fg": "white",
+                    "min_rating": 75
+                },
+                {
+                    "rating": 50,
+                    "bg": "#E5BE20",
+                    "label_short": "Sketchy",
+                    "label_long": "Sketchy, not safe in many contexts",
+                    "fg": "white",
+                    "min_rating": 40
+                },
+                {
+                    "rating": 0,
+                    "bg": "#CF1F00",
+                    "label_short": "Not safe",
+                    "label_long": "Definitely NSFW",
+                    "fg": "white",
+                    "min_rating": 0
+                }
+            ]
+
+    @classmethod
+    @cache(ttl_seconds=1800)
+    def get_sfw_rating(cls, origin_url):
+        try:
+            logger.debug('Checking SFW rating for image origin URL %s' % origin_url)
+            imageid = Smart.get_image_id(origin_url)
+            info = Util.fetch_json(Smart.API_URL + '/image/' + imageid + '?action_source=get_sfw_rating')
+            rating = int(info['sfw_rating'])
+            logger.debug('Rating is: %s' % rating)
+            return rating
+        except Exception, e:
+            return None
+
+    @classmethod
+    @cache(ttl_seconds=1800)
+    def get_safe_mode_keyword_blacklist(cls):
+        try:
+            logger.debug('Fethcing safe mode keywords blacklist')
+            blacklisted = set(Util.fetch_json(Smart.API_URL + '/safe-mode-blacklisted-tags').keys())
+            logger.info('Safe mode blacklisted keywords: %s' % str(blacklisted))
+            return blacklisted
+        except Exception, e:
+            return set()

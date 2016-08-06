@@ -22,7 +22,7 @@ import time
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from variety.Util import Util, debounce, throttle
+from variety.Util import Util, debounce, throttle, cache
 
 
 class TestUtil(unittest.TestCase):
@@ -251,6 +251,13 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(count[0] == 2)
         time.sleep(0.31)
         self.assertTrue(count[0] == 3)
+
+    def test_cache(self):
+        @cache(ttl_seconds=10)
+        def fib(n):
+            return 1 if n <= 1 else fib(n - 1) + fib(n - 2)
+
+        self.assertEqual(573147844013817084101, fib(100))
 
 if __name__ == '__main__':
     unittest.main()

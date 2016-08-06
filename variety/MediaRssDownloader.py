@@ -19,6 +19,8 @@ import urlparse
 import xml.etree.ElementTree as ET
 
 import logging
+from variety.Smart import Smart
+
 from variety import Downloader
 from variety.Util import Util
 
@@ -160,6 +162,19 @@ class MediaRssDownloader(Downloader.Downloader):
                         extra_metadata['authorURL'] = author.attrib.get('url', None)
                     else:
                         extra_metadata['author'] = item.find("{0}credit".format(MEDIA_NS)).text
+                except:
+                    pass
+
+                try:
+                    sfw = item.find("{0}sfw_info".format(VARIETY_NS))
+                    if sfw is not None:
+                        rating = int(sfw.attrib.get('rating', None))
+                        extra_metadata['sfwRating'] = rating
+
+                        if self.parent.options.safe_mode and rating < 100:
+                            logger.info(lambda: "Skipping non-safe download from VRTY MediaRss feed. "
+                                                "Is the source %s suitable for Safe mode?" % self.location)
+                            continue
                 except:
                     pass
 

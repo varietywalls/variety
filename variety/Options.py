@@ -108,6 +108,11 @@ class Options:
                 pass
 
             try:
+                self.safe_mode = config["safe_mode"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.download_enabled = config["download_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -562,6 +567,7 @@ class Options:
         self.change_enabled = True
         self.change_on_start = False
         self.change_interval = 300
+        self.safe_mode = False
 
         self.download_enabled = True
         self.download_interval = 600
@@ -671,6 +677,7 @@ class Options:
             config["change_enabled"] = str(self.change_enabled)
             config["change_on_start"] = str(self.change_on_start)
             config["change_interval"] = str(self.change_interval)
+            config["safe_mode"] = str(self.safe_mode)
 
             config["download_enabled"] = str(self.download_enabled)
             config["download_interval"] = str(self.download_interval)

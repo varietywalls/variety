@@ -38,6 +38,7 @@ import random
 import re
 import urlparse
 import webbrowser
+from PIL import Image as PILImage
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -426,14 +427,7 @@ class VarietyWindow(Gtk.Window):
 
         # clean prepared - they are outdated
         if self.should_clear_prepared():
-            self.filters_warning_shown = False
-            logger.info(lambda: "Clearing prepared queue")
-            with self.prepared_lock:
-                self.prepared_cleared = True
-                self.prepared = []
-                self.prepared_from_downloads = []
-                self.prepare_event.set()
-            self.image_count = -1
+            self.clear_prepared_queue()
         else:
             logger.info(lambda: "No need to clear prepared queue")
 
@@ -477,6 +471,16 @@ class VarietyWindow(Gtk.Window):
             for e in self.events:
                 e.set()
 
+    def clear_prepared_queue(self):
+        self.filters_warning_shown = False
+        logger.info(lambda: "Clearing prepared queue")
+        with self.prepared_lock:
+            self.prepared_cleared = True
+            self.prepared = []
+            self.prepared_from_downloads = []
+            self.prepare_event.set()
+        self.image_count = -1
+
     def should_clear_prepared(self):
         return self.previous_options and (
                [s for s in self.previous_options.sources if s[0]] != [s for s in self.options.sources if s[0]] or \
@@ -486,6 +490,8 @@ class VarietyWindow(Gtk.Window):
         if not self.previous_options:
             return False
         if self.size_options_changed():
+            return True
+        if self.previous_options.safe_mode != self.options.safe_mode:
             return True
         if self.previous_options.desired_color_enabled != self.options.desired_color_enabled or \
             self.previous_options.desired_color != self.options.desired_color:
@@ -726,6 +732,16 @@ class VarietyWindow(Gtk.Window):
                     self.ind.trash.set_visible(bool(file))
                     self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
+                    self.ind.sfw_menu_item.set_visible(self.url is not None)
+                    if hasattr(self.ind, 'safe_mode'):
+                        self.ind.safe_mode.handler_block(self.ind.safe_mode_handler_id)
+                        self.ind.safe_mode.set_active(self.options.safe_mode)
+                        self.ind.safe_mode.set_label(_('Safe mode: On') if self.options.safe_mode else _('Turn Safe mode on'))
+                        self.ind.safe_mode.handler_unblock(self.ind.safe_mode_handler_id)
+                    if hasattr(self.ind, 'rating_items'):
+                        for item in self.ind.rating_items:
+                            item.set_sensitive(self.url is not None)
+
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
@@ -868,7 +884,7 @@ class VarietyWindow(Gtk.Window):
 
     def find_images(self):
         self.prepared_cleared = False
-        images = self.select_random_images(100)
+        images = self.select_random_images(100 if not self.options.safe_mode else 30)
 
         found = set()
         for fuzziness in xrange(0, 5):
@@ -1456,40 +1472,57 @@ class VarietyWindow(Gtk.Window):
                 if rating is None or rating <= 0 or rating < self.options.min_rating:
                     return False
 
-            if not self.options.desired_color_enabled and not self.options.lightness_enabled:
-                if not self.options.use_landscape_enabled and not self.options.min_size_enabled:
-                    return True
+            if self.options.use_landscape_enabled or self.options.min_size_enabled:
+                if img in self.image_colors_cache:
+                    width = self.image_colors_cache[img][3]
+                    height = self.image_colors_cache[img][4]
                 else:
-                    if img in self.image_colors_cache:
-                        width = self.image_colors_cache[img][3]
-                        height = self.image_colors_cache[img][4]
-                    else:
-                        dom = DominantColors(img)
-                        width = dom.get_width()
-                        height = dom.get_height()
+                    i = PILImage.open(img)
+                    width = i.size[0]
+                    height = i.size[1]
 
-                    return self.size_ok(width, height, fuzziness)
-            else:
+                if not self.size_ok(width, height, fuzziness):
+                    return False
+
+            if self.options.desired_color_enabled or self.options.lightness_enabled:
                 if not img in self.image_colors_cache:
                     dom = DominantColors(img, False)
                     self.image_colors_cache[img] = dom.get_dominant_colors()
                 colors = self.image_colors_cache[img]
 
-                ok = self.size_ok(colors[3], colors[4], fuzziness)
-
                 if self.options.lightness_enabled:
                     lightness = colors[2]
                     if self.options.lightness_mode == Options.LightnessMode.DARK:
-                        ok = ok and lightness < 75 + fuzziness * 6
+                        if lightness >= 75 + fuzziness * 6:
+                            return False
                     elif self.options.lightness_mode == Options.LightnessMode.LIGHT:
-                        ok = ok and lightness > 180 - fuzziness * 6
+                        if lightness <= 180 - fuzziness * 6:
+                            return False
                     else:
                         logger.warning(lambda: "Unknown lightness mode: %d", self.options.lightness_mode)
 
-                if self.options.desired_color_enabled and self.options.desired_color:
-                    ok = ok and DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2)
+                if self.options.desired_color_enabled and self.options.desired_color \
+                        and not DominantColors.contains_color(colors, self.options.desired_color, fuzziness + 2):
+                    return False
 
-                return ok
+            if self.options.safe_mode:
+                try:
+                    info = Util.read_metadata(img)
+                    if info.get('sfwRating', 100) < 100:
+                        return False
+
+                    blacklisted = set(k.lower() for k in info.get('keywords', [])) & Smart.get_safe_mode_keyword_blacklist()
+                    if len(blacklisted) > 0:
+                        return False
+
+                    sfw_rating = Smart.get_sfw_rating(info['sourceURL'])
+                    if sfw_rating is not None and sfw_rating < 100:
+                        return False
+                except Exception:
+                    pass
+
+            return True
+
         except Exception:
             logger.exception(lambda: "Error in image_ok for file %s" % img)
             return False
@@ -1677,6 +1710,29 @@ class VarietyWindow(Gtk.Window):
         self.downloaded = [f for f in self.downloaded if not Util.file_in(f, folder)]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
+
+    def report_sfw_rating(self, file, rating):
+        try:
+            if not file:
+                file = self.current
+            if not file:
+                return
+
+            try:
+                if self.options.safe_mode and rating <= 50:
+                    if self.current == file:
+                        self.next_wallpaper(self.ind.rating)
+                    self.remove_from_queues(file)
+                    self.prepare_event.set()
+                    self.thumbs_manager.remove_image(file)
+            except:
+                logger.exception(lambda: 'Error in report_sfw_rating:')
+
+            Util.write_metadata(file, {'sfwRating': rating})
+            self.smart.report_sfw_rating(file, rating, async=True)
+            self.show_notification('Thanks for reporting!', 'This makes Variety better for everyone')
+        except Exception:
+            logger.exception(lambda: "Exception in report_sfw_rating")
 
     def copy_to_favorites(self, widget=None, file=None):
         try:
@@ -1948,6 +2004,19 @@ class VarietyWindow(Gtk.Window):
         self.options.write()
         self.update_indicator(auto_changed=False)
         self.change_event.set()
+
+    def on_safe_mode_toggled(self, widget=None, safe_mode=None):
+        if safe_mode is None:
+            self.options.safe_mode = not self.options.safe_mode
+        else:
+            self.options.safe_mode = safe_mode
+
+        if self.preferences_dialog:
+            self.preferences_dialog.ui.safe_mode.set_active(self.options.safe_mode)
+
+        self.options.write()
+        self.update_indicator(auto_changed=False)
+        self.clear_prepared_queue()
 
     @staticmethod
     def parse_options(arguments, report_errors=True):

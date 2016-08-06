@@ -28,7 +28,10 @@ import threading
 import time
 import pyexiv2
 import urllib
+import functools
+import datetime
 from urlparse import urlparse
+
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib
 import inspect
@@ -134,6 +137,33 @@ class throttle(object):
                 self.timer.start()
 
         return wrapper
+
+
+def cache(ttl_seconds=100*365*24*3600, debug=False):
+    """
+    caching decorator with TTL. Keep in mind the cache is per-process.
+    TODO: There is no process for cache invalidation now. Introduce memcached and use it instead.
+    :param ttl_seconds: TTL in seconds before the cache entry expires
+    :param debug: use True to log cache hits (with DEBUG level)
+    """
+    def decorate(f):
+        _cache = {}
+
+        @functools.wraps(f)
+        def decorated(*args):
+            cached = _cache.get(args)
+            if not cached or cached['timestamp'] < datetime.datetime.now() - datetime.timedelta(seconds=ttl_seconds):
+                cached = {
+                    'timestamp': datetime.datetime.now(),
+                    'result': f(*args)
+                }
+                _cache[args] = cached
+            elif debug:
+                logger.debug(lambda: '@cache hit for %s' % str(args))
+            return cached['result']
+        return decorated
+
+    return decorate
 
 
 class Util:
