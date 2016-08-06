@@ -991,7 +991,7 @@ class VarietyWindow(Gtk.Window):
                     time.sleep(30)
                     continue
 
-            time.sleep(3600)  # Report once per hour
+            time.sleep(3600 * 6)  # Report once per 6 hours
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher) > 0
