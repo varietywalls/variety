@@ -54,13 +54,17 @@ class Stats:
 
         # add some general OS and desktop environment information
         config["platform"] = str(platform.platform())
-        config["linux_distribution"] = str(platform.linux_distribution())
+        distro = platform.linux_distribution()
+        config["linux_distribution"] = distro
+        config["linux_distribution_distname"] = str(distro[0])
+        config["linux_distribution_version"] = str(distro[1])
+        config["linux_distribution_id"] = str(distro[2])
         config["desktop_session"] = str(os.getenv('DESKTOP_SESSION'))
 
         # add screen info - resolution, monitor count, etc.
-        config["total_screen_width"] = str(Gdk.Screen.get_default().get_width())
-        config["total_screen_height"] = str(Gdk.Screen.get_default().get_height())
-        config["monitor_count"] = str(Gdk.Screen.get_default().get_n_monitors())
+        config["total_screen_width"] = Gdk.Screen.get_default().get_width()
+        config["total_screen_height"] = Gdk.Screen.get_default().get_height()
+        config["monitor_count"] = Gdk.Screen.get_default().get_n_monitors()
 
         try:
             rect = Gdk.Screen.get_default().get_monitor_geometry(Gdk.Screen.get_default().get_primary_monitor())
