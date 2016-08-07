@@ -462,7 +462,8 @@ class Util:
                                  data=data,
                                  headers=headers,
                                  stream=stream,
-                                 allow_redirects=True)
+                                 allow_redirects=True,
+                                 verify=False)
             r.raise_for_status()
             return r
         except requests.exceptions.SSLError:
