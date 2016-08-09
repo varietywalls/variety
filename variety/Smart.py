@@ -814,12 +814,22 @@ class Smart:
     @cache(ttl_seconds=1800)
     def get_safe_mode_keyword_blacklist(cls):
         try:
-            logger.debug('Fethcing safe mode keywords blacklist')
+            logger.debug('Fetching safe mode keywords blacklist')
             blacklisted = set(Util.fetch_json(Smart.API_URL + '/safe-mode-blacklisted-tags').keys())
             logger.info('Safe mode blacklisted keywords: %s' % str(blacklisted))
             return blacklisted
         except Exception, e:
-            return set()
+            logger.info('Could not fetch Safe mode blacklisted keywords, using defaults:')
+            return {
+                # Sample of Wallhaven and Flickr tags that cover most not-fully-safe images
+                'woman', 'women', 'model', 'models', 'boob', 'boobs', 'tit', 'tits',
+                'lingerie', 'bikini', 'bikini model', 'sexy', 'bra', 'bras', 'panties',
+                'face', 'faces', 'legs', 'feet', 'pussy',
+                'ass', 'asses', 'topless', 'long hair', 'lesbians', 'cleavage',
+                'brunette', 'brunettes', 'redhead', 'redheads', 'blonde', 'blondes',
+                'high heels', 'miniskirt', 'stockings', 'anime girls', 'in bed', 'kneeling',
+                'girl', 'girls', 'nude', 'naked', 'people', 'fuck', 'sex'
+            }
 
     def stats_report_config(self):
         logger.info(lambda: "Stats: Reporting config anonymously")
