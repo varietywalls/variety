@@ -165,7 +165,6 @@ class Indicator:
         # self.menu.append(self.image_item)
         #
         self.sfw_menu = Gtk.Menu()
-        self.sfw_menu.set_sensitive(False)
         threading.Timer(2, self.populate_sfw_menu).start()
 
         self.sfw_menu_item = Gtk.MenuItem(_("Report NSFW image"))
