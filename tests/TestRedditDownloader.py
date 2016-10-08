@@ -20,6 +20,7 @@ import os.path
 import unittest
 
 from tests.TestDownloader import test_download_one_for
+from variety.AttrDict import AttrDict
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -41,8 +42,16 @@ class TestRedditDownloader(unittest.TestCase):
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/top/?sort=top&t=week'))
 
     def test_validate(self):
-        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics'))
-        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics/'))
+        parent = AttrDict()
+
+        parent.options.safe_mode = True
+        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics', parent))
+        self.assertFalse(RedditDownloader.validate('http://www.reddit.com/r/nsfw/', parent))
+
+        parent.options.safe_mode = False
+        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/comics', parent))
+        self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/nsfw/', parent))
+
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/'))
         self.assertTrue(RedditDownloader.validate('http://www.reddit.com/r/AutumnPorn/top?sort=top&t=month'))
         self.assertFalse(RedditDownloader.validate('http://www.reddit.com/r/bestof/'))

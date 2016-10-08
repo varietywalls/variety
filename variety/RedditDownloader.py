@@ -41,7 +41,7 @@ class RedditDownloader(Downloader.Downloader):
         return p.scheme + '://' + p.netloc + p.path + '.json' + '?' + p.query + ('&' if p.query else '') + 'limit=100'
 
     @staticmethod
-    def validate(url):
+    def validate(url, parent=None):
         logger.info(lambda: "Validating Reddit url " + url)
         try:
             if not url.startswith("http://") and not url.startswith("https://"):
@@ -50,7 +50,7 @@ class RedditDownloader(Downloader.Downloader):
             if not '//reddit.com' in url and not '//www.reddit.com' in url:
                 return False
 
-            dl = RedditDownloader(None, url)
+            dl = RedditDownloader(parent, url)
             dl.fill_queue()
             return len(dl.queue) > 0
         except Exception:
@@ -87,7 +87,7 @@ class RedditDownloader(Downloader.Downloader):
                     extra_metadata = {'sourceType': 'reddit'}
                     if data['over_18']:
                         extra_metadata['sfwRating'] = 0
-                        if self.parent.options.safe_mode:
+                        if self.parent and self.parent.options.safe_mode:
                             continue
                     self.queue.append((src_url, image_url, extra_metadata))
             except Exception:

@@ -171,7 +171,7 @@ class MediaRssDownloader(Downloader.Downloader):
                         rating = int(sfw.attrib.get('rating', None))
                         extra_metadata['sfwRating'] = rating
 
-                        if self.parent.options.safe_mode and rating < 100:
+                        if self.parent and self.parent.options.safe_mode and rating < 100:
                             logger.info(lambda: "Skipping non-safe download from VRTY MediaRss feed. "
                                                 "Is the source %s suitable for Safe mode?" % self.location)
                             continue

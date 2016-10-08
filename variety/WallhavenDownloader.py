@@ -120,7 +120,7 @@ class WallhavenDownloader(Downloader.Downloader):
             sfw_rating = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
             extra_metadata['sfwRating'] = sfw_rating
 
-            if self.parent.options.safe_mode and sfw_rating < 100:
+            if self.parent and self.parent.options.safe_mode and sfw_rating < 100:
                 logger.info(lambda: "Skipping non-safe download from Wallhaven. "
                                     "Is the source %s suitable for Safe mode?" % self.location)
                 return None

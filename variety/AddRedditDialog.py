@@ -42,7 +42,7 @@ class AddRedditDialog(AbstractAddByQueryDialog):
             if not '//reddit.com' in query and not '//www.reddit.com' in query:
                 return query, False, _("This does not seem to be a valid Reddit URL")
 
-        valid = RedditDownloader.validate(query)
+        valid = RedditDownloader.validate(query, self.parent)
         return query, None if valid else _("We could not find any image submissions there.")
 
     def commit(self, final_url):
