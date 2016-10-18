@@ -156,6 +156,11 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_image('fake_image.jpg'))
         self.assertFalse(Util.is_image('fake_image.jpg', check_contents=True))
 
+    def test_is_animated_gif(self):
+        self.assertFalse(Util.is_animated_gif('test.jpg'))
+        self.assertTrue(Util.is_animated_gif('animated.gif'))
+        self.assertFalse(Util.is_animated_gif('not-animated.gif'))
+
     def test_is_dead_or_not_image(self):
         self.assertTrue(Util.is_dead_or_not_image(None))
         self.assertTrue(Util.is_dead_or_not_image('not a URL'))

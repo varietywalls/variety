@@ -31,6 +31,7 @@ import urllib
 import functools
 import datetime
 from urlparse import urlparse
+from PIL import Image
 
 from DominantColors import DominantColors
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib
@@ -220,11 +221,27 @@ class Util:
 
     @staticmethod
     def is_image(filename, check_contents=False):
+        if Util.is_animated_gif(filename):
+            return False
+
         if not check_contents:
             return filename.lower().endswith(('.jpg', '.jpeg', '.gif', '.png', '.tiff', '.svg', '.bmp'))
         else:
             format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)
             return bool(format)
+
+    @staticmethod
+    def is_animated_gif(filename):
+        if not filename.lower().endswith('.gif'):
+            return False
+
+        gif = Image.open(filename)
+        try:
+            gif.seek(1)
+        except EOFError:
+            return False
+        else:
+            return True
 
     @staticmethod
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):

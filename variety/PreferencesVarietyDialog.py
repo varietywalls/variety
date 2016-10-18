@@ -544,7 +544,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.set_local_only(True)
         filter = Gtk.FileFilter()
         filter.set_name(_("Images"))
-        for s in ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg"]:
+        for s in ["jpg", "jpeg", "png", "bmp", "tiff", "svg"]:
             filter.add_pattern("*." + s)
             filter.add_pattern("*." + s.upper())
         chooser.add_filter(filter)

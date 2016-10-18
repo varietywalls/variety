@@ -1490,6 +1490,9 @@ class VarietyWindow(Gtk.Window):
 
     def image_ok(self, img, fuzziness):
         try:
+            if Util.is_animated_gif(img):
+                return False
+
             if self.options.min_rating_enabled:
                 rating = Util.get_rating(img)
                 if rating is None or rating <= 0 or rating < self.options.min_rating:
