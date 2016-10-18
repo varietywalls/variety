@@ -33,7 +33,7 @@ class TestImageFetcher(unittest.TestCase):
         os.makedirs(target_folder)
         for url in ["http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-207261.jpg",
                     "http://unsplash.com/photos/7EqQ1s3wIAI/download",
-                    "https://www.bing.com/az/hprichbg/rb/CabodeGata_EN-US11322608653_1920x1080.jpg",
+                    "http://az608707.vo.msecnd.net/files/GreaterFlamingos_EN-US13682107304_1366x768.jpg",
                     "http://a.desktopprassets.com/wallpapers/07865fb0cb575e82fe43d3e1b634f6e2309e2114/foto_alese45.jpg",
                     ]:
             f = ImageFetcher.fetch(url, target_folder, verbose=False)
