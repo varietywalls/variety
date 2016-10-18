@@ -40,7 +40,6 @@ class Options:
         DESKTOPPR = 6
         FLICKR = 7
         APOD = 8
-        WALLBASE = 9
         MEDIA_RSS = 10
         EARTH = 11
         PANORAMIO = 12
@@ -59,7 +58,6 @@ class Options:
             DESKTOPPR: "desktoppr",
             FLICKR: "flickr",
             APOD: "apod",
-            WALLBASE: "wallbase",
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
             PANORAMIO: "panoramio",
@@ -73,7 +71,7 @@ class Options:
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [DESKTOPPR, FLICKR, APOD, WALLBASE, MEDIA_RSS, EARTH,
+        dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
                     PANORAMIO, WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
 
     class LightnessMode:
@@ -581,7 +579,7 @@ class Options:
         self.fetched_folder = os.path.expanduser(u"~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "alpha.wallhaven.cc,wallbase.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+        self.clipboard_hosts = "alpha.wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
 
         self.icon = "Light"
 

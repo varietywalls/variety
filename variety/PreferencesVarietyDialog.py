@@ -30,7 +30,6 @@ from variety_lib.varietyconfig import get_data_file
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.AddFlickrDialog import AddFlickrDialog
-from variety.AddWallbaseDialog import AddWallbaseDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
 from variety.AddPanoramioDialog import AddPanoramioDialog
@@ -63,7 +62,6 @@ UNREMOVEABLE_TYPES = [
 ]
 
 EDITABLE_TYPES = [
-    Options.SourceType.WALLBASE,
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS,
     Options.SourceType.PANORAMIO,
@@ -383,7 +381,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             '-',
             (_("Flickr"), self.on_add_flickr_clicked),
             (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            # (_("Wallbase.cc"), self.on_add_wallbase_clicked),
             (_("Panoramio"), self.on_add_panoramio_clicked),
             (_("Reddit"), self.on_add_reddit_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
@@ -669,8 +666,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         elif type in EDITABLE_TYPES:
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
-            elif type == Options.SourceType.WALLBASE:
-                self.dialog = AddWallbaseDialog()
             elif type == Options.SourceType.WALLHAVEN:
                 self.dialog = AddWallhavenDialog()
             elif type == Options.SourceType.REDDIT:
@@ -787,9 +782,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
-
-    def on_add_wallbase_clicked(self, widget=None):
-        self.show_dialog(AddWallbaseDialog())
 
     def on_add_wallhaven_clicked(self, widget=None):
         self.show_dialog(AddWallhavenDialog())

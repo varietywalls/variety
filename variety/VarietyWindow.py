@@ -49,7 +49,6 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
-from variety.WallbaseDownloader import WallbaseDownloader
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
@@ -527,8 +526,6 @@ class VarietyWindow(Gtk.Window):
             return EarthDownloader(self)
         elif type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
-        elif type == Options.SourceType.WALLBASE:
-            return WallbaseDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
         elif type == Options.SourceType.REDDIT:
