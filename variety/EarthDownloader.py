@@ -22,8 +22,8 @@ logger = logging.getLogger('variety')
 
 from variety import Downloader
 
-EARTH_IMAGE_URL = "http://static.die.net/earth/mercator/1600.jpg"
-EARTH_ORIGIN_URL = "http://www.die.net/earth/"
+EARTH_IMAGE_URL = "https://static.die.net/earth/mercator/1600.jpg"
+EARTH_ORIGIN_URL = "https://www.die.net/earth/"
 EARTH_FILENAME = "earth.jpg"
 
 class EarthDownloader(Downloader.Downloader):

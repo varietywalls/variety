@@ -73,6 +73,12 @@ class Downloader(object):
         except Exception:
             pass
 
+        if origin_url.startswith('//'):
+            origin_url = 'https:' + origin_url
+
+        if image_url.startswith('//'):
+            image_url = origin_url.split('//')[0] + image_url
+
         if not local_filename:
             local_filename = self.get_local_filename(image_url)
         logger.info(lambda: "Origin URL: " + origin_url)

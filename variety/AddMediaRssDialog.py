@@ -35,7 +35,7 @@ class AddMediaRssDialog(AbstractAddByQueryDialog):
 
     def validate(self, url):
         if not url.startswith("http://") and not url.startswith("https://"):
-            url = "http://" + url
+            url = "https://" + url
         valid = MediaRssDownloader.validate(url)
         return url, None if valid else _("This does not seem to be a valid Media RSS feed URL or there is no content there.")
 

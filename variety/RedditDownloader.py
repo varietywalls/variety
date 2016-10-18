@@ -83,7 +83,7 @@ class RedditDownloader(Downloader.Downloader):
                     image_url = image_url.replace('://', '://i.') + '.jpg'
 
                 if image_url.lower().endswith(('.jpg', '.jpeg', '.png')):
-                    src_url = 'http://www.reddit.com' + data['permalink']
+                    src_url = 'https://www.reddit.com' + data['permalink']
                     extra_metadata = {'sourceType': 'reddit'}
                     if data['over_18']:
                         extra_metadata['sfwRating'] = 0

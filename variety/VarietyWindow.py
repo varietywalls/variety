@@ -689,8 +689,14 @@ class VarietyWindow(Gtk.Window):
                     label = _("View at %s") % self.source_name
 
                 self.url = info["sourceURL"]
+                if self.url.startswith('//'):
+                    self.url = 'https:' + self.url
+
                 if "imageURL" in info:
                     self.image_url = info["imageURL"]
+                    if self.image_url.startswith('//'):
+                        self.image_url = self.url.split('//')[0] + self.image_url
+
             if label and len(label) > 50:
                 label = label[:50] + "..."
 
@@ -2781,12 +2787,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
-            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["quote"].encode('utf8'))
+            url = "https://google.com/search?q=" + urllib.quote_plus(self.quote["quote"].encode('utf8'))
             webbrowser.open_new_tab(url)
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:
-            url = "http://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
+            url = "https://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
             webbrowser.open_new_tab(url)
 
     def google_image_search(self, widget=None):

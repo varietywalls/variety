@@ -73,13 +73,13 @@ class AddFlickrDialog(Gtk.Dialog):
             self.ui.tags.set_text(params["tags"])
 
         if "user" in params:
-            if not params["user"].startswith("http://"):
-                params["user"] = "http://" + params["user"]
+            if '://' not in params["user"]:
+                params["user"] = "https://" + params["user"]
             self.ui.user_url.set_text(params["user"])
 
         if "group" in params:
-            if not params["group"].startswith("http://"):
-                params["group"] = "http://" + params["group"]
+            if '://' not in params["group"]:
+                params["group"] = "https://" + params["group"]
             self.ui.group_url.set_text(params["group"])
 
 

@@ -60,14 +60,14 @@ class GoodreadsSource(IQuoteSource):
     def get_for_author(self, author):
         logger.info(lambda: "Fetching quotes from Goodreads for author=%s" % author)
 
-        url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % author)
+        url = iri2uri(u"https://www.goodreads.com/quotes/search?utf8=\u2713&q=%s" % author)
         soup = Util.html_soup(url)
         page_links = list(Util.safe_map(int,
                                         [pagelink.contents[0] for pagelink in
                                          soup.find_all(href=re.compile('quotes/search.*page='))]))
         if page_links:
             page = random.randint(1, max(page_links))
-            url = iri2uri(u"http://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d" % (author, page))
+            url = iri2uri(u"https://www.goodreads.com/quotes/search?utf8=\u2713&q=%s&page=%d" % (author, page))
             soup = Util.html_soup(url)
 
         return self.get_from_soup(url, soup)
@@ -75,14 +75,14 @@ class GoodreadsSource(IQuoteSource):
     def get_for_keyword(self, keyword):
         logger.info(lambda: "Fetching quotes from Goodreads for keyword=%s" % keyword)
 
-        url = iri2uri(u"http://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s" % keyword)
+        url = iri2uri(u"https://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s" % keyword)
         soup = Util.html_soup(url)
         page_links = list(Util.safe_map(int,
                                         [pagelink.contents[0] for pagelink in
                                          soup.find_all(href=re.compile('quotes/tag.*page='))]))
         if page_links:
             page = random.randint(1, max(page_links))
-            url = iri2uri(u"http://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s&page=%d" % (keyword, page))
+            url = iri2uri(u"https://www.goodreads.com/quotes/tag?utf8=\u2713&id=%s&page=%d" % (keyword, page))
             soup = Util.html_soup(url)
 
         return self.get_from_soup(url, soup)
@@ -105,7 +105,7 @@ class GoodreadsSource(IQuoteSource):
 
                 if first_a:
                     author = first_a.contents[0]
-                    link = "http://www.goodreads.com" + div.find('a')["href"]
+                    link = "https://www.goodreads.com" + div.find('a')["href"]
                     if div.find('i'):
                         author = author + ', ' + div.find('i').find('a').contents[0]
                 else:

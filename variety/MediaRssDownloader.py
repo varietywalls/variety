@@ -57,7 +57,7 @@ class MediaRssDownloader(Downloader.Downloader):
         logger.info(lambda: "Validating MediaRSS url " + url)
         try:
             if not url.startswith("http://") and not url.startswith("https://"):
-                url = "http://" + url
+                url = "https://" + url
 
             s = MediaRssDownloader.fetch(url)
             walls = [x.attrib["url"] for x in s.findall(".//{0}content".format(MEDIA_NS))

@@ -35,10 +35,10 @@ class AddRedditDialog(AbstractAddByQueryDialog):
 
     def validate(self, query):
         if not '/' in query:
-            query = 'http://www.reddit.com/r/%s' % query
+            query = 'https://www.reddit.com/r/%s' % query
         else:
             if not query.startswith("http://") and not query.startswith("https://"):
-                query = "http://" + query
+                query = "https://" + query
             if not '//reddit.com' in query and not '//www.reddit.com' in query:
                 return query, False, _("This does not seem to be a valid Reddit URL")
 

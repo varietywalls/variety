@@ -29,7 +29,7 @@ random.seed()
 
 
 class BingDownloader(Downloader.Downloader):
-    BING_JSON_URL = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=100&mkt=en-US"  # n=100, but max 8 images are actually returned... Pity.
+    BING_JSON_URL = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=100&mkt=en-US"  # n=100, but max 8 images are actually returned... Pity.
 
     def __init__(self, parent):
         super(BingDownloader, self).__init__(parent, "bing", "Bing", "https://www.bing.com/gallery/")

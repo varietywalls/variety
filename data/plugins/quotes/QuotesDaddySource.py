@@ -38,7 +38,7 @@ class QuotesDaddySource(IQuoteSource):
         return False
 
     def get_random(self):
-        url = "http://www.quotesdaddy.com/feed"
+        url = "https://www.quotesdaddy.com/feed"
 
         bs = Util.xml_soup(url)
         item = bs.find("item")
