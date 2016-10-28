@@ -650,7 +650,6 @@ class Options:
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
-            [True, Options.SourceType.WALLHAVEN, "nature"],
         ]
 
         self.filters = [
