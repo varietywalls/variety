@@ -41,7 +41,7 @@ import platform
 from variety import _u, _str
 
 
-VARIETY_INFO = ""
+VARIETY_INFO = "-"
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
 
@@ -283,6 +283,34 @@ class Util:
         force_exit_thread.start()
 
     @staticmethod
+    def check_and_update_metadata(filename):
+        try:
+            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
+        except KeyError:
+            pass
+
+        try:
+            m = pyexiv2.ImageMetadata(filename)
+            m.read()
+        except Exception:
+            logger.exception(lambda: "Could not read metadata for %s" % filename)
+            return False
+
+        try:
+            if 'Xmp.variety.info' in m or 'vrty.org' in m.get('imageURL', ''):
+                logger.info(lambda: 'Updating metadata for %s' % filename)
+                del m["Xmp.variety.info"]
+                if 'imageURL' in m and 'vrty.org' in m['imageURL']:
+                    del m['imageURL']
+                m.write(preserve_timestamps=True)
+
+                return True
+        except Exception:
+            logger.exception(lambda: "Could not read metadata for %s" % filename)
+
+        return False
+
+    @staticmethod
     def write_metadata(filename, info):
         try:
             pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
@@ -292,7 +320,6 @@ class Util:
         try:
             m = pyexiv2.ImageMetadata(filename)
             m.read()
-            m["Xmp.variety.info"] = VARIETY_INFO
             for k, v in info.items():
                 if k == 'author':
                     m["Xmp.variety." + k] = v

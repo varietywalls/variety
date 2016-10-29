@@ -16,6 +16,9 @@
 
 import gettext
 import logging
+
+import datetime
+
 gettext.textdomain('variety')
 import os
 import sys
@@ -169,7 +172,15 @@ def monkeypatch_ssl():
     ssl.SSLSocket.__init__ = ubuntu_openssl_bug_965371
 
 
+REL_DATE = "2016-10-30"
+
+
 def main():
+    if datetime.datetime.now() - datetime.datetime.strptime(REL_DATE, "%Y-%m-%d") > datetime.timedelta(
+            days=180):
+        print VarietyWindow.OUTDATED_MSG
+        return
+
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
     signal.signal(signal.SIGTERM, sigint_handler)

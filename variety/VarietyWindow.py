@@ -15,6 +15,8 @@
 ### END LICENSE
 import io
 
+import datetime
+
 from variety import _, _u
 import subprocess
 import urllib
@@ -75,10 +77,14 @@ DL_FOLDER_FILE = ".variety_download_folder"
 DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DHQUELMQRQW46&lc=BG&item_name=' \
              'Variety%20Wallpaper%20Changer&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted'
 
+OUTDATED_MSG = 'This version of Variety is outdated and unsupported. Please upgrade. Quitting.'
+
+
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-051"
+    #SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-051"
+    SERVERSIDE_OPTIONS_URL = "http://localhost:8000/options"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -970,6 +976,10 @@ class VarietyWindow(Gtk.Window):
                 logger.info(lambda: "Fetched server options: %s" % str(self.server_options))
                 if self.preferences_dialog:
                     self.preferences_dialog.update_status_message()
+
+                if varietyconfig.get_version() in self.server_options.get('outdated_versions', []):
+                    self.show_notification('Version unsupported', OUTDATED_MSG)
+                    GObject.idle_add(self.on_quit)
             except Exception:
                 logger.exception(lambda: "Could not fetch Variety serverside options")
                 if attempts < 5:
@@ -1300,6 +1310,9 @@ class VarietyWindow(Gtk.Window):
                 if not os.access(filename, os.R_OK):
                     logger.info(lambda: "Missing file or bad permissions, will not use it: " + filename)
                     return
+
+                if Util.check_and_update_metadata(filename):
+                    self.update_images_metadata(os.path.dirname(filename))
 
                 self.write_filtered_wallpaper_origin(filename)
                 to_set = filename
@@ -1915,6 +1928,45 @@ class VarietyWindow(Gtk.Window):
         with open(os.path.join(self.config_folder, ".version"), "w") as f:
             f.write(current_version)
 
+    def update_images_metadata(self, folder=None):
+        if getattr(self, 'updating_images_metadata', False):
+            return
+
+        def _go():
+            if getattr(self, 'updating_images_metadata', False):
+                return
+
+            try:
+                self.updating_images_metadata = True
+                logger.info('Updating images metadata')
+                options = Options()
+                options.read()
+
+                if not folder:
+                    for f in Util.list_files(folders=[options.favorites_folder],
+                                             filter_func=Util.is_image, max_files=50000, randomize=True):
+                        Util.check_and_update_metadata(f)
+                        time.sleep(0.1)
+
+                    for f in Util.list_files(folders=[options.fetched_folder, options.download_folder],
+                                             filter_func=Util.is_image, max_files=50000, randomize=True):
+                        Util.check_and_update_metadata(f)
+                        time.sleep(0.1)
+                else:
+                    for f in Util.list_files(folders=[folder],
+                                             filter_func=Util.is_image, max_files=50000, randomize=True):
+                        Util.check_and_update_metadata(f)
+                        time.sleep(0.1)
+
+            except Exception:
+                logger.exception(lambda: "Could not update images metadata")
+            finally:
+                self.updating_images_metadata = False
+
+        metadata_thread = threading.Thread(target=_go)
+        metadata_thread.daemon = True
+        metadata_thread.start()
+
     def perform_upgrade(self):
         try:
             current_version = varietyconfig.get_version()
@@ -1971,6 +2023,7 @@ class VarietyWindow(Gtk.Window):
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
+                self.update_images_metadata()
 
                 # Upgrade set and get_wallpaper scripts
                 def upgrade_script(script, outdated_md5):
