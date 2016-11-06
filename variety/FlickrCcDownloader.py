@@ -112,7 +112,7 @@ class FlickrCcDownloader(Downloader.Downloader):
 
     def count_results(self):
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search"\
-               "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
+               "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1&license=1,2,3,4,5,6" % API_KEY
 
         for k, v in self.params.items():
             call = call + "&" + k + "=" + v
@@ -157,7 +157,7 @@ class FlickrCcDownloader(Downloader.Downloader):
         logger.info(lambda: "Filling Flickr download queue: " + self.location)
 
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
-               "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
+               "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1&license=1,2,3,4,5,6" % API_KEY
 
         for k, v in self.params.items():
             call = call + "&" + k + "=" + v

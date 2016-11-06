@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.0"/>
   <!-- interface-requires add_flickr_dialog 1.0 -->
   <object class="AddFlickrDialog" id="add_flickr_dialog">
     <property name="width_request">650</property>
@@ -30,7 +31,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -48,7 +48,6 @@
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -98,7 +97,7 @@
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
                 <property name="margin_left">15</property>
-                <property name="label" translatable="yes">Please specify the &lt;a href="http://flickr.com"&gt;Flickr&lt;/a&gt; search criteria. Photos that match all of the chosen criteria will be downloaded. Leave unneeded criteria empty.</property>
+                <property name="label" translatable="yes">Please specify the &lt;a href="http://flickr.com"&gt;Flickr&lt;/a&gt; search criteria. Photos licensed under Creative Commons that match all of the chosen criteria will be downloaded. Leave unneeded criteria empty.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
@@ -137,7 +136,6 @@
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
                     <property name="activates_default">True</property>
-                    <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -184,7 +182,6 @@ Example: yellow,car</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
                     <property name="activates_default">True</property>
-                    <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -231,7 +228,6 @@ Example: &lt;a href="http://www.flickr.com/photos/peter-levi/"&gt;http://www.fli
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
                     <property name="activates_default">True</property>
-                    <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -277,7 +273,6 @@ Example: &lt;a href="http://www.flickr.com/groups/wallpapers/"&gt;http://www.fli
                     <property name="hexpand">True</property>
                     <property name="invisible_char">•</property>
                     <property name="activates_default">True</property>
-                    <property name="invisible_char_set">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
