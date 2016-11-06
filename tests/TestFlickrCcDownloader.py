@@ -23,37 +23,37 @@ from tests.TestDownloader import test_download_one_for
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from variety.FlickrDownloader import FlickrDownloader
+from variety.FlickrCcDownloader import FlickrCcDownloader
 
 
-class TestFlickrDownloader(unittest.TestCase):
+class TestFlickrCcDownloader(unittest.TestCase):
     def test_download_one(self):
         test_download_one_for(self,
-                              FlickrDownloader(None, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"))
+                              FlickrCcDownloader(None, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"))
 
     def test_obtain_userid_ok(self):
         self.assertEqual((True, "ok", "34388055@N08"),
-            FlickrDownloader.obtain_userid("http://www.flickr.com/photos/camillelacroix/"))
+            FlickrCcDownloader.obtain_userid("http://www.flickr.com/photos/camillelacroix/"))
 
     def test_obtain_userid_fail(self):
         self.assertEqual((False, "User not found", None),
-            FlickrDownloader.obtain_userid("http://www.flickr.com/photos/bad_username_here_xxx/"))
+            FlickrCcDownloader.obtain_userid("http://www.flickr.com/photos/bad_username_here_xxx/"))
 
     def test_obtain_groupid_ok(self):
         self.assertEqual((True, "ok", "40961104@N00"),
-            FlickrDownloader.obtain_groupid("http://www.flickr.com/groups/wallpapers/"))
+            FlickrCcDownloader.obtain_groupid("http://www.flickr.com/groups/wallpapers/"))
 
     def test_obtain_groupid_fail(self):
         self.assertEqual((False, "Group not found", None),
-            FlickrDownloader.obtain_groupid("http://www.flickr.com/groups/bad_groupname_here_xxx/"))
+            FlickrCcDownloader.obtain_groupid("http://www.flickr.com/groups/bad_groupname_here_xxx/"))
 
     def test_get_photo_id(self):
-        self.assertEqual('7527967456', FlickrDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456/'))
-        self.assertEqual('7527967456', FlickrDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456'))
+        self.assertEqual('7527967456', FlickrCcDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456/'))
+        self.assertEqual('7527967456', FlickrCcDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456'))
 
     def test_get_image_url(self):
         self.assertEquals('https://farm9.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg',
-                          FlickrDownloader.get_image_url('https://www.flickr.com/photos/peter-levi/7527967456/'))
+                          FlickrCcDownloader.get_image_url('https://www.flickr.com/photos/peter-levi/7527967456/'))
 
     def test_get_extra_metadata(self):
         expected = {
@@ -64,7 +64,7 @@ class TestFlickrDownloader(unittest.TestCase):
             'author': u'Peter Levi'
         }
         self.assertEquals(expected,
-                          FlickrDownloader.get_extra_metadata('https://www.flickr.com/photos/peter-levi/7527967456/'))
+                          FlickrCcDownloader.get_extra_metadata('https://www.flickr.com/photos/peter-levi/7527967456/'))
 
 if __name__ == '__main__':
     unittest.main()

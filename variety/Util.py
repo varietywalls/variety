@@ -46,15 +46,9 @@ VARIETY_INFO = "-"
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
 
 SOURCE_NAME_TO_TYPE = {
-    'wallbase.cc': 'wallbase',
-    'wallhaven.cc': 'wallhaven',
-    'wallpapers.net': 'wn',
-    'desktoppr.co': 'desktoppr',
-    'nasa astro pic of the day': 'apod',
-    'opentopia.com': 'earth',
     'fetched': 'fetched',
-    'recommended by variety': 'recommended',
     'flickr': 'flickr',
+    'flickrcc': 'flickrcc',
     'media rss': 'mediarss',
 }
 
@@ -706,8 +700,6 @@ class Util:
             if host.startswith('interfacelift.com'):
                 return False
 
-            if 'wallbase.cc' in host or 'ns223506.ovh.net' in host:
-                return True
         except:
             return True
 

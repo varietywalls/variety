@@ -31,12 +31,9 @@ from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
-from variety.AddRedditDialog import AddRedditDialog
-from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
-from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u
 
@@ -52,21 +49,12 @@ from variety_lib.PreferencesDialog import PreferencesDialog
 UNREMOVEABLE_TYPES = [
     Options.SourceType.FAVORITES,
     Options.SourceType.FETCHED,
-    Options.SourceType.DESKTOPPR,
-    Options.SourceType.BING,
     Options.SourceType.UNSPLASH,
-    Options.SourceType.APOD,
-    Options.SourceType.EARTH,
-    Options.SourceType.RECOMMENDED,
-    Options.SourceType.LATEST,
 ]
 
 EDITABLE_TYPES = [
-    Options.SourceType.FLICKR,
+    Options.SourceType.FLICKR_CC,
     Options.SourceType.MEDIA_RSS,
-    Options.SourceType.PANORAMIO,
-    Options.SourceType.WALLHAVEN,
-    Options.SourceType.REDDIT,
 ]
 
 
@@ -380,9 +368,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             (_("Folders"), self.on_add_folders_clicked),
             '-',
             (_("Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Panoramio"), self.on_add_panoramio_clicked),
-            (_("Reddit"), self.on_add_reddit_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
 
@@ -431,46 +416,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_row_enabled_state_changed(row)
 
     def on_row_enabled_state_changed(self, row):
-        # Special case when enabling the Earth downloader:
-        if row[0] and row[1] == Options.type_to_str(Options.SourceType.EARTH):
-            updated = False
-            if not self.ui.change_enabled.get_active():
-                self.ui.change_enabled.set_active(True)
-                updated = True
-            if self.get_change_interval() > 30 * 60:
-                self.set_change_interval(30 * 60)
-                updated = True
-
-            if not self.ui.download_enabled.get_active():
-                self.ui.download_enabled.set_active(True)
-                updated = True
-            if self.get_download_interval() > 30 * 60:
-                self.set_download_interval(30 * 60)
-                updated = True
-
-            if updated:
-                self.parent.show_notification(
-                    _("World Sunlight Map enabled"),
-                    _("Using the World Sunlight Map requires both downloading and changing "
-                    "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
-
-        # special case when enabling the Recommended or Latest downloader:
-        elif row[0] and row[1] in (Options.type_to_str(Options.SourceType.RECOMMENDED),) and \
-                not self.parent.options.smart_enabled:
-
-            row[0] = False
-            self.dialog = SmartFeaturesConfirmationDialog()
-            def _on_ok(button):
-                self.parent.options.smart_enabled = self.dialog.ui.smart_enabled.get_active()
-                self.parent.options.write()
-                self.ui.smart_enabled.set_active(self.parent.options.smart_enabled)
-                if self.parent.options.smart_enabled:
-                    row[0] = True
-
-            self.dialog.ui.btn_ok.connect("clicked", _on_ok)
-            self.dialog.run()
-            self.dialog.destroy()
-            self.dialog = None
+        return
 
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:
@@ -664,16 +610,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
         elif type == Options.SourceType.FETCHED:
             subprocess.call(["xdg-open", self.parent.options.fetched_folder])
         elif type in EDITABLE_TYPES:
-            if type == Options.SourceType.FLICKR:
+            if type == Options.SourceType.FLICKR_CC:
                 self.dialog = AddFlickrDialog()
-            elif type == Options.SourceType.WALLHAVEN:
-                self.dialog = AddWallhavenDialog()
-            elif type == Options.SourceType.REDDIT:
-                self.dialog = AddRedditDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
-            elif type == Options.SourceType.PANORAMIO:
-                self.dialog = AddPanoramioDialog()
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
@@ -777,17 +717,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_add_mediarss_clicked(self, widget=None):
         self.show_dialog(AddMediaRssDialog())
 
-    def on_add_reddit_clicked(self, widget=None):
-        self.show_dialog(AddRedditDialog())
-
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
-
-    def on_add_wallhaven_clicked(self, widget=None):
-        self.show_dialog(AddWallhavenDialog())
-
-    def on_add_panoramio_clicked(self, widget=None):
-        self.show_dialog(AddPanoramioDialog())
 
     def show_dialog(self, dialog):
         self.dialog = dialog
@@ -1071,6 +1002,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
 
     def on_smart_enabled_toggled(self, widget=None):
+        # TODO $$: remove
         self.on_smart_user_updated()
         if not self.ui.smart_enabled.get_active():
             for s in self.parent.options.sources:

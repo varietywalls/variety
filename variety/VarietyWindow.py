@@ -15,8 +15,6 @@
 ### END LICENSE
 import io
 
-import datetime
-
 from variety import _, _u
 import subprocess
 import urllib
@@ -51,16 +49,9 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
-from variety.WallhavenDownloader import WallhavenDownloader
-from variety.RedditDownloader import RedditDownloader
-from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
-from variety.PanoramioDownloader import PanoramioDownloader
-from variety.DesktopprDownloader import DesktopprDownloader
-from variety.APODDownloader import APODDownloader
-from variety.FlickrDownloader import FlickrDownloader
+from variety.FlickrCcDownloader import FlickrCcDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
-from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util, throttle, debounce
@@ -83,8 +74,7 @@ OUTDATED_MSG = 'This version of Variety is outdated and unsupported. Please upgr
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    #SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-051"
-    SERVERSIDE_OPTIONS_URL = "http://localhost:8000/options"
+    SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-063"
 
     OUTDATED_SET_WP_SCRIPTS = {
         "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
@@ -185,9 +175,6 @@ class VarietyWindow(Gtk.Window):
         self.update_indicator(auto_changed=False)
 
         self.start_threads()
-
-        prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
-        prepare_earth_timer.start()
 
         self.dialogs = []
 
@@ -479,6 +466,8 @@ class VarietyWindow(Gtk.Window):
             for e in self.events:
                 e.set()
 
+        self.options.write()
+
     def clear_prepared_queue(self):
         self.filters_warning_shown = False
         logger.info(lambda: "Clearing prepared queue")
@@ -524,33 +513,12 @@ class VarietyWindow(Gtk.Window):
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
-        if type == Options.SourceType.DESKTOPPR:
-            return DesktopprDownloader(self)
-        elif type == Options.SourceType.APOD:
-            return APODDownloader(self)
-        elif type == Options.SourceType.EARTH:
-            return EarthDownloader(self)
-        elif type == Options.SourceType.FLICKR:
-            return FlickrDownloader(self, location)
-        elif type == Options.SourceType.WALLHAVEN:
-            return WallhavenDownloader(self, location)
-        elif type == Options.SourceType.REDDIT:
-            return RedditDownloader(self, location)
-        elif type == Options.SourceType.BING:
-            return BingDownloader(self)
+        if type == Options.SourceType.FLICKR_CC:
+            return FlickrCcDownloader(self, location)
         elif type == Options.SourceType.UNSPLASH:
             return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
-        elif type == Options.SourceType.PANORAMIO:
-            return PanoramioDownloader(self, location)
-        elif type == Options.SourceType.RECOMMENDED:
-            if self.smart.user:
-                return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
-            else:
-                raise Exception('No Smart user yet, not a problem')
-        elif type == Options.SourceType.LATEST:
-            return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
             raise Exception("Unknown downloader type")
 
@@ -639,10 +607,6 @@ class VarietyWindow(Gtk.Window):
         filename = os.path.basename(file)
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
-    def is_current_refreshable(self):
-        #TODO this is a hacky check, but works while EarthDownloader is the only refreshing downloader
-        return self.url == EARTH_ORIGIN_URL
-
     def update_favorites_menuitems(self, holder, auto_changed, favs_op):
         if auto_changed:
             # delay enabling Move/Copy operations in this case - see comment below
@@ -718,7 +682,7 @@ class VarietyWindow(Gtk.Window):
             if not self.ind:
                 return
 
-            deleteable = bool(file) and os.access(file, os.W_OK) and not self.is_current_refreshable()
+            deleteable = bool(file) and os.access(file, os.W_OK)
             favs_op = self.determine_favorites_operation(file)
             image_source = self.get_source(file)
 
@@ -1051,12 +1015,6 @@ class VarietyWindow(Gtk.Window):
             logger.info(lambda: "Triggering one download")
             self.last_dl_time = 0
             self.dl_event.set()
-
-    def prepare_earth_downloader(self):
-        dl = EarthDownloader(self)
-        dl.update_download_folder()
-        if not os.path.exists(dl.target_folder):
-            dl.download_one()
 
     def register_downloaded_file(self, file):
         if not self.downloaded or self.downloaded[0] != file:
@@ -1435,7 +1393,7 @@ class VarietyWindow(Gtk.Window):
                 logger.info(lambda: "No images yet in prepared buffer, using some random image")
                 self.prepare_event.set()
                 rnd_images = self.select_random_images(3)
-                rnd_images = [f for f in rnd_images if f != self.current or self.is_current_refreshable()]
+                rnd_images = [f for f in rnd_images if f != self.current]
                 img = rnd_images[0] if rnd_images else None
 
             if not img:
@@ -1457,7 +1415,7 @@ class VarietyWindow(Gtk.Window):
 
     def set_wallpaper(self, img, auto_changed=False):
         logger.info(lambda: "Calling set_wallpaper with " + img)
-        if img == self.current and not self.is_current_refreshable():
+        if img == self.current:
             return
         if os.access(img, os.R_OK):
             at_front = self.position == 0
@@ -2959,21 +2917,11 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             return  # Suggest fixing only once per run
         self.ssl_error_shown = True
 
-        def _disable_wallhaven_sources(notify=True):
-            for s in self.options.sources:
-                if s[1] in (Options.SourceType.WALLHAVEN,) and s[0]:
-                    s[0] = False
-                self.options.write()
-            if notify:
-                self.show_notification(_("Wallhaven image sources disabled"),
-                                       _('Please google "Python SNI SSL error" '
-                                         'if you want to fix the problem yourself.'))
-
         def _go():
             dialog = Gtk.MessageDialog(self.preferences_dialog,
                                        Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO)
             dialog.set_markup(_('There are SSL incompatibilities between your version of Python and some https '
-                                'sites like Wallhaven. '
+                                'sites. '
                                 'You can <a href="https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/">read more about the issue here</a>.'
                                 '\n\nDo you want to install the Python dependencies required to fix this problem? '
                                 '\nThis operation will ask for superuser privileges. '))
@@ -3016,17 +2964,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                                                _( 'If SSL errors persist, you will have to google for '
                                                   '"Python SNI SSL error" and seek another solution.'))
                     except Exception:
-                        self.show_notification(_('Failure. Wallhaven sources disabled.'),
+                        self.show_notification(_('Failure'),
                                                _('SSL-related dependencies were not installed successfully. '
                                                  'Please see %s or google "Python SNI SSL error" '
                                                  'and seek another solution.') % install_log_path)
-                        _disable_wallhaven_sources(notify=False)
                     finally:
                         working = False
 
                 threading.Timer(0, _do_fix).start()
-            else:
-                _disable_wallhaven_sources()
 
         Util.add_mainloop_task(_go)
 

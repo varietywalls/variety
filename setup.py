@@ -75,14 +75,10 @@ DistUtilsExtra.auto.setup(
     description='Wallpaper changer, downloader and manager',
     long_description=
 "Variety changes the desktop wallpaper regularly, using local "
-"or automatically downloaded images. "
+"or automatically downloaded images licensed under Creative Commons. "
 ""
 "Variety sits conveniently as an indicator in the panel and can be easily paused "
-"and resumed. The mouse wheel can be used to scroll wallpapers back and forth"
-""
-"Variety can fetch wallpapers from Flickr, Wallhaven.cc, "
-"NASA Astronomy Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa, "
-"deviantART or any other place are also supported.",
+"and resumed. The mouse wheel can be used to scroll wallpapers back and forth",
     url='https://launchpad.net/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )

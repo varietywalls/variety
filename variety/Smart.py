@@ -821,7 +821,7 @@ class Smart:
         except Exception, e:
             logger.info('Could not fetch Safe mode blacklisted keywords, using defaults:')
             return {
-                # Sample of Wallhaven and Flickr tags that cover most not-fully-safe images
+                # Sample of Flickr tags that cover most not-fully-safe images
                 'woman', 'women', 'model', 'models', 'boob', 'boobs', 'tit', 'tits',
                 'lingerie', 'bikini', 'bikini model', 'sexy', 'bra', 'bras', 'panties',
                 'face', 'faces', 'legs', 'feet', 'pussy',

@@ -37,42 +37,23 @@ class Options:
         FOLDER = 2
         FAVORITES = 3
         FETCHED = 4
-        DESKTOPPR = 6
-        FLICKR = 7
-        APOD = 8
         MEDIA_RSS = 10
-        EARTH = 11
-        PANORAMIO = 12
-        WALLHAVEN = 13
-        REDDIT = 14
-        BING = 15
         UNSPLASH = 16
-        RECOMMENDED = 19
-        LATEST = 20
+        FLICKR_CC = 21
 
         type_to_str = {
             FAVORITES: "favorites",
             FETCHED: "fetched",
             IMAGE: "image",
             FOLDER: "folder",
-            DESKTOPPR: "desktoppr",
-            FLICKR: "flickr",
-            APOD: "apod",
             MEDIA_RSS: "mediarss",
-            EARTH: "earth",
-            PANORAMIO: "panoramio",
-            WALLHAVEN: "wallhaven",
-            REDDIT: "reddit",
-            BING: "bing",
             UNSPLASH: "unsplash",
-            RECOMMENDED: "recommended",
-            LATEST: "latest",
+            FLICKR_CC: "flickrcc",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
-                    PANORAMIO, WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
+        dl_types = [MEDIA_RSS, UNSPLASH, FLICKR_CC]
 
     class LightnessMode:
         DARK = 0
@@ -117,8 +98,8 @@ class Options:
 
             try:
                 self.download_interval = int(config["download_interval"])
-                if self.download_interval < 60:
-                    self.download_interval = 60
+                if self.download_interval < 600:
+                    self.download_interval = 600
             except Exception:
                 pass
 
@@ -472,10 +453,6 @@ class Options:
 
             self.parse_autosources()
 
-            for s in self.sources:
-                if s[1] in (Options.SourceType.RECOMMENDED,) and not self.smart_enabled:
-                    s[0] = False
-
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
@@ -541,6 +518,8 @@ class Options:
     def parse_source(v):
         s = v.strip().split('|')
         enabled = s[0].lower() in TRUTH_VALUES
+        if 'vrty.org' in s[2]:
+            raise Exception('Source not supported')
         return [enabled, (Options.str_to_type(s[1])), s[2]]
 
     @staticmethod
@@ -579,7 +558,7 @@ class Options:
         self.fetched_folder = os.path.expanduser(u"~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "alpha.wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+        self.clipboard_hosts = "flickr.com,deviantart.com".split(',')
 
         self.icon = "Light"
 
@@ -645,11 +624,7 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
-            [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
-            [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
-            [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
         ]
 
         self.filters = [

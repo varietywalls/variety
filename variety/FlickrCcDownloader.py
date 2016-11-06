@@ -27,17 +27,17 @@ random.seed()
 
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
-class FlickrDownloader(Downloader.Downloader):
+class FlickrCcDownloader(Downloader.Downloader):
     last_download_time = 0
 
     def __init__(self, parent, location):
-        super(FlickrDownloader, self).__init__(parent, "flickr", "Flickr", location)
+        super(FlickrCcDownloader, self).__init__(parent, "flickrcc", "Flickr", location)
         self.parse_location()
         self.queue = []
         self.last_fill_time = 0
 
     def convert_to_filename(self, url):
-        return "flickr_" + super(FlickrDownloader, self).convert_to_filename(url)
+        return "flickrcc_" + super(FlickrCcDownloader, self).convert_to_filename(url)
 
     def parse_location(self):
         s = self.location.split(';')
@@ -68,7 +68,7 @@ class FlickrDownloader(Downloader.Downloader):
                 API_KEY,
                 urllib.quote_plus(url))
 
-            resp = FlickrDownloader.fetch(call)
+            resp = FlickrCcDownloader.fetch(call)
 
             if resp["stat"] == "ok":
                 logger.info(lambda: "Found " + resp["user"]["id"])
@@ -89,7 +89,7 @@ class FlickrDownloader(Downloader.Downloader):
                 API_KEY,
                 urllib.quote_plus(url))
 
-            resp = FlickrDownloader.fetch(call)
+            resp = FlickrCcDownloader.fetch(call)
 
             if resp["stat"] == "ok":
                 logger.info(lambda: "Found " + resp["group"]["id"])
@@ -104,7 +104,7 @@ class FlickrDownloader(Downloader.Downloader):
     @staticmethod
     def count_search_results(search):
         try:
-            dl = FlickrDownloader(None, search)
+            dl = FlickrCcDownloader(None, search)
             return dl.count_results()
         except Exception:
             logger.exception(lambda: "Exception while counting Flickr results")
@@ -117,7 +117,7 @@ class FlickrDownloader(Downloader.Downloader):
         for k, v in self.params.items():
             call = call + "&" + k + "=" + v
 
-        resp = FlickrDownloader.fetch(call)
+        resp = FlickrCcDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
@@ -126,7 +126,7 @@ class FlickrDownloader(Downloader.Downloader):
     def download_one(self):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("flickr", 60, 600)
 
-        if time.time() - FlickrDownloader.last_download_time < min_download_interval:
+        if time.time() - FlickrCcDownloader.last_download_time < min_download_interval:
             logger.info(lambda: "Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
             return None
 
@@ -145,7 +145,7 @@ class FlickrDownloader(Downloader.Downloader):
             logger.info(lambda: "Flickr queue empty after fill - too restrictive search parameters or image size preference?")
             return None
 
-        FlickrDownloader.last_download_time = time.time()
+        FlickrCcDownloader.last_download_time = time.time()
 
         urls = self.queue.pop()
         logger.info(lambda: "Photo URL: " + urls[0])
@@ -162,7 +162,7 @@ class FlickrDownloader(Downloader.Downloader):
         for k, v in self.params.items():
             call = call + "&" + k + "=" + v
 
-        resp = FlickrDownloader.fetch(call)
+        resp = FlickrCcDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
@@ -174,7 +174,7 @@ class FlickrDownloader(Downloader.Downloader):
         logger.info(lambda: "%d pages in the search results, using page %d" % (pages, page))
 
         call = call + "&extras=owner_name,description,tags,o_dims,url_o,url_k,url_h,url_l&page=" + str(page)
-        resp = FlickrDownloader.fetch(call)
+        resp = FlickrCcDownloader.fetch(call)
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
@@ -255,7 +255,7 @@ class FlickrDownloader(Downloader.Downloader):
 
     @staticmethod
     def get_image_url(origin_url):
-        photo_id = FlickrDownloader.get_photo_id(origin_url)
+        photo_id = FlickrCcDownloader.get_photo_id(origin_url)
         call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
                (API_KEY, photo_id)
         resp = Util.fetch_json(call)
@@ -264,7 +264,7 @@ class FlickrDownloader(Downloader.Downloader):
 
     @staticmethod
     def get_extra_metadata(origin_url):
-        photo_id = FlickrDownloader.get_photo_id(origin_url)
+        photo_id = FlickrCcDownloader.get_photo_id(origin_url)
         call = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=%s&photo_id=%s&format=json&nojsoncallback=1' % \
                (API_KEY, photo_id)
         resp = Util.fetch_json(call)

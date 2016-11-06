@@ -30,16 +30,6 @@ FILTERS = {
 SOURCES = {
     "favorites": ("The Favorites folder", _("The Favorites folder")),
     "fetched": ("The Fetched folder", _("The Fetched folder")),
-    "recommended":
-        ("Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.",
-        _("Recommended by Variety. Adapts to your taste as you mark images as favorite or trash.")),
-    "latest": ("Latest favorites by the other users of Variety. [May contain NSFW images]",
-               _("Latest favorites by the other users of Variety. [May contain NSFW images]")),
-    "desktoppr": ("Random wallpapers from Desktoppr.co", _("Random wallpapers from Desktoppr.co")),
-    "apod": ("NASA's Astronomy Picture of the Day", _("NASA's Astronomy Picture of the Day")),
-    "earth": ("World Sunlight Map - live wallpaper from Die.net",
-              _("World Sunlight Map - live wallpaper from Die.net")),
-    "bing": ("Bing Photo of the Day", _("Bing Photo of the Day")),
     "unsplash": ("High-resolution photos from Unsplash.com", _("High-resolution photos from Unsplash.com")),
 }
 

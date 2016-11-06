@@ -15,7 +15,7 @@
 ### END LICENSE
 
 from gi.repository import Gtk, Gdk # pylint: disable=E0611
-from variety.FlickrDownloader import FlickrDownloader
+from variety.FlickrCcDownloader import FlickrCcDownloader
 from variety.Options import Options
 
 from variety_lib.helpers import get_builder
@@ -115,7 +115,7 @@ class AddFlickrDialog(Gtk.Dialog):
         user_url = self.ui.user_url.get_text().strip()
         if len(user_url) > 0:
             self.show_spinner()
-            u = FlickrDownloader.obtain_userid(user_url)
+            u = FlickrCcDownloader.obtain_userid(user_url)
             if u[0]:
                 search += "user:" + self.ui.user_url.get_text().replace("http://", "").replace("https://", "") + ";"
                 search += "user_id:" + u[2] + ";"
@@ -125,7 +125,7 @@ class AddFlickrDialog(Gtk.Dialog):
         group_url = self.ui.group_url.get_text().strip()
         if len(group_url) > 0:
             self.show_spinner()
-            g = FlickrDownloader.obtain_groupid(group_url)
+            g = FlickrCcDownloader.obtain_groupid(group_url)
             if g[0]:
                 search += "group:" + self.ui.group_url.get_text().replace("http://", "").replace("https://", "") + ";"
                 search += "group_id:" + g[2]
@@ -134,7 +134,7 @@ class AddFlickrDialog(Gtk.Dialog):
 
         if not len(self.error) and len(search) > 0:
             self.show_spinner()
-            if FlickrDownloader.count_search_results(search) <= 0:
+            if FlickrCcDownloader.count_search_results(search) <= 0:
                 self.error = _("No images found")
 
         try:
@@ -153,7 +153,7 @@ class AddFlickrDialog(Gtk.Dialog):
                         break
             else:
                 if len(search):
-                    self.parent.on_add_dialog_okay(Options.SourceType.FLICKR, search, self.edited_row)
+                    self.parent.on_add_dialog_okay(Options.SourceType.FLICKR_CC, search, self.edited_row)
                 self.destroy()
 
         finally:
