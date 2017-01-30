@@ -1,1 +1,11 @@
 .idea/workspace.xml
+
+# Build artifacts
+*.pyc
+build/
+debian/debhelper-build-stamp
+debian/files
+debian/*.log
+debian/*.substvars
+debian/*.debhelper
+debian/variety/
