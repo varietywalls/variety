@@ -268,10 +268,12 @@ class ThumbsManager():
             _resume_scrolling()
         else:
             menu = self.create_menu(file)
-            def _compute_position(a, b, event=event):
+
+            def _compute_position(*args, **kwargs):
                 x, y = event.get_root_coords()[0], event.get_root_coords()[1]
                 h = menu.get_preferred_height()[1]
                 return x, y - h if y - h >= 40 else y, True
+
             menu.connect("deactivate", _resume_scrolling)
             menu.popup(None, None, _compute_position, None, 0, event.time)
 

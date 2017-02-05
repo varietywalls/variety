@@ -316,14 +316,11 @@ class Indicator:
         self.status_icon = None
         self.visible = True
 
-        def pos(menu, icon):
-            return Gtk.StatusIcon.position_menu(self.menu, icon)
-
         def right_click_event(icon, button, time):
-            self.menu.popup(None, None, pos, self.status_icon, 0, time)
+            self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, time)
 
         def left_click_event(data):
-            self.menu.popup(None, None, pos, self.status_icon, 0, Gtk.get_current_event_time())
+            self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, Gtk.get_current_event_time())
 
         def on_indicator_scroll_status_icon(status_icon, event):
             window.on_indicator_scroll(None, 1, event.direction)

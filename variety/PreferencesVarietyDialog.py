@@ -357,7 +357,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             timer.start()
 
     def on_add_button_clicked(self, widget=None):
-        def position(x, y):
+        def position(*args, **kwargs):
             button_alloc = self.ui.add_button.get_allocation()
             window_pos = self.ui.add_button.get_window().get_position()
             return button_alloc.x + window_pos[0], button_alloc.y + button_alloc.height + window_pos[1], True
@@ -365,7 +365,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu.popup(None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time())
 
     def on_remove_sources_clicked(self, widget=None):
-        def position(x, y):
+        def position(*args, **kwargs):
             button_alloc = self.ui.remove_sources.get_allocation()
             window_pos = self.ui.remove_sources.get_window().get_position()
             return button_alloc.x + window_pos[0], button_alloc.y + button_alloc.height + window_pos[1], True
