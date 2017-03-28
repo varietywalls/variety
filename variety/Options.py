@@ -38,6 +38,7 @@ class Options:
         FAVORITES = 3
         FETCHED = 4
         MEDIA_RSS = 10
+        BING = 15
         UNSPLASH = 16
         FLICKR_CC = 21
 
@@ -47,13 +48,14 @@ class Options:
             IMAGE: "image",
             FOLDER: "folder",
             MEDIA_RSS: "mediarss",
+            BING: "bing",
             UNSPLASH: "unsplash",
             FLICKR_CC: "flickrcc",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
-        dl_types = [MEDIA_RSS, UNSPLASH, FLICKR_CC]
+        dl_types = [MEDIA_RSS, BING, UNSPLASH, FLICKR_CC]
 
     class LightnessMode:
         DARK = 0
@@ -624,6 +626,7 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
+            [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
         ]
 

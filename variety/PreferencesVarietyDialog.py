@@ -49,6 +49,7 @@ from variety_lib.PreferencesDialog import PreferencesDialog
 UNREMOVEABLE_TYPES = [
     Options.SourceType.FAVORITES,
     Options.SourceType.FETCHED,
+    Options.SourceType.BING,
     Options.SourceType.UNSPLASH,
 ]
 

@@ -30,6 +30,7 @@ FILTERS = {
 SOURCES = {
     "favorites": ("The Favorites folder", _("The Favorites folder")),
     "fetched": ("The Fetched folder", _("The Fetched folder")),
+    "bing": ("Bing Photo of the Day", _("Bing Photo of the Day")),
     "unsplash": ("High-resolution photos from Unsplash.com", _("High-resolution photos from Unsplash.com")),
 }
 

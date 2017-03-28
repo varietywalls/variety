@@ -49,6 +49,7 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
+from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
 from variety.FlickrCcDownloader import FlickrCcDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
@@ -515,6 +516,8 @@ class VarietyWindow(Gtk.Window):
     def create_downloader(self, type, location):
         if type == Options.SourceType.FLICKR_CC:
             return FlickrCcDownloader(self, location)
+        elif type == Options.SourceType.BING:
+            return BingDownloader(self)
         elif type == Options.SourceType.UNSPLASH:
             return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
