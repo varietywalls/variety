@@ -172,7 +172,7 @@ def monkeypatch_ssl():
     ssl.SSLSocket.__init__ = ubuntu_openssl_bug_965371
 
 
-REL_DATE = "2016-10-30"
+REL_DATE = "2017-04-06"
 
 
 def main():
