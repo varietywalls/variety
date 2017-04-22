@@ -3,7 +3,7 @@ Section: python
 Priority: extra
 Build-Depends: debhelper (>= 8),
  python (>= 2.6.6-3~),
- python-distutils-extra (>= 2.10)
+ python-distutils-extra (>= 2.18)
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
 Standards-Version: 3.9.3
 XS-Python-Version: current
