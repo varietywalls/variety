@@ -53,25 +53,35 @@ class TestUtil(unittest.TestCase):
             'author': u'автор',
             'authorURL': u'url',
             'keywords': [u'дума1', u'дума2'],
-            'headline': u'проба1',
-            'description': u'проба2',
+            'headline': u'проба1 проба1',
+            'description': u'проба2 проба2',
             'sfwRating': 50,
         }
+        self.assertEqual(info, Util.read_metadata('test.jpg'))
         self.assertTrue(Util.write_metadata('test.jpg', info))
         self.assertEqual(info, Util.read_metadata('test.jpg'))
 
         self.assertTrue(os.path.exists('test.svg'))
+        self.assertEqual(info, Util.read_metadata('test.svg'))
         Util.write_metadata('test.svg', info)
         self.assertEqual(info, Util.read_metadata('test.svg'))
 
     def test_read_write_rating(self):
         self.assertTrue(os.path.exists('test.jpg'))
+        self.assertEqual(None, Util.get_rating('test.jpg'))
+
+        Util.set_rating('test.jpg', None)
+        self.assertEqual(None, Util.get_rating('test.jpg'))
+
         Util.set_rating('test.jpg', 4)
         self.assertEqual(4, Util.get_rating('test.jpg'))
+
         Util.set_rating('test.jpg', -1)
         self.assertEqual(-1, Util.get_rating('test.jpg'))
+
         Util.set_rating('test.jpg', 0)
         self.assertEqual(0, Util.get_rating('test.jpg'))
+
         Util.set_rating('test.jpg', None)
         self.assertEqual(None, Util.get_rating('test.jpg'))
 
@@ -115,7 +125,7 @@ class TestUtil(unittest.TestCase):
         self.assertEquals("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
 
     def test_md5file(self):
-        self.assertEquals("09e0399cd580cdae81102e676802e3cb", Util.md5file("test.jpg"))
+        self.assertEquals("633de9e37fd782d79b59c626695ac2ef", Util.md5file("test.jpg"))
 
     def test_collapseuser(self):
         self.assertEquals("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))

@@ -26,7 +26,6 @@ import logging
 import string
 import threading
 import time
-import pyexiv2
 import urllib
 import functools
 import datetime
@@ -34,7 +33,11 @@ from urlparse import urlparse
 from PIL import Image
 
 from DominantColors import DominantColors
+
+import gi
+gi.require_version('GExiv2', '0.10')
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib
+from gi.repository import GExiv2
 import inspect
 import subprocess
 import platform
@@ -167,6 +170,45 @@ def cache(ttl_seconds=100*365*24*3600, debug=False):
     return decorate
 
 
+class VarietyMetadata(GExiv2.Metadata):
+    MULTIPLES = {
+        "Iptc.Application2.Headline",
+        "Iptc.Application2.Keywords",
+        "Xmp.dc.creator",
+        "Xmp.dc.subject",
+    }
+
+    NUMBERS = {
+        "Xmp.variety.sfwRating",
+        "Xmp.xmp.Rating",
+        "Exif.Image.Rating",
+        "Exif.Image.RatingPercent",
+    }
+
+    def __init__(self, path):
+        super(VarietyMetadata, self).__init__(path=path)
+        self.register_xmp_namespace("https://launchpad.net/variety/", "variety")
+
+    def __getitem__(self, key):
+        if self.has_tag(key):
+            if key in self.MULTIPLES:
+                return self.get_tag_multiple(key)
+            elif key in self.NUMBERS:
+                return self.get_tag_long(key)
+            else:
+                return self.get_tag_string(key)
+        else:
+            raise KeyError(u'%s: Unknown tag' % key)
+
+    def __setitem__(self, key, value):
+        if key in self.MULTIPLES:
+            self.set_tag_multiple(key, value)
+        elif key in self.NUMBERS:
+            self.set_tag_long(key, value)
+        else:
+            self.set_tag_string(key, value)
+
+
 class Util:
     @staticmethod
     def log_all(cls, level=logging.DEBUG):
@@ -285,13 +327,7 @@ class Util:
     @staticmethod
     def check_and_update_metadata(filename):
         try:
-            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
-        except KeyError:
-            pass
-
-        try:
-            m = pyexiv2.ImageMetadata(filename)
-            m.read()
+            m = VarietyMetadata(filename)
         except Exception:
             logger.exception(lambda: "Could not read metadata for %s" % filename)
             return False
@@ -313,13 +349,7 @@ class Util:
     @staticmethod
     def write_metadata(filename, info):
         try:
-            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
-        except KeyError:
-            pass
-
-        try:
-            m = pyexiv2.ImageMetadata(filename)
-            m.read()
+            m = VarietyMetadata(filename)
             for k, v in info.items():
                 if k == 'author':
                     m["Xmp.variety." + k] = v
@@ -328,20 +358,20 @@ class Util:
                 if k == 'headline':
                     m['Iptc.Application2.Headline'] = [v]
                 elif k == 'description':
-                    m['Xmp.dc.description'] = v
-                    m['Exif.Image.ImageDescription'] = v
+                    m.set_comment(v)
                 elif k == 'keywords':
-                    if isinstance(v, list):
-                        m['Iptc.Application2.Keywords'] = v
-                        m['Xmp.dc.subject'] = v
+                    if not isinstance(v, (list, tuple)):
+                        v = [v]
+                    m['Iptc.Application2.Keywords'] = v
+                    m['Xmp.dc.subject'] = v
                 elif k == 'sfwRating':
-                    m["Xmp.variety." + k] = str(v)
+                    m["Xmp.variety." + k] = int(v)
                 else:
                     m["Xmp.variety." + k] = v
-            m.write()
+            m.save_file()
             return True
         except Exception:
-            # could not write metadata inside file, use json txt instead
+            # could not write metadata inside file, use json instead
             try:
                 with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
                     f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
@@ -353,48 +383,38 @@ class Util:
     @staticmethod
     def read_metadata(filename):
         try:
-            pyexiv2.xmp.register_namespace("https://launchpad.net/variety/", "variety")
-        except KeyError:
-            pass
-
-        try:
-            m = pyexiv2.ImageMetadata(filename)
-            m.read()
+            m = VarietyMetadata(filename)
 
             info = {}
-            keys = ["sourceName", "sourceLocation", "sourceURL", "sourceType", "imageURL", "author", "authorURL"]
-            for k in keys:
+            for k in ["sourceName", "sourceLocation", "sourceURL", "sourceType", "imageURL", "author", "authorURL"]:
                 if "Xmp.variety." + k in m:
-                    info[k] = _u(m["Xmp.variety." + k].value)
+                    info[k] = _u(m["Xmp.variety." + k])
 
             try:
-                info['sfwRating'] = int(m['Xmp.variety.sfwRating'].value)
+                info['sfwRating'] = int(m['Xmp.variety.sfwRating'])
             except:
                 pass
 
             try:
-                info['author'] = _u(m['Xmp.dc.creator'].value[0])
+                info['author'] = _u(m['Xmp.dc.creator'][0])
             except:
                 pass
 
             try:
-                info['headline'] = _u(m['Iptc.Application2.Headline'].value[0])
+                info['headline'] = _u(m['Iptc.Application2.Headline'][0])
             except:
                 pass
 
             try:
-                info['description'] = _u(m['Xmp.dc.description'].value.values()[0])
+                info['description'] = _u(m.get_comment())
+            except:
+                pass
+
+            try:
+                info['keywords'] = map(_u, m['Iptc.Application2.Keywords'])
             except:
                 try:
-                    info['description'] = _u(m['Exif.Image.ImageDescription'].value)
-                except:
-                    pass
-
-            try:
-                info['keywords'] = map(_u, m['Iptc.Application2.Keywords'].value)
-            except:
-                try:
-                    info['keywords'] = map(_u, m['Xmp.dc.subject'].value)
+                    info['keywords'] = map(_u, m['Xmp.dc.subject'])
                 except:
                     pass
 
@@ -407,38 +427,14 @@ class Util:
                     return json.loads(f.read())
 
             except Exception:
-                # could not read json metadata, use txt instead # TODO: legacy support. Remove after some time has passed.
-                try:
-                    with io.open(filename + ".txt", encoding='utf8') as f:
-                        lines = list(f)
-                    info = {}
-                    if len(lines) > 2 and lines[0].strip() == "INFO:":
-                        info["sourceName"] = lines[1].strip().replace("Downloaded from ", "")  # TODO remove later on
-                        info["sourceURL"] = lines[2].strip()
-                        if len(lines) > 3 and len(lines[3].strip()) > 0:
-                            info["sourceLocation"] = lines[3].strip()
-                        if len(lines) > 4 and len(lines[4].strip()) > 0:
-                            info["imageURL"] = lines[4].strip()
-                        if len(lines) > 5 and len(lines[5].strip()) > 0:
-                            info["sourceType"] = lines[5].strip()
-
-                        if Util.write_metadata(filename, info):
-                            logger.warning(lambda: "Replacing txt image metadata with json-based: %s" % filename)
-                            os.unlink(filename + ".txt")
-
-                        return info
-                    else:
-                        return None
-                except Exception:
-                    return None
+                return None
 
     @staticmethod
     def set_rating(filename, rating):
         if rating is not None and (rating < -1 or rating > 5):
             raise ValueError("Rating should be between -1 and 5, or None")
 
-        m = pyexiv2.ImageMetadata(filename)
-        m.read()
+        m = VarietyMetadata(filename)
 
         if rating is None:
             for key in ["Xmp.xmp.Rating", "Exif.Image.Rating", "Exif.Image.RatingPercent"]:
@@ -452,19 +448,18 @@ class Util:
             elif "Exif.Image.RatingPercent" in m:
                 del m["Exif.Image.RatingPercent"]
 
-        m.write()
+        m.save_file()
 
     @staticmethod
     def get_rating(filename):
-        m = pyexiv2.ImageMetadata(filename)
-        m.read()
+        m = VarietyMetadata(filename)
         rating = None
         if "Xmp.xmp.Rating" in m:
-            rating = m["Xmp.xmp.Rating"].value
+            rating = m["Xmp.xmp.Rating"]
         elif "Exif.Image.Rating" in m:
-            rating = m["Exif.Image.Rating"].value
+            rating = m["Exif.Image.Rating"]
         elif "Exif.Image.RatingPercent" in m:
-            rating = m["Exif.Image.RatingPercent"].value // 25 + 1
+            rating = m["Exif.Image.RatingPercent"] // 25 + 1
         if rating is not None:
             rating = max(-1, min(5, rating))
         return rating
