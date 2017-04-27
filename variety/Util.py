@@ -36,8 +36,9 @@ from DominantColors import DominantColors
 
 import gi
 gi.require_version('GExiv2', '0.10')
-from gi.repository import Gdk, Pango, GdkPixbuf, GLib
-from gi.repository import GExiv2
+gi.require_version('PangoCairo', '1.0')
+
+from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2
 import inspect
 import subprocess
 import platform

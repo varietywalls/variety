@@ -24,6 +24,9 @@ from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
 
+import gi
+gi.require_version('Notify', '0.7')
+
 from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
 
 Notify.init("Variety")

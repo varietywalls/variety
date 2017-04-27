@@ -16,6 +16,10 @@
 
 import cairo
 from PIL import Image
+
+import gi
+gi.require_version('PangoCairo', '1.0')
+
 from gi.repository import Gdk, Pango, PangoCairo, GdkPixbuf, GObject
 from variety.Util import Util
 import threading
