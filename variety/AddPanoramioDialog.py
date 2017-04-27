@@ -16,6 +16,9 @@
 import json
 
 import logging
+import gi
+gi.require_version('WebKit', '3.0')
+
 from gi.repository import Gtk, WebKit, GObject # pylint: disable=E0611
 from variety.Options import Options
 from variety_lib.helpers import get_builder
