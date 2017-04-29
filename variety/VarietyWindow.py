@@ -71,6 +71,8 @@ DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DHQU
 
 OUTDATED_MSG = 'This version of Variety is outdated and unsupported. Please upgrade. Quitting.'
 
+INITIAL_DOWNLOAD_POPULATE_COUNT = 5
+
 
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
@@ -408,6 +410,8 @@ class VarietyWindow(Gtk.Window):
             Util.makedirs(downloader.target_folder)
             self.folders.append(downloader.target_folder)
 
+        self.populate_download_folders()
+
         self.filters = [f[2] for f in self.options.filters if f[0]]
 
         self.min_width = 0
@@ -587,12 +591,7 @@ class VarietyWindow(Gtk.Window):
         prep_thread.daemon = True
         prep_thread.start()
 
-        self.dl_event = threading.Event()
-        dl_thread = threading.Thread(target=self.download_thread)
-        dl_thread.daemon = True
-        dl_thread.start()
-
-        self.events.extend([self.change_event, self.prepare_event, self.dl_event])
+        self.events.extend([self.change_event, self.prepare_event])
 
         server_options_thread = threading.Thread(target=self.server_options_thread)
         server_options_thread.daemon = True
@@ -903,7 +902,7 @@ class VarietyWindow(Gtk.Window):
             random.shuffle(self.prepared)
 
         if len(images) < 3 and self.has_real_downloaders():
-            self.trigger_download()
+            self.populate_download_folders()
 
         if len(found) <= 5 and len(images) >= max(20, 10 * len(found)) and found.issubset(set(self.used[:10])):
             logger.warning(lambda: "Too few images found: %d out of %d" % (len(found), len(images)))
@@ -974,43 +973,31 @@ class VarietyWindow(Gtk.Window):
     def has_real_downloaders(self):
         return len(self.downloaders) > 0
 
-    def download_thread(self):
-        self.last_dl_time = time.time()
-        while self.running:
-            try:
-                while not self.options.download_enabled or \
-                      (time.time() - self.last_dl_time) < self.options.download_interval:
+    def populate_download_folders(self):
+        def _go():
+            self.purge_downloaded()
+
+            for dl in self.downloaders:
+                # try to make sure every active downloader has at least 3 images
+                for _ in range(1, 10):
                     if not self.running:
                         return
-                    now = time.time()
-                    wait_more = self.options.download_interval - max(0, (now - self.last_dl_time))
-                    if self.options.download_enabled:
-                        self.dl_event.wait(max(0, wait_more))
-                    else:
-                        self.dl_event.wait()
-                    self.dl_event.clear()
 
-                if not self.running:
-                    return
-                if not self.options.download_enabled:
-                    continue
+                    dl_images = [i for i in os.listdir(dl.target_folder) if Util.is_image(i)]
+                    if len(dl_images) >= INITIAL_DOWNLOAD_POPULATE_COUNT:
+                        break
+                    dl.download_one()
+                    time.sleep(2)
+        Util.start_daemon(_go)
 
-                self.last_dl_time = time.time()
-                if self.downloaders:
-                    self.purge_downloaded()
+    def trigger_download(self, downloader=None):
+        if downloader is None:
+            downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
 
-                    # download from a random downloader (gives equal chance to all)
-                    downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
-                    self.download_one_from(downloader)
-
-            except Exception:
-                logger.exception(lambda: "Could not download wallpaper:")
-
-    def trigger_download(self):
-        if self.downloaders:
+        def _go():
             logger.info(lambda: "Triggering one download")
-            self.last_dl_time = 0
-            self.dl_event.set()
+            self.download_one_from(downloader)
+        Util.start_daemon(_go)
 
     def register_downloaded_file(self, file):
         if not self.downloaded or self.downloaded[0] != file:
@@ -1026,7 +1013,7 @@ class VarietyWindow(Gtk.Window):
         if file:
             self.register_downloaded_file(file)
 
-            if downloader.is_refresher or self.image_ok(file, 0):
+            if self.image_ok(file, 0):
                 # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
                 logger.info(lambda: "Adding downloaded file %s to prepared_from_downloads queue" % file)
                 with self.prepared_lock:
@@ -1373,10 +1360,12 @@ class VarietyWindow(Gtk.Window):
             img = None
 
             with self.prepared_lock:
-                # prepend the prepared_from_downloads queue and clear it:
-                random.shuffle(self.prepared_from_downloads)
-                self.prepared[0:0] = self.prepared_from_downloads
-                self.prepared_from_downloads = []
+                # prefer the latest downloads about half of the time
+                if random.random() < 0.5:
+                    # prepend the prepared_from_downloads queue and clear it:
+                    random.shuffle(self.prepared_from_downloads)
+                    self.prepared[0:0] = self.prepared_from_downloads
+                    self.prepared_from_downloads = []
 
                 for prep in self.prepared:
                     if prep != self.current and os.access(prep, os.R_OK):
@@ -1428,6 +1417,10 @@ class VarietyWindow(Gtk.Window):
             self.set_wp_throttled(img)
         else:
             logger.warning(lambda: "set_wallpaper called with unaccessible image " + img)
+
+        for dl in self.downloaders:
+            if img.startswith(dl.target_folder):
+                self.trigger_download(dl)
 
     def refresh_thumbs_history(self, added_image, at_front=False):
         if self.thumbs_manager.is_showing("history"):
