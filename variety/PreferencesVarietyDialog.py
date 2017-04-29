@@ -78,7 +78,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.loading = False
 
-        self.dl_chooser = FolderChooser(self.ui.download_folder_chooser, self.on_downloaded_changed)
         self.fav_chooser = FolderChooser(self.ui.favorites_folder_chooser, self.on_favorites_changed)
         self.fetched_chooser = FolderChooser(self.ui.fetched_folder_chooser, self.on_fetched_changed)
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
@@ -136,15 +135,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.set_change_interval(self.options.change_interval)
             self.ui.change_on_start.set_active(self.options.change_on_start)
             self.ui.safe_mode.set_active(self.options.safe_mode)
-
-            self.ui.download_enabled.set_active(self.options.download_enabled)
-            self.set_download_interval(self.options.download_interval)
-
-            self.dl_chooser.set_folder(os.path.expanduser(self.options.download_folder))
-            self.update_real_download_folder()
-
-            self.ui.quota_enabled.set_active(self.options.quota_enabled)
-            self.ui.quota_size.set_text(str(self.options.quota_size))
 
             self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
 
@@ -321,7 +311,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_smart_user_updated()
 
             self.on_change_enabled_toggled()
-            self.on_download_enabled_toggled()
             self.on_sources_selection_changed()
             self.on_desired_color_enabled_toggled()
             self.on_min_size_enabled_toggled()
@@ -432,10 +421,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def set_change_interval(self, seconds):
         self.set_time(seconds, self.ui.change_interval_text, self.ui.change_interval_time_unit)
 
-    def set_download_interval(self, seconds):
-        self.set_time(seconds, self.ui.download_interval_text, self.ui.download_interval_time_unit,
-                      times=(60, 60 * 60, 24 * 60 * 60))
-
     def set_quotes_change_interval(self, seconds):
         self.set_time(seconds, self.ui.quotes_change_interval_text, self.ui.quotes_change_interval_time_unit)
 
@@ -457,10 +442,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def get_change_interval(self):
         return self.read_time(
             self.ui.change_interval_text, self.ui.change_interval_time_unit, 5, self.options.change_interval)
-
-    def get_download_interval(self):
-        return self.read_time(
-            self.ui.download_interval_text, self.ui.download_interval_time_unit, 60, self.options.download_interval)
 
     def get_quotes_change_interval(self):
         return self.read_time(
@@ -739,7 +720,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def close(self):
-        self.ui.error_downloaded.set_label("")
         self.ui.error_favorites.set_label("")
         self.ui.error_fetched.set_label("")
 
@@ -782,19 +762,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.change_interval = self.get_change_interval()
             self.options.safe_mode = self.ui.safe_mode.get_active()
 
-            self.options.download_enabled = self.ui.download_enabled.get_active()
-            self.options.download_interval = self.get_download_interval()
-
-            self.options.quota_enabled = self.ui.quota_enabled.get_active()
-            try:
-                self.options.quota_size = int(self.ui.quota_size.get_text())
-                if self.options.quota_size < 50:
-                    self.options.quota_size = 50
-            except Exception:
-                logger.exception(lambda: "Could not understand quota size")
-
-            if os.access(self.dl_chooser.get_folder(), os.W_OK):
-                self.options.download_folder = self.dl_chooser.get_folder()
             if os.access(self.fav_chooser.get_folder(), os.W_OK):
                 self.options.favorites_folder = self.fav_chooser.get_folder()
             self.options.favorites_operations = self.favorites_operations
@@ -976,19 +943,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.quotes_change_interval_text.set_sensitive(self.ui.quotes_change_enabled.get_active())
         self.ui.quotes_change_interval_time_unit.set_sensitive(self.ui.quotes_change_enabled.get_active())
 
-    def on_download_enabled_toggled(self, widget = None):
-        active = self.ui.download_enabled.get_active()
-        self.ui.download_interval_text.set_sensitive(active)
-        self.ui.download_interval_time_unit.set_sensitive(active)
-        self.ui.download_folder_chooser.set_sensitive(active)
-        self.ui.quota_enabled.set_sensitive(active)
-        self.ui.quota_size.set_sensitive(active)
-        self.on_quota_enabled_toggled()
-
-    def on_quota_enabled_toggled(self, widget = None):
-        active = self.ui.download_enabled.get_active() and self.ui.quota_enabled.get_active()
-        self.ui.quota_size.set_sensitive(active)
-
     def on_desired_color_enabled_toggled(self, widget = None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
 
@@ -1025,32 +979,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog.destroy()
             except Exception:
                 pass
-        for chooser in (self.dl_chooser, self.fav_chooser, self.fetched_chooser):
+        for chooser in (self.fav_chooser, self.fetched_chooser):
             try:
                 chooser.destroy()
             except Exception:
                 pass
         self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
-
-    def on_downloaded_changed(self, widget=None):
-        self.delayed_apply()
-
-        if not os.access(self.dl_chooser.get_folder(), os.W_OK):
-            self.ui.error_downloaded.set_label(_("No write permissions"))
-        else:
-            self.ui.error_downloaded.set_label("")
-
-        if not self.loading and self.ui.quota_enabled.get_active():
-            self.ui.quota_enabled.set_active(False)
-            self.parent.show_notification(
-                _("Limit disabled"),
-                _("Changing the download folder automatically turns off the size limit to prevent from accidental data loss"),
-                important=True)
-
-    def update_real_download_folder(self):
-        if not Util.same_file_paths(self.parent.options.download_folder, self.parent.real_download_folder):
-            self.ui.real_download_folder.set_visible(True)
-        self.ui.real_download_folder.set_text(_("Actual download folder: %s ") % self.parent.real_download_folder)
 
     def on_favorites_changed(self, widget=None):
         self.delayed_apply()
@@ -1058,7 +992,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.error_favorites.set_label(_("No write permissions"))
         else:
             self.ui.error_favorites.set_label("")
-
 
     def on_fetched_changed(self, widget=None):
         self.delayed_apply()

@@ -94,18 +94,6 @@ class Options:
                 pass
 
             try:
-                self.download_enabled = config["download_enabled"].lower() in TRUTH_VALUES
-            except Exception:
-                pass
-
-            try:
-                self.download_interval = int(config["download_interval"])
-                if self.download_interval < 600:
-                    self.download_interval = 600
-            except Exception:
-                pass
-
-            try:
                 self.download_folder = os.path.expanduser(config["download_folder"])
             except Exception:
                 pass
@@ -548,8 +536,6 @@ class Options:
         self.change_interval = 300
         self.safe_mode = False
 
-        self.download_enabled = True
-        self.download_interval = 600
         self.download_folder = os.path.expanduser(u"~/.config/variety/Downloaded")
         self.quota_enabled = True
         self.quota_size = 500
@@ -654,8 +640,6 @@ class Options:
             config["change_interval"] = str(self.change_interval)
             config["safe_mode"] = str(self.safe_mode)
 
-            config["download_enabled"] = str(self.download_enabled)
-            config["download_interval"] = str(self.download_interval)
             config["download_folder"] = Util.collapseuser(self.download_folder)
 
             config["quota_enabled"] = str(self.quota_enabled)

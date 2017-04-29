@@ -345,8 +345,6 @@ class VarietyWindow(Gtk.Window):
 
     def prepare_download_folder(self):
         self.real_download_folder = self.get_real_download_folder()
-        if self.preferences_dialog:
-            GObject.idle_add(self.preferences_dialog.update_real_download_folder)
 
         Util.makedirs(self.real_download_folder)
         dl_folder_file = os.path.join(self.real_download_folder, DL_FOLDER_FILE)
@@ -578,12 +576,6 @@ class VarietyWindow(Gtk.Window):
             self.clock_thread.daemon = True
             self.clock_thread.start()
 
-    def start_reporting_thread(self):
-        if not self.reporting_thread and self.options.stats_enabled:
-            self.reporting_thread = threading.Thread(target=self.reporting_thread_method)
-            self.reporting_thread.daemon = True
-            self.reporting_thread.start()
-
     def start_threads(self):
         self.change_event = threading.Event()
         change_thread = threading.Thread(target=self.regular_change_thread)
@@ -605,6 +597,12 @@ class VarietyWindow(Gtk.Window):
         server_options_thread = threading.Thread(target=self.server_options_thread)
         server_options_thread.daemon = True
         server_options_thread.start()
+
+    def start_reporting_thread(self):
+        if not self.reporting_thread and self.options.stats_enabled:
+            self.reporting_thread = threading.Thread(target=self.reporting_thread_method)
+            self.reporting_thread.daemon = True
+            self.reporting_thread.start()
 
     def is_in_favorites(self, file):
         filename = os.path.basename(file)
@@ -750,7 +748,7 @@ class VarietyWindow(Gtk.Window):
                     self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
                     self.ind.history.handler_unblock(self.ind.history_handler_id)
 
-                    self.ind.downloads.set_visible(self.options.download_enabled)
+                    self.ind.downloads.set_visible(len(self.downloaded) > 0)
                     self.ind.downloads.set_sensitive(len(self.downloaded) > 0)
                     self.ind.downloads.handler_block(self.ind.downloads_handler_id)
                     self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
@@ -974,7 +972,7 @@ class VarietyWindow(Gtk.Window):
             time.sleep(3600 * 6)  # Report once per 6 hours
 
     def has_real_downloaders(self):
-        return sum(1 for d in self.downloaders if not d.is_refresher) > 0
+        return len(self.downloaders) > 0
 
     def download_thread(self):
         self.last_dl_time = time.time()
@@ -1004,11 +1002,6 @@ class VarietyWindow(Gtk.Window):
                     # download from a random downloader (gives equal chance to all)
                     downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
                     self.download_one_from(downloader)
-
-                    # Also refresh the images for all the refreshers - these need to be updated regularly
-                    for dl in self.downloaders:
-                        if dl.is_refresher and dl != downloader:
-                            dl.download_one()
 
             except Exception:
                 logger.exception(lambda: "Could not download wallpaper:")
@@ -2883,7 +2876,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if self.options.slideshow_favorites_enabled:
                     folders.append(self.options.favorites_folder)
                 if self.options.slideshow_downloads_enabled:
-                    folders.append(self.options.download_folder)
+                    folders.append(self.options.real_download_folder)
                 if self.options.slideshow_custom_enabled and os.path.isdir(self.options.slideshow_custom_folder):
                     folders.append(self.options.slideshow_custom_folder)
 
