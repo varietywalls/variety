@@ -15,8 +15,6 @@
 ### END LICENSE
 import io
 
-import datetime
-
 from variety import _, _u
 import subprocess
 import urllib

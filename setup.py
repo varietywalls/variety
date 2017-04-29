@@ -68,7 +68,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='variety',
-    version='0.6.3',
+    version='0.6.4',
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
