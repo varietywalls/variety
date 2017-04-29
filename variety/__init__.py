@@ -17,8 +17,6 @@
 import gettext
 import logging
 
-import datetime
-
 gettext.textdomain('variety')
 import os
 import sys
@@ -105,6 +103,9 @@ import signal
 import dbus, dbus.service, dbus.glib
 import logging
 
+import gi
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 
 from variety import VarietyWindow
@@ -170,9 +171,6 @@ def monkeypatch_ssl():
         old_init(self, *args, **kwargs)
 
     ssl.SSLSocket.__init__ = ubuntu_openssl_bug_965371
-
-
-REL_DATE = "2016-10-30"
 
 
 def main():
