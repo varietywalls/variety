@@ -41,10 +41,10 @@ class UnsplashDownloader(Downloader.Downloader):
     def convert_to_filename(self, url):
         return "Unsplash"
 
-    def download_one(self):
+    def download_one(self, force=False):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("unsplash", 0, 0)
 
-        if time.time() - UnsplashDownloader.last_download_time < min_download_interval:
+        if not force and time.time() - UnsplashDownloader.last_download_time < min_download_interval:
             logger.info(lambda: "Minimal interval between Unsplash downloads is %d, skip this attempt" % min_download_interval)
             return None
 

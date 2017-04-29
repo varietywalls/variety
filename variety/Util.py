@@ -720,8 +720,8 @@ class Util:
             origin_url = meta['sourceURL']
 
             if "flickr.com" in origin_url:
-                from variety.FlickrDownloader import FlickrDownloader
-                return FlickrDownloader.get_image_url(origin_url)
+                from variety.FlickrCcDownloader import FlickrCcDownloader
+                return FlickrCcDownloader.get_image_url(origin_url)
 
             elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
                 return origin_url

@@ -123,10 +123,10 @@ class FlickrCcDownloader(Downloader.Downloader):
 
         return int(resp["photos"]["total"])
 
-    def download_one(self):
+    def download_one(self, force=False):
         min_download_interval, min_fill_queue_interval = self.parse_server_options("flickr", 60, 600)
 
-        if time.time() - FlickrCcDownloader.last_download_time < min_download_interval:
+        if not force and time.time() - FlickrCcDownloader.last_download_time < min_download_interval:
             logger.info(lambda: "Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
             return None
 
@@ -134,7 +134,7 @@ class FlickrCcDownloader(Downloader.Downloader):
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
-            if time.time() - self.last_fill_time < min_fill_queue_interval:
+            if not force and time.time() - self.last_fill_time < min_fill_queue_interval:
                 logger.info(lambda: "Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
                             min_fill_queue_interval)
                 return None

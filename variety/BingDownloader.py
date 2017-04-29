@@ -39,7 +39,7 @@ class BingDownloader(Downloader.Downloader):
     def convert_to_filename(self, url):
         return "Bing"
 
-    def download_one(self):
+    def download_one(self, force=False):
         logger.info(lambda: "Downloading an image from Bing")
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 

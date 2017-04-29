@@ -986,7 +986,7 @@ class VarietyWindow(Gtk.Window):
                     dl_images = [i for i in os.listdir(dl.target_folder) if Util.is_image(i)]
                     if len(dl_images) >= INITIAL_DOWNLOAD_POPULATE_COUNT:
                         break
-                    dl.download_one()
+                    dl.download_one(force=True)
                     time.sleep(2)
         Util.start_daemon(_go)
 
