@@ -67,12 +67,15 @@ class MediaRssDownloader(Downloader.Downloader):
             logger.exception(lambda: "Error while validating URL, probably not a MediaRSS feed")
             return False
 
-    def download_one(self, force=False):
+    def download_one(self):
         logger.info(lambda: "Downloading an image from MediaRSS, " + self.location)
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
+            if self.parent:
+                self.parent.throttler.api(self.source_type)
             self.fill_queue()
+
         if not self.queue:
             logger.info(lambda: "MediaRSS queue empty after fill")
             return None

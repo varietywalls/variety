@@ -13,11 +13,13 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
+import abc
 import os
 import string
 import re
 import logging
+from variety.Options import Options
+
 from variety.Smart import Smart
 
 from variety.Util import Util
@@ -25,6 +27,8 @@ from variety.Util import Util
 logger = logging.getLogger('variety')
 
 class Downloader(object):
+    __metaclass__ = abc.ABCMeta
+
     def __init__(self, parent, source_type, name, location):
         self.parent = parent
         self.source_type = source_type
@@ -154,3 +158,7 @@ class Downloader(object):
 
         return min_download_interval, min_fill_queue_interval
 
+
+    @abc.abstractmethod
+    def download_one(self):
+        pass

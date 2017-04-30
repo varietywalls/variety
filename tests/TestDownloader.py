@@ -38,9 +38,17 @@ def test_download_one_for(test_case, dl):
     test_case.fail("Tried download_one 5 times, all failed")
 
 class TestDownloader(unittest.TestCase):
+    class _Dl(Downloader):
+
+        def __init__(self):
+            super(TestDownloader._Dl, self).__init__(None, "", "", ".")
+
+        def download_one(self):
+            pass
+
     def test_convert_url(self):
         self.assertEqual("wallpapers_net_some_category_html",
-            Downloader("", "", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
+             TestDownloader._Dl().convert_to_filename("http://wallpapers.net/some-category.html"))
 
 if __name__ == '__main__':
     unittest.main()

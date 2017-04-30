@@ -27,6 +27,7 @@ random.seed()
 
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
+
 class FlickrCcDownloader(Downloader.Downloader):
     last_download_time = 0
 
@@ -123,22 +124,13 @@ class FlickrCcDownloader(Downloader.Downloader):
 
         return int(resp["photos"]["total"])
 
-    def download_one(self, force=False):
-        min_download_interval, min_fill_queue_interval = self.parse_server_options("flickr", 60, 600)
-
-        if not force and time.time() - FlickrCcDownloader.last_download_time < min_download_interval:
-            logger.info(lambda: "Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
-            return None
-
+    def download_one(self):
         logger.info(lambda: "Downloading an image from Flickr, " + self.location)
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
-            if not force and time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info(lambda: "Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
-                            min_fill_queue_interval)
-                return None
-
+            if self.parent:
+                self.parent.throttler.api(self.source_type)
             self.fill_queue()
 
         if not self.queue:

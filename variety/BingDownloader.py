@@ -39,12 +39,15 @@ class BingDownloader(Downloader.Downloader):
     def convert_to_filename(self, url):
         return "Bing"
 
-    def download_one(self, force=False):
+    def download_one(self):
         logger.info(lambda: "Downloading an image from Bing")
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 
         if not self.queue:
+            if self.parent:
+                self.parent.throttler.api(self.source_type)
             self.fill_queue()
+
         if not self.queue:
             logger.info(lambda: "Bing queue empty after fill")
             return None

@@ -28,26 +28,18 @@ random.seed()
 
 
 class UnsplashDownloader(Downloader.Downloader):
-    last_download_time = 0
     rate_limiting_started_time = 0
 
     CLIENT_ID = '072e5048dfcb73a8d9ad59fcf402471518ff8df725df462b0c4fa665f466515a'
 
     def __init__(self, parent):
         super(UnsplashDownloader, self).__init__(parent, "unsplash", "Unsplash.com", "https://unsplash.com")
-        self.last_fill_time = 0
         self.queue = []
 
     def convert_to_filename(self, url):
         return "Unsplash"
 
-    def download_one(self, force=False):
-        min_download_interval, min_fill_queue_interval = self.parse_server_options("unsplash", 0, 0)
-
-        if not force and time.time() - UnsplashDownloader.last_download_time < min_download_interval:
-            logger.info(lambda: "Minimal interval between Unsplash downloads is %d, skip this attempt" % min_download_interval)
-            return None
-
+    def download_one(self):
         logger.info(lambda: "Downloading an image from Unsplash")
         logger.info(lambda: "Queue size: %d" % len(self.queue))
 
@@ -56,12 +48,8 @@ class UnsplashDownloader(Downloader.Downloader):
                 logger.info(lambda: "Unsplash queue empty, but rate limit reached, will try again later")
                 return None
 
-            if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info(lambda: "Unsplash queue empty, but minimal interval between fill attempts is %d, "
-                            "will try again later" % min_fill_queue_interval)
-                return None
-
-            self.last_fill_time = time.time()
+            if self.parent:
+                self.parent.throttler.api(self.source_type)
             self.fill_queue()
 
         if not self.queue:

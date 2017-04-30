@@ -13,8 +13,6 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import io
-
 from variety import _, _u
 import subprocess
 import urllib
@@ -31,6 +29,8 @@ Notify.init("Variety")
 
 from variety_lib import varietyconfig
 
+import io
+import json
 import os
 import stat
 import shutil
@@ -52,6 +52,7 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
 from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
+from variety.Throttler import Throttler, ThrottleException
 from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
 from variety.FlickrCcDownloader import FlickrCcDownloader
@@ -146,6 +147,7 @@ class VarietyWindow(Gtk.Window):
         self.prepared_lock = threading.Lock()
         self.prepared_from_downloads = []
 
+        self.throttler = Throttler()
         self.downloaded = []
 
         self.register_clipboard()
@@ -940,6 +942,7 @@ class VarietyWindow(Gtk.Window):
                 attempts += 1
                 logger.info(lambda: "Fetching server options from %s" % VarietyWindow.SERVERSIDE_OPTIONS_URL)
                 self.server_options = Util.fetch_json(VarietyWindow.SERVERSIDE_OPTIONS_URL)
+                self.throttler.update_server_options(self.server_options)
                 logger.info(lambda: "Fetched server options: %s" % str(self.server_options))
                 if self.preferences_dialog:
                     self.preferences_dialog.update_status_message()
@@ -980,17 +983,28 @@ class VarietyWindow(Gtk.Window):
         def _go():
             self.purge_downloaded()
 
-            for dl in self.downloaders:
-                # try to make sure every active downloader has at least 3 images
-                for _ in range(1, 10):
+            dls = self.downloaders
+            for dl in dls[:20]:
+                # try to make sure every active downloader has at least several images
+                # limit to max 20 downloaders to avoid infinite operations
+                # due to long list of downloaders and quota_enabled
+                for _ in range(1, INITIAL_DOWNLOAD_POPULATE_COUNT * 2):
                     if not self.running:
                         return
 
                     dl_images = [i for i in os.listdir(dl.target_folder) if Util.is_image(i)]
                     if len(dl_images) >= INITIAL_DOWNLOAD_POPULATE_COUNT:
                         break
-                    dl.download_one(force=True)
-                    time.sleep(2)
+
+                    # bypass throttling
+                    with self.throttler.bypass():
+                        try:
+                            dl.download_one()
+                        except:
+                            logger.exception(lambda: 'Download failed during initial population for %s, %s:' % (
+                                dl.source_type, dl.location))
+
+                    time.sleep(3)
         Util.start_daemon(_go)
 
     def trigger_download(self, downloader=None):
@@ -1012,7 +1026,14 @@ class VarietyWindow(Gtk.Window):
                 self.download_folder_size += os.path.getsize(file)
 
     def download_one_from(self, downloader):
-        file = downloader.download_one()
+        try:
+            self.throttler.download(downloader.source_type)
+            file = downloader.download_one()
+        except ThrottleException as e:
+            logger.info(lambda: 'Skipping download from %s, limits are: %s, %s' % (
+                e.source_type, e.request_type, json.dumps(e.limits)))
+            return
+
         if file:
             self.register_downloaded_file(file)
 
@@ -1024,6 +1045,8 @@ class VarietyWindow(Gtk.Window):
             else:
                 # image is not ok, but still notify prepare thread that there is a new image - it might be "desperate"
                 self.prepare_event.set()
+
+            self.purge_downloaded()
 
     def purge_downloaded(self):
         if not self.options.quota_enabled:
@@ -1363,8 +1386,8 @@ class VarietyWindow(Gtk.Window):
             img = None
 
             with self.prepared_lock:
-                # prefer the latest downloads about half of the time
-                if random.random() < 0.5:
+                # prefer the latest downloads only some of the time so that there is enough source switching
+                if random.random() < 0.3:
                     # prepend the prepared_from_downloads queue and clear it:
                     random.shuffle(self.prepared_from_downloads)
                     self.prepared[0:0] = self.prepared_from_downloads
