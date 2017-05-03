@@ -3,7 +3,6 @@
 # This script is run when the application starts
 # Its purpose is to obtain the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
 # This is needed by Variety at start to ensure History->Back works OK to revert back to the pre-Variety wallpaper.
-# You need to edit this if you use something other than Gnome 3 or Unity for a desktop environment
 
 desktop=$DESKTOP_SESSION
 
@@ -26,11 +25,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
 # MATE
 elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
         version=`mate-about -v | sed s/MATE\ Desktop\ Environment\ //`
-        if [[ "$version" > "1.6.0" || "$version" == "1.6.0" ]]; then
-            gsettings get org.mate.background picture-filename
-        else
-            mateconftool-2 --get /desktop/mate/background/picture_filename
-        fi
+        gsettings get org.mate.background picture-filename
 
 # Cinnamon after 2.0
 elif [ "$desktop" == "Cinnamon" ] || [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
