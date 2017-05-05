@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -18,7 +18,6 @@ import os
 import string
 import re
 import logging
-from variety.Smart import Smart
 
 from variety.Util import Util
 
@@ -89,15 +88,8 @@ class Downloader(object):
             logger.info(lambda: "File already exists, skip downloading")
             return None
 
-        if self.parent and self.parent.options.safe_mode:
-            sfw_rating = Smart.get_sfw_rating(origin_url)
-            if sfw_rating is not None and sfw_rating < 100:
-                logger.info(lambda: "Skipping non-safe download %s. Is the source %s:%s "
-                                    "suitable for Safe mode?" % (origin_url, source_type, self.location))
-                return None
-
         if self.parent and self.parent.options.safe_mode and 'keywords' in extra_metadata:
-            blacklisted = set(k.lower() for k in extra_metadata['keywords']) & Smart.get_safe_mode_keyword_blacklist()
+            blacklisted = set(k.lower() for k in extra_metadata['keywords'])
             if len(blacklisted) > 0:
                 logger.info(lambda: "Skipping non-safe download %s due to blacklisted keywords (%s). "
                                     "Is the source %s:%s suitable for Safe mode?" %

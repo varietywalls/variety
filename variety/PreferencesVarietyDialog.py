@@ -33,7 +33,7 @@ from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
-from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialogg
+from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u

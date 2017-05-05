@@ -72,7 +72,6 @@ from variety.Util import Util, throttle, debounce
 from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
-from variety.Smart import Smart
 from variety.Stats import Stats
 from variety import indicator
 
@@ -181,8 +180,6 @@ class VarietyWindow(Gtk.Window):
         self.image_count = -1
         self.image_colors_cache = {}
 
-        self.smart = Smart(self)
-
         self.reload_config()
         self.load_last_change_time()
 
@@ -199,7 +196,6 @@ class VarietyWindow(Gtk.Window):
 
         def _delayed():
             self.create_preferences_dialog()
-            self.smart.reload()
         GObject.timeout_add(1000, _delayed)
 
     def on_mnu_about_activate(self, widget, data=None):
@@ -478,9 +474,6 @@ class VarietyWindow(Gtk.Window):
         else:
             threading.Timer(0.1, self.refresh_texts).start()
 
-        if self.preferences_dialog:
-            self.smart.reload()
-
         if self.events:
             for e in self.events:
                 e.set()
@@ -548,13 +541,6 @@ class VarietyWindow(Gtk.Window):
             return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
-        elif type == Options.SourceType.RECOMMENDED:
-            if self.smart.user:
-                return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
-            else:
-                raise Exception('No Smart user yet, not a problem')
-        elif type == Options.SourceType.LATEST:
-            return MediaRssDownloader(self, Smart.SITE_URL + '/rss')
         else:
             raise Exception("Unknown downloader type")
 
@@ -754,12 +740,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.trash.set_visible(bool(file))
                     self.ind.trash.set_sensitive(deleteable and not auto_changed)
 
-                    self.ind.sfw_menu_item.set_visible(self.url is not None)
-                    if hasattr(self.ind, 'safe_mode'):
-                        self.ind.safe_mode.handler_block(self.ind.safe_mode_handler_id)
-                        self.ind.safe_mode.set_active(self.options.safe_mode)
-                        self.ind.safe_mode.set_label(_('Safe mode: On') if self.options.safe_mode else _('Turn Safe mode on'))
-                        self.ind.safe_mode.handler_unblock(self.ind.safe_mode_handler_id)
                     if hasattr(self.ind, 'rating_items'):
                         for item in self.ind.rating_items:
                             item.set_sensitive(self.url is not None)
@@ -999,8 +979,6 @@ class VarietyWindow(Gtk.Window):
         while self.running:
             try:
                 attempts += 1
-                if self.options.stats_enabled:
-                    self.smart.stats_report_config()
             except Exception:
                 logger.exception("Stats: Could not report config")
                 if attempts < 3:
@@ -1574,12 +1552,8 @@ class VarietyWindow(Gtk.Window):
                     if info.get('sfwRating', 100) < 100:
                         return False
 
-                    blacklisted = set(k.lower() for k in info.get('keywords', [])) & Smart.get_safe_mode_keyword_blacklist()
+                    blacklisted = set(k.lower() for k in info.get('keywords', []))
                     if len(blacklisted) > 0:
-                        return False
-
-                    sfw_rating = Smart.get_sfw_rating(info['sourceURL'])
-                    if sfw_rating is not None and sfw_rating < 100:
                         return False
                 except Exception:
                     pass
@@ -1789,29 +1763,6 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
-    def report_sfw_rating(self, file, rating):
-        try:
-            if not file:
-                file = self.current
-            if not file:
-                return
-
-            try:
-                if self.options.safe_mode and rating <= 50:
-                    if self.current == file:
-                        self.next_wallpaper(self.ind.rating)
-                    self.remove_from_queues(file)
-                    self.prepare_event.set()
-                    self.thumbs_manager.remove_image(file)
-            except:
-                logger.exception(lambda: 'Error in report_sfw_rating:')
-
-            Util.write_metadata(file, {'sfwRating': rating})
-            self.smart.report_sfw_rating(file, rating, async=True)
-            self.show_notification('Thanks for reporting!', 'This makes Variety better for everyone')
-        except Exception:
-            logger.exception(lambda: "Exception in report_sfw_rating")
-
     def copy_to_favorites(self, widget=None, file=None):
         try:
             if not file:
@@ -1821,7 +1772,6 @@ class VarietyWindow(Gtk.Window):
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
-                self.smart.report_file(file, 'favorite', async=True)
         except Exception:
             logger.exception(lambda: "Exception in copy_to_favorites")
 
@@ -1846,8 +1796,6 @@ class VarietyWindow(Gtk.Window):
                         if self.no_effects_on == file:
                             self.no_effects_on = new_file
                         self.set_wp_throttled(new_file)
-
-                    self.smart.report_file(new_file, 'favorite', async=True)
         except Exception:
             logger.exception(lambda: "Exception in move_to_favorites")
 
@@ -1939,27 +1887,15 @@ class VarietyWindow(Gtk.Window):
                 if not self.running:
                     return
 
-            if not self.options.smart_notice_shown:
-                self.smart.show_notice_dialog()
-                if not self.running:
-                    return
-
             if first_run:
                 with open(fr_file, "w") as f:
                     f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-
-            if self.options.smart_enabled and not self.options.smart_register_shown:
-                self.smart.show_register_dialog()
-                if not self.running:
-                    return
 
             if first_run:
                 self.create_autostart_entry()
                 self.on_mnu_preferences_activate()
             else:
                 self.show_usage_stats_notice()
-
-            self.smart.sync()
 
         Util.add_mainloop_task(_go)
 
@@ -2452,17 +2388,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 GObject.idle_add(_add)
 
             elif command == 'set-wallpaper':
-                if "id" in args:
-                    image_data = Util.fetch_json(Smart.API_URL + '/image/' + args["id"][0])
-                    image_url, origin_url, source_type, source_location, source_name, extra_metadata = \
-                        Smart.extract_fetch_data(image_data)
-                else:
-                    image_url = args["image_url"][0]
-                    origin_url = args["origin_url"][0]
-                    source_type = args.get("source_type", [None])[0]
-                    source_location = args.get("source_location", [None])[0]
-                    source_name = args.get("source_name", [None])[0]
-                    extra_metadata = {}
+                image_url = args["image_url"][0]
+                origin_url = args["origin_url"][0]
+                source_type = args.get("source_type", [None])[0]
+                source_location = args.get("source_location", [None])[0]
+                source_name = args.get("source_name", [None])[0]
+                extra_metadata = {}
 
                 image = ImageFetcher.fetch(image_url, self.options.fetched_folder,
                                            origin_url=origin_url,
@@ -2476,12 +2407,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.register_downloaded_file(image)
                     self.show_notification(_("Fetched and applied"), os.path.basename(image), icon=image)
                     self.set_wallpaper(image, False)
-
-            elif command == 'smart-login':
-                userid = args["id"][0]
-                username = args["username"][0]
-                authkey = args["authkey"][0]
-                self.smart.process_login_request(userid, username, authkey)
 
             elif command == 'test-variety-link':
                 self.show_notification(_('It works!'), _('Yay, Variety links work. Great!'))
