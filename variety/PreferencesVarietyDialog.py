@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -33,8 +33,7 @@ from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
-from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
-from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
+from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialogg
 from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u
@@ -144,7 +143,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
             self.ui.change_on_start.set_active(self.options.change_on_start)
-            self.ui.safe_mode.set_active(self.options.safe_mode)
 
             self.ui.download_enabled.set_active(self.options.download_enabled)
             self.set_download_interval(self.options.download_interval)
@@ -184,10 +182,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.favorites_operations.set_active(3)
 
             self.favorites_operations = self.options.favorites_operations
-
-            self.ui.smart_enabled.set_active(self.options.smart_enabled)
-            self.ui.sync_enabled.set_active(self.options.sync_enabled)
-            self.ui.stats_enabled.set_active(self.options.stats_enabled)
 
             self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
 
@@ -326,8 +320,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     self.ui.changes_buffer.set_text(f.read())
             except Exception:
                 logger.warning(lambda: "Missing ui/changes.txt file")
-
-            self.on_smart_user_updated()
 
             self.on_change_enabled_toggled()
             self.on_download_enabled_toggled()
@@ -840,7 +832,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.change_enabled = self.ui.change_enabled.get_active()
             self.options.change_on_start = self.ui.change_on_start.get_active()
             self.options.change_interval = self.get_change_interval()
-            self.options.safe_mode = self.ui.safe_mode.get_active()
 
             self.options.download_enabled = self.ui.download_enabled.get_active()
             self.options.download_interval = self.get_download_interval()
@@ -895,10 +886,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 # will be set in the favops editor dialog
                 pass
 
-            self.options.smart_enabled = self.ui.smart_enabled.get_active()
-            if self.ui.sync_enabled.get_sensitive():
-                self.options.sync_enabled = self.ui.sync_enabled.get_active()
-            self.options.stats_enabled = self.ui.stats_enabled.get_active()
 
             self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
@@ -1062,21 +1049,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_lightness_enabled_toggled(self, widget = None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
 
-    def on_smart_enabled_toggled(self, widget=None):
-        self.on_smart_user_updated()
-        if not self.ui.smart_enabled.get_active():
-            for s in self.parent.options.sources:
-                if s[1] in (Options.SourceType.RECOMMENDED,) and s[0]:
-                    self.parent.show_notification(_("Recommended images source disabled"))
-                    s[0] = False
-                    self.parent.options.write()
-            for i, r in enumerate(self.ui.sources.get_model()):
-                if Options.str_to_type(r[1]) in (Options.SourceType.RECOMMENDED,):
-                    r[0] = False
-        elif not self.parent.smart.user:
-            def _f():
-                self.parent.smart.load_user(create_if_missing=True)
-            threading.Timer(0, _f).start()
 
     def on_destroy(self, widget = None):
         if hasattr(self, "dialog") and self.dialog:
@@ -1192,67 +1164,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 _("Could not adjust permissions"),
                 _('You may try manually running this command:\nsudo chmod %s "%s"') % (mode, folder))
         self.on_copyto_changed()
-
-    def on_btn_login_register_clicked(self, widget=None):
-        if hasattr(self, 'dialog') and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
-            return
-        login_dialog = LoginOrRegisterDialog()
-        login_dialog.set_smart(self.parent.smart)
-        self.show_dialog(login_dialog)
-
-    def close_login_register_dialog(self):
-        if hasattr(self, "dialog") and self.dialog and isinstance(self.dialog, LoginOrRegisterDialog):
-            def _close():
-                self.dialog.destroy()
-                self.dialog = None
-            GObject.idle_add(_close)
-
-    def on_smart_user_updated(self, create_user_attempts=0):
-        self.update_status_message()
-
-        sync_allowed = self.ui.smart_enabled.get_active() and self.parent.smart.is_registered()
-        self.ui.sync_enabled.set_sensitive(sync_allowed)
-        self.ui.sync_login_note.set_visible(not sync_allowed)
-        if not sync_allowed:
-            self.ui.sync_enabled.set_active(False)
-        else:
-            self.ui.sync_enabled.set_active(self.options.sync_enabled)
-
-        if self.parent.smart.user:
-            self.ui.box_smart_connecting.set_visible(False)
-            self.ui.box_smart_user.set_visible(True)
-            username = self.parent.smart.user.get("username")
-            self.ui.smart_username.set_markup(_('Logged in as: ') + '<a href="%s">%s</a>' % (
-                    self.parent.smart.get_profile_url(),
-                    username or _('Anonymous')))
-            self.ui.btn_login_register.set_label(_('Login or register') if not bool(username) else _('Switch user'))
-            self.ui.smart_register_note.set_visible(not bool(username))
-        else:
-            if not self.ui.smart_enabled.get_active():
-                self.ui.box_smart_connecting.set_visible(False)
-                self.ui.box_smart_user.set_visible(False)
-            elif create_user_attempts == 0:
-                def _create_user():
-                    def _start():
-                        self.ui.smart_spinner.set_visible(True)
-                        self.ui.smart_spinner.start()
-                        self.ui.smart_connect_error.set_visible(False)
-                        self.ui.box_smart_connecting.set_visible(True)
-                    GObject.idle_add(_start)
-
-                    try:
-                        self.parent.smart.load_user(create_if_missing=True)
-                        self.on_smart_user_updated(create_user_attempts + 1)
-                    except IOError:
-                        def _fail():
-                            self.ui.smart_spinner.set_visible(False)
-                            self.ui.smart_connect_error.set_visible(True)
-                        GObject.idle_add(_fail)
-                    finally:
-                        def _stop():
-                            self.ui.smart_spinner.set_visible(False)
-                        GObject.idle_add(_stop)
-                threading.Timer(0, _create_user).start()
 
     def on_btn_slideshow_reset_clicked(self, widget=None):
         self.ui.slideshow_seconds.set_value(6)
