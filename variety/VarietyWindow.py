@@ -72,9 +72,7 @@ from variety.Util import Util, throttle, debounce
 from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
-from variety.Stats import Stats
 from variety import indicator
-
 
 DL_FOLDER_FILE = ".variety_download_folder"
 
@@ -139,7 +137,6 @@ class VarietyWindow(Gtk.Window):
         self.quote = None
         self.quote_favorites_contents = ''
         self.clock_thread = None
-        self.reporting_thread = None
 
         self.prepare_config_folder()
         self.perform_upgrade()
@@ -441,7 +438,6 @@ class VarietyWindow(Gtk.Window):
             logger.info(lambda: "No need to clear prepared queue")
 
         self.start_clock_thread()
-        self.start_reporting_thread()
 
         if self.options.quotes_enabled:
             if not self.quotes_engine:
@@ -596,12 +592,6 @@ class VarietyWindow(Gtk.Window):
             self.clock_thread = threading.Thread(target=self.clock_thread_method)
             self.clock_thread.daemon = True
             self.clock_thread.start()
-
-    def start_reporting_thread(self):
-        if not self.reporting_thread and self.options.stats_enabled:
-            self.reporting_thread = threading.Thread(target=self.reporting_thread_method)
-            self.reporting_thread.daemon = True
-            self.reporting_thread.start()
 
     def start_threads(self):
         self.change_event = threading.Event()
@@ -972,21 +962,6 @@ class VarietyWindow(Gtk.Window):
                     continue
 
             time.sleep(3600 * 24) # Update once daily
-
-    def reporting_thread_method(self):
-        time.sleep(20)
-        attempts = 0
-        while self.running:
-            try:
-                attempts += 1
-            except Exception:
-                logger.exception("Stats: Could not report config")
-                if attempts < 3:
-                    # the first several attempts may easily fail if Variety is run on startup, try again soon:
-                    time.sleep(30)
-                    continue
-
-            time.sleep(3600 * 6)  # Report once per 6 hours
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher) > 0
@@ -1868,16 +1843,6 @@ class VarietyWindow(Gtk.Window):
                 logger.debug(lambda: '%s, %s' % (t.name, getattr(t, '_Thread__target', None)))
             GObject.idle_add(Gtk.main_quit)
 
-    def show_usage_stats_notice(self):
-        if not self.options.stats_notice_shown and self.options.stats_enabled:
-            self.options.stats_notice_shown = True
-            self.options.write()
-            self.show_notification(
-                _('Anonymous usage statistics'),
-                _('Variety collects anonymous usage statistics. \n'
-                  'These help us make it better and are not shared with anyone. \n'
-                  'To read more or turn them off, go to "Sync and social"'))
-
     def first_run(self):
         def _go():
             fr_file = os.path.join(self.config_folder, ".firstrun")
@@ -1894,8 +1859,6 @@ class VarietyWindow(Gtk.Window):
             if first_run:
                 self.create_autostart_entry()
                 self.on_mnu_preferences_activate()
-            else:
-                self.show_usage_stats_notice()
 
         Util.add_mainloop_task(_go)
 
@@ -2919,8 +2882,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         threading.Thread(target=_go).start()
 
     def fix_ssl_dependencies(self):
-        if not self.options.stats_notice_shown:
-            return  # Suggest fix after we've dealt with the other onboarding stuff
         if getattr(self, 'ssl_error_shown', False):
             return  # Suggest fixing only once per run
         self.ssl_error_shown = True

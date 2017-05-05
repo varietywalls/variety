@@ -799,8 +799,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.parent.trigger_download()
         self.on_destroy()
 
-        self.parent.show_usage_stats_notice()
-
     def on_save_clicked(self, widget):
         self.delayed_apply()
         self.close()
