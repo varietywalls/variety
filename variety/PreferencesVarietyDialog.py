@@ -33,7 +33,6 @@ from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
-from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 
 from variety import _, _u
@@ -55,8 +54,6 @@ UNREMOVEABLE_TYPES = [
     Options.SourceType.UNSPLASH,
     Options.SourceType.APOD,
     Options.SourceType.EARTH,
-    Options.SourceType.RECOMMENDED,
-    Options.SourceType.LATEST,
 ]
 
 EDITABLE_TYPES = [
