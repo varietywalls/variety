@@ -79,6 +79,7 @@ class ThumbsWindow(Gtk.Window):
             self.mouse_in = False
             self.mouse_position = None
             self.previous_speed = 0
+            self.autoscroll_event.clear()
 
         eventbox = Gtk.EventBox()
         eventbox.set_visible(True)
