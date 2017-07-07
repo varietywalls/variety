@@ -57,7 +57,7 @@ class QuoteWriter:
     @staticmethod
     def save_cairo_surface(surface, filename):
         size = surface.get_width(), surface.get_height()
-        image = Image.frombuffer('RGBA', size, surface.get_data(), 'raw', 'BGRA', 0, 1)
+        image = Image.frombuffer('RGBA', size, surface.get_data(), 'raw', 'BGRA', 0, 1).convert("RGB")
         image.save(filename, quality=100)
 
     @staticmethod
