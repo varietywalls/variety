@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>variety.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+  <name>Variety</name>
+  <summary>Wallpaper changer that automatically downloads wallpapers</summary>
+  <description>
+    <p>
+        Variety changes the desktop wallpaper on a regular basis, 
+        using user-specified or automatically downloaded images.
+    </p>
+    <p>
+        Variety sits conveniently as an indicator in the panel 
+        and can be easily paused and resumed. The mouse wheel 
+        can be used to scroll wallpapers back and forth until 
+        you find the perfect one for your current mood.
+    </p>
+    <p>
+        Apart from displaying images from local folders, several 
+        different online sources can be used to fetch wallpapers 
+        according to user-specified criteria.
+    </p>
+    <p>
+        Variety can also automatically apply various fancy 
+        filters to the displayed images - charcoal painting, 
+        oil painting, heavy blurring, etc. - so that your 
+        desktop is always fresh and unique.
+    </p>
+  </description>
+  <url type="homepage">https://launchpad.net/variety</url>
+  <url type="bugtracker">https://bugs.launchpad.net/variety</url>
+  <update_contact>eclipseo_at_fedoraproject.org</update_contact>
+</component>

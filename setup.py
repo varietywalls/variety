@@ -84,5 +84,6 @@ DistUtilsExtra.auto.setup(
 "NASA Astronomy Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa, "
 "deviantART or any other place are also supported.",
     url='https://launchpad.net/variety',
-    cmdclass={'install': InstallAndUpdateDataDirectory}
-    )
+    cmdclass={'install': InstallAndUpdateDataDirectory},
+    data_files=[('share/appdata', ['variety.appdata.xml'])]
+)
