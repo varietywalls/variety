@@ -32,7 +32,6 @@ from variety.Options import Options
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
-from variety.AddPanoramioDialog import AddPanoramioDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.SmartFeaturesConfirmationDialog import SmartFeaturesConfirmationDialog
 from variety.LoginOrRegisterDialog import LoginOrRegisterDialog
@@ -64,7 +63,6 @@ UNREMOVEABLE_TYPES = [
 EDITABLE_TYPES = [
     Options.SourceType.FLICKR,
     Options.SourceType.MEDIA_RSS,
-    Options.SourceType.PANORAMIO,
     Options.SourceType.WALLHAVEN,
     Options.SourceType.REDDIT,
 ]
@@ -381,7 +379,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             '-',
             (_("Flickr"), self.on_add_flickr_clicked),
             (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Panoramio"), self.on_add_panoramio_clicked),
             (_("Reddit"), self.on_add_reddit_clicked),
             (_("Media RSS"), self.on_add_mediarss_clicked),
         ]
@@ -672,8 +669,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddRedditDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
-            elif type == Options.SourceType.PANORAMIO:
-                self.dialog = AddPanoramioDialog()
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
@@ -785,9 +780,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_wallhaven_clicked(self, widget=None):
         self.show_dialog(AddWallhavenDialog())
-
-    def on_add_panoramio_clicked(self, widget=None):
-        self.show_dialog(AddPanoramioDialog())
 
     def show_dialog(self, dialog):
         self.dialog = dialog

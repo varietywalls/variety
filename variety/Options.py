@@ -42,7 +42,6 @@ class Options:
         APOD = 8
         MEDIA_RSS = 10
         EARTH = 11
-        PANORAMIO = 12
         WALLHAVEN = 13
         REDDIT = 14
         BING = 15
@@ -60,7 +59,6 @@ class Options:
             APOD: "apod",
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
-            PANORAMIO: "panoramio",
             WALLHAVEN: "wallhaven",
             REDDIT: "reddit",
             BING: "bing",
@@ -72,7 +70,7 @@ class Options:
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
         dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
-                    PANORAMIO, WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
+                    WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
 
     class LightnessMode:
         DARK = 0

@@ -56,7 +56,6 @@ from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
-from variety.PanoramioDownloader import PanoramioDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
@@ -542,8 +541,6 @@ class VarietyWindow(Gtk.Window):
             return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
-        elif type == Options.SourceType.PANORAMIO:
-            return PanoramioDownloader(self, location)
         elif type == Options.SourceType.RECOMMENDED:
             if self.smart.user:
                 return MediaRssDownloader(self, '%s/user/%s/recommended/rss' % (Smart.SITE_URL, self.smart.user["id"]))
