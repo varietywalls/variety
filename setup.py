@@ -60,15 +60,13 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
         DistUtilsExtra.auto.install_auto.run(self)
         update_config(previous_values)
 
-
-        
 ##################################################################################
 ###################### YOU SHOULD MODIFY ONLY WHAT IS BELOW ######################
 ##################################################################################
 
 DistUtilsExtra.auto.setup(
     name='variety',
-    version='0.6.4',
+    version='0.6.5',
     license='GPL-3',
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
