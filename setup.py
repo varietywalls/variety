@@ -60,7 +60,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
         DistUtilsExtra.auto.install_auto.run(self)
         update_config(previous_values)
 
-from variety_lib import get_version
+from variety_lib.varietyconfig import get_version
 
 ##################################################################################
 ###################### YOU SHOULD MODIFY ONLY WHAT IS BELOW ######################
