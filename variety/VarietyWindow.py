@@ -208,6 +208,8 @@ class VarietyWindow(Gtk.Window):
         else:
             logger.debug(lambda: 'create new about dialog')
             self.about = AboutVarietyDialog() # pylint: disable=E1102
+            # Set the version on runtime.
+            Gtk.AboutDialog.set_version(self.about, varietyconfig.get_version())
             self.about.run()
             self.about.destroy()
             self.about = None
