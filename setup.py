@@ -83,5 +83,5 @@ DistUtilsExtra.auto.setup(
 "deviantART or any other place are also supported.",
     url='https://launchpad.net/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory},
-    data_files=[('share/appdata', ['variety.appdata.xml'])]
+    data_files=[('share/metainfo', ['variety.appdata.xml'])]
 )
