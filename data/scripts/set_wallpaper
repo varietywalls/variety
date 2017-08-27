@@ -114,19 +114,35 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     exit 0
 fi
 
-# KDE - User will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short iterval.
+# KDE: Users on KDE 4 or Plasma < 5.7 will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short interval.
 # Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
 # and KDE will refresh it
-if [ "`env | grep KDE_FULL_SESSION | tail -c +18`" == "true" ]; then
-    mkdir -p "$(xdg-user-dir PICTURES)/variety-wallpaper"
-    NEWWP="$(xdg-user-dir PICTURES)/variety-wallpaper/wallpaper-kde-$RANDOM.jpg"
-    cp "$WP" "$NEWWP"
-    touch "$NEWWP"
-    PWDIR=`pwd`
-    cd "$(xdg-user-dir PICTURES)/variety-wallpaper/"
-    ls -tr "$(xdg-user-dir PICTURES)/variety-wallpaper/" | head -n -1 | xargs --no-run-if-empty rm
-    cd "$PWDIR"
-    exit 0
+# On Plasma 5.7 and above, the wallpaper choosing is automatic.
+if [ ${KDE_FULL_SESSION} == "true" ]; then
+    # Plasma 5.7 introduced a new feature to set the wallpaper via a qdbus script:
+    # https://github.com/KDE/plasma-workspace/commit/903cbfd7e267a4812a6ec222eb7e1b5dd775686f
+    if [[ -n ${KDE_SESSION_VERSION} && ${KDE_SESSION_VERSION} == '5' ]]; then
+        qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+        var allDesktops = desktops();
+        for (i=0; i < allDesktops.length; i++) {
+            d = allDesktops[i];
+            d.wallpaperPlugin = 'org.kde.image';
+            d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');
+            d.writeConfig('Image', 'file://"$WP"')
+        }
+        "
+        # Reuse the exit code from qdbus
+        exit "$?"
+    else
+        mkdir -p "$(xdg-user-dir PICTURES)/variety-wallpaper"
+        NEWWP="$(xdg-user-dir PICTURES)/variety-wallpaper/wallpaper-kde-$RANDOM.jpg"
+        cp "$WP" "$NEWWP"
+        touch "$NEWWP"
+        PWDIR=`pwd`
+        cd "$(xdg-user-dir PICTURES)/variety-wallpaper/"
+        ls -tr "$(xdg-user-dir PICTURES)/variety-wallpaper/" | head -n -1 | xargs --no-run-if-empty rm
+        cd "$PWDIR"
+    fi
 fi
 
 # Cinnamon, for cases when it is detectable
