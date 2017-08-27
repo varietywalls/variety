@@ -134,14 +134,14 @@ if [ ${KDE_FULL_SESSION} == "true" ]; then
         # Reuse the exit code from qdbus
         exit "$?"
     else
-        mkdir -p "$(xdg-user-dir PICTURES)/variety-wallpaper"
-        NEWWP="$(xdg-user-dir PICTURES)/variety-wallpaper/wallpaper-kde-$RANDOM.jpg"
+        WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
+        mkdir -p "$WALLDIR"
+        # Remove all old wallpapers
+        rm -fv ${WALLDIR}/*
+
+        NEWWP="${WALLDIR}/wallpaper-kde-$RANDOM.jpg"
         cp "$WP" "$NEWWP"
         touch "$NEWWP"
-        PWDIR=`pwd`
-        cd "$(xdg-user-dir PICTURES)/variety-wallpaper/"
-        ls -tr "$(xdg-user-dir PICTURES)/variety-wallpaper/" | head -n -1 | xargs --no-run-if-empty rm
-        cd "$PWDIR"
     fi
 fi
 
