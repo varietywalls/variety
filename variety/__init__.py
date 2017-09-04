@@ -188,9 +188,9 @@ def main():
     set_up_logging(options.verbose)
     monkeypatch_ssl()
 
-    if options.verbose > 2:
+    if options.verbose >= 2:
         Util.log_all(VarietyWindow.VarietyWindow)
-    if options.verbose > 3:
+    if options.verbose >= 3:
         Util.log_all(ThumbsManager.ThumbsManager)
         Util.log_all(ThumbsWindow.ThumbsWindow)
 

@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -22,9 +22,9 @@ from . varietyconfig import get_data_file
 from . Builder import Builder
 
 def get_builder(builder_file_name):
-    """Return a fully-instantiated Gtk.Builder instance from specified ui 
+    """Return a fully-instantiated Gtk.Builder instance from specified ui
     file
-    
+
     :param builder_file_name: The name of the builder file, without extension.
         Assumed to be in the 'ui' directory under the data path.
     """
@@ -78,13 +78,19 @@ def set_up_logging(verbose):
     lib_logger_sh.setFormatter(formatter)
     lib_logger.addHandler(lib_logger_sh)
 
+    logger.setLevel(logging.INFO)
     # Set the logging level to show debug messages.
-    if verbose:
-        logger.setLevel(logging.INFO)
-        logger.debug('logging enabled')
-    if verbose > 1:
+    if verbose >= 2:
         logger.setLevel(logging.DEBUG)
-    if verbose > 2:
+    elif not verbose:
+        # If we're not in verbose mode, only log these messages to file. This prevents
+        # flooding syslog and/or ~/.xsession-errors depending on how variety was started:
+        # (https://bugs.launchpad.net/variety/+bug/1685003)
+        # XXX: We should /really/ make the internal debug logging use logging.debug,
+        # this is really just a bandaid patch.
+        logger_sh.setLevel(logging.WARNING)
+
+    if verbose >= 3:
         lib_logger.setLevel(logging.DEBUG)
 
 def get_help_uri(page=None):
