@@ -283,9 +283,9 @@ class Indicator:
         try:
             from varietyslideshow import varietyslideshow
         except:
-            logger.warning('Variety Slideshow is not installed. '
-                           'Install it with "sudo apt-get install variety-slideshow", '
-                           'read more here: http://peterlevi.com/variety/slideshow/')
+            logger.warning('Variety Slideshow is not installed. This is an optional extension '
+                           'adding pan-and-zoom slideshows to Variety: see '
+                           'https://github.com/peterlevi/variety-slideshow for details')
         else:
             self.menu.append(Gtk.SeparatorMenuItem.new())
 
