@@ -43,6 +43,10 @@ import urlparse
 import webbrowser
 from PIL import Image as PILImage
 
+# Replacement for shutil.which, which (no pun intended) only exists on Python 3.3+
+# unless we want another 3rd party dependency.
+from distutils.spawn import find_executable
+
 random.seed()
 logger = logging.getLogger('variety')
 
@@ -1721,14 +1725,29 @@ class VarietyWindow(Gtk.Window):
                 def _go():
                     self.smart.report_file(file, 'trash', async=False)
 
-                    command = 'gvfs-trash "%s" || trash-put "%s" || kfmclient move "%s" trash:/' % (file, file, file)
-                    logger.info(lambda: "Running trash command %s" % command)
-                    result = os.system(command.encode('utf8'))
-                    if result != 0:
-                        logger.error(lambda: "Trash resulted in error code %d" % result)
+                    command = ''
+                    if find_executable('gvfs-trash'):
+                        command = ['gvfs-trash', file.encode('utf-8')]
+                    elif find_executable('trash-put'):
+                        command = ['trash-put', file.encode('utf-8')]
+                    elif find_executable('kfmclient'):
+                        command = ['kfmclient', 'move', file.encode('utf-8'), 'trash:/']
+
+                    logger.info("Running trash command %s", command)
+                    if command:
+                        result = subprocess.call(command)
+                        if result != 0:
+                            logger.error("Trash resulted in error code %d", result)
+                            self.show_notification(
+                                _("Cannot delete"),
+                                _("Deleting to trash failed, check variety.log for more information."))
+                    else:
+                        logger.error("Delete to trash failed as no suitable program was found.")
                         self.show_notification(
                             _("Cannot delete"),
-                            _("Probably there is no utility for moving to Trash?\nPlease install trash-cli or gvfs-bin or konquerer."))
+                            _("Deleting to trash failed because no suitable program is installed. "
+                              "Please install gvfs (gvfs-bin), trash-cli, or konqueror."))
+
                 threading.Timer(0, _go).start()
         except Exception:
             logger.exception(lambda: "Exception in move_to_trash")
