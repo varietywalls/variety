@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.2"/>
-  <!-- interface-requires preferences_variety_dialog 1.0 -->
+  <requires lib="preferences_variety_dialog" version="1.0"/>
   <object class="GtkTextBuffer" id="changes_buffer"/>
   <object class="GtkTextBuffer" id="clipboard_hosts_buffer">
     <signal name="changed" handler="delayed_apply_slow" swapped="no"/>
@@ -129,6 +129,39 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="dialog-action_area1">
+            <property name="height_request">50</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_right">5</property>
+            <property name="margin_top">5</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="save">
+                <property name="label">gtk-close</property>
+                <property name="use_action_appearance">False</property>
+                <property name="height_request">35</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <signal name="clicked" handler="on_save_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
         <child>
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
@@ -1048,8 +1081,8 @@
                                   <object class="GtkLabel" id="label54">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Text color: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1077,8 +1110,8 @@
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Text font: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1121,8 +1154,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Backdrop color: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1149,8 +1182,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Backdrop opacity: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1163,8 +1196,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes"> Transparent</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1267,8 +1300,8 @@
                                   <object class="GtkLabel" id="label44">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Quotes area width: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1281,8 +1314,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">1</property>
                                     <property name="label" translatable="yes">Narrow </property>
+                                    <property name="xalign">1</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1336,8 +1369,8 @@
                                   <object class="GtkLabel" id="label57">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Horizontal position: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1350,8 +1383,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">1</property>
                                     <property name="label" translatable="yes">Left </property>
+                                    <property name="xalign">1</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1405,8 +1438,8 @@
                                   <object class="GtkLabel" id="label61">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Vertical position: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1419,8 +1452,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">10</property>
-                                    <property name="xalign">1</property>
                                     <property name="label" translatable="yes">Top </property>
+                                    <property name="xalign">1</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1628,8 +1661,6 @@
                                   <packing>
                                     <property name="left_attach">1</property>
                                     <property name="top_attach">1</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1643,8 +1674,6 @@
                                   <packing>
                                     <property name="left_attach">1</property>
                                     <property name="top_attach">0</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1652,14 +1681,12 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Tags: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
                                     <property name="top_attach">0</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1673,8 +1700,6 @@
                                   <packing>
                                     <property name="left_attach">2</property>
                                     <property name="top_attach">0</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1688,8 +1713,6 @@
                                   <packing>
                                     <property name="left_attach">2</property>
                                     <property name="top_attach">1</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1697,14 +1720,12 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Authors: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
                                     <property name="top_attach">1</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
                                   </packing>
                                 </child>
                               </object>
@@ -1896,8 +1917,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Clock font: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1939,8 +1960,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">start</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Date font: </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -2197,8 +2218,8 @@
                               <object class="GtkLabel" id="label34">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Order of images in slideshow </property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2272,8 +2293,8 @@
                               <object class="GtkLabel" id="label75">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Run on monitor</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2308,8 +2329,8 @@
                               <object class="GtkLabel" id="label77">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Window mode for the slideshow </property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2397,8 +2418,8 @@
                               <object class="GtkLabel" id="label79">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Interval between image changes </property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2455,8 +2476,8 @@
                                   <object class="GtkLabel" id="label84">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Quick fade </property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -2509,8 +2530,8 @@
                                   <object class="GtkLabel" id="label86">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Less zoom</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -2562,8 +2583,8 @@
                                   <object class="GtkLabel" id="label87">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Less pan</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -3847,10 +3868,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="halign">start</property>
                             <property name="margin_right">10</property>
                             <property name="margin_top">5</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">Indicator icon:</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3961,10 +3982,10 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="halign">start</property>
                             <property name="margin_right">10</property>
                             <property name="margin_top">5</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">Favorites operations to show in main menu:</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -4172,8 +4193,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Copy wallpaper image files to this folder: </property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -4265,8 +4286,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">You don't have write permissions for this folder.</property>
+                                <property name="xalign">0</property>
                                 <attributes>
                                   <attribute name="foreground" value="#ffff00000000"/>
                                 </attributes>
@@ -4282,8 +4303,8 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Permissions do not allow LightDM to read files from this folder.</property>
+                                <property name="xalign">0</property>
                                 <attributes>
                                   <attribute name="foreground" value="#ffff00000000"/>
                                 </attributes>
@@ -4382,7 +4403,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -4404,7 +4425,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="margin_left">3</property>
                         <property name="margin_right">3</property>
                         <property name="margin_top">3</property>
-                        <property name="margin_bottom">3</property>
                         <property name="editable">False</property>
                         <property name="wrap_mode">word</property>
                         <property name="buffer">tips_buffer</property>
@@ -4431,7 +4451,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -4441,8 +4461,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="can_focus">True</property>
                     <property name="margin_left">30</property>
                     <property name="margin_right">10</property>
-                    <property name="margin_top">5</property>
-                    <property name="margin_bottom">10</property>
                     <property name="vexpand">True</property>
                     <property name="shadow_type">in</property>
                     <child>
@@ -4466,151 +4484,150 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label23">
+                  <object class="GtkGrid" id="tips_and_tricks_links_grid">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">15</property>
-                    <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Visit website</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
+                    <property name="orientation">vertical</property>
+                    <property name="column_homogeneous">True</property>
+                    <child>
+                      <object class="GtkLabel" id="label23">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_left">15</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Visit website</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton3">
+                        <property name="label">http://peterlevi.com/variety</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="relief">none</property>
+                        <property name="uri">http://peterlevi.com/variety</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label21">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Report a bug or request a feature</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton1">
+                        <property name="label">https://bugs.launchpad.net/variety/+filebug</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="relief">none</property>
+                        <property name="uri">https://bugs.launchpad.net/variety/+filebug</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label22">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Send feedback</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton2">
+                        <property name="label">peterlevi@peterlevi.com</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="relief">none</property>
+                        <property name="uri">mailto:peterlevi@peterlevi.com</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label3">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_top">10</property>
+                        <property name="label" translatable="yes">Donate to Variety</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="linkbutton5">
+                        <property name="label" translatable="yes">Donate via PayPal</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="halign">start</property>
+                        <property name="relief">none</property>
+                        <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLinkButton" id="linkbutton3">
-                    <property name="label">http://peterlevi.com/variety</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">30</property>
-                    <property name="relief">none</property>
-                    <property name="uri">http://peterlevi.com/variety</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="pack_type">end</property>
                     <property name="position">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label21">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">15</property>
-                    <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Report a bug or request a feature</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">6</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLinkButton" id="linkbutton1">
-                    <property name="label">https://bugs.launchpad.net/variety/+filebug</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">30</property>
-                    <property name="relief">none</property>
-                    <property name="uri">https://bugs.launchpad.net/variety/+filebug</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">7</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label22">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">15</property>
-                    <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Send feedback</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">8</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLinkButton" id="linkbutton2">
-                    <property name="label">peterlevi@peterlevi.com</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">30</property>
-                    <property name="relief">none</property>
-                    <property name="uri">mailto:peterlevi@peterlevi.com</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">9</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label3">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">15</property>
-                    <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Donate to Variety</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">10</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLinkButton" id="linkbutton5">
-                    <property name="label" translatable="yes">Donate via PayPal</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="halign">start</property>
-                    <property name="margin_left">30</property>
-                    <property name="relief">none</property>
-                    <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">11</property>
                   </packing>
                 </child>
               </object>
@@ -4738,39 +4755,6 @@ Peter Levi</property>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
-          </packing>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="height_request">50</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_right">5</property>
-            <property name="margin_top">5</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="save">
-                <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
-                <property name="height_request">35</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <signal name="clicked" handler="on_save_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">2</property>
           </packing>
         </child>
         <child>
