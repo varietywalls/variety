@@ -44,7 +44,6 @@ SOURCES = {
 }
 
 TIPS = [
-    _("If you use KDE, you need to perform some actions before Variety will work. Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"),
     _("You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."),
     _("If you want to run custom commands every time the wallpaper changes or if you use an alternative desktop environment, please edit the scripts in ~/.config/variety/scripts. There are examples there for various desktop environments."),
     _("Variety can be controlled from the command line and you can use this to define keyboard shortcuts for the operations you use most often. Run \"variety --help\" to see all available commands."),
