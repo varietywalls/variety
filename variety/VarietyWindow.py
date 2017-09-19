@@ -312,7 +312,7 @@ class VarietyWindow(Gtk.Window):
                 try:
                     os.system(
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
-                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% \"%s\"" % pencil_tile_filename.encode('utf8'))
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s" % pipes.quote(pencil_tile_filename.encode('utf8')))
                 except Exception:
                     logger.exception(lambda: "Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
@@ -1167,9 +1167,9 @@ class VarietyWindow(Gtk.Window):
         logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + ' '
 
-        cmd = cmd + ' "' + target_file + '"'
-        cmd = cmd.replace("%FILEPATH%", filename)
-        cmd = cmd.replace("%FILENAME%", os.path.basename(filename))
+        cmd += pipes.quote(target_file)
+        cmd = cmd.replace("%FILEPATH%", pipes.quote(filename))
+        cmd = cmd.replace("%FILENAME%", pipes.quote(os.path.basename(filename)))
 
         logger.info(lambda: "ImageMagick filter cmd: " + cmd)
         return cmd.encode('utf-8')
@@ -1191,7 +1191,9 @@ class VarietyWindow(Gtk.Window):
         clock_filter = time.strftime(clock_filter.encode('utf8'), time.localtime()).decode('utf8') # this should always be called last
         logger.info(lambda: "Applying clock filter: " + clock_filter)
 
-        cmd += clock_filter + u' "' + target_file + '"'
+        cmd += clock_filter
+        cmd += ' '
+        cmd += pipes.quote(unicode(target_file))
         logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode('utf-8')
 
