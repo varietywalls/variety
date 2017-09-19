@@ -41,6 +41,7 @@ import random
 import re
 import urlparse
 import webbrowser
+import pipes
 from PIL import Image as PILImage
 
 # Replacement for shutil.which, which (no pun intended) only exists on Python 3.3+
@@ -1161,7 +1162,7 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = 'convert %s -scale %dx%d^ ' % (pipes.quote(filename), w, h)
 
         logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + ' '
@@ -1179,7 +1180,7 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert "%s" -scale %dx%d^ ' % (filename, w, h)
+        cmd = 'convert %s -scale %dx%d^ ' % (pipes.quote(filename), w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
         clock_filter = self.options.clock_filter
