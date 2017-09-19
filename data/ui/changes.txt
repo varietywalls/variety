@@ -1,3 +1,17 @@
+0.6.6
+    [Security] Fixed multiple shell injection issues in the "Delete to Trash", filter, and clock code
+    Add long-awaited wallpaper changing support on KDE Plasma 5
+    Fix crash when gi-appindicator isn't installed
+    Removed verbose console output by default, as this tends to spam syslog and ~/.xsession-errors when launched via autostart - see https://bugs.launchpad.net/bugs/1685003
+    Fixed Variety showing the wrong version in the About dialog
+
+0.6.5
+    Fix "Previous" wallpaper button on MATE 1.10 and later
+    Fix quote applying with Pillow >= 4.2.0, patch from Elon Bing
+    Remove Panoramio support, as that service no longer exists. Initial patch by Balló György in Arch Linux.
+    Fix high CPU usage when mousing away from the thumbnail selector
+    Add trinity-desktop support and AppStream metadata for GNOME Software Center
+
 0.6.2 - 0.6.4
     Safe mode added for filtering out NSFW images
 
