@@ -1,3 +1,16 @@
+variety (0.6.6) xenial; urgency=medium
+
+  * [Security] Fixed multiple shell injection issues in the
+    "Delete to Trash", filter, and clock code
+  * Add long-awaited wallpaper changing support on KDE Plasma 5
+  * Fix crash when gi-appindicator isn't installed
+  * Removed verbose console output by default, as this tends to spam
+    syslog and ~/.xsession-errors when launched via autostart -
+    see https://bugs.launchpad.net/bugs/1685003
+  * Fixed Variety showing the wrong version in the About dialog
+
+ -- James Lu <bitflip3@gmail.com>  Tue, 19 Sep 2017 11:50:11 -0700
+
 variety (0.6.5) xenial; urgency=medium
 
   * Variety 0.6.5: See
