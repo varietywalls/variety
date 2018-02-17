@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 # ## BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 #
@@ -62,18 +62,17 @@ PUBLISH_URL = "https://graph.facebook.com/me/feed"
 
 
 class FacebookHelper:
-    """ Creates a web browser using GTK+ and WebKit to authorize a
-        desktop application in Facebook. It uses OAuth 2.0.
-        Requires the Facebook's Application ID. The token is then
-        saved to token_file.
+    """
+    Open's the user's web browser to the Facebook OAuth setup page.
+    This requires the Variety's Application ID and saves the retrieved OAuth token to token_file.
     """
 
     def __init__(self, parent, token_file, app_key='368780939859975', scope='publish_actions'):
-        """ Constructor. Creates the GTK+ app and adds the WebKit widget
-            @param app_key Application key ID (Public).
+        """Creates the FacebookHelper class capable of opening a Facebook OAuth setup page.
+           @param app_key Application key ID (Public).
 
-            @param scope A string list of permissions to ask for. More at
-            http://developers.facebook.com/docs/reference/api/permissions/
+           @param scope A string list of permissions to ask for. More at
+           http://developers.facebook.com/docs/reference/api/permissions/
         """
         self.parent = parent
         self.app_key = app_key
