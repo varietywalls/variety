@@ -1,0 +1,113 @@
+.TH VARIETY "1" "August 2015" "variety 0.5.4" "User Commands"
+.SH NAME
+variety \- open\-source wallpaper changer for Linux
+.SH SYNOPSIS
+.B variety
+[\fI\,options\/\fR] [\fI\,files or urls\/\fR]
+.SH DESCRIPTION
+Variety is an open\-source wallpaper changer, downloader, and manager for Linux. It supports a variety of sources for wallpapers, including local files, online services such as Flickr, Wallbase.cc, Wallpapers.net, NASA Astronomy Picture of the Day, Desktoppr.co, and media RSS feeds (Picasa, deviantART, etc.).
+.SH NOTES
+Passing local files will add them to Variety's queue.
+Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
+.PP
+To set a specific wallpaper: variety \fI\,/some/local/image.jpg\/\fP \fB\-\-next\fR
+.SH OPTIONS
+.TP
+\fB\-\-version\fR
+show program's version number and exit
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+show this help message and exit
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Show logging messages (\fB\-vv\fR shows even finer debugging
+messages, \fB\-vvv\fR debugs variety_lib too)
+.TP
+\fB\-q\fR, \fB\-\-quit\fR
+Make the running instance quit
+.TP
+\fB\-\-get\fR, \fB\-\-current\fR, \fB\-\-show\-current\fR
+Print the current wallpaper location. Used only when
+the application is already running.
+.TP
+\fB\-n\fR, \fB\-\-next\fR
+Show Next wallpaper
+.TP
+\fB\-p\fR, \fB\-\-previous\fR
+Show Previous wallpaper
+.TP
+\fB\-\-fast\-forward\fR
+Show Next wallpaper, skipping the forward history
+.TP
+\fB\-t\fR, \fB\-\-trash\fR
+Move current wallpaper to Trash. Used only when the
+application is already running.
+.TP
+\fB\-f\fR, \fB\-\-favorite\fR
+Copy current wallpaper to Favorites. Used only when
+the application is already running.
+.TP
+\fB\-\-move\-to\-favorites\fR
+Move current wallpaper to Favorites. Used only when
+the application is already running.
+.TP
+\fB\-\-pause\fR
+Pause on current image
+.TP
+\fB\-\-resume\fR
+Resume regular image changes
+.TP
+\fB\-\-toggle\-pause\fR
+Toggle Pause/Resume state
+.TP
+\fB\-\-quotes\-next\fR
+Show Next quote
+.TP
+\fB\-\-quotes\-previous\fR
+Show Previous quote
+.TP
+\fB\-\-quotes\-fast\-forward\fR
+Show Next quote, skipping the forward history
+.TP
+\fB\-\-quotes\-toggle\-pause\fR
+Toggle Quotes Pause/Resume state
+.TP
+\fB\-\-quotes\-save\-favorite\fR
+Save the current quote to Favorites
+.TP
+\fB\-\-history\fR
+Toggle History display
+.TP
+\fB\-\-downloads\fR
+Toggle Recent Downloads display
+.TP
+\fB\-\-preferences\fR, \fB\-\-show\-preferences\fR
+Show Preferences dialog
+.TP
+\fB\-\-selector\fR, \fB\-\-show\-selector\fR
+Show manual wallpaper selector \- the thumbnail bar
+filled with images from the active image sources
+.TP
+\fB\-\-set\-option\fR=\fI\,SET_OPTIONS\/\fR
+Sets and applies an option. The option names are the
+same that are used in Variety's config file
+~/.config/variety/variety.conf. Multiple options can
+be set in a single command. Example: 'variety \fB\-\-setoption\fR icon Dark \fB\-\-set\-option\fR clock_enabled True'. USE
+WITH CAUTION: You are changing the settings file
+directly in an unguarded way.
+.TP
+\fB\-\-debug\-smart\fR
+Debug VRTY.ORG and sync functionality by using local
+server
+.SH "SEE ALSO"
+The full documentation for
+.B variety
+is maintained as a Texinfo manual.  If the
+.B info
+and
+.B variety
+programs are properly installed at your site, the command
+.IP
+.B info variety
+.PP
+should give you access to the complete manual.

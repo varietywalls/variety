@@ -6,4 +6,12 @@ else
 	dh $@ --with python2
 endif
 
+VER = $(shell dpkg-parsechangelog --show-field=Version | cut -d '-' -f 1)
 
+get-orig-source:
+	uscan --noconf --verbose --rename --destdir=$(CURDIR)/.. --check-dirname-level=0 --force-download --download-version $(VER)
+
+override_dh_auto_clean:
+	# Remove the auto-generated .pot file so successive builds work.
+	rm -f po/variety.pot
+	dh_auto_clean

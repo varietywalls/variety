@@ -1,46 +1,57 @@
 Source: variety
-Section: python
-Priority: extra
-Build-Depends: debhelper (>= 8),
- python (>= 2.6.6-3~),
- python-distutils-extra (>= 2.18)
+Section: graphics
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               python (>= 2.6.6-3~),
+               python-bs4,
+               python-cairo,
+               python-configobj,
+               python-dbus,
+               python-distutils-extra (>= 2.18),
+               python-gi,
+               python-pil,
+               python-pycurl,
+               python-requests
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
-Standards-Version: 3.9.3
-XS-Python-Version: current
+Uploaders: James Lu <james@overdrivenetworks.com>
+Standards-Version: 4.1.0
+XS-Python-Version: 2.7
+Homepage: http://peterlevi.com/variety/
+Vcs-Git: https://github.com/varietywalls/variety
+Vcs-Browser: https://github.com/varietywalls/variety
 
 Package: variety
 Architecture: all
 XB-Python-Version: ${python:Versions}
-Depends: ${misc:Depends},
- ${python:Depends},
- gir1.2-notify-0.7,
- python-configobj,
- python-pyexiv2,
- gir1.2-gtk-3.0,
- python-dbus,
- python-requests,
- gir1.2-pango-1.0,
- gir1.2-glib-2.0,
- gir1.2-gexiv2-0.10,
- python-pycurl,
- python-pil,
- python-cairo,
- gir1.2-gdkpixbuf-2.0,
- variety-slideshow,
- python-bs4,
- gir1.2-webkit-3.0,
- gir1.2-appindicator3-0.1,
- yelp,
- imagemagick,
- python-lxml,
- python-gi-cairo
-Recommends: variety-slideshow
-Suggests: feh
+Depends: gir1.2-gdkpixbuf-2.0,
+         gir1.2-gexiv2-0.10,
+         gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         gir1.2-notify-0.7,
+         gir1.2-pango-1.0,
+         imagemagick,
+         python-bs4,
+         python-cairo,
+         python-configobj,
+         python-dbus,
+         python-gi-cairo,
+         python-pil,
+         python-pycurl,
+         python-requests,
+         ${misc:Depends},
+         ${python:Depends}
+Recommends: gir1.2-appindicator3-0.1, python-httplib2
+Suggests: feh, gnome-shell-extension-top-icons-plus, nitrogen
 Description: Wallpaper changer, downloader and manager
- Variety changes the desktop wallpaper regularly, using local or
- automatically downloaded images. Variety sits conveniently as an
- indicator in the panel and can be easily paused and resumed. The mouse
- wheel can be used to scroll wallpapers back and forthVariety can fetch
- wallpapers from Flickr, Wallhaven.cc, NASA Astronomy Picture of the Day,
- Desktoppr.co. Media RSS feeds from Picasa, deviantART or any other place
- are also supported.
+ Variety is an open-source wallpaper changer, downloader, and manager for
+ Linux. It supports a variety of sources for wallpapers, including local
+ files, online services such as Flickr, Wallhaven.cc, NASA Astronomy Picture
+ of the Day, Desktoppr.co, and media RSS feeds (Picasa, deviantART, etc.).
+ .
+ You can also install the following (suggested) packages to enhance Variety's
+ functionality on certain desktop setups:
+  * feh: required for wallpaper changing on i3-wm
+  * gnome-shell-extension-top-icons-plus: adds indicators support to GNOME
+    Shell, so that Variety's tray icon can be displayed
+  * nitrogen: required for wallpaper changing on Openbox
