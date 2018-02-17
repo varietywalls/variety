@@ -195,7 +195,7 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
 fi
 
 # i3-wm/Feh. Use Feh only for i3, as it may cause problems with Nautilus, (see bug https://bugs.launchpad.net/variety/+bug/1047083)
-if [ "$XDG_CURRENT_DESKTOP" == "i3" ] || [ "$XDG_SESSION_DESKTOP" == "i3" ]; then
+if [ "$XDG_CURRENT_DESKTOP" == "i3"* ] || [ "$XDG_SESSION_DESKTOP" == "i3"* ]; then
     feh --bg-fill "$WP" 2> /dev/null
 fi
 
