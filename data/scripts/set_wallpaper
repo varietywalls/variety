@@ -195,7 +195,7 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
 fi
 
 # i3 and openbox: use either feh or nitrogen
-if [ "$XDG_CURRENT_DESKTOP" == "i3"* ] || [ "$XDG_SESSION_DESKTOP" == "i3"* ] || [ "$DESKTOP_SESSION" == "openbox" ]; then
+if [[ "$XDG_CURRENT_DESKTOP" == "i3"* ]] || [[ "$XDG_SESSION_DESKTOP" == "i3"* ]] || [[ "$DESKTOP_SESSION" == "openbox" ]]; then
 	if command -v "feh" >/dev/null 2>&1; then
 	    feh --bg-fill "$WP" 2> /dev/null
 	elif command -v "nitrogen" >/dev/null 2>&1; then
