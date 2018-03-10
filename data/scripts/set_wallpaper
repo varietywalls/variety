@@ -62,14 +62,14 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     DIMENSION="$(identify -format "%w/%h" "$WP")"
 
     if [ ! -z "$DIMENSION" ]; then
-        WIDTH=$(echo $DIMENSION | cut -d/ -f1)
-        HEIGHT=$(echo $DIMENSION | cut -d/ -f2)
+        WIDTH="$(echo "$DIMENSION" | cut -d/ -f1)"
+        HEIGHT="$(echo "$DIMENSION" | cut -d/ -f2)"
         IMAGE="$(echo "$WP" | sed 's/[^[:alnum:]_-]/\\&/g')"
 
-        if [ -z "$HEIGHT" -o "$HEIGHT" = "0" ]; then
+        if [ -z "$HEIGHT" ] || [ "$HEIGHT" = "0" ]; then
             ASPECT="0.0"
         else
-            ASPECT=$(echo "scale=9; $DIMENSION" | bc)
+            ASPECT="$(echo "scale=9; $DIMENSION" | bc)"
         fi
     fi
 
@@ -86,7 +86,7 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     screen_count=1
     # If xrandr is available use it to get screen desk_x_count
     if command -v xrandr >/dev/null 2>&1; then
-        screen_count=$(xrandr -q | grep ' connected' | wc -l)
+        screen_count=$(xrandr -q | grep -c ' connected')
     fi
 
     ## Set the wallpaper for each virtual desktop
@@ -105,12 +105,12 @@ if [ "`echo $DESKTOP | grep Enlightenment`" ]; then
     #   replaced yet then the wallpaper will get set back to the theme one causing ugly artifacts
     LAST_WALLPAPER_FILE="$HOME/.config/variety/.enlightenment_last_wallpaper.txt"
 
-    if [ -e $LAST_WALLPAPER_FILE ]; then
-        find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v $(cat $LAST_WALLPAPER_FILE) | xargs rm
+    if [ -e "$LAST_WALLPAPER_FILE" ]; then
+        find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v "$(cat "$LAST_WALLPAPER_FILE")" | xargs rm
     else
-        find $OUTPUT_DIR -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
+        find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
-    echo "$OFILE.edj" > $LAST_WALLPAPER_FILE
+    echo "$OFILE.edj" > "$LAST_WALLPAPER_FILE"
     exit 0
 fi
 
@@ -128,7 +128,7 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
             d = allDesktops[i];
             d.wallpaperPlugin = 'org.kde.image';
             d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');
-            d.writeConfig('Image', 'file://"$WP"')
+            d.writeConfig('Image', 'file://""$WP""')
         }
         "
         # Reuse the exit code from qdbus
@@ -137,7 +137,7 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
         WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
         mkdir -p "$WALLDIR"
         # Remove all old wallpapers
-        rm -fv ${WALLDIR}/*
+        rm -fv "${WALLDIR}"/*
 
         NEWWP="${WALLDIR}/wallpaper-kde-$RANDOM.jpg"
         cp "$WP" "$NEWWP"
@@ -177,10 +177,10 @@ fi
 command -v xfconf-query >/dev/null 2>&1
 rc=$?
 if [[ $rc = 0 ]] ; then
-    for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l|egrep -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
-        xfconf-query -c xfce4-desktop -p $i -n -t string -s "" 2> /dev/null
-        xfconf-query -c xfce4-desktop -p $i -s "" 2> /dev/null
-        xfconf-query -c xfce4-desktop -p $i -s "$WP" 2> /dev/null
+    for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
+        xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2> /dev/null
+        xfconf-query -c xfce4-desktop -p "$i" -s "" 2> /dev/null
+        xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2> /dev/null
     done
 fi
 
