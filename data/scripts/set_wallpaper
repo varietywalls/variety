@@ -148,12 +148,12 @@ fi
 # Cinnamon, for cases when it is detectable
 if [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
     gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
-    if [ "`gsettings get org.cinnamon.background picture-options`" == "'none'" ]; then
+    if [ "$(gsettings get org.cinnamon.background picture-options)" == "'none'" ]; then
         gsettings set org.cinnamon.background picture-options 'zoom'
     fi
 
     gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
-    if [ "`gsettings get org.cinnamon.desktop.background picture-options`" == "'none'" ]; then
+    if [ "$(gsettings get org.cinnamon.desktop.background picture-options)" == "'none'" ]; then
         gsettings set org.cinnamon.desktop.background picture-options 'zoom'
     fi
     exit 0
@@ -161,14 +161,14 @@ fi
 
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
-if [ "`gsettings get org.gnome.desktop.background picture-options`" == "'none'" ]; then
+if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
     gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
 
 # Deepin
-if [ "$(gsettings list-schemas | grep com.deepin.wrap.gnome.desktop.background | wc -l)" -ge 1 ]; then
+if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
     gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
-    if [ "`gsettings get com.deepin.wrap.gnome.desktop.background picture-options`" == "'none'" ]; then
+    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
         gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
     fi
 fi
