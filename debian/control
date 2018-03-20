@@ -43,7 +43,8 @@ Depends: gir1.2-gdkpixbuf-2.0,
          ${python:Depends}
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
             python-httplib2
-Suggests: feh | nitrogen, gnome-shell-extension-top-icons-plus
+Suggests: feh | nitrogen,
+          gnome-shell-extension-appindicator | gnome-shell-extension-top-icons-plus
 Description: Wallpaper changer, downloader and manager
  Variety is an open-source wallpaper changer, downloader, and manager for
  Linux. It supports a variety of sources for wallpapers, including local
