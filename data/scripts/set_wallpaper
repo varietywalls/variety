@@ -27,10 +27,9 @@
 WP=$1
 
 
-
 # Enlightenment
 # Needs Modules/System/DBus Extension loaded to work
-if echo "$DESKTOP" | grep -q Enlightenment; then
+if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
 
     OUTPUT_DIR="$HOME/.e/e/backgrounds"
 
