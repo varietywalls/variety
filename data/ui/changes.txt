@@ -1,3 +1,11 @@
+0.6.7
+    Fix "unary operator expected" errors on KDE variables in set_wallpaper
+    New WM support: i3 with logging (i3-with-shmlog), Moksha (e17 fork), dwm
+    i3 and openbox code now uses either feh or nitrogen interchangeably
+    Removed Debian-specific use of dpkg-query in checks for nitrogen
+    Switch to Ayatana indicators by default
+    Many fixes to set_wallpaper pointed out by shellcheck
+
 0.6.6
     [Security] Fixed multiple shell injection issues in the "Delete to Trash", filter, and clock code
     Add long-awaited wallpaper changing support on KDE Plasma 5
