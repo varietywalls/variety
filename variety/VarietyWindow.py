@@ -1875,7 +1875,9 @@ class VarietyWindow(Gtk.Window):
         if self.running:
             self.running = False
 
+            logger.debug(lambda: "Trying to destroy all dialogs")
             for d in self.dialogs + [self.preferences_dialog, self.about]:
+                logger.debug(lambda: "Trying to destroy dialog %s" % d)
                 try:
                     if d:
                         d.destroy()
@@ -1887,6 +1889,7 @@ class VarietyWindow(Gtk.Window):
 
             try:
                 if self.quotes_engine:
+                    logger.debug(lambda: "Trying to stop quotes engine")
                     self.quotes_engine.quit()
             except Exception:
                 logger.exception(lambda: "Could not stop quotes engine")
@@ -1895,9 +1898,14 @@ class VarietyWindow(Gtk.Window):
                 self.options.clock_enabled = False
                 self.options.quotes_enabled = False
                 if self.current:
+                    logger.debug(lambda: "Cleaning up clock & quotes")
                     GObject.idle_add(lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS))
 
             Util.start_force_exit_thread(15)
+            logger.debug(lambda: "OK, waiting for other loops to finish")
+            logger.debug(lambda: 'Remaining threads: ')
+            for t in threading.enumerate():
+                logger.debug(lambda: '%s, %s' % (t.name, getattr(t, '_Thread__target', None)))
             GObject.idle_add(Gtk.main_quit)
 
     def show_usage_stats_notice(self):
