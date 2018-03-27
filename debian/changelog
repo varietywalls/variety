@@ -1,3 +1,14 @@
+variety (0.6.7) bionic; urgency=medium
+
+  * Fix "unary operator expected" errors on KDE variables in set_wallpaper
+  * New WM support: i3 with logging (i3-with-shmlog), Moksha (e17 fork), dwm
+  * i3 and openbox code now uses either feh or nitrogen interchangeably
+  * Removed Debian-specific use of dpkg-query in checks for nitrogen
+  * Switch to Ayatana indicators by default, patch by Unit 193
+  * Many fixes to set_wallpaper pointed out by shellcheck
+
+ -- James Lu <james@overdrivenetworks.com>  Mon, 26 Mar 2018 18:12:12 -0700
+
 variety (0.6.6) xenial; urgency=medium
 
   * [Security] Fixed multiple shell injection issues in the
