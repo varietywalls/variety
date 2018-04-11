@@ -146,7 +146,7 @@ class VarietyWindow(Gtk.Window):
         self.perform_upgrade()
 
         self.events = []
-
+        self.downloaderSetWallpaperHooks = {}
         self.create_downloaders_cache()
 
         self.prepared = []
@@ -1478,6 +1478,18 @@ class VarietyWindow(Gtk.Window):
             self.auto_changed = auto_changed
             self.last_change_time = time.time()
             self.set_wp_throttled(img)
+
+            # Unsplash API requires that we call their download endpoint
+            # when setting the wallpaper, not when queueing it:
+            meta = Util.read_metadata(img)
+            if meta and 'sourceType' in meta:
+                if meta['sourceType'] in self.downloaderSetWallpaperHooks:
+                    hook = self.downloaderSetWallpaperHooks[meta['sourceType']]
+
+                    def _do_hook():
+                        hook(img, meta)
+
+                    threading.Timer(0, _do_hook).start()
         else:
             logger.warning(lambda: "set_wallpaper called with unaccessible image " + img)
 
@@ -3058,4 +3070,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 _disable_wallhaven_sources()
 
         Util.add_mainloop_task(_go)
+
+    def registerDownloaderSetWallpaperHook(self, sourceType, hook):
+        self.downloaderSetWallpaperHooks[sourceType] = hook
 

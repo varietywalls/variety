@@ -359,7 +359,10 @@ class Util:
                 if k == 'headline':
                     m['Iptc.Application2.Headline'] = [v]
                 elif k == 'description':
-                    m.set_comment(v)
+                    if v is not None:
+                        m.set_comment(v)
+                    else:
+                        m.clear_comment()
                 elif k == 'keywords':
                     if not isinstance(v, (list, tuple)):
                         v = [v]
@@ -367,12 +370,15 @@ class Util:
                     m['Xmp.dc.subject'] = v
                 elif k == 'sfwRating':
                     m["Xmp.variety." + k] = int(v)
+                elif k == 'extraData':
+                    m["Xmp.variety." + k] = json.dumps(v)
                 else:
                     m["Xmp.variety." + k] = v
             m.save_file()
             return True
-        except Exception:
+        except Exception, ex:
             # could not write metadata inside file, use json instead
+            logger.exception(lambda: "Could not write metadata directly in file, trying json metadata: " + filename)
             try:
                 with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
                     f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
@@ -408,6 +414,11 @@ class Util:
 
             try:
                 info['description'] = _u(m.get_comment())
+            except:
+                pass
+
+            try:
+                info['extraData'] = json.loads(m['Xmp.variety.extraData'])
             except:
                 pass
 
