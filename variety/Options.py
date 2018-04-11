@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import io
@@ -46,9 +46,6 @@ class Options:
         REDDIT = 14
         BING = 15
         UNSPLASH = 16
-        RECOMMENDED = 19
-        LATEST = 20
-
         type_to_str = {
             FAVORITES: "favorites",
             FETCHED: "fetched",
@@ -63,14 +60,12 @@ class Options:
             REDDIT: "reddit",
             BING: "bing",
             UNSPLASH: "unsplash",
-            RECOMMENDED: "recommended",
-            LATEST: "latest",
         }
 
         str_to_type = dict((v,k) for k, v in type_to_str.items())
 
         dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
-                    WALLHAVEN, REDDIT, BING, UNSPLASH, RECOMMENDED, LATEST]
+                    WALLHAVEN, REDDIT, BING, UNSPLASH]
 
     class LightnessMode:
         DARK = 0
@@ -470,10 +465,6 @@ class Options:
 
             self.parse_autosources()
 
-            for s in self.sources:
-                if s[1] in (Options.SourceType.RECOMMENDED,) and not self.smart_enabled:
-                    s[0] = False
-
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
@@ -595,9 +586,9 @@ class Options:
         self.smart_register_shown = False
         self.stats_notice_shown = False
 
-        self.smart_enabled = True
-        self.sync_enabled = True
-        self.stats_enabled = True
+        self.smart_enabled = False
+        self.sync_enabled = False
+        self.stats_enabled = False
 
         self.facebook_show_dialog = True
         self.facebook_message = ""
