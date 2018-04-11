@@ -34,10 +34,26 @@ class UnsplashDownloader(Downloader.Downloader):
     CLIENT_ID = '072e5048dfcb73a8d9ad59fcf402471518ff8df725df462b0c4fa665f466515a'
     UTM_PARAMS = '?utm_source=Variety+Wallpaper+Changer&utm_medium=referral'
 
+    @staticmethod
+    def setWallpaperHook(img, meta):
+        extraData = meta.get('extraData', None)
+        if not extraData:
+            return
+
+        download_loc = extraData.get('unsplashDownloadLocation')
+        reported = extraData.get('unsplashDownloadReported')
+        if download_loc and not reported:
+            url = '{}?client_id={}'.format(download_loc, UnsplashDownloader.CLIENT_ID)
+            Util.fetch(url)
+            meta['extraData']['unsplashDownloadReported'] = True
+            Util.write_metadata(img, meta)
+
     def __init__(self, parent):
         super(UnsplashDownloader, self).__init__(parent, "unsplash", "Unsplash.com", "https://unsplash.com")
         self.last_fill_time = 0
         self.queue = []
+
+        parent.registerDownloaderSetWallpaperHook("unsplash", UnsplashDownloader.setWallpaperHook)
 
     def convert_to_filename(self, url):
         return "Unsplash"
@@ -71,8 +87,8 @@ class UnsplashDownloader(Downloader.Downloader):
 
         UnsplashDownloader.last_download_time = time.time()
 
-        origin_url, image_url, extra_metadata, filename = self.queue.pop()
-        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata, local_filename=filename)
+        origin_url, image_url, extra_metadata = self.queue.pop()
+        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
         page = random.randint(1, 250)
@@ -93,16 +109,19 @@ class UnsplashDownloader(Downloader.Downloader):
                 image_url = item['urls']['full']
                 origin_url = item['links']['html'] + UnsplashDownloader.UTM_PARAMS
 
-                filename = os.path.join(self.target_folder, Util.sanitize_filename(image_url.split('/')[-2] + '.jpg'))
                 extra_metadata = {
                     'sourceType': 'unsplash',
                     'sfwRating': 100,
                     'author': item['user']['name'],
                     'authorURL': item['user']['links']['html'] + UnsplashDownloader.UTM_PARAMS,
-                    'keywords': [cat['title'].lower().strip() for cat in item['categories']]
+                    'keywords': [cat['title'].lower().strip() for cat in item['categories']],
+                    'extraData': {
+                        'unsplashDownloadLocation': item['links']['download_location'],
+                        'unsplashDownloadReported': False,
+                    }
                 }
 
-                self.queue.append((origin_url, image_url, extra_metadata, filename))
+                self.queue.append((origin_url, image_url, extra_metadata))
             except:
                 logger.exception(lambda: "Could not process an item from Unsplash")
                 raise

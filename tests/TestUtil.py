@@ -56,6 +56,7 @@ class TestUtil(unittest.TestCase):
             'headline': u'проба1 проба1',
             'description': u'проба2 проба2',
             'sfwRating': 50,
+            'extraData': {'key1': 'val1', 'key2': 'val2'}
         }
         self.assertEqual(info, Util.read_metadata('test.jpg'))
         self.assertTrue(Util.write_metadata('test.jpg', info))
