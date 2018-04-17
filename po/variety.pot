@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-16 21:39-0700\n"
+"POT-Creation-Date: 2018-04-16 21:43-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,106 +18,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
-#: ../debian/variety/usr/share/variety/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:20
 #: ../variety/Texts.py:20
 msgid "Keep original"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:21
 #: ../variety/Texts.py:21
 msgid "Grayscale"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:22
 #: ../variety/Texts.py:22
 msgid "Heavy blur"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:23
 #: ../variety/Texts.py:23
 msgid "Soft blur"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:24
 #: ../variety/Texts.py:24
 msgid "Oil painting"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:25
 #: ../variety/Texts.py:25
 msgid "Pencil sketch"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:26
 #: ../variety/Texts.py:26
 msgid "Pointilism"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:27
 #: ../variety/Texts.py:27
 msgid "Pixellate"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:31
 #: ../variety/Texts.py:31
 msgid "The Favorites folder"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:32
 #: ../variety/Texts.py:32
 msgid "The Fetched folder"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:35
 #: ../variety/Texts.py:35
 msgid ""
 "Recommended by Variety. Adapts to your taste as you mark images as favorite "
 "or trash."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:37
 #: ../variety/Texts.py:37
 msgid ""
 "Latest favorites by the other users of Variety. [May contain NSFW images]"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:38
 #: ../variety/Texts.py:38
 msgid "Random wallpapers from Desktoppr.co"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:39
 #: ../variety/Texts.py:39
 msgid "NASA's Astronomy Picture of the Day"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:41
 #: ../variety/Texts.py:41
 msgid "World Sunlight Map - live wallpaper from Die.net"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:42
 #: ../variety/Texts.py:42
 msgid "Bing Photo of the Day"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:43
 #: ../variety/Texts.py:43
 msgid "High-resolution photos from Unsplash.com"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:47
 #: ../variety/Texts.py:47
 msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:48
 #: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
@@ -126,7 +106,6 @@ msgid ""
 "environments."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:49
 #: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
@@ -134,7 +113,6 @@ msgid ""
 "\"variety --help\" to see all available commands."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:50
 #: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
@@ -142,7 +120,6 @@ msgid ""
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:51
 #: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
@@ -150,7 +127,6 @@ msgid ""
 "in Ubuntu."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:52
 #: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open ~/.config/variety/variety."
@@ -158,7 +134,6 @@ msgid ""
 "is just a line of options to be passed to ImageMagick's convert command."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:53
 #: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
@@ -169,14 +144,12 @@ msgid ""
 "several hundred randomly selected images."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:54
 #: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:55
 #: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
@@ -185,7 +158,6 @@ msgid ""
 "light icon."
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Texts.py:56
 #: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
@@ -195,422 +167,79 @@ msgid ""
 "This file is also compatible with the Unix fortune utility."
 msgstr ""
 
-#: ../variety/LoginOrRegisterDialog.py:80
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/LoginOrRegisterDialog.py:80
-#, python-format
-msgid "Oops, server returned error (%s)"
-msgstr ""
-
-#: ../variety/LoginOrRegisterDialog.py:85
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/LoginOrRegisterDialog.py:85
-msgid "Could not connect to server"
-msgstr ""
-
-#: ../variety/AddWallhavenDialog.py:38
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/AddFlickrDialog.py:138
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/AddWallhavenDialog.py:38
-#: ../variety/AddFlickrDialog.py:138
-msgid "No images found"
-msgstr ""
-
-#. pass
-#. print "\n----results----"
-#. for fuzzy in xrange(10):
-#. print fuzzy
-#. for k, v in m.items():
-#. if v == fuzzy:
-#. print k
-#.
-#. print "no match:"
-#. for k, v in m.items():
-#. if v == -1:
-#. print k
-#: ../data/ui/AddPanoramioDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/AddPanoramioDialog.ui.h:1
-msgid "Variety - add Panoramio image source"
-msgstr ""
-
-#: ../data/ui/AddPanoramioDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/AddPanoramioDialog.ui.h:2
-msgid "Panoramio"
-msgstr ""
-
-#: ../data/ui/AddPanoramioDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/AddPanoramioDialog.ui.h:3
-msgid "Please zoom over your area of interest."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:1
-msgid "Login to VRTY.ORG"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:2
-msgid "Username: "
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:3
-msgid "Password: "
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:4
-msgid "No account? Register here"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:5
-msgid "Forgot your password?"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:6
-msgid ""
-"Tip: You can also login to <a href=\"https://vrty.org\">VRTY.ORG</a> in a "
-"browser and click the link <span weight=\"bold\">\"Trigger Variety login\"</"
-"span> in your profile."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/LoginOrRegisterDialog.ui.h:7
-msgid "Login"
-msgstr ""
-
-#: ../variety/FolderChooser.py:65
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FolderChooser.py:65
-msgid "Choose a folder"
-msgstr ""
-
-#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:526
-#: ../variety/PreferencesVarietyDialog.py:550
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FolderChooser.py:66
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:537
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:561
-msgid "Cancel"
-msgstr ""
-
-#: ../variety/FolderChooser.py:66
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FolderChooser.py:66
-msgid "OK"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:41
-#: ../data/ui/PreferencesVarietyDialog.ui.h:53
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:55
-#: ../variety/ThumbsManager.py:41
-msgid "Bottom"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:42
-#: ../variety/ThumbsManager.py:42
-msgid "Top"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:43
-#: ../variety/ThumbsManager.py:43
-msgid "Left"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:44
-#: ../data/ui/PreferencesVarietyDialog.ui.h:50
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:52
-#: ../variety/ThumbsManager.py:44
-msgid "Right"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:94
-#: ../variety/ThumbsManager.py:94
-msgid "Position"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:98
-#: ../data/ui/PreferencesVarietyDialog.ui.h:114
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:133
-#: ../variety/ThumbsManager.py:98
-msgid "Size"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:109
-#: ../variety/ThumbsManager.py:109
-msgid "Show Containing Folder"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:119
-#: ../variety/VarietyWindow.py:673
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:697
-#: ../variety/ThumbsManager.py:119
-msgid "Fetched: Show Origin"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:121
-#: ../variety/VarietyWindow.py:675 ../variety/VarietyWindow.py:780
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:699
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:810
-#: ../variety/ThumbsManager.py:121
-#, python-format
-msgid "View at %s"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:136
-#: ../variety/indicator.py:167
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:165
-#: ../variety/ThumbsManager.py:136
-msgid "Set EXIF Rating"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:144
-#: ../variety/VarietyWindow.py:642 ../variety/indicator.py:87
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:666
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:85
-#: ../variety/ThumbsManager.py:144
-msgid "Copy to _Favorites"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:151
-#: ../variety/VarietyWindow.py:643
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:667
-#: ../variety/ThumbsManager.py:151
-msgid "Move to _Favorites"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:160
-#: ../variety/indicator.py:98
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:96
-#: ../variety/ThumbsManager.py:160
-msgid "Delete to _Trash"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:167
-#: ../variety/indicator.py:142
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:140
-#: ../variety/ThumbsManager.py:167
-msgid "Where is it from?"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:178
-#: ../variety/ThumbsManager.py:178
-msgid "Close"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:198
-#: ../variety/ThumbsManager.py:198
-msgid "Could not set EXIF rating"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:217
-#: ../variety/ThumbsManager.py:217
-msgid "Unrated"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:224
-#: ../variety/ThumbsManager.py:224
-msgid "Rejected"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:326
-#: ../variety/ThumbsManager.py:326
-msgid "Variety History"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:328
-#: ../variety/ThumbsManager.py:328
-msgid "Variety Recent Downloads"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ThumbsManager.py:330
-#: ../variety/ThumbsManager.py:330
-msgid "Variety Images"
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:1
-msgid "Variety - add Wallhaven.cc image source"
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:370
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:2
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:381
-msgid "Wallhaven.cc"
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:3
-msgid ""
-"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a> provides a variety of image "
-"search options. Below you can specify keywords to search for, or visit <a "
-"href=\"http://wallhaven.cc\">Wallhaven.cc</a>, setup your search criteria "
-"there, ensure you like the results, and paste the full Wallhaven URL in the "
-"box.\n"
-"\n"
-"If you specify keywords, the most liked safe-for-work images that match all "
-"of the keywords will be used. \n"
-"\n"
-"If you specify a Wallhaven URL, please choose the sorting criteria carefully "
-"- Variety regularly requests images, but uses only images from the first "
-"several hundred returned. Random or Date will mean this image source will "
-"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
-"better images and Relevance will provide closer matches when searching for "
-"phrases or colors."
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:8
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:8
-msgid "Enter keywords or paste URL here: "
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:16
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:9
-msgid "Just a moment to check this search"
-msgstr ""
-
-#: ../data/ui/AddWallhavenDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddMediaRssDialog.ui.h:6
-#: ../debian/variety/usr/share/variety/ui/AddWallhavenDialog.ui.h:10
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:6
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:9
-msgid "  "
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/AddRedditDialog.py:43
-#: ../variety/AddRedditDialog.py:43
-msgid "This does not seem to be a valid Reddit URL"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/AddRedditDialog.py:46
-#: ../variety/AddRedditDialog.py:46
-msgid "We could not find any image submissions there."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/plugins/quotes/QuotesDaddySource.py:31
-#: ../data/plugins/quotes/QuotesDaddySource.py:31
-msgid ""
-"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
-"Does not support searching by tags or authors."
-msgstr ""
-
-#: ../variety/QuotesEngine.py:232
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:232
-msgid "No quote plugins"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:232
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:232
-msgid "There are no quote plugins installed"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:238
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:238
-msgid "No suitable quote plugins"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:239
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:239
-msgid ""
-"You have no quote plugins which support searching by keywords and authors"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:251
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:251
-msgid "Could not fetch quotes"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:252
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:252
-msgid "Quotes services may be down, we will continue trying"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:255
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:255
-msgid "Could not find quotes"
-msgstr ""
-
-#: ../variety/QuotesEngine.py:256
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/QuotesEngine.py:256
-msgid "Maybe you are searching for something very obscure?"
-msgstr ""
-
 #: ../variety/PreferencesVarietyDialog.py:245
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:254
 msgid "All"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:366
 #: ../variety/PreferencesVarietyDialog.py:532
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:11
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:377
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:543
 msgid "Images"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:367
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:378
 msgid "Folders"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:369 ../data/ui/AddFlickrDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:2
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:380
 msgid "Flickr"
 msgstr ""
 
+#: ../variety/PreferencesVarietyDialog.py:370
+#: ../data/ui/AddWallhavenDialog.ui.h:2
+msgid "Wallhaven.cc"
+msgstr ""
+
 #: ../variety/PreferencesVarietyDialog.py:371 ../data/ui/AddRedditDialog.ui.h:2
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:382
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:372
 #: ../data/ui/AddMediaRssDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:2
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:383
 msgid "Media RSS"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:397
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:408
 msgid "Remove the source, keep the files"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:398
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:409
 msgid "Remove the sources, keep the files"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:405
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source and delete the downloaded files"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:406
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources and delete the downloaded files"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:439
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:450
 msgid "World Sunlight Map enabled"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:440
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:451
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:525
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:536
 msgid "Add Images"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:526
+#: ../variety/PreferencesVarietyDialog.py:550 ../variety/FolderChooser.py:66
+msgid "Cancel"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:526
 #: ../variety/PreferencesVarietyDialog.py:550
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:537
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:561
 msgid "Add"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:548
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:559
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
@@ -618,251 +247,311 @@ msgstr ""
 #: ../variety/PreferencesVarietyDialog.py:678
 #: ../variety/PreferencesVarietyDialog.py:691
 #: ../data/ui/PreferencesVarietyDialog.ui.h:151
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:170
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:689
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:702
 msgid "Edit..."
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:685
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:696
 msgid "View Image"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:688
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:699
 msgid "Open Folder"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1065
 #: ../variety/PreferencesVarietyDialog.py:1084
 #: ../variety/PreferencesVarietyDialog.py:1092
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1098
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1117
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1125
 msgid "No write permissions"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1072
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1105
 msgid "Limit disabled"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1073
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1106
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1079
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1112
 #, python-format
 msgid "Actual download folder: %s "
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1159
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1192
 msgid "Could not adjust permissions"
 msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:1160
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1193
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:1
-msgid "Variety - add Flickr as an image source"
+#: ../data/ui/WelcomeDialog.ui.h:1
+msgid "Welcome to Variety!"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:3
+#: ../data/ui/WelcomeDialog.ui.h:2
+msgid "Continue"
+msgstr ""
+
+#: ../data/ui/WelcomeDialog.ui.h:3
 msgid ""
-"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
-"Photos that match all of the chosen criteria will be downloaded. Leave "
-"unneeded criteria empty."
+"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper "
+"on a regular basis using local images or images downloaded from various "
+"online sources. It runs quietly in the background - to control it, click "
+"this icon in your system tray:"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:4
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:4
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:60
-msgid "Tags: "
-msgstr ""
-
-#: ../data/ui/AddFlickrDialog.ui.h:5
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:5
+#: ../data/ui/WelcomeDialog.ui.h:4
 msgid ""
-"A comma-separated list of tags. A photo has to contain all of them "
-"simultaneosly in order to match.\n"
-"Example: yellow,car"
+"Variety is open-source software, created by Peter Levi, a software developer "
+"from Bulgaria. If you like it, please <a href=\"http://peterlevi.com/variety/"
+"donate/\">donate</a>."
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:7
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:7
-msgid "User: "
-msgstr ""
-
-#: ../data/ui/AddFlickrDialog.ui.h:8
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:8
+#: ../data/ui/WelcomeDialog.ui.h:5
 msgid ""
-"Please insert the URL to the user's photostream or to one of their photos.\n"
-"Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www."
-"flickr.com/photos/peter-levi/</a>"
+"Now please take some time to set your preferences on the following screens."
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:10
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:10
-msgid "Group: "
+#: ../variety/LoginOrRegisterDialog.py:80
+#, python-format
+msgid "Oops, server returned error (%s)"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:11
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:11
+#: ../variety/LoginOrRegisterDialog.py:85
+msgid "Could not connect to server"
+msgstr ""
+
+#: ../variety/indicator.py:60 ../variety/indicator.py:107
+#: ../variety/indicator.py:178
+msgid "_Next"
+msgstr ""
+
+#: ../variety/indicator.py:65 ../variety/indicator.py:112
+#: ../variety/indicator.py:183
+msgid "_Previous"
+msgstr ""
+
+#: ../variety/indicator.py:72
+msgid "Current desktop wallpaper"
+msgstr ""
+
+#: ../variety/indicator.py:76
+msgid "Show origin"
+msgstr ""
+
+#: ../variety/indicator.py:87 ../variety/VarietyWindow.py:642
+#: ../variety/ThumbsManager.py:144
+msgid "Copy to _Favorites"
+msgstr ""
+
+#. both
+#: ../variety/indicator.py:92 ../variety/VarietyWindow.py:651
+#: ../data/ui/PreferencesVarietyDialog.ui.h:148
+msgid "Move to Favorites"
+msgstr ""
+
+#: ../variety/indicator.py:98 ../variety/ThumbsManager.py:160
+msgid "Delete to _Trash"
+msgstr ""
+
+#: ../variety/indicator.py:117 ../variety/indicator.py:188
+msgid "_Next, skipping forward history"
+msgstr ""
+
+#: ../variety/indicator.py:125
 msgid ""
-"Please insert the group's URL.\n"
-"Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www."
-"flickr.com/groups/wallpapers/</a>"
+"Tip: Scroll wheel over icon\n"
+"for Next and Previous"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:13
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:13
-msgid "Text:"
+#: ../variety/indicator.py:131 ../variety/indicator.py:197
+#: ../variety/VarietyWindow.py:773 ../variety/VarietyWindow.py:787
+msgid "Pause on current"
 msgstr ""
 
-#: ../data/ui/AddFlickrDialog.ui.h:14
-#: ../debian/variety/usr/share/variety/ui/AddFlickrDialog.ui.h:14
-msgid ""
-"Free text search in photos' titles, descriptions and tags. Exclude terms by "
-"prepending them with -.\n"
-"Example: apple -pie"
+#: ../variety/indicator.py:135
+msgid "_Image"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesConfirmationDialog.ui.h:1
-msgid "VRTY.ORG integration"
+#: ../variety/indicator.py:142 ../variety/ThumbsManager.py:167
+msgid "Where is it from?"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesConfirmationDialog.ui.h:2
-msgid "This feature requires VRTY.ORG integration"
+#: ../variety/indicator.py:146
+msgid "Show without effects"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesConfirmationDialog.ui.h:3
-msgid "Enable VRTY.ORG integration"
+#: ../variety/indicator.py:154
+msgid "Google Image Search"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesConfirmationDialog.ui.h:4
-msgid ""
-"For this feature Variety needs permission to collect data about the images "
-"you like or dislike and the online sources you have enabled.\n"
-"\n"
-"Collected data is anonymous by default and covers only images which Variety "
-"downloaded, never images you already had in your local folders that might be "
-"private.\n"
-"\n"
-"This data helps us provide better images for everyone and fuels <a href="
-"\"https://vrty.org\">VRTY.ORG</a> - a valuable resource for all users of "
-"Variety."
+#: ../variety/indicator.py:160 ../variety/indicator.py:235
+#: ../data/ui/FacebookPublishDialog.ui.h:2
+msgid "Share on Facebook"
+msgstr ""
+
+#: ../variety/indicator.py:167 ../variety/ThumbsManager.py:136
+msgid "Set EXIF Rating"
+msgstr ""
+
+#: ../variety/indicator.py:203 ../variety/VarietyWindow.py:790
+msgid "Save to Favorites"
+msgstr ""
+
+#: ../variety/indicator.py:208
+msgid "View Favorites..."
+msgstr ""
+
+#: ../variety/indicator.py:215
+msgid "Copy to Clipboard"
+msgstr ""
+
+#: ../variety/indicator.py:225
+msgid "Google Quote"
+msgstr ""
+
+#: ../variety/indicator.py:230
+msgid "Google Author"
+msgstr ""
+
+#: ../variety/indicator.py:242 ../variety/indicator.py:296
+msgid "Preferences..."
+msgstr ""
+
+#: ../variety/indicator.py:250
+msgid "Turn off"
+msgstr ""
+
+#: ../variety/indicator.py:256
+msgid "_Quote"
+msgstr ""
+
+#: ../variety/indicator.py:263
+msgid "_History"
+msgstr ""
+
+#: ../variety/indicator.py:269
+msgid "_Wallpaper Selector"
+msgstr ""
+
+#: ../variety/indicator.py:275
+msgid "Recent _Downloads"
+msgstr ""
+
+#: ../variety/indicator.py:290
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../variety/indicator.py:300
+msgid "About"
+msgstr ""
+
+#: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui.h:177
+msgid "Donate"
+msgstr ""
+
+#: ../variety/indicator.py:308
+msgid "Quit"
 msgstr ""
 
 #: ../variety/AddMediaRssDialog.py:40
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/AddMediaRssDialog.py:40
 msgid ""
 "This does not seem to be a valid Media RSS feed URL or there is no content "
 "there."
 msgstr ""
 
+#: ../data/ui/FacebookPublishDialog.ui.h:1
+msgid "Variety - Publish to Facebook"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:3
+msgid ""
+"Publish a link to the current wallpaper on Facebook. Include this text along "
+"with the link (or just leave empty):"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:4
+msgid "Use current quote"
+msgstr ""
+
+#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2578
+msgid "Do not ask anymore, always use the text above"
+msgstr ""
+
+#: ../variety/AddWallhavenDialog.py:38 ../variety/AddFlickrDialog.py:138
+msgid "No images found"
+msgstr ""
+
 #: ../variety/VarietyWindow.py:638 ../variety/VarietyWindow.py:790
 #: ../variety/VarietyWindow.py:2737
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:662
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:820
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2839
 msgid "Already in Favorites"
 msgstr ""
 
-#. both
-#: ../variety/VarietyWindow.py:651 ../variety/indicator.py:92
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:675
-#: ../data/ui/PreferencesVarietyDialog.ui.h:148
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:167
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:90
-msgid "Move to Favorites"
+#: ../variety/VarietyWindow.py:643 ../variety/ThumbsManager.py:151
+msgid "Move to _Favorites"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:673 ../variety/ThumbsManager.py:119
+msgid "Fetched: Show Origin"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:675 ../variety/VarietyWindow.py:780
+#: ../variety/ThumbsManager.py:121
+#, python-format
+msgid "View at %s"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:725
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:749
 msgid "Unknown"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:750
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:780
 #, python-format
 msgid "Author: %s"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:773 ../variety/VarietyWindow.py:787
-#: ../variety/indicator.py:131 ../variety/indicator.py:197
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:803
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:817
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:129
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:203
-msgid "Pause on current"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:773 ../variety/VarietyWindow.py:787
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:803
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:817
 msgid "Resume regular changes"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:790 ../variety/indicator.py:203
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:820
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:209
-msgid "Save to Favorites"
-msgstr ""
-
 #: ../variety/VarietyWindow.py:922
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:952
 msgid "Filtering too strict?"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:923
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:953
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1404
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1447
 msgid "Please add more image sources or wait for some downloads"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1406
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1449
 msgid "Please add more image sources"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1407
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1450
 msgid "No more wallpapers"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1621
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1656
 msgid "Current wallpaper is not in the image sources"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1656
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1691
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1658
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1693
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
@@ -870,39 +559,31 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:1678 ../variety/VarietyWindow.py:1706
 #: ../variety/VarietyWindow.py:1711
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1713
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1741
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1746
 msgid "Cannot delete"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1679
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1714
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1707
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1742
 msgid "Deleting to trash failed, check variety.log for more information."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:1712
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1747
 msgid ""
 "Deleting to trash failed because no suitable program is installed. Please "
 "install gvfs (gvfs-bin), trash-cli, or konqueror."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2005
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2096
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2043
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2134
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -914,124 +595,102 @@ msgid ""
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2053
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2144
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2057
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2148
 msgid "Make the running instance quit"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2061
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2152
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2065
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2156
 msgid "Show Next wallpaper"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2069
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2160
 msgid "Show Previous wallpaper"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2073
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2164
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2077
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2168
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2081
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2172
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2085
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2176
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2089
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2180
 msgid "Pause on current image"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2093
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2184
 msgid "Resume regular image changes"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2097
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2188
 msgid "Toggle Pause/Resume state"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2101
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2192
 msgid "Show Next quote"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2105
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2196
 msgid "Show Previous quote"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2109
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2200
 msgid "Show Next quote, skipping the forward history"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2113
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2204
 msgid "Toggle Quotes Pause/Resume state"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2117
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2208
 msgid "Save the current quote to Favorites"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2121
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2212
 msgid "Toggle History display"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2125
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2216
 msgid "Toggle Recent Downloads display"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2129
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2220
 msgid "Show Preferences dialog"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2133
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2224
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2137
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2228
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
@@ -1041,171 +700,126 @@ msgid ""
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2151
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2242
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2154
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2245
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2157
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2248
 msgid "options --pause and --resume are mutually exclusive"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2160
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2251
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2277
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:60
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:70
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:77
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:110
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2368
-#: ../variety/ImageFetcher.py:60 ../variety/ImageFetcher.py:70
-#: ../variety/ImageFetcher.py:77 ../variety/ImageFetcher.py:110
+#: ../variety/VarietyWindow.py:2277 ../variety/ImageFetcher.py:60
+#: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
+#: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2282
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2373
 msgid "Added to queue"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2283 ../variety/VarietyWindow.py:2289
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2374
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2380
 msgid "Press Next to see it"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2289
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2380
 msgid "Fetched"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2335
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2426
 msgid "Unsupported source type"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2336 ../variety/VarietyWindow.py:2373
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2427
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2475
 msgid "Are you running the most recent version of Variety?"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2342
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2433
 msgid "New image source added"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2344
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2435
 msgid "Image source already exists, enabling it"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2365
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2461
 msgid "Fetched and applied"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2369
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2471
 msgid "It works!"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2369
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2471
 msgid "Yay, Variety links work. Great!"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2373
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2475
 msgid "Unsupported command"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2375
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2477
 msgid "Could not process the given variety:// URL"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2376
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2478
 msgid "Run with logging enabled to see details"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2575
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2677
 msgid "Do not ask anymore, always use the current quote"
 msgstr ""
 
-#: ../variety/VarietyWindow.py:2578
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2680
-#: ../data/ui/FacebookPublishDialog.ui.h:5
-#: ../debian/variety/usr/share/variety/ui/FacebookPublishDialog.ui.h:5
-msgid "Do not ask anymore, always use the text above"
-msgstr ""
-
 #: ../variety/VarietyWindow.py:2610 ../variety/VarietyWindow.py:2639
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2712
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2741
 msgid "Published"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2610 ../variety/VarietyWindow.py:2639
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2712
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2741
 msgid "You may open your Facebook feed to see the post"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2613 ../variety/VarietyWindow.py:2642
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2715
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2744
 msgid "Could not publish"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2805
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2907
 msgid "Could not create autostart entry"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2806
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2908
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2856
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2958
 msgid "No images"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2856
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2958
 msgid "There are no images in the slideshow folders"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2889
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2993
 msgid "Wallhaven image sources disabled"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2890
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:2994
 msgid ""
 "Please google \"Python SNI SSL error\" if you want to fix the problem "
 "yourself."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2896
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3000
 msgid ""
 "There are SSL incompatibilities between your version of Python and some "
 "https sites like Wallhaven. You can <a href=\"https://stackoverflow.com/"
@@ -1218,41 +832,34 @@ msgid ""
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2901
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3005
 msgid "Variety - SSL error. Install dependencies?"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2922
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3026
 msgid "Installing..."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2923
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3027
 #, python-format
 msgid ""
 "Installation will take a minute or two. Please be patient. Log file is at %s"
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2936
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3040
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2937
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3041
 msgid ""
 "If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
 "and seek another solution."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2940
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3044
 msgid "Failure. Wallhaven sources disabled."
 msgstr ""
 
 #: ../variety/VarietyWindow.py:2941
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:3045
 #, python-format
 msgid ""
 "SSL-related dependencies were not installed successfully. Please see %s or "
@@ -1260,19 +867,15 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
 msgstr ""
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
 #: ../data/ui/PreferencesVarietyDialog.ui.h:152
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:171
-#: ../debian/variety/usr/share/variety/ui/FacebookFirstRunDialog.ui.h:2
 msgid "Facebook Sharing"
 msgstr ""
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/FacebookFirstRunDialog.ui.h:3
 msgid ""
 "You are sharing on Facebook for the first time. Sharing from Variety is "
 "available for images that come from online sources and for quotes. It works "
@@ -1299,47 +902,15 @@ msgid ""
 "you will be asked to login again."
 msgstr ""
 
-#: ../data/ui/WelcomeDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:1
-msgid "Welcome to Variety!"
-msgstr ""
-
-#: ../data/ui/WelcomeDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:3
-msgid "Continue"
-msgstr ""
-
-#: ../data/ui/WelcomeDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:3
-msgid ""
-"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper "
-"on a regular basis using local images or images downloaded from various "
-"online sources. It runs quietly in the background - to control it, click "
-"this icon in your system tray:"
-msgstr ""
-
-#: ../data/ui/WelcomeDialog.ui.h:4
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:4
-msgid ""
-"Variety is open-source software, created by Peter Levi, a software developer "
-"from Bulgaria. If you like it, please <a href=\"http://peterlevi.com/variety/"
-"donate/\">donate</a>."
-msgstr ""
-
-#: ../data/ui/WelcomeDialog.ui.h:5
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:5
-msgid ""
-"Now please take some time to set your preferences on the following screens."
+#: ../data/plugins/quotes/QuotationsPageSource.py:35
+msgid "Fetches quotes from TheQuotationsPage.com"
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:1
 msgid "Variety - add Reddit feed"
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:3
 msgid ""
 "Enter the name of a subreddit or paste the full URL of a subreddit or a <a "
 "href=\"http://reddit.com\">Reddit</a> user. You may specify sort order and "
@@ -1354,272 +925,167 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:7
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:7
 msgid "URL or name of a subreddit: "
 msgstr ""
 
 #: ../data/ui/AddRedditDialog.ui.h:8
-#: ../debian/variety/usr/share/variety/ui/AddRedditDialog.ui.h:8
 msgid "Just a moment to check what's there"
 msgstr ""
 
-#: ../data/ui/AddMediaRssDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:1
-msgid "Variety - add Media RSS feed"
+#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:17
+#: ../data/ui/AddWallhavenDialog.ui.h:10 ../data/ui/AddMediaRssDialog.ui.h:6
+msgid "  "
 msgstr ""
 
-#: ../data/ui/AddMediaRssDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:3
+#: ../data/ui/AddFlickrDialog.ui.h:1
+msgid "Variety - add Flickr as an image source"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:3
 msgid ""
-"Please paste the URL of the Media RSS feed below. Please note that only "
-"Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds "
-"contain media:content tags linking directly to the actual image content. "
-"Some examples of sites that provide Media RSS feeds are: <a href=\"https://"
-"picasaweb.google.com/\">Picasa</a>, <a href=\"http://www.deviantart.com"
-"\">deviantART</a>, <a href=\"http://www.smugmug.com/browse/\">SmugMug</a>, "
-"<a href=\"http://www.flickr.com\">Flickr</a>, <a href=\"http://interfacelift."
-"com\">InterfaceLIFT</a>."
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
+"Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
 msgstr ""
 
-#: ../data/ui/AddMediaRssDialog.ui.h:4
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:4
-msgid "Paste the URL of the Media RSS feed here: "
+#: ../data/ui/AddFlickrDialog.ui.h:4
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
+msgid "Tags: "
 msgstr ""
 
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-#: ../debian/variety/usr/share/variety/ui/AddMediaRssDialog.ui.h:5
-msgid "Just a moment to check what's at that URL"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:56
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:102
-#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
-msgid "Fetching"
-msgstr ""
-
-#. too small - delete and do not use
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:116
-#: ../variety/ImageFetcher.py:116
-msgid "Image too small, ignoring it"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:138
-#: ../variety/ImageFetcher.py:138
-#, python-format
-msgid "Sorry, got %s error..."
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:139
-#: ../variety/ImageFetcher.py:139
-msgid "This means the link is no longer valid"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:142
-#: ../variety/ImageFetcher.py:142
-msgid "Fetch failed for some reason"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/ImageFetcher.py:143
-#: ../variety/ImageFetcher.py:143
+#: ../data/ui/AddFlickrDialog.ui.h:5
 msgid ""
-"To get more information, please run Variety from terminal with -v option and "
-"retry the action"
+"A comma-separated list of tags. A photo has to contain all of them "
+"simultaneosly in order to match.\n"
+"Example: yellow,car"
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FacebookHelper.py:115
-#: ../variety/FacebookHelper.py:115
-msgid "Authorization successful"
+#: ../data/ui/AddFlickrDialog.ui.h:7
+msgid "User: "
 msgstr ""
 
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FacebookHelper.py:115
-#: ../variety/FacebookHelper.py:115
-msgid "Publishing..."
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/FacebookHelper.py:120
-#: ../variety/FacebookHelper.py:120
-msgid "Authorization failed"
-msgstr ""
-
-#: ../variety/indicator.py:60 ../variety/indicator.py:107
-#: ../variety/indicator.py:178
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:58
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:105
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:184
-msgid "_Next"
-msgstr ""
-
-#: ../variety/indicator.py:65 ../variety/indicator.py:112
-#: ../variety/indicator.py:183
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:63
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:110
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:189
-msgid "_Previous"
-msgstr ""
-
-#: ../variety/indicator.py:72
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:70
-msgid "Current desktop wallpaper"
-msgstr ""
-
-#: ../variety/indicator.py:76
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:74
-msgid "Show origin"
-msgstr ""
-
-#: ../variety/indicator.py:117 ../variety/indicator.py:188
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:115
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:194
-msgid "_Next, skipping forward history"
-msgstr ""
-
-#: ../variety/indicator.py:125
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:123
+#: ../data/ui/AddFlickrDialog.ui.h:8
 msgid ""
-"Tip: Scroll wheel over icon\n"
-"for Next and Previous"
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www."
+"flickr.com/photos/peter-levi/</a>"
 msgstr ""
 
-#: ../variety/indicator.py:135
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:133
-msgid "_Image"
+#: ../data/ui/AddFlickrDialog.ui.h:10
+msgid "Group: "
 msgstr ""
 
-#: ../variety/indicator.py:146
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:144
-msgid "Show without effects"
-msgstr ""
-
-#: ../variety/indicator.py:154
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:152
-msgid "Google Image Search"
-msgstr ""
-
-#: ../variety/indicator.py:160 ../variety/indicator.py:235
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:158
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:241
-#: ../data/ui/FacebookPublishDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/FacebookPublishDialog.ui.h:2
-msgid "Share on Facebook"
-msgstr ""
-
-#: ../variety/indicator.py:208
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:214
-msgid "View Favorites..."
-msgstr ""
-
-#: ../variety/indicator.py:215
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:221
-msgid "Copy to Clipboard"
-msgstr ""
-
-#: ../variety/indicator.py:225
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:231
-msgid "Google Quote"
-msgstr ""
-
-#: ../variety/indicator.py:230
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:236
-msgid "Google Author"
-msgstr ""
-
-#: ../variety/indicator.py:242 ../variety/indicator.py:296
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:248
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:302
-msgid "Preferences..."
-msgstr ""
-
-#: ../variety/indicator.py:250
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:256
-msgid "Turn off"
-msgstr ""
-
-#: ../variety/indicator.py:256
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:262
-msgid "_Quote"
-msgstr ""
-
-#: ../variety/indicator.py:263
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:269
-msgid "_History"
-msgstr ""
-
-#: ../variety/indicator.py:269
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:275
-msgid "_Wallpaper Selector"
-msgstr ""
-
-#: ../variety/indicator.py:275
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:281
-msgid "Recent _Downloads"
-msgstr ""
-
-#: ../variety/indicator.py:290
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:296
-msgid "Start Slideshow"
-msgstr ""
-
-#: ../variety/indicator.py:300
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:306
-msgid "About"
-msgstr ""
-
-#: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui.h:177
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:196
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:310
-msgid "Donate"
-msgstr ""
-
-#: ../variety/indicator.py:308
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:314
-msgid "Quit"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:761
-msgid "Safe mode: On"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:761
-msgid "Turn Safe mode on"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1912
-msgid "Anonymous usage statistics"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/VarietyWindow.py:1913
+#: ../data/ui/AddFlickrDialog.ui.h:11
 msgid ""
-"Variety collects anonymous usage statistics. \n"
-"These help us make it better and are not shared with anyone. \n"
-"To read more or turn them off, go to \"Sync and social\""
+"Please insert the group's URL.\n"
+"Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www."
+"flickr.com/groups/wallpapers/</a>"
 msgstr ""
 
-#: ../data/plugins/quotes/QuotationsPageSource.py:35
-#: ../debian/variety/usr/share/variety/plugins/quotes/QuotationsPageSource.py:35
-msgid "Fetches quotes from TheQuotationsPage.com"
+#: ../data/ui/AddFlickrDialog.ui.h:13
+msgid "Text:"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/AboutVarietyDialog.ui.h:1
+#: ../data/ui/AddFlickrDialog.ui.h:14
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by "
+"prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+
+#: ../data/ui/AddFlickrDialog.ui.h:16 ../data/ui/AddWallhavenDialog.ui.h:9
+msgid "Just a moment to check this search"
+msgstr ""
+
+#: ../variety/FolderChooser.py:65
+msgid "Choose a folder"
+msgstr ""
+
+#: ../variety/FolderChooser.py:66
+msgid "OK"
+msgstr ""
+
+#: ../variety/__init__.py:147
+msgid "Terminating signal received, quitting..."
+msgstr ""
+
+#: ../variety/__init__.py:202
+msgid ""
+"Variety is already running. Sending the command to the running instance."
+msgstr ""
+
+#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui.h:53
+msgid "Bottom"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:42
+msgid "Top"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:43
+msgid "Left"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui.h:50
+msgid "Right"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:94
+msgid "Position"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:98 ../data/ui/PreferencesVarietyDialog.ui.h:114
+msgid "Size"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:109
+msgid "Show Containing Folder"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:178
+msgid "Close"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:198
+msgid "Could not set EXIF rating"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:217
+msgid "Unrated"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:224
+msgid "Rejected"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:326
+msgid "Variety History"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:328
+msgid "Variety Recent Downloads"
+msgstr ""
+
+#: ../variety/ThumbsManager.py:330
+msgid "Variety Images"
+msgstr ""
+
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/AboutVarietyDialog.ui.h:2
 #: ../data/ui/AboutVarietyDialog.ui.h:2
 msgid "About Variety"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/AboutVarietyDialog.ui.h:3
 #: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "An automatic wallpaper changer, downloader and manager."
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/AboutVarietyDialog.ui.h:4
 #: ../data/ui/AboutVarietyDialog.ui.h:4
 msgid "http://peterlevi.com/variety"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/AboutVarietyDialog.ui.h:5
 #: ../data/ui/AboutVarietyDialog.ui.h:5
 msgid ""
 "# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
@@ -1635,1181 +1101,6 @@ msgid ""
 "# \n"
 "# You should have received a copy of the GNU General Public License along \n"
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:119
-msgid ""
-"Your smart_user.json config file appears broken. You may have to login again "
-"to VRTY.ORG."
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:211
-msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:635
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:684
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:113
-msgid "Sync"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:636
-#, python-format
-msgid "Fetching %d images"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:636
-msgid "Fetching 1 image"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:684
-msgid "Finished"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:705
-#, python-format
-msgid "Logged in as %s"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:717
-#, python-format
-msgid ""
-"Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/Smart.py:718
-msgid "VRTY.ORG login confirmation"
-msgstr ""
-
-#: ../variety/__init__.py:147
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/__init__.py:147
-msgid "Terminating signal received, quitting..."
-msgstr ""
-
-#: ../variety/__init__.py:202
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/__init__.py:202
-msgid ""
-"Variety is already running. Sending the command to the running instance."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:6
-msgid "KDE Users - Important, please read:"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/WelcomeDialog.ui.h:7
-msgid ""
-"You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper "
-"from inside a program - there is no API for this. To make Variety work, <a "
-"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">please read "
-"and follow the instructions here</a>."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:1
-msgid "seconds"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:2
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:2
-msgid "minutes"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:3
-msgid "hours"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:4
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:4
-msgid "days"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:5
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:5
-msgid "Variety Preferences"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:6
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:6
-msgid "General"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:7
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:7
-msgid "Start Variety when the computer starts"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:8
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:8
-msgid "Change wallpaper every "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:9
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:9
-msgid "Minimum interval is 5 seconds"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:10
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:10
-msgid "Change wallpaper on start"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:12
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:14
-msgid "Enabled"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:13
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:15
-msgid "Type"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:14
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:16
-msgid "Location"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:15
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:17
-msgid "_Add..."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:16
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:18
-msgid "Add images, folders or online image sources"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:17
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:19
-msgid "_Edit..."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:18
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:20
-msgid "Edit the selected source"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:21
-msgid "_Remove..."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:22
-msgid "Remove selected image sources"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:23
-msgid "_Use"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:24
-msgid "Enable the selected sources and disable all others"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:25
-msgid "Download a wallpaper every "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:26
-msgid "Minimum interval is one minute"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:27
-msgid "to "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:28
-msgid "Actual download folder "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:29
-msgid ""
-"Caution: do NOT use this option if you use a custom download folder with "
-"valuable files in it. Variety will maintain the limit regardless of what is "
-"in the download folder."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:30
-msgid "Limit download folder to "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:31
-msgid "Minimum size is 50 MB"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:32
-msgid "MB by deleting oldest files when necessary"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:33
-msgid "Favorites"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:34
-msgid "Copy favorite wallpapers to "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:35
-msgid "Filters"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:36
-msgid ""
-"Randomly apply these filters to the displayed wallpapers (thanks to the "
-"wonderful ImageMagick):"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:37
-msgid "Quotes"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:38
-msgid "Show random wise quotes on the desktop"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:39
-msgid "Text color: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:38
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:40
-msgid "Text font: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:41
-msgid "Backdrop color: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:42
-msgid "Backdrop opacity: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:43
-msgid " Transparent"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:44
-msgid "Opaque"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:45
-msgid "Draw a text shadow"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:46
-msgid "Appearance"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:47
-msgid "Quotes area width: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:48
-msgid "Narrow "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:49
-msgid "Wide"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:50
-msgid "Horizontal position: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:51
-msgid "Left "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:53
-msgid "Vertical position: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:54
-msgid "Top "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:56
-msgid "Placement"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:57
-msgid "Show quotes from these sources: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:58
-msgid ""
-"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More plugins</a></"
-"small>"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:59
-msgid "Show only these tags and authors. Leave empty to show random quotes."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:61
-msgid "Example: funny, inspirational"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:62
-msgid "Example: Albert Einstein, Voltaire"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:63
-msgid "Authors: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:64
-msgid "Sources and filtering"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:63
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:65
-msgid "Change quote every "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:66
-msgid "Minimum interval is 10 seconds"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:67
-msgid "Regular change"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:66
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:68
-msgid "Clock"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:67
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:69
-msgid ""
-"Show a nice big digital clock on the desktop, displaying the current time "
-"and date"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:68
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:70
-msgid ""
-"To configure the clock's appearance edit the clock_filter property in "
-"Variety's settings file (~/.config/variety/variety.conf). Use the comments "
-"in ~/.config/variety/variety_latest_default.conf as a guide."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:71
-msgid "Clock font: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:72
-msgid "Date font: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:73
-msgid ""
-"These don't work? <a href=\"https://answers.launchpad.net/variety/"
-"+faq/2138\">Read here</a>. How to further configure the clock? <a href="
-"\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Read here</"
-"a>."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:74
-msgid "Effects"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:75
-msgid "Images for slideshow"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:76
-msgid "Favorite images"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:77
-msgid "Images in all enabled image sources"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:78
-msgid "All images in the Downloads folder"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:79
-msgid "Custom folder (includes images in subfolders) "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:80
-msgid "Order of images in slideshow "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:81
-msgid "Random"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:82
-msgid "By name, A to Z"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:83
-msgid "By name, Z to A"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:84
-msgid "By date, oldest first"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:85
-msgid "By date, newest first"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:84
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:86
-msgid "Screen"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:87
-msgid "Run on monitor"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:88
-msgid "Window mode for the slideshow "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:89
-msgid "Fullscreen"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:90
-msgid "Desktop (stays below other windows)"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:91
-msgid "Maximized window"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:90
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:92
-msgid "Normal window"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:93
-msgid "Dynamics"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:94
-msgid "Interval between image changes "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:95
-msgid " seconds"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:94
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:96
-msgid "Quick fade "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:97
-msgid "Slow fade"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:98
-msgid "Less zoom"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:99
-msgid "More zoom"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:100
-msgid "Less pan"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:101
-msgid "More pan"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:100
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:102
-msgid "Reset to defaults"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:103
-msgid "Changes on this page take effect after the slideshow is restarted"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:104
-msgid "Start slideshow now"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:105
-msgid "Slideshow"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:123
-msgid "Fetch folder"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:124
-msgid "Save manually downloaded wallpapers to "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:106
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:125
-msgid "Drag and drop"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:126
-msgid ""
-"Variety's icon in the launcher serves as a drop target. Drop any image URL "
-"or file on it and it will be saved to your fetch folder. You can then press "
-"Next to see it on your desktop.\n"
-"To show the icon in the launcher choose About or Preferences. You may wish "
-"to lock it there for easy drag-and-drop access."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:128
-msgid "Clipboard monitoring"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:129
-msgid "Monitor clipboard for image URLs and fetch them"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:130
-msgid "But fetch only when the URL host is one of these:"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:131
-msgid "Manual downloading"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:132
-msgid "When possible use images that:"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:134
-msgid "Have landscape orientation"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:135
-msgid "Are big at least "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:136
-msgid "50"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:137
-msgid "80"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:138
-msgid "100"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:140
-#, no-c-format
-msgid "% of the screen resolution"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:141
-msgid "Color"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:142
-msgid "Are dark or light:"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:143
-msgctxt "Color option - images that are dark or light"
-msgid "Dark"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:144
-msgctxt "Color option - images that are dark or light"
-msgid "Light"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:145
-msgid "Contain this color: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:146
-msgid "(Takes effect after some initial searching)"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:147
-msgid "Rating"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:148
-msgid "Have EXIF rating at least "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:149
-msgid "1"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:150
-msgid "2"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:151
-msgid "3"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:152
-msgid "4"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:153
-msgid "5"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:154
-msgid "Color and size"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:155
-msgid "Indicator Icon"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:156
-msgid "Indicator icon:"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:157
-msgctxt "Icon option"
-msgid "Light"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:158
-msgctxt "Icon option"
-msgid "Dark"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:159
-msgctxt "Icon option"
-msgid "Use current wallpaper"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:160
-msgctxt "Icon option"
-msgid "Custom image..."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:161
-msgctxt "Icon option"
-msgid "None"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:162
-msgid "Select an icon"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:163
-msgid ""
-"When the icon is hidden, Variety can be controlled from the command line, or "
-"from the launcher quicklist. Run \"variety --help\" to see all available "
-"commands."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:164
-msgid "Favorites Operations"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:165
-msgid "Favorites operations to show in main menu:"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:147
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:166
-msgid "Copy to Favorites"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:149
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:168
-msgid "Both Copy and Move"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:169
-msgid "Depends on folder..."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:153
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:172
-msgid "Display dialog to customize the Facebook post before publishing"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:173
-msgid "Login Screen Support"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:155
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:174
-msgid ""
-"Make sure the wallpapers set by Variety will be used on the login screen"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:156
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:175
-msgid ""
-"<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
-"permissions over the image. With this option on, Variety will copy the "
-"wallpapers to a public folder and change their permissions to make them "
-"readable by all. By default, the folder is ~/Pictures if your home folder in "
-"not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
-"multiuser systems."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:157
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:176
-msgid "Copy wallpaper image files to this folder: "
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:158
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:177
-msgid "Reset to default"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:159
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:178
-msgid "Still doesn't work?"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:160
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:179
-msgid ""
-"It seems your home folder is encrypted, so using folders inside it will not "
-"work."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:161
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:180
-msgid "You don't have write permissions for this folder."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:162
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:181
-msgid "Permissions do not allow LightDM to read files from this folder."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:163
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:182
-msgid ""
-"Variety can adjust the permissions, but you will have to provide superuser "
-"privileges."
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:164
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:183
-msgid "Customize"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:165
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:184
-msgid "Tips and tricks"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:166
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:185
-msgid "Recent changes"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:167
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:186
-msgid "Visit website"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:168
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:187
-msgid "Report a bug or request a feature"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:169
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:188
-msgid "Send feedback"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:170
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:189
-msgid "Donate to Variety"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:171
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:190
-msgid "Donate via PayPal"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:172
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:191
-msgid ""
-"I am developing Variety in my spare time, which usually means the late hours "
-"after my kids go to bed. Any amount you donate will be appreciated. It will "
-"show me Variety is valued by you - the users - and will motivate me to "
-"continue working actively on it.\n"
-"\n"
-"Thank you,\n"
-"Peter Levi"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:176
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:195
-msgid ""
-"<i>For Bitcoin and other payment methods please go to <a href=\"http://"
-"peterlevi.com/variety/\">Variety's website</a>.</i>"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:12
-msgid "Safe mode. Avoid NSFW and sketchy images"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:13
-msgid ""
-"<i>Experimental feature. Relies on community ratings. <a href=\"http://"
-"peterlevi.com/variety/2016/08/introducing-safe-mode/\">Read more here</a></i>"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:106
-msgid "VRTY.ORG"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:107
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:8
-msgid "Participate in VRTY.ORG"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:108
-msgid "VRTY.ORG is in beta and will take some time to mature"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:109
-msgid ""
-"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
-"similar tastes and provides super-convenient ways to change your wallpaper, "
-"to add new image sources to Variety, and to follow other users' favorites. "
-"It is fueled by the favorite images of all participating users."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:110
-msgid ""
-"Could not create user - no connection to VRTY.ORG. We will try again later."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:111
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1228
-msgid "Login or register"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:112
-msgid ""
-"Registration enables cool features like synchronization of favorite images "
-"and sources between computers and personalized recommendations."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:114
-msgid "Synchronize favorite images between computers"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:115
-msgid "Requires VRTY.ORG enabled and logged in."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:116
-msgid ""
-"Your favorite images from other computers will be automatically downloaded "
-"to this computer. You need to be logged in with the same VRTY.ORG user "
-"everywhere. Sync will not delete any images."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:117
-msgid "Privacy policy"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:118
-msgid ""
-"Variety sends data only for images it downloaded, never for images you "
-"already had in your local folders that might be private, and Sync does not "
-"work for such images. Collected data is not shared with third parties, "
-"unless you opt-in to make your profile public. <a href='http://peterlevi.com/"
-"variety/vrty-org/'>Read more details about the service and the privacy "
-"policy here.</a>"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:119
-msgid "Usage statistics"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:120
-msgid "Help make Variety better by sending anonymous usage statistics"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:121
-msgid ""
-"These stats help us improve Variety by understanding how users interact with "
-"it. They also include general info about your OS version and monitor setup. "
-"Collected data is not shared with anyone."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/PreferencesVarietyDialog.ui.h:122
-msgid "Sync and social"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/EditFavoriteOperationsDialog.ui.h:1
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
-msgid "Copy to Favorites vs. Move to Favorites"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/EditFavoriteOperationsDialog.ui.h:2
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
-msgid "Reset to Default"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/EditFavoriteOperationsDialog.ui.h:3
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
-msgid ""
-"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
-"menu depending on the image location:"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/EditFavoriteOperationsDialog.ui.h:4
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
-msgid ""
-"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
-"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
-"folder path.\n"
-"Order is important. When an image is shown, the first folder in this list "
-"which contains the image will determine which operations will be shown in "
-"Variety's menu. 'Others' matches any file and should be last in the list.\n"
-"\n"
-"Example:\n"
-"\tDownloaded:Copy\n"
-"\tFetched:Move\n"
-"\t/pics/RandomImages:Move\n"
-"\t/pics/OrganizedAlbums:Copy\n"
-"\tOthers:Both"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:176
-msgid "Report NSFW image"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/indicator.py:432
-msgid "_Safe mode"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:1
-msgid "Variety - VRTY.ORG registration"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:2
-msgid "Would you like to register?"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:3
-msgid ""
-"You may participate in <a href=\"https://vrty.org\">VRTY.ORG</a> "
-"anonymously, but registration enables some very nice features, such as <span "
-"weight=\"bold\">synchronization</span> of favorites between computers and "
-"<span weight=\"bold\">personalized recommendations</span>. It also ensures "
-"you will not lose your profile and favorite wallpapers if you reinstall your "
-"OS."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:4
-msgid "Registration is very easy and does not require any personal data."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:5
-msgid ""
-"If you choose to participate anonymously, you can register later from the "
-"<span weight=\"bold\">\"Sync and social\"</span> page in Preferences."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:6
-msgid ""
-"Oops, we could not connect to VRTY.ORG. Server might be down. Please wait a "
-"couple of minutes and try again or choose <span font_weight=\"bold\">"
-"\"Participate anonymously\"</span> and register later from the <span "
-"font_weight=\"bold\">\"Sync and social\"</span> page in Preferences."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:7
-msgid ""
-"Please continue the registration and follow the instructions in the browser "
-"tab we opened."
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:8
-msgid "I will participate anonymously"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:9
-msgid "I'm registered, let me login"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartRegisterDialog.ui.h:10
-msgid "Register here"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/plugins/quotes/LocalFilesSource.py:34
-#: ../data/plugins/quotes/LocalFilesSource.py:34
-msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-
-#: ../data/ui/FacebookPublishDialog.ui.h:1
-#: ../debian/variety/usr/share/variety/ui/FacebookPublishDialog.ui.h:1
-msgid "Variety - Publish to Facebook"
-msgstr ""
-
-#: ../data/ui/FacebookPublishDialog.ui.h:3
-#: ../debian/variety/usr/share/variety/ui/FacebookPublishDialog.ui.h:3
-msgid ""
-"Publish a link to the current wallpaper on Facebook. Include this text along "
-"with the link (or just leave empty):"
-msgstr ""
-
-#: ../data/ui/FacebookPublishDialog.ui.h:4
-#: ../debian/variety/usr/share/variety/ui/FacebookPublishDialog.ui.h:4
-msgid "Use current quote"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1070
-msgid "Recommended images source disabled"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1225
-msgid "Logged in as: "
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1227
-msgid "Anonymous"
-msgstr ""
-
-#: ../debian/variety/usr/lib/python2.7/dist-packages/variety/PreferencesVarietyDialog.py:1228
-msgid "Switch user"
 msgstr ""
 
 #: ../variety.desktop.in.h:1
@@ -2840,39 +1131,890 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:1
-msgid "Variety - VRTY.ORG"
+#: ../data/ui/AddWallhavenDialog.ui.h:1
+msgid "Variety - add Wallhaven.cc image source"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:2
-msgid "No, thanks"
-msgstr ""
-
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:4
+#: ../data/ui/AddWallhavenDialog.ui.h:3
 msgid ""
-"<span font=\"14\" weight=\"bold\">Introducing <a href=\"https://vrty.org"
-"\">VRTY.ORG</a>! Wanna take part?</span>"
+"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a> provides a variety of image "
+"search options. Below you can specify keywords to search for, or visit <a "
+"href=\"http://wallhaven.cc\">Wallhaven.cc</a>, setup your search criteria "
+"there, ensure you like the results, and paste the full Wallhaven URL in the "
+"box.\n"
+"\n"
+"If you specify keywords, the most liked safe-for-work images that match all "
+"of the keywords will be used. \n"
+"\n"
+"If you specify a Wallhaven URL, please choose the sorting criteria carefully "
+"- Variety regularly requests images, but uses only images from the first "
+"several hundred returned. Random or Date will mean this image source will "
+"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
+"better images and Relevance will provide closer matches when searching for "
+"phrases or colors."
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:5
-msgid ""
-"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
-"similar tastes and provides super-convenient ways to change your wallpaper, "
-"to find and add new image sources to Variety, and to follow other users' "
-"favorites."
+#: ../data/ui/AddWallhavenDialog.ui.h:8
+msgid "Enter keywords or paste URL here: "
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:6
+#: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
-"Participation takes no effort - your profile will be built automatically, as "
-"you like or dislike images downloaded by Variety. Your profile will not be "
-"shared with third parties, unless you opt-in to make it public. <a "
-"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
-"service and the privacy policy here.</a>"
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
+"\n"
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
 
-#: ../debian/variety/usr/share/variety/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../data/ui/AddMediaRssDialog.ui.h:1
+msgid "Variety - add Media RSS feed"
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:3
 msgid ""
-"Participation is required for some features of Variety such as <span weight="
-"\"bold\">synchronization of favorites between computers</span>."
+"Please paste the URL of the Media RSS feed below. Please note that only "
+"Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds "
+"contain media:content tags linking directly to the actual image content. "
+"Some examples of sites that provide Media RSS feeds are: <a href=\"https://"
+"picasaweb.google.com/\">Picasa</a>, <a href=\"http://www.deviantart.com"
+"\">deviantART</a>, <a href=\"http://www.smugmug.com/browse/\">SmugMug</a>, "
+"<a href=\"http://www.flickr.com\">Flickr</a>, <a href=\"http://interfacelift."
+"com\">InterfaceLIFT</a>."
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:4
+msgid "Paste the URL of the Media RSS feed here: "
+msgstr ""
+
+#: ../data/ui/AddMediaRssDialog.ui.h:5
+msgid "Just a moment to check what's at that URL"
+msgstr ""
+
+#: ../variety/FacebookHelper.py:115
+msgid "Authorization successful"
+msgstr ""
+
+#: ../variety/FacebookHelper.py:115
+msgid "Publishing..."
+msgstr ""
+
+#: ../variety/FacebookHelper.py:120
+msgid "Authorization failed"
+msgstr ""
+
+#: ../variety/AddRedditDialog.py:43
+msgid "This does not seem to be a valid Reddit URL"
+msgstr ""
+
+#: ../variety/AddRedditDialog.py:46
+msgid "We could not find any image submissions there."
+msgstr ""
+
+#: ../data/plugins/quotes/QuotesDaddySource.py:31
+msgid ""
+"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
+"Does not support searching by tags or authors."
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
+msgid "Reset to Default"
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
+"menu depending on the image location:"
+msgstr ""
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
+"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
+"folder path.\n"
+"Order is important. When an image is shown, the first folder in this list "
+"which contains the image will determine which operations will be shown in "
+"Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:1
+msgid "seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:2
+msgid "minutes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:3
+msgid "hours"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:4
+msgid "days"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:5
+msgid "Variety Preferences"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:6
+msgid "General"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:7
+msgid "Start Variety when the computer starts"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:8
+msgid "Change wallpaper every "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:9
+msgid "Minimum interval is 5 seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:10
+msgid "Change wallpaper on start"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:12
+msgid "Enabled"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:13
+msgid "Type"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:14
+msgid "Location"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:15
+msgid "_Add..."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
+msgid "Add images, folders or online image sources"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+msgid "_Edit..."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+msgid "Edit the selected source"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+msgid "_Remove..."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+msgid "Remove selected image sources"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+msgid "_Use"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+msgid "Enable the selected sources and disable all others"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+msgid "Download a wallpaper every "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+msgid "Minimum interval is one minute"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+msgid "to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+msgid "Actual download folder "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+msgid ""
+"Caution: do NOT use this option if you use a custom download folder with "
+"valuable files in it. Variety will maintain the limit regardless of what is "
+"in the download folder."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+msgid "Limit download folder to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+msgid "Minimum size is 50 MB"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+msgid "MB by deleting oldest files when necessary"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+msgid "Favorites"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+msgid "Copy favorite wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+msgid "Filters"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+msgid ""
+"Randomly apply these filters to the displayed wallpapers (thanks to the "
+"wonderful ImageMagick):"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+msgid "Quotes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+msgid "Show random wise quotes on the desktop"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+msgid "Text color: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+msgid "Text font: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+msgid "Backdrop color: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+msgid "Backdrop opacity: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+msgid " Transparent"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+msgid "Opaque"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+msgid "Draw a text shadow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+msgid "Appearance"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+msgid "Quotes area width: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+msgid "Narrow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+msgid "Wide"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+msgid "Horizontal position: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+msgid "Left "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+msgid "Vertical position: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+msgid "Top "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+msgid "Placement"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+msgid "Show quotes from these sources: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+msgid ""
+"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More plugins</a></"
+"small>"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+msgid "Show only these tags and authors. Leave empty to show random quotes."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+msgid "Example: funny, inspirational"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+msgid "Example: Albert Einstein, Voltaire"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+msgid "Authors: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+msgid "Sources and filtering"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+msgid "Change quote every "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+msgid "Minimum interval is 10 seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+msgid "Regular change"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+msgid "Clock"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+msgid ""
+"Show a nice big digital clock on the desktop, displaying the current time "
+"and date"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+msgid ""
+"To configure the clock's appearance edit the clock_filter property in "
+"Variety's settings file (~/.config/variety/variety.conf). Use the comments "
+"in ~/.config/variety/variety_latest_default.conf as a guide."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+msgid "Clock font: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+msgid "Date font: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+msgid ""
+"These don't work? <a href=\"https://answers.launchpad.net/variety/"
+"+faq/2138\">Read here</a>. How to further configure the clock? <a href="
+"\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Read here</"
+"a>."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+msgid "Effects"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+msgid "Images for slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+msgid "Favorite images"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+msgid "Images in all enabled image sources"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+msgid "All images in the Downloads folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+msgid "Custom folder (includes images in subfolders) "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+msgid "Order of images in slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+msgid "Random"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+msgid "By name, A to Z"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+msgid "By name, Z to A"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+msgid "By date, oldest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+msgid "By date, newest first"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+msgid "Screen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+msgid "Run on monitor"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+msgid "Window mode for the slideshow "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+msgid "Fullscreen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+msgid "Desktop (stays below other windows)"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+msgid "Maximized window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+msgid "Normal window"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+msgid "Dynamics"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+msgid "Interval between image changes "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+msgid " seconds"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+msgid "Quick fade "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+msgid "Slow fade"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+msgid "Less zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+msgid "More zoom"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
+msgid "Less pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
+msgid "More pan"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:100
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+msgid "Changes on this page take effect after the slideshow is restarted"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+msgid "Start slideshow now"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+msgid "Slideshow"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+msgid "Fetch folder"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+msgid "Save manually downloaded wallpapers to "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+msgid "Drag and drop"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+msgid ""
+"Variety's icon in the launcher serves as a drop target. Drop any image URL "
+"or file on it and it will be saved to your fetch folder. You can then press "
+"Next to see it on your desktop.\n"
+"To show the icon in the launcher choose About or Preferences. You may wish "
+"to lock it there for easy drag-and-drop access."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+msgid "Clipboard monitoring"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+msgid "Monitor clipboard for image URLs and fetch them"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+msgid "But fetch only when the URL host is one of these:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+msgid "Manual downloading"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+msgid "When possible use images that:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+msgid "Have landscape orientation"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+msgid "Are big at least "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+msgid "50"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+msgid "80"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+msgid "100"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#, no-c-format
+msgid "% of the screen resolution"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+msgid "Color"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+msgid "Are dark or light:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+msgctxt "Color option - images that are dark or light"
+msgid "Dark"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+msgctxt "Color option - images that are dark or light"
+msgid "Light"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+msgid "Contain this color: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+msgid "(Takes effect after some initial searching)"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+msgid "Rating"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+msgid "Have EXIF rating at least "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+msgid "1"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+msgid "2"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+msgid "3"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+msgid "4"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
+msgid "5"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+msgid "Color and size"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+msgid "Indicator Icon"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+msgid "Indicator icon:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+msgctxt "Icon option"
+msgid "Light"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+msgctxt "Icon option"
+msgid "Dark"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+msgctxt "Icon option"
+msgid "Use current wallpaper"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+msgctxt "Icon option"
+msgid "Custom image..."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+msgctxt "Icon option"
+msgid "None"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+msgid "Select an icon"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+msgid ""
+"When the icon is hidden, Variety can be controlled from the command line, or "
+"from the launcher quicklist. Run \"variety --help\" to see all available "
+"commands."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+msgid "Favorites Operations"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+msgid "Favorites operations to show in main menu:"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:147
+msgid "Copy to Favorites"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
+msgid "Both Copy and Move"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+msgid "Depends on folder..."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
+msgid "Display dialog to customize the Facebook post before publishing"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+msgid "Login Screen Support"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:155
+msgid ""
+"Make sure the wallpapers set by Variety will be used on the login screen"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:156
+msgid ""
+"<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
+"permissions over the image. With this option on, Variety will copy the "
+"wallpapers to a public folder and change their permissions to make them "
+"readable by all. By default, the folder is ~/Pictures if your home folder in "
+"not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
+"multiuser systems."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:157
+msgid "Copy wallpaper image files to this folder: "
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:158
+msgid "Reset to default"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:159
+msgid "Still doesn't work?"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:160
+msgid ""
+"It seems your home folder is encrypted, so using folders inside it will not "
+"work."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:161
+msgid "You don't have write permissions for this folder."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:162
+msgid "Permissions do not allow LightDM to read files from this folder."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:163
+msgid ""
+"Variety can adjust the permissions, but you will have to provide superuser "
+"privileges."
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:164
+msgid "Customize"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:165
+msgid "Tips and tricks"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:166
+msgid "Recent changes"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:167
+msgid "Visit website"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:168
+msgid "Report a bug or request a feature"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:169
+msgid "Send feedback"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:170
+msgid "Donate to Variety"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:171
+msgid "Donate via PayPal"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:172
+msgid ""
+"I am developing Variety in my spare time, which usually means the late hours "
+"after my kids go to bed. Any amount you donate will be appreciated. It will "
+"show me Variety is valued by you - the users - and will motivate me to "
+"continue working actively on it.\n"
+"\n"
+"Thank you,\n"
+"Peter Levi"
+msgstr ""
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:176
+msgid ""
+"<i>For Bitcoin and other payment methods please go to <a href=\"http://"
+"peterlevi.com/variety/\">Variety's website</a>.</i>"
+msgstr ""
+
+#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
+msgid "Fetching"
+msgstr ""
+
+#. too small - delete and do not use
+#: ../variety/ImageFetcher.py:116
+msgid "Image too small, ignoring it"
+msgstr ""
+
+#: ../variety/ImageFetcher.py:138
+#, python-format
+msgid "Sorry, got %s error..."
+msgstr ""
+
+#: ../variety/ImageFetcher.py:139
+msgid "This means the link is no longer valid"
+msgstr ""
+
+#: ../variety/ImageFetcher.py:142
+msgid "Fetch failed for some reason"
+msgstr ""
+
+#: ../variety/ImageFetcher.py:143
+msgid ""
+"To get more information, please run Variety from terminal with -v option and "
+"retry the action"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:232
+msgid "No quote plugins"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:232
+msgid "There are no quote plugins installed"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:238
+msgid "No suitable quote plugins"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:239
+msgid ""
+"You have no quote plugins which support searching by keywords and authors"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:251
+msgid "Could not fetch quotes"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:252
+msgid "Quotes services may be down, we will continue trying"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:255
+msgid "Could not find quotes"
+msgstr ""
+
+#: ../variety/QuotesEngine.py:256
+msgid "Maybe you are searching for something very obscure?"
 msgstr ""
