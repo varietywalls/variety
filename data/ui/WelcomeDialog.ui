@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.0 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <!-- interface-requires welcome_dialog 1.0 -->
+  <requires lib="gtk+" version="3.0"/>
+  <requires lib="welcome_dialog" version="1.0"/>
   <object class="WelcomeDialog" id="welcome_dialog">
     <property name="width_request">750</property>
     <property name="height_request">520</property>
@@ -37,7 +38,6 @@
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -134,12 +134,12 @@
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="margin_top">20</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Now please take some time to set your preferences on the following screens.</property>
                 <property name="use_markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
                 <property name="max_width_chars">130</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -154,60 +154,13 @@
             <property name="position">1</property>
           </packing>
         </child>
-        <child>
-          <object class="GtkBox" id="kde_warning">
-            <property name="can_focus">False</property>
-            <property name="margin_left">25</property>
-            <property name="margin_right">25</property>
-            <property name="margin_top">40</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkLabel" id="label1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="margin_bottom">10</property>
-                <property name="label" translatable="yes">KDE Users - Important, please read:</property>
-                <attributes>
-                  <attribute name="weight" value="bold"/>
-                  <attribute name="foreground" value="#ffff00000000"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="message1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="valign">start</property>
-                <property name="label" translatable="yes">You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper from inside a program - there is no API for this. To make Variety work, &lt;a href="http://peterlevi.com/variety/2014/05/variety-and-kde/"&gt;please read and follow the instructions here&lt;/a&gt;.</property>
-                <property name="use_markup">True</property>
-                <property name="justify">fill</property>
-                <property name="wrap">True</property>
-                <property name="max_width_chars">130</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
       </object>
     </child>
     <action-widgets>
       <action-widget response="0">continue_button</action-widget>
     </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
   </object>
 </interface>
