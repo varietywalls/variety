@@ -30,11 +30,14 @@ try:
     try:
         gi.require_version('AyatanaAppIndicator3', '0.1')
         from gi.repository import AyatanaAppIndicator3 as AppIndicator3 # pylint: disable=E0611
+        _indicator_backend = 'AyatanaAppIndicator3'  # Just a dummy value we use for logging
     except (ValueError, ImportError):
         gi.require_version('AppIndicator3', '0.1')
         from gi.repository import AppIndicator3 # pylint: disable=E0611
+        _indicator_backend = 'AppIndicator3'
     use_appindicator = True
 except (ValueError, ImportError):
+    _indicator_backend = 'fallback tray'
     use_appindicator = False
 
 from variety_lib import varietyconfig
@@ -309,6 +312,7 @@ class Indicator:
         self.menu.show_all()
 
     def create_indicator(self, window):
+        logger.info('indicator backend: %s', _indicator_backend)
         self.indicator = None
         self.status_icon = None
         self.visible = True
