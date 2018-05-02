@@ -1708,7 +1708,7 @@ class VarietyWindow(Gtk.Window):
                         self.show_notification(
                             _("Cannot delete"),
                             _("Deleting to trash failed because no suitable program is installed. "
-                              "Please install gvfs (gvfs-bin), trash-cli, or konqueror."))
+                              "Please install gio (part of GLib), trash-cli, or konqueror."))
 
                 threading.Timer(0, _go).start()
         except Exception:
