@@ -440,24 +440,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     _("Using the World Sunlight Map requires both downloading and changing "
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
 
-        # special case when enabling the Recommended or Latest downloader:
-        elif row[0] and row[1] in (Options.type_to_str(Options.SourceType.RECOMMENDED),) and \
-                not self.parent.options.smart_enabled:
-
-            row[0] = False
-            self.dialog = SmartFeaturesConfirmationDialog()
-            def _on_ok(button):
-                self.parent.options.smart_enabled = self.dialog.ui.smart_enabled.get_active()
-                self.parent.options.write()
-                self.ui.smart_enabled.set_active(self.parent.options.smart_enabled)
-                if self.parent.options.smart_enabled:
-                    row[0] = True
-
-            self.dialog.ui.btn_ok.connect("clicked", _on_ok)
-            self.dialog.run()
-            self.dialog.destroy()
-            self.dialog = None
-
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:
             interval = 5
