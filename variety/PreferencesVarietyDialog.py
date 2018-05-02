@@ -626,11 +626,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         type = Options.str_to_type(edited_row[1])
 
         if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
-            subprocess.call(["xdg-open", os.path.realpath(_u(edited_row[2]))])
+            subprocess.Popen(["xdg-open", os.path.realpath(_u(edited_row[2]))])
         elif type == Options.SourceType.FAVORITES:
-            subprocess.call(["xdg-open", self.parent.options.favorites_folder])
+            subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
         elif type == Options.SourceType.FETCHED:
-            subprocess.call(["xdg-open", self.parent.options.fetched_folder])
+            subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
         elif type in EDITABLE_TYPES:
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()

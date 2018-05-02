@@ -1555,13 +1555,13 @@ class VarietyWindow(Gtk.Window):
         if not file:
             file = self.current
         if file:
-            subprocess.call(["xdg-open", os.path.dirname(file)])
+            subprocess.Popen(["xdg-open", os.path.dirname(file)])
 
     def open_file(self, widget=None, file=None):
         if not file:
             file = self.current
         if file:
-            subprocess.call(["xdg-open", os.path.realpath(file)])
+            subprocess.Popen(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
@@ -2739,7 +2739,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def quote_view_favorites(self, widget=None):
         if os.path.isfile(self.options.quotes_favorites_file):
-            subprocess.call(["xdg-open", self.options.quotes_favorites_file])
+            subprocess.Popen(["xdg-open", self.options.quotes_favorites_file])
 
     def on_quotes_pause_resume(self, widget=None, change_enabled=None):
         if change_enabled is None:
