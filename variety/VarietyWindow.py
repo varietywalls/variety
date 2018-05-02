@@ -1690,8 +1690,8 @@ class VarietyWindow(Gtk.Window):
                     self.smart.report_file(file, 'trash', async=False)
 
                     command = ''
-                    if find_executable('gvfs-trash'):
-                        command = ['gvfs-trash', file.encode('utf-8')]
+                    if find_executable('gio'):
+                        command = ['gio', 'trash', file.encode('utf-8')]
                     elif find_executable('trash-put'):
                         command = ['trash-put', file.encode('utf-8')]
                     elif find_executable('kfmclient'):
