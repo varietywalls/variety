@@ -1687,8 +1687,6 @@ class VarietyWindow(Gtk.Window):
                 self.thumbs_manager.remove_image(file)
 
                 def _go():
-                    self.smart.report_file(file, 'trash', async=False)
-
                     command = ''
                     if find_executable('gio'):
                         command = ['gio', 'trash', file.encode('utf-8')]
