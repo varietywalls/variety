@@ -523,13 +523,7 @@ class Util:
             return r
         except requests.exceptions.SSLError:
             logger.exception('SSL Error for url %s:' % url)
-            try:
-                from variety.VarietyWindow import VarietyWindow
-                VarietyWindow.get_instance().fix_ssl_dependencies()
-            except Exception:
-                pass
             raise
-
 
     @staticmethod
     def request_write_to(r, f):
