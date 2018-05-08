@@ -4,7 +4,7 @@
 # Its purpose is to obtain the current wallpaper as an absolute path, or file URI (e.g. file://a/b.jpg)
 # This is needed by Variety at start to ensure History->Back works OK to revert back to the pre-Variety wallpaper.
 
-desktop=$DESKTOP_SESSION
+desktop="$DESKTOP_SESSION"
 
 # Gnome 3, Unity:
 if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
@@ -23,8 +23,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
         grep wallpaper=/ ~/.config/pcmanfm-qt/lxqt/settings.conf | sed -e 's/wallpaper=//g'
 
 # MATE
-elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
-        version=`mate-about -v | sed s/MATE\ Desktop\ Environment\ //`
+elif [ "$XDG_CURRENT_DESKTOP" == "MATE" ]; then
         gsettings get org.mate.background picture-filename
 
 # Cinnamon after 2.0
