@@ -31,6 +31,10 @@ elif [ `env | grep MATE_DESKTOP_SESSION_ID | wc -l` -gt 0 ]; then
 elif [ "$desktop" == "Cinnamon" ] || [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
         gsettings get org.cinnamon.desktop.background picture-uri
 
+# KDE Plasma 5
+elif [ "$XDG_CURRENT_DESKTOP" == "KDE" ] && [ "$KDE_SESSION_VERSION" == "5" ]; then
+        grep 'Image=' ~/.config/plasma-org.kde.plasma.desktop-appletsrc | sed 's/Image=//'
+
 # All above fails => fallback to the Gnome 3 way
 else
         gsettings get org.gnome.desktop.background picture-uri
