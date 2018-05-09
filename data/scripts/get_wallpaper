@@ -14,9 +14,13 @@ if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
 elif [ "$desktop" == "xubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
         xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image
 
-# LXDE/PCmanFM
+# LXDE/PCManFM
 elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
-        grep wallpaper=/ ~/.config/pcmanfm/lubuntu/pcmanfm.conf | sed -e 's/wallpaper=//g'
+        # The PCManFM config path varies by session name; Lubuntu is effectively a special case here
+        if [ "$desktop" == "Lubuntu" ]; then
+            desktop="lubuntu"  # Curse this inconsistency in cases
+        fi
+        grep wallpaper=/ "$HOME/.config/pcmanfm/$desktop/desktop-items-0.conf" | sed -e 's/wallpaper=//g'
 
 # LXQt/PCmanFM-qt
 elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
