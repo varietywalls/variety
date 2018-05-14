@@ -1,3 +1,12 @@
+0.6.9
+    Removed broken "SSL dependency" installation code
+    Fix trash deletion (0.6.8 regression) and replace gvfs-trash (deprecated) with 'gio trash'
+    Skip metadata checks on non-image files, leading to "GExiv2: unsupported format" warnings
+    Use subprocess.Popen to run xdg-open so that it doesn't block on some distros (LXQt, Trinity DE)
+    Removed more dead code related to VRTY.org, Panoramio, KDE 4
+    Add get_wallpaper support for KDE Plasma 5; fix support for LXDE
+    Move bug tracker links to GitHub
+
 0.6.8
     Unsplash API update
     Remove everything related to VRTY.org which is not running anymore
