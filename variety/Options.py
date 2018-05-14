@@ -461,7 +461,8 @@ class Options:
                     try:
                         self.sources.append(Options.parse_source(v))
                     except Exception:
-                        logger.exception(lambda: "Cannot parse source: " + v)
+                        logger.debug(lambda: "Cannot parse source: " + v, exc_info=True)
+                        logger.info('Ignoring no longer supported source %s', v)
 
             self.parse_autosources()
 
