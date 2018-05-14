@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.2"/>
   <requires lib="preferences_variety_dialog" version="1.0"/>
@@ -124,6 +124,9 @@
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <signal name="destroy" handler="on_destroy" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -4029,7 +4032,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     </child>
                     <child>
                       <object class="GtkLinkButton" id="linkbutton1">
-                        <property name="label">https://bugs.launchpad.net/variety/+filebug</property>
+                        <property name="label">https://github.com/varietywalls/variety/issues</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -4037,7 +4040,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
                         <property name="relief">none</property>
-                        <property name="uri">https://bugs.launchpad.net/variety/+filebug</property>
+                        <property name="uri">https://github.com/varietywalls/variety/issues</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
