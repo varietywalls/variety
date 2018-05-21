@@ -212,19 +212,12 @@ fi
 # MATE after 1.6
 gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 
-# MATE before 1.6
-mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$WP" 2> /dev/null
-
-# Cinnamon after 1.8, before 2.0
-gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
-
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
 
-# Gnome 2
-gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /dev/null
+# =====================================================================================
 
-# Awesome Window Manager
+# Awesome Window Manager (disabled by default as it needs more setup)
 
 # Set the path to the wallpaper using awesome-client, which communicates with awesome using D-Bus.
 # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc in Arch Linux.
@@ -234,6 +227,7 @@ gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$WP" 2> /de
 # NOTE: This config will change the wallpaper after your current awesome theme sets it.
 # As such, the theme's wallpaper will briefly appear before being replaced with variety's wallpaper.
 
+# =====================================================================================
 
 # Show a notification on wallpaper change (only when the change is automatic). Display the original filename, but the post-effects image.
 # name=$(echo "$3" | sed 's/\//\n/g'| tail -n 1)
