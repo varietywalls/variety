@@ -215,6 +215,9 @@ gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
 
+# GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
+gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
+
 # =====================================================================================
 
 # Awesome Window Manager (disabled by default as it needs more setup)
