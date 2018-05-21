@@ -131,7 +131,17 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
         }
         "
         # Reuse the exit code from qdbus
-        exit "$?"
+        qdbus_exitcode="$?"
+
+        if [[ "$qdbus_exitcode" -ne 0 ]]; then
+            # If the script fails, show a notification.
+            kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
+                make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
+                Due to Plasma limitations, external programs cannot automatically change the wallpaper when the widgets are locked.\n \
+                See https://git.io/vprpM for more information." --icon variety 10  # Final number is the length of the popup
+        fi
+        exit "$qdbus_exitcode"
+
     else
         WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
         mkdir -p "$WALLDIR"
