@@ -36,7 +36,7 @@ class QuoteWriter:
                 surface = QuoteWriter.load_cairo_surface(infile, w, h)
                 QuoteWriter.write_quote_on_surface(surface, quote, author, options)
                 QuoteWriter.save_cairo_surface(surface, outfile)
-            except Exception, e:
+            except Exception as e:
                 exception[0] = e
             finally:
                 done_event.set()

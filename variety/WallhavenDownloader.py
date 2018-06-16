@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import random
 
 import logging
@@ -44,7 +44,7 @@ class WallhavenDownloader(Downloader.Downloader):
         else:
             # interpret location as keywords
             self.url = "https://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
-                       urllib.quote(self.location)
+                       urllib.parse.quote(self.location)
 
     def search(self, page=None):
         url = self.url
@@ -149,7 +149,7 @@ class WallhavenDownloader(Downloader.Downloader):
         thumbs = s.find_all('figure', {'class': 'thumb'})
         for thumb in thumbs:
             try:
-                p = map(int, thumb.find('span', {'class': 'wall-res'}).contents[0].split('x'))
+                p = list(map(int, thumb.find('span', {'class': 'wall-res'}).contents[0].split('x')))
                 width = p[0]
                 height = p[1]
                 if self.parent and not self.parent.size_ok(width, height):

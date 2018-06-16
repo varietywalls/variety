@@ -409,18 +409,18 @@ if __name__ == "__main__":
         if os.path.isfile(file) and file.endswith(".jpg"):
             images.append(file)
 
-    print images
+    print(images)
 
     win = ThumbsWindow()
     win.connect("delete-event", Gtk.main_quit)
 
-    print "starting"
+    print("starting")
     win.start(images)
 
     GObject.threads_init()
     Gdk.threads_init()
     Gdk.threads_enter()
-    print "gtk main"
+    print("gtk main")
     Gtk.main()
     Gdk.threads_leave()
 

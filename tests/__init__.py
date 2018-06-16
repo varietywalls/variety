@@ -2,7 +2,7 @@ import logging
 
 
 def setup_test_logging():
-    print 'Setting up variety logger'
+    print('Setting up variety logger')
     logger = logging.getLogger('variety')
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()

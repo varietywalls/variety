@@ -32,13 +32,13 @@ class TestRedditDownloader(unittest.TestCase):
         test_download_one_for(self, RedditDownloader(None, 'http://www.reddit.com/r/AutumnPorn/'))
 
     def test_build_json_url(self):
-        self.assertEquals('http://www.reddit.com/r/comics/.json?limit=100',
+        self.assertEqual('http://www.reddit.com/r/comics/.json?limit=100',
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/'))
 
-        self.assertEquals('http://www.reddit.com/r/comics/top/.json?limit=100',
+        self.assertEqual('http://www.reddit.com/r/comics/top/.json?limit=100',
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/top/'))
 
-        self.assertEquals('http://www.reddit.com/r/comics/top/.json?sort=top&t=week&limit=100',
+        self.assertEqual('http://www.reddit.com/r/comics/top/.json?sort=top&t=week&limit=100',
                           RedditDownloader.build_json_url('http://www.reddit.com/r/comics/top/?sort=top&t=week'))
 
     def test_validate(self):

@@ -38,8 +38,8 @@ class DominantColors():
     def get_lightness(self):
         count = 0
         pixel_sum = 0
-        for x in xrange(0, self.resized.size[0]):
-            for y in xrange(0, self.resized.size[1]):
+        for x in range(0, self.resized.size[0]):
+            for y in range(0, self.resized.size[1]):
                 count += 1
                 pixel = self.img_data[x, y]
                 if not tuple == type(pixel):
@@ -56,7 +56,7 @@ class DominantColors():
         pixel_sum = 0
 
         iterations = 1
-        for counter in xrange(iterations): # perform only X iterations of clustering, that should be enough
+        for counter in range(iterations): # perform only X iterations of clustering, that should be enough
             sums = {}
             counts = {}
 
@@ -66,8 +66,8 @@ class DominantColors():
 
             total = 0
             pixel_sum = 0
-            for x in xrange(0, self.resized.size[0], 2):
-                for y in xrange(0, self.resized.size[1], 2):
+            for x in range(0, self.resized.size[0], 2):
+                for y in range(0, self.resized.size[1], 2):
                     total += 4
                     pixel = self.img_data[x, y]
                     if not tuple == type(pixel):
@@ -86,9 +86,9 @@ class DominantColors():
 
             colors = [c for c in colors if counts[c] > 0]
             if counter == iterations - 1:
-                colors = map(lambda c: (counts[c], (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c])), colors)
+                colors = [(counts[c], (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c])) for c in colors]
             else:
-                colors = map(lambda c: (sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c]), colors)
+                colors = [(sums[c][0] // counts[c], sums[c][1] // counts[c], sums[c][2] // counts[c]) for c in colors]
 
         s = sorted(colors, key=lambda x: x[0], reverse=True)
         return total, s, pixel_sum * 4 // total, self.get_width(), self.get_height()
@@ -112,5 +112,5 @@ class DominantColors():
     
 if __name__ == '__main__':
     pc = DominantColors(sys.argv[1])
-    print pc.get_dominant_colors()
+    print(pc.get_dominant_colors())
 

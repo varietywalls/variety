@@ -25,16 +25,16 @@ import sys
 def _u(s):
     if s is None:
         return s
-    if isinstance(s, unicode):
+    if isinstance(s, str):
         return s
     else:
-        return unicode(s, 'utf8')
+        return str(s, 'utf8')
 
 
 def _str(s):
     if s is None:
         return s
-    if isinstance(s, unicode):
+    if isinstance(s, str):
         return s.encode('utf8')
     else:
         return str(s)
@@ -61,7 +61,7 @@ def safe_print(text, ascii_text=None):
             logging.getLogger("variety").error('Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
             if ascii_text:
                 try:
-                    print ascii_text
+                    print(ascii_text)
                     return
                 except:
                     pass
@@ -77,7 +77,7 @@ class SafeLogger(logging.Logger):
     """
     def makeRecord(self, name, level, fn, lno, msg, args, exc_info, func=None, extra=None):
         try:
-            new_msg = msg if isinstance(msg, basestring) else msg()
+            new_msg = msg if isinstance(msg, str) else msg()
         except:
             locale_info = 'Unknown'
             try:
@@ -179,9 +179,9 @@ def main():
     signal.signal(signal.SIGTERM, sigint_handler)
     signal.signal(signal.SIGQUIT, sigint_handler)
 
-    Util.makedirs(os.path.expanduser(u"~/.config/variety/"))
+    Util.makedirs(os.path.expanduser("~/.config/variety/"))
 
-    arguments = map(_u, sys.argv[1:])
+    arguments = list(map(_u, sys.argv[1:]))
 
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)

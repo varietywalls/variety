@@ -17,7 +17,7 @@ import io
 
 from variety import _, _u
 import subprocess
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
@@ -39,7 +39,7 @@ import time
 import logging
 import random
 import re
-import urlparse
+import urllib.parse
 import webbrowser
 import pipes
 from PIL import Image as PILImage
@@ -256,7 +256,7 @@ class VarietyWindow(Gtk.Window):
             # destroy command moved into dialog to allow for a help button
 
     def prepare_config_folder(self):
-        self.config_folder = os.path.expanduser(u"~/.config/variety")
+        self.config_folder = os.path.expanduser("~/.config/variety")
         Util.makedirs(self.config_folder)
 
         shutil.copy(varietyconfig.get_data_file("config", "variety.conf"),
@@ -714,7 +714,7 @@ class VarietyWindow(Gtk.Window):
                 if self.options.quotes_enabled and self.quote is not None:
                     quote_not_fav = self.quote is not None and self.quote_favorites_contents.find(self.current_quote_to_text()) == -1
 
-                for i in xrange(5):    # if only done once, the menu is not always updated for some reason
+                for i in range(5):    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                     if getattr(self.ind, 'prev_main', None):
                         self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
@@ -807,7 +807,7 @@ class VarietyWindow(Gtk.Window):
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
             if auto_changed:
                 def update_file_operations():
-                    for i in xrange(5):
+                    for i in range(5):
                         self.ind.trash.set_sensitive(deleteable)
                         self.ind.copy_to_favorites.set_sensitive(favs_op in ("copy", "both"))
                         self.ind.move_to_favorites.set_sensitive(favs_op in ("move", "both"))
@@ -879,7 +879,7 @@ class VarietyWindow(Gtk.Window):
         images = self.select_random_images(100 if not self.options.safe_mode else 30)
 
         found = set()
-        for fuzziness in xrange(0, 5):
+        for fuzziness in range(0, 5):
             if len(found) > 10 or len(found) >= len(images):
                 break
             for img in images:
@@ -1146,7 +1146,7 @@ class VarietyWindow(Gtk.Window):
 
         cmd += clock_filter
         cmd += ' '
-        cmd += pipes.quote(unicode(target_file))
+        cmd += pipes.quote(str(target_file))
         logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode('utf-8')
 
@@ -1978,7 +1978,7 @@ class VarietyWindow(Gtk.Window):
                 upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
 
                 # Upgrade the autostart entry, if there is one
-                if os.path.exists(os.path.expanduser(u"~/.config/autostart/variety.desktop")):
+                if os.path.exists(os.path.expanduser("~/.config/autostart/variety.desktop")):
                     logger.info(lambda: 'Updating Variety autostart desktop entry')
                     self.create_autostart_entry()
 
@@ -2145,7 +2145,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         options, args = parser.parse_args(arguments)
 
         if report_errors:
-            if (options.next or options.fast_forward) and options.previous:
+            if (options.__next__ or options.fast_forward) and options.previous:
                 parser.error(_("options --next/--fast-forward and --previous are mutually exclusive"))
 
             if options.trash and options.favorite:
@@ -2161,7 +2161,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def process_command(self, arguments, initial_run):
         try:
-            arguments = [unicode(arg) for arg in arguments]
+            arguments = [str(arg) for arg in arguments]
             logger.info(lambda: "Received command: " + str(arguments))
 
             options, args = self.parse_options(arguments, report_errors=False)
@@ -2199,7 +2199,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
                 if options.fast_forward:
                     self.next_wallpaper(bypass_history=True)
-                elif options.next:
+                elif options.__next__:
                     self.next_wallpaper()
                 elif options.previous:
                     self.prev_wallpaper()
@@ -2317,13 +2317,13 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             url = url.replace('variety://', 'http://')
             url = url.replace('vrty://', 'http://')
 
-            parts = urlparse.urlparse(url)
+            parts = urllib.parse.urlparse(url)
             command = parts.netloc
-            args = urlparse.parse_qs(parts.query)
+            args = urllib.parse.parse_qs(parts.query)
 
             if command == 'facebook-auth':
                 if hasattr(self, 'facebook_helper') and self.facebook_helper:
-                    fragments = urlparse.parse_qs(parts.fragment)
+                    fragments = urllib.parse.parse_qs(parts.fragment)
                     args.update(fragments)
                     self.facebook_helper.on_facebook_auth(args)
 
@@ -2426,7 +2426,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             logger.debug(lambda: "Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
                 subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])
-            except subprocess.CalledProcessError, e:
+            except subprocess.CalledProcessError as e:
                 if e.returncode == 124:
                     logger.error(lambda: "Timeout while running set_wallpaper script, killed")
                 logger.exception(lambda: "Exception when calling set_wallpaper script: %d" % e.returncode)
@@ -2497,7 +2497,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             end = min(self.position + 100, len(self.used))
             to_save = self.used[start:end]
             with io.open(os.path.join(self.config_folder, "history.txt"), "w", encoding='utf8') as f:
-                f.write(u"%d\n" % (self.position - start))
+                f.write("%d\n" % (self.position - start))
                 for file in to_save:
                     f.write(file + "\n")
         except Exception:
@@ -2557,7 +2557,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         logger.info(lambda: "Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
 
         message = self.options.facebook_message
-        if message == u'<current_quote>':
+        if message == '<current_quote>':
             message = quote_text
 
         if self.options.facebook_show_dialog:
@@ -2595,7 +2595,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 return
 
             message = _u(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)).strip()
-            self.options.facebook_message = u'<current_quote>' if message == _u(quote_text) else message
+            self.options.facebook_message = '<current_quote>' if message == _u(quote_text) else message
             self.options.facebook_show_dialog = not publish_dialog.ui.hide_dialog.get_active()
             self.options.write()
 
@@ -2761,17 +2761,17 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def google_quote_text(self, widget=None):
         if self.quote and self.quote["quote"]:
-            url = "https://google.com/search?q=" + urllib.quote_plus(self.quote["quote"].encode('utf8'))
+            url = "https://google.com/search?q=" + urllib.parse.quote_plus(self.quote["quote"].encode('utf8'))
             webbrowser.open_new_tab(url)
 
     def google_quote_author(self, widget=None):
         if self.quote and self.quote["author"]:
-            url = "https://google.com/search?q=" + urllib.quote_plus(self.quote["author"].encode('utf8'))
+            url = "https://google.com/search?q=" + urllib.parse.quote_plus(self.quote["author"].encode('utf8'))
             webbrowser.open_new_tab(url)
 
     def google_image_search(self, widget=None):
         if self.image_url:
-            url = "https://www.google.com/searchbyimage?safe=off&image_url=" + urllib.quote_plus(self.image_url.encode('utf8'))
+            url = "https://www.google.com/searchbyimage?safe=off&image_url=" + urllib.parse.quote_plus(self.image_url.encode('utf8'))
             webbrowser.open_new_tab(url)
 
     def toggle_no_effects(self, no_effects):
@@ -2793,9 +2793,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 "X-GNOME-Autostart-Delay=20\n"
             )
 
-            Util.makedirs(os.path.expanduser(u"~/.config/autostart/"))
+            Util.makedirs(os.path.expanduser("~/.config/autostart/"))
 
-            path = os.path.expanduser(u"~/.config/autostart/variety.desktop")
+            path = os.path.expanduser("~/.config/autostart/variety.desktop")
             with open(path, "w") as f:
                 f.write(content)
         except:

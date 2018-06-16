@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from IVarietyPlugin import IVarietyPlugin
+from .IVarietyPlugin import IVarietyPlugin
 
 class IQuoteSource(IVarietyPlugin):
     def supports_search(self):

@@ -49,6 +49,6 @@ class QuotesDaddySource(IQuoteSource):
         s = item.find("description").contents[0]
         author = s[s.rindex('- ') + 1:].strip()
         quote = s[:s.rindex('- ')].strip().replace('"', '').replace('<br>', '\n').replace('<br/>', '\n').strip()
-        quote = u"\u201C%s\u201D" % quote
+        quote = "\u201C%s\u201D" % quote
 
         return [{"quote": quote, "author": author, "sourceName": "QuotesDaddy", "link": link}]

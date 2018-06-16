@@ -29,6 +29,6 @@ class TestGoodreadsSource(unittest.TestCase):
         p = Jumble(["../data/plugins"])
         p.load()
         source = p.get_plugins(typename="GoodreadsSource")[0]
-        q = source["plugin"].get_for_author(u"Вежинов")
+        q = source["plugin"].get_for_author("Вежинов")
         self.assertTrue(len(q) > 0)
         self.assertEqual("Goodreads", q[0]["sourceName"])

@@ -24,7 +24,7 @@ from variety import _, _u
 
 import logging
 import threading
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 logger = logging.getLogger('variety')
 
@@ -64,7 +64,7 @@ class AddFlickrDialog(Gtk.Dialog):
         for x in s:
             if len(x) and x.find(':') > 0:
                 k, v = x.split(':')
-                params[k.lower()] = urllib.unquote_plus(v)
+                params[k.lower()] = urllib.parse.unquote_plus(v)
 
         if "text" in params:
             self.ui.text.set_text(params["text"])
@@ -105,10 +105,10 @@ class AddFlickrDialog(Gtk.Dialog):
         search = ""
 
         if len(self.ui.tags.get_text().strip()):
-            search +=  "tags:" + ','.join([urllib.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
+            search +=  "tags:" + ','.join([urllib.parse.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
 
         if len(self.ui.text.get_text().strip()):
-            search +=  "text:" + urllib.quote_plus(self.ui.text.get_text().strip()) +";"
+            search +=  "text:" + urllib.parse.quote_plus(self.ui.text.get_text().strip()) +";"
 
         self.error = ""
 

@@ -18,7 +18,7 @@ import os
 import imp
 import logging
 import inspect
-from IPlugin import IPlugin
+from .IPlugin import IPlugin
 
 logger = logging.getLogger('variety')
 

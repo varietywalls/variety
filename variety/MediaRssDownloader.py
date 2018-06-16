@@ -15,7 +15,7 @@
 ### END LICENSE
 
 import random
-import urlparse
+import urllib.parse
 import xml.etree.ElementTree as ET
 
 import logging
@@ -77,7 +77,7 @@ class MediaRssDownloader(Downloader.Downloader):
             return None
 
         origin_url, image_url, source_type, source_location, source_name, extra_metadata = self.queue.pop()
-        parse = urlparse.urlparse(origin_url)
+        parse = urllib.parse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
         return self.save_locally(origin_url, image_url, source_type or 'mediarss',
                                  source_location, source_name or host, extra_metadata=extra_metadata)
@@ -178,7 +178,7 @@ class MediaRssDownloader(Downloader.Downloader):
                     pass
 
                 try:
-                    extra_metadata['keywords'] = map(lambda k: k.strip(), item.find("{0}keywords".format(MEDIA_NS)).text.split(','))
+                    extra_metadata['keywords'] = [k.strip() for k in item.find("{0}keywords".format(MEDIA_NS)).text.split(',')]
                 except:
                     pass
 
