@@ -38,6 +38,11 @@ elif [ "$desktop" == "Cinnamon" ] || [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ];
 elif [ "$XDG_CURRENT_DESKTOP" == "KDE" ] && [ "$KDE_SESSION_VERSION" == "5" ]; then
         grep 'Image=' ~/.config/plasma-org.kde.plasma.desktop-appletsrc | sed 's/Image=//'
 
+# Trinity
+elif [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
+        # The "1" refers to the virtual desktop number
+        dcop kdesktop KBackgroundIface currentWallpaper 1 2> /dev/null
+
 # All above fails => fallback to the Gnome 3 way
 else
         gsettings get org.gnome.desktop.background picture-uri

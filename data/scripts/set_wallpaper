@@ -216,6 +216,7 @@ fi
 
 # trinity
 if [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
+    # The 4 refers to display mode 4; valid ones are 1-8
     dcop kdesktop KBackgroundIface setWallpaper "$WP" 4 2> /dev/null
 fi
 
