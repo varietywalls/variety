@@ -2145,7 +2145,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         options, args = parser.parse_args(arguments)
 
         if report_errors:
-            if (options.__next__ or options.fast_forward) and options.previous:
+            if (options.next or options.fast_forward) and options.previous:
                 parser.error(_("options --next/--fast-forward and --previous are mutually exclusive"))
 
             if options.trash and options.favorite:
@@ -2199,7 +2199,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
                 if options.fast_forward:
                     self.next_wallpaper(bypass_history=True)
-                elif options.__next__:
+                elif options.next:
                     self.next_wallpaper()
                 elif options.previous:
                     self.prev_wallpaper()

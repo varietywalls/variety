@@ -107,7 +107,7 @@ class Indicator:
         self.next = Gtk.MenuItem(_("_Next"))
         self.next.set_use_underline(True)
         self.next.connect("activate", window.next_wallpaper)
-        self.image_menu.append(self.__next__)
+        self.image_menu.append(self.next)
 
         self.prev = Gtk.MenuItem(_("_Previous"))
         self.prev.set_use_underline(True)
