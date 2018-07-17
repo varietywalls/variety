@@ -73,9 +73,9 @@ def safe_print(text, ascii_text=None):
 class SafeLogger(logging.Logger):
     """
     Fixes UnicodeDecodeErrors errors in logging calls:
-    Accepts lambda instead of string messages. Catches errors when evaluatiating the passed lambda.
+    Accepts lambda as well string messages. Catches errors when evaluating the passed lambda.
     """
-    def makeRecord(self, name, level, fn, lno, msg, args, exc_info, func=None, extra=None):
+    def makeRecord(self, name, level, fn, lno, msg, *args, **kwargs):
         try:
             new_msg = msg if isinstance(msg, str) else msg()
         except:
@@ -89,7 +89,7 @@ class SafeLogger(logging.Logger):
                 pass
             new_msg = 'Errors while logging. Locale info: %s' % locale_info
 
-        return super(SafeLogger, self).makeRecord(name, level, fn, lno, new_msg, args, exc_info, func, extra)
+        return super().makeRecord(name, level, fn, lno, new_msg, *args, **kwargs)
 
 logging.setLoggerClass(SafeLogger)
 
