@@ -32,8 +32,8 @@ def update_config(values = {}):
 
     oldvalues = {}
     try:
-        fin = file('variety_lib/varietyconfig.py', 'r')
-        fout = file(fin.name + '.new', 'w')
+        fin = open('variety_lib/varietyconfig.py', 'r')
+        fout = open(fin.name + '.new', 'w')
 
         for line in fin:
             fields = line.split(' = ') # Separate variable from value
