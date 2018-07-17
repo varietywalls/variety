@@ -45,16 +45,16 @@ class TestUtil(unittest.TestCase):
     def test_metadata(self):
         self.assertTrue(os.path.exists('test.jpg'))
         info = {
-            'sourceURL': u'b',
-            'imageURL': u'd',
-            'sourceName': u'a',
-            'sourceLocation': u'c',
-            'sourceType': u'flickr',
-            'author': u'автор',
-            'authorURL': u'url',
-            'keywords': [u'дума1', u'дума2'],
-            'headline': u'проба1 проба1',
-            'description': u'проба2 проба2',
+            'sourceURL': 'b',
+            'imageURL': 'd',
+            'sourceName': 'a',
+            'sourceLocation': 'c',
+            'sourceType': 'flickr',
+            'author': 'автор',
+            'authorURL': 'url',
+            'keywords': ['дума1', 'дума2'],
+            'headline': 'проба1 проба1',
+            'description': 'проба2 проба2',
             'sfwRating': 50,
             'extraData': {'key1': 'val1', 'key2': 'val2'}
         }
@@ -93,15 +93,15 @@ class TestUtil(unittest.TestCase):
             pass #OK
 
     def test_find_unique_name(self):
-        self.assertEquals('/etc/fstab_1', Util.find_unique_name('/etc/fstab'))
-        self.assertEquals('/etc/bash_1.bashrc', Util.find_unique_name('/etc/bash.bashrc'))
+        self.assertEqual('/etc/fstab_1', Util.find_unique_name('/etc/fstab'))
+        self.assertEqual('/etc/bash_1.bashrc', Util.find_unique_name('/etc/bash.bashrc'))
 
     def test_folderpath(self):
-        self.assertEquals("/", Util.folderpath("/"))
-        self.assertEquals("/a/b/c/", Util.folderpath("/a/b/c"))
+        self.assertEqual("/", Util.folderpath("/"))
+        self.assertEqual("/a/b/c/", Util.folderpath("/a/b/c"))
 
     def test_gtk_to_fcmatch_font(self):
-        self.assertEquals(
+        self.assertEqual(
             ("Bitstream Charter:Bold:Italic:10", '10'), Util.gtk_to_fcmatch_font("Bitstream Charter Bold Italic 10"))
 
     def test_file_in(self):
@@ -114,51 +114,51 @@ class TestUtil(unittest.TestCase):
         self.assertFalse(Util.same_file_paths("/a/../b/c", "/a/./b/c"))
 
     def test_compare_versions(self):
-        self.assertEquals(-1, Util.compare_versions("0.4.10", "0.4.11"))
-        self.assertEquals(-1, Util.compare_versions("0.4.10", "0.5"))
-        self.assertEquals(-1, Util.compare_versions("0.4.10", "1"))
-        self.assertEquals(0, Util.compare_versions("0.4.10", "0.4.10"))
-        self.assertEquals(1, Util.compare_versions("0.4.10", "0.4.8"))
-        self.assertEquals(1, Util.compare_versions("0.4.10", "0.4"))
-        self.assertEquals(1, Util.compare_versions("0.4.10", "0"))
+        self.assertEqual(-1, Util.compare_versions("0.4.10", "0.4.11"))
+        self.assertEqual(-1, Util.compare_versions("0.4.10", "0.5"))
+        self.assertEqual(-1, Util.compare_versions("0.4.10", "1"))
+        self.assertEqual(0, Util.compare_versions("0.4.10", "0.4.10"))
+        self.assertEqual(1, Util.compare_versions("0.4.10", "0.4.8"))
+        self.assertEqual(1, Util.compare_versions("0.4.10", "0.4"))
+        self.assertEqual(1, Util.compare_versions("0.4.10", "0"))
 
     def test_md5(self):
-        self.assertEquals("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
+        self.assertEqual("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
 
     def test_md5file(self):
-        self.assertEquals("633de9e37fd782d79b59c626695ac2ef", Util.md5file("test.jpg"))
+        self.assertEqual("633de9e37fd782d79b59c626695ac2ef", Util.md5file("test.jpg"))
 
     def test_collapseuser(self):
-        self.assertEquals("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))
-        self.assertEquals("/home/peteraaa/.config/variety", Util.collapseuser("/home/peteraaa/.config/variety"))
-        self.assertEquals("/media/.config/variety", Util.collapseuser("/media/.config/variety"))
+        self.assertEqual("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))
+        self.assertEqual("/home/peteraaa/.config/variety", Util.collapseuser("/home/peteraaa/.config/variety"))
+        self.assertEqual("/media/.config/variety", Util.collapseuser("/media/.config/variety"))
 
     def test_random_hash(self):
-        s = set(Util.random_hash() for i in xrange(100))
-        self.assertEquals(100, len(s))
+        s = set(Util.random_hash() for i in range(100))
+        self.assertEqual(100, len(s))
         for x in s:
-            self.assertEquals(32, len(x))
+            self.assertEqual(32, len(x))
 
     def test_get_file_icon_name(self):
-        self.assertEquals("folder", Util.get_file_icon_name("/xxx/yyy/zzz")) # nonexistent
-        self.assertEquals("user-home", Util.get_file_icon_name("~"))
-        self.assertEquals("folder-pictures", Util.get_file_icon_name("~/Pictures"))
+        self.assertEqual("folder", Util.get_file_icon_name("/xxx/yyy/zzz")) # nonexistent
+        self.assertEqual("user-home", Util.get_file_icon_name("~"))
+        self.assertEqual("folder-pictures", Util.get_file_icon_name("~/Pictures"))
 
     def test_get_xdg_pictures_folder(self):
-        self.assertEquals(os.path.expanduser('~/Pictures'), Util.get_xdg_pictures_folder())
+        self.assertEqual(os.path.expanduser('~/Pictures'), Util.get_xdg_pictures_folder())
 
     def test_safe_map(self):
         def f(i):
             if i <= 10: raise Exception
             return i
-        self.assertEquals([20,30], list(Util.safe_map(f, [1,5,20,10,30,4])))
+        self.assertEqual([20,30], list(Util.safe_map(f, [1,5,20,10,30,4])))
 
     def test_fetch(self):
         resp = Util.fetch("//google.com")
         self.assertTrue(len(resp) > 0)
 
     def test_get_size(self):
-        self.assertEquals((32, 32), Util.get_size('test.jpg'))
+        self.assertEqual((32, 32), Util.get_size('test.jpg'))
         self.assertRaises(Exception, lambda: Util.get_size('fake_image.jpg'))
 
     def test_is_image(self):
@@ -185,19 +185,19 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_dead_or_not_image('http://ns223506.ovh.net/rozne/a1b2/wallpaper-1996019.png'))
 
     def test_guess_image_url(self):
-        self.assertEquals('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
+        self.assertEqual('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
                           Util.guess_image_url({'sourceURL': 'https://www.flickr.com/photos/83646108@N00/4558166441'}))
 
-        self.assertEquals('https://farm5.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
+        self.assertEqual('https://farm5.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
                           Util.guess_image_url({'sourceURL': 'http://www.flickr.com/photos/52821721@N00/4768189432'}))
 
-        self.assertEquals('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',
+        self.assertEqual('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',
                           Util.guess_image_url({'sourceURL': 'http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg'}))
 
     def test_guess_source_type(self):
-        self.assertEquals(None, Util.guess_source_type({}))
-        self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'host.com', 'sourceLocation': 'http://host.com/rss'}))
-        self.assertEquals('mediarss', Util.guess_source_type({'sourceName': 'camelid.deviantart.com', 'sourceLocation': 'http://backend.deviantart.com/rss.xml?type=deviation&q=by%3ACamelid+sort%3Atime+meta%3Aall'}))
+        self.assertEqual(None, Util.guess_source_type({}))
+        self.assertEqual('mediarss', Util.guess_source_type({'sourceName': 'host.com', 'sourceLocation': 'http://host.com/rss'}))
+        self.assertEqual('mediarss', Util.guess_source_type({'sourceName': 'camelid.deviantart.com', 'sourceLocation': 'http://backend.deviantart.com/rss.xml?type=deviation&q=by%3ACamelid+sort%3Atime+meta%3Aall'}))
 
     def test_debounce(self):
         """ Test that the increment function is being debounced.

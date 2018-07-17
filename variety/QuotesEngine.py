@@ -225,7 +225,7 @@ class QuotesEngine:
         category, search = ("random", "")
         if keywords or authors:
             category, search = random.choice(
-                map(lambda k: ("keyword", k), keywords) + map(lambda a: ("author", a), authors))
+                [("keyword", k) for k in keywords] + [("author", a) for a in authors])
 
         plugins = list(self.plugins)
         if not plugins:
@@ -288,7 +288,7 @@ class QuotesEngine:
                 plugins.remove(plugin)
                 continue
 
-            quote = random.choice(cached.values())
+            quote = random.choice(list(cached.values()))
             del cached[quote["quote"]]
             if not cached:
                 del cached

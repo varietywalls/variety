@@ -24,7 +24,7 @@ import glob
 try:
     import DistUtilsExtra.auto
 except ImportError:
-    print >> sys.stderr, 'To build variety you need https://launchpad.net/python-distutils-extra'
+    print('To build variety you need https://launchpad.net/python-distutils-extra', file=sys.stderr)
     sys.exit(1)
 assert DistUtilsExtra.auto.__version__ >= '2.18', 'needs DistUtilsExtra.auto >= 2.18'
 
@@ -46,7 +46,7 @@ def update_config(values = {}):
         fout.close()
         fin.close()
         os.rename(fout.name, fin.name)
-    except (OSError, IOError), e:
+    except (OSError, IOError) as e:
         print ("ERROR: Can't find variety_lib/varietyconfig.py")
         sys.exit(1)
     return oldvalues

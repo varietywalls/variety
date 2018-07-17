@@ -16,7 +16,7 @@
 from datetime import datetime
 
 import random
-import urlparse
+import urllib.parse
 
 import logging
 import re

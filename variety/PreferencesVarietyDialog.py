@@ -135,7 +135,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options = Options()
             self.options.read()
 
-            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser(u"~/.config/autostart/variety.desktop")))
+            self.ui.autostart.set_active(os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop")))
 
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
@@ -978,7 +978,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 dialog.destroy()
 
     def update_autostart(self):
-        file = os.path.expanduser(u"~/.config/autostart/variety.desktop")
+        file = os.path.expanduser("~/.config/autostart/variety.desktop")
 
         if not self.ui.autostart.get_active():
             try:

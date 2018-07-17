@@ -44,9 +44,9 @@ class ThumbsManager():
         "right": _("Right")
     }
 
-    R_POSITIONS = dict((v, k) for (k,v) in POSITIONS.items())
+    R_POSITIONS = dict((v, k) for (k,v) in list(POSITIONS.items()))
 
-    SIZES = [x*30 for x in xrange(2, 11)]
+    SIZES = [x*30 for x in range(2, 11)]
 
     class Options():
         def __init__(self):
@@ -74,7 +74,7 @@ class ThumbsManager():
         menu = Gtk.Menu()
 
         position_menu = Gtk.Menu()
-        for p, v in ThumbsManager.POSITIONS.items():
+        for p, v in list(ThumbsManager.POSITIONS.items()):
             item = Gtk.CheckMenuItem(ThumbsManager.POSITION_NAMES[p])
             item.set_draw_as_radio(True)
             item.set_active(options.position == v)
@@ -204,8 +204,8 @@ class ThumbsManager():
             actual_rating = None
 
         rating_menu = Gtk.Menu()
-        for rating in xrange(5, 0, -1):
-            item = Gtk.CheckMenuItem(u"\u2605" * rating)
+        for rating in range(5, 0, -1):
+            item = Gtk.CheckMenuItem("\u2605" * rating)
             item.set_draw_as_radio(True)
             item.set_active(actual_rating == rating)
             item.set_sensitive(not item.get_active())

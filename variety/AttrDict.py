@@ -26,14 +26,14 @@ class AttrDict(defaultdict):
         elif isinstance(v, dict):
             return AttrDict(v)
         elif isinstance(v, (list, tuple)):
-            r = map(AttrDict.converted, v)
+            r = list(map(AttrDict.converted, v))
             return tuple(r) if isinstance(v, tuple) else r
         else:
             return v
 
     def merge(self, arg):
         if hasattr(arg, 'iteritems'):
-            self.merge(arg.iteritems())
+            self.merge(iter(arg.items()))
         else:
             for k, v in arg:
                 self[k] = AttrDict.converted(v)

@@ -100,7 +100,7 @@ class Downloader(object):
             r = Util.request(image_url, stream=True)
             with open(local_filename, 'wb') as f:
                 Util.request_write_to(r, f)
-        except Exception, e:
+        except Exception as e:
             logger.info(lambda: "Download failed from image URL: %s (source location: %s) " % (image_url, self.location))
             raise e
 

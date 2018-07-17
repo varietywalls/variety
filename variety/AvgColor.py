@@ -33,8 +33,8 @@ class AvgColor(object):
     def getAvg(self):
         r, g, b = 0, 0, 0
         count = 0
-        for x in xrange(0, self.pic.size[0], 1):
-            for y in xrange(0, self.pic.size[1], 1):
+        for x in range(0, self.pic.size[0], 1):
+            for y in range(0, self.pic.size[1], 1):
                 clrs = self.imgData[x, y]
                 try:
                     r += clrs[0]
@@ -52,6 +52,6 @@ class AvgColor(object):
 if __name__ == '__main__':
     # assumes you have a test.jpg in the working directory!
     pc = AvgColor('test.jpg')
-    print "(red, green, blue, total_pixel_count)"
-    print pc.getAvg()
+    print("(red, green, blue, total_pixel_count)")
+    print(pc.getAvg())
 

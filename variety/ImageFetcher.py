@@ -17,7 +17,7 @@ import os
 
 import logging
 from requests.exceptions import HTTPError
-import urlparse
+import urllib.parse
 from variety.Util import Util
 from PIL import Image
 
@@ -30,7 +30,7 @@ class ImageFetcher:
     @staticmethod
     def url_ok(url, use_whitelist, hosts_whitelist):
         try:
-            p = urlparse.urlparse(url)
+            p = urllib.parse.urlparse(url)
             if p.scheme in ['http', 'https']:
                 if use_whitelist:
                     for host in hosts_whitelist:
@@ -130,7 +130,7 @@ class ImageFetcher:
 
             return filename
 
-        except Exception, e:
+        except Exception as e:
             logger.exception(lambda: "Fetch failed for URL " + url)
             if reported:
                 if isinstance(e, HTTPError) and e.response.status_code in (403, 404):
