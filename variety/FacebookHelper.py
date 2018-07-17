@@ -44,10 +44,10 @@
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import json
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import pycurl
-import StringIO
+import io
 import logging
 import webbrowser
 
@@ -92,9 +92,9 @@ class FacebookHelper:
 
         # Loads the Facebook OAuth page
         auth_url = AUTH_URL % (
-            urllib.quote(self.app_key),
-            urllib.quote(AUTH_REDIRECT_URL % self.hash),
-            urllib.quote(self.scope))
+            urllib.parse.quote(self.app_key),
+            urllib.parse.quote(AUTH_REDIRECT_URL % self.hash),
+            urllib.parse.quote(self.scope))
 
         webbrowser.open(auth_url)
 
@@ -130,8 +130,8 @@ class FacebookHelper:
     def publish(self, message=None, link=None, picture=None, caption=None, description=None,
                 on_success=None, on_failure=None, attempts=0):
 
-        message = message.encode('utf8') if type(message) == unicode else message
-        link = link.encode('utf8') if type(link) == unicode else link
+        message = message.encode('utf8') if type(message) == str else message
+        link = link.encode('utf8') if type(link) == str else link
 
         def republish(action=None, token=None):
             self.publish(message=message, link=link, picture=picture, caption=caption, description=description,
@@ -160,7 +160,7 @@ class FacebookHelper:
         m["access_token"] = self.token
         try:
             content = FacebookHelper.post(PUBLISH_URL, m)
-        except pycurl.error, e:
+        except pycurl.error as e:
             on_failure(self, "publish", str(e))
             return
 
@@ -194,8 +194,8 @@ class FacebookHelper:
         c.setopt(pycurl.TIMEOUT, timeout)
         c.setopt(pycurl.URL, url)
         c.setopt(pycurl.POST, 1)
-        c.setopt(pycurl.POSTFIELDS, urllib.urlencode(post_data))
-        b = StringIO.StringIO()
+        c.setopt(pycurl.POSTFIELDS, urllib.parse.urlencode(post_data))
+        b = io.StringIO()
         c.setopt(pycurl.WRITEFUNCTION, b.write)
         c.perform()
         c.close()

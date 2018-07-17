@@ -75,7 +75,7 @@ class LocalFilesSource(IQuoteSource):
                             parts = q.split('-- ')
                             quote = ' '.join(parts[0].split())
                             if quote[0] == quote[-1] == '"':
-                                quote = u"\u201C%s\u201D" % quote[1:-1]
+                                quote = "\u201C%s\u201D" % quote[1:-1]
                             author = parts[1].strip() if len(parts) > 1 else None
                             self.quotes.append({"quote": quote, "author": author, "sourceName": os.path.basename(path)})
                     except Exception:

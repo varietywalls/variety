@@ -62,7 +62,7 @@ class Options:
             UNSPLASH: "unsplash",
         }
 
-        str_to_type = dict((v,k) for k, v in type_to_str.items())
+        str_to_type = dict((v,k) for k, v in list(type_to_str.items()))
 
         dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
                     WALLHAVEN, REDDIT, BING, UNSPLASH]
@@ -72,7 +72,7 @@ class Options:
         LIGHT = 1
 
     def __init__(self):
-        self.configfile = os.path.expanduser(u"~/.config/variety/variety.conf")
+        self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
 
     def read(self):
         self.set_defaults()
@@ -176,7 +176,7 @@ class Options:
                 pass
 
             try:
-                self.desired_color = map(int, config["desired_color"].split())
+                self.desired_color = list(map(int, config["desired_color"].split()))
                 for i, x in enumerate(self.desired_color):
                     self.desired_color[i] = max(0, min(255, x))
             except Exception:
@@ -301,14 +301,14 @@ class Options:
                 pass
 
             try:
-                self.quotes_text_color = map(int, config["quotes_text_color"].split())
+                self.quotes_text_color = list(map(int, config["quotes_text_color"].split()))
                 for i, x in enumerate(self.quotes_text_color):
                     self.quotes_text_color[i] = max(0, min(255, x))
             except Exception:
                 pass
 
             try:
-                self.quotes_bg_color = map(int, config["quotes_bg_color"].split())
+                self.quotes_bg_color = list(map(int, config["quotes_bg_color"].split()))
                 for i, x in enumerate(self.quotes_bg_color):
                     self.quotes_bg_color[i] = max(0, min(255, x))
             except Exception:
@@ -326,7 +326,7 @@ class Options:
                 pass
 
             try:
-                self.quotes_text_color = map(int, config["quotes_text_color"].split())
+                self.quotes_text_color = list(map(int, config["quotes_text_color"].split()))
                 for i, x in enumerate(self.quotes_text_color):
                     self.quotes_text_color[i] = max(0, min(255, x))
             except Exception:
@@ -457,7 +457,7 @@ class Options:
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
-                for v in sources.values():
+                for v in list(sources.values()):
                     try:
                         self.sources.append(Options.parse_source(v))
                     except Exception:
@@ -469,7 +469,7 @@ class Options:
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
-                for v in filters.values():
+                for v in list(filters.values()):
                     try:
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
@@ -486,7 +486,7 @@ class Options:
 
     def fix_outdated(self, config):
         changed = False
-        for key, outdated_hashes in Options.OUTDATED_HASHES.items():
+        for key, outdated_hashes in list(Options.OUTDATED_HASHES.items()):
             if key in config:
                 current_hash = hashlib.md5(_str(config[key])).hexdigest()
                 if current_hash in outdated_hashes:
@@ -559,14 +559,14 @@ class Options:
 
         self.download_enabled = True
         self.download_interval = 600
-        self.download_folder = os.path.expanduser(u"~/.config/variety/Downloaded")
+        self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
         self.quota_enabled = True
         self.quota_size = 500
 
-        self.favorites_folder = os.path.expanduser(u"~/.config/variety/Favorites")
+        self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
         self.favorites_operations = [["Downloaded", "Copy"], ["Fetched", "Move"], ["Others", "Copy"]]
 
-        self.fetched_folder = os.path.expanduser(u"~/.config/variety/Fetched")
+        self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
         self.clipboard_hosts = "alpha.wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
@@ -616,7 +616,7 @@ class Options:
         self.quotes_width = 70
         self.quotes_hpos = 100
         self.quotes_vpos = 40
-        self.quotes_favorites_file = os.path.expanduser(u"~/.config/variety/favorite_quotes.txt")
+        self.quotes_favorites_file = os.path.expanduser("~/.config/variety/favorite_quotes.txt")
 
         self.slideshow_sources_enabled = True
         self.slideshow_favorites_enabled = True
@@ -780,6 +780,6 @@ if __name__ == "__main__":
 
     o = Options()
     o.read()
-    print o.sources
-    print o.filters
+    print(o.sources)
+    print(o.filters)
     o.write()

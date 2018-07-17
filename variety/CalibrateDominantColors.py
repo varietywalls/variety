@@ -1,7 +1,7 @@
 import os
 import sys
 
-from DominantColors import DominantColors
+from .DominantColors import DominantColors
 
 dir = sys.argv[1]
 m = {}
@@ -11,20 +11,20 @@ for f in sorted(os.listdir(dir)):
         try:
             d = DominantColors(os.path.join(dir, f))
             calc = d.get_dominant_colors()
-            print f, "light:", calc[2]
+            print(f, "light:", calc[2])
             continue
 
-            for fuzzy in xrange(20):
+            for fuzzy in range(20):
                 if DominantColors.contains_color(calc, (255, 217, 100), fuzzy):
                     m[f] = fuzzy
-                    print f, fuzzy
+                    print(f, fuzzy)
                     break
             else:
                 m[f] = -1
-                print f, "no match"
+                print(f, "no match")
 
         except Exception:
-            print "oops for " + f
+            print("oops for " + f)
             raise
             #pass
 

@@ -44,21 +44,21 @@ class QuotationsPageSource(IQuoteSource):
         quotes = []
         bs = bs4.BeautifulSoup(html)
         fixmap = {
-            u'\u0091': u"\u2018",
-            u'\u0092': u"\u2019",
-            u'\u0093': u"\u201C",
-            u'\u0094': u"\u201D",
-            u'\u0085': "...",
-            u'\u0097': u"\u2014",
-            u'\u0096': "-"
+            '\u0091': "\u2018",
+            '\u0092': "\u2019",
+            '\u0093': "\u201C",
+            '\u0094': "\u201D",
+            '\u0085': "...",
+            '\u0097': "\u2014",
+            '\u0096': "-"
         }
         for item in bs.findAll('dt', 'quote'):
             quote = None
             try:
                 quote = item.find('a').contents[0]
-                for k, v in fixmap.items():
+                for k, v in list(fixmap.items()):
                     quote = quote.replace(k, v)
-                quote = u"\u201C%s\u201D" % quote
+                quote = "\u201C%s\u201D" % quote
                 link = "http://www.quotationspage.com" + item.find('a')['href']
                 try:
                     author = item.next_sibling.find('b').find('a').contents[0]
@@ -82,11 +82,11 @@ class QuotationsPageSource(IQuoteSource):
 
     def get_for_author(self, author):
         return self.get_for_search_url(
-            iri2uri((u"http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
+            iri2uri(("http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
 
     def get_for_keyword(self, keyword):
         return self.get_for_search_url(
-            iri2uri((u"http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
+            iri2uri(("http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
 
     def get_for_search_url(self, url):
         logger.info(lambda: "Fetching quotes from Goodreads for search url=%s" % url)
@@ -110,6 +110,6 @@ class QuotationsPageSource(IQuoteSource):
 
 if __name__ == "__main__":
     q = QuotationsPageSource()
-    print q.get_for_author("einstein")
-    print q.get_for_keyword("funny")
-    print q.get_random()
+    print(q.get_for_author("einstein"))
+    print(q.get_for_keyword("funny"))
+    print(q.get_random())

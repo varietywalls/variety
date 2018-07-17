@@ -26,13 +26,13 @@ import logging
 import string
 import threading
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import functools
 import datetime
-from urlparse import urlparse
+from urllib.parse import urlparse
 from PIL import Image
 
-from DominantColors import DominantColors
+from .DominantColors import DominantColors
 
 import gi
 gi.require_version('GExiv2', '0.10')
@@ -72,10 +72,10 @@ class LogMethodCalls(object):
 
     def __get__(self, obj, cls=None):
         def logcall(*func_args, **func_kwargs):
-            logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.func_name +
+            logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.__name__ +
                          '(' + ', '.join(map(_str, func_args)) +
                          ((', %s' % func_kwargs) if func_kwargs else '') + ')')
-            if inspect.isfunction(self.func) or inspect.isclass(self.func.im_self):
+            if inspect.isfunction(self.func) or inspect.isclass(self.func.__self__):
                 ret = self.func(*func_args, **func_kwargs)
             else:
                 ret = self.func(obj, *func_args, **func_kwargs)
@@ -199,7 +199,7 @@ class VarietyMetadata(GExiv2.Metadata):
             else:
                 return self.get_tag_string(key)
         else:
-            raise KeyError(u'%s: Unknown tag' % key)
+            raise KeyError('%s: Unknown tag' % key)
 
     def __setitem__(self, key, value):
         if key in self.MULTIPLES:
@@ -234,7 +234,7 @@ class Util:
         if index > 0:
             filename = filename[:index]
 
-        filename = urllib.unquote_plus(filename)
+        filename = urllib.parse.unquote_plus(filename)
 
         filename = Util.sanitize_filename(filename)
 
@@ -319,7 +319,7 @@ class Util:
     def start_force_exit_thread(delay):
         def force_exit():
             time.sleep(delay)
-            print "Exiting takes too long. Calling os.kill."
+            print("Exiting takes too long. Calling os.kill.")
             os.kill(os.getpid(), 9)
         force_exit_thread = threading.Thread(target=force_exit)
         force_exit_thread.daemon = True
@@ -355,7 +355,7 @@ class Util:
     def write_metadata(filename, info):
         try:
             m = VarietyMetadata(filename)
-            for k, v in info.items():
+            for k, v in list(info.items()):
                 if k == 'author':
                     m["Xmp.variety." + k] = v
                     if not 'Xmp.dc.creator' in m:
@@ -380,14 +380,14 @@ class Util:
                     m["Xmp.variety." + k] = v
             m.save_file()
             return True
-        except Exception, ex:
+        except Exception as ex:
             # could not write metadata inside file, use json instead
             logger.exception(lambda: "Could not write metadata directly in file, trying json metadata: " + filename)
             try:
                 with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
                     f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
                     return True
-            except Exception, e:
+            except Exception as e:
                 logger.exception(lambda: "Could not write metadata for file " + filename)
                 return False
 
@@ -427,16 +427,16 @@ class Util:
                 pass
 
             try:
-                info['keywords'] = map(_u, m['Iptc.Application2.Keywords'])
+                info['keywords'] = list(map(_u, m['Iptc.Application2.Keywords']))
             except:
                 try:
-                    info['keywords'] = map(_u, m['Xmp.dc.subject'])
+                    info['keywords'] = list(map(_u, m['Xmp.dc.subject']))
                 except:
                     pass
 
             return info
 
-        except Exception, e:
+        except Exception as e:
             # could not read metadata inside file, try reading json metadata instead
             try:
                 with io.open(filename + '.metadata.json', encoding='utf8') as f:
@@ -625,7 +625,7 @@ class Util:
     @staticmethod
     def compare_versions(v1, v2):
         def _score(v):
-            a = map(int, v.split('.'))
+            a = list(map(int, v.split('.')))
             while len(a) < 3:
                 a.append(0)
             return a[0] * 10**6 + a[1] * 10**3 + a[2]
@@ -647,7 +647,7 @@ class Util:
         try:
             return os.urandom(16).encode('hex')
         except Exception:
-            return ''.join(random.choice(string.hexdigits) for n in xrange(32))
+            return ''.join(random.choice(string.hexdigits) for n in range(32))
 
     @staticmethod
     def get_file_icon_name(path):
@@ -673,7 +673,7 @@ class Util:
             return pics_folder
         except:
             logger.exception(lambda: "Could not get path to Pictures folder. Defaulting to ~/Pictures.")
-            return os.path.expanduser(u'~/Pictures')
+            return os.path.expanduser('~/Pictures')
 
     @staticmethod
     def superuser_exec(*command_args):

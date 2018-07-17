@@ -15,7 +15,7 @@
 ### END LICENSE
 
 import random
-import urlparse
+import urllib.parse
 
 import logging
 import re
@@ -37,7 +37,7 @@ class RedditDownloader(Downloader.Downloader):
 
     @staticmethod
     def build_json_url(url):
-        p = urlparse.urlparse(url)
+        p = urllib.parse.urlparse(url)
         return p.scheme + '://' + p.netloc + p.path + '.json' + '?' + p.query + ('&' if p.query else '') + 'limit=100'
 
     @staticmethod

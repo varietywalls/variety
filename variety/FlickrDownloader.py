@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import random
 import logging
 import time
@@ -66,7 +66,7 @@ class FlickrDownloader(Downloader.Downloader):
 
             call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
-                urllib.quote_plus(url))
+                urllib.parse.quote_plus(url))
 
             resp = FlickrDownloader.fetch(call)
 
@@ -76,7 +76,7 @@ class FlickrDownloader(Downloader.Downloader):
             else:
                 logger.info(lambda: "Oops " + resp["message"])
                 return False, resp["message"], None
-        except Exception, e:
+        except Exception as e:
             logger.exception(lambda: "Exception while checking Flickr user")
             return False, "Exception while checking user. Please run with -v and check log.", None
 
@@ -87,7 +87,7 @@ class FlickrDownloader(Downloader.Downloader):
 
             call = "https://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1" % (
                 API_KEY,
-                urllib.quote_plus(url))
+                urllib.parse.quote_plus(url))
 
             resp = FlickrDownloader.fetch(call)
 
@@ -97,7 +97,7 @@ class FlickrDownloader(Downloader.Downloader):
             else:
                 logger.info(lambda: "Oops " + resp["message"])
                 return False, resp["message"], None
-        except Exception, e:
+        except Exception as e:
             logger.exception(lambda: "Exception while checking Flickr group")
             return False, "Exception while checking group. Please run with -v and check log.", None
 
@@ -114,7 +114,7 @@ class FlickrDownloader(Downloader.Downloader):
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search"\
                "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
-        for k, v in self.params.items():
+        for k, v in list(self.params.items()):
             call = call + "&" + k + "=" + v
 
         resp = FlickrDownloader.fetch(call)
@@ -159,7 +159,7 @@ class FlickrDownloader(Downloader.Downloader):
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
                "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
-        for k, v in self.params.items():
+        for k, v in list(self.params.items()):
             call = call + "&" + k + "=" + v
 
         resp = FlickrDownloader.fetch(call)
