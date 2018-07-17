@@ -81,7 +81,6 @@ class SafeLogger(logging.Logger):
         except:
             locale_info = 'Unknown'
             try:
-                import os
                 locale_info = 'Terminal encoding=%s, LANG=%s, LANGUAGE=%s' % (
                     sys.stdout.encoding, os.getenv('LANG'), os.getenv('LANGUAGE'))
                 logging.getLogger("variety").exception('Errors while logging. Locale info: %s' % locale_info)
