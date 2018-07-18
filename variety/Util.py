@@ -72,16 +72,18 @@ class LogMethodCalls(object):
 
     def __get__(self, obj, cls=None):
         def logcall(*func_args, **func_kwargs):
-            logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.__name__ +
-                         '(' + ', '.join(map(_str, func_args)) +
-                         ((', %s' % func_kwargs) if func_kwargs else '') + ')')
-            if inspect.isfunction(self.func) or inspect.isclass(self.func.__self__):
-                ret = self.func(*func_args, **func_kwargs)
-            else:
-                ret = self.func(obj, *func_args, **func_kwargs)
-            return ret
-        for attr in "__module__", "__name__", "__doc__":
-            setattr(logcall, attr, getattr(self.func, attr))
+            # In order: class name (if present), function name, arguments, kwargs (if present)
+            logger.log(self.level, "%s: %s(%s%s)",
+                       # class name (if present)
+                       cls.__name__ if cls else '<unknown class>',
+                       # function name
+                       self.func.__name__,
+                       # positional arguments
+                       ', '.join(map(str, func_args)),
+                       # keyword args (formatted as a dict) if given
+                       (', %s' % func_kwargs) if func_kwargs else '')
+
+            return self.func(obj, *func_args, **func_kwargs)
         return logcall
 
 
@@ -214,9 +216,10 @@ class Util:
     @staticmethod
     def log_all(cls, level=logging.DEBUG):
         if logger.isEnabledFor(level):
-            for name, meth in inspect.getmembers(cls):
-                if inspect.ismethod(meth) or inspect.isfunction(meth):
-                    setattr(cls, name, LogMethodCalls(meth, level))
+            for name, meth in inspect.getmembers(cls, callable):
+                if name.startswith('__'):
+                    continue  # Don't mess with the class' internal fields
+                setattr(cls, name, LogMethodCalls(meth, level))
         return cls
 
     @staticmethod
