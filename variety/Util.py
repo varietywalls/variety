@@ -194,15 +194,15 @@ class Util:
     def log_wrapper(meth, level, cls=None):
         # In order: class name (if present), function name, arguments, kwargs (if present)
         def _log_wrapper(*args, **kwargs):
-            logger.log(level, "%s: %s(%s%s)",
+            logger.log(level, "%s: %s() args=%s kwargs=%s",
                        # class name (if present)
                        cls.__name__ if cls else '<unknown class>',
                        # function name
                        meth.__name__,
                        # positional arguments
-                       ', '.join(map(str, args)),
+                       args,
                        # keyword args (formatted as a dict) if given
-                       (', %s' % kwargs) if kwargs else '')
+                       kwargs)
 
             return meth(*args, **kwargs)
 
