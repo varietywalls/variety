@@ -27,7 +27,6 @@ import string
 import threading
 import time
 import urllib.request, urllib.parse, urllib.error
-import functools
 import datetime
 from urllib.parse import urlparse
 from PIL import Image
@@ -156,7 +155,7 @@ def cache(ttl_seconds=100*365*24*3600, debug=False):
     def decorate(f):
         _cache = {}
 
-        @functools.wraps(f)
+        @wraps(f)
         def decorated(*args):
             cached = _cache.get(args)
             if not cached or cached['timestamp'] < datetime.datetime.now() - datetime.timedelta(seconds=ttl_seconds):
