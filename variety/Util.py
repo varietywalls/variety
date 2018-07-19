@@ -64,28 +64,6 @@ SOURCE_NAME_TO_TYPE = {
 random.seed()
 logger = logging.getLogger('variety')
 
-class LogMethodCalls(object):
-    def __init__(self, func, level):
-        self.level = level
-        self.func = func
-
-    def __get__(self, obj, cls=None):
-        def logcall(*func_args, **func_kwargs):
-            # In order: class name (if present), function name, arguments, kwargs (if present)
-            logger.log(self.level, "%s: %s(%s%s)",
-                       # class name (if present)
-                       cls.__name__ if cls else '<unknown class>',
-                       # function name
-                       self.func.__name__,
-                       # positional arguments
-                       ', '.join(map(str, func_args)),
-                       # keyword args (formatted as a dict) if given
-                       (', %s' % func_kwargs) if func_kwargs else '')
-
-            return self.func(obj, *func_args, **func_kwargs)
-        return logcall
-
-
 def debounce(seconds):
     """ Decorator that will postpone a functions execution until after wait seconds
         have elapsed since the last time it was invoked. """
@@ -213,12 +191,30 @@ class VarietyMetadata(GExiv2.Metadata):
 
 class Util:
     @staticmethod
-    def log_all(cls, level=logging.DEBUG):
+    def log_wrapper(meth, level, cls=None):
+        # In order: class name (if present), function name, arguments, kwargs (if present)
+        def _log_wrapper(*args, **kwargs):
+            logger.log(level, "%s: %s(%s%s)",
+                       # class name (if present)
+                       cls.__name__ if cls else '<unknown class>',
+                       # function name
+                       meth.__name__,
+                       # positional arguments
+                       ', '.join(map(str, args)),
+                       # keyword args (formatted as a dict) if given
+                       (', %s' % kwargs) if kwargs else '')
+
+            return meth(*args, **kwargs)
+
+        return _log_wrapper
+
+    @classmethod
+    def log_all(mycls, cls, level=logging.DEBUG):
         if logger.isEnabledFor(level):
             for name, meth in inspect.getmembers(cls, callable):
                 if name.startswith('__'):
                     continue  # Don't mess with the class' internal fields
-                setattr(cls, name, LogMethodCalls(meth, level))
+                setattr(cls, name, mycls.log_wrapper(meth, level, cls))
         return cls
 
     @staticmethod
