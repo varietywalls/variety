@@ -1141,8 +1141,7 @@ class VarietyWindow(Gtk.Window):
         clock_filter = VarietyWindow.replace_clock_filter_offsets(clock_filter, hoffset, voffset)
         clock_filter = self.replace_clock_filter_fonts(clock_filter)
 
-        # Note: time.strftime does not support Unicode format, so the encode/decode cycle
-        clock_filter = time.strftime(clock_filter.encode('utf8'), time.localtime()).decode('utf8') # this should always be called last
+        clock_filter = time.strftime(clock_filter, time.localtime()) # this should always be called last
         logger.info(lambda: "Applying clock filter: " + clock_filter)
 
         cmd += clock_filter
