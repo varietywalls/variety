@@ -42,6 +42,8 @@ import re
 import urllib.parse
 import webbrowser
 import pipes
+import sys
+import argparse
 from PIL import Image as PILImage
 
 # Replacement for shutil.which, which (no pun intended) only exists on Python 3.3+
@@ -2038,99 +2040,101 @@ class VarietyWindow(Gtk.Window):
     @staticmethod
     def parse_options(arguments, report_errors=True):
         """Support for command line options"""
-        usage = _("""%prog [options] [files or urls]
+        usage = _("""%(prog)s [options] [files or urls]
 
 Passing local files will add them to Variety's queue.
 Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
 
-To set a specific wallpaper: %prog /some/local/image.jpg --next""")
-        parser = VarietyOptionParser(usage=usage, version="%%prog %s" % varietyconfig.get_version(), report_errors=report_errors)
+To set a specific wallpaper: %(prog)s /some/local/image.jpg --next""" % {'prog': sys.argv[0]})
+        parser = argparse.ArgumentParser(usage=usage)
 
-        parser.add_option(
+        parser.add_argument('--version', action='version', version=varietyconfig.get_version())
+
+        parser.add_argument(
             "-v", "--verbose", action="count", dest="verbose", default=0,
             help=_("Show logging messages (-vv to -vvvvv will profile various parts of Variety with increasing detail"))
 
-        parser.add_option(
+        parser.add_argument(
             "-q", "--quit", action="store_true", dest="quit",
             help=_("Make the running instance quit"))
 
-        parser.add_option(
+        parser.add_argument(
             "--get", "--current", "--show-current", action="store_true", dest="show_current",
             help=_("Print the current wallpaper location. Used only when the application is already running."))
 
-        parser.add_option(
+        parser.add_argument(
             "-n", "--next", action="store_true", dest="next",
             help=_("Show Next wallpaper"))
 
-        parser.add_option(
+        parser.add_argument(
             "-p", "--previous", action="store_true", dest="previous",
             help=_("Show Previous wallpaper"))
 
-        parser.add_option(
+        parser.add_argument(
             "--fast-forward", action="store_true", dest="fast_forward",
             help=_("Show Next wallpaper, skipping the forward history"))
 
-        parser.add_option(
+        parser.add_argument(
             "-t", "--trash", action="store_true", dest="trash",
             help=_("Move current wallpaper to Trash. Used only when the application is already running."))
 
-        parser.add_option(
+        parser.add_argument(
             "-f", "--favorite", action="store_true", dest="favorite",
             help=_("Copy current wallpaper to Favorites. Used only when the application is already running."))
 
-        parser.add_option(
+        parser.add_argument(
             "--move-to-favorites", action="store_true", dest="movefavorite",
             help=_("Move current wallpaper to Favorites. Used only when the application is already running."))
 
-        parser.add_option(
+        parser.add_argument(
             "--pause", action="store_true", dest="pause",
             help=_("Pause on current image"))
 
-        parser.add_option(
+        parser.add_argument(
             "--resume", action="store_true", dest="resume",
             help=_("Resume regular image changes"))
 
-        parser.add_option(
+        parser.add_argument(
             "--toggle-pause", action="store_true", dest="toggle_pause",
             help=_("Toggle Pause/Resume state"))
 
-        parser.add_option(
+        parser.add_argument(
             "--quotes-next", action="store_true", dest="quotes_next",
             help=_("Show Next quote"))
 
-        parser.add_option(
+        parser.add_argument(
             "--quotes-previous", action="store_true", dest="quotes_previous",
             help=_("Show Previous quote"))
 
-        parser.add_option(
+        parser.add_argument(
             "--quotes-fast-forward", action="store_true", dest="quotes_fast_forward",
             help=_("Show Next quote, skipping the forward history"))
 
-        parser.add_option(
+        parser.add_argument(
             "--quotes-toggle-pause", action="store_true", dest="quotes_toggle_pause",
             help=_("Toggle Quotes Pause/Resume state"))
 
-        parser.add_option(
+        parser.add_argument(
             "--quotes-save-favorite", action="store_true", dest="quotes_save_favorite",
             help=_("Save the current quote to Favorites"))
 
-        parser.add_option(
+        parser.add_argument(
             "--history", action="store_true", dest="history",
             help=_("Toggle History display"))
 
-        parser.add_option(
+        parser.add_argument(
             "--downloads", action="store_true", dest="downloads",
             help=_("Toggle Recent Downloads display"))
 
-        parser.add_option(
+        parser.add_argument(
             "--preferences", "--show-preferences", action="store_true", dest="preferences",
             help=_("Show Preferences dialog"))
 
-        parser.add_option(
+        parser.add_argument(
             "--selector", "--show-selector", action="store_true", dest="selector",
             help=_("Show manual wallpaper selector - the thumbnail bar filled with images from the active image sources"))
 
-        parser.add_option(
+        parser.add_argument(
             "--set-option", action="append", dest="set_options", nargs=2,
             help=_("Sets and applies an option. "
                    "The option names are the same that are used in Variety's config file ~/.config/variety/variety.conf. "
@@ -2138,31 +2142,31 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                    "Example: 'variety --set-option icon Dark --set-option clock_enabled True'. "
                    "USE WITH CAUTION: You are changing the settings file directly in an unguarded way."))
 
-        options, args = parser.parse_args(arguments)
+        args = parser.parse_args(arguments)
 
         if report_errors:
-            if (options.next or options.fast_forward) and options.previous:
+            if (args.next or args.fast_forward) and args.previous:
                 parser.error(_("options --next/--fast-forward and --previous are mutually exclusive"))
 
-            if options.trash and options.favorite:
+            if args.trash and args.favorite:
                 parser.error(_("options --trash and --favorite are mutually exclusive"))
 
-            if options.pause and options.resume:
+            if args.pause and args.resume:
                 parser.error(_("options --pause and --resume are mutually exclusive"))
 
-            if (options.quotes_next or options.quotes_fast_forward) and options.quotes_previous:
+            if (args.quotes_next or args.quotes_fast_forward) and args.quotes_previous:
                 parser.error(_("options --quotes-next/--quotes-fast-forward and --quotes-previous are mutually exclusive"))
 
-        return options, args
+        return args
 
     def process_command(self, arguments, initial_run):
         try:
             arguments = [str(arg) for arg in arguments]
             logger.info(lambda: "Received command: " + str(arguments))
 
-            options, args = self.parse_options(arguments, report_errors=False)
+            args = self.parse_options(arguments, report_errors=False)
 
-            if options.quit:
+            if args.quit:
                 self.on_quit()
                 return
 
@@ -2176,9 +2180,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     GObject.timeout_add(5000, _process_urls)
 
 
-            if options.set_options:
+            if args.set_options:
                 try:
-                    Options.set_options(options.set_options)
+                    args.set_options(args.set_options)
                     if not initial_run:
                         self.reload_config()
                 except Exception:
@@ -2186,52 +2190,52 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             def _process_command():
                 if not initial_run:
-                    if options.trash:
+                    if args.trash:
                         self.move_to_trash()
-                    elif options.favorite:
+                    elif args.favorite:
                         self.copy_to_favorites()
-                    elif options.movefavorite:
+                    elif args.movefavorite:
                         self.move_to_favorites()
 
-                if options.fast_forward:
+                if args.fast_forward:
                     self.next_wallpaper(bypass_history=True)
-                elif options.next:
+                elif args.next:
                     self.next_wallpaper()
-                elif options.previous:
+                elif args.previous:
                     self.prev_wallpaper()
 
-                if options.pause:
+                if args.pause:
                     self.on_pause_resume(change_enabled=False)
-                elif options.resume:
+                elif args.resume:
                     self.on_pause_resume(change_enabled=True)
-                elif options.toggle_pause:
+                elif args.toggle_pause:
                     self.on_pause_resume()
 
-                if options.history:
+                if args.history:
                     self.show_hide_history()
-                if options.downloads:
+                if args.downloads:
                     self.show_hide_downloads()
-                if options.selector:
+                if args.selector:
                     self.show_hide_wallpaper_selector()
-                if options.preferences:
+                if args.preferences:
                     self.on_mnu_preferences_activate()
 
-                if options.quotes_fast_forward:
+                if args.quotes_fast_forward:
                     self.next_quote(bypass_history=True)
-                elif options.quotes_next:
+                elif args.quotes_next:
                     self.next_quote()
-                elif options.quotes_previous:
+                elif args.quotes_previous:
                     self.prev_quote()
 
-                if options.quotes_toggle_pause:
+                if args.quotes_toggle_pause:
                     self.on_quotes_pause_resume()
 
-                if options.quotes_save_favorite:
+                if args.quotes_save_favorite:
                     self.quote_save_to_favorites()
 
             GObject.timeout_add(3000 if initial_run else 1, _process_command)
 
-            return self.current if options.show_current else ""
+            return self.current if args.show_current else ""
         except Exception:
             logger.exception(lambda: "Could not process passed command")
 
