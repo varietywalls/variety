@@ -204,9 +204,9 @@ class ModuleProfiler():
         # The intent is to only log the first call to outside methods without following them further
         self.nontarget_depths = {}
 
-    def log_all(self, cls):
+    def log_class(self, cls):
         """
-        Adds the given class to the list of modules to be profiled.
+        Adds the given class' module to the list of modules to be profiled.
         """
         modulename = cls.__module__
         if modulename not in sys.modules:
@@ -215,10 +215,18 @@ class ModuleProfiler():
             return
 
         module = sys.modules[modulename]
+
+        self.log_module(module, request=cls)
+
+    def log_module(self, module, request=None):
+        """
+        Adds the given module to the list of modules to be profiled.
+        """
         path = module.__file__
         self.target_paths.append(path)
 
-        logger.info("ModuleProfiler: added class %s at %s to list of classes to profile", cls, path)
+        logger.info("ModuleProfiler: added module %s at %s to list of modules to profile (request=%s)",
+                    module, path, request)
 
     @functools.lru_cache(maxsize=2048)
     def is_target_path(self, path):

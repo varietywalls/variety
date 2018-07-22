@@ -189,11 +189,11 @@ def main():
 
     if options.verbose >= 2:
         profiler = ModuleProfiler()
-        profiler.log_all(VarietyWindow.VarietyWindow)
+        profiler.log_class(VarietyWindow.VarietyWindow)
 
         if options.verbose >= 3:
-            profiler.log_all(ThumbsManager.ThumbsManager)
-            profiler.log_all(ThumbsWindow.ThumbsWindow)
+            profiler.log_class(ThumbsManager.ThumbsManager)
+            profiler.log_class(ThumbsWindow.ThumbsWindow)
 
         profiler.start()
 
