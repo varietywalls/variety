@@ -2380,7 +2380,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             if os.access(script, os.X_OK):
                 logger.debug(lambda: "Running get_wallpaper script")
                 try:
-                    output = subprocess.check_output(script).strip()
+                    output = subprocess.check_output(script).decode().strip()
                     if output:
                         file = output
                 except subprocess.CalledProcessError:
