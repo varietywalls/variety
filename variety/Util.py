@@ -191,11 +191,18 @@ class VarietyMetadata(GExiv2.Metadata):
             self.set_tag_string(key, value)
 
 class ModuleProfiler():
+    # How deep in other modules' code we should profile
+    MAX_NONTARGET_DEPTH = 1
+
     def __init__(self):
         """
         Initializes the module profiler.
         """
         self.target_paths = []
+
+        # Track how far deep we are in functions outside our target packages
+        # The intent is to only log the first call to outside methods without following them further
+        self.nontarget_depth = 0
 
     def log_all(self, cls):
         """
@@ -239,13 +246,28 @@ class ModuleProfiler():
 
     def profiler(self, frame, event, arg):
         filename = frame.f_code.co_filename
+
         if not self.is_target_path(filename):
-            return
+            self.nontarget_depth += 1
+        else:
+            self.nontarget_depth = 0
 
         if event == 'call':
-            # In order: function name, line number, filename
-            logger.debug('-> Entering function: %s\t(line %s in %s)' % (frame.f_code.co_name, frame.f_lineno, filename))
+            if self.nontarget_depth > self.MAX_NONTARGET_DEPTH:
+                # Don't log past our max depth for packages that we're not tracking
+                return
+            else:
+                # In order: function name, line number, filename
+                s = '-> Entering function: %s\t(line %s in %s)' % (frame.f_code.co_name, frame.f_lineno, filename)
+                if self.nontarget_depth == self.MAX_NONTARGET_DEPTH:
+                    s += " - not tracing further because MAX_NONTARGET_DEPTH=%s" % self.MAX_NONTARGET_DEPTH
+                logger.debug(s)
+
+
         elif event == 'return':
+            if self.nontarget_depth > self.MAX_NONTARGET_DEPTH:
+                return
+
             logger.debug('-> Leaving function:  %s\t(line %s in %s)' %  (frame.f_code.co_name, frame.f_lineno, filename))
 
 class Util:
