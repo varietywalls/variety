@@ -151,27 +151,6 @@ def check_quit():
         GObject.idle_add(VARIETY_WINDOW.on_quit)
     Util.start_force_exit_thread(10)
 
-
-def monkeypatch_ssl():
-    """
-    HTTPS connections may fail on Ubuntu 12.04 to servers with disabled SSL with this error:
-    URLError: <urlopen error [Errno 1] _ssl.c:504: error:14077410:SSL routines:SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure>.
-    This monkeypatching routine fixes the issue by forcing it to use TLSv1 instead of SSL.
-    Solution copied from http://askubuntu.com/questions/116020/python-https-requests-urllib2-to-some-sites-fail-on-ubuntu-12-04-without-proxy
-    """
-    import functools
-    import ssl
-
-    old_init = ssl.SSLSocket.__init__
-
-    @functools.wraps(old_init)
-    def ubuntu_openssl_bug_965371(self, *args, **kwargs):
-        kwargs['ssl_version'] = ssl.PROTOCOL_TLSv1
-        old_init(self, *args, **kwargs)
-
-    ssl.SSLSocket.__init__ = ubuntu_openssl_bug_965371
-
-
 def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
@@ -185,7 +164,6 @@ def main():
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
     set_up_logging(options.verbose)
-    monkeypatch_ssl()
 
     if options.verbose >= 2:
         profiler = ModuleProfiler()
