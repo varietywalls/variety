@@ -23,7 +23,7 @@ import threading
 
 logger = logging.getLogger('variety')
 
-from variety import _, _u
+from variety import _
 
 
 class QuotesEngine:

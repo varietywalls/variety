@@ -42,7 +42,7 @@ except (ValueError, ImportError):
 
 from variety_lib import varietyconfig
 
-from variety import _, _u
+from variety import _
 
 import logging
 logger = logging.getLogger('variety')

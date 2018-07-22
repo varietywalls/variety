@@ -20,7 +20,7 @@ from variety.Options import Options
 
 from variety_lib.helpers import get_builder
 
-from variety import _, _u
+from variety import _
 
 import logging
 import threading

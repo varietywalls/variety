@@ -18,7 +18,7 @@ from gi.repository import Gtk # pylint: disable=E0611
 
 from variety_lib.helpers import get_builder
 
-from variety import _, _u
+from variety import _
 
 class EditFavoriteOperationsDialog(Gtk.Dialog):
     __gtype_name__ = "EditFavoriteOperationsDialog"

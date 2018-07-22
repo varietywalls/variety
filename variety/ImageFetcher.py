@@ -21,7 +21,7 @@ import urllib.parse
 from variety.Util import Util
 from PIL import Image
 
-from variety import _, _u
+from variety import _
 
 logger = logging.getLogger('variety')
 

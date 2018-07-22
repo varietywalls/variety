@@ -22,20 +22,11 @@ gettext.textdomain('variety')
 import os
 import sys
 
-
-def _u(s):
-    if s is None:
-        return s
-    if isinstance(s, str):
-        return s
-    else:
-        return str(s, 'utf8')
-
 def _(text):
     # Use "from locale import gettext" if we are deploying to /opt/extras
     # Use "from gettext import gettext" when using standard Debian deployment
     from gettext import gettext as _
-    return _u(_(text))
+    return _(text)
 
 def safe_print(text, ascii_text=None):
     """
@@ -149,7 +140,7 @@ def main():
 
     Util.makedirs(os.path.expanduser("~/.config/variety/"))
 
-    arguments = list(map(_u, sys.argv[1:]))
+    arguments = sys.argv[1:]
 
     # validate arguments and set up logging
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)

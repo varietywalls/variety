@@ -17,7 +17,7 @@
 import os.path
 from gi.repository import Gtk
 from variety.Util import Util
-from variety import _, _u
+from variety import _
 import logging
 
 logger = logging.getLogger('variety')
@@ -69,7 +69,7 @@ class FolderChooser:
             self.chooser.set_local_only(False)
 
             if self.chooser.run() == Gtk.ResponseType.OK:
-                self.set_folder(_u(self.chooser.get_filename()))
+                self.set_folder(self.chooser.get_filename())
                 try:
                     if self.on_change:
                         self.on_change()

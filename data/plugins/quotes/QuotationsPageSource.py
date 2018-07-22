@@ -21,7 +21,7 @@ import re
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
 from httplib2 import iri2uri
-from variety import _, _u
+from variety import _
 import logging
 
 logger = logging.getLogger("variety")

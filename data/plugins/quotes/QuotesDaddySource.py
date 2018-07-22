@@ -16,7 +16,7 @@
 
 from variety.Util import Util
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety import _, _u
+from variety import _
 
 import logging
 

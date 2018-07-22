@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from variety import _, _u
+from variety import _
 
 import logging
 logger = logging.getLogger('variety')

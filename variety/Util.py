@@ -43,8 +43,6 @@ from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2
 import inspect
 import subprocess
 import platform
-from variety import _u
-
 
 VARIETY_INFO = "-"
 
@@ -477,7 +475,7 @@ class Util:
             info = {}
             for k in ["sourceName", "sourceLocation", "sourceURL", "sourceType", "imageURL", "author", "authorURL"]:
                 if "Xmp.variety." + k in m:
-                    info[k] = _u(m["Xmp.variety." + k])
+                    info[k] = m["Xmp.variety." + k]
 
             try:
                 info['sfwRating'] = int(m['Xmp.variety.sfwRating'])
@@ -485,17 +483,17 @@ class Util:
                 pass
 
             try:
-                info['author'] = _u(m['Xmp.dc.creator'][0])
+                info['author'] = m['Xmp.dc.creator'][0]
             except:
                 pass
 
             try:
-                info['headline'] = _u(m['Iptc.Application2.Headline'][0])
+                info['headline'] = m['Iptc.Application2.Headline'][0]
             except:
                 pass
 
             try:
-                info['description'] = _u(m.get_comment())
+                info['description'] = m.get_comment()
             except:
                 pass
 
@@ -682,7 +680,7 @@ class Util:
     @staticmethod
     def gtk_to_fcmatch_font(gtk_font_name):
         fd = Pango.FontDescription(gtk_font_name)
-        family = _u(fd.get_family())
+        family = fd.get_family()
         size = gtk_font_name[gtk_font_name.rindex(' '):].strip()
         rest = gtk_font_name.replace(family, '').strip().replace(' ', ':')
         return family + ":" + rest, size

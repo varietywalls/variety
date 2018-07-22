@@ -16,7 +16,7 @@
 ### END LICENSE
 import io
 
-from variety import _, _u
+from variety import _
 import subprocess
 import urllib.request, urllib.parse, urllib.error
 from variety.VarietyOptionParser import VarietyOptionParser
@@ -1182,7 +1182,7 @@ class VarietyWindow(Gtk.Window):
             return
         try:
             with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
-                f.write(_u(filename))
+                f.write(filename)
         except Exception:
             logger.exception(lambda: "Cannot write wallpaper.jpg.txt")
 
@@ -1719,7 +1719,7 @@ class VarietyWindow(Gtk.Window):
         try:
             self.banned.add(url)
             with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
-                f.write(_u(url) + "\n")
+                f.write(url) + "\n"
         except Exception:
             logger.exception(lambda: "Could not ban URL")
 
@@ -2382,7 +2382,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 try:
                     output = subprocess.check_output(script).strip()
                     if output:
-                        file = _u(output)
+                        file = output
                 except subprocess.CalledProcessError:
                     logger.exception(lambda: "Exception when calling get_wallpaper script")
             else:
@@ -2591,8 +2591,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             if not self.running or response != Gtk.ResponseType.OK:
                 return
 
-            message = _u(buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)).strip()
-            self.options.facebook_message = '<current_quote>' if message == _u(quote_text) else message
+            message = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).strip()
+            self.options.facebook_message = '<current_quote>' if message == quote_text else message
             self.options.facebook_show_dialog = not publish_dialog.ui.hide_dialog.get_active()
             self.options.write()
 
