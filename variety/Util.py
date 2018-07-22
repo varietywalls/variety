@@ -202,7 +202,7 @@ class ModuleProfiler():
 
         # Track how far deep we are in functions outside our target packages
         # The intent is to only log the first call to outside methods without following them further
-        self.nontarget_depth = 0
+        self.nontarget_depths = {}
 
     def log_all(self, cls):
         """
@@ -232,43 +232,54 @@ class ModuleProfiler():
 
     def start(self):
         """
-        Starts the module profiler.
+        Starts the module profiler for all future threads.
         """
-        sys.setprofile(self.profiler)
+        threading.setprofile(self.profiler)
 
     def stop(self):
         """
-        Starts the module profiler.
+        Removes the module profiler globally and from future threads.
         """
         if sys.getprofile() != self.profiler:
             logger.warning("ModuleProfiler: The currently enabled profile function was not ours - unbinding anyways")
+        threading.setprofile(None)
         sys.setprofile(None)
 
     def profiler(self, frame, event, arg):
         filename = frame.f_code.co_filename
 
+        tid = threading.get_ident()
+
         if not self.is_target_path(filename):
-            self.nontarget_depth += 1
+            if tid not in self.nontarget_depths:
+                # Pick up where the main thread left off
+                self.nontarget_depths[tid] = self.nontarget_depths.get(threading.main_thread().ident, 1)
+            else:
+                self.nontarget_depths[tid] += 1
         else:
-            self.nontarget_depth = 0
+            self.nontarget_depths[tid] = 0
+
+        tname = threading.current_thread().name
 
         if event == 'call':
-            if self.nontarget_depth > self.MAX_NONTARGET_DEPTH:
+            if self.nontarget_depths[tid] > self.MAX_NONTARGET_DEPTH:
                 # Don't log past our max depth for packages that we're not tracking
                 return
             else:
                 # In order: function name, line number, filename
-                s = '-> Entering function: %s\t(line %s in %s)' % (frame.f_code.co_name, frame.f_lineno, filename)
-                if self.nontarget_depth == self.MAX_NONTARGET_DEPTH:
+                s = '[%s] -> Entering function: %s\t(line %s in %s)' % \
+                   (tname, frame.f_code.co_name, frame.f_lineno, filename)
+                if self.nontarget_depths[tid] == self.MAX_NONTARGET_DEPTH:
                     s += " - not tracing further because MAX_NONTARGET_DEPTH=%s" % self.MAX_NONTARGET_DEPTH
                 logger.debug(s)
 
 
         elif event == 'return':
-            if self.nontarget_depth > self.MAX_NONTARGET_DEPTH:
+            if self.nontarget_depths[tid] > self.MAX_NONTARGET_DEPTH:
                 return
 
-            logger.debug('-> Leaving function:  %s\t(line %s in %s)' %  (frame.f_code.co_name, frame.f_lineno, filename))
+            logger.debug('[%s] -> Leaving function:  %s\t(line %s in %s)' %
+                         (tname, frame.f_code.co_name, frame.f_lineno, filename))
 
 class Util:
     @staticmethod
