@@ -222,11 +222,16 @@ class ModuleProfiler():
         """
         Adds the given module to the list of modules to be profiled.
         """
-        path = module.__file__
+        self.log_path(module.__file__, request=request)
+
+    def log_path(self, path, request=None):
+        """
+        Adds the given module path to the list of profile targets.
+        """
         self.target_paths.append(path)
 
-        logger.info("ModuleProfiler: added module %s at %s to list of modules to profile (request=%s)",
-                    module, path, request)
+        logger.info("ModuleProfiler: added path %s to list of profile targets (request=%s)",
+                    path, request)
 
     @functools.lru_cache(maxsize=2048)
     def is_target_path(self, path):
@@ -234,7 +239,9 @@ class ModuleProfiler():
         Returns whether the given path matches one of our modules to be profiled.
         """
         for target in self.target_paths:
-            if path.startswith(target):  # XXX: is this portable across OSes?
+            if os.path.isdir(target) and path.startswith(target+os.path.sep):
+                return True
+            elif path == target:
                 return True
         return False
 
