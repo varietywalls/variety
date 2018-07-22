@@ -2048,7 +2048,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
         parser.add_option(
             "-v", "--verbose", action="count", dest="verbose", default=0,
-            help=_("Show logging messages (-vv shows even finer debugging messages, -vvv debugs variety_lib too)"))
+            help=_("Show logging messages (-vv to -vvvvv will profile various parts of Variety with increasing detail"))
 
         parser.add_option(
             "-q", "--quit", action="store_true", dest="quit",

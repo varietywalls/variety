@@ -189,11 +189,21 @@ def main():
 
     if options.verbose >= 2:
         profiler = ModuleProfiler()
-        profiler.log_class(VarietyWindow.VarietyWindow)
+        if options.verbose >= 4:
+            # The main variety package
+            pkgname = os.path.dirname(__file__)
+            profiler.log_path(pkgname)
 
-        if options.verbose >= 3:
-            profiler.log_class(ThumbsManager.ThumbsManager)
-            profiler.log_class(ThumbsWindow.ThumbsWindow)
+            if options.verbose >= 5:
+                # Track variety_lib
+                profiler.log_path(pkgname + "_lib")
+        else:
+            # Cherry-picked log items carried over from variety 0.6.x
+            profiler.log_class(VarietyWindow.VarietyWindow)
+
+            if options.verbose >= 3:
+                profiler.log_class(ThumbsManager.ThumbsManager)
+                profiler.log_class(ThumbsWindow.ThumbsWindow)
 
         profiler.start()
 
