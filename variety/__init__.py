@@ -110,7 +110,7 @@ from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
 from variety import VarietyWindow
 from variety import ThumbsManager
 from variety import ThumbsWindow
-from variety.Util import Util
+from variety.Util import Util, ModuleProfiler
 from variety_lib.helpers import set_up_logging
 
 DBUS_KEY = 'com.peterlevi.Variety'
@@ -188,10 +188,14 @@ def main():
     monkeypatch_ssl()
 
     if options.verbose >= 2:
-        Util.log_all(VarietyWindow.VarietyWindow)
-    if options.verbose >= 3:
-        Util.log_all(ThumbsManager.ThumbsManager)
-        Util.log_all(ThumbsWindow.ThumbsWindow)
+        profiler = ModuleProfiler()
+        profiler.log_all(VarietyWindow.VarietyWindow)
+
+        if options.verbose >= 3:
+            profiler.log_all(ThumbsManager.ThumbsManager)
+            profiler.log_all(ThumbsWindow.ThumbsWindow)
+
+        profiler.start()
 
     bus = dbus.SessionBus()
     # ensure singleton

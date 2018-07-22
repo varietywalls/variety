@@ -28,6 +28,8 @@ import threading
 import time
 import urllib.request, urllib.parse, urllib.error
 import datetime
+import sys
+import functools
 from urllib.parse import urlparse
 from PIL import Image
 
@@ -63,26 +65,6 @@ SOURCE_NAME_TO_TYPE = {
 
 random.seed()
 logger = logging.getLogger('variety')
-
-class LogMethodCalls(object):
-    def __init__(self, func, level):
-        self.level = level
-        self.func = func
-
-    def __get__(self, obj, cls=None):
-        def logcall(*func_args, **func_kwargs):
-            logger.log(self.level, (cls.__name__ if cls else '')+ ": " + self.func.__name__ +
-                         '(' + ', '.join(map(_str, func_args)) +
-                         ((', %s' % func_kwargs) if func_kwargs else '') + ')')
-            if inspect.isfunction(self.func) or inspect.isclass(self.func.__self__):
-                ret = self.func(*func_args, **func_kwargs)
-            else:
-                ret = self.func(obj, *func_args, **func_kwargs)
-            return ret
-        for attr in "__module__", "__name__", "__doc__":
-            setattr(logcall, attr, getattr(self.func, attr))
-        return logcall
-
 
 def debounce(seconds):
     """ Decorator that will postpone a functions execution until after wait seconds
@@ -208,16 +190,65 @@ class VarietyMetadata(GExiv2.Metadata):
         else:
             self.set_tag_string(key, value)
 
+class ModuleProfiler():
+    def __init__(self):
+        """
+        Initializes the module profiler.
+        """
+        self.target_paths = []
+
+    def log_all(self, cls):
+        """
+        Adds the given class to the list of modules to be profiled.
+        """
+        modulename = cls.__module__
+        if modulename not in sys.modules:
+            logger.error("ModuleProfiler: Could not add module %r (class %s) to the list of modules to trace - "
+                         "has it been imported entirely?", modulename, cls)
+            return
+
+        module = sys.modules[modulename]
+        path = module.__file__
+        self.target_paths.append(path)
+
+        logger.info("ModuleProfiler: added class %s at %s to list of classes to profile", cls, path)
+
+    @functools.lru_cache(maxsize=2048)
+    def is_target_path(self, path):
+        """
+        Returns whether the given path matches one of our modules to be profiled.
+        """
+        for target in self.target_paths:
+            if path.startswith(target):  # XXX: is this portable across OSes?
+                return True
+        return False
+
+    def start(self):
+        """
+        Starts the module profiler.
+        """
+        sys.setprofile(self.profiler)
+
+    def stop(self):
+        """
+        Starts the module profiler.
+        """
+        if sys.getprofile() != self.profiler:
+            logger.warning("ModuleProfiler: The currently enabled profile function was not ours - unbinding anyways")
+        sys.setprofile(None)
+
+    def profiler(self, frame, event, arg):
+        filename = frame.f_code.co_filename
+        if not self.is_target_path(filename):
+            return
+
+        if event == 'call':
+            # In order: function name, line number, filename
+            logger.debug('-> Entering function: %s\t(line %s in %s)' % (frame.f_code.co_name, frame.f_lineno, filename))
+        elif event == 'return':
+            logger.debug('-> Leaving function:  %s\t(line %s in %s)' %  (frame.f_code.co_name, frame.f_lineno, filename))
 
 class Util:
-    @staticmethod
-    def log_all(cls, level=logging.DEBUG):
-        if logger.isEnabledFor(level):
-            for name, meth in inspect.getmembers(cls):
-                if inspect.ismethod(meth) or inspect.isfunction(meth):
-                    setattr(cls, name, LogMethodCalls(meth, level))
-        return cls
-
     @staticmethod
     def sanitize_filename(filename):
         valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
