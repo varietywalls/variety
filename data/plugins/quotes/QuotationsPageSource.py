@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -78,15 +78,15 @@ class QuotationsPageSource(IQuoteSource):
         return quotes
 
     def get_random(self):
-        return self.get_for_search_url("http://www.quotationspage.com/random.php3")
+        return self.get_for_search_url("http://www.quotationspage.com/random.php")
 
     def get_for_author(self, author):
         return self.get_for_search_url(
-            iri2uri(("http://www.quotationspage.com/search.php3?Search=&Author=%s" % author).encode('utf-8')))
+            iri2uri(("http://www.quotationspage.com/search.php?Search=&Author=%s" % author).encode('utf-8')))
 
     def get_for_keyword(self, keyword):
         return self.get_for_search_url(
-            iri2uri(("http://www.quotationspage.com/search.php3?Search=%s&Author=" % keyword).encode('utf-8')))
+            iri2uri(("http://www.quotationspage.com/search.php?Search=%s&Author=" % keyword).encode('utf-8')))
 
     def get_for_search_url(self, url):
         logger.info(lambda: "Fetching quotes from Goodreads for search url=%s" % url)
