@@ -31,22 +31,11 @@ def _u(s):
     else:
         return str(s, 'utf8')
 
-
-def _str(s):
-    if s is None:
-        return s
-    if isinstance(s, str):
-        return s.encode('utf8')
-    else:
-        return str(s)
-
-
 def _(text):
     # Use "from locale import gettext" if we are deploying to /opt/extras
     # Use "from gettext import gettext" when using standard Debian deployment
     from gettext import gettext as _
     return _u(_(text))
-
 
 def safe_print(text, ascii_text=None):
     """

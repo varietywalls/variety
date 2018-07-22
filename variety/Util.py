@@ -43,7 +43,7 @@ from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2
 import inspect
 import subprocess
 import platform
-from variety import _u, _str
+from variety import _u
 
 
 VARIETY_INFO = "-"
@@ -755,7 +755,7 @@ class Util:
 
     @staticmethod
     def superuser_exec(*command_args):
-        logger.warning(lambda: "Executing as superuser: %s" % _str(command_args))
+        logger.warning(lambda: "Executing as superuser: %s" % command_args)
         subprocess.check_call(["pkexec"] + list(command_args))
 
     @staticmethod
