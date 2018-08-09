@@ -74,7 +74,7 @@ class ThumbsManager():
         menu = Gtk.Menu()
 
         position_menu = Gtk.Menu()
-        for p, v in list(ThumbsManager.POSITIONS.items()):
+        for p, v in ThumbsManager.POSITIONS.items():
             item = Gtk.CheckMenuItem(ThumbsManager.POSITION_NAMES[p])
             item.set_draw_as_radio(True)
             item.set_active(options.position == v)

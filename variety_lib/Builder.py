@@ -118,7 +118,7 @@ class Builder(Gtk.Builder):
         connection_dict = {}
         connection_dict.update(self.glade_handler_dict)
         connection_dict.update(callback_handler_dict)
-        for item in list(connection_dict.items()):
+        for item in connection_dict.items():
             if item[1] is None:
                 # the handler is missing so reroute to default_handler
                 handler = functools.partial(
@@ -165,7 +165,7 @@ class UiFactory():
     ''' provides an object with attributes as glade widgets'''
     def __init__(self, widget_dict):
         self._widget_dict = widget_dict
-        for (widget_name, widget) in list(widget_dict.items()):
+        for (widget_name, widget) in widget_dict.items():
             setattr(self, widget_name, widget)
 
         # Mangle any non-usable names (like with spaces or dashes)
@@ -174,7 +174,7 @@ class UiFactory():
         consider using a pythonic name instead of design name '%s'"""
         consider_message = """consider using a pythonic name instead of design name '%s'"""
         
-        for (widget_name, widget) in list(widget_dict.items()):
+        for (widget_name, widget) in widget_dict.items():
             pyname = make_pyname(widget_name)
             if pyname != widget_name:
                 if hasattr(self, pyname):
@@ -258,7 +258,7 @@ def auto_connect_by_name(callback_obj, builder):
 
     callback_handler_dict = dict_from_callback_obj(callback_obj)
 
-    for item in list(builder.widgets.items()):
+    for item in builder.widgets.items():
         (widget_name, widget) = item
         signal_ids = []
         try:

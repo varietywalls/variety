@@ -431,7 +431,7 @@ class Util:
     def write_metadata(filename, info):
         try:
             m = VarietyMetadata(filename)
-            for k, v in list(info.items()):
+            for k, v in info.items():
                 if k == 'author':
                     m["Xmp.variety." + k] = v
                     if not 'Xmp.dc.creator' in m:

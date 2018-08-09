@@ -456,7 +456,7 @@ class Options:
             if "sources" in config:
                 self.sources = []
                 sources = config["sources"]
-                for v in list(sources.values()):
+                for v in sources.values():
                     try:
                         self.sources.append(Options.parse_source(v))
                     except Exception:
@@ -468,7 +468,7 @@ class Options:
             if "filters" in config:
                 self.filters = []
                 filters = config["filters"]
-                for v in list(filters.values()):
+                for v in filters.values():
                     try:
                         self.filters.append(Options.parse_filter(v))
                     except Exception:
@@ -485,7 +485,7 @@ class Options:
 
     def fix_outdated(self, config):
         changed = False
-        for key, outdated_hashes in list(Options.OUTDATED_HASHES.items()):
+        for key, outdated_hashes in Options.OUTDATED_HASHES.items():
             if key in config:
                 current_hash = hashlib.md5(config[key].encode()).hexdigest()
                 if current_hash in outdated_hashes:

@@ -114,7 +114,7 @@ class FlickrDownloader(Downloader.Downloader):
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search"\
                "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
-        for k, v in list(self.params.items()):
+        for k, v in self.params.items():
             call = call + "&" + k + "=" + v
 
         resp = FlickrDownloader.fetch(call)
@@ -159,7 +159,7 @@ class FlickrDownloader(Downloader.Downloader):
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
                "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
 
-        for k, v in list(self.params.items()):
+        for k, v in self.params.items():
             call = call + "&" + k + "=" + v
 
         resp = FlickrDownloader.fetch(call)

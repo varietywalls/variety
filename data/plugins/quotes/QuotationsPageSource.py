@@ -56,7 +56,7 @@ class QuotationsPageSource(IQuoteSource):
             quote = None
             try:
                 quote = item.find('a').contents[0]
-                for k, v in list(fixmap.items()):
+                for k, v in fixmap.items():
                     quote = quote.replace(k, v)
                 quote = "\u201C%s\u201D" % quote
                 link = "http://www.quotationspage.com" + item.find('a')['href']
