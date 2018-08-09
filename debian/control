@@ -38,7 +38,7 @@ Depends: gir1.2-gdkpixbuf-2.0,
          python3-pycurl,
          python3-requests,
          ${misc:Depends},
-         ${python:Depends}
+         ${python3:Depends}
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
             libglib2.0-bin | trash-cli | konqueror,
             python3-httplib2

@@ -1,17 +1,19 @@
 #!/usr/bin/make -f
+
+export PYBUILD_NAME=variety
+
 %:
 ifneq ($(shell dh -l | grep -xF translations),)
-	dh $@ --with python2,translations
+	dh $@ --with python3,translations --buildsystem=pybuild
 else
-	dh $@ --with python2
+	dh $@ --with python3 --buildsystem=pybuild
 endif
-
-VER = $(shell dpkg-parsechangelog --show-field=Version | cut -d '-' -f 1)
-
-get-orig-source:
-	uscan --noconf --verbose --rename --destdir=$(CURDIR)/.. --check-dirname-level=0 --force-download --download-version $(VER)
 
 override_dh_auto_clean:
 	# Remove the auto-generated .pot file so successive builds work.
 	rm -f po/variety.pot
 	dh_auto_clean
+
+override_dh_auto_test:
+	# Not used in Debian build since they predominantly require network access
+	true
