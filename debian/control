@@ -3,27 +3,25 @@ Section: graphics
 Priority: optional
 Build-Depends: debhelper (>= 9),
                dh-python,
-               python (>= 2.6.6-3~),
-               python-bs4,
-               python-cairo,
-               python-configobj,
-               python-dbus,
-               python-distutils-extra (>= 2.18),
-               python-gi,
-               python-pil,
-               python-pycurl,
-               python-requests
+               python3,
+               python3-bs4,
+               python3-cairo,
+               python3-configobj,
+               python3-dbus,
+               python3-distutils-extra (>= 2.18),
+               python3-gi,
+               python3-pil,
+               python3-pycurl,
+               python3-requests
 Maintainer: Peter Levi <peterlevi@peterlevi.com>
 Uploaders: James Lu <james@overdrivenetworks.com>
 Standards-Version: 4.1.0
-XS-Python-Version: 2.7
 Homepage: http://peterlevi.com/variety/
 Vcs-Git: https://github.com/varietywalls/variety
 Vcs-Browser: https://github.com/varietywalls/variety
 
 Package: variety
 Architecture: all
-XB-Python-Version: ${python:Versions}
 Depends: gir1.2-gdkpixbuf-2.0,
          gir1.2-gexiv2-0.10,
          gir1.2-glib-2.0,
@@ -31,19 +29,19 @@ Depends: gir1.2-gdkpixbuf-2.0,
          gir1.2-notify-0.7,
          gir1.2-pango-1.0,
          imagemagick,
-         python-bs4,
-         python-cairo,
-         python-configobj,
-         python-dbus,
-         python-gi-cairo,
-         python-pil,
-         python-pycurl,
-         python-requests,
+         python3-bs4,
+         python3-cairo,
+         python3-configobj,
+         python3-dbus,
+         python3-gi-cairo,
+         python3-pil,
+         python3-pycurl,
+         python3-requests,
          ${misc:Depends},
          ${python:Depends}
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
             libglib2.0-bin | trash-cli | konqueror,
-            python-httplib2
+            python3-httplib2
 Suggests: feh | nitrogen,
           gnome-shell-extension-appindicator | gnome-shell-extension-top-icons-plus
 Description: Wallpaper changer, downloader and manager
