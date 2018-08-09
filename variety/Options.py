@@ -61,7 +61,7 @@ class Options:
             UNSPLASH: "unsplash",
         }
 
-        str_to_type = dict((v,k) for k, v in list(type_to_str.items()))
+        str_to_type = {v: k for k, v in type_to_str.items()}
 
         dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
                     WALLHAVEN, REDDIT, BING, UNSPLASH]

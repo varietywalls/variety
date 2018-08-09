@@ -44,7 +44,7 @@ class ThumbsManager():
         "right": _("Right")
     }
 
-    R_POSITIONS = dict((v, k) for (k,v) in list(POSITIONS.items()))
+    R_POSITIONS = {v: k for (k,v) in POSITIONS.items()}
 
     SIZES = [x*30 for x in range(2, 11)]
 
