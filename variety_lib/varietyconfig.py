@@ -27,7 +27,7 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__variety_data_directory__ = '/usr/share/variety/'
+__variety_data_directory__ = '../data'
 __license__ = 'GPL-3'
 __version__ = '0.6.9'
 
