@@ -30,19 +30,18 @@ import urllib.request, urllib.parse, urllib.error
 import datetime
 import sys
 import functools
+import subprocess
+import platform
+import codecs
+
 from urllib.parse import urlparse
 from PIL import Image
-
-from .DominantColors import DominantColors
 
 import gi
 gi.require_version('GExiv2', '0.10')
 gi.require_version('PangoCairo', '1.0')
 
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2
-import inspect
-import subprocess
-import platform
 
 VARIETY_INFO = "-"
 
@@ -706,6 +705,8 @@ class Util:
 
     @staticmethod
     def md5(s):
+        if isinstance(s, str):
+            s = s.encode('utf-8')
         return hashlib.md5(s).hexdigest()
 
     @staticmethod
@@ -716,9 +717,9 @@ class Util:
     @staticmethod
     def random_hash():
         try:
-            return os.urandom(16).encode('hex')
+            return codecs.encode(os.urandom(16), 'hex_codec').decode('utf8')
         except Exception:
-            return ''.join(random.choice(string.hexdigits) for n in range(32))
+            return ''.join(random.choice(string.hexdigits) for n in range(32)).lower()
 
     @staticmethod
     def get_file_icon_name(path):
