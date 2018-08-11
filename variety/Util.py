@@ -34,7 +34,6 @@ import subprocess
 import platform
 import codecs
 
-from urllib.parse import urlparse
 from PIL import Image
 
 import gi
@@ -752,7 +751,7 @@ class Util:
             return True
 
         try:
-            host = urlparse(url).netloc
+            host = urllib.parse.urlparse(url).netloc
             if host.startswith('interfacelift.com'):
                 return False
 
