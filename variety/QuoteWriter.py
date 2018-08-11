@@ -29,10 +29,11 @@ class QuoteWriter:
     @staticmethod
     def write_quote(quote, author, infile, outfile, options=None):
         done_event = threading.Event()
-        w, h = Util.get_scaled_size(infile)
         exception = [None]
+
         def go():
             try:
+                w, h = Util.get_scaled_size(infile)
                 surface = QuoteWriter.load_cairo_surface(infile, w, h)
                 QuoteWriter.write_quote_on_surface(surface, quote, author, options)
                 QuoteWriter.save_cairo_surface(surface, outfile)
@@ -40,6 +41,7 @@ class QuoteWriter:
                 exception[0] = e
             finally:
                 done_event.set()
+
         GObject.idle_add(go)
         done_event.wait()
         if exception[0]:
@@ -56,9 +58,17 @@ class QuoteWriter:
 
     @staticmethod
     def save_cairo_surface(surface, filename):
-        size = surface.get_width(), surface.get_height()
-        image = Image.frombuffer('RGBA', size, surface.get_data().tobytes(), 'raw', 'BGRA', 0, 1).convert("RGB")
-        image.save(filename, quality=100)
+        try:
+            # attempt faster method first
+            # the get_data() call will fail with Cairo version < 1.15.4-1 (e.g. on 16.04)
+            # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=809479
+            data = surface.get_data()
+            size = surface.get_width(), surface.get_height()
+            image = Image.frombuffer('RGBA', size, data.tobytes(), 'raw', 'BGRA', 0, 1).convert("RGB")
+            image.save(filename, quality=100)
+        except:
+            # fallback to slower method, but which works on 16.04
+            surface.write_to_png(filename)
 
     @staticmethod
     def write_quote_on_surface(surface, quote, author=None, options=None, margin=30):
@@ -144,4 +154,4 @@ if __name__ == "__main__":
         '"I may be drunk, Miss, but in the morning I will be sober and you will still be ugly."',
         "Winston Churchill",
         "test.jpg",
-        "test_result.jpg")
+        "test_result.png")

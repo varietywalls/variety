@@ -43,7 +43,7 @@ class Jumble:
                 logger.info(lambda: "Jumble loading module in %s from %s" % (name, path))
                 yield imp.load_module(name, *info), path
             except Exception:
-                logging.exception("Could not load plugin module %s" % path)
+                logger.exception("Could not load plugin module %s" % path)
                 continue
 
     def _walk_plugin_classes(self):
@@ -64,11 +64,11 @@ class Jumble:
             try:
                 info = cls.get_info()
             except Exception:
-                logging.exception("Jumble: not a plugin class: %s" % str(cls))
+                logger.exception("Jumble: not a plugin class: %s" % str(cls))
                 continue
 
             if not info:
-                logging.warning("Jumble: %s: get_info() returned None" % str(cls))
+                logger.warning("Jumble: %s: get_info() returned None" % str(cls))
                 continue
 
             try:
@@ -80,7 +80,7 @@ class Jumble:
                 plugin.folder = os.path.dirname(plugin.path)
                 self.plugins.append({"plugin": plugin, "class": cls, "info": info})
             except Exception:
-                logging.exception("Jumble: could not instantiate plugin class: %s" % str(cls))
+                logger.exception("Jumble: could not instantiate plugin class: %s" % str(cls))
                 continue
 
     def get_plugins(self, clazz=None, typename=None, name=None, active=None):

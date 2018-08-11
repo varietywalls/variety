@@ -106,8 +106,9 @@ class GoodreadsSource(IQuoteSource):
                 if first_a:
                     author = first_a.contents[0]
                     link = "https://www.goodreads.com" + div.find('a')["href"]
-                    if div.find('i'):
-                        author = author + ', ' + div.find('i').find('a').contents[0]
+                    i = div.find('i')
+                    if i:
+                        author = author + ', ' + (i.find('a') or i).contents[0]
                 else:
                     link = None
                     author = re.match(r'(\n\s+)+((.*)$)', quote_text, re.MULTILINE)

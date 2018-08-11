@@ -273,9 +273,10 @@ class QuotesEngine:
                     else:
                         raise RuntimeError("Unknown category")
 
-                    for q in quotes:
-                        if len(q["quote"]) < 250:
-                            cached[q["quote"]] = q
+                    if quotes:
+                        for q in quotes:
+                            if len(q["quote"]) < 250:
+                                cached[q["quote"]] = q
 
                 except Exception:
                     logger.exception(lambda: "Exception in quote plugin")
