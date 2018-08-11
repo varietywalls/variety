@@ -326,32 +326,6 @@ class Util:
         force_exit_thread.start()
 
     @staticmethod
-    def check_and_update_metadata(filename):
-        if not Util.is_image(filename):
-            # Skip working on stuff that isn't a picture; part of https://bugs.debian.org/893759
-            return False
-
-        try:
-            m = VarietyMetadata(filename)
-        except Exception:
-            logger.exception(lambda: "Could not read metadata for %s" % filename)
-            return False
-
-        try:
-            if 'Xmp.variety.info' in m or 'vrty.org' in m.get('imageURL', ''):
-                logger.info(lambda: 'Updating metadata for %s' % filename)
-                del m["Xmp.variety.info"]
-                if 'imageURL' in m and 'vrty.org' in m['imageURL']:
-                    del m['imageURL']
-                m.write(preserve_timestamps=True)
-
-                return True
-        except Exception:
-            logger.exception(lambda: "Could not read metadata for %s" % filename)
-
-        return False
-
-    @staticmethod
     def write_metadata(filename, info):
         try:
             m = VarietyMetadata(filename)
