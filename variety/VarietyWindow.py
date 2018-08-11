@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import io
 
 from variety import _
 import subprocess
@@ -580,7 +579,7 @@ class VarietyWindow(Gtk.Window):
     def load_banned(self):
         self.banned = set()
         try:
-            with io.open(os.path.join(self.config_folder, "banned.txt"), encoding='utf8') as f:
+            with open(os.path.join(self.config_folder, "banned.txt"), encoding='utf8') as f:
                 for line in f:
                     self.banned.add(line.strip())
         except Exception:
@@ -1180,7 +1179,7 @@ class VarietyWindow(Gtk.Window):
         if not filename:
             return
         try:
-            with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
+            with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), "w", encoding='utf8') as f:
                 f.write(filename)
         except Exception:
             logger.exception(lambda: "Cannot write wallpaper.jpg.txt")
@@ -1714,7 +1713,7 @@ class VarietyWindow(Gtk.Window):
     def ban_url(self, url):
         try:
             self.banned.add(url)
-            with io.open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
+            with open(os.path.join(self.config_folder, "banned.txt"), "a", encoding='utf8') as f:
                 f.write(url) + "\n"
         except Exception:
             logger.exception(lambda: "Could not ban URL")
@@ -2449,7 +2448,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             start = max(0, self.position - 100) # TODO do we want to remember forward history?
             end = min(self.position + 100, len(self.used))
             to_save = self.used[start:end]
-            with io.open(os.path.join(self.config_folder, "history.txt"), "w", encoding='utf8') as f:
+            with open(os.path.join(self.config_folder, "history.txt"), "w", encoding='utf8') as f:
                 f.write("%d\n" % (self.position - start))
                 for file in to_save:
                     f.write(file + "\n")
@@ -2462,7 +2461,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         self.no_effects_on = None
 
         try:
-            with io.open(os.path.join(self.config_folder, "history.txt"), "r", encoding='utf8') as f:
+            with open(os.path.join(self.config_folder, "history.txt"), "r", encoding='utf8') as f:
                 lines = list(f)
             self.position = int(lines[0].strip())
             for i, line in enumerate(lines[1:]):
@@ -2479,7 +2478,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                os.path.basename(current).startswith("variety-copied-wallpaper-"):
 
                 try:
-                    with io.open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), encoding='utf8') as f:
+                    with open(os.path.join(self.wallpaper_folder, "wallpaper.jpg.txt"), encoding='utf8') as f:
                         current = f.read().strip()
                 except Exception:
                     logger.exception(lambda: "Cannot read wallpaper.jpg.txt")
@@ -2662,7 +2661,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         self.quote_favorites_contents = ''
         try:
             if os.path.isfile(self.options.quotes_favorites_file):
-                with io.open(self.options.quotes_favorites_file, encoding='utf8') as f:
+                with open(self.options.quotes_favorites_file, encoding='utf8') as f:
                     self.quote_favorites_contents = f.read()
         except Exception:
             logger.exception(lambda: "Could not load favorite quotes file %s" % self.options.quotes_favorites_file)

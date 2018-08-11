@@ -17,7 +17,6 @@ import bs4
 import requests
 from functools import wraps
 import hashlib
-import io
 import json
 import re
 import os
@@ -432,7 +431,7 @@ class Util:
             # could not write metadata inside file, use json instead
             logger.exception(lambda: "Could not write metadata directly in file, trying json metadata: " + filename)
             try:
-                with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
+                with open(filename + '.metadata.json', 'w', encoding='utf8') as f:
                     f.write(json.dumps(info, indent=4, ensure_ascii=False, sort_keys=True))
                     return True
             except Exception as e:
@@ -487,7 +486,7 @@ class Util:
         except Exception as e:
             # could not read metadata inside file, try reading json metadata instead
             try:
-                with io.open(filename + '.metadata.json', encoding='utf8') as f:
+                with open(filename + '.metadata.json', encoding='utf8') as f:
                     return json.loads(f.read())
 
             except Exception:

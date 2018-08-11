@@ -17,7 +17,6 @@
 # This is the preferences dialog.
 
 from gi.repository import Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
-import io
 import stat
 
 import threading
@@ -311,7 +310,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.tips_buffer.set_text('\n\n'.join(Texts.TIPS))
 
             try:
-                with io.open(get_data_file("ui/changes.txt")) as f:
+                with open(get_data_file("ui/changes.txt")) as f:
                     self.ui.changes_buffer.set_text(f.read())
             except Exception:
                 logger.warning(lambda: "Missing ui/changes.txt file")

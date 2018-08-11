@@ -13,8 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import io
-
 import os
 import hashlib
 from configobj import ConfigObj
@@ -497,7 +495,7 @@ class Options:
 
     def parse_autosources(self):
         try:
-            with io.open(varietyconfig.get_data_file("config", "sources.txt"), encoding='utf8') as f:
+            with open(varietyconfig.get_data_file("config", "sources.txt"), encoding='utf8') as f:
                 for line in f:
                     if not line.strip() or line.strip().startswith('#'):
                         continue
@@ -513,7 +511,7 @@ class Options:
 
     def parse_autofilters(self):
         try:
-            with io.open(varietyconfig.get_data_file("config", "filters.txt"), encoding='utf8') as f:
+            with open(varietyconfig.get_data_file("config", "filters.txt"), encoding='utf8') as f:
                 for line in f:
                     if not line.strip() or line.strip().startswith('#'):
                         continue
