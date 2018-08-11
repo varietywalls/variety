@@ -593,7 +593,7 @@ class Util:
 
     @staticmethod
     def html_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.fetch(url, data))
+        return bs4.BeautifulSoup(Util.fetch(url, data), "lxml")
 
     @staticmethod
     def xml_soup(url, data=None):

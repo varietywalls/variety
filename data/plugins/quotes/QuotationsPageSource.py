@@ -42,7 +42,7 @@ class QuotationsPageSource(IQuoteSource):
 
     def get_from_html(self, url, html):
         quotes = []
-        bs = bs4.BeautifulSoup(html)
+        bs = bs4.BeautifulSoup(html, "lxml")
         fixmap = {
             '\u0091': "\u2018",
             '\u0092': "\u2019",
