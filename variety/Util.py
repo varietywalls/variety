@@ -833,3 +833,12 @@ class Util:
         daemon_thread.start()
         return daemon_thread
 
+    @staticmethod
+    def check_variety_slideshow_present():
+        try:
+            subprocess.check_call(['which', 'variety-slideshow'],
+                                  stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+            return True
+        except:
+            return False
+

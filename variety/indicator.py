@@ -18,7 +18,6 @@
 
 from gi.repository import Gtk # pylint: disable=E0611
 import os
-import threading
 
 from variety.Util import Util
 
@@ -278,18 +277,15 @@ class Indicator:
         self.downloads_handler_id = self.downloads.connect("toggled", window.show_hide_downloads)
         self.menu.append(self.downloads)
 
-        try:
-            from varietyslideshow import varietyslideshow
-        except:
-            logger.warning('Variety Slideshow is not installed. This is an optional extension '
-                           'adding pan-and-zoom slideshows to Variety: see '
-                           'https://github.com/peterlevi/variety-slideshow for details')
-        else:
+        if Util.check_variety_slideshow_present():
             self.menu.append(Gtk.SeparatorMenuItem.new())
-
             self.slideshow = Gtk.MenuItem(_("Start Slideshow"))
             self.slideshow.connect("activate", window.on_start_slideshow)
             self.menu.append(self.slideshow)
+        else:
+            logger.warning('Variety Slideshow is not installed. This is an optional extension '
+                           'adding pan-and-zoom slideshows to Variety: see '
+                           'https://github.com/peterlevi/variety-slideshow for details')
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 

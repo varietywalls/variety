@@ -89,9 +89,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.copyto_chooser = FolderChooser(self.ui.copyto_folder_chooser, self.on_copyto_changed)
         self.slideshow_custom_chooser = FolderChooser(self.ui.slideshow_custom_chooser, self.delayed_apply)
 
-        try:
-            from varietyslideshow import varietyslideshow
-        except:
+        if not Util.check_variety_slideshow_present():
             self.ui.notebook.remove_page(2)
 
         self.reload()
