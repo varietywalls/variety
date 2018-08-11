@@ -58,7 +58,8 @@ class WallhavenDownloader(Downloader.Downloader):
 
         result_count = None
         try:
-            result_count = int(soup.find('header', {'class': 'listing-header'}).find('h1').text.split()[0])
+            result_count = int(soup.find('header', {'class': 'listing-header'})
+                               .find('h1').text.split()[0].replace(',', ''))
         except:
             pass
 
@@ -139,7 +140,7 @@ class WallhavenDownloader(Downloader.Downloader):
             s, count = self.search()
             if not count:
                 count = 300
-            pages = min(count, 300) / 24 + 1
+            pages = min(count, 300) // 24 + 1
             page = random.randint(1, pages)
             logger.info(lambda: '%s wallpapers in result, using page %s' % (count, page))
             s, count = self.search(page=page)
