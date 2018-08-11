@@ -434,7 +434,7 @@ class Util:
             logger.exception(lambda: "Could not write metadata directly in file, trying json metadata: " + filename)
             try:
                 with io.open(filename + '.metadata.json', 'w', encoding='utf8') as f:
-                    f.write(json.dumps(info, indent=4, ensure_ascii=False, encoding='utf8'))
+                    f.write(json.dumps(info, indent=4, ensure_ascii=False, sort_keys=True))
                     return True
             except Exception as e:
                 logger.exception(lambda: "Could not write metadata for file " + filename)
@@ -476,10 +476,10 @@ class Util:
                 pass
 
             try:
-                info['keywords'] = list(map(_u, m['Iptc.Application2.Keywords']))
+                info['keywords'] = m['Iptc.Application2.Keywords']
             except:
                 try:
-                    info['keywords'] = list(map(_u, m['Xmp.dc.subject']))
+                    info['keywords'] = m['Xmp.dc.subject']
                 except:
                     pass
 
