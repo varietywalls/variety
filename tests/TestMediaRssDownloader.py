@@ -28,7 +28,7 @@ from variety.MediaRssDownloader import MediaRssDownloader
 
 class TestMediaRssDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, MediaRssDownloader(None, "https://vrty.org/user/~peterlevi/rss"))
+        test_download_one_for(self, MediaRssDownloader(None, "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
 
     def test_validate_deviantart(self):
         self.assertTrue(MediaRssDownloader.validate("http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))

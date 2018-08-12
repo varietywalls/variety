@@ -402,7 +402,7 @@ class Util:
     def write_metadata(filename, info):
         try:
             m = VarietyMetadata(filename)
-            for k, v in info.items():
+            for k, v in sorted(info.items()):
                 if k == 'author':
                     m["Xmp.variety." + k] = v
                     if not 'Xmp.dc.creator' in m:
@@ -422,7 +422,7 @@ class Util:
                 elif k == 'sfwRating':
                     m["Xmp.variety." + k] = int(v)
                 elif k == 'extraData':
-                    m["Xmp.variety." + k] = json.dumps(v)
+                    m["Xmp.variety." + k] = json.dumps(v, sort_keys=True)
                 else:
                     m["Xmp.variety." + k] = v
             m.save_file()
@@ -688,7 +688,7 @@ class Util:
 
     @staticmethod
     def md5file(file):
-        with open(file) as f:
+        with open(file, mode='rb') as f:
             return Util.md5(f.read())
 
     @staticmethod

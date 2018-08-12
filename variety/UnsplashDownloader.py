@@ -53,7 +53,8 @@ class UnsplashDownloader(Downloader.Downloader):
         self.last_fill_time = 0
         self.queue = []
 
-        parent.registerDownloaderSetWallpaperHook("unsplash", UnsplashDownloader.setWallpaperHook)
+        if self.parent:
+            parent.registerDownloaderSetWallpaperHook("unsplash", UnsplashDownloader.setWallpaperHook)
 
     def convert_to_filename(self, url):
         return "Unsplash"
