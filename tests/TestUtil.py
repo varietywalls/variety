@@ -17,6 +17,7 @@
 
 import sys
 import os.path
+import os
 import unittest
 import time
 
@@ -26,6 +27,12 @@ from variety.Util import Util, debounce, throttle, cache
 
 
 class TestUtil(unittest.TestCase):
+    def setUpClass():
+        # Chdir to the tests directory so that we can find our test images
+        curdir = os.path.dirname(os.path.abspath(__file__))
+        if curdir:
+            os.chdir(curdir)
+
     def test_sanitize_filename(self):
         self.assertEqual("i_m____g_.jpg", Util.sanitize_filename("i?m?*%^g_.jpg"))
 
