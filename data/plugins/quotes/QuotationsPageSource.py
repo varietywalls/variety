@@ -82,11 +82,11 @@ class QuotationsPageSource(IQuoteSource):
 
     def get_for_author(self, author):
         return self.get_for_search_url(
-            iri2uri(("http://www.quotationspage.com/search.php?Search=&Author=%s" % author).encode('utf-8')))
+            iri2uri("http://www.quotationspage.com/search.php?Search=&Author=%s" % author))
 
     def get_for_keyword(self, keyword):
         return self.get_for_search_url(
-            iri2uri(("http://www.quotationspage.com/search.php?Search=%s&Author=" % keyword).encode('utf-8')))
+            iri2uri("http://www.quotationspage.com/search.php?Search=%s&Author=" % keyword))
 
     def get_for_search_url(self, url):
         logger.info(lambda: "Fetching quotes from Goodreads for search url=%s" % url)
