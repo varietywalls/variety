@@ -2,16 +2,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -114,13 +114,18 @@ class TestUtil(unittest.TestCase):
         self.assertFalse(Util.same_file_paths("/a/../b/c", "/a/./b/c"))
 
     def test_compare_versions(self):
+        self.assertEqual(-1, Util.compare_versions("0.6.9", "0.7.0-alpha1"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "0.4.11"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "0.5"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "1"))
         self.assertEqual(0, Util.compare_versions("0.4.10", "0.4.10"))
+        self.assertEqual(0, Util.compare_versions("1.0.0", "1.0"))  # PEP 440 details
         self.assertEqual(1, Util.compare_versions("0.4.10", "0.4.8"))
         self.assertEqual(1, Util.compare_versions("0.4.10", "0.4"))
         self.assertEqual(1, Util.compare_versions("0.4.10", "0"))
+        self.assertEqual(1, Util.compare_versions("0.7.0-beta1", "0.7.0-alpha1"))
+        self.assertEqual(1, Util.compare_versions("0.7.0", "0.7.0-alpha1"))
+        self.assertEqual(1, Util.compare_versions("0.7.0", "0.7.0-beta1"))
 
     def test_md5(self):
         self.assertEqual("098f6bcd4621d373cade4e832627b4f6", Util.md5("test"))
