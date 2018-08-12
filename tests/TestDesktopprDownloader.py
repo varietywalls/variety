@@ -18,10 +18,10 @@
 import sys
 import os.path
 import unittest
-from .TestDownloader import test_download_one_for
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
+from tests.TestDownloader import test_download_one_for
 from variety.DesktopprDownloader import DesktopprDownloader
 
 
