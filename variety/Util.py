@@ -34,7 +34,6 @@ import platform
 import codecs
 
 from PIL import Image
-from pkg_resources import parse_version
 
 import gi
 gi.require_version('GExiv2', '0.10')
@@ -672,6 +671,7 @@ class Util:
 
     @staticmethod
     def compare_versions(v1, v2):
+        from pkg_resources import parse_version
         pv1 = parse_version(v1)
         pv2 = parse_version(v2)
 
