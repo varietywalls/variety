@@ -114,7 +114,6 @@ class TestUtil(unittest.TestCase):
         self.assertFalse(Util.same_file_paths("/a/../b/c", "/a/./b/c"))
 
     def test_compare_versions(self):
-        self.assertEqual(-1, Util.compare_versions("0.6.9", "0.7.0-alpha1"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "0.4.11"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "0.5"))
         self.assertEqual(-1, Util.compare_versions("0.4.10", "1"))
