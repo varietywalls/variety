@@ -1681,7 +1681,6 @@ class VarietyWindow(Gtk.Window):
 
                 def _go():
                     try:
-                        from gi.repository import Gio
                         gio_file = Gio.File.new_for_path(file)
                         ok = gio_file.trash()
                     except:
