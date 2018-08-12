@@ -134,7 +134,7 @@ class TestUtil(unittest.TestCase):
         self.assertEqual("633de9e37fd782d79b59c626695ac2ef", Util.md5file("test.jpg"))
 
     def test_collapseuser(self):
-        self.assertEqual("~/.config/variety", Util.collapseuser("/home/peter/.config/variety"))
+        self.assertEqual("~/.config/variety", Util.collapseuser("%s/.config/variety" % os.path.expanduser('~')))
         self.assertEqual("/home/peteraaa/.config/variety", Util.collapseuser("/home/peteraaa/.config/variety"))
         self.assertEqual("/media/.config/variety", Util.collapseuser("/media/.config/variety"))
 
