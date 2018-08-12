@@ -25,7 +25,7 @@ import logging
 import string
 import threading
 import time
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import datetime
 import sys
 import functools

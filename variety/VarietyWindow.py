@@ -17,7 +17,7 @@
 
 from variety import _
 import subprocess
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble

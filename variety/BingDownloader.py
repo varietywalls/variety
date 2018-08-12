@@ -13,13 +13,9 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-from datetime import datetime
-
 import random
-import urllib.parse
-
 import logging
-import re
+from datetime import datetime
 from variety import Downloader
 from variety.Util import Util
 

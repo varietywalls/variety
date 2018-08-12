@@ -44,7 +44,6 @@
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import json
-import urllib.request, urllib.parse, urllib.error
 import urllib.parse
 import pycurl
 import io

@@ -24,7 +24,7 @@ from variety import _
 
 import logging
 import threading
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 
 logger = logging.getLogger('variety')
 
