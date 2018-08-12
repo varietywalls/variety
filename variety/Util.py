@@ -551,7 +551,7 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None):
+    def request(url, data=None, stream=False, method=None, timeout=5):
         if url.startswith('//'):
             url = 'http:' + url
         headers = {
@@ -565,7 +565,8 @@ class Util:
                                  data=data,
                                  headers=headers,
                                  stream=stream,
-                                 allow_redirects=True)
+                                 allow_redirects=True,
+                                 timeout=timeout)
             r.raise_for_status()
             return r
         except requests.exceptions.SSLError:
