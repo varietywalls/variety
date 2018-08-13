@@ -30,7 +30,6 @@ import datetime
 import sys
 import functools
 import subprocess
-import platform
 import codecs
 
 from PIL import Image
@@ -39,7 +38,7 @@ import gi
 gi.require_version('GExiv2', '0.10')
 gi.require_version('PangoCairo', '1.0')
 
-from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2
+from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2, Gio
 
 VARIETY_INFO = "-"
 
@@ -60,6 +59,7 @@ SOURCE_NAME_TO_TYPE = {
 
 random.seed()
 logger = logging.getLogger('variety')
+
 
 def debounce(seconds):
     """ Decorator that will postpone a functions execution until after wait seconds
@@ -502,14 +502,14 @@ class Util:
         if rating is None:
             for key in ["Xmp.xmp.Rating", "Exif.Image.Rating", "Exif.Image.RatingPercent"]:
                 if key in m:
-                    del m[key]
+                    del m[key]  # pylint: disable=unsupported-delete-operation
         else:
             m["Xmp.xmp.Rating"] = rating
             m["Exif.Image.Rating"] = max(0, rating)
             if rating >= 1:
                 m["Exif.Image.RatingPercent"] = (rating - 1) * 25
             elif "Exif.Image.RatingPercent" in m:
-                del m["Exif.Image.RatingPercent"]
+                del m["Exif.Image.RatingPercent"]  # pylint: disable=unsupported-delete-operation
 
         m.save_file()
 
@@ -696,12 +696,11 @@ class Util:
         try:
             return codecs.encode(os.urandom(16), 'hex_codec').decode('utf8')
         except Exception:
-            return ''.join(random.choice(string.hexdigits) for n in range(32)).lower()
+            return ''.join(random.choice(string.hexdigits) for _ in range(32)).lower()
 
     @staticmethod
     def get_file_icon_name(path):
         try:
-            from gi.repository import Gio
             f = Gio.File.new_for_path(os.path.normpath(os.path.expanduser(path)))
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
             return query_info.get_attribute_object("standard::icon").get_names()[0]
@@ -811,10 +810,6 @@ class Util:
             return None
         except:
             return None
-
-    @staticmethod
-    def get_os_name():
-        return ' '.join(platform.linux_distribution()[0:2])
 
     # makes the Gtk thread execute the given callback.
     @staticmethod

@@ -25,7 +25,7 @@ from jumble.Jumble import Jumble
 import gi
 gi.require_version('Notify', '0.7')
 
-from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GdkPixbuf, GObject, Gio, Notify  # pylint: disable=E0611
 
 Notify.init("Variety")
 
@@ -201,7 +201,7 @@ class VarietyWindow(Gtk.Window):
             self.about.present()
         else:
             logger.debug(lambda: 'create new about dialog')
-            self.about = AboutVarietyDialog() # pylint: disable=E1102
+            self.about = AboutVarietyDialog()  # pylint: disable=E1102
             # Set the version on runtime.
             Gtk.AboutDialog.set_version(self.about, varietyconfig.get_version())
             self.about.run()
@@ -482,7 +482,8 @@ class VarietyWindow(Gtk.Window):
 
     def should_clear_prepared(self):
         return self.previous_options and (
-               [s for s in self.previous_options.sources if s[0]] != [s for s in self.options.sources if s[0]] or \
+               [s for s in self.previous_options.sources if s[0]] !=
+               [s for s in self.options.sources if s[0]] or
                self.filtering_options_changed())
 
     def filtering_options_changed(self):
@@ -505,8 +506,8 @@ class VarietyWindow(Gtk.Window):
 
     def size_options_changed(self):
         return self.previous_options and (
-            self.previous_options.min_size_enabled != self.options.min_size_enabled or \
-            self.previous_options.min_size != self.options.min_size or \
+            self.previous_options.min_size_enabled != self.options.min_size_enabled or
+            self.previous_options.min_size != self.options.min_size or
             self.previous_options.use_landscape_enabled != self.options.use_landscape_enabled)
 
     def create_downloaders_cache(self):
@@ -725,10 +726,6 @@ class VarietyWindow(Gtk.Window):
                     # delay enabling Trash if auto_changed
                     self.ind.trash.set_visible(bool(file))
                     self.ind.trash.set_sensitive(deleteable and not auto_changed)
-
-                    if hasattr(self.ind, 'rating_items'):
-                        for item in self.ind.rating_items:
-                            item.set_sensitive(self.url is not None)
 
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 

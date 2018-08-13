@@ -401,7 +401,7 @@ class Options:
 
             try:
                 custom_path = config["slideshow_custom_folder"]
-                if custom_path in ('None', 'Default') or not os.path.isdir():
+                if custom_path in ('None', 'Default') or not os.path.isdir(custom_path):
                     self.slideshow_custom_folder = Util.get_xdg_pictures_folder()
                 else:
                     self.slideshow_custom_folder = custom_path

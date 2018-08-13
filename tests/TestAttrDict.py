@@ -14,35 +14,40 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import shutil
 import sys
 import os
 import unittest
 
 from tests import setup_test_logging
-from variety import Util
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
+from variety.AttrDict import AttrDict
+
 setup_test_logging()
 
-from variety.Downloader import Downloader
 
+class TestAttrDict(unittest.TestCase):
+    def test_attr_dict(self):
+        a = AttrDict({'a': {'b': 1}})
+        self.assertFalse(bool(a.deep.inside))
+        self.assertTrue(bool(a.a))
+        self.assertEqual(1, a.a.b)
+        a.l.k = 3
+        self.assertEqual(3, a.l.k)
+        a.f.g.h = 2
+        self.assertEqual(2, a.f.g.h)
+        a["x"]["y"]["z"] = 1
+        self.assertEqual(1, a["x"]["y"]["z"])
 
-def test_download_one_for(test_case, dl):
-    dl.target_folder = '/tmp/variety/%s' % dl.__class__.__name__
-    shutil.rmtree(dl.target_folder, ignore_errors=True)
-    for _ in range(5):
-        f = dl.download_one()
-        if f and os.path.isfile(f) and Util.is_image(f, check_contents=True):
-            return
-    test_case.fail("Tried download_one 5 times, all failed")
+        b = AttrDict(x=1, y=2)
+        self.assertFalse(bool(b.deep.inside))
+        self.assertEqual(1, b.x)
+        self.assertEqual(2, b.y)
 
-
-class TestDownloader(unittest.TestCase):
-    def test_convert_url(self):
-        self.assertEqual("wallpapers_net_some_category_html",
-            Downloader("", "", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
+        b.c = {'z': 3}
+        self.assertEqual(3, b.c.z)
+        self.assertFalse(bool(b.c.dredrefre))
 
 
 if __name__ == '__main__':

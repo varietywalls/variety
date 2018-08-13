@@ -16,7 +16,7 @@
 
 # This is the preferences dialog.
 
-from gi.repository import Gtk, Gdk, GObject, GdkPixbuf # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject, GdkPixbuf  # pylint: disable=E0611
 import stat
 
 import threading
@@ -277,7 +277,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             #self.ui.sources.get_selection().connect("changed", self.on_sources_selection_changed)
 
             if hasattr(self, "filter_checkboxes"):
-                for cb in self.filter_checkboxes:
+                for cb in self.filter_checkboxes:  # pylint: disable=access-member-before-definition
                     self.ui.filters_grid.remove(cb)
                     cb.destroy()
             self.filter_checkboxes = []
@@ -292,6 +292,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.filters_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.filter_checkboxes.append(cb)
 
+            # pylint: disable=access-member-before-definition
             if hasattr(self, "quotes_sources_checkboxes"):
                 for cb in self.quotes_sources_checkboxes:
                     self.ui.quotes_sources_grid.remove(cb)
@@ -648,6 +649,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         selected = set(row.get_indices()[0] for row in rows)
         self.ui.use_button.set_sensitive(selected and enabled != selected)
 
+        # pylint: disable=access-member-before-definition
         if hasattr(self, "previous_selection") and rows == self.previous_selection:
             return
 
@@ -671,6 +673,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
+
+        # pylint: disable=access-member-before-definition
         if hasattr(self, "show_timer") and self.show_timer:
             self.show_timer.cancel()
         self.show_timer = threading.Timer(0.3, timer_func)
@@ -788,6 +792,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.delayed_apply_with_interval(1)
 
     def delayed_apply_with_interval(self, interval):
+        # pylint: disable=access-member-before-definition
         if not self.loading:
             if hasattr(self, "apply_timer") and self.apply_timer:
                 self.apply_timer.cancel()

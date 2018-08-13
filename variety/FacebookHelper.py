@@ -159,7 +159,7 @@ class FacebookHelper:
         m["access_token"] = self.token
         try:
             content = FacebookHelper.post(PUBLISH_URL, m)
-        except pycurl.error as e:
+        except pycurl.error as e:  # pylint: disable=no-member
             on_failure(self, "publish", str(e))
             return
 
@@ -188,6 +188,7 @@ class FacebookHelper:
 
     @staticmethod
     def post(url, post_data, timeout=10):
+        # pylint: disable=no-member
         c = pycurl.Curl()
         c.setopt(pycurl.CONNECTTIMEOUT, timeout)
         c.setopt(pycurl.TIMEOUT, timeout)

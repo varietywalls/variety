@@ -18,6 +18,7 @@
 import unittest
 import subprocess
 
+
 class TestPylint(unittest.TestCase):
     def test_project_errors_only(self):
         '''run pylint in error only mode

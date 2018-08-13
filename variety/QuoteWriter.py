@@ -45,10 +45,11 @@ class QuoteWriter:
         GObject.idle_add(go)
         done_event.wait()
         if exception[0]:
-            raise exception[0]
+            raise exception[0]  # pylint: disable=raising-bad-type
 
     @staticmethod
     def load_cairo_surface(filename, w, h):
+        # pylint: disable=no-member
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(filename, w, h, False)
         surface = cairo.ImageSurface(0, pixbuf.get_width(), pixbuf.get_height())
         context = cairo.Context(surface)
@@ -72,8 +73,8 @@ class QuoteWriter:
 
     @staticmethod
     def write_quote_on_surface(surface, quote, author=None, options=None, margin=30):
-        qcontext = cairo.Context(surface)
-        acontext = cairo.Context(surface)
+        qcontext = cairo.Context(surface)  # pylint: disable=no-member
+        acontext = cairo.Context(surface)  # pylint: disable=no-member
 
         iw = surface.get_width()
         ih = surface.get_height()

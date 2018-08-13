@@ -131,6 +131,7 @@ class ImageFetcher:
             return filename
 
         except Exception as e:
+            # pylint: disable=no-member
             logger.exception(lambda: "Fetch failed for URL " + url)
             if reported:
                 if isinstance(e, HTTPError) and e.response.status_code in (403, 404):

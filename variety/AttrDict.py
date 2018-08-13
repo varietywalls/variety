@@ -32,8 +32,8 @@ class AttrDict(defaultdict):
             return v
 
     def merge(self, arg):
-        if hasattr(arg, 'iteritems'):
-            self.merge(iter(arg.items()))
+        if hasattr(arg, 'items'):
+            self.merge(arg.items())
         else:
             for k, v in arg:
                 self[k] = AttrDict.converted(v)
@@ -56,24 +56,3 @@ class AttrDict(defaultdict):
     __setattr__ = __setitem__
 
 
-
-if __name__ == "__main__":
-    a = AttrDict({'a': {'b':1}})
-    assert not bool(a.deep.inside)
-    assert bool(a.a)
-    assert a.a.b == 1
-    a.l.k = 3
-    assert a.l.k == 3
-    a.f.g.h = 2
-    assert a.f.g.h == 2
-    a["x"]["y"]["z"] = 1
-    assert a["x"]["y"]["z"] == 1
-
-    b = AttrDict(x=1, y=2)
-    assert not bool(b.deep.inside)
-    assert b.x == 1
-    assert b.y == 2
-
-    b.c = {'z': 3}
-    assert b.c.z == 3
-    assert not bool(b.c.dredrefre)
