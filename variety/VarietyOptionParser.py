@@ -17,6 +17,7 @@
 import optparse
 from variety import safe_print
 
+
 class VarietyOptionParser(optparse.OptionParser):
     """Override optparse.OptionParser to allow for errors in options without exiting"""
 
@@ -33,8 +34,7 @@ class VarietyOptionParser(optparse.OptionParser):
         if file is None:
             safe_print(self.format_help())
         else:
-            encoding = self._get_encoding(file)
-            file.write(self.format_help().encode(encoding, "replace"))
+            file.write(self.format_help().encode())
 
     def error(self, msg):
         if self.report_errors:
