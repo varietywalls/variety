@@ -31,11 +31,11 @@ Depends: gir1.2-gdkpixbuf-2.0,
          python3-pkg-resources,
          python3-pycurl,
          python3-requests,
-         python3-httplib2,
          ${misc:Depends},
          ${python3:Depends}
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
-            libglib2.0-bin | trash-cli | konqueror
+            libglib2.0-bin | trash-cli | konqueror,
+            python3-httplib2
 Suggests: feh | nitrogen,
           gnome-shell-extension-appindicator | gnome-shell-extension-top-icons-plus
 Description: Wallpaper changer, downloader and manager
