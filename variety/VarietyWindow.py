@@ -19,7 +19,10 @@ from variety import _
 import subprocess
 import urllib.parse
 from variety.VarietyOptionParser import VarietyOptionParser
-from variety.FacebookHelper import FacebookHelper
+try:
+    from variety.FacebookHelper import FacebookHelper
+except ImportError:
+    FacebookHelper = None
 from jumble.Jumble import Jumble
 
 import gi
@@ -2471,7 +2474,19 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.used.insert(0, self.current)
             self.position = 0
 
+    @staticmethod
+    def _show_facebookhelper_not_available():
+        dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.ERROR,
+            Gtk.ButtonsType.CLOSE, "Facebook Sharing Error")
+        dialog.format_secondary_text(
+            "Please install pycurl to enable Facebook Sharing.")
+        dialog.run()
+        dialog.destroy()
+
     def publish_on_facebook(self, widget):
+        if FacebookHelper is None:
+            self._show_facebookhelper_not_available()
+            return
         if not self.url:
             logger.warning(lambda: "publish_on_facebook called with no current URL")
             return
@@ -2559,6 +2574,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         return text
 
     def publish_quote_on_facebook(self, widget):
+        if FacebookHelper is None:
+            self._show_facebookhelper_not_available()
+            return
         if not self.quote:
             logger.warning(lambda: "publish_quote_on_facebook called with no current quote")
             return
