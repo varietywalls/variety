@@ -34,14 +34,13 @@ Depends: gir1.2-gdkpixbuf-2.0,
          ${misc:Depends},
          ${python3:Depends}
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
-            libglib2.0-bin | trash-cli | konqueror,
             python3-httplib2
 Suggests: feh | nitrogen,
           gnome-shell-extension-appindicator | gnome-shell-extension-top-icons-plus
 Description: Wallpaper changer, downloader and manager
  Variety is an open-source wallpaper changer, downloader, and manager for
  Linux. It supports a variety of sources for wallpapers, including local
- files, online services such as Flickr, Wallhaven.cc, NASA Astronomy Picture
+ files, online services such as Unsplash, Flickr, Wallhaven.cc, NASA Astronomy Picture
  of the Day, Desktoppr.co, and media RSS feeds (Picasa, deviantART, etc.).
  .
  You can also install the following (suggested) packages to enhance Variety's

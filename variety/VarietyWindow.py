@@ -44,10 +44,6 @@ import webbrowser
 import pipes
 from PIL import Image as PILImage
 
-# Replacement for shutil.which, which (no pun intended) only exists on Python 3.3+
-# unless we want another 3rd party dependency.
-from distutils.spawn import find_executable
-
 random.seed()
 logger = logging.getLogger('variety')
 
@@ -1683,30 +1679,20 @@ class VarietyWindow(Gtk.Window):
                 self.thumbs_manager.remove_image(file)
 
                 def _go():
-                    command = ''
-                    if find_executable('gio'):
-                        command = ['gio', 'trash', file.encode('utf-8')]
-                    elif find_executable('trash-put'):
-                        command = ['trash-put', file.encode('utf-8')]
-                    elif find_executable('kfmclient'):
-                        command = ['kfmclient', 'move', file.encode('utf-8'), 'trash:/']
+                    try:
+                        gio_file = Gio.File.new_for_path(file)
+                        ok = gio_file.trash()
+                    except:
+                        logger.exception("Gio.File.trash failed with exception")
+                        ok = False
 
-                    logger.info("Running trash command %s", command)
-                    if command:
-                        result = subprocess.call(command)
-                        if result != 0:
-                            logger.error("Trash resulted in error code %d", result)
-                            self.show_notification(
-                                _("Cannot delete"),
-                                _("Deleting to trash failed, check variety.log for more information."))
-                    else:
-                        logger.error("Delete to trash failed as no suitable program was found.")
+                    if not ok:
+                        logger.error("Gio.File.trash failed")
                         self.show_notification(
                             _("Cannot delete"),
-                            _("Deleting to trash failed because no suitable program is installed. "
-                              "Please install gio (part of GLib), trash-cli, or konqueror."))
+                            _("Deleting to trash failed, check variety.log for more information."))
 
-                threading.Timer(0, _go).start()
+                GObject.idle_add(_go)
         except Exception:
             logger.exception(lambda: "Exception in move_to_trash")
 

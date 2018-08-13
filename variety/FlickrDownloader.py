@@ -236,8 +236,8 @@ class FlickrDownloader(Downloader.Downloader):
                         'author': ph['ownername'],
                         'authorURL': 'https://www.flickr.com/photos/%s' % ph["owner"],
                         'headline': ph['title'],
-                        'keywords': ph['tags'].split(' '),
-                        'description': ph['description']['_content']
+                        'keywords': ph['tags'].split(' ')[:200],  # Flickr metadata can be excessive and hit Exif limits
+                        'description': ph['description']['_content'][:10000]
                     }
                 except:
                     extra_metadata = {}
