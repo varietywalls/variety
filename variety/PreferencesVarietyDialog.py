@@ -177,8 +177,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.favorites_operations = self.options.favorites_operations
 
-            self.ui.facebook_show_dialog.set_active(self.options.facebook_show_dialog)
-
             self.ui.copyto_enabled.set_active(self.options.copyto_enabled)
             self.copyto_chooser.set_folder(self.parent.get_actual_copyto_folder())
 
@@ -865,8 +863,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 # will be set in the favops editor dialog
                 pass
 
-
-            self.options.facebook_show_dialog = self.ui.facebook_show_dialog.get_active()
 
             self.options.copyto_enabled = self.ui.copyto_enabled.get_active()
             copyto = os.path.normpath(self.copyto_chooser.get_folder())
