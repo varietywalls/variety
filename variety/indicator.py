@@ -154,12 +154,6 @@ class Indicator:
         self.google_image.connect("activate", window.google_image_search)
         self.image_menu.append(self.google_image)
 
-        self.image_menu.append(Gtk.SeparatorMenuItem.new())
-
-        self.publish_fb = Gtk.MenuItem(_("Share on Facebook"))
-        self.publish_fb.connect("activate", window.publish_on_facebook)
-        self.image_menu.append(self.publish_fb)
-
         self.rating_separator = Gtk.SeparatorMenuItem.new()
         self.image_menu.append(self.rating_separator)
 
@@ -230,11 +224,6 @@ class Indicator:
         self.google_quote_author.set_use_underline(True)
         self.google_quote_author.connect("activate", window.google_quote_author)
         self.quotes_menu.append(self.google_quote_author)
-
-        self.quote_fb = Gtk.MenuItem(_("Share on Facebook"))
-        self.quote_fb.set_use_underline(True)
-        self.quote_fb.connect("activate", window.publish_quote_on_facebook)
-        self.quotes_menu.append(self.quote_fb)
 
         self.quotes_menu.append(Gtk.SeparatorMenuItem.new())
 

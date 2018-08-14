@@ -248,16 +248,6 @@ class Options:
                 pass
 
             try:
-                self.facebook_show_dialog = config["facebook_show_dialog"].lower() in TRUTH_VALUES
-            except Exception:
-                pass
-
-            try:
-                self.facebook_message = config["facebook_message"].strip()
-            except Exception:
-                pass
-
-            try:
                 self.copyto_enabled = config["copyto_enabled"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -588,9 +578,6 @@ class Options:
         self.sync_enabled = False
         self.stats_enabled = False
 
-        self.facebook_show_dialog = True
-        self.facebook_message = ""
-
         self.copyto_enabled = False
         self.copyto_folder = "Default"
 
@@ -697,9 +684,6 @@ class Options:
             config["smart_enabled"] = str(self.smart_enabled)
             config["sync_enabled"] = str(self.sync_enabled)
             config["stats_enabled"] = str(self.stats_enabled)
-
-            config["facebook_show_dialog"] = str(self.facebook_show_dialog)
-            config["facebook_message"] = self.facebook_message
 
             config["copyto_enabled"] = str(self.copyto_enabled)
             config["copyto_folder"] = Util.collapseuser(self.copyto_folder)

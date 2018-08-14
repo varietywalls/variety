@@ -19,7 +19,6 @@ from variety import _
 import subprocess
 import urllib.parse
 from variety.VarietyOptionParser import VarietyOptionParser
-from variety.FacebookHelper import FacebookHelper
 from jumble.Jumble import Jumble
 
 import gi
@@ -50,8 +49,6 @@ logger = logging.getLogger('variety')
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.WelcomeDialog import WelcomeDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
-from variety.FacebookFirstRunDialog import FacebookFirstRunDialog
-from variety.FacebookPublishDialog import FacebookPublishDialog
 from variety.DominantColors import DominantColors
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
@@ -760,7 +757,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.selector.set_active(self.thumbs_manager.is_showing("selector"))
                     self.ind.selector.handler_unblock(self.ind.selector_handler_id)
 
-                    self.ind.publish_fb.set_sensitive(self.url is not None)
                     self.ind.google_image.set_sensitive(self.image_url is not None)
 
                     self.ind.pause_resume.set_label(_("Pause on current") if self.options.change_enabled else _("Resume regular changes"))
@@ -2256,13 +2252,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             command = parts.netloc
             args = urllib.parse.parse_qs(parts.query)
 
-            if command == 'facebook-auth':
-                if hasattr(self, 'facebook_helper') and self.facebook_helper:
-                    fragments = urllib.parse.parse_qs(parts.fragment)
-                    args.update(fragments)
-                    self.facebook_helper.on_facebook_auth(args)
-
-            elif command == 'add-source':
+            if command == 'add-source':
                 source_type = args['type'][0].lower()
                 if not source_type in Options.SourceType.str_to_type:
                     self.show_notification(_('Unsupported source type'),
@@ -2471,116 +2461,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             self.used.insert(0, self.current)
             self.position = 0
 
-    def publish_on_facebook(self, widget):
-        if not self.url:
-            logger.warning(lambda: "publish_on_facebook called with no current URL")
-            return
-
-        file = self.current
-        if not file:
-            return
-
-        link = self.url
-        picture = self.image_url
-        caption = None
-        quote_text = self.get_quote_text_for_publishing()
-        if self.source_name:
-            caption = self.source_name + ", via Variety Wallpaper Changer"
-        else:
-            caption = "Via Variety Wallpaper Changer"
-
-        logger.info(lambda: "Publish on FB requested with params %s, %s, %s" % (link, picture, caption))
-
-        message = self.options.facebook_message
-        if message == '<current_quote>':
-            message = quote_text
-
-        if self.options.facebook_show_dialog:
-            publish_dialog = FacebookPublishDialog()
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 200, 100)
-            publish_dialog.ui.image.set_from_pixbuf(pixbuf)
-            buf = publish_dialog.ui.message.get_buffer()
-
-            def _text_changed(widget=None):
-                text = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).strip()
-                if self.quote and text == quote_text:
-                    publish_dialog.ui.fill_quote.set_sensitive(False)
-                    publish_dialog.ui.hide_dialog.set_label(_('Do not ask anymore, always use the current quote'))
-                else:
-                    publish_dialog.ui.fill_quote.set_sensitive(bool(quote_text))
-                    publish_dialog.ui.hide_dialog.set_label(_('Do not ask anymore, always use the text above'))
-
-            buf.connect("changed", _text_changed)
-
-            buf.set_text(message)
-
-            publish_dialog.ui.fill_quote.set_visible(bool(quote_text))
-            def _fill_quote(widget=None):
-                buf.set_text(quote_text)
-            publish_dialog.ui.fill_quote.connect("clicked", _fill_quote)
-
-            self.dialogs.append(publish_dialog)
-            response = publish_dialog.run()
-            publish_dialog.destroy()
-            try:
-                self.dialogs.remove(publish_dialog)
-            except:
-                pass
-            if not self.running or response != Gtk.ResponseType.OK:
-                return
-
-            message = buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False).strip()
-            self.options.facebook_message = '<current_quote>' if message == quote_text else message
-            self.options.facebook_show_dialog = not publish_dialog.ui.hide_dialog.get_active()
-            self.options.write()
-
-        if self.facebook_firstrun():
-            return
-
-        def do_publish():
-            self.facebook_helper = FacebookHelper(self, token_file=os.path.join(self.config_folder, ".fbtoken"))
-            def on_success(fb, action, data):
-                self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"), icon=file)
-                self.facebook_helper = None
-            def on_failure(fb, action, data):
-                self.show_notification(_("Could not publish"), str(data), icon=file)
-                self.facebook_helper = None
-
-            self.facebook_helper.publish(
-                message=message, link=link, picture=picture, caption=caption,
-                on_success=on_success, on_failure=on_failure)
-        GObject.idle_add(do_publish)
-
-    def get_quote_text_for_publishing(self):
-        if not self.quote:
-            return ''
-        author = ("\n-- " + self.quote["author"]) if self.quote.get("author", None) else ""
-        text = (self.quote["quote"] + author).strip().encode('utf8')
-        return text
-
-    def publish_quote_on_facebook(self, widget):
-        if not self.quote:
-            logger.warning(lambda: "publish_quote_on_facebook called with no current quote")
-            return
-
-        if self.facebook_firstrun():
-            return
-
-        def do_publish():
-            self.facebook_helper = FacebookHelper(self, token_file=os.path.join(self.config_folder, ".fbtoken"))
-            def on_success(fb, action, data):
-                self.show_notification(_("Published"), _("You may open your Facebook feed to see the post"))
-                self.facebook_helper = None
-            def on_failure(fb, action, data):
-                self.show_notification(_("Could not publish"), str(data))
-                self.facebook_helper = None
-
-            text = self.get_quote_text_for_publishing()
-            self.facebook_helper.publish(message=text, caption="Via Variety Wallpaper Changer",
-                on_success=on_success, on_failure=on_failure)
-
-        GObject.idle_add(do_publish)
-
     def disable_quotes(self, widget=None):
         self.options.quotes_enabled = False
         self.quote = None
@@ -2592,34 +2472,6 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
         self.update_indicator(auto_changed=False)
         if self.quotes_engine:
             self.quotes_engine.stop()
-
-    def facebook_firstrun(self):
-        def _cleanup():
-            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-                self.facebook_dialog.destroy()
-                try:
-                    self.dialogs.remove(self.facebook_dialog)
-                except Exception:
-                    pass
-                self.facebook_dialog = None
-
-        first_run_file = os.path.join(self.config_folder, ".fbfirstrun")
-        if not os.path.exists(first_run_file):
-            if hasattr(self, "facebook_dialog") and self.facebook_dialog:
-                self.facebook_dialog.present()
-                return True
-            else:
-                self.facebook_dialog = FacebookFirstRunDialog()
-                self.dialogs.append(self.facebook_dialog)
-                response = self.facebook_dialog.run()
-                if not self.running or response != Gtk.ResponseType.OK:
-                    _cleanup()
-                    return True
-                with open(first_run_file, "w") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-
-        _cleanup()
-        return False
 
     def prev_quote(self, widget=None):
         if self.quotes_engine and self.options.quotes_enabled:
