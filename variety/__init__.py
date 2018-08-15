@@ -22,11 +22,13 @@ gettext.textdomain('variety')
 import os
 import sys
 
+
 def _(text):
     # Use "from locale import gettext" if we are deploying to /opt/extras
     # Use "from gettext import gettext" when using standard Debian deployment
     from gettext import gettext as _
     return _(text)
+
 
 def safe_print(text, ascii_text=None):
     """
@@ -37,9 +39,10 @@ def safe_print(text, ascii_text=None):
     """
     try:
         print(text)
-    except: # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
+    except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
         try:
-            logging.getLogger("variety").error('Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
+            logging.getLogger("variety").error(
+                'Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
             if ascii_text:
                 try:
                     print(ascii_text)
@@ -56,6 +59,7 @@ class SafeLogger(logging.Logger):
     Fixes UnicodeDecodeErrors errors in logging calls:
     Accepts lambda as well string messages. Catches errors when evaluating the passed lambda.
     """
+
     def makeRecord(self, name, level, fn, lno, msg, *args, **kwargs):
         try:
             new_msg = msg if isinstance(msg, str) else msg()
@@ -72,6 +76,7 @@ class SafeLogger(logging.Logger):
 
         return super().makeRecord(name, level, fn, lno, new_msg, *args, **kwargs)
 
+
 logging.setLoggerClass(SafeLogger)
 
 # # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
@@ -84,9 +89,10 @@ import dbus, dbus.service, dbus.glib
 import logging
 
 import gi
+
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gtk, Gdk, GObject # pylint: disable=E0611
+from gi.repository import Gtk, Gdk, GObject  # pylint: disable=E0611
 
 from variety import VarietyWindow
 from variety import ThumbsManager
@@ -101,7 +107,7 @@ DBUS_PATH = '/com/peterlevi/Variety'
 class VarietyService(dbus.service.Object):
     def __init__(self, variety_window):
         self.variety_window = variety_window
-        bus_name = dbus.service.BusName(DBUS_KEY, bus = dbus.SessionBus())
+        bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
 
     @dbus.service.method(dbus_interface=DBUS_KEY, in_signature='as', out_signature='s')
@@ -109,13 +115,16 @@ class VarietyService(dbus.service.Object):
         result = self.variety_window.process_command(arguments, initial_run=False)
         return "" if result is None else result
 
+
 VARIETY_WINDOW = None
 
 terminate = False
 
+
 def sigint_handler(*args):
     global terminate
     terminate = True
+
 
 def check_quit():
     global terminate
@@ -132,6 +141,7 @@ def check_quit():
         GObject.idle_add(VARIETY_WINDOW.on_quit)
     Util.start_force_exit_thread(10)
 
+
 def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
@@ -142,7 +152,22 @@ def main():
 
     arguments = sys.argv[1:]
 
+    bus = dbus.SessionBus()
+    # ensure singleton
+    if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+        if not arguments:
+            arguments = ["--preferences"]
+        safe_print(_("Variety is already running. Sending the command to the running instance."),
+                   "Variety is already running. Sending the command to the running instance.")
+        method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+        result = method(arguments)
+        if result:
+            safe_print(result)
+        return
+
     # validate arguments and set up logging
+    # set_up_logging must be called after the DBus checks, only by one running instance,
+    # or the log file can be corrupted
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
     set_up_logging(options.verbose)
 
@@ -165,19 +190,6 @@ def main():
                 profiler.log_class(ThumbsWindow.ThumbsWindow)
 
         profiler.start()
-
-    bus = dbus.SessionBus()
-    # ensure singleton
-    if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
-        if not arguments:
-            arguments = ["--preferences"]
-        safe_print(_("Variety is already running. Sending the command to the running instance."),
-                   "Variety is already running. Sending the command to the running instance.")
-        method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
-        result = method(arguments)
-        if result:
-            safe_print(result)
-        return
 
     # Run the application.
     window = VarietyWindow.VarietyWindow()
