@@ -1,6 +1,10 @@
-0.7.0-alpha1
-    Experimental port to Python 3 - some things might not work yet!
+0.7.0-beta1
+    Port to Python 3
+    Fix broken trash deletion on some systems by directly using Gio libraries
+    Fix potential log file corruption when trying to start multiple instances
     Removed outdated functionality for publishing to Facebook
+    Updated URL for QuotationsPage plugin
+    Update default clipboard_hosts: add deviantart.net, imageshack.com; remove (dead) ns223506.ovh.net
 
 0.6.9
     Removed broken "SSL dependency" installation code
