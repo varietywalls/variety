@@ -22,13 +22,9 @@ gettext.textdomain('variety')
 import os
 import sys
 
-
 def _(text):
-    # Use "from locale import gettext" if we are deploying to /opt/extras
-    # Use "from gettext import gettext" when using standard Debian deployment
-    from gettext import gettext as _
-    return _(text)
-
+    """Returns the translated form of text."""
+    return gettext.gettext(text)
 
 def safe_print(text, ascii_text=None):
     """
