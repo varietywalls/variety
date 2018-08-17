@@ -53,6 +53,10 @@ See `debian/control` for an equivalent list of runtime dependencies on Debian/Ub
 
 ### Install steps
 
-1. Clone the git repository: `git clone https://github.com/varietywalls/variety.git && cd variety`
+1. Clone the git repository: `git clone -b wip/python3 https://github.com/varietywalls/variety.git && cd variety`
 
 2. Run `python3 setup.py install`. By default, this will install Variety into `/usr/local`, but you can adjust the install destination by specifying `--prefix /your/preferred/path`.
+
+3. Run `pip install -r requirements.txt` to install Python libraries.
+
+4. `sudo get install python3-distutils-extra gir1.2-gdkpixbuf-2.0 gir1.2-gexiv2-0.10 gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-notify-0.7 gir1.2-pango-1.0 imagemagick` for system packages.
