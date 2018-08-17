@@ -1,8 +1,12 @@
-variety (0.7.0~a1) UNRELEASED; urgency=medium
+variety (0.7.0~b1) bionic; urgency=medium
 
-  * Experimental port to Python 3 - some things might not work yet
-  * Update extended description notes of when feh and nitrogen are used
-  * Remove runtime dependencies from build-deps.
+  * Port to Python 3
+  * Updated URL for QuotationsPage plugin
+  * Update default clipboard_hosts: add deviantart.net, imageshack.com; remove (dead) ns223506.ovh.net
+
+  [ Peter Levi ]
+  * Fix broken trash deletion on some systems by directly using Gio libraries
+  * Fix potential log file corruption when trying to start multiple instances
   * Removed outdated functionality for publishing to Facebook
 
  -- James Lu <james@overdrivenetworks.com>  Tue, 17 Jul 2018 15:41:18 -0700
