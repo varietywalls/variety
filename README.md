@@ -9,21 +9,27 @@ Variety sits as a tray icon to allow easy pausing and resuming where supported.
 It also implements a range of image effects such as oil painting and blur, as
 well as layering quotes and a clock onto the background.
 
-### Requirements
 
-- [gir1.2-gdkpixbuf-2.0](https://packages.debian.org/sid/gir1.2-gdkpixbuf-2.0)
-- [gir1.2-gexiv2-0.10](https://packages.debian.org/sid/gir1.2-gexiv2-0.10)
-- [gir1.2-glib-2.0](https://packages.debian.org/sid/gir1.2-glib-2.0)
-- [gir1.2-gtk-3.0](https://packages.debian.org/sid/gir1.2-gtk-3.0)
-- [gir1.2-notify-0.7](https://packages.debian.org/sid/gir1.2-notify-0.7)
-- [gir1.2-pango-1.0](https://packages.debian.org/sid/gir1.2-pango-1.0)
-- [imagemagick](https://packages.debian.org/sid/imagemagick)
-- [python3-bs4](https://packages.debian.org/sid/python3-bs4)
-- [python3-lxml](https://packages.debian.org/sid/python3-lxml)
-- [python3-cairo](https://packages.debian.org/sid/python3-cairo)
-- [python3-configobj](https://packages.debian.org/sid/python3-configobj)
-- [python3-dbus](https://packages.debian.org/sid/python3-dbus)
-- [python3-gi-cairo](https://packages.debian.org/sid/python3-gi-cairo)
-- [python3-pil](https://packages.debian.org/sid/python3-pil)
-- [python3-pkg-resources](https://packages.debian.org/sid/python3-pkg-resources)
-- [python3-requests](https://packages.debian.org/sid/python3-requests)
+## Requirements
+- Python 3.5+
+- GObject introspection / GIRepository bindings for:
+    - GDK Pixbuf (Debian/Ubuntu: [gir1.2-gdkpixbuf-2.0](https://packages.debian.org/sid/gir1.2-gdkpixbuf-2.0))
+    - gexiv2 (Debian/Ubuntu: [gir1.2-gexiv2-0.10](https://packages.debian.org/sid/gir1.2-gexiv2-0.10))
+    - GLib, GObject, GModule, Gio (Debian/Ubuntu: [gir1.2-glib-2.0](https://packages.debian.org/sid/gir1.2-glib-2.0))
+    - GTK+ 3 (Debian/Ubuntu: [gir1.2-gtk-3.0](https://packages.debian.org/sid/gir1.2-gtk-3.0))
+    - libnotify (Debian/Ubuntu: [gir1.2-gtk-3.0](https://packages.debian.org/sid/gir1.2-gtk-3.0))
+    - Pango (Debian/Ubuntu: [gir1.2-pango-1.0](https://packages.debian.org/sid/gir1.2-pango-1.0))
+- Python 3 libraries:
+    - BeautifulSoup4
+    - lxml
+    - Cairo bindings for Python 3 (e.g. Debian/Ubuntu [python3-cairo](https://packages.debian.org/sid/python3-cairo))
+    - Cairo PyGObject integration (e.g. Debian/Ubuntu [python3-gi-cairo](https://packages.debian.org/sid/python3-gi-cairo))
+    - ConfigObj
+    - Pillow
+    - pkg_resources (from setuptools)
+    - Requests
+    - *Optional*: httplib2 (for more quotes sources)
+- *Optional*: imagemagick (for wallpaper filters)
+- *Optional*: feh and/or nitrogen: used by default for wallpaper changing on i3, openbox, and dwm
+
+See `debian/control` for an equivalent list of runtime dependencies on Debian/Ubuntu.
