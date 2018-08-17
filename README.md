@@ -55,4 +55,6 @@ See `debian/control` for an equivalent list of runtime dependencies on Debian/Ub
 
 1. Clone the git repository: `git clone https://github.com/varietywalls/variety.git && cd variety`
 
-2. Run `python3 setup.py install`. By default, this will install Variety into `/usr/local`, but you can adjust the install destination by specifying `--prefix /your/preferred/path`.
+2. Run `python3 setup.py install`. By default, this will install Variety into `/usr/local`; for a local installation, use `python3 setup.py install --prefix $HOME/.local`.
+
+3. Run `variety` from the command line or its desktop menu entry!
