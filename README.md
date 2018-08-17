@@ -10,6 +10,28 @@ Otherwise, its desktop entry menu provides a similar set of options.
 Variety also includes a range of image effects, such as oil painting and blur,
 as well as options to layer quotes and a clock onto the background.
 
+## Installation
+
+### As a system package
+
+Variety is available in the distro repositories of:
+
+- [Arch Linux](https://www.archlinux.org/packages/community/any/variety/)
+- [Debian 9+](https://packages.debian.org/search?keywords=variety)
+- [Fedora](https://www.rpmfind.net/linux/rpm2html/search.php?query=variety)
+- [OpenSUSE](https://software.opensuse.org/package/variety?search_term=variety)
+- [Ubuntu 16.04+](https://packages.ubuntu.com/search?keywords=variety)
+
+### Ubuntu PPA
+Variety backports to older Ubuntu releases are available at https://code.launchpad.net/~peterlevi/+archive/ubuntu/ppa
+
+### Install from source
+To install Variety from source, you will need Git, Python 3 and [distutils-extra](https://launchpad.net/python-distutils-extra)
+
+1. Clone the git repository: `git clone https://github.com/varietywalls/variety.git && cd variety`
+
+2. Run `python3 setup.py install`. By default, this will install Variety into `/usr/local`, but you can adjust the install destination by specifying `--prefix /your/preferred/path`.
+
 ## Requirements
 - Python 3.5+
 - GObject introspection / GIRepository bindings for:
