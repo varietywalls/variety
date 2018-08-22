@@ -2,6 +2,7 @@
     Port to Python 3
     Fix broken trash deletion on some systems by directly using Gio libraries
     Fix potential log file corruption when trying to start multiple instances
+    Support for setting GNOME Screensaver / GDM background
     Removed outdated functionality for publishing to Facebook
     Updated URL for QuotationsPage plugin
     Update default clipboard_hosts: add deviantart.net, imageshack.com; remove (dead) ns223506.ovh.net
