@@ -23,6 +23,18 @@ from variety.Util import Util
 
 logger = logging.getLogger('variety')
 
+SAFE_MODE_BLACKLIST = {
+    # Sample of Wallhaven and Flickr tags that cover most not-fully-safe images
+    'woman', 'women', 'model', 'models', 'boob', 'boobs', 'tit', 'tits',
+    'lingerie', 'bikini', 'bikini model', 'sexy', 'bra', 'bras', 'panties',
+    'face', 'faces', 'legs', 'feet', 'pussy',
+    'ass', 'asses', 'topless', 'long hair', 'lesbians', 'cleavage',
+    'brunette', 'brunettes', 'redhead', 'redheads', 'blonde', 'blondes',
+    'high heels', 'miniskirt', 'stockings', 'anime girls', 'in bed', 'kneeling',
+    'girl', 'girls', 'nude', 'naked', 'people', 'fuck', 'sex'
+}
+
+
 class Downloader(object):
     def __init__(self, parent, source_type, name, location, is_refresher=False):
         self.parent = parent
@@ -89,7 +101,7 @@ class Downloader(object):
             return None
 
         if self.parent and self.parent.options.safe_mode and 'keywords' in extra_metadata:
-            blacklisted = set(k.lower() for k in extra_metadata['keywords'])
+            blacklisted = set(k.lower() for k in extra_metadata['keywords']) & SAFE_MODE_BLACKLIST
             if len(blacklisted) > 0:
                 logger.info(lambda: "Skipping non-safe download %s due to blacklisted keywords (%s). "
                                     "Is the source %s:%s suitable for Safe mode?" %
