@@ -94,6 +94,7 @@ class VarietyWindow(Gtk.Window):
         "d8d6a6c407a3d02ee242e9ce9ceaf293",  # 0.4.19
         "fdb69a2b16c62594c0fc12318ec58023",  # 0.4.20
         "236fa00c42af82904eaaecf2d460d21f",  # 0.5.5
+        "6005ee48fc9cb48050af6e0e9572e660",  # 0.6.6 (unary operator expected bug; LP: #1722433)
     }
 
     OUTDATED_GET_WP_SCRIPTS = {
