@@ -13,13 +13,16 @@
 # You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import abc
 
-class IPlugin(object):
+
+class IPlugin(object, metaclass=abc.ABCMeta):
     """
     The most simple interface to be inherited when creating a plugin.
     """
 
     @classmethod
+    @abc.abstractmethod
     def get_info(cls):
         """
         Returns the basic info about the plugin. Please make sure the name is unique among all Variety plugins
@@ -29,10 +32,10 @@ class IPlugin(object):
            "description": "Sample description",
            "version": "1.0",
            "author": "Author name", # optional
-           "url": "Plugin URL"  # optional
+           "url": "Plugin homepage URL"  # optional
         }
         """
-        return {}
+        pass
 
     def __init__(self):
         """
@@ -43,8 +46,8 @@ class IPlugin(object):
 
         # These will be filled in by Jumble.load() and available before the first activate() call
         self.jumble = None
-        self.path = None # Path to the plugin python file
-        self.folder = None # Folder where plugin is located (can be used for loading UI resources, etc.).
+        self.path = None  # Path to the plugin python file
+        self.folder = None  # Folder where plugin is located (can be used for loading UI resources, etc.).
         # This folder may be read-only. A separate config folder convention should be used to store config files.
 
     def activate(self):
@@ -69,4 +72,3 @@ class IPlugin(object):
 
     def is_active(self):
         return self.active
-

@@ -1,9 +1,10 @@
 import os
+import abc
 from jumble.IPlugin import IPlugin
 from variety.Util import Util
 
 
-class IVarietyPlugin(IPlugin):
+class IVarietyPlugin(IPlugin, metaclass=abc.ABCMeta):
     """
     Variety-specific plugin interface
     """
