@@ -94,24 +94,9 @@ class GoodreadsSource(IQuoteSource):
         for div in soup.find_all('div', 'quoteText'):
             logger.debug(lambda: "Parsing quote for div\n%s" % div)
             try:
-                quote_text = ""
-                first_a = div.find('a')
-                for elem in div.contents:
-                    if elem == first_a:
-                        break
-                    else:
-                        quote_text += str(elem)
-                quote_text = quote_text.replace('<br>', '\n').replace('<br/>', '\n').replace('―', '').strip()
-
-                if first_a:
-                    author = first_a.contents[0]
-                    link = "https://www.goodreads.com" + div.find('a')["href"]
-                    i = div.find('i')
-                    if i:
-                        author = author + ', ' + (i.find('a') or i).contents[0]
-                else:
-                    link = None
-                    author = re.match(r'(\n\s+)+((.*)$)', quote_text, re.MULTILINE)
+                quote_text = "\n".join(div.find_all(text=True, recursive=False)).replace('―', '').strip()
+                author = div.find("span", attrs={"class": "authorOrTitle"}).string.strip().strip(',')
+                link = "https://www.goodreads.com" + div.find('a')["href"]
                 quotes.append({"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link})
             except Exception:
                 logger.exception(lambda: "Could not extract Goodreads quote")
