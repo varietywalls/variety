@@ -98,7 +98,7 @@ class GoodreadsSource(IQuoteSource):
                 author = div.find("span", attrs={"class": "authorOrTitle"}).string.strip().strip(',')
                 first_a = div.find('a')
                 if first_a:
-                    link = "https://www.goodreads.com" + div.find('a')["href"]
+                    link = "https://www.goodreads.com" + first_a["href"]
                 else:
                     link = None  # No link given
                 quotes.append({"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link})
