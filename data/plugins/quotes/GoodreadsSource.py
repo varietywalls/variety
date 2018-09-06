@@ -96,7 +96,11 @@ class GoodreadsSource(IQuoteSource):
             try:
                 quote_text = "\n".join(div.find_all(text=True, recursive=False)).replace('―', '').strip()
                 author = div.find("span", attrs={"class": "authorOrTitle"}).string.strip().strip(',')
-                link = "https://www.goodreads.com" + div.find('a')["href"]
+                first_a = div.find('a')
+                if first_a:
+                    link = "https://www.goodreads.com" + div.find('a')["href"]
+                else:
+                    link = None  # No link given
                 quotes.append({"quote": quote_text, "author": author, "sourceName": "Goodreads", "link": link})
             except Exception:
                 logger.exception(lambda: "Could not extract Goodreads quote")
