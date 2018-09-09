@@ -1,3 +1,8 @@
+0.7.0
+	New translation: Turkish
+	Fix possible download issues when upgrading from older Variety versions and having safe mode enabled
+	GoodreadsSource: fix stray HTML tags being displayed in quote authors
+
 0.7.0-beta1
     Port to Python 3
     Fix broken trash deletion on some systems by directly using Gio libraries
