@@ -14,9 +14,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
+import os
+
+from variety.Util import Util
 
 
-class IDownloader(abc.ABC):
+class Downloader(abc.ABC):
     def __init__(self, source, description, folder_name, config=None, full_descriptor=None):
         super().__init__(source)
         self.source = source
@@ -24,6 +27,21 @@ class IDownloader(abc.ABC):
         self.folder_name = folder_name
         self.config = config
         self.full_descriptor = full_descriptor
+
+        self._update_target_folder()
+
+    def get_variety(self):
+        return self.source.get_variety()
+
+    def _update_target_folder(self):
+        dl_folder = self.get_variety().options.real_download_folder
+        filename = Util.convert_to_filename(self.folder_name)
+        if len(filename) + len(dl_folder) > 160:
+            filename = filename[:(150 - len(dl_folder))] + Util.md5(filename)[:10]
+        self.target_folder = os.path.join(dl_folder, filename)
+
+    def get_local_filename(self, url):
+        return os.path.join(self.target_folder, Util.get_local_name(url))
 
     def get_source(self):
         """
@@ -40,7 +58,7 @@ class IDownloader(abc.ABC):
 
     def get_description(self):
         """
-        User-friendly description of this downlaoder to show in UI (in the list of sources).
+        User-friendly description of this downloader to show in UI (in the list of sources).
         E.g. "Downloads random images from site X", or "Images from Flickr user XXX"
         :return: description
         """

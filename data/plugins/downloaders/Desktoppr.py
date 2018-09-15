@@ -15,28 +15,32 @@
 ### END LICENSE
 
 import logging
+
+from variety import _
 from variety.Util import Util
-from variety.plugins.ISimpleDownloader import ISimpleDownloader
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.plugins.downloaders.DefaultDownloader import QueueItem
 
 logger = logging.getLogger('variety')
 
 
-class Desktoppr(ISimpleDownloader):
-    def get_source_type(self):
-        return "desktoppr"
+class Desktoppr(SimpleDownloader):
+    DESCRIPTION = _("Random wallpapers from Desktoppr.co")
 
-    def get_source_name(self):
-        return "Desktoppr"
+    @classmethod
+    def get_info(cls):
+        return {
+            "name": "Desktoppr",
+            "description": Desktoppr.DESCRIPTION,
+            "author": "Peter Levi",
+            "version": "0.1"
+        }
 
-    def get_description(self):
-        return "Random wallpapers from Desktoppr.co"
+    def __init__(self):
+        SimpleDownloader.__init__(
+            self, source_type="desktoppr", description=Desktoppr.DESCRIPTION)
 
-    def get_folder_name(self):
-        return "Desktoppr"
-
-    def download_one(self):
-        logger.info(lambda: "Downloading a random image from desktoppr.co")
-
+    def fill_queue(self):
         response = Util.fetch_json("https://api.desktoppr.co/1/wallpapers/random")
 
         if response["response"]["review_state"] != "safe":
@@ -45,5 +49,4 @@ class Desktoppr(ISimpleDownloader):
 
         origin_url = response["response"]["url"]
         image_url = response["response"]["image"]["url"]
-
-        return self.save_locally(origin_url, image_url)
+        self.queue.append(QueueItem(origin_url, image_url, {}))

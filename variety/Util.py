@@ -843,3 +843,10 @@ class Util:
         except:
             return False
 
+    @staticmethod
+    def convert_to_filename(url):
+        url = re.sub(r"http://", "", url)
+        url = re.sub(r"https://", "", url)
+        valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
+        return ''.join(c if c in valid_chars else '_' for c in url)
+

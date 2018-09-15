@@ -14,12 +14,16 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
-from variety.plugins.downloaders.IImageSource import IImageSource
+from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 
 
-class ISimpleDownloader(IImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
+class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
     def __init__(self, source_type, description):
-        IImageSource.__init__(self, source_type)
-        DefaultDownloader.__init__(self, self, description, self.get_folder_name())
+        ImageSource.__init__(
+            self, source_type=source_type)
+        DefaultDownloader.__init__(
+            self, source=self, description=description, folder_name=self.get_source_name())
         self.queue = []
+
+

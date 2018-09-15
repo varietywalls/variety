@@ -14,10 +14,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
-from variety.plugins.downloaders.IImageSource import IImageSource
+from variety.plugins.downloaders.ImageSource import ImageSource
 
 
-class IConfigurableImageSource(IImageSource, metaclass=abc.ABCMeta):
+class ConfigurableImageSource(ImageSource, metaclass=abc.ABCMeta):
     def __init__(self, source_type):
         super().__init__(source_type)
 
