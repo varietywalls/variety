@@ -1,9 +1,22 @@
+variety (0.7.0) bionic; urgency=medium
+
+  * New translation: Turkish
+  * Fix possible download issues when upgrading from older Variety versions
+    and having safe mode enabled
+  * GoodreadsSource: fix stray HTML tags being displayed in quote authors
+
+ -- James Lu <james@overdrivenetworks.com>  Tue, 17 Jul 2018 15:41:18 -0700
+
 variety (0.7.0~a1) UNRELEASED; urgency=medium
 
-  * Experimental port to Python 3 - some things might not work yet
-  * Update extended description notes of when feh and nitrogen are used
-  * Remove runtime dependencies from build-deps.
+  * Port to Python 3
+  * Fix broken trash deletion on some systems by directly using Gio libraries
+  * Fix potential log file corruption when trying to start multiple instances
+  * Support for setting GNOME Screensaver / GDM background
   * Removed outdated functionality for publishing to Facebook
+  * Updated URL for QuotationsPage plugin
+  * Update default clipboard_hosts: add deviantart.net, imageshack.com;
+    remove (dead) ns223506.ovh.net
 
  -- James Lu <james@overdrivenetworks.com>  Tue, 17 Jul 2018 15:41:18 -0700
 
