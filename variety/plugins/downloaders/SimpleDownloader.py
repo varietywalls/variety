@@ -19,11 +19,14 @@ from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 
 
 class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
-    def __init__(self, source_type, description):
+    def __init__(self, source_type, description, folder_name=None):
         ImageSource.__init__(
             self, source_type=source_type)
         DefaultDownloader.__init__(
-            self, source=self, description=description, folder_name=self.get_source_name())
+            self,
+            source=self,
+            description=description,
+            folder_name=folder_name or self.get_source_name())
         self.queue = []
 
 

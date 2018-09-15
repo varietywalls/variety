@@ -47,10 +47,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def fill_queue(self):
         """
-        Subclasses should implement this method. It should fill self.queue with QueueItems.
+        Subclasses should implement this method. It should return one or more QueueItems.
         This serves as a cache so that downloaders can prepare multiple items for downloading using
-        fewer API/scrape calls.
-        :return: nothing, but as a side effect self.queue should be populated
+        fewer API/scrape calls. The size of the queue should be a compromise between making fewer API calls
+        and keeping some variety in the consecutive downloads.
+        :return: a list with one or more QueueItems
         """
         pass
 
@@ -74,7 +75,9 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
 
             self.source.last_fill_time = time.time()
             logger.info(lambda: "%s: Filling queue" % name)
-            self.fill_queue()
+            items = self.fill_queue()
+            for item in items:
+                self.queue.append(item)
 
         if not self.queue:
             logger.info(lambda: "%s: Queue still empty after fill request" % name)
