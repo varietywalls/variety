@@ -40,7 +40,7 @@ import random
 import re
 import urllib.parse
 import webbrowser
-import pipes
+import shlex
 from PIL import Image as PILImage
 
 random.seed()
@@ -299,7 +299,7 @@ class VarietyWindow(Gtk.Window):
                 try:
                     os.system(
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
-                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s" % pipes.quote(pencil_tile_filename))
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s" % shlex.quote(pencil_tile_filename))
                 except Exception:
                     logger.exception(lambda: "Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
@@ -1105,14 +1105,14 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert %s -scale %dx%d^ ' % (pipes.quote(filename), w, h)
+        cmd = 'convert %s -scale %dx%d^ ' % (shlex.quote(filename), w, h)
 
         logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + ' '
 
-        cmd += pipes.quote(target_file)
-        cmd = cmd.replace("%FILEPATH%", pipes.quote(filename))
-        cmd = cmd.replace("%FILENAME%", pipes.quote(os.path.basename(filename)))
+        cmd += shlex.quote(target_file)
+        cmd = cmd.replace("%FILEPATH%", shlex.quote(filename))
+        cmd = cmd.replace("%FILENAME%", shlex.quote(os.path.basename(filename)))
 
         logger.info(lambda: "ImageMagick filter cmd: " + cmd)
         return cmd.encode('utf-8')
@@ -1123,7 +1123,7 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = 'convert %s -scale %dx%d^ ' % (pipes.quote(filename), w, h)
+        cmd = 'convert %s -scale %dx%d^ ' % (shlex.quote(filename), w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
         clock_filter = self.options.clock_filter
@@ -1135,7 +1135,7 @@ class VarietyWindow(Gtk.Window):
 
         cmd += clock_filter
         cmd += ' '
-        cmd += pipes.quote(str(target_file))
+        cmd += shlex.quote(target_file)
         logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode('utf-8')
 
