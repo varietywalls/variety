@@ -299,7 +299,7 @@ class VarietyWindow(Gtk.Window):
                 try:
                     os.system(
                         "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
-                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s" % pipes.quote(pencil_tile_filename.encode('utf8')))
+                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s" % pipes.quote(pencil_tile_filename))
                 except Exception:
                     logger.exception(lambda: "Could not generate pencil_tile.png")
             threading.Timer(0, _generate_pencil_tile).start()
