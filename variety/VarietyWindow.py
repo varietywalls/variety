@@ -2515,7 +2515,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if self.quote_favorites_contents.find(self.current_quote_to_text()) == -1:
                     with open(self.options.quotes_favorites_file, "a") as f:
                         text = self.current_quote_to_text()
-                        f.write(text.encode('utf-8'))
+                        f.write(text)
                     self.reload_quote_favorites_contents()
                     self.update_indicator()
                     self.show_notification("Saved", "Saved to %s" % self.options.quotes_favorites_file)
