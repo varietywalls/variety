@@ -11,11 +11,11 @@ from gi.repository import Gtk, Gdk, GObject
 class FloatingWindow(Gtk.Window):
     __gtype_name__ = "FloatingWindow"
 
-    def __init__(self, menu=None):
+    def __init__(self, parent=None):
         super().__init__()
 
         self.running = True
-        self.menu = menu
+        self.parent = parent
 
         self.set_decorated(False)
         self.set_accept_focus(True)
@@ -73,14 +73,14 @@ class FloatingWindow(Gtk.Window):
 
         if event.button != 1 or event.type == Gdk.EventType._2BUTTON_PRESS:
             # This program can run as a standalone app too for testing :)
-            if self.menu:
-                self.menu.popup_at_pointer(event)
+            if self.parent:
+                self.parent.ind.menu.popup_at_pointer(event)
             else:
                 print('Not showing menu; we were started in a standalone fashion.')
 
     def handle_drag(self, widget, event, data=None):
         """
-        Handles drag movement when the left mouse button is clicked.
+        Handles drag movement when the left mouse button is pressed down.
         """
         if self._last_offset:
             current_x, current_y = self.get_position()

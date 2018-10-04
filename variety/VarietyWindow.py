@@ -2158,7 +2158,7 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                 if options.preferences:
                     self.on_mnu_preferences_activate()
                 if options.floating:
-                    self.floating_window = FloatingWindow(self.ind.menu)
+                    self.floating_window = FloatingWindow(self)
 
                 if options.quotes_fast_forward:
                     self.next_quote(bypass_history=True)
