@@ -152,7 +152,7 @@ def main():
     # ensure singleton
     if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
-            arguments = ["--preferences"]
+            arguments = ["--floating"]
         safe_print(_("Variety is already running. Sending the command to the running instance."),
                    "Variety is already running. Sending the command to the running instance.")
         method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
