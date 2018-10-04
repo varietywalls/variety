@@ -17,8 +17,10 @@ class FloatingWindow(Gtk.Window):
         self.running = True
         self.parent = parent
 
-        self.set_decorated(False)
+        if os.environ.get('XDG_SESSION_TYPE') != 'wayland': # Movement tracking doesn't work on Wayland :(
+            self.set_decorated(False)
         self.set_accept_focus(True)
+        self.set_title('Variety')
         self.set_resizable(False)
         self.set_default_size(48, 48)
 
