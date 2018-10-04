@@ -8,15 +8,14 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk, Gdk, GObject
 
-from variety import VARIETY_WINDOW
-
 class FloatingWindow(Gtk.Window):
     __gtype_name__ = "FloatingWindow"
 
-    def __init__(self):
+    def __init__(self, menu=None):
         super().__init__()
 
         self.running = True
+        self.menu = menu
 
         #self.set_decorated(False)
         self.set_accept_focus(True)
@@ -36,6 +35,7 @@ class FloatingWindow(Gtk.Window):
 
         self._eventbox = Gtk.EventBox()
         self._eventbox.set_visible(True)
+
         # Handle button press & left mouse button
         self._eventbox.set_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON1_MOTION_MASK)
         self._eventbox.connect('motion-notify-event', self.handle_drag)
@@ -67,16 +67,16 @@ class FloatingWindow(Gtk.Window):
            We want to allow dragging in the way that the cursor is at the same position
            relative to the window when the window moves (instead of moving with the cursor
            always at the top left).
-        2) Bring up the Variety Menu when clicked.
+        2) Bring up the Variety Menu when right-clicked or double-clicked.
         """
         self._last_offset = (event.x, event.y)
 
-        # Maybe not the best practice, but I wanted this program to run in a standalone form
-        # too for testing...
-        if VARIETY_WINDOW:
-            # stub
-        else:
-            print('Not showing menu; we were started in a standalone fashion.')
+        if event.button != 1 or event.type == Gdk.EventType._2BUTTON_PRESS:
+            # This program can run as a standalone app too for testing :)
+            if self.menu:
+                self.menu.popup_at_pointer(event)
+            else:
+                print('Not showing menu; we were started in a standalone fashion.')
 
     def handle_drag(self, widget, event, data=None):
         """

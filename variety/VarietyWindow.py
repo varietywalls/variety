@@ -66,6 +66,7 @@ from variety.ThumbsManager import ThumbsManager
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety import indicator
+from variety.FloatingWindow import FloatingWindow
 
 DL_FOLDER_FILE = ".variety_download_folder"
 
@@ -116,6 +117,7 @@ class VarietyWindow(Gtk.Window):
         self.about = None
         self.preferences_dialog = None
         self.ind = None
+        self.floating_window = None
 
         try:
             if Gio.SettingsSchemaSource.get_default().lookup("org.gnome.desktop.background", True):
@@ -2063,6 +2065,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Show Preferences dialog"))
 
         parser.add_option(
+            "-F", "--floating", action="store_true", dest="floating",
+            help=_("Show mini floating window (useful on systems without indicator / tray support)"))
+
+        parser.add_option(
             "--selector", "--show-selector", action="store_true", dest="selector",
             help=_("Show manual wallpaper selector - the thumbnail bar filled with images from the active image sources"))
 
@@ -2151,6 +2157,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_wallpaper_selector()
                 if options.preferences:
                     self.on_mnu_preferences_activate()
+                if options.floating:
+                    self.floating_window = FloatingWindow(self.ind.menu)
 
                 if options.quotes_fast_forward:
                     self.next_quote(bypass_history=True)
