@@ -1987,6 +1987,10 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Show logging messages (-vv to -vvvvv will profile various parts of Variety with increasing detail"))
 
         parser.add_option(
+            "-m", "--open-menu", action="store_true", dest="open_menu",
+            help=_("Forces opening the Variety menu"))
+
+        parser.add_option(
             "-q", "--quit", action="store_true", dest="quit",
             help=_("Make the running instance quit"))
 
@@ -2151,6 +2155,8 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     self.show_hide_wallpaper_selector()
                 if options.preferences:
                     self.on_mnu_preferences_activate()
+                if options.open_menu:
+                    self.ind.menu.popup(None, None, None, self.ind.status_icon, 0, Gtk.get_current_event_time())
 
                 if options.quotes_fast_forward:
                     self.next_quote(bypass_history=True)
