@@ -17,7 +17,7 @@ class FloatingWindow(Gtk.Window):
         self.running = True
         self.menu = menu
 
-        #self.set_decorated(False)
+        self.set_decorated(False)
         self.set_accept_focus(True)
         self.set_resizable(False)
         self.set_default_size(48, 48)
