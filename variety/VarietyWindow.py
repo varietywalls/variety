@@ -1299,10 +1299,13 @@ class VarietyWindow(Gtk.Window):
         return all_images[:count]
 
     def on_indicator_scroll(self, indicator, steps, direction):
-        self.on_indicator_scroll_throttled(indicator, steps, direction)
+        self.handle_scroll(direction)
 
     @debounce(seconds=0.3)
-    def on_indicator_scroll_throttled(self, indicator, steps, direction):
+    def handle_scroll(self, direction):
+        """
+        Handles scrolling to change the wallpaper (indicator and floating widget).
+        """
         if direction == Gdk.ScrollDirection.SMOOTH:
             return
 
