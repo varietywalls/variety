@@ -37,9 +37,12 @@ class FloatingWindow(Gtk.Window):
         self._eventbox.set_visible(True)
 
         # Handle button press & left mouse button
-        self._eventbox.set_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON1_MOTION_MASK)
+        self._eventbox.set_events(Gdk.EventMask.BUTTON_PRESS_MASK |
+                                  Gdk.EventMask.BUTTON1_MOTION_MASK |
+                                  Gdk.EventMask.SCROLL_MASK)
         self._eventbox.connect('motion-notify-event', self.handle_drag)
         self._eventbox.connect('button-press-event', self.handle_click)
+        self._eventbox.connect('scroll-event', self.handle_scroll)
 
         self._image = Gtk.Image.new_from_icon_name("variety", Gtk.IconSize.DIALOG)
         self._eventbox.add(self._image)
@@ -88,6 +91,13 @@ class FloatingWindow(Gtk.Window):
             x = current_x + event.x - offset_x
             y = current_y + event.y - offset_y
             self.move(x, y)
+
+    def handle_scroll(self, widget, event, data=None):
+        """
+        Handles scrolling to change the wallpaper.
+        """
+        if self.parent:
+            self.parent.handle_scroll(event.direction)
 
 if __name__ == "__main__":
     w = FloatingWindow()
