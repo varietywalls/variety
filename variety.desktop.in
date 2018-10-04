@@ -8,7 +8,7 @@ Icon=variety
 Terminal=false
 Type=Application
 StartupNotify=false
-Actions=Next;Previous;PauseResume;History;Preferences;
+Actions=Next;Previous;PauseResume;History;Preferences;OpenMenu;
 Keywords=Wallpaper;Changer;Change;Download;Downloader;Variety;
 
 [Desktop Action Next]
@@ -30,3 +30,7 @@ _Name=History
 [Desktop Action Preferences]
 Exec=variety --preferences
 _Name=Preferences
+
+[Desktop Action OpenMenu]
+Exec=variety --open-menu
+_Name=Open Menu
