@@ -39,6 +39,7 @@ class Options:
         APOD = 8
         MEDIA_RSS = 10
         EARTH = 11
+        WIKIMEDIA = 12
         WALLHAVEN = 13
         REDDIT = 14
         BING = 15
@@ -51,6 +52,7 @@ class Options:
             DESKTOPPR: "desktoppr",
             FLICKR: "flickr",
             APOD: "apod",
+            WIKIMEDIA: "wikimedia",
             MEDIA_RSS: "mediarss",
             EARTH: "earth",
             WALLHAVEN: "wallhaven",
@@ -61,7 +63,7 @@ class Options:
 
         str_to_type = {v: k for k, v in type_to_str.items()}
 
-        dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
+        dl_types = [DESKTOPPR, FLICKR, APOD, WIKIMEDIA, MEDIA_RSS, EARTH,
                     WALLHAVEN, REDDIT, BING, UNSPLASH]
 
     class LightnessMode:
@@ -624,6 +626,7 @@ class Options:
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
+            [True, Options.SourceType.WIKIMEDIA, "Wikimedia Commons Picture of the Day"],
         ]
 
         self.filters = [

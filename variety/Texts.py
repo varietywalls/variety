@@ -39,6 +39,7 @@ SOURCES = {
     "apod": ("NASA's Astronomy Picture of the Day", _("NASA's Astronomy Picture of the Day")),
     "earth": ("World Sunlight Map - live wallpaper from Die.net",
               _("World Sunlight Map - live wallpaper from Die.net")),
+    "wikimedia": ("Wikimedia Commons Picture of the Day", _("Wikimedia Commons Picture of the Day")),
     "bing": ("Bing Photo of the Day", _("Bing Photo of the Day")),
     "unsplash": ("High-resolution photos from Unsplash.com", _("High-resolution photos from Unsplash.com")),
 }

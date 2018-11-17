@@ -56,6 +56,7 @@ from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
 from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
+from variety.WikimediaDownloader import WikimediaDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
@@ -520,6 +521,8 @@ class VarietyWindow(Gtk.Window):
             return APODDownloader(self)
         elif type == Options.SourceType.EARTH:
             return EarthDownloader(self)
+        elif type == Options.SourceType.WIKIMEDIA:
+            return WikimediaDownloader(self)
         elif type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
