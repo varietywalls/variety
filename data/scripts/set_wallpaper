@@ -215,11 +215,7 @@ if [[ "$XDG_CURRENT_DESKTOP" == "i3"* ]] || [[ "$XDG_SESSION_DESKTOP" == "i3"* ]
 fi
 
 if [[ "$XDG_CURRENT_DESKTOP" == "sway" ]]; then
-    displays=($(swaymsg -t get_outputs | grep name | awk '{print $2}' | tr --delete ,\"))
-    for display in "${displays[@]}"
-    do
-        swaymsg output $display bg "$WP" fill
-    done
+    swaymsg output "*" bg "$WP" fill 2> /dev/null
 fi
 
 # trinity
