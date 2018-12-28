@@ -214,6 +214,14 @@ if [[ "$XDG_CURRENT_DESKTOP" == "i3"* ]] || [[ "$XDG_SESSION_DESKTOP" == "i3"* ]
     fi
 fi
 
+if [[ "$XDG_CURRENT_DESKTOP" == "sway" ]]; then
+    displays=($(swaymsg -t get_outputs | grep name | awk '{print $2}' | tr --delete ,\"))
+    for display in "${displays[@]}"
+    do
+        swaymsg output $display bg "$WP" fill
+    done
+fi
+
 # trinity
 if [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
     # The 4 refers to display mode 4; valid ones are 1-8
