@@ -73,7 +73,7 @@ class LocalFilesSource(IQuoteSource):
                     try:
                         if q.strip() and len(q.strip()) > 5:
                             parts = q.split('-- ')
-                            quote = ' '.join(parts[0].split())
+                            quote = parts[0]
                             if quote[0] == quote[-1] == '"':
                                 quote = "\u201C%s\u201D" % quote[1:-1]
                             author = parts[1].strip() if len(parts) > 1 else None
