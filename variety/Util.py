@@ -363,6 +363,7 @@ class Util:
     def list_files(files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True):
         count = 0
         for filepath in files:
+            logger.debug(lambda: 'checking file %s against filter_func %s' % (filepath, filter_func))
             if filter_func(filepath) and os.access(filepath, os.R_OK):
                 count += 1
                 yield filepath
@@ -379,14 +380,16 @@ class Util:
                             random.shuffle(files)
                             random.shuffle(subFolders)
                         for filename in files:
-                            if filter_func(filename):
+                            logger.debug(lambda: 'checking file %s against filter_func %s (root=%s)' % (filename, filter_func, root))
+                            path = os.path.join(root, filename)
+                            if filter_func(path):
                                 count += 1
                                 if count > max_files:
                                     logger.info(lambda: "More than %d files in the folders, stop listing" % max_files)
                                     return
-                                yield os.path.join(root, filename)
+                                yield path
                 except Exception:
-                    logger.exception(lambda: "Cold not walk folder " + folder)
+                    logger.exception(lambda: "Could not walk folder " + folder)
 
     @staticmethod
     def start_force_exit_thread(delay):
