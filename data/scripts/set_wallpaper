@@ -233,17 +233,13 @@ gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/n
 # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
 gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
 
-# =====================================================================================
-
-# Awesome Window Manager (disabled by default as it needs more setup)
-
-# Set the path to the wallpaper using awesome-client, which communicates with awesome using D-Bus.
-# Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc in Arch Linux.
-
-# echo "local gears = require(\"gears\") gears.wallpaper.maximized(\"$1\", s, true)" | awesome-client
-
+# Awesome Window Manager
+# Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
 # NOTE: This config will change the wallpaper after your current awesome theme sets it.
-# As such, the theme's wallpaper will briefly appear before being replaced with variety's wallpaper.
+# As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
+if [[ "$DESKTOP_STARTUP_ID" == "awesome"* ]]; then
+	echo "local gears = require(\"gears\") gears.wallpaper.maximized(\"$1\", s, true)" | awesome-client
+fi
 
 # =====================================================================================
 
