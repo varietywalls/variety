@@ -206,7 +206,7 @@ fi
 # i3, openbox, dwm: use either feh or nitrogen
 if [[ "$XDG_CURRENT_DESKTOP" == "i3"* ]] || [[ "$XDG_SESSION_DESKTOP" == "i3"* ]] ||
         [[ "$DESKTOP_SESSION" == "openbox" ]] || [[ "$XDG_SESSION_DESKTOP" == *"dwm"* ]] ||
-        [[ "$XDG_CURRENT_DESKTOP" == *"dwm"* ]]; then
+        [[ "$XDG_CURRENT_DESKTOP" == *"dwm"* || "$DESKTOP_SESSION" == "bspwm" ]]; then
     if command -v "feh" >/dev/null 2>&1; then
         feh --bg-fill "$WP" 2> /dev/null
     elif command -v "nitrogen" >/dev/null 2>&1; then
