@@ -148,6 +148,9 @@ def main():
 
     arguments = sys.argv[1:]
 
+    # validate arguments
+    options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
+
     bus = dbus.SessionBus()
     # ensure singleton
     if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
@@ -161,10 +164,9 @@ def main():
             safe_print(result)
         return
 
-    # validate arguments and set up logging
+    # set up logging
     # set_up_logging must be called after the DBus checks, only by one running instance,
     # or the log file can be corrupted
-    options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
     set_up_logging(options.verbose)
 
     if options.verbose >= 3:
