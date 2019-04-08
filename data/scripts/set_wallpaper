@@ -217,7 +217,7 @@ if [[ "$XDG_CURRENT_DESKTOP" == "i3"* ]] || [[ "$XDG_SESSION_DESKTOP" == "i3"* ]
     fi
 fi
 
-if [[ "$XDG_CURRENT_DESKTOP" == "sway" ]]; then
+if [[ -n $SWAYSOCK ]]; then
     swaymsg output "*" bg "$WP" fill 2> /dev/null
 fi
 
