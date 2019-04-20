@@ -83,7 +83,7 @@ DistUtilsExtra.auto.setup(
 "Variety can fetch wallpapers from Flickr, Wallhaven.cc, "
 "NASA Astronomy Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa, "
 "deviantART or any other place are also supported.",
-    url='https://launchpad.net/variety',
+    url='https://github.com/varietywalls/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory},
     data_files=[('share/metainfo', ['variety.appdata.xml'])]
 )
