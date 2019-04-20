@@ -23,7 +23,7 @@ Variety is available in the distro repositories of:
 - [Ubuntu 16.04+](https://packages.ubuntu.com/search?keywords=variety)
 
 ### Ubuntu PPA
-Variety backports to older Ubuntu releases are available at https://code.launchpad.net/~peterlevi/+archive/ubuntu/ppa
+Variety backports to older Ubuntu releases are available at https://launchpad.net/~variety/+archive/ubuntu/stable (a NEW location as of April 2019).
 
 ### Install from source
 To install Variety from source, you will need Git, Python 3.5+ and [distutils-extra](https://launchpad.net/python-distutils-extra). To actually run Variety, you will also need the following:
