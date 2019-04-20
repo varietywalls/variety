@@ -28,14 +28,10 @@ Variety backports to older Ubuntu releases are available at https://code.launchp
 ### Install from source
 To install Variety from source, you will need Git, Python 3.5+ and [distutils-extra](https://launchpad.net/python-distutils-extra). To actually run Variety, you will also need the following:
 
-### Runtime Requirements
-- GObject introspection / GIRepository bindings for:
-    - GDK Pixbuf (Debian/Ubuntu: [gir1.2-gdkpixbuf-2.0](https://packages.debian.org/sid/gir1.2-gdkpixbuf-2.0))
-    - gexiv2 (Debian/Ubuntu: [gir1.2-gexiv2-0.10](https://packages.debian.org/sid/gir1.2-gexiv2-0.10))
-    - GLib, GObject, GModule, Gio (Debian/Ubuntu: [gir1.2-glib-2.0](https://packages.debian.org/sid/gir1.2-glib-2.0))
-    - GTK+ 3 (Debian/Ubuntu: [gir1.2-gtk-3.0](https://packages.debian.org/sid/gir1.2-gtk-3.0))
-    - libnotify (Debian/Ubuntu: [gir1.2-gtk-3.0](https://packages.debian.org/sid/gir1.2-gtk-3.0))
-    - Pango (Debian/Ubuntu: [gir1.2-pango-1.0](https://packages.debian.org/sid/gir1.2-pango-1.0))
+#### Runtime Requirements
+- GTK+ 3
+- gexiv2
+- libnotify
 - Python 3 libraries:
     - BeautifulSoup4
     - lxml
@@ -47,11 +43,11 @@ To install Variety from source, you will need Git, Python 3.5+ and [distutils-ex
     - Requests
     - *Optional*: httplib2 (for more quotes sources)
 - *Optional*: imagemagick (for wallpaper filters)
-- *Optional*: feh and/or nitrogen: used by default for wallpaper changing on i3, openbox, and dwm
+- *Optional*: feh or nitrogen: used by default to set wallpapers on i3, openbox, and other WMs
 
 See `debian/control` for an equivalent list of runtime dependencies on Debian/Ubuntu.
 
-### Install steps
+#### Install steps
 
 1. Clone the git repository: `git clone https://github.com/varietywalls/variety.git && cd variety`
 
