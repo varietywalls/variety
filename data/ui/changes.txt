@@ -1,7 +1,7 @@
 0.7.2
     Add support for Sway, bspwm
     Enable AwesomeWM support by default
-    Fix crash on --help if a Variety instance is already running (GH-148)
+    Fix crash on --help or --version if a Variety instance is already running (GH-148)
     Fix spurious "file not found" errors when checking for animated GIFs (GH-132)
     New translations: Chinese, Japanese
 
