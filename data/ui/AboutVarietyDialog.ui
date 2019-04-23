@@ -2,7 +2,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-requires about_variety_dialog 1.0 -->
   <object class="AboutVarietyDialog" id="about_variety_dialog">
-    <property translatable="yes" name="copyright">Copyright (c) 2012, Peter Levi &lt;peterlevi@peterlevi.com&gt;</property><property name="can_focus">False</property>
+    <property translatable="yes" name="copyright">Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors</property><property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">About Variety</property>
     <property name="icon">../media/variety128.png</property>
@@ -12,20 +12,20 @@
     <property name="comments" translatable="yes">An automatic wallpaper changer, downloader and manager.</property>
     <property name="website">https://launchpad.net/variety</property>
     <property name="website_label" translatable="yes">http://peterlevi.com/variety</property>
-    <property name="license" translatable="yes"># Copyright (c) 2012, Peter Levi &lt;peterlevi@peterlevi.com&gt;
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+    <property name="license" translatable="yes"># Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </property>
-    <property name="authors">Copyright (c) 2012, Peter Levi &lt;peterlevi@peterlevi.com&gt;</property>
+    <property name="authors">Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors</property>
     <property name="logo">../media/variety128.png</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
