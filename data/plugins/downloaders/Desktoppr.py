@@ -36,15 +36,17 @@ class Desktoppr(SimpleDownloader):
             "version": "0.1"
         }
 
-    def __init__(self):
-        SimpleDownloader.__init__(
-            self,
-            source_type="desktoppr",
-            description=Desktoppr.DESCRIPTION,
-            folder_name="Desktoppr")
+    def get_source_type(self):
+        return "desktoppr"
 
     def get_source_name(self):
         return "Desktoppr.co"
+
+    def get_description(self):
+        return Desktoppr.DESCRIPTION
+
+    def get_folder_name(self):
+        return "Desktoppr"
 
     def fill_queue(self):
         response = Util.fetch_json("https://api.desktoppr.co/1/wallpapers/random")

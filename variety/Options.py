@@ -28,6 +28,7 @@ TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 
 class Options:
     OUTDATED_HASHES = {'clock_filter': ['dca6bd2dfa2b8c4e2db8801e39208f7f']}
+    SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
 
     class SourceType:
         IMAGE = 1
@@ -441,8 +442,8 @@ class Options:
             except Exception:
                 pass
 
+            self.sources = []
             if "sources" in config:
-                self.sources = []
                 sources = config["sources"]
                 for v in sources.values():
                     try:
@@ -450,6 +451,14 @@ class Options:
                     except Exception:
                         logger.debug(lambda: "Cannot parse source: " + v, exc_info=True)
                         logger.info('Ignoring no longer supported source %s', v)
+
+            source_types = set(Options.type_to_str(s[1]) for s in self.sources)
+            for downloader in self.SIMPLE_DOWNLOADERS:
+                if downloader.get_source_type() not in source_types:
+                    self.sources.append([
+                        True,
+                        Options.str_to_type(downloader.get_source_type()),
+                        downloader.get_description()])
 
             self.parse_autosources()
 
@@ -750,6 +759,7 @@ class Options:
         except DuplicateError:
             logger.warning(lambda: "Duplicate keys in config file, please fix this")
         return config
+
 
 if __name__ == "__main__":
     formatter = logging.Formatter("%(levelname)s:%(name)s: %(funcName)s() '%(message)s'")

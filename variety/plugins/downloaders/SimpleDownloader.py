@@ -14,19 +14,26 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
+
+from jumble.IPlugin import IPlugin
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 
 
 class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
-    def __init__(self, source_type, description, folder_name=None):
-        ImageSource.__init__(
-            self, source_type=source_type)
+    def __init__(self):
+        ImageSource.__init__(self)
         DefaultDownloader.__init__(
             self,
             source=self,
-            description=description,
-            folder_name=folder_name or self.get_source_name())
+            description=self.get_description(),
+            folder_name=self.get_folder_name())
+        IPlugin.activate(self)
         self.queue = []
 
+    @abc.abstractmethod
+    def get_description(self):
+        pass
 
+    def get_folder_name(self):
+        return self.get_source_name()

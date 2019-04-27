@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
 from variety import _
 import subprocess
 import urllib.parse
@@ -46,6 +45,7 @@ from PIL import Image as PILImage
 random.seed()
 logger = logging.getLogger('variety')
 
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.WelcomeDialog import WelcomeDialog
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
@@ -54,7 +54,6 @@ from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
-from variety.DesktopprDownloader import DesktopprDownloader
 from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
@@ -362,6 +361,14 @@ class VarietyWindow(Gtk.Window):
     def reload_config(self):
         self.previous_options = self.options
 
+        if not hasattr(self, 'simple_downloaders'):
+            self.simple_downloaders = [
+                p["plugin"] for p in self.jumble.get_plugins(SimpleDownloader, active=True)]
+            for dl in self.simple_downloaders:
+                dl.set_variety(self)
+
+            Options.SIMPLE_DOWNLOADERS = self.simple_downloaders
+
         self.options = Options()
         self.options.read()
 
@@ -514,9 +521,7 @@ class VarietyWindow(Gtk.Window):
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
-        if type == Options.SourceType.DESKTOPPR:
-            return DesktopprDownloader(self)
-        elif type == Options.SourceType.APOD:
+        if type == Options.SourceType.APOD:
             return APODDownloader(self)
         elif type == Options.SourceType.EARTH:
             return EarthDownloader(self)
@@ -533,7 +538,11 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         else:
-            raise Exception("Unknown downloader type")
+            for dl in self.simple_downloaders:
+                if Options.str_to_type(dl.get_source_type()) == type:
+                    return dl
+
+        raise Exception("Unknown downloader type")
 
     def get_folder_of_source(self, source):
         type = source[1]
@@ -987,7 +996,7 @@ class VarietyWindow(Gtk.Window):
 
                     # Also refresh the images for all the refreshers - these need to be updated regularly
                     for dl in self.downloaders:
-                        if dl.is_refresher and dl != downloader:
+                        if getattr(dl, "is_refresher", False) and dl != downloader:
                             dl.download_one()
 
             except Exception:
@@ -1019,7 +1028,7 @@ class VarietyWindow(Gtk.Window):
         if file:
             self.register_downloaded_file(file)
 
-            if downloader.is_refresher or self.image_ok(file, 0):
+            if getattr(downloader, "is_refresher", False) or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
                 logger.info(lambda: "Adding downloaded file %s to prepared_from_downloads queue" % file)
                 with self.prepared_lock:

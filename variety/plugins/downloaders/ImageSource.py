@@ -25,15 +25,18 @@ Throttling = collections.namedtuple('Throttling', ['min_download_interval', 'min
 
 
 class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
-    def __init__(self, source_type):
+    def __init__(self):
         super().__init__()
-        self.source_type = source_type
         self.last_download_time = 0
         self.last_fill_time = 0
 
-    def get_variety(self):
-        return self.jumble.parent
+    def set_variety(self, variety):
+        self.variety = variety
 
+    def get_variety(self):
+        return self.variety
+
+    @abc.abstractmethod
     def get_source_type(self):
         """
         Returns a key for this source that will be used to identify it in
@@ -43,7 +46,7 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         source plugins.
         :return: source type, e.g. "flickr", "unsplash", etc.
         """
-        return self.source_type
+        pass
 
     def get_source_name(self):
         """
@@ -63,6 +66,7 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         :param img path to the image file
         :param meta image metadata
         """
+        # TODO Never called for now, to be implemented
         pass
 
     def on_image_favorited(self, img, meta):
@@ -72,6 +76,7 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         :param img path to the image file
         :param meta image metadata
         """
+        # TODO Never called for now, to be implemented
         pass
 
     def get_default_throttling(self):

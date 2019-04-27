@@ -21,26 +21,26 @@ from variety.Util import Util
 
 class Downloader(abc.ABC):
     def __init__(self, source, description, folder_name, config=None, full_descriptor=None):
-        super().__init__(source)
+        super().__init__()
         self.source = source
         self.description = description
         self.folder_name = folder_name
         self.config = config
         self.full_descriptor = full_descriptor
 
-        self._update_target_folder()
-
     def get_variety(self):
         return self.source.get_variety()
 
-    def _update_target_folder(self):
-        dl_folder = self.get_variety().options.real_download_folder
+    def update_download_folder(self):
+        dl_folder = self.get_variety().real_download_folder
         filename = Util.convert_to_filename(self.folder_name)
         if len(filename) + len(dl_folder) > 160:
             filename = filename[:(150 - len(dl_folder))] + Util.md5(filename)[:10]
         self.target_folder = os.path.join(dl_folder, filename)
 
     def get_local_filename(self, url):
+        if not hasattr(self, 'target_folder'):
+            self.update_download_folder()
         return os.path.join(self.target_folder, Util.get_local_name(url))
 
     def get_source(self):

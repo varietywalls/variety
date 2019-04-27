@@ -86,8 +86,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         self.source.last_download_time = time.time()
 
         origin_url, image_url, extra_metadata = self.queue.pop()
-        return self.save_locally(
-            self.target_folder, origin_url, image_url, extra_metadata=extra_metadata)
+        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
 
     def is_in_downloaded(self, url):
         return os.path.exists(self.get_local_filename(url))
