@@ -42,7 +42,7 @@ from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2, Gio
 
 VARIETY_INFO = "-"
 
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
 
 SOURCE_NAME_TO_TYPE = {
     'wallbase.cc': 'wallbase',

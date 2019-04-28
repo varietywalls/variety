@@ -21,13 +21,13 @@ import unittest
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from tests.TestDownloader import test_download_one_for
-from variety.DesktopprDownloader import DesktopprDownloader
+from tests.TestDownloader import get_plugin_downloader, test_download_one_for
 
 
 class TestDesktopprDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, DesktopprDownloader(None))
+        dl = get_plugin_downloader("Desktoppr")
+        test_download_one_for(self, dl)
 
 
 if __name__ == '__main__':

@@ -21,6 +21,7 @@ import stat
 
 import threading
 import subprocess
+
 from variety.Util import Util
 from variety import Texts
 from variety.plugins.IQuoteSource import IQuoteSource
@@ -44,23 +45,6 @@ random.seed()
 logger = logging.getLogger('variety')
 
 from variety_lib.PreferencesDialog import PreferencesDialog
-
-UNREMOVEABLE_TYPES = [
-    Options.SourceType.FAVORITES,
-    Options.SourceType.FETCHED,
-    Options.SourceType.DESKTOPPR,
-    Options.SourceType.BING,
-    Options.SourceType.UNSPLASH,
-    Options.SourceType.APOD,
-    Options.SourceType.EARTH,
-]
-
-EDITABLE_TYPES = [
-    Options.SourceType.FLICKR,
-    Options.SourceType.MEDIA_RSS,
-    Options.SourceType.WALLHAVEN,
-    Options.SourceType.REDDIT,
-]
 
 
 class PreferencesVarietyDialog(PreferencesDialog):
@@ -384,8 +368,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         has_downloaders = False
         for row in rows:
-            type = Options.str_to_type(model[row][1])
-            if type in Options.SourceType.dl_types and type not in UNREMOVEABLE_TYPES:
+            type = model[row][1]
+            if type in Options.SourceType.EDITABLE_DL_TYPES:
                 has_downloaders = True
 
         self.remove_menu = Gtk.Menu()
@@ -414,7 +398,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_row_enabled_state_changed(self, row):
         # Special case when enabling the Earth downloader:
-        if row[0] and row[1] == Options.type_to_str(Options.SourceType.EARTH):
+        if row[0] and row[1] == Options.SourceType.EARTH:
             updated = False
             if not self.ui.change_enabled.get_active():
                 self.ui.change_enabled.set_active(True)
@@ -543,7 +527,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.ui.sources.get_selection().unselect_all()
         existing = {}
         for i, r in enumerate(self.ui.sources.get_model()):
-            if r[1] == Options.type_to_str(type):
+            if r[1] == type:
                 if type == Options.SourceType.FOLDER:
                     existing[os.path.normpath(r[2])] = r, i
                 else:
@@ -553,7 +537,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for f in locations:
             if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
                 f = os.path.normpath(f)
-            elif type in UNREMOVEABLE_TYPES:
+            elif type not in Options.SourceType.EDITABLE_DL_TYPES:
                 f = list(existing.keys())[0] if existing else None  # reuse the already existing location, do not add another one
 
             if not f in existing:
@@ -584,15 +568,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         if delete_files:
             for row in rows:
-                type = Options.str_to_type(model[row][1])
-                if type in Options.SourceType.dl_types and type not in UNREMOVEABLE_TYPES:
+                type = model[row][1]
+                if type in Options.SourceType.EDITABLE_DL_TYPES:
                     source = self.model_row_to_source(model[row])
                     self.parent.delete_files_of_source(source)
 
         # store the treeiters from paths
         iters = []
         for row in rows:
-            if Options.str_to_type(model[row][1]) not in UNREMOVEABLE_TYPES:
+            if model[row][1] in Options.SourceType.REMOVABLE_TYPES:
                 iters.append(model.get_iter(row))
         # remove the rows (treeiters)
         for i in iters:
@@ -619,7 +603,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_sources_selection_changed()
 
     def edit_source(self, edited_row):
-        type = Options.str_to_type(edited_row[1])
+        type = edited_row[1]
 
         if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
             subprocess.Popen(["xdg-open", os.path.realpath(edited_row[2])])
@@ -627,7 +611,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
         elif type == Options.SourceType.FETCHED:
             subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
-        elif type in EDITABLE_TYPES:
+        elif type in Options.SourceType.EDITABLE_DL_TYPES:
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLHAVEN:
@@ -639,6 +623,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
+        elif type in Options.get_downloader_source_types():
+            subprocess.Popen([
+                "xdg-open",
+                self.parent.get_folder_of_source(self.model_row_to_source(edited_row))])
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -658,16 +646,19 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         if len(rows) == 1:
             source = model[rows[0]]
-            type = Options.str_to_type(source[1])
+            type = source[1]
             if type == Options.SourceType.IMAGE:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label(_("View Image"))
             elif type in [Options.SourceType.FOLDER, Options.SourceType.FAVORITES, Options.SourceType.FETCHED]:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label(_("Open Folder"))
-            elif type in EDITABLE_TYPES:
+            elif type in Options.SourceType.EDITABLE_DL_TYPES:
                 self.ui.edit_source.set_sensitive(True)
                 self.ui.edit_source.set_label(_("Edit..."))
+            elif type in Options.get_downloader_source_types():
+                self.ui.edit_source.set_sensitive(True)
+                self.ui.edit_source.set_label(_("Open Folder"))
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
@@ -679,7 +670,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.show_timer.start()
 
         for row in rows:
-            if Options.str_to_type(model[row][1]) in UNREMOVEABLE_TYPES:
+            if model[row][1] not in Options.SourceType.REMOVABLE_TYPES:
                 self.ui.remove_sources.set_sensitive(False)
                 return
 
@@ -687,11 +678,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def model_row_to_source(self, row):
         return [row[0],
-                Options.str_to_type(row[1]),
+                row[1],
                 Texts.SOURCES[row[1]][0] if row[1] in Texts.SOURCES else row[2]]
 
     def source_to_model_row(self, s):
-        srctype = Options.type_to_str(s[1])
+        srctype = s[1]
         return [s[0], srctype, s[2] if not srctype in Texts.SOURCES else Texts.SOURCES[srctype][1]]
 
     def show_thumbs(self, source_rows, pin=False, thumbs_type=None):
@@ -709,7 +700,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 if not row:
                     continue
 
-                type = Options.str_to_type(row[1])
+                type = row[1]
                 if type == Options.SourceType.IMAGE:
                     image_count += 1
                     images.append(row[2])

@@ -33,9 +33,6 @@ class TestMediaRssDownloader(unittest.TestCase):
     def test_validate_deviantart(self):
         self.assertTrue(MediaRssDownloader.validate("http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
 
-    def test_validate_picasa(self):
-        self.assertTrue(MediaRssDownloader.validate("https://picasaweb.google.com/data/feed/base/user/111758109475195528754/albumid/5731259484758046113?alt=rss&kind=photo&hl=bg"))
-
     def test_validate_non_media_rss(self):
         self.assertFalse(MediaRssDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
 

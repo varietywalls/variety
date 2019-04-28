@@ -52,7 +52,7 @@ class TestFlickrDownloader(unittest.TestCase):
         self.assertEqual('7527967456', FlickrDownloader.get_photo_id('https://www.flickr.com/photos/peter-levi/7527967456'))
 
     def test_get_image_url(self):
-        self.assertEqual('https://farm9.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg',
+        self.assertEqual('https://live.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg',
                           FlickrDownloader.get_image_url('https://www.flickr.com/photos/peter-levi/7527967456/'))
 
     def test_get_extra_metadata(self):

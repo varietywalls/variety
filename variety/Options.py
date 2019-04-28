@@ -31,39 +31,64 @@ class Options:
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
 
     class SourceType:
-        IMAGE = 1
-        FOLDER = 2
-        FAVORITES = 3
-        FETCHED = 4
-        DESKTOPPR = 6
-        FLICKR = 7
-        APOD = 8
-        MEDIA_RSS = 10
-        EARTH = 11
-        WALLHAVEN = 13
-        REDDIT = 14
-        BING = 15
-        UNSPLASH = 16
-        type_to_str = {
-            FAVORITES: "favorites",
-            FETCHED: "fetched",
-            IMAGE: "image",
-            FOLDER: "folder",
-            DESKTOPPR: "desktoppr",
-            FLICKR: "flickr",
-            APOD: "apod",
-            MEDIA_RSS: "mediarss",
-            EARTH: "earth",
-            WALLHAVEN: "wallhaven",
-            REDDIT: "reddit",
-            BING: "bing",
-            UNSPLASH: "unsplash",
+        # local files and folders
+        IMAGE = "image"
+        FOLDER = "folder"
+
+        # special local folders
+        FAVORITES = "favorites"
+        FETCHED = "fetched"
+
+        # predefined non-configurable sources
+        # TODO: implement as SimpleDownloader plugins and remove from here
+        APOD = "apod"
+        EARTH = "earth"
+        BING = "bing"
+        UNSPLASH = "unsplash"
+
+        # predefined configurable sources
+        MEDIA_RSS = "mediarss"
+        FLICKR = "flickr"
+        WALLHAVEN = "wallhaven"
+        REDDIT = "reddit"
+
+        BUILTIN_SOURCE_TYPES = {
+            IMAGE,
+            FOLDER,
+            FAVORITES,
+            FETCHED,
+            FLICKR,
+            APOD,
+            MEDIA_RSS,
+            EARTH,
+            WALLHAVEN,
+            REDDIT,
+            BING,
+            UNSPLASH,
         }
 
-        str_to_type = {v: k for k, v in type_to_str.items()}
+        DL_TYPES = {
+            FLICKR,
+            APOD,
+            MEDIA_RSS,
+            EARTH,
+            WALLHAVEN,
+            REDDIT,
+            BING,
+            UNSPLASH,
+        }
 
-        dl_types = [DESKTOPPR, FLICKR, APOD, MEDIA_RSS, EARTH,
-                    WALLHAVEN, REDDIT, BING, UNSPLASH]
+        EDITABLE_DL_TYPES = {
+            FLICKR,
+            MEDIA_RSS,
+            WALLHAVEN,
+            REDDIT,
+        }
+
+        REMOVABLE_TYPES = {
+            FOLDER,
+            IMAGE,
+        } | EDITABLE_DL_TYPES
 
     class LightnessMode:
         DARK = 0
@@ -452,12 +477,12 @@ class Options:
                         logger.debug(lambda: "Cannot parse source: " + v, exc_info=True)
                         logger.info('Ignoring no longer supported source %s', v)
 
-            source_types = set(Options.type_to_str(s[1]) for s in self.sources)
+            source_types = set(s[1] for s in self.sources)
             for downloader in self.SIMPLE_DOWNLOADERS:
                 if downloader.get_source_type() not in source_types:
                     self.sources.append([
                         True,
-                        Options.str_to_type(downloader.get_source_type()),
+                        downloader.get_source_type(),
                         downloader.get_description()])
 
             self.parse_autosources()
@@ -527,7 +552,7 @@ class Options:
     def parse_source(v):
         s = v.strip().split('|')
         enabled = s[0].lower() in TRUTH_VALUES
-        return [enabled, (Options.str_to_type(s[1])), s[2]]
+        return [enabled, s[1], s[2]]
 
     @staticmethod
     def parse_filter(v):
@@ -536,16 +561,16 @@ class Options:
         return [enabled, s[1], s[2]]
 
     @staticmethod
-    def str_to_type(s):
-        s = s.lower()
-        if s in Options.SourceType.str_to_type:
-            return Options.SourceType.str_to_type[s]
-        else:
-            raise Exception("Unknown source type")
+    def get_all_supported_source_types():
+        return Options.SourceType.BUILTIN_SOURCE_TYPES | Options.get_simple_downloader_source_types()
 
     @staticmethod
-    def type_to_str(stype):
-        return Options.SourceType.type_to_str[stype]
+    def get_downloader_source_types():
+        return Options.SourceType.DL_TYPES | Options.get_simple_downloader_source_types()
+
+    @staticmethod
+    def get_simple_downloader_source_types():
+        return set(dl.get_source_type() for dl in Options.SIMPLE_DOWNLOADERS)
 
     def set_defaults(self):
         self.change_enabled = True
@@ -628,7 +653,6 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [True, Options.SourceType.DESKTOPPR, "Random wallpapers from Desktoppr.co"],
             [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
@@ -733,7 +757,7 @@ class Options:
 
             config["sources"] = {}
             for i, s in enumerate(self.sources):
-                config["sources"]["src" + str(i + 1)] = str(s[0]) + "|" + str(Options.type_to_str(s[1])) + "|" + s[2]
+                config["sources"]["src" + str(i + 1)] = str(s[0]) + "|" + str(s[1]) + "|" + s[2]
 
             config["filters"] = {}
             for i, f in enumerate(self.filters):

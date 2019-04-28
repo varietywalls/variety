@@ -27,7 +27,7 @@ from variety.Util import Util, debounce, throttle, cache
 
 
 class TestUtil(unittest.TestCase):
-    def setUpClass():
+    def setUpClass(cls):
         # Chdir to the tests directory so that we can find our test images
         curdir = os.path.dirname(os.path.abspath(__file__))
         if curdir:
@@ -197,10 +197,10 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_dead_or_not_image('http://ns223506.ovh.net/rozne/a1b2/wallpaper-1996019.png'))
 
     def test_guess_image_url(self):
-        self.assertEqual('https://farm5.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
+        self.assertEqual('https://live.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
                           Util.guess_image_url({'sourceURL': 'https://www.flickr.com/photos/83646108@N00/4558166441'}))
 
-        self.assertEqual('https://farm5.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
+        self.assertEqual('https://live.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
                           Util.guess_image_url({'sourceURL': 'http://www.flickr.com/photos/52821721@N00/4768189432'}))
 
         self.assertEqual('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',

@@ -29,6 +29,7 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         super().__init__()
         self.last_download_time = 0
         self.last_fill_time = 0
+        self.variety = None
 
     def set_variety(self, variety):
         self.variety = variety

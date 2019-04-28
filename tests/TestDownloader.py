@@ -19,6 +19,7 @@ import sys
 import os
 import unittest
 
+from jumble.Jumble import Jumble
 from tests import setup_test_logging
 from variety import Util
 
@@ -27,6 +28,12 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 setup_test_logging()
 
 from variety.Downloader import Downloader
+
+
+def get_plugin_downloader(typename):
+    p = Jumble(["../data/plugins"])
+    p.load()
+    return p.get_plugins(typename=typename)[0]["plugin"]
 
 
 def test_download_one_for(test_case, dl):

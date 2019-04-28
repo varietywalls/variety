@@ -136,7 +136,6 @@ class VarietyWindow(Gtk.Window):
 
         self.events = []
         self.downloaderSetWallpaperHooks = {}
-        self.create_downloaders_cache()
 
         self.prepared = []
         self.prepared_cleared = False
@@ -170,6 +169,8 @@ class VarietyWindow(Gtk.Window):
         self.image_count = -1
         self.image_colors_cache = {}
 
+        self.load_downloader_plugins()
+        self.create_downloaders_cache()
         self.reload_config()
         self.load_last_change_time()
 
@@ -358,16 +359,16 @@ class VarietyWindow(Gtk.Window):
             with open(dl_folder_file, "w") as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
+    def load_downloader_plugins(self):
+        simple_downloaders = [
+            p["plugin"] for p in self.jumble.get_plugins(SimpleDownloader, active=True)]
+        for dl in simple_downloaders:
+            dl.set_variety(self)
+
+        Options.SIMPLE_DOWNLOADERS = simple_downloaders
+
     def reload_config(self):
         self.previous_options = self.options
-
-        if not hasattr(self, 'simple_downloaders'):
-            self.simple_downloaders = [
-                p["plugin"] for p in self.jumble.get_plugins(SimpleDownloader, active=True)]
-            for dl in self.simple_downloaders:
-                dl.set_variety(self)
-
-            Options.SIMPLE_DOWNLOADERS = self.simple_downloaders
 
         self.options = Options()
         self.options.read()
@@ -403,19 +404,19 @@ class VarietyWindow(Gtk.Window):
 
             if not enabled:
                 continue
-            if type not in Options.SourceType.dl_types:
+            if type not in self.options.get_downloader_source_types():
                 continue
 
             if location in self.downloaders_cache[type]:
                 self.downloaders.append(self.downloaders_cache[type][location])
             else:
                 try:
-                    logger.info(lambda: "Creating new downloader for type %d, location %s" % (type, location))
+                    logger.info(lambda: "Creating new downloader for type %s, location %s" % (type, location))
                     dlr = self.create_downloader(type, location)
                     self.downloaders_cache[type][location] = dlr
                     self.downloaders.append(dlr)
                 except Exception:
-                    logger.exception(lambda: "Could not create Downloader for type %d, location %s" % (type, location))
+                    logger.exception(lambda: "Could not create Downloader for type %s, location %s" % (type, location))
 
         for downloader in self.downloaders:
             downloader.update_download_folder()
@@ -517,7 +518,7 @@ class VarietyWindow(Gtk.Window):
 
     def create_downloaders_cache(self):
         self.downloaders_cache = {}
-        for type in Options.SourceType.dl_types:
+        for type in Options.get_downloader_source_types():
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
@@ -538,8 +539,8 @@ class VarietyWindow(Gtk.Window):
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         else:
-            for dl in self.simple_downloaders:
-                if Options.str_to_type(dl.get_source_type()) == type:
+            for dl in Options.SIMPLE_DOWNLOADERS:
+                if dl.get_source_type() == type:
                     return dl
 
         raise Exception("Unknown downloader type")
@@ -1458,8 +1459,8 @@ class VarietyWindow(Gtk.Window):
         GObject.idle_add(_update_indicator)
 
         should_show = self.thumbs_manager.is_showing("downloads") or (
-            self.thumbs_manager.get_folders() is not None \
-                and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)) > 0)
+            self.thumbs_manager.get_folders() is not None
+            and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)) > 0)
 
         if should_show:
             def _add():
@@ -1582,7 +1583,7 @@ class VarietyWindow(Gtk.Window):
         prioritized_sources.extend(
             s for s in self.options.sources if s[0] and s[1] == Options.SourceType.FOLDER)
         prioritized_sources.extend(
-            s for s in self.options.sources if s[0] and s[1] in Options.SourceType.dl_types)
+            s for s in self.options.sources if s[0] and s[1] in Options.get_downloader_source_types())
         prioritized_sources.extend(
             s for s in self.options.sources if s[0] and s[1] == Options.SourceType.FETCHED)
         prioritized_sources.extend(
@@ -2264,12 +2265,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             if command == 'add-source':
                 source_type = args['type'][0].lower()
-                if not source_type in Options.SourceType.str_to_type:
+                if not source_type in Options.get_all_supported_source_types():
                     self.show_notification(_('Unsupported source type'),
                                            _('Are you running the most recent version of Variety?'))
                     return
                 def _add():
-                    newly_added = self.preferences_dialog.add_sources(Options.str_to_type(source_type), [args['location'][0]])
+                    newly_added = self.preferences_dialog.add_sources(source_type, [args['location'][0]])
                     self.preferences_dialog.delayed_apply()
                     if newly_added == 1:
                         self.show_notification(_('New image source added'))
@@ -2672,4 +2673,3 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def registerDownloaderSetWallpaperHook(self, sourceType, hook):
         self.downloaderSetWallpaperHooks[sourceType] = hook
-
