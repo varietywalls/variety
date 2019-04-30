@@ -196,21 +196,6 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_dead_or_not_image('http://wallpapers.wallbase.cc/rozne/wallpaper-1227671.jpg'))
         self.assertTrue(Util.is_dead_or_not_image('http://ns223506.ovh.net/rozne/a1b2/wallpaper-1996019.png'))
 
-    def test_guess_image_url(self):
-        self.assertEqual('https://live.staticflickr.com/4032/4558166441_4e34855b39_o.jpg',
-                          Util.guess_image_url({'sourceURL': 'https://www.flickr.com/photos/83646108@N00/4558166441'}))
-
-        self.assertEqual('https://live.staticflickr.com/4077/4768189432_24275ea76b_b.jpg',
-                          Util.guess_image_url({'sourceURL': 'http://www.flickr.com/photos/52821721@N00/4768189432'}))
-
-        self.assertEqual('http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg',
-                          Util.guess_image_url({'sourceURL': 'http://fc04.deviantart.net/fs71/i/2011/319/4/f/scarlet_leaf_wallpaper_by_venomxbaby-d4gc238.jpg'}))
-
-    def test_guess_source_type(self):
-        self.assertEqual(None, Util.guess_source_type({}))
-        self.assertEqual('mediarss', Util.guess_source_type({'sourceName': 'host.com', 'sourceLocation': 'http://host.com/rss'}))
-        self.assertEqual('mediarss', Util.guess_source_type({'sourceName': 'camelid.deviantart.com', 'sourceLocation': 'http://backend.deviantart.com/rss.xml?type=deviation&q=by%3ACamelid+sort%3Atime+meta%3Aall'}))
-
     def test_debounce(self):
         """ Test that the increment function is being debounced.
         The counter should only be incremented once 10 seconds after the last call to the function """

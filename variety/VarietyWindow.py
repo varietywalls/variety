@@ -54,7 +54,6 @@ from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
 from variety.UnsplashDownloader import UnsplashDownloader
-from variety.APODDownloader import APODDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
@@ -522,9 +521,7 @@ class VarietyWindow(Gtk.Window):
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
-        if type == Options.SourceType.APOD:
-            return APODDownloader(self)
-        elif type == Options.SourceType.EARTH:
+        if type == Options.SourceType.EARTH:
             return EarthDownloader(self)
         elif type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
@@ -964,7 +961,7 @@ class VarietyWindow(Gtk.Window):
             time.sleep(3600 * 24) # Update once daily
 
     def has_real_downloaders(self):
-        return sum(1 for d in self.downloaders if not d.is_refresher) > 0
+        return sum(1 for d in self.downloaders if not getattr(d, "is_refresher", False)) > 0
 
     def download_thread(self):
         self.last_dl_time = time.time()

@@ -121,7 +121,7 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
             options = self.get_server_options()
             logger.info(lambda: "%s serverside options: %s" % (self.get_source_name(), str(options)))
         except Exception:
-            logger.exception(lambda: "Could not parse %s serverside options, using defaults %d, %d" % (
+            logger.info(lambda: "Could not parse %s serverside options, using defaults %d, %d" % (
                 name, min_download_interval, min_fill_queue_interval))
             return defaults
 

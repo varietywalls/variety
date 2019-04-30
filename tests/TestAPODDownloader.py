@@ -24,9 +24,9 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 from tests.TestDownloader import get_plugin_downloader, test_download_one_for
 
 
-class TestDesktopprDownloader(unittest.TestCase):
+class TestAPODDownloader(unittest.TestCase):
     def test_download_one(self):
-        dl = get_plugin_downloader("DesktopprDownloader")
+        dl = get_plugin_downloader("APODDownloader")
         test_download_one_for(self, dl)
 
 

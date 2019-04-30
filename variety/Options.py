@@ -41,7 +41,6 @@ class Options:
 
         # predefined non-configurable sources
         # TODO: implement as SimpleDownloader plugins and remove from here
-        APOD = "apod"
         EARTH = "earth"
         BING = "bing"
         UNSPLASH = "unsplash"
@@ -58,7 +57,6 @@ class Options:
             FAVORITES,
             FETCHED,
             FLICKR,
-            APOD,
             MEDIA_RSS,
             EARTH,
             WALLHAVEN,
@@ -69,7 +67,6 @@ class Options:
 
         DL_TYPES = {
             FLICKR,
-            APOD,
             MEDIA_RSS,
             EARTH,
             WALLHAVEN,
@@ -655,7 +652,6 @@ class Options:
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
             [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
-            [False, Options.SourceType.APOD, "NASA's Astronomy Picture of the Day"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
         ]
 

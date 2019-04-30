@@ -44,19 +44,6 @@ VARIETY_INFO = "-"
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
 
-SOURCE_NAME_TO_TYPE = {
-    'wallbase.cc': 'wallbase',
-    'wallhaven.cc': 'wallhaven',
-    'wallpapers.net': 'wn',
-    'desktoppr.co': 'desktoppr',
-    'nasa astro pic of the day': 'apod',
-    'opentopia.com': 'earth',
-    'fetched': 'fetched',
-    'recommended by variety': 'recommended',
-    'flickr': 'flickr',
-    'media rss': 'mediarss',
-}
-
 random.seed()
 logger = logging.getLogger('variety')
 
@@ -774,45 +761,6 @@ class Util:
             return True
         except:
             return False
-
-    @staticmethod
-    def guess_image_url(meta):
-        if 'imageURL' in meta:
-            return meta['imageURL']
-
-        try:
-            origin_url = meta['sourceURL']
-
-            if "flickr.com" in origin_url:
-                from variety.FlickrDownloader import FlickrDownloader
-                return FlickrDownloader.get_image_url(origin_url)
-
-            elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
-                return origin_url
-
-            return None
-        except:
-            return None
-
-    @staticmethod
-    def guess_source_type(meta):
-        try:
-            if 'sourceType' in meta:
-                return meta['sourceType']
-            elif 'sourceName' in meta:
-                source_name = meta['sourceName'].lower()
-                if source_name in SOURCE_NAME_TO_TYPE:
-                    return SOURCE_NAME_TO_TYPE[source_name]
-                else:
-                    source_location = meta.get('sourceLocation', '').lower()
-                    if source_location.startswith(('http://' + source_name, 'https://' + source_name)) \
-                            or 'backend.deviantart.com' in source_location \
-                            or 'rss' in source_location \
-                            or '/feed' in source_location:
-                        return 'mediarss'
-            return None
-        except:
-            return None
 
     # makes the Gtk thread execute the given callback.
     @staticmethod

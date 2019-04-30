@@ -24,14 +24,14 @@ from variety.plugins.downloaders.DefaultDownloader import QueueItem
 logger = logging.getLogger('variety')
 
 
-class Desktoppr(SimpleDownloader):
+class DesktopprDownloader(SimpleDownloader):
     DESCRIPTION = _("Random wallpapers from Desktoppr.co")
 
     @classmethod
     def get_info(cls):
         return {
-            "name": "Desktoppr",
-            "description": Desktoppr.DESCRIPTION,
+            "name": "DesktopprDownloader",
+            "description": DesktopprDownloader.DESCRIPTION,
             "author": "Peter Levi",
             "version": "0.1"
         }
@@ -43,7 +43,7 @@ class Desktoppr(SimpleDownloader):
         return "Desktoppr.co"
 
     def get_description(self):
-        return Desktoppr.DESCRIPTION
+        return DesktopprDownloader.DESCRIPTION
 
     def get_folder_name(self):
         return "Desktoppr"
