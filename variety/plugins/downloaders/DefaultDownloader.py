@@ -109,6 +109,15 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     def is_in_banned(self, url):
         return self.get_variety() and url in self.get_variety().banned
 
+    def is_unsafe(self, extra_metadata):
+        if self.get_variety() and self.get_variety().options.safe_mode and 'keywords' in extra_metadata:
+            blacklisted = set(k.lower() for k in extra_metadata['keywords']) & SAFE_MODE_BLACKLIST
+            return True, blacklisted if len(blacklisted) > 0 else False, []
+        return False, []
+
+    def is_size_inadequate(self, width, height):
+        return self.get_variety() and not self.get_variety().size_ok(width, height)
+
     def is_in_favorites(self, url):
         return self.get_variety() and os.path.exists(
             os.path.join(self.get_variety().options.favorites_folder, Util.get_local_name(url)))
@@ -116,13 +125,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     def save_locally(self, origin_url, image_url,
                      source_type=None, source_location=None, source_name=None,
                      force_download=False, extra_metadata={}, local_filename=None):
-        parent = self.get_variety()
-
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
-        source_location = source_location or self.get_config() or self.get_description()
+        source_location = source_location or self.get_source_location() or self.get_description()
 
-        if not force_download and parent and origin_url in parent.banned:
+        if not force_download and self.is_in_banned(origin_url):
             logger.info(lambda: "URL " + origin_url + " is banned, skip downloading")
             return None
 
@@ -147,13 +154,13 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             logger.info(lambda: "File already exists, skip downloading")
             return None
 
-        if parent and parent.options.safe_mode and 'keywords' in extra_metadata:
-            blacklisted = set(k.lower() for k in extra_metadata['keywords']) & SAFE_MODE_BLACKLIST
-            if len(blacklisted) > 0:
-                logger.info(lambda: "Skipping non-safe download %s due to blacklisted keywords (%s). "
-                                    "Is the source %s:%s suitable for Safe mode?" %
-                                    (origin_url, str(blacklisted), source_type, source_location))
-                return None
+        is_unsafe, blacklisted = self.is_unsafe(extra_metadata)
+        if is_unsafe:
+            logger.info(
+                lambda: "Skipping non-safe download %s due to blacklisted keywords (%s). "
+                        "Is the source %s:%s suitable for Safe mode?" %
+                        (origin_url, str(blacklisted), source_type, source_location))
+            return None
 
         try:
             r = Util.request(image_url, stream=True)

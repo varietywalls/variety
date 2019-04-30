@@ -48,6 +48,21 @@ class APODDownloader(SimpleDownloader):
     def get_folder_name(self):
         return "nasa_apod"
 
+    def fill_queue(self):
+        logger.info(lambda: "Filling APOD queue from Archive")
+
+        s = Util.html_soup("http://apod.nasa.gov/apod/archivepix.html")
+        urls = [self.ROOT_URL + x["href"] for x in s.findAll("a") if
+                x["href"].startswith("ap") and x["href"].endswith(".html")]
+        urls = urls[:730]  # leave only last 2 years' pics
+        urls = [x for x in urls if not self.is_in_banned(x)]
+
+        queue = urls[:3]  # always put the latest 3 first
+        urls = urls[3:]
+        random.shuffle(urls)  # shuffle the rest
+        queue.extend(urls)
+        return queue
+
     def download_queue_item(self, queue_item):
         origin_url = queue_item
         logger.info(lambda: "APOD URL: " + origin_url)
@@ -67,18 +82,3 @@ class APODDownloader(SimpleDownloader):
         else:
             logger.info(lambda: "No image url found for this APOD URL")
             return None
-
-    def fill_queue(self):
-        logger.info(lambda: "Filling APOD queue from Archive")
-
-        s = Util.html_soup("http://apod.nasa.gov/apod/archivepix.html")
-        urls = [self.ROOT_URL + x["href"] for x in s.findAll("a") if
-                x["href"].startswith("ap") and x["href"].endswith(".html")]
-        urls = urls[:730]  # leave only last 2 years' pics
-        urls = [x for x in urls if not self.is_in_banned(x)]
-
-        queue = urls[:3]  # always put the latest 3 first
-        urls = urls[3:]
-        random.shuffle(urls)  # shuffle the rest
-        queue.extend(urls)
-        return queue

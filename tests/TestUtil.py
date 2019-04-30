@@ -27,6 +27,7 @@ from variety.Util import Util, debounce, throttle, cache
 
 
 class TestUtil(unittest.TestCase):
+    @classmethod
     def setUpClass(cls):
         # Chdir to the tests directory so that we can find our test images
         curdir = os.path.dirname(os.path.abspath(__file__))

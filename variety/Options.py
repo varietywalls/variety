@@ -43,7 +43,6 @@ class Options:
         # TODO: implement as SimpleDownloader plugins and remove from here
         EARTH = "earth"
         BING = "bing"
-        UNSPLASH = "unsplash"
 
         # predefined configurable sources
         MEDIA_RSS = "mediarss"
@@ -62,7 +61,6 @@ class Options:
             WALLHAVEN,
             REDDIT,
             BING,
-            UNSPLASH,
         }
 
         DL_TYPES = {
@@ -72,7 +70,6 @@ class Options:
             WALLHAVEN,
             REDDIT,
             BING,
-            UNSPLASH,
         }
 
         EDITABLE_DL_TYPES = {
@@ -651,7 +648,6 @@ class Options:
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
             [True, Options.SourceType.BING, "Bing Photo of the Day"],
-            [True, Options.SourceType.UNSPLASH, "High-resolution photos from Unsplash.com"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
         ]
 

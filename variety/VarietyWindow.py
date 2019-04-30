@@ -53,7 +53,6 @@ from variety.DominantColors import DominantColors
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.BingDownloader import BingDownloader
-from variety.UnsplashDownloader import UnsplashDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
@@ -134,7 +133,6 @@ class VarietyWindow(Gtk.Window):
         self.perform_upgrade()
 
         self.events = []
-        self.downloaderSetWallpaperHooks = {}
 
         self.prepared = []
         self.prepared_cleared = False
@@ -531,8 +529,6 @@ class VarietyWindow(Gtk.Window):
             return RedditDownloader(self, location)
         elif type == Options.SourceType.BING:
             return BingDownloader(self)
-        elif type == Options.SourceType.UNSPLASH:
-            return UnsplashDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         else:
@@ -1429,13 +1425,13 @@ class VarietyWindow(Gtk.Window):
             # when setting the wallpaper, not when queueing it:
             meta = Util.read_metadata(img)
             if meta and 'sourceType' in meta:
-                if meta['sourceType'] in self.downloaderSetWallpaperHooks:
-                    hook = self.downloaderSetWallpaperHooks[meta['sourceType']]
+                # TODO: eventually we need to iterate ImageSources here, not SimpleDownloaders
+                for dl in Options.SIMPLE_DOWNLOADERS:
+                    if dl.get_source_type() == meta['sourceType']:
+                        def _do_hook():
+                            dl.on_image_set_as_wallpaper(img, meta)
 
-                    def _do_hook():
-                        hook(img, meta)
-
-                    threading.Timer(0, _do_hook).start()
+                        threading.Timer(0, _do_hook).start()
         else:
             logger.warning(lambda: "set_wallpaper called with unaccessible image " + img)
 
@@ -2667,6 +2663,3 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             except:
                 logger.exception('Could not start slideshow:')
         threading.Thread(target=_go).start()
-
-    def registerDownloaderSetWallpaperHook(self, sourceType, hook):
-        self.downloaderSetWallpaperHooks[sourceType] = hook

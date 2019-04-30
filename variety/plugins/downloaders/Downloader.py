@@ -56,6 +56,9 @@ class Downloader(abc.ABC):
     def get_source_name(self):
         return self.source.get_source_name()
 
+    def get_source_location(self):
+        return self.get_config()
+
     def get_description(self):
         """
         User-friendly description of this downloader to show in UI (in the list of sources).
