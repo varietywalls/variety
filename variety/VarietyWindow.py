@@ -52,7 +52,6 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
-from variety.BingDownloader import BingDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
@@ -527,8 +526,6 @@ class VarietyWindow(Gtk.Window):
             return WallhavenDownloader(self, location)
         elif type == Options.SourceType.REDDIT:
             return RedditDownloader(self, location)
-        elif type == Options.SourceType.BING:
-            return BingDownloader(self)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         else:

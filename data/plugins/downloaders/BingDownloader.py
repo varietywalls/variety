@@ -16,40 +16,43 @@
 import random
 import logging
 from datetime import datetime
-from variety import Downloader
+
+from variety import _
 from variety.Util import Util
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 
 logger = logging.getLogger('variety')
 
 random.seed()
 
 
-class BingDownloader(Downloader.Downloader):
+class BingDownloader(SimpleDownloader):
+    DESCRIPTION = _("Bing Photo of the Day")
     BING_JSON_URL = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=100&mkt=en-US"  # n=100, but max 8 images are actually returned... Pity.
 
-    def __init__(self, parent):
-        super(BingDownloader, self).__init__(parent, "bing", "Bing", "https://www.bing.com/gallery/")
-        self.queue = []
+    @classmethod
+    def get_info(cls):
+        return {
+            "name": "BingDownloader",
+            "description": BingDownloader.DESCRIPTION,
+            "author": "Peter Levi",
+            "version": "0.1"
+        }
 
-    def convert_to_filename(self, url):
+    def get_source_type(self):
+        return "bing"
+
+    def get_description(self):
+        return BingDownloader.DESCRIPTION
+
+    def get_source_name(self):
         return "Bing"
 
-    def download_one(self):
-        logger.info(lambda: "Downloading an image from Bing")
-        logger.info(lambda: "Queue size: %d" % len(self.queue))
-
-        if not self.queue:
-            self.fill_queue()
-        if not self.queue:
-            logger.info(lambda: "Bing queue empty after fill")
-            return None
-
-        origin_url, image_url, extra_metadata = self.queue.pop()
-        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
+    def get_source_location(self):
+        return "https://www.bing.com/gallery/"
 
     def fill_queue(self):
-        logger.info(lambda: "Filling Bing queue from " + self.location)
-
+        queue = []
         s = Util.fetch_json(BingDownloader.BING_JSON_URL)
         for item in s['images']:
             try:
@@ -67,9 +70,9 @@ class BingDownloader(Downloader.Downloader):
                     'headline': 'Bing Photo of the Day, %s' % date,
                     'description': item['copyright'],
                 }
-                self.queue.append((src_url, image_url, extra_metadata))
+                queue.append((src_url, image_url, extra_metadata))
             except:
                 logger.exception(lambda: "Could not process an item in the Bing json result")
 
-        random.shuffle(self.queue)
-        logger.info(lambda: "Bing queue populated with %d URLs" % len(self.queue))
+        random.shuffle(queue)
+        return queue

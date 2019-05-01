@@ -48,10 +48,13 @@ class APODDownloader(SimpleDownloader):
     def get_folder_name(self):
         return "nasa_apod"
 
+    def get_source_location(self):
+        return self.ROOT_URL
+
     def fill_queue(self):
         logger.info(lambda: "Filling APOD queue from Archive")
 
-        s = Util.html_soup("http://apod.nasa.gov/apod/archivepix.html")
+        s = Util.html_soup(self.ROOT_URL + "archivepix.html")
         urls = [self.ROOT_URL + x["href"] for x in s.findAll("a") if
                 x["href"].startswith("ap") and x["href"].endswith(".html")]
         urls = urls[:730]  # leave only last 2 years' pics

@@ -39,11 +39,11 @@ class DesktopprDownloader(SimpleDownloader):
     def get_source_type(self):
         return "desktoppr"
 
-    def get_source_name(self):
-        return "Desktoppr.co"
-
     def get_description(self):
         return DesktopprDownloader.DESCRIPTION
+
+    def get_source_name(self):
+        return "Desktoppr.co"
 
     def get_folder_name(self):
         return "Desktoppr"

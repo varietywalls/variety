@@ -42,7 +42,6 @@ class Options:
         # predefined non-configurable sources
         # TODO: implement as SimpleDownloader plugins and remove from here
         EARTH = "earth"
-        BING = "bing"
 
         # predefined configurable sources
         MEDIA_RSS = "mediarss"
@@ -60,7 +59,6 @@ class Options:
             EARTH,
             WALLHAVEN,
             REDDIT,
-            BING,
         }
 
         DL_TYPES = {
@@ -69,7 +67,6 @@ class Options:
             EARTH,
             WALLHAVEN,
             REDDIT,
-            BING,
         }
 
         EDITABLE_DL_TYPES = {
@@ -647,7 +644,6 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [True, Options.SourceType.BING, "Bing Photo of the Day"],
             [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
         ]
 
