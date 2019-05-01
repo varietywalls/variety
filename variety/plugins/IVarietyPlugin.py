@@ -18,3 +18,10 @@ class IVarietyPlugin(IPlugin, metaclass=abc.ABCMeta):
         :return: The config directory which the plugin can use to store config or cache files
         """
         return self.config_folder
+
+    def on_variety_start_complete(self):
+        """
+        Called towards the end of VarietyWindow.start, when options are loaded and
+        caches - created
+        """
+        pass

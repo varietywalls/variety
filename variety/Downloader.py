@@ -36,12 +36,14 @@ SAFE_MODE_BLACKLIST = {
 
 
 class Downloader(object):
-    def __init__(self, parent, source_type, name, location, is_refresher=False):
+    def __init__(self, parent, source_type, name, location):
         self.parent = parent
         self.source_type = source_type
         self.name = name
         self.location = location
-        self.is_refresher = is_refresher
+
+    def is_refresher(self):
+        return False
 
     def update_download_folder(self):
         filename = self.convert_to_filename(self.location)

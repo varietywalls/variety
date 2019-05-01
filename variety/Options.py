@@ -39,10 +39,6 @@ class Options:
         FAVORITES = "favorites"
         FETCHED = "fetched"
 
-        # predefined non-configurable sources
-        # TODO: implement as SimpleDownloader plugins and remove from here
-        EARTH = "earth"
-
         # predefined configurable sources
         MEDIA_RSS = "mediarss"
         FLICKR = "flickr"
@@ -56,7 +52,6 @@ class Options:
             FETCHED,
             FLICKR,
             MEDIA_RSS,
-            EARTH,
             WALLHAVEN,
             REDDIT,
         }
@@ -64,7 +59,6 @@ class Options:
         DL_TYPES = {
             FLICKR,
             MEDIA_RSS,
-            EARTH,
             WALLHAVEN,
             REDDIT,
         }

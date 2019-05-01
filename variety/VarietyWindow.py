@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+from variety.plugins.IVarietyPlugin import IVarietyPlugin
+
 from variety import _
 import subprocess
 import urllib.parse
@@ -54,7 +56,6 @@ from variety.WallhavenDownloader import WallhavenDownloader
 from variety.RedditDownloader import RedditDownloader
 from variety.FlickrDownloader import FlickrDownloader
 from variety.MediaRssDownloader import MediaRssDownloader
-from variety.EarthDownloader import EarthDownloader, EARTH_ORIGIN_URL
 from variety.Options import Options
 from variety.ImageFetcher import ImageFetcher
 from variety.Util import Util, throttle, debounce
@@ -174,15 +175,17 @@ class VarietyWindow(Gtk.Window):
 
         self.start_threads()
 
-        prepare_earth_timer = threading.Timer(0, self.prepare_earth_downloader)
-        prepare_earth_timer.start()
-
         self.dialogs = []
 
         self.first_run()
 
         def _delayed():
             self.create_preferences_dialog()
+
+            for plugin in self.jumble.get_plugins(clazz=IVarietyPlugin):
+                prepare_earth_timer = threading.Timer(0, plugin["plugin"].on_variety_start_complete)
+                prepare_earth_timer.start()
+
         GObject.timeout_add(1000, _delayed)
 
     def on_mnu_about_activate(self, widget, data=None):
@@ -358,9 +361,6 @@ class VarietyWindow(Gtk.Window):
     def load_downloader_plugins(self):
         simple_downloaders = [
             p["plugin"] for p in self.jumble.get_plugins(SimpleDownloader, active=True)]
-        for dl in simple_downloaders:
-            dl.set_variety(self)
-
         Options.SIMPLE_DOWNLOADERS = simple_downloaders
 
     def reload_config(self):
@@ -372,6 +372,10 @@ class VarietyWindow(Gtk.Window):
         GObject.idle_add(self.update_indicator_icon)
 
         self.prepare_download_folder()
+
+        for dl in Options.SIMPLE_DOWNLOADERS:
+            dl.set_variety(self)
+            dl.update_download_folder()
 
         Util.makedirs(self.options.favorites_folder)
         Util.makedirs(self.options.fetched_folder)
@@ -518,9 +522,7 @@ class VarietyWindow(Gtk.Window):
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
-        if type == Options.SourceType.EARTH:
-            return EarthDownloader(self)
-        elif type == Options.SourceType.FLICKR:
+        if type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
@@ -615,8 +617,7 @@ class VarietyWindow(Gtk.Window):
         return os.path.exists(os.path.join(self.options.favorites_folder, filename))
 
     def is_current_refreshable(self):
-        #TODO this is a hacky check, but works while EarthDownloader is the only refreshing downloader
-        return self.url == EARTH_ORIGIN_URL
+        return '--refreshable' in self.current
 
     def update_favorites_menuitems(self, holder, auto_changed, favs_op):
         if auto_changed:
@@ -954,7 +955,7 @@ class VarietyWindow(Gtk.Window):
             time.sleep(3600 * 24) # Update once daily
 
     def has_real_downloaders(self):
-        return sum(1 for d in self.downloaders if not getattr(d, "is_refresher", False)) > 0
+        return sum(1 for d in self.downloaders if not d.is_refresher()) > 0
 
     def download_thread(self):
         self.last_dl_time = time.time()
@@ -987,7 +988,7 @@ class VarietyWindow(Gtk.Window):
 
                     # Also refresh the images for all the refreshers - these need to be updated regularly
                     for dl in self.downloaders:
-                        if getattr(dl, "is_refresher", False) and dl != downloader:
+                        if dl.is_refresher() and dl != downloader:
                             dl.download_one()
 
             except Exception:
@@ -998,12 +999,6 @@ class VarietyWindow(Gtk.Window):
             logger.info(lambda: "Triggering one download")
             self.last_dl_time = 0
             self.dl_event.set()
-
-    def prepare_earth_downloader(self):
-        dl = EarthDownloader(self)
-        dl.update_download_folder()
-        if not os.path.exists(dl.target_folder):
-            dl.download_one()
 
     def register_downloaded_file(self, file):
         if not self.downloaded or self.downloaded[0] != file:
@@ -1019,7 +1014,7 @@ class VarietyWindow(Gtk.Window):
         if file:
             self.register_downloaded_file(file)
 
-            if getattr(downloader, "is_refresher", False) or self.image_ok(file, 0):
+            if downloader.is_refresher() or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
                 logger.info(lambda: "Adding downloaded file %s to prepared_from_downloads queue" % file)
                 with self.prepared_lock:

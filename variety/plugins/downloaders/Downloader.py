@@ -51,12 +51,24 @@ class Downloader(abc.ABC):
         return self.source
 
     def get_source_type(self):
+        """
+        :return: the image source's source type
+        """
         return self.source.get_source_type()
 
     def get_source_name(self):
+        """
+        :return: the image source's source name
+        """
         return self.source.get_source_name()
 
     def get_source_location(self):
+        """
+        What to save as sourceLocation in the images' metadata.
+        By default this is this downloader's config string.
+        Override in SimpleDownloaders to return a non-null string.
+        :return: the source location to be saved in images
+        """
         return self.get_config()
 
     def get_description(self):
@@ -99,6 +111,16 @@ class Downloader(abc.ABC):
         :return: None, or a positive number of seconds
         """
         return None
+
+    def is_refresher(self):
+        """
+        "Refresher" downloaders download regularly the same image URL, but it changes with time.
+        They require that the wallpaper is regularly updated.
+        Images downloaded by refreshers MUST contain the string "--refreshable" in the name -
+        this is the way Variety will know these images can be set as wallpaper again and again.
+        :return: False by defualt, override to return True when implementing refreshers
+        """
+        return False
 
     @abc.abstractmethod
     def download_one(self):

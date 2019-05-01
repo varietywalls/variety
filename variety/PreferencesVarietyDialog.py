@@ -397,8 +397,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.on_row_enabled_state_changed(row)
 
     def on_row_enabled_state_changed(self, row):
-        # Special case when enabling the Earth downloader:
-        if row[0] and row[1] == Options.SourceType.EARTH:
+        # Special case when enabling refresher downloaders:
+        refresher_dls = [
+            dl for dl in Options.SIMPLE_DOWNLOADERS
+            if dl.get_source_type() == row[1] and dl.is_refresher()]
+        if row[0] and len(refresher_dls) > 0:
             updated = False
             if not self.ui.change_enabled.get_active():
                 self.ui.change_enabled.set_active(True)
@@ -416,8 +419,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             if updated:
                 self.parent.show_notification(
-                    _("World Sunlight Map enabled"),
-                    _("Using the World Sunlight Map requires both downloading and changing "
+                    refresher_dls[0].get_description(),
+                    _("Using this source requires both downloading and changing "
                     "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
 
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):

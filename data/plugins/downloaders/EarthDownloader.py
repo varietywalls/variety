@@ -18,25 +18,56 @@ import logging
 import os
 import subprocess
 
+from variety import _
+
 logger = logging.getLogger('variety')
 
-from variety import Downloader
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 
-EARTH_IMAGE_URL = "https://static.die.net/earth/mercator/1600.jpg"
+
+EARTH_IMAGE_URL = "http://images.opentopia.com/sunlight/world_sunlight_map_rectangular.jpg"
 EARTH_ORIGIN_URL = "https://www.die.net/earth/"
-EARTH_FILENAME = "earth.jpg"
+EARTH_FILENAME = "earth--refreshable.jpg"
 
-class EarthDownloader(Downloader.Downloader):
-    def __init__(self, parent):
-        super(EarthDownloader, self).__init__(
-            parent, "earth", "Die.net", EARTH_ORIGIN_URL, is_refresher=True)
 
-    def convert_to_filename(self, url):
+class EarthDownloader(SimpleDownloader):
+    DESCRIPTION = _("World Sunlight Map - live wallpaper from Die.net")
+
+    @classmethod
+    def get_info(cls):
+        return {
+            "name": "EarthDownloader",
+            "description": EarthDownloader.DESCRIPTION,
+            "author": "Peter Levi",
+            "version": "0.1"
+        }
+
+    def get_source_type(self):
+        return "earth"
+
+    def get_description(self):
+        return EarthDownloader.DESCRIPTION
+
+    def get_source_name(self):
+        return "Die.net"
+
+    def get_folder_name(self):
         return "Earth"
+
+    def get_source_location(self):
+        return EARTH_ORIGIN_URL
+
+    def is_refresher(self):
+        return True
 
     def download_one(self):
         logger.info(lambda: "Downloading world sunlight map from " + EARTH_ORIGIN_URL)
-        downloaded = self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True, extra_metadata={'headline': 'World Sunlight Map'})
+        downloaded = self.save_locally(
+            EARTH_ORIGIN_URL,
+            EARTH_IMAGE_URL,
+            force_download=True,
+            extra_metadata={'headline': 'World Sunlight Map'}
+        )
         cropped = os.path.join(self.target_folder, EARTH_FILENAME)
         subprocess.call(["convert", downloaded, "-gravity", "north", "-crop", "100%x95%", cropped])
         for f in os.listdir(self.target_folder):
@@ -44,3 +75,10 @@ class EarthDownloader(Downloader.Downloader):
                 os.unlink(os.path.join(self.target_folder, f))
         return cropped
 
+    def fill_queue(self):
+        """ Not needed here """
+        return []
+
+    def on_variety_start_complete(self):
+        if not os.path.exists(os.path.join(self.target_folder, EARTH_FILENAME)):
+            self.download_one()

@@ -32,9 +32,18 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         self.variety = None
 
     def set_variety(self, variety):
+        """
+        Sets the VarietyWindow instance. This is called after Jumble creates the instance, before
+        it is actually used.
+        :param variety: the instance of VarietyWindow
+        """
         self.variety = variety
 
     def get_variety(self):
+        """
+        Returns the VarietyWindow instance. This is available, before the source is actually used.
+        :return the instance of VarietyWindow
+        """
         return self.variety
 
     @abc.abstractmethod
