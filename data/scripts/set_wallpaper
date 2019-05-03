@@ -113,7 +113,6 @@ if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
         find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
     echo "$OFILE.edj" > "$LAST_WALLPAPER_FILE"
-    exit 0
 fi
 
 # KDE: Users on KDE 4 or Plasma < 5.7 will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short interval.
@@ -250,3 +249,5 @@ fi
 # Display the original filename in the notification, but actually apply the post-effects image.
 # name=$(echo "$3" | sed 's/\//\n/g'| tail -n 1)
 # if [ "$2" == "auto" ]; then notify-send --icon "$WP" "Wallpaper changed" "$name" ; fi
+
+exit 0
