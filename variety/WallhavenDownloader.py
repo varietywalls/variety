@@ -17,34 +17,48 @@ import urllib.parse
 import random
 
 import logging
-import time
-from variety import Downloader
+
+from variety import _
 from variety.Util import Util
+from plugins.downloaders.DefaultDownloader import DefaultDownloader
+from plugins.downloaders.ImageSource import ImageSource, Throttling
 
 logger = logging.getLogger('variety')
 
 random.seed()
 
-class WallhavenDownloader(Downloader.Downloader):
-    last_download_time = 0
 
+class WallhavenDownloader(ImageSource, DefaultDownloader):
     def __init__(self, parent, location):
-        super(WallhavenDownloader, self).__init__(parent, "wallhaven", "Wallhaven.cc", location)
+        ImageSource.__init__(self)
+        DefaultDownloader.__init__(self, source=self, config=location)
+        self.set_variety(parent)
         self.parse_location()
-        self.last_fill_time = 0
-        self.queue = []
 
-    def convert_to_filename(self, url):
-        return "wallhaven_" + super(WallhavenDownloader, self).convert_to_filename(url)
+    @classmethod
+    def get_info(cls):
+        raise Exception("Not yet implemented as a plugin")
+
+    def get_description(self):
+        return _("Images from Wallhaven.cc")
+
+    def get_source_name(self):
+        return "Wallhaven.cc"
+
+    def get_source_type(self):
+        return "wallhaven"
+
+    def get_default_throttling(self):
+        return Throttling(min_download_interval=600, min_fill_queue_interval=600)
 
     def parse_location(self):
-        if self.location.startswith(('http://', 'https://')):
+        if self.config.startswith(('http://', 'https://')):
             # location is an URL, use it
-            self.url = self.location.replace('http://', 'https://')
+            self.url = self.config.replace('http://', 'https://')
         else:
             # interpret location as keywords
             self.url = "https://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
-                       urllib.parse.quote(self.location)
+                       urllib.parse.quote(self.config)
 
     def search(self, page=None):
         url = self.url
@@ -79,31 +93,8 @@ class WallhavenDownloader(Downloader.Downloader):
             logger.exception(lambda: "Error while validating wallhaven search")
             return False
 
-    def download_one(self):
-        min_download_interval, min_fill_queue_interval = self.parse_server_options("wallhaven", 0, 0)
-
-        if time.time() - WallhavenDownloader.last_download_time < min_download_interval:
-            logger.info(lambda: "Minimal interval between Wallhaven downloads is %d, skip this attempt" % min_download_interval)
-            return None
-
-        logger.info(lambda: "Downloading an image from Wallhaven.cc, " + self.location)
-        logger.info(lambda: "Queue size: %d" % len(self.queue))
-
-        if not self.queue:
-            if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info(lambda: "Wallhaven queue empty, but minimal interval between fill attempts is %d, "
-                            "will try again later" % min_fill_queue_interval)
-                return None
-
-            self.fill_queue()
-
-        if not self.queue:
-            logger.info(lambda: "Wallhaven queue still empty after fill request")
-            return None
-
-        WallhavenDownloader.last_download_time = time.time()
-
-        wallpaper_url = self.queue.pop()
+    def download_queue_item(self, queue_item):
+        wallpaper_url = queue_item
         logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
@@ -121,9 +112,9 @@ class WallhavenDownloader(Downloader.Downloader):
             sfw_rating = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
             extra_metadata['sfwRating'] = sfw_rating
 
-            if self.parent and self.parent.options.safe_mode and sfw_rating < 100:
+            if self.is_safe_mode_enabled() and sfw_rating < 100:
                 logger.info(lambda: "Skipping non-safe download from Wallhaven. "
-                                    "Is the source %s suitable for Safe mode?" % self.location)
+                                    "Is the source %s suitable for Safe mode?" % self.config)
                 return None
         except:
             pass
@@ -131,9 +122,7 @@ class WallhavenDownloader(Downloader.Downloader):
         return self.save_locally(wallpaper_url, src_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
-        self.last_fill_time = time.time()
-
-        logger.info(lambda: "Filling wallhaven queue: " + self.location)
+        queue = []
 
         not_random = not "sorting=random" in self.url
         if not_random:
@@ -153,7 +142,7 @@ class WallhavenDownloader(Downloader.Downloader):
                 p = list(map(int, thumb.find('span', {'class': 'wall-res'}).contents[0].split('x')))
                 width = p[0]
                 height = p[1]
-                if self.parent and not self.parent.size_ok(width, height):
+                if self.is_size_inadequate(width, height):
                     continue
             except Exception:
                 # missing or unparseable resolution - consider ok
@@ -161,17 +150,17 @@ class WallhavenDownloader(Downloader.Downloader):
 
             try:
                 link = thumb.find('a', {'class': 'preview'})["href"]
-                if self.parent and link in self.parent.banned:
+                if self.is_in_banned(link):
                     continue
-                self.queue.append(link)
+                queue.append(link)
             except Exception:
                 logger.debug(lambda: "Missing link for thumbnail")
 
-        random.shuffle(self.queue)
+        random.shuffle(queue)
 
-        if not_random and len(self.queue) >= 20:
-            self.queue = self.queue[:len(self.queue)//2]
+        if not_random and len(queue) >= 20:
+            queue = queue[:len(queue)//2]
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 
-        logger.info(lambda: "Wallhaven queue populated with %d URLs" % len(self.queue))
+        return queue
