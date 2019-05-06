@@ -27,8 +27,6 @@ sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), ".."
 
 setup_test_logging()
 
-from variety.Downloader import Downloader
-
 
 def get_plugin_downloader(typename):
     p = Jumble(["../data/plugins"])
@@ -44,12 +42,6 @@ def test_download_one_for(test_case, dl):
         if f and os.path.isfile(f) and Util.is_image(f, check_contents=True):
             return
     test_case.fail("Tried download_one 5 times, all failed")
-
-
-class TestDownloader(unittest.TestCase):
-    def test_convert_url(self):
-        self.assertEqual("wallpapers_net_some_category_html",
-            Downloader("", "", "", ".").convert_to_filename("http://wallpapers.net/some-category.html"))
 
 
 if __name__ == '__main__':

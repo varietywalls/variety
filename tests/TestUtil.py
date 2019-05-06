@@ -170,6 +170,10 @@ class TestUtil(unittest.TestCase):
         resp = Util.fetch("//google.com")
         self.assertTrue(len(resp) > 0)
 
+    def test_convert_url(self):
+        self.assertEqual("wallpapers_net_some_category_html",
+                         Util.convert_to_filename("http://wallpapers.net/some-category.html"))
+
     def test_get_size(self):
         self.assertEqual((32, 32), Util.get_size('test.jpg'))
         self.assertRaises(Exception, lambda: Util.get_size('fake_image.jpg'))
