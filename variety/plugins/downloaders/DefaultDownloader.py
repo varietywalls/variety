@@ -74,16 +74,18 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         min_download_interval, min_fill_queue_interval = self.source.get_throttling()
 
         if time.time() - self.source.last_download_time < min_download_interval:
-            logger.info(lambda: "%s: Minimal interval between downloads is %d, skip this attempt" % (
-                name, min_download_interval))
+            logger.info(
+                lambda: "%s: Minimal interval between downloads is %d, skip this attempt" %
+                        (name, min_download_interval))
             return None
 
-        logger.info(lambda: "%s: Downloading an image" % name)
+        logger.info(lambda: "%s: Downloading an image, config: %s" % (name, self.config))
         logger.info(lambda: "%s: Queue size: %d" % (name, len(self.queue)))
 
         if not self.queue:
             if time.time() - self.source.last_fill_time < min_fill_queue_interval:
-                logger.info(lambda: "%s: Queue empty, but minimal interval between fill attempts is %d, "
+                logger.info(
+                    lambda: "%s: Queue empty, but minimal interval between fill attempts is %d, "
                             "will try again later" % (name, min_fill_queue_interval))
                 return None
 
@@ -97,7 +99,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             logger.info(lambda: "%s: Queue still empty after fill request" % name)
             return None
         else:
-            logger.info(lambda: "Queue populated with %d URLs" % len(self.queue))
+            logger.info(lambda: "%s: Queue populated with %d URLs" % (name, len(self.queue)))
 
         self.source.last_download_time = time.time()
         queue_item = self.queue.pop()
