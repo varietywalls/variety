@@ -31,9 +31,12 @@ class Downloader(abc.ABC):
     def get_variety(self):
         return self.source.get_variety()
 
+    def convert_to_filename(self, config):
+        return self.get_source_type() + '_' + Util.convert_to_filename(config)
+
     def update_download_folder(self):
         dl_folder = self.get_variety().real_download_folder
-        filename = Util.convert_to_filename(self.folder_name)
+        filename = self.convert_to_filename(self.config) if self.config else self.get_folder_name()
         if len(filename) + len(dl_folder) > 160:
             filename = filename[:(150 - len(dl_folder))] + Util.md5(filename)[:10]
         self.target_folder = os.path.join(dl_folder, filename)
@@ -106,22 +109,26 @@ class Downloader(abc.ABC):
     def get_refresh_interval_seconds(self):
         """
         Refresher downloaders can download one and the same image URL on a regular basis.
-        Returning a positive integer here instructs Variety to initiate regular downloads and wallpaper changes
-        when using this downloader.
+        Returning a positive integer here instructs Variety to initiate regular downloads and
+        wallpaper changes when using this downloader.
+        Images downloaded by refreshers MUST contain the string "--refreshable" in the name -
+        this is the way Variety will know these images can be set as wallpaper again and again.
+        :return: False by defualt, override to return True when implementing refreshers
         :return: None, or a positive number of seconds
         """
         return None
 
     def is_refresher(self):
         """
-        "Refresher" downloaders download regularly the same image URL, but it changes with time.
-        They require that the wallpaper is regularly updated.
-        Images downloaded by refreshers MUST contain the string "--refreshable" in the name -
-        this is the way Variety will know these images can be set as wallpaper again and again.
-        :return: False by defualt, override to return True when implementing refreshers
+        Checks if this is a "refresher" plugin, i.e. refresh_interval_seconds is not None
         """
-        return False
+        return self.get_refresh_interval_seconds() is not None
 
     @abc.abstractmethod
     def download_one(self):
+        """
+        Downloads a single image. DefaultDownloader provides a reference implementation and most
+        plugins should inherit DefaultDownloader instead of implementing this method.
+        :return: the downloaded file path, or None
+        """
         pass

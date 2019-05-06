@@ -402,26 +402,28 @@ class PreferencesVarietyDialog(PreferencesDialog):
             dl for dl in Options.SIMPLE_DOWNLOADERS
             if dl.get_source_type() == row[1] and dl.is_refresher()]
         if row[0] and len(refresher_dls) > 0:
+            refresh_time = refresher_dls[0].get_refresh_interval_seconds()
             updated = False
             if not self.ui.change_enabled.get_active():
                 self.ui.change_enabled.set_active(True)
                 updated = True
-            if self.get_change_interval() > 30 * 60:
-                self.set_change_interval(30 * 60)
+            if self.get_change_interval() > refresh_time:
+                self.set_change_interval(refresh_time)
                 updated = True
 
             if not self.ui.download_enabled.get_active():
                 self.ui.download_enabled.set_active(True)
                 updated = True
-            if self.get_download_interval() > 30 * 60:
-                self.set_download_interval(30 * 60)
+            if self.get_download_interval() > refresh_time:
+                self.set_download_interval(refresh_time)
                 updated = True
 
             if updated:
                 self.parent.show_notification(
                     refresher_dls[0].get_description(),
                     _("Using this source requires both downloading and changing "
-                    "enabled at intervals of 30 minutes or less. Settings were adjusted automatically."))
+                      "enabled at intervals of %d minutes or less. "
+                      "Settings were adjusted automatically.") % int(refresh_time / 60))
 
     def set_time(self, interval, text, time_unit, times=(1, 60, 60 * 60, 24 * 60 * 60)):
         if interval < 5:

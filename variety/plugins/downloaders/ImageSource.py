@@ -76,7 +76,6 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         :param img path to the image file
         :param meta image metadata
         """
-        # TODO Never called for now, to be implemented
         pass
 
     def on_image_favorited(self, img, meta):

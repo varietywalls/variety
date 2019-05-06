@@ -57,8 +57,8 @@ class EarthDownloader(SimpleDownloader):
     def get_source_location(self):
         return EARTH_ORIGIN_URL
 
-    def is_refresher(self):
-        return True
+    def get_refresh_interval_seconds(self):
+        return 15 * 60
 
     def download_one(self):
         logger.info(lambda: "Downloading world sunlight map from " + EARTH_ORIGIN_URL)
