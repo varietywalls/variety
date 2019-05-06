@@ -20,30 +20,36 @@ from variety.Util import Util
 
 
 class Downloader(abc.ABC):
-    def __init__(self, source, description, folder_name, config=None, full_descriptor=None):
+    def __init__(self, source, config=None, full_descriptor=None):
         super().__init__()
         self.source = source
-        self.description = description
-        self.folder_name = folder_name
         self.config = config
         self.full_descriptor = full_descriptor
+        self.target_folder = None  # initialized post construction by update_download_folder
 
     def get_variety(self):
         return self.source.get_variety()
 
-    def convert_to_filename(self, config):
-        return self.get_source_type() + '_' + Util.convert_to_filename(config)
-
     def update_download_folder(self):
+        """
+        Called after initialization, once the VarietyWindow instance is filled in, sets
+        the target folder according to the current options. Also called if downloads folder
+        is changed in settings.
+        """
         dl_folder = self.get_variety().real_download_folder
-        filename = self.convert_to_filename(self.config) if self.config else self.get_folder_name()
+        filename = self.get_folder_name()
         if len(filename) + len(dl_folder) > 160:
             filename = filename[:(150 - len(dl_folder))] + Util.md5(filename)[:10]
         self.target_folder = os.path.join(dl_folder, filename)
 
     def get_local_filename(self, url):
-        if not hasattr(self, 'target_folder'):
-            self.update_download_folder()
+        """
+        Returns the local file path where to save a remote image (at URL url)
+        :param url: the URL of the image
+        :return: the full local path, under the current target_folder
+        """
+        if self.target_folder is None:
+            raise Exception('update_download_folder was not called before downloading')
         return os.path.join(self.target_folder, Util.get_local_name(url))
 
     def get_source(self):
@@ -74,13 +80,14 @@ class Downloader(abc.ABC):
         """
         return self.get_config()
 
+    @abc.abstractmethod
     def get_description(self):
         """
         User-friendly description of this downloader to show in UI (in the list of sources).
         E.g. "Downloads random images from site X", or "Images from Flickr user XXX"
         :return: description
         """
-        return self.description
+        pass
 
     def get_config(self):
         """
@@ -104,7 +111,10 @@ class Downloader(abc.ABC):
         How should the folder be named where images from this source are downloaded to
         :return: folder name (just name, not full path)
         """
-        return self.folder_name
+        if self.config:
+            return self.get_source_type() + '_' + Util.convert_to_filename(self.config)
+        else:
+            return self.get_source_name()
 
     def get_refresh_interval_seconds(self):
         """

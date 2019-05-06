@@ -40,8 +40,8 @@ SAFE_MODE_BLACKLIST = {
 
 
 class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
-    def __init__(self, source, description, folder_name, config=None, full_descriptor=None):
-        super().__init__(source, description, folder_name, config, full_descriptor)
+    def __init__(self, source, config=None, full_descriptor=None):
+        super().__init__(source, config, full_descriptor)
         self.queue = []
 
     @abc.abstractmethod

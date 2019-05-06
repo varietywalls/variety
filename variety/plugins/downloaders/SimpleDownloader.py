@@ -21,19 +21,12 @@ from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 
 
 class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
+    """
+    Base class for non-configurable "singleton" downloaders, where the same object instance
+    serves as both the ImageSource and the Downloader.
+    """
     def __init__(self):
         ImageSource.__init__(self)
-        DefaultDownloader.__init__(
-            self,
-            source=self,
-            description=self.get_description(),
-            folder_name=self.get_folder_name())
+        DefaultDownloader.__init__(self, source=self)
         IPlugin.activate(self)
         self.queue = []
-
-    @abc.abstractmethod
-    def get_description(self):
-        pass
-
-    def get_folder_name(self):
-        return self.get_source_name()
