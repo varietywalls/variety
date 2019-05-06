@@ -109,8 +109,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     def is_in_banned(self, url):
         return self.get_variety() and url in self.get_variety().banned
 
+    def is_safe_mode_enabled(self):
+        return self.get_variety() and self.get_variety().options.safe_mode
+
     def is_unsafe(self, extra_metadata):
-        if self.get_variety() and self.get_variety().options.safe_mode and 'keywords' in extra_metadata:
+        if self.is_safe_mode_enabled() and 'keywords' in extra_metadata:
             blacklisted = set(k.lower() for k in extra_metadata['keywords']) & SAFE_MODE_BLACKLIST
             return True, blacklisted if len(blacklisted) > 0 else False, []
         return False, []
