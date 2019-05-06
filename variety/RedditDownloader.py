@@ -38,7 +38,7 @@ class RedditDownloader(ImageSource, DefaultDownloader):
 
     @classmethod
     def get_info(cls):
-        raise Exception("Not implemented as a plugin yet")
+        raise Exception("Not yet implemented as a plugin")
 
     def get_source_type(self):
         return "reddit"
