@@ -399,7 +399,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def on_row_enabled_state_changed(self, row):
         # Special case when enabling refresher downloaders:
         refresher_dls = [
-            dl for dl in Options.SIMPLE_DOWNLOADERS
+            dl for dl in Options.SIMPLE_DOWNLOADERS  # TODO: this will break if we have non-simple refresher downloaders
             if dl.get_source_type() == row[1] and dl.is_refresher()]
         if row[0] and len(refresher_dls) > 0:
             refresh_time = refresher_dls[0].get_refresh_interval_seconds()

@@ -41,7 +41,8 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
 
     def get_variety(self):
         """
-        Returns the VarietyWindow instance. This is available, before the source is actually used.
+        Returns the VarietyWindow instance, if set via set_variety(), or None.
+        This is available before the source is actually used.
         :return the instance of VarietyWindow
         """
         return self.variety
@@ -80,12 +81,11 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
 
     def on_image_favorited(self, img, meta):
         """
-        Called when a wallpaper downloaded from this source was copied to favorites.
+        Called when a wallpaper downloaded from this source was copied or moved to favorites.
         This can be used to call back the image provider for stats purposes.
         :param img path to the image file
         :param meta image metadata
         """
-        # TODO Never called for now, to be implemented
         pass
 
     def get_default_throttling(self):
@@ -94,7 +94,8 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         It is normally controlled via a remote config, but defaults should be provided for the cases
         when the remote config is not set or cannot be fetched.
         All downloaders for the same source are throttled together.
-        :return: a dict with min_download_interval (in seconds) and min_fill_queue_interval (in seconds)
+        :return: a Throttling namedtuple with min_download_interval (in seconds)
+        and min_fill_queue_interval (in seconds)
         """
         return Throttling(min_download_interval=0, min_fill_queue_interval=0)
 

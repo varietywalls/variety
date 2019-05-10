@@ -29,6 +29,7 @@ TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 class Options:
     OUTDATED_HASHES = {'clock_filter': ['dca6bd2dfa2b8c4e2db8801e39208f7f']}
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
+    IMAGE_SOURCES = []  # set by VarietyWindow at start
 
     class SourceType:
         # local files and folders
@@ -462,8 +463,9 @@ class Options:
                         logger.debug(lambda: "Cannot parse source: " + v, exc_info=True)
                         logger.info('Ignoring no longer supported source %s', v)
 
+            # automatically append sources for all simple downloaders we have
             source_types = set(s[1] for s in self.sources)
-            for downloader in self.SIMPLE_DOWNLOADERS:
+            for downloader in sorted(self.SIMPLE_DOWNLOADERS, key=lambda dl: dl.get_source_type()):
                 if downloader.get_source_type() not in source_types:
                     self.sources.append([
                         True,
@@ -547,15 +549,15 @@ class Options:
 
     @staticmethod
     def get_all_supported_source_types():
-        return Options.SourceType.BUILTIN_SOURCE_TYPES | Options.get_simple_downloader_source_types()
+        return Options.SourceType.BUILTIN_SOURCE_TYPES | Options.get_plugin_source_types()
 
     @staticmethod
     def get_downloader_source_types():
-        return Options.SourceType.DL_TYPES | Options.get_simple_downloader_source_types()
+        return Options.SourceType.DL_TYPES | Options.get_plugin_source_types()
 
     @staticmethod
-    def get_simple_downloader_source_types():
-        return set(dl.get_source_type() for dl in Options.SIMPLE_DOWNLOADERS)
+    def get_plugin_source_types():
+        return set(dl.get_source_type() for dl in Options.IMAGE_SOURCES)
 
     def set_defaults(self):
         self.change_enabled = True

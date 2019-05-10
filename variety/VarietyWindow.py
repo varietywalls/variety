@@ -14,12 +14,9 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-from variety.plugins.IVarietyPlugin import IVarietyPlugin
-
 from variety import _
 import subprocess
 import urllib.parse
-from variety.VarietyOptionParser import VarietyOptionParser
 from jumble.Jumble import Jumble
 
 import gi
@@ -47,6 +44,9 @@ from PIL import Image as PILImage
 random.seed()
 logger = logging.getLogger('variety')
 
+from variety.VarietyOptionParser import VarietyOptionParser
+from variety.plugins.IVarietyPlugin import IVarietyPlugin
+from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.WelcomeDialog import WelcomeDialog
@@ -359,9 +359,14 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
     def load_downloader_plugins(self):
-        simple_downloaders = [
-            p["plugin"] for p in self.jumble.get_plugins(SimpleDownloader, active=True)]
-        Options.SIMPLE_DOWNLOADERS = simple_downloaders
+        Options.IMAGE_SOURCES = [
+            p["plugin"] for p in self.jumble.get_plugins(ImageSource, active=True)
+        ]
+        Options.SIMPLE_DOWNLOADERS = [
+            p for p in Options.IMAGE_SOURCES if isinstance(p, SimpleDownloader)
+        ]
+        for image_source in Options.IMAGE_SOURCES:
+            image_source.set_variety(self)
 
     def reload_config(self):
         self.previous_options = self.options
@@ -372,10 +377,6 @@ class VarietyWindow(Gtk.Window):
         GObject.idle_add(self.update_indicator_icon)
 
         self.prepare_download_folder()
-
-        for dl in Options.SIMPLE_DOWNLOADERS:
-            dl.set_variety(self)
-            dl.update_download_folder()
 
         Util.makedirs(self.options.favorites_folder)
         Util.makedirs(self.options.fetched_folder)
@@ -419,7 +420,7 @@ class VarietyWindow(Gtk.Window):
                     logger.exception(lambda: "Could not create Downloader for type %s, location %s" % (type, location))
 
         for downloader in self.downloaders:
-            downloader.update_download_folder()
+            downloader.update_download_folder(self.real_download_folder)
             Util.makedirs(downloader.target_folder)
             self.folders.append(downloader.target_folder)
 
@@ -551,7 +552,7 @@ class VarietyWindow(Gtk.Window):
             return self.options.fetched_folder
         else:
             dlr = self.create_downloader(type, location)
-            dlr.update_download_folder()
+            dlr.update_download_folder(self.real_download_folder)
             return dlr.target_folder
 
     def delete_files_of_source(self, source):
@@ -1417,11 +1418,10 @@ class VarietyWindow(Gtk.Window):
             # when setting the wallpaper, not when queueing it:
             meta = Util.read_metadata(img)
             if meta and 'sourceType' in meta:
-                # TODO: eventually we need to iterate ImageSources here, not SimpleDownloaders
-                for dl in Options.SIMPLE_DOWNLOADERS:
-                    if dl.get_source_type() == meta['sourceType']:
+                for image_source in Options.IMAGE_SOURCES:
+                    if image_source.get_source_type() == meta['sourceType']:
                         def _do_hook():
-                            dl.on_image_set_as_wallpaper(img, meta)
+                            image_source.on_image_set_as_wallpaper(img, meta)
 
                         threading.Timer(0, _do_hook).start()
         else:
@@ -1716,6 +1716,7 @@ class VarietyWindow(Gtk.Window):
             if os.access(file, os.R_OK) and not self.is_in_favorites(file):
                 self.move_or_copy_file(file, self.options.favorites_folder, "favorites", shutil.copy)
                 self.update_indicator(auto_changed=False)
+                self.report_image_favorited(file)
         except Exception:
             logger.exception(lambda: "Exception in copy_to_favorites")
 
@@ -1740,8 +1741,19 @@ class VarietyWindow(Gtk.Window):
                         if self.no_effects_on == file:
                             self.no_effects_on = new_file
                         self.set_wp_throttled(new_file)
+                    self.report_image_favorited(new_file)
         except Exception:
             logger.exception(lambda: "Exception in move_to_favorites")
+
+    def report_image_favorited(self, img):
+        meta = Util.read_metadata(img)
+        if meta and 'sourceType' in meta:
+            for image_source in Options.IMAGE_SOURCES:
+                if image_source.get_source_type() == meta['sourceType']:
+                    def _do_hook():
+                        image_source.on_image_favorited(img, meta)
+
+                    threading.Timer(0, _do_hook).start()
 
     def determine_favorites_operation(self, file=None):
         if not file:

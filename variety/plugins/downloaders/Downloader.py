@@ -21,6 +21,12 @@ from variety.Util import Util
 
 class Downloader(abc.ABC):
     def __init__(self, source, config=None, full_descriptor=None):
+        """
+        Create a downloader for an image source
+        :param source: the image source this downloader is associated with
+        :param config: optional, see get_config()
+        :param full_descriptor: optional, see get_full_descriptor()
+        """
         super().__init__()
         self.source = source
         self.config = config
@@ -28,19 +34,26 @@ class Downloader(abc.ABC):
         self.target_folder = None  # initialized post construction by update_download_folder
 
     def get_variety(self):
+        """
+        :return: the VarietyWindow instance, if set in the source, else None
+        """
         return self.source.get_variety()
 
-    def update_download_folder(self):
+    def update_download_folder(self, global_download_folder):
         """
         Called after initialization, once the VarietyWindow instance is filled in, sets
         the target folder according to the current options. Also called if downloads folder
         is changed in settings.
+        :param global_download_folder the "global" download folder as set in Variety's preferences
+        Our target_folder will be a subfolder to that one, named depending on what get_folder_name()
+        returns.
+        :return the target_folder for this particular downloader
         """
-        dl_folder = self.get_variety().real_download_folder
         filename = self.get_folder_name()
-        if len(filename) + len(dl_folder) > 160:
-            filename = filename[:(150 - len(dl_folder))] + Util.md5(filename)[:10]
-        self.target_folder = os.path.join(dl_folder, filename)
+        if len(filename) + len(global_download_folder) > 160:
+            filename = filename[:(150 - len(global_download_folder))] + Util.md5(filename)[:10]
+        self.target_folder = os.path.join(global_download_folder, filename)
+        return self.target_folder
 
     def get_local_filename(self, url):
         """
@@ -91,7 +104,7 @@ class Downloader(abc.ABC):
 
     def get_config(self):
         """
-        Returns the config string used to create this downloader, e.g. "nature"
+        Returns the config string used to create this downloader, e.g. a search keyword, or URL
         :return: the config string, will be None for non-configurable sources
         """
         return self.config
