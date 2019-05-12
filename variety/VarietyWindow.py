@@ -419,6 +419,9 @@ class VarietyWindow(Gtk.Window):
                 except Exception:
                     logger.exception(lambda: "Could not create Downloader for type %s, location %s" % (type, location))
 
+        for downloader in Options.SIMPLE_DOWNLOADERS:
+            downloader.update_download_folder(self.real_download_folder)
+
         for downloader in self.downloaders:
             downloader.update_download_folder(self.real_download_folder)
             Util.makedirs(downloader.target_folder)

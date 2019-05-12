@@ -45,6 +45,9 @@ class APODDownloader(SimpleDownloader):
     def get_source_type(self):
         return "apod"
 
+    def get_source_name(self):
+        return "NASA Astro Pic of the Day"
+
     def get_folder_name(self):
         return "nasa_apod"
 
