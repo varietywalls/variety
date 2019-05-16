@@ -70,6 +70,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
 
     def download_one(self):
+        """
+        Provides a default implementation which relies on fill_queue, and takes the image source
+        throttling into account.
+        :return: path to the newly downloaded file, or None if the download attempt ws unsuccessful
+        """
         name = self.get_source_name()
         min_download_interval, min_fill_queue_interval = self.source.get_throttling()
 
