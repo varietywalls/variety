@@ -36,7 +36,7 @@ class EarthDownloader(Downloader.Downloader):
 
     def download_one(self):
         logger.info(lambda: "Downloading world sunlight map from " + EARTH_ORIGIN_URL)
-        downloaded = self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True, extra_metadata={'headline': 'World Sunlight Map'})
+        downloaded = self.save_locally(self.location, EARTH_IMAGE_URL, force_download=True, extra_metadata={'headline': 'World Sunlight Map'}, user_agent='wget')
         cropped = os.path.join(self.target_folder, EARTH_FILENAME)
         subprocess.call(["convert", downloaded, "-gravity", "north", "-crop", "100%x95%", cropped])
         for f in os.listdir(self.target_folder):

@@ -553,11 +553,11 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5):
+    def request(url, data=None, stream=False, method=None, timeout=5, user_agent=None):
         if url.startswith('//'):
             url = 'http:' + url
         headers = {
-            'User-Agent': USER_AGENT,
+            'User-Agent': user_agent if user_agent else USER_AGENT,
             'Cache-Control': 'max-age=0'
         }
         method = method if method else 'POST' if data else 'GET'

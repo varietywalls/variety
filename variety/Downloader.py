@@ -67,7 +67,7 @@ class Downloader(object):
 
     def save_locally(self, origin_url, image_url,
                      source_type=None, source_location=None, source_name=None,
-                     force_download=False, extra_metadata={}, local_filename=None):
+                     force_download=False, extra_metadata={}, local_filename=None, user_agent=None):
         if not source_type:
             source_type = self.source_type
         if not source_name:
@@ -109,7 +109,7 @@ class Downloader(object):
                 return None
 
         try:
-            r = Util.request(image_url, stream=True)
+            r = Util.request(image_url, stream=True, user_agent=user_agent)
             with open(local_filename, 'wb') as f:
                 Util.request_write_to(r, f)
         except Exception as e:
