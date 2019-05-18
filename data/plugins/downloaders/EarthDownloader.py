@@ -16,7 +16,7 @@
 
 import logging
 import os
-import subprocess
+import shutil
 
 from variety import _
 
@@ -25,7 +25,7 @@ logger = logging.getLogger('variety')
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 
 
-EARTH_IMAGE_URL = "http://images.opentopia.com/sunlight/world_sunlight_map_rectangular.jpg"
+EARTH_IMAGE_URL = "https://static.die.net/earth/mercator/1600.jpg"
 EARTH_ORIGIN_URL = "https://www.die.net/earth/"
 EARTH_FILENAME = "earth--refreshable.jpg"
 
@@ -66,14 +66,14 @@ class EarthDownloader(SimpleDownloader):
             EARTH_ORIGIN_URL,
             EARTH_IMAGE_URL,
             force_download=True,
-            extra_metadata={'headline': 'World Sunlight Map'}
+            extra_metadata={'headline': 'World Sunlight Map'},
         )
-        cropped = os.path.join(self.target_folder, EARTH_FILENAME)
-        subprocess.call(["convert", downloaded, "-gravity", "north", "-crop", "100%x95%", cropped])
+        final_path = os.path.join(self.target_folder, EARTH_FILENAME)
+        shutil.move(downloaded, final_path)
         for f in os.listdir(self.target_folder):
             if f != EARTH_FILENAME and f.lower().endswith(".jpg"):
                 os.unlink(os.path.join(self.target_folder, f))
-        return cropped
+        return final_path
 
     def fill_queue(self):
         """ Not needed here """

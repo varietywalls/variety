@@ -134,7 +134,8 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
 
     def save_locally(self, origin_url, image_url,
                      source_type=None, source_location=None, source_name=None,
-                     force_download=False, extra_metadata={}, local_filename=None):
+                     force_download=False, extra_metadata={}, local_filename=None,
+                     request_headers={}):
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
         source_location = source_location or self.get_source_location() or self.get_description()
@@ -173,7 +174,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             return None
 
         try:
-            r = Util.request(image_url, stream=True)
+            r = Util.request(image_url, stream=True, headers=request_headers)
             with open(local_filename, 'wb') as f:
                 Util.request_write_to(r, f)
         except Exception as e:

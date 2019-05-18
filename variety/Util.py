@@ -35,14 +35,15 @@ import codecs
 from PIL import Image
 
 import gi
+
 gi.require_version('GExiv2', '0.10')
 gi.require_version('PangoCairo', '1.0')
 
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2, Gio
 
-VARIETY_INFO = "-"
+from variety_lib import get_version
 
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
+USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -540,13 +541,13 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5):
+    def request(url, data=None, stream=False, method=None, timeout=5, headers={}):
         if url.startswith('//'):
             url = 'http:' + url
-        headers = {
+        headers = dict({
             'User-Agent': USER_AGENT,
             'Cache-Control': 'max-age=0'
-        }
+        }, **headers)
         method = method if method else 'POST' if data else 'GET'
         try:
             r = requests.request(method=method,
