@@ -135,7 +135,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     def save_locally(self, origin_url, image_url,
                      source_type=None, source_location=None, source_name=None,
                      force_download=False, extra_metadata={}, local_filename=None,
-                     request_headers={}):
+                     request_headers=None):
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
         source_location = source_location or self.get_source_location() or self.get_description()
