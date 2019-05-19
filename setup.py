@@ -17,14 +17,20 @@
 
 ###################### DO NOT TOUCH THIS (HEAD TO THE SECOND PART) ######################
 
+from __future__ import print_function
+
 import os
 import sys
 import glob
 
+if sys.version_info[0] < 3:
+    print('Variety requires Python 3 - please run this script using python3.', file=sys.stderr)
+    sys.exit(1)
+
 try:
     import DistUtilsExtra.auto
 except ImportError:
-    print('To build variety you need https://launchpad.net/python-distutils-extra', file=sys.stderr)
+    print('To build variety you need python-distutils-extra for Python 3 - https://launchpad.net/python-distutils-extra', file=sys.stderr)
     sys.exit(1)
 assert DistUtilsExtra.auto.__version__ >= '2.18', 'needs DistUtilsExtra.auto >= 2.18'
 
