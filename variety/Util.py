@@ -35,27 +35,15 @@ import codecs
 from PIL import Image
 
 import gi
+
 gi.require_version('GExiv2', '0.10')
 gi.require_version('PangoCairo', '1.0')
 
 from gi.repository import Gdk, Pango, GdkPixbuf, GLib, GExiv2, Gio
 
-VARIETY_INFO = "-"
+from variety_lib import get_version
 
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36"
-
-SOURCE_NAME_TO_TYPE = {
-    'wallbase.cc': 'wallbase',
-    'wallhaven.cc': 'wallhaven',
-    'wallpapers.net': 'wn',
-    'desktoppr.co': 'desktoppr',
-    'nasa astro pic of the day': 'apod',
-    'opentopia.com': 'earth',
-    'fetched': 'fetched',
-    'recommended by variety': 'recommended',
-    'flickr': 'flickr',
-    'media rss': 'mediarss',
-}
+USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger('variety')
@@ -553,12 +541,14 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5):
+    def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
         if url.startswith('//'):
             url = 'http:' + url
+        headers = headers or {}
         headers = {
             'User-Agent': USER_AGENT,
-            'Cache-Control': 'max-age=0'
+            'Cache-Control': 'max-age=0',
+            **headers
         }
         method = method if method else 'POST' if data else 'GET'
         try:
@@ -775,45 +765,6 @@ class Util:
         except:
             return False
 
-    @staticmethod
-    def guess_image_url(meta):
-        if 'imageURL' in meta:
-            return meta['imageURL']
-
-        try:
-            origin_url = meta['sourceURL']
-
-            if "flickr.com" in origin_url:
-                from variety.FlickrDownloader import FlickrDownloader
-                return FlickrDownloader.get_image_url(origin_url)
-
-            elif Util.is_image(origin_url) and Util.is_alive_and_image(origin_url):
-                return origin_url
-
-            return None
-        except:
-            return None
-
-    @staticmethod
-    def guess_source_type(meta):
-        try:
-            if 'sourceType' in meta:
-                return meta['sourceType']
-            elif 'sourceName' in meta:
-                source_name = meta['sourceName'].lower()
-                if source_name in SOURCE_NAME_TO_TYPE:
-                    return SOURCE_NAME_TO_TYPE[source_name]
-                else:
-                    source_location = meta.get('sourceLocation', '').lower()
-                    if source_location.startswith(('http://' + source_name, 'https://' + source_name)) \
-                            or 'backend.deviantart.com' in source_location \
-                            or 'rss' in source_location \
-                            or '/feed' in source_location:
-                        return 'mediarss'
-            return None
-        except:
-            return None
-
     # makes the Gtk thread execute the given callback.
     @staticmethod
     def add_mainloop_task(callback, *args):
@@ -842,4 +793,11 @@ class Util:
             return True
         except:
             return False
+
+    @staticmethod
+    def convert_to_filename(url):
+        url = re.sub(r"http://", "", url)
+        url = re.sub(r"https://", "", url)
+        valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
+        return ''.join(c if c in valid_chars else '_' for c in url)
 

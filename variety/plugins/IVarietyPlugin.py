@@ -1,9 +1,10 @@
 import os
+import abc
 from jumble.IPlugin import IPlugin
 from variety.Util import Util
 
 
-class IVarietyPlugin(IPlugin):
+class IVarietyPlugin(IPlugin, metaclass=abc.ABCMeta):
     """
     Variety-specific plugin interface
     """
@@ -17,3 +18,10 @@ class IVarietyPlugin(IPlugin):
         :return: The config directory which the plugin can use to store config or cache files
         """
         return self.config_folder
+
+    def on_variety_start_complete(self):
+        """
+        Called towards the end of VarietyWindow.start, when options are loaded and
+        caches - created
+        """
+        pass

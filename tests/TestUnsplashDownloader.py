@@ -19,22 +19,21 @@ import sys
 import os.path
 import unittest
 
-from tests.TestDownloader import test_download_one_for
+from tests.TestDownloader import test_download_one_for, get_plugin_downloader
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-
-from variety.UnsplashDownloader import UnsplashDownloader
 
 
 class TestUnsplashDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, UnsplashDownloader(None))
+        dl = get_plugin_downloader("UnsplashDownloader")
+        test_download_one_for(self, dl)
 
     def test_fill_queue(self):
-        dl = UnsplashDownloader(None)
+        dl = get_plugin_downloader("UnsplashDownloader")
         dl.target_folder = '/tmp/variety/'
-        dl.fill_queue()
-        self.assertTrue(len(dl.queue) > 0)
+        queue = dl.fill_queue()
+        self.assertTrue(len(queue) > 0)
 
 if __name__ == '__main__':
     unittest.main()

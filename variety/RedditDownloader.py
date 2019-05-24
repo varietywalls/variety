@@ -19,7 +19,10 @@ import urllib.parse
 
 import logging
 import re
-from variety import Downloader
+
+from variety import _
+from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
+from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
 logger = logging.getLogger('variety')
@@ -27,13 +30,21 @@ logger = logging.getLogger('variety')
 random.seed()
 
 
-class RedditDownloader(Downloader.Downloader):
+class RedditDownloader(ImageSource, DefaultDownloader):
     def __init__(self, parent, url):
-        super(RedditDownloader, self).__init__(parent, "reddit", "Reddit", url)
-        self.queue = []
+        ImageSource.__init__(self)
+        DefaultDownloader.__init__(self, source=self, config=url)
+        self.set_variety(parent)
 
-    def convert_to_filename(self, url):
-        return "reddit_" + super(RedditDownloader, self).convert_to_filename(url)
+    @classmethod
+    def get_info(cls):
+        raise Exception("Not yet implemented as a plugin")
+
+    def get_source_type(self):
+        return "reddit"
+
+    def get_description(self):
+        return _("Images from subreddits at Reddit")
 
     @staticmethod
     def build_json_url(url):
@@ -51,29 +62,17 @@ class RedditDownloader(Downloader.Downloader):
                 return False
 
             dl = RedditDownloader(parent, url)
-            dl.fill_queue()
-            return len(dl.queue) > 0
+            queue = dl.fill_queue()
+            return len(queue) > 0
         except Exception:
             logger.exception(lambda: "Error while validating URL, probably no image posts for this URL")
             return False
 
-    def download_one(self):
-        logger.info(lambda: "Downloading an image from Reddit, " + self.location)
-        logger.info(lambda: "Queue size: %d" % len(self.queue))
-
-        if not self.queue:
-            self.fill_queue()
-        if not self.queue:
-            logger.info(lambda: "Reddit queue empty after fill")
-            return None
-
-        origin_url, image_url, extra_metadata = self.queue.pop()
-        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
-
     def fill_queue(self):
-        logger.info(lambda: "Reddit URL: " + self.location)
+        logger.info(lambda: "Reddit URL: " + self.config)
 
-        json_url = RedditDownloader.build_json_url(self.location)
+        queue = []
+        json_url = RedditDownloader.build_json_url(self.config)
         s = Util.fetch_json(json_url)
         for item in s['data']['children']:
             try:
@@ -87,11 +86,11 @@ class RedditDownloader(Downloader.Downloader):
                     extra_metadata = {'sourceType': 'reddit'}
                     if data['over_18']:
                         extra_metadata['sfwRating'] = 0
-                        if self.parent and self.parent.options.safe_mode:
+                        if self.is_safe_mode_enabled():
                             continue
-                    self.queue.append((src_url, image_url, extra_metadata))
+                    queue.append((src_url, image_url, extra_metadata))
             except Exception:
                 logger.exception(lambda: "Could not process an item in the Reddit json result")
 
-        random.shuffle(self.queue)
-        logger.info(lambda: "Reddit queue populated with %d URLs" % len(self.queue))
+        random.shuffle(queue)
+        return queue

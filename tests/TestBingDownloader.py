@@ -21,18 +21,18 @@ import unittest
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from tests.TestDownloader import test_download_one_for
-from variety.BingDownloader import BingDownloader
+from tests.TestDownloader import test_download_one_for, get_plugin_downloader
 
 
 class TestBingDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, BingDownloader(None))
+        dl = get_plugin_downloader("BingDownloader")
+        test_download_one_for(self, dl)
 
     def test_fill_queue(self):
-        dl = BingDownloader(None)
-        dl.fill_queue()
-        self.assertTrue(len(dl.queue) > 0)
+        dl = get_plugin_downloader("BingDownloader")
+        queue = dl.fill_queue()
+        self.assertTrue(len(queue) > 0)
 
 if __name__ == '__main__':
     unittest.main()

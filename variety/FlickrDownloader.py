@@ -17,9 +17,10 @@
 import urllib.parse
 import random
 import logging
-import time
-from variety import Downloader
+
 from variety.Util import Util
+from plugins.downloaders.DefaultDownloader import DefaultDownloader
+from plugins.downloaders.ImageSource import ImageSource, Throttling
 
 logger = logging.getLogger('variety')
 
@@ -27,20 +28,32 @@ random.seed()
 
 API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
 
-class FlickrDownloader(Downloader.Downloader):
-    last_download_time = 0
 
+class FlickrDownloader(ImageSource, DefaultDownloader):
     def __init__(self, parent, location):
-        super(FlickrDownloader, self).__init__(parent, "flickr", "Flickr", location)
+        ImageSource.__init__(self)
+        DefaultDownloader.__init__(self, source=self, config=location)
+        self.set_variety(parent)
         self.parse_location()
-        self.queue = []
-        self.last_fill_time = 0
 
-    def convert_to_filename(self, url):
-        return "flickr_" + super(FlickrDownloader, self).convert_to_filename(url)
+    @classmethod
+    def get_info(cls):
+        raise Exception("Not yet implemented as a plugin")
+
+    def get_description(self):
+        return _("Images from Flickr")
+
+    def get_source_name(self):
+        return "Flickr"
+
+    def get_source_type(self):
+        return "flickr"
+
+    def get_default_throttling(self):
+        return Throttling(min_download_interval=60, min_fill_queue_interval=600)
 
     def parse_location(self):
-        s = self.location.split(';')
+        s = self.config.split(';')
         self.params = {}
         for x in s:
             if len(x) and x.find(':') > 0:
@@ -123,38 +136,8 @@ class FlickrDownloader(Downloader.Downloader):
 
         return int(resp["photos"]["total"])
 
-    def download_one(self):
-        min_download_interval, min_fill_queue_interval = self.parse_server_options("flickr", 60, 600)
-
-        if time.time() - FlickrDownloader.last_download_time < min_download_interval:
-            logger.info(lambda: "Minimal interval between Flickr downloads is %d, skip this attempt" % min_download_interval)
-            return None
-
-        logger.info(lambda: "Downloading an image from Flickr, " + self.location)
-        logger.info(lambda: "Queue size: %d" % len(self.queue))
-
-        if not self.queue:
-            if time.time() - self.last_fill_time < min_fill_queue_interval:
-                logger.info(lambda: "Flickr queue empty, but minimal interval between fill attempts is %d, will try again later" %
-                            min_fill_queue_interval)
-                return None
-
-            self.fill_queue()
-
-        if not self.queue:
-            logger.info(lambda: "Flickr queue empty after fill - too restrictive search parameters or image size preference?")
-            return None
-
-        FlickrDownloader.last_download_time = time.time()
-
-        urls = self.queue.pop()
-        logger.info(lambda: "Photo URL: " + urls[0])
-        return self.save_locally(urls[0], urls[1], extra_metadata=urls[2])
-
     def fill_queue(self):
-        self.last_fill_time = time.time()
-
-        logger.info(lambda: "Filling Flickr download queue: " + self.location)
+        queue = []
 
         call = "https://api.flickr.com/services/rest/?method=flickr.photos.search" \
                "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
@@ -178,29 +161,29 @@ class FlickrDownloader(Downloader.Downloader):
         if resp["stat"] != "ok":
             raise Exception("Flickr returned error message: " + resp["message"])
 
-        used = set(x[0] for x in self.queue)
+        used = set(x[0] for x in queue)
         size_suffixes = ["o", "k", "h", "l"]
         for s in size_suffixes:
-            self.process_photos_in_response(resp, s, used)
-            if len(self.queue) > 20:
+            self.process_photos_in_response(queue, resp, s, used)
+            if len(queue) > 20:
                 break
 
-        random.shuffle(self.queue)
-        if len(self.queue) >= 20:
-            self.queue = self.queue[:len(self.queue)//2]
+        random.shuffle(queue)
+        if len(queue) >= 20:
+            queue = queue[:len(queue)//2]
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 
-        logger.info(lambda: "Flickr queue populated with %d URLs" % len(self.queue))
+        return queue
 
-    def process_photos_in_response(self, resp, size_suffix, used):
-        logger.info(lambda: "Queue size is %d, populating with images for size suffix %s" % (len(self.queue), size_suffix))
+    def process_photos_in_response(self, queue, resp, size_suffix, used):
+        logger.info(lambda: "Queue size is %d, populating with images for size suffix %s" % (len(queue), size_suffix))
         for ph in resp["photos"]["photo"]:
             try:
                 photo_url = "https://www.flickr.com/photos/%s/%s" % (ph["owner"], ph["id"])
                 logger.debug(lambda: "Checking photo_url " + photo_url)
 
-                if self.parent and photo_url in self.parent.banned:
+                if self.is_in_banned(photo_url):
                     logger.debug(lambda: "In banned, skipping")
                     continue
                 if photo_url in used:
@@ -227,7 +210,7 @@ class FlickrDownloader(Downloader.Downloader):
                     logger.debug(lambda: "Already in favorites")
                     continue
 
-                if self.parent and not self.parent.size_ok(width, height):
+                if self.is_size_inadequate(width, height):
                     logger.debug(lambda: "Small or non-landscape size/resolution")
                     continue
 
@@ -243,7 +226,7 @@ class FlickrDownloader(Downloader.Downloader):
                     extra_metadata = {}
 
                 logger.debug(lambda: "Appending to queue %s, %s" % (photo_url, image_file_url))
-                self.queue.append((photo_url, image_file_url, extra_metadata))
+                queue.append((photo_url, image_file_url, extra_metadata))
             except Exception:
                 logger.exception(lambda: "Error parsing single flickr photo info:")
 
@@ -277,4 +260,3 @@ class FlickrDownloader(Downloader.Downloader):
             'keywords': [x['_content'] for x in ph['tags']['tag']],
         }
         return extra_meta
-

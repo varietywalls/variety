@@ -31,8 +31,8 @@ class TestWallhavenDownloader(unittest.TestCase):
 
     def test_fill_queue(self):
         dl = WallhavenDownloader(None, "nature")
-        dl.fill_queue()
-        self.assertTrue(len(dl.queue) > 0)
+        queue = dl.fill_queue()
+        self.assertTrue(len(queue) > 0)
 
 if __name__ == '__main__':
     unittest.main()

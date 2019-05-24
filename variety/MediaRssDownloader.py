@@ -20,7 +20,8 @@ import xml.etree.ElementTree as ET
 
 import logging
 
-from variety import Downloader
+from plugins.downloaders.DefaultDownloader import DefaultDownloader
+from plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
 logger = logging.getLogger('variety')
@@ -30,13 +31,25 @@ random.seed()
 MEDIA_NS = "{http://search.yahoo.com/mrss/}"
 VARIETY_NS = "{http://vrty.org/}"
 
-class MediaRssDownloader(Downloader.Downloader):
-    def __init__(self, parent, url):
-        super(MediaRssDownloader, self).__init__(parent, "mediarss", "Media RSS", url)
-        self.queue = []
 
-    def convert_to_filename(self, url):
-        return "mediarss_" + super(MediaRssDownloader, self).convert_to_filename(url)
+class MediaRssDownloader(ImageSource, DefaultDownloader):
+    def __init__(self, parent, url):
+        ImageSource.__init__(self)
+        DefaultDownloader.__init__(self, source=self, config=url)
+        self.set_variety(parent)
+
+    @classmethod
+    def get_info(cls):
+        raise Exception("Not yet implemented as a plugin")
+
+    def get_source_name(self):
+        return "MediaRSS"
+
+    def get_source_type(self):
+        return "mediarss"
+
+    def get_description(self):
+        return _("Images from MediaRSS feeds")
 
     @staticmethod
     def fetch(url):
@@ -46,9 +59,9 @@ class MediaRssDownloader(Downloader.Downloader):
     @staticmethod
     def is_valid_content(x):
         return x is not None and "url" in x.attrib and (
-            Util.is_image(x.attrib["url"]) or
-            ("medium" in x.attrib and x.attrib["medium"].lower() == "image") or
-            ("type" in x.attrib and x.attrib["type"].lower().startswith("image/"))
+                Util.is_image(x.attrib["url"]) or
+                ("medium" in x.attrib and x.attrib["medium"].lower() == "image") or
+                ("type" in x.attrib and x.attrib["type"].lower().startswith("image/"))
         )
 
     @staticmethod
@@ -66,46 +79,19 @@ class MediaRssDownloader(Downloader.Downloader):
             logger.exception(lambda: "Error while validating URL, probably not a MediaRSS feed")
             return False
 
-    def download_one(self):
-        logger.info(lambda: "Downloading an image from MediaRSS, " + self.location)
-        logger.info(lambda: "Queue size: %d" % len(self.queue))
-
-        if not self.queue:
-            self.fill_queue()
-        if not self.queue:
-            logger.info(lambda: "MediaRSS queue empty after fill")
-            return None
-
-        origin_url, image_url, source_type, source_location, source_name, extra_metadata = self.queue.pop()
+    def download_queue_item(self, queue_item):
+        origin_url, image_url, source_type, source_location, source_name, extra_metadata = queue_item
         parse = urllib.parse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
         return self.save_locally(origin_url, image_url, source_type or 'mediarss',
-                                 source_location, source_name or host, extra_metadata=extra_metadata)
-
-    @staticmethod
-    def picasa_hack(feed_url):
-        """ Picasa hack - by default Picasa's RSS feeds link to low-resolution images.
-        Add special parameter to request the full-resolution instead:"""
-        if feed_url.find("://picasaweb.") > 0:
-            logger.info(lambda: "Picasa hack to get full resolution images: add imgmax=d to the feed URL")
-            feed_url = feed_url.replace("&imgmax=", "&imgmax_disabled=")
-            feed_url += "&imgmax=d"
-            logger.info(lambda: "Final Picasa feed URL: " + feed_url)
-
-        return feed_url
+                                 source_location, source_name or host,
+                                 extra_metadata=extra_metadata)
 
     def fill_queue(self):
-        logger.info(lambda: "MediaRSS URL: " + self.location)
-        feed_url = self.location
-        feed_url = MediaRssDownloader.picasa_hack(feed_url)
+        queue = []
+        logger.info(lambda: "MediaRSS URL: " + self.config)
+        s = self.fetch(self.config)
 
-        s = self.fetch(feed_url)
-
-#        try:
-#            self.channel_title = s.find("channel/title").text
-#        except Exception:
-#            self.channel_title = "origin"
-#
         for item in s.findall(".//item"):
             try:
                 origin_url = item.find("link").text
@@ -118,7 +104,7 @@ class MediaRssDownloader(Downloader.Downloader):
                         try:
                             if MediaRssDownloader.is_valid_content(c):
                                 if content is None:
-                                    content = c # use the first one, in case we don't find any width info
+                                    content = c  # use the first one, in case we don't find any width info
                                 if "width" in c.attrib and int(c.attrib["width"]) > width:
                                     content = c
                                     width = int(c.attrib["width"])
@@ -150,7 +136,8 @@ class MediaRssDownloader(Downloader.Downloader):
                         pass
 
                 try:
-                    extra_metadata['description'] = item.find("{0}description".format(MEDIA_NS)).text
+                    extra_metadata['description'] = item.find(
+                        "{0}description".format(MEDIA_NS)).text
                 except:
                     pass
 
@@ -170,30 +157,34 @@ class MediaRssDownloader(Downloader.Downloader):
                         rating = int(sfw.attrib.get('rating', None))
                         extra_metadata['sfwRating'] = rating
 
-                        if self.parent and self.parent.options.safe_mode and rating < 100:
-                            logger.info(lambda: "Skipping non-safe download from VRTY MediaRss feed. "
-                                                "Is the source %s suitable for Safe mode?" % self.location)
+                        if self.is_safe_mode_enabled() and rating < 100:
+                            logger.info(
+                                lambda: "Skipping non-safe download from VRTY MediaRss feed. "
+                                        "Is the source %s suitable for Safe mode?" % self.config)
                             continue
                 except:
                     pass
 
                 try:
-                    extra_metadata['keywords'] = [k.strip() for k in item.find("{0}keywords".format(MEDIA_NS)).text.split(',')]
+                    extra_metadata['keywords'] = [k.strip() for k in item.find(
+                        "{0}keywords".format(MEDIA_NS)).text.split(',')]
                 except:
                     pass
 
-                self.process_content(origin_url, content, source_type, source_location, source_name, extra_metadata)
+                self.process_content(origin_url, content, source_type, source_location, source_name,
+                                     extra_metadata)
             except Exception:
                 logger.exception(lambda: "Could not process an item in the Media RSS feed")
 
-        random.shuffle(self.queue)
-        logger.info(lambda: "MediaRSS queue populated with %d URLs" % len(self.queue))
+        random.shuffle(queue)
+        return queue
 
-    def process_content(self, origin_url, content, source_type=None, source_location=None, source_name=None, extra_metadata={}):
+    def process_content(self, origin_url, content, source_type=None, source_location=None,
+                        source_name=None, extra_metadata={}):
         try:
             logger.debug(lambda: "Checking origin_url " + origin_url)
 
-            if self.parent and origin_url in self.parent.banned:
+            if self.is_in_banned(origin_url):
                 logger.debug(lambda: "In banned, skipping")
                 return
 
@@ -215,12 +206,14 @@ class MediaRssDownloader(Downloader.Downloader):
             except Exception:
                 pass
 
-            if self.parent and width and height and not self.parent.size_ok(width, height):
+            if self.is_size_inadequate(width, height):
                 logger.debug(lambda: "Small or non-landscape size/resolution")
                 return
 
             logger.debug(lambda: "Appending to queue %s, %s, %s, %s, %s" %
-                         (origin_url, image_file_url, source_type, source_location, source_name))
-            self.queue.append((origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
+                                 (origin_url, image_file_url, source_type, source_location,
+                                  source_name))
+            self.queue.append((
+                origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
         except Exception:
             logger.exception(lambda: "Error parsing single MediaRSS image info:")

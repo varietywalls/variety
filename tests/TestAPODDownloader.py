@@ -19,25 +19,16 @@ import sys
 import os.path
 import unittest
 
-from tests.TestDownloader import test_download_one_for
-
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
-from variety.MediaRssDownloader import MediaRssDownloader
+from tests.TestDownloader import get_plugin_downloader, test_download_one_for
 
 
-class TestMediaRssDownloader(unittest.TestCase):
+class TestAPODDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, MediaRssDownloader(None, "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
+        dl = get_plugin_downloader("APODDownloader")
+        test_download_one_for(self, dl)
 
-    def test_validate_deviantart(self):
-        self.assertTrue(MediaRssDownloader.validate("http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"))
-
-    def test_validate_non_media_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
-
-    def test_validate_non_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://google.com"))
 
 if __name__ == '__main__':
     unittest.main()

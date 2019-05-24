@@ -16,6 +16,7 @@
 
 from .IVarietyPlugin import IVarietyPlugin
 
+
 class IQuoteSource(IVarietyPlugin):
     def supports_search(self):
         """
