@@ -74,16 +74,16 @@ DistUtilsExtra.auto.setup(
     author='Peter Levi',
     author_email='peterlevi@peterlevi.com',
     description='Wallpaper changer, downloader and manager',
-    long_description=
-"Variety changes the desktop wallpaper regularly, using local "
-"or automatically downloaded images. "
-""
-"Variety sits conveniently as an indicator in the panel and can be easily paused "
-"and resumed. The mouse wheel can be used to scroll wallpapers back and forth"
-""
-"Variety can fetch wallpapers from Flickr, Wallhaven.cc, "
-"NASA Astronomy Picture of the Day, Desktoppr.co. Media RSS feeds from Picasa, "
-"deviantART or any other place are also supported.",
+    long_description="""
+Variety is a wallpaper manager for Linux systems. It supports numerous desktops
+and wallpaper sources, including local files and online services: Flickr,
+Wallhaven, Unsplash, and more.
+
+Where supported, Variety sits as a tray icon to allow easy pausing and resuming.
+Otherwise, its desktop entry menu provides a similar set of options.
+
+Variety also includes a range of image effects, such as oil painting and blur,
+as well as options to layer quotes and a clock onto the background.""",
     url='https://github.com/varietywalls/variety',
     cmdclass={'install': InstallAndUpdateDataDirectory},
     data_files=[('share/metainfo', ['variety.appdata.xml'])]
