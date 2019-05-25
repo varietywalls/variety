@@ -20,8 +20,8 @@ import xml.etree.ElementTree as ET
 
 import logging
 
-from plugins.downloaders.DefaultDownloader import DefaultDownloader
-from plugins.downloaders.ImageSource import ImageSource
+from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
+from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
 logger = logging.getLogger('variety')

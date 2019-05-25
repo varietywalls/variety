@@ -20,8 +20,8 @@ import logging
 
 from variety import _
 from variety.Util import Util
-from plugins.downloaders.DefaultDownloader import DefaultDownloader
-from plugins.downloaders.ImageSource import ImageSource, Throttling
+from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
+from variety.plugins.downloaders.ImageSource import ImageSource, Throttling
 
 logger = logging.getLogger('variety')
 

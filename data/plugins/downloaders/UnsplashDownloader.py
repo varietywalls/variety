@@ -17,7 +17,7 @@ import random
 import logging
 import time
 
-from plugins.downloaders.ImageSource import Throttling
+from variety.plugins.downloaders.ImageSource import Throttling
 from variety import _
 from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
