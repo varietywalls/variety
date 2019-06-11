@@ -158,6 +158,7 @@ class VarietyWindow(Gtk.Window):
         if self.position < len(self.used):
             self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
+        logger.info(lambda: "Using data_path %s" % varietyconfig.get_data_path())
         self.jumble = Jumble([os.path.join(varietyconfig.get_data_path(), "plugins"), self.plugins_folder])
 
         setattr(self.jumble, "parent", self)

@@ -14,20 +14,18 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-# THIS IS Variety CONFIGURATION FILE
-# YOU CAN PUT THERE SOME GLOBAL VALUE
-# Do not touch unless you know what you're doing.
-# you're warned :)
-
 __all__ = [
     'project_path_not_found',
     'get_data_file',
     'get_data_path',
     ]
 
-# Where your project will look for your data (for instance, images and ui
-# files). By default, this is ../data, relative your trunk layout
-__variety_data_directory__ = '../data'
+try:
+    from .variety_build_settings import __variety_data_directory__
+except ImportError:
+    # Variety's data directory. This is set by setup.py for permanent installations, but defaults to ../data
+    # for easy development / running from source.
+    __variety_data_directory__ = '../data'
 __license__ = 'GPL-3'
 __version__ = '0.8.0-dev1'
 
@@ -35,7 +33,6 @@ import os
 
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
-
 
 def get_data_file(*path_segments):
     """Get the full path to a data file.
