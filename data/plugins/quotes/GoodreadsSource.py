@@ -91,7 +91,7 @@ class GoodreadsSource(IQuoteSource):
         logger.info(lambda: "Used Goodreads url %s" % url)
         quotes = []
 
-        for div in soup.find_all('div', 'quoteText'):
+        for div in soup.find_all('div', {'class':'quoteText'}):
             logger.debug(lambda: "Parsing quote for div\n%s" % div)
             try:
                 quote_text = "\n".join(div.find_all(text=True, recursive=False)).replace('―', '').strip()

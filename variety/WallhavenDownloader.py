@@ -57,7 +57,7 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
             self.url = self.config.replace('http://', 'https://')
         else:
             # interpret location as keywords
-            self.url = "https://alpha.wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
+            self.url = "https://wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
                        urllib.parse.quote(self.config)
 
     def search(self, page=None):
