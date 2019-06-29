@@ -29,20 +29,20 @@ logger = logging.getLogger("variety")
 random.seed()
 
 
-class ChromeOsWallpapersDownloader(SimpleDownloader):
+class ChromeOSWallpapersDownloader(SimpleDownloader):
     DESCRIPTION = _("Chrome OS Wallpapers")
 
     @classmethod
     def get_info(cls):
         return {
             "name": "ChromeOsWallpapersDownloader",
-            "description": ChromeOsWallpapersDownloader.DESCRIPTION,
+            "description": ChromeOSWallpapersDownloader.DESCRIPTION,
             "author": "Peter Levi",
             "version": "0.1",
         }
 
     def get_description(self):
-        return ChromeOsWallpapersDownloader.DESCRIPTION
+        return ChromeOSWallpapersDownloader.DESCRIPTION
 
     def get_source_type(self):
         return "chromeos"
