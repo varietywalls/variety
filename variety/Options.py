@@ -577,7 +577,7 @@ class Options:
         self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "alpha.wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+        self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
 
         self.icon = "Light"
 

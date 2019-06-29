@@ -1905,6 +1905,14 @@ class VarietyWindow(Gtk.Window):
                     except Exception:
                         logger.warning(lambda: "Could not delete %s, no worries" % file)
 
+            if Util.compare_versions(last_version, "0.8.0") < 0:
+                logger.info(lambda: "Performing upgrade to 0.8.0")
+                options = Options()
+                options.read()
+                for source in options.sources:
+                    source[2] = source[2].replace('alpha.wallhaven.cc', 'wallhaven.cc')
+                options.write()
+
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
