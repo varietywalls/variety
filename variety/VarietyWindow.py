@@ -1296,15 +1296,19 @@ class VarietyWindow(Gtk.Window):
         return all_images[:count]
 
     def on_indicator_scroll(self, indicator, steps, direction):
-        self.on_indicator_scroll_throttled(indicator, steps, direction)
+        if direction in (Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.UP):
+            self.recent_scroll_actions = getattr(self, "recent_scroll_actions", [])
+            self.recent_scroll_actions = [
+                a for a in self.recent_scroll_actions if a[0] > time.time() - 0.3]
+            self.recent_scroll_actions.append((time.time(), steps, direction))
+            count_up = sum(a[1] for a in self.recent_scroll_actions if a[2] == Gdk.ScrollDirection.UP)
+            count_down = sum(a[1] for a in self.recent_scroll_actions if a[2] == Gdk.ScrollDirection.DOWN)
+            self.on_indicator_scroll_throttled(
+                Gdk.ScrollDirection.UP if count_up > count_down else Gdk.ScrollDirection.DOWN)
 
     @debounce(seconds=0.3)
-    def on_indicator_scroll_throttled(self, indicator, steps, direction):
-        if direction == Gdk.ScrollDirection.SMOOTH:
-            return
-
-        wheel_direction_forward = direction in [Gdk.ScrollDirection.DOWN, Gdk.ScrollDirection.LEFT]
-        if wheel_direction_forward:
+    def on_indicator_scroll_throttled(self, direction):
+        if direction == Gdk.ScrollDirection.DOWN:
             self.next_wallpaper(widget=self)
         else:
             self.prev_wallpaper(widget=self)
