@@ -21,7 +21,7 @@ from variety import _
 from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 random.seed()
 
@@ -36,7 +36,7 @@ class APODDownloader(SimpleDownloader):
             "name": "APODDownloader",
             "description": APODDownloader.DESCRIPTION,
             "author": "Peter Levi",
-            "version": "0.1"
+            "version": "0.1",
         }
 
     def get_description(self):
@@ -58,10 +58,13 @@ class APODDownloader(SimpleDownloader):
         logger.info(lambda: "Filling APOD queue from Archive")
 
         s = Util.html_soup(self.ROOT_URL + "archivepix.html")
-        urls = [self.ROOT_URL + x["href"] for x in s.findAll("a") if
-                x["href"].startswith("ap") and x["href"].endswith(".html")]
+        urls = [
+            self.ROOT_URL + x["href"]
+            for x in s.findAll("a")
+            if x["href"].startswith("ap") and x["href"].endswith(".html")
+        ]
         urls = urls[:730]  # leave only last 2 years' pics
-        urls = [x for x in urls if not self.is_in_banned(x)]
+        urls = [url for url in urls if not self.is_in_banned(url)]
 
         queue = urls[:3]  # always put the latest 3 first
         urls = urls[3:]

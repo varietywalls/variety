@@ -171,15 +171,16 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                 except:
                     pass
 
-                self.process_content(origin_url, content, source_type, source_location, source_name,
-                                     extra_metadata)
+                self.process_content(
+                    queue, origin_url, content, source_type,
+                    source_location, source_name, extra_metadata)
             except Exception:
                 logger.exception(lambda: "Could not process an item in the Media RSS feed")
 
         random.shuffle(queue)
         return queue
 
-    def process_content(self, origin_url, content, source_type=None, source_location=None,
+    def process_content(self, queue, origin_url, content, source_type=None, source_location=None,
                         source_name=None, extra_metadata={}):
         try:
             logger.debug(lambda: "Checking origin_url " + origin_url)
@@ -213,7 +214,7 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
             logger.debug(lambda: "Appending to queue %s, %s, %s, %s, %s" %
                                  (origin_url, image_file_url, source_type, source_location,
                                   source_name))
-            self.queue.append((
+            queue.append((
                 origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
         except Exception:
             logger.exception(lambda: "Error parsing single MediaRSS image info:")

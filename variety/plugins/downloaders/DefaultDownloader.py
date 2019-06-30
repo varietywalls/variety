@@ -22,20 +22,58 @@ import logging
 from variety.plugins.downloaders.Downloader import Downloader
 from variety.Util import Util
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
-QueueItem = collections.namedtuple('QueueItem', ['origin_url', 'image_url', 'extra_metadata'])
+QueueItem = collections.namedtuple("QueueItem", ["origin_url", "image_url", "extra_metadata"])
 
 
 SAFE_MODE_BLACKLIST = {
     # Sample of Wallhaven and Flickr tags that cover most not-fully-safe images
-    'woman', 'women', 'model', 'models', 'boob', 'boobs', 'tit', 'tits',
-    'lingerie', 'bikini', 'bikini model', 'sexy', 'bra', 'bras', 'panties',
-    'face', 'faces', 'legs', 'feet', 'pussy',
-    'ass', 'asses', 'topless', 'long hair', 'lesbians', 'cleavage',
-    'brunette', 'brunettes', 'redhead', 'redheads', 'blonde', 'blondes',
-    'high heels', 'miniskirt', 'stockings', 'anime girls', 'in bed', 'kneeling',
-    'girl', 'girls', 'nude', 'naked', 'people', 'fuck', 'sex'
+    "woman",
+    "women",
+    "model",
+    "models",
+    "boob",
+    "boobs",
+    "tit",
+    "tits",
+    "lingerie",
+    "bikini",
+    "bikini model",
+    "sexy",
+    "bra",
+    "bras",
+    "panties",
+    "face",
+    "faces",
+    "legs",
+    "feet",
+    "pussy",
+    "ass",
+    "asses",
+    "topless",
+    "long hair",
+    "lesbians",
+    "cleavage",
+    "brunette",
+    "brunettes",
+    "redhead",
+    "redheads",
+    "blonde",
+    "blondes",
+    "high heels",
+    "miniskirt",
+    "stockings",
+    "anime girls",
+    "in bed",
+    "kneeling",
+    "girl",
+    "girls",
+    "nude",
+    "naked",
+    "people",
+    "fuck",
+    "sex",
 }
 
 
@@ -75,13 +113,17 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         throttling into account.
         :return: path to the newly downloaded file, or None if the download attempt ws unsuccessful
         """
+        if self.target_folder is None:
+            raise Exception("update_download_folder was not called before downloading")
+
         name = self.get_source_name()
         min_download_interval, min_fill_queue_interval = self.source.get_throttling()
 
         if time.time() - self.source.last_download_time < min_download_interval:
             logger.info(
-                lambda: "%s: Minimal interval between downloads is %d, skip this attempt" %
-                        (name, min_download_interval))
+                lambda: "%s: Minimal interval between downloads is %d, skip this attempt"
+                % (name, min_download_interval)
+            )
             return None
 
         logger.info(lambda: "%s: Downloading an image, config: %s" % (name, self.config))
@@ -91,7 +133,8 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             if time.time() - self.source.last_fill_time < min_fill_queue_interval:
                 logger.info(
                     lambda: "%s: Queue empty, but minimal interval between fill attempts is %d, "
-                            "will try again later" % (name, min_fill_queue_interval))
+                    "will try again later" % (name, min_fill_queue_interval)
+                )
                 return None
 
             self.source.last_fill_time = time.time()
@@ -110,18 +153,18 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         queue_item = self.queue.pop()
         return self.download_queue_item(queue_item)
 
-    def is_in_downloaded(self, url):
-        return os.path.exists(self.get_local_filename(url))
+    def is_in_downloaded(self, image_url):
+        return os.path.exists(self._local_filepath(url=image_url))
 
-    def is_in_banned(self, url):
-        return self.get_variety() and url in self.get_variety().banned
+    def is_in_banned(self, origin_url):
+        return self.get_variety() and origin_url in self.get_variety().banned
 
     def is_safe_mode_enabled(self):
         return self.get_variety() and self.get_variety().options.safe_mode
 
     def is_unsafe(self, extra_metadata):
-        if self.is_safe_mode_enabled() and 'keywords' in extra_metadata:
-            blacklisted = set(k.lower() for k in extra_metadata['keywords']) & SAFE_MODE_BLACKLIST
+        if self.is_safe_mode_enabled() and "keywords" in extra_metadata:
+            blacklisted = set(k.lower() for k in extra_metadata["keywords"]) & SAFE_MODE_BLACKLIST
             return True, blacklisted if len(blacklisted) > 0 else False, []
         return False, []
 
@@ -130,12 +173,21 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
 
     def is_in_favorites(self, url):
         return self.get_variety() and os.path.exists(
-            os.path.join(self.get_variety().options.favorites_folder, Util.get_local_name(url)))
+            os.path.join(self.get_variety().options.favorites_folder, Util.get_local_name(url))
+        )
 
-    def save_locally(self, origin_url, image_url,
-                     source_type=None, source_location=None, source_name=None,
-                     force_download=False, extra_metadata={}, local_filename=None,
-                     request_headers=None):
+    def save_locally(
+        self,
+        origin_url,
+        image_url,
+        source_type=None,
+        source_location=None,
+        source_name=None,
+        force_download=False,
+        extra_metadata=None,
+        local_filename=None,
+        request_headers=None,
+    ):
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
         source_location = source_location or self.get_source_location() or self.get_description()
@@ -149,42 +201,46 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         except Exception:
             pass
 
-        if origin_url.startswith('//'):
-            origin_url = 'https:' + origin_url
+        if origin_url.startswith("//"):
+            origin_url = "https:" + origin_url
 
-        if image_url.startswith('//'):
-            image_url = origin_url.split('//')[0] + image_url
+        if image_url.startswith("//"):
+            image_url = origin_url.split("//")[0] + image_url
 
         if not local_filename:
-            local_filename = self.get_local_filename(image_url)
+            local_filename = self.get_local_filename(url=image_url)
+        local_filepath = self._local_filepath(local_filename=local_filename)
         logger.info(lambda: "Origin URL: " + origin_url)
         logger.info(lambda: "Image URL: " + image_url)
-        logger.info(lambda: "Local name: " + local_filename)
+        logger.info(lambda: "Local path: " + local_filepath)
 
-        if not force_download and os.path.exists(local_filename):
+        if not force_download and os.path.exists(local_filepath):
             logger.info(lambda: "File already exists, skip downloading")
             return None
 
-        is_unsafe, blacklisted = self.is_unsafe(extra_metadata)
+        is_unsafe, blacklisted = self.is_unsafe(extra_metadata or {})
         if is_unsafe:
             logger.info(
                 lambda: "Skipping non-safe download %s due to blacklisted keywords (%s). "
-                        "Is the source %s:%s suitable for Safe mode?" %
-                        (origin_url, str(blacklisted), source_type, source_location))
+                "Is the source %s:%s suitable for Safe mode?"
+                % (origin_url, str(blacklisted), source_type, source_location)
+            )
             return None
 
         try:
             r = Util.request(image_url, stream=True, headers=request_headers)
-            with open(local_filename, 'wb') as f:
+            with open(local_filepath, "wb") as f:
                 Util.request_write_to(r, f)
         except Exception as e:
-            logger.info(lambda: "Download failed from image URL: %s (source location: %s) " % (
-                image_url, source_location))
+            logger.info(
+                lambda: "Download failed from image URL: %s (source location: %s) "
+                % (image_url, source_location)
+            )
             raise e
 
-        if not Util.is_image(local_filename, check_contents=True):
+        if not Util.is_image(local_filepath, check_contents=True):
             logger.info(lambda: "Downloaded data was not an image, image URL might be outdated")
-            os.unlink(local_filename)
+            os.unlink(local_filepath)
             return None
 
         metadata = {
@@ -192,10 +248,10 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             "sourceName": source_name,
             "sourceLocation": source_location,
             "sourceURL": origin_url,
-            "imageURL": image_url
+            "imageURL": image_url,
         }
-        metadata.update(extra_metadata)
-        Util.write_metadata(local_filename, metadata)
+        metadata.update(extra_metadata or {})
+        Util.write_metadata(local_filepath, metadata)
 
         logger.info(lambda: "Download complete")
-        return local_filename
+        return local_filepath

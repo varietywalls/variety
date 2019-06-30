@@ -1,16 +1,16 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
@@ -51,19 +51,36 @@ class Downloader(abc.ABC):
         """
         filename = self.get_folder_name()
         if len(filename) + len(global_download_folder) > 160:
-            filename = filename[:(150 - len(global_download_folder))] + Util.md5(filename)[:10]
+            filename = filename[: (150 - len(global_download_folder))] + Util.md5(filename)[:10]
         self.target_folder = os.path.join(global_download_folder, filename)
         return self.target_folder
 
     def get_local_filename(self, url):
         """
-        Returns the local file path where to save a remote image (at URL url)
+        Returns the local file name under which to save a remote image (at URL url).
+        By default this is Util.get_local_name(url), but subclasses can override.
         :param url: the URL of the image
         :return: the full local path, under the current target_folder
         """
+        return Util.get_local_name(url)
+
+    def _local_filepath(self, url=None, local_filename=None):
+        """
+        Returns the local file path where to save a remote image (at URL url).
+        By default this is os.path.join(self.target_folder, self.get_local_filename(url)).
+        Subclasses are discouraged from overriding this method, override get_local_filename()
+        instead so that downloaded files are kept under the downloader's target_folder.
+        :param url: the URL of the image
+        :param local_filename: what local filename to use instead of extracting it from the URL.
+        Pass None to use self.get_local_filename(url)
+        :return: the full local path, under the current target_folder
+        """
+        if url is None and local_filename is None:
+            raise ValueError("One of url or local_filename must be specified")
         if self.target_folder is None:
-            raise Exception('update_download_folder was not called before downloading')
-        return os.path.join(self.target_folder, Util.get_local_name(url))
+            raise Exception("update_download_folder was not called before downloading")
+        filename = local_filename if local_filename else self.get_local_filename(url)
+        return os.path.join(self.target_folder, filename)
 
     def get_source(self):
         """
@@ -125,7 +142,7 @@ class Downloader(abc.ABC):
         :return: folder name (just name, not full path)
         """
         if self.config:
-            return self.get_source_type() + '_' + Util.convert_to_filename(self.config)
+            return self.get_source_type() + "_" + Util.convert_to_filename(self.config)
         else:
             return self.get_source_name()
 

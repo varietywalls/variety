@@ -62,13 +62,10 @@ class EarthviewDownloader(SimpleDownloader):
     def download_queue_item(self, item):
         region = item["Region"]
         filename = "{}{} (ID-{}).jpg".format(
-            region + ", " if region and region != "-" else "",
-            item["Country"],
-            item["ID"],
+            region + ", " if region and region != "-" else "", item["Country"], item["ID"]
         )
-        local_filename = os.path.join(self.target_folder, filename)
         origin_url = EarthviewDownloader.ROOT_URL + str(item["ID"])
         image_url = item["Image URL"]
         if not image_url.startswith("http"):
             image_url = "https://" + image_url
-        return self.save_locally(origin_url, image_url, local_filename=local_filename)
+        return self.save_locally(origin_url, image_url, local_filename=filename)
