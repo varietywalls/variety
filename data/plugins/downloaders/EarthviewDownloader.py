@@ -13,10 +13,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import os
 import random
 import logging
 
+from plugins.downloaders.ImageSource import Throttling
 from variety import _
 from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -58,6 +58,11 @@ class EarthviewDownloader(SimpleDownloader):
         queue = Util.fetch_json(DATA_URL)
         random.shuffle(queue)
         return queue
+
+    def get_default_throttling(self):
+        # throttle this source, as otherwise maps "overpower" all other types of images
+        # with Variety's default settings, and we have no other way to control source "weights"
+        return Throttling(min_download_interval=600, min_fill_queue_interval=0)
 
     def download_queue_item(self, item):
         region = item["Region"]
