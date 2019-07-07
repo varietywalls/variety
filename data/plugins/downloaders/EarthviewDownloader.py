@@ -16,10 +16,10 @@
 import random
 import logging
 
-from plugins.downloaders.ImageSource import Throttling
 from variety import _
 from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.plugins.downloaders.ImageSource import Throttling
 
 # Credits: Using the data prepared by limhenry @ https://github.com/limhenry/earthview
 DATA_URL = "https://raw.githubusercontent.com/limhenry/earthview/3cd868a932cd652c4373c0f6ea8618a96b08be4e/wallpaper%20changer/data.json"
