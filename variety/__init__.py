@@ -26,7 +26,7 @@ def _(text):
     """Returns the translated form of text."""
     return gettext.gettext(text)
 
-def safe_print(text, ascii_text=None):
+def safe_print(text, ascii_text=None, file=sys.stdout):
     """
     Python's print throws UnicodeEncodeError if the terminal encoding is borked. This version tries print, then logging, then printing the ascii text when one is present.
     If does not throw exceptions even if it fails.
@@ -34,7 +34,7 @@ def safe_print(text, ascii_text=None):
     :param ascii_text: optional. Original untranslated ascii version of the text when present.
     """
     try:
-        print(text)
+        print(text, file=file)
     except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
         try:
             logging.getLogger("variety").error(
@@ -130,7 +130,8 @@ def check_quit():
 
     logging.getLogger("variety").info("Terminating signal received, quitting...")
     safe_print(_("Terminating signal received, quitting..."),
-               "Terminating signal received, quitting...")
+               "Terminating signal received, quitting...",
+               file=sys.stderr)
 
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
@@ -157,7 +158,8 @@ def main():
         if not arguments:
             arguments = ["--preferences"]
         safe_print(_("Variety is already running. Sending the command to the running instance."),
-                   "Variety is already running. Sending the command to the running instance.")
+                   "Variety is already running. Sending the command to the running instance.",
+                   file=sys.stderr)
         method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
         result = method(arguments)
         if result:

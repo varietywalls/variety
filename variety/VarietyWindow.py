@@ -2001,7 +2001,8 @@ class VarietyWindow(Gtk.Window):
 Passing local files will add them to Variety's queue.
 Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
 
-To set a specific wallpaper: %prog /some/local/image.jpg --next""")
+To set a specific wallpaper: %prog --set /some/local/image.jpg
+""")
         parser = VarietyOptionParser(usage=usage, version="%%prog %s" % varietyconfig.get_version(), report_errors=report_errors)
 
         parser.add_option(
@@ -2013,8 +2014,12 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
             help=_("Make the running instance quit"))
 
         parser.add_option(
-            "--get", "--current", "--show-current", action="store_true", dest="show_current",
+            "--get", "--get-wallpaper", "--current", "--show-current", action="store_true", dest="show_current",
             help=_("Print the current wallpaper location. Used only when the application is already running."))
+
+        parser.add_option(
+            "--set", "--set-wallpaper", action="store", dest="set_wallpaper",
+            help=_("Set the given file as wallpaper, absolute path required"))
 
         parser.add_option(
             "-n", "--next", action="store_true", dest="next",
@@ -2151,7 +2156,9 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
                     elif options.movefavorite:
                         self.move_to_favorites()
 
-                if options.fast_forward:
+                if options.set_wallpaper:
+                    self.set_wallpaper(options.set_wallpaper)
+                elif options.fast_forward:
                     self.next_wallpaper(bypass_history=True)
                 elif options.next:
                     self.next_wallpaper()
