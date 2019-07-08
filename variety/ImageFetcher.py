@@ -47,7 +47,7 @@ class ImageFetcher:
     @staticmethod
     def fetch(url, to_folder, origin_url=None,
               source_type=None, source_location=None, source_name=None,
-              extra_metadata={},
+              extra_metadata=None,
               progress_reporter=lambda a, b: None, verbose=True):
         reported = verbose
         try:
@@ -94,27 +94,27 @@ class ImageFetcher:
                     logger.info(lambda:
                         "File with same name already exists, but from different imageURL; renaming new download")
                     filename = Util.find_unique_name(filename)
-                    local_name = os.path.basename(filename)
 
             logger.info(lambda: "Fetching to " + filename)
             if not reported:
                 reported = True
                 progress_reporter(_("Fetching"), url)
 
-            with open(filename, 'wb') as f:
+            local_filepath_partial = filename + '.partial'
+            with open(local_filepath_partial, 'wb') as f:
                 Util.request_write_to(r, f)
 
             try:
-                img = Image.open(filename)
+                img = Image.open(local_filepath_partial)
             except Exception:
                 progress_reporter(_("Not an image"), url)
-                os.unlink(filename)
+                Util.safe_unlink(local_filepath_partial)
                 return None
 
             if img.size[0] < 400 or img.size[1] < 400:
                 # too small - delete and do not use
                 progress_reporter(_("Image too small, ignoring it"), url)
-                os.unlink(filename)
+                Util.safe_unlink(local_filepath_partial)
                 return None
 
             metadata = {"sourceType": source_type or 'fetched',
@@ -123,11 +123,11 @@ class ImageFetcher:
                         "imageURL": url}
             if source_location:
                 metadata["sourceLocation"] = source_location
-            metadata.update(extra_metadata)
-            Util.write_metadata(filename, metadata)
+            metadata.update(extra_metadata or {})
+            Util.write_metadata(local_filepath_partial, metadata)
 
+            os.rename(local_filepath_partial, filename)
             logger.info(lambda: "Fetched %s to %s." % (url, filename))
-
             return filename
 
         except Exception as e:

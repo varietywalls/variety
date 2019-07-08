@@ -975,12 +975,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
         file = os.path.expanduser("~/.config/autostart/variety.desktop")
 
         if not self.ui.autostart.get_active():
-            try:
-                if os.path.exists(file):
-                    logger.info(lambda: "Removing autostart entry")
-                    os.unlink(file)
-            except Exception:
-                logger.exception(lambda: "Could not remove autostart entry variety.desktop")
+            if os.path.exists(file):
+                logger.info(lambda: "Removing autostart entry")
+                Util.safe_unlink(file)
         else:
             if not os.path.exists(file):
                 self.parent.create_autostart_entry()

@@ -207,9 +207,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         if image_url.startswith("//"):
             image_url = origin_url.split("//")[0] + image_url
 
+        # we will download the contents to a ".partial" file, then rename it to the proper name
         if not local_filename:
             local_filename = self.get_local_filename(url=image_url)
         local_filepath = self._local_filepath(local_filename=local_filename)
+        local_filepath_partial = local_filepath + '.partial'
         logger.info(lambda: "Origin URL: " + origin_url)
         logger.info(lambda: "Image URL: " + image_url)
         logger.info(lambda: "Local path: " + local_filepath)
@@ -229,18 +231,19 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
 
         try:
             r = Util.request(image_url, stream=True, headers=request_headers)
-            with open(local_filepath, "wb") as f:
+            with open(local_filepath_partial, "wb") as f:
                 Util.request_write_to(r, f)
         except Exception as e:
             logger.info(
                 lambda: "Download failed from image URL: %s (source location: %s) "
                 % (image_url, source_location)
             )
+            Util.safe_unlink(local_filepath_partial)
             raise e
 
-        if not Util.is_image(local_filepath, check_contents=True):
+        if not Util.is_image(local_filepath_partial, check_contents=True):
             logger.info(lambda: "Downloaded data was not an image, image URL might be outdated")
-            os.unlink(local_filepath)
+            Util.safe_unlink(local_filepath_partial)
             return None
 
         metadata = {
@@ -251,7 +254,9 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             "imageURL": image_url,
         }
         metadata.update(extra_metadata or {})
-        Util.write_metadata(local_filepath, metadata)
+        Util.write_metadata(local_filepath_partial, metadata)
 
+        # file rename is an atomic operation, so we should never end up with partial downloads
+        os.rename(local_filepath_partial, local_filepath)
         logger.info(lambda: "Download complete")
         return local_filepath
