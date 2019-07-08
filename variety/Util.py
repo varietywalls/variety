@@ -801,3 +801,9 @@ class Util:
         valid_chars = "_%s%s" % (string.ascii_letters, string.digits)
         return ''.join(c if c in valid_chars else '_' for c in url)
 
+    @staticmethod
+    def safe_unlink(filepath):
+        try:
+            os.unlink(filepath)
+        except Exception:
+            logger.exception(lambda: 'Could not delete {}, ignoring'.format(filepath))

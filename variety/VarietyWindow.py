@@ -1043,7 +1043,7 @@ class VarietyWindow(Gtk.Window):
             files = []
             for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
                 for f in filenames:
-                    if Util.is_image(f):
+                    if Util.is_image(f) or f.endswith('.partial'):
                         fp = os.path.join(dirpath, f)
                         files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
             files = sorted(files, key=lambda x: x[2])
@@ -1054,16 +1054,9 @@ class VarietyWindow(Gtk.Window):
                     try:
                         logger.debug(lambda: "Deleting old file in downloaded: " + file)
                         self.remove_from_queues(file)
-                        os.unlink(file)
+                        Util.safe_unlink(file)
                         self.download_folder_size -= files[i][1]
-                        try:
-                            os.unlink(file + '.metadata.json')
-                        except Exception:
-                            pass
-                        try:
-                            os.unlink(file + '.txt')
-                        except Exception:
-                            pass
+                        Util.safe_unlink(file + '.metadata.json')
                     except Exception:
                         logger.exception(lambda: "Could not delete some file while purging download folder: " + file)
                 i += 1
@@ -1621,10 +1614,6 @@ class VarietyWindow(Gtk.Window):
                 operation(file + '.metadata.json', to)
             except Exception:
                 pass
-            try:
-                operation(file + '.txt', to)
-            except Exception:
-                pass
             logger.info(lambda: ("Moved %s to %s" if is_move else "Copied %s to %s") % (file, to))
             #self.show_notification(("Moved %s to %s" if is_move else "Copied %s to %s") % (os.path.basename(file), to_name))
             return True
@@ -1903,12 +1892,9 @@ class VarietyWindow(Gtk.Window):
 
                 for suffix in ("filter", "clock", "quote"):
                     file = os.path.join(self.config_folder, "wallpaper-%s.jpg" % suffix)
-                    try:
-                        if os.path.exists(file):
-                            logger.info(lambda: "Deleting unneeded file " + file)
-                            os.unlink(file)
-                    except Exception:
-                        logger.warning(lambda: "Could not delete %s, no worries" % file)
+                    if os.path.exists(file):
+                        logger.info(lambda: "Deleting unneeded file " + file)
+                        Util.safe_unlink(file)
 
             if Util.compare_versions(last_version, "0.8.0") < 0:
                 logger.info(lambda: "Performing upgrade to 0.8.0")
@@ -2370,7 +2356,7 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
                 if file != current_wallpaper and file != new_wallpaper and file != self.post_filter_filename and\
                    name.startswith(prefix) and name.endswith(".jpg"):
                     logger.debug(lambda: "Removing old wallpaper %s" % file)
-                    os.unlink(file)
+                    Util.safe_unlink(file)
         except Exception:
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
