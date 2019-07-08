@@ -69,4 +69,5 @@ as well as options to layer quotes and a clock onto the background.""",
 )
 
 # Remove this after we're done with the build
-os.remove(BUILD_SETTINGS_PATH)
+if os.path.exists(BUILD_SETTINGS_PATH):
+    os.remove(BUILD_SETTINGS_PATH)
