@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Pre-commit git hook that runs autoformat on all changed files
+# Install as a git hook by running this in the project root folder:
+# cd .git/hooks && ln -sf ../../toolchain/pre-commit-autoformat pre-commit
+#
+# Note that commits will proceed even when autoformat makes changes to the files
+# (which is different from how pre-commit hooks often work).
+
+git diff --cached --name-only --diff-filter=ACM | \
+grep -E '\.py$' | \
+xargs -i sh -c 'toolchain/autoformat {}; git add {}'
