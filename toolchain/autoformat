@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This is our code autoformatting tool. It's run on all code files and runs Black, isort and
+# whatever other code-fixing tools we decide to use.
+#
+# Usage: autoformat <file_or_folder_1> [<file_or_folder_2> ...]
+# Note this expects Black and isort to be in you path.
+
+if (( $# < 1 )); then
+    echo 'Usage: autoformat <file_or_folder_1> [<file_or_folder_2> ...]'
+    exit 1
+fi
+
+# isort must be run before Black, explicitly just on Python files as it borks other files
+echo 'Running isort'
+find "$@" -type f -name '*.py' -exec isort {} \;
+
+# Run Black on Python files only
+echo 'Running Black'
+find "$@" -type f -name '*.py' -exec black -l 100 -t py35 {} \;
