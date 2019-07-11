@@ -16,8 +16,8 @@
 import abc
 
 from jumble.IPlugin import IPlugin
-from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
+from variety.plugins.downloaders.ImageSource import ImageSource
 
 
 class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
@@ -25,6 +25,7 @@ class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
     Base class for non-configurable "singleton" downloaders, where the same object instance
     serves as both the ImageSource and the Downloader.
     """
+
     def __init__(self):
         ImageSource.__init__(self)
         DefaultDownloader.__init__(self, source=self)

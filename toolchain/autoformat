@@ -10,10 +10,8 @@ if (( $# < 1 )); then
     exit 1
 fi
 
-# isort must be run before Black, explicitly just on Python files as it borks other files
+# isort must be run before Black
 echo 'Running isort'
-find "$@" -type f -name '*.py' -exec isort {} \;
-
-# Run Black on Python files only
+isort -rc "$@"
 echo 'Running Black'
-find "$@" -type f -name '*.py' -exec black -l 100 -t py35 {} \;
+black -l 100 -t py35 "$@"

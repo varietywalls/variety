@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import random
 import logging
+import random
 from datetime import datetime
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 from variety import _
-from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import Util
 
 logger = logging.getLogger("variety")
 
@@ -55,7 +55,7 @@ class BingDownloader(SimpleDownloader):
         return "https://www.bing.com/gallery/"
 
     def get_local_filename(self, url):
-        return parse_qs(urlparse(url).query)['id'][0]
+        return parse_qs(urlparse(url).query)["id"][0]
 
     def fill_queue(self):
         queue = []

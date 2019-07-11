@@ -14,17 +14,16 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import logging
 import random
 import urllib.parse
 import xml.etree.ElementTree as ET
-
-import logging
 
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 random.seed()
 
@@ -58,10 +57,14 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
 
     @staticmethod
     def is_valid_content(x):
-        return x is not None and "url" in x.attrib and (
-                Util.is_image(x.attrib["url"]) or
-                ("medium" in x.attrib and x.attrib["medium"].lower() == "image") or
-                ("type" in x.attrib and x.attrib["type"].lower().startswith("image/"))
+        return (
+            x is not None
+            and "url" in x.attrib
+            and (
+                Util.is_image(x.attrib["url"])
+                or ("medium" in x.attrib and x.attrib["medium"].lower() == "image")
+                or ("type" in x.attrib and x.attrib["type"].lower().startswith("image/"))
+            )
         )
 
     @staticmethod
@@ -72,20 +75,30 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                 url = "https://" + url
 
             s = MediaRssDownloader.fetch(url)
-            walls = [x.attrib["url"] for x in s.findall(".//{0}content".format(MEDIA_NS))
-                     if MediaRssDownloader.is_valid_content(x)]
+            walls = [
+                x.attrib["url"]
+                for x in s.findall(".//{0}content".format(MEDIA_NS))
+                if MediaRssDownloader.is_valid_content(x)
+            ]
             return len(walls) > 0
         except Exception:
             logger.exception(lambda: "Error while validating URL, probably not a MediaRSS feed")
             return False
 
     def download_queue_item(self, queue_item):
-        origin_url, image_url, source_type, source_location, source_name, extra_metadata = queue_item
+        origin_url, image_url, source_type, source_location, source_name, extra_metadata = (
+            queue_item
+        )
         parse = urllib.parse.urlparse(origin_url)
         host = parse.netloc if hasattr(parse, "netloc") else "origin"
-        return self.save_locally(origin_url, image_url, source_type or 'mediarss',
-                                 source_location, source_name or host,
-                                 extra_metadata=extra_metadata)
+        return self.save_locally(
+            origin_url,
+            image_url,
+            source_type or "mediarss",
+            source_location,
+            source_name or host,
+            extra_metadata=extra_metadata,
+        )
 
     def fill_queue(self):
         queue = []
@@ -104,7 +117,9 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                         try:
                             if MediaRssDownloader.is_valid_content(c):
                                 if content is None:
-                                    content = c  # use the first one, in case we don't find any width info
+                                    content = (
+                                        c
+                                    )  # use the first one, in case we don't find any width info
                                 if "width" in c.attrib and int(c.attrib["width"]) > width:
                                     content = c
                                     width = int(c.attrib["width"])
@@ -121,67 +136,84 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                 source_type = None
                 variety_source = item.find("{0}source".format(VARIETY_NS))
                 if variety_source is not None:
-                    source_name = variety_source.attrib.get('name', None)
-                    source_location = variety_source.attrib.get('location', None)
-                    source_type = variety_source.attrib.get('type', None)
+                    source_name = variety_source.attrib.get("name", None)
+                    source_location = variety_source.attrib.get("location", None)
+                    source_type = variety_source.attrib.get("type", None)
 
                 extra_metadata = {}
 
                 try:
-                    extra_metadata['headline'] = item.find("{0}title".format(MEDIA_NS)).text
+                    extra_metadata["headline"] = item.find("{0}title".format(MEDIA_NS)).text
                 except:
                     try:
-                        extra_metadata['headline'] = item.find("title").text
+                        extra_metadata["headline"] = item.find("title").text
                     except:
                         pass
 
                 try:
-                    extra_metadata['description'] = item.find(
-                        "{0}description".format(MEDIA_NS)).text
+                    extra_metadata["description"] = item.find(
+                        "{0}description".format(MEDIA_NS)
+                    ).text
                 except:
                     pass
 
                 try:
                     author = item.find("{0}author".format(VARIETY_NS))
                     if author is not None:
-                        extra_metadata['author'] = author.attrib.get('name', None)
-                        extra_metadata['authorURL'] = author.attrib.get('url', None)
+                        extra_metadata["author"] = author.attrib.get("name", None)
+                        extra_metadata["authorURL"] = author.attrib.get("url", None)
                     else:
-                        extra_metadata['author'] = item.find("{0}credit".format(MEDIA_NS)).text
+                        extra_metadata["author"] = item.find("{0}credit".format(MEDIA_NS)).text
                 except:
                     pass
 
                 try:
                     sfw = item.find("{0}sfw_info".format(VARIETY_NS))
                     if sfw is not None:
-                        rating = int(sfw.attrib.get('rating', None))
-                        extra_metadata['sfwRating'] = rating
+                        rating = int(sfw.attrib.get("rating", None))
+                        extra_metadata["sfwRating"] = rating
 
                         if self.is_safe_mode_enabled() and rating < 100:
                             logger.info(
                                 lambda: "Skipping non-safe download from VRTY MediaRss feed. "
-                                        "Is the source %s suitable for Safe mode?" % self.config)
+                                "Is the source %s suitable for Safe mode?" % self.config
+                            )
                             continue
                 except:
                     pass
 
                 try:
-                    extra_metadata['keywords'] = [k.strip() for k in item.find(
-                        "{0}keywords".format(MEDIA_NS)).text.split(',')]
+                    extra_metadata["keywords"] = [
+                        k.strip() for k in item.find("{0}keywords".format(MEDIA_NS)).text.split(",")
+                    ]
                 except:
                     pass
 
                 self.process_content(
-                    queue, origin_url, content, source_type,
-                    source_location, source_name, extra_metadata)
+                    queue,
+                    origin_url,
+                    content,
+                    source_type,
+                    source_location,
+                    source_name,
+                    extra_metadata,
+                )
             except Exception:
                 logger.exception(lambda: "Could not process an item in the Media RSS feed")
 
         random.shuffle(queue)
         return queue
 
-    def process_content(self, queue, origin_url, content, source_type=None, source_location=None,
-                        source_name=None, extra_metadata={}):
+    def process_content(
+        self,
+        queue,
+        origin_url,
+        content,
+        source_type=None,
+        source_location=None,
+        source_name=None,
+        extra_metadata={},
+    ):
         try:
             logger.debug(lambda: "Checking origin_url " + origin_url)
 
@@ -211,10 +243,19 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                 logger.debug(lambda: "Small or non-landscape size/resolution")
                 return
 
-            logger.debug(lambda: "Appending to queue %s, %s, %s, %s, %s" %
-                                 (origin_url, image_file_url, source_type, source_location,
-                                  source_name))
-            queue.append((
-                origin_url, image_file_url, source_type, source_location, source_name, extra_metadata))
+            logger.debug(
+                lambda: "Appending to queue %s, %s, %s, %s, %s"
+                % (origin_url, image_file_url, source_type, source_location, source_name)
+            )
+            queue.append(
+                (
+                    origin_url,
+                    image_file_url,
+                    source_type,
+                    source_location,
+                    source_name,
+                    extra_metadata,
+                )
+            )
         except Exception:
             logger.exception(lambda: "Error parsing single MediaRSS image info:")

@@ -14,16 +14,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import os.path
 import shutil
 import sys
-import os.path
 import unittest
 
 from variety import Util
+from variety.ImageFetcher import ImageFetcher
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-
-from variety.ImageFetcher import ImageFetcher
 
 
 class TestImageFetcher(unittest.TestCase):

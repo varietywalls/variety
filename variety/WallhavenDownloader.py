@@ -1,29 +1,32 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import urllib.parse
-import random
-
 import logging
+import random
+import urllib.parse
 
 from variety import _
-from variety.Util import Util
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource, Throttling
+from variety.Util import Util
 
-logger = logging.getLogger('variety')
+SEARCH_URL = (
+    "https://wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc"
+)
+
+logger = logging.getLogger("variety")
 
 random.seed()
 
@@ -52,13 +55,12 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
         return Throttling(min_download_interval=60, min_fill_queue_interval=600)
 
     def parse_location(self):
-        if self.config.startswith(('http://', 'https://')):
+        if self.config.startswith(("http://", "https://")):
             # location is an URL, use it
-            self.url = self.config.replace('http://', 'https://')
+            self.url = self.config.replace("http://", "https://")
         else:
             # interpret location as keywords
-            self.url = "https://wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc" % \
-                       urllib.parse.quote(self.config)
+            self.url = SEARCH_URL % urllib.parse.quote(self.config)
 
     def search(self, page=None):
         url = self.url
@@ -72,8 +74,12 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
 
         result_count = None
         try:
-            result_count = int(soup.find('header', {'class': 'listing-header'})
-                               .find('h1').text.split()[0].replace(',', ''))
+            result_count = int(
+                soup.find("header", {"class": "listing-header"})
+                .find("h1")
+                .text.split()[0]
+                .replace(",", "")
+            )
         except:
             pass
 
@@ -98,23 +104,27 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
         logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
         s = Util.html_soup(wallpaper_url)
-        src_url = s.find('img', id='wallpaper')['src']
+        src_url = s.find("img", id="wallpaper")["src"]
         logger.info(lambda: "Image src URL: " + src_url)
 
         extra_metadata = {}
         try:
-            extra_metadata['keywords'] = [el.text.strip() for el in s.find_all('a', {'class':'tagname'})]
+            extra_metadata["keywords"] = [
+                el.text.strip() for el in s.find_all("a", {"class": "tagname"})
+            ]
         except:
             pass
 
         try:
-            purity = s.find('div', 'sidebar-content').find('label', 'purity').text.lower()
-            sfw_rating = {'sfw': 100, 'sketchy': 50, 'nsfw': 0}[purity]
-            extra_metadata['sfwRating'] = sfw_rating
+            purity = s.find("div", "sidebar-content").find("label", "purity").text.lower()
+            sfw_rating = {"sfw": 100, "sketchy": 50, "nsfw": 0}[purity]
+            extra_metadata["sfwRating"] = sfw_rating
 
             if self.is_safe_mode_enabled() and sfw_rating < 100:
-                logger.info(lambda: "Skipping non-safe download from Wallhaven. "
-                                    "Is the source %s suitable for Safe mode?" % self.config)
+                logger.info(
+                    lambda: "Skipping non-safe download from Wallhaven. "
+                    "Is the source %s suitable for Safe mode?" % self.config
+                )
                 return None
         except:
             pass
@@ -131,15 +141,15 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
                 count = 300
             pages = min(count, 300) // 24 + 1
             page = random.randint(1, pages)
-            logger.info(lambda: '%s wallpapers in result, using page %s' % (count, page))
+            logger.info(lambda: "%s wallpapers in result, using page %s" % (count, page))
             s, count = self.search(page=page)
         else:
             s, count = self.search()
 
-        thumbs = s.find_all('figure', {'class': 'thumb'})
+        thumbs = s.find_all("figure", {"class": "thumb"})
         for thumb in thumbs:
             try:
-                p = list(map(int, thumb.find('span', {'class': 'wall-res'}).contents[0].split('x')))
+                p = list(map(int, thumb.find("span", {"class": "wall-res"}).contents[0].split("x")))
                 width = p[0]
                 height = p[1]
                 if self.is_size_inadequate(width, height):
@@ -149,7 +159,7 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
                 pass
 
             try:
-                link = thumb.find('a', {'class': 'preview'})["href"]
+                link = thumb.find("a", {"class": "preview"})["href"]
                 if self.is_in_banned(link):
                     continue
                 queue.append(link)
@@ -159,7 +169,7 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
         random.shuffle(queue)
 
         if not_random and len(queue) >= 20:
-            queue = queue[:len(queue)//2]
+            queue = queue[: len(queue) // 2]
             # only use randomly half the images from the page -
             # if we ever hit that same page again, we'll still have what to download
 

@@ -15,9 +15,9 @@
 ### END LICENSE
 import abc
 import collections
+import logging
 import os
 import time
-import logging
 
 from variety.plugins.downloaders.Downloader import Downloader
 from variety.Util import Util
@@ -211,7 +211,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         if not local_filename:
             local_filename = self.get_local_filename(url=image_url)
         local_filepath = self._local_filepath(local_filename=local_filename)
-        local_filepath_partial = local_filepath + '.partial'
+        local_filepath_partial = local_filepath + ".partial"
         logger.info(lambda: "Origin URL: " + origin_url)
         logger.info(lambda: "Image URL: " + image_url)
         logger.info(lambda: "Local path: " + local_filepath)

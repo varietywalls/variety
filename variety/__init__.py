@@ -18,13 +18,15 @@
 import gettext
 import logging
 
-gettext.textdomain('variety')
+gettext.textdomain("variety")
 import os
 import sys
+
 
 def _(text):
     """Returns the translated form of text."""
     return gettext.gettext(text)
+
 
 def safe_print(text, ascii_text=None, file=sys.stdout):
     """
@@ -38,7 +40,8 @@ def safe_print(text, ascii_text=None, file=sys.stdout):
     except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
         try:
             logging.getLogger("variety").error(
-                'Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
+                "Error printing non-ascii text, terminal encoding is %s" % sys.stdout.encoding
+            )
             if ascii_text:
                 try:
                     print(ascii_text)
@@ -60,15 +63,20 @@ class SafeLogger(logging.Logger):
         try:
             new_msg = msg if isinstance(msg, str) else msg()
         except:
-            locale_info = 'Unknown'
+            locale_info = "Unknown"
             try:
-                locale_info = 'Terminal encoding=%s, LANG=%s, LANGUAGE=%s' % (
-                    sys.stdout.encoding, os.getenv('LANG'), os.getenv('LANGUAGE'))
-                logging.getLogger("variety").exception('Errors while logging. Locale info: %s' % locale_info)
+                locale_info = "Terminal encoding=%s, LANG=%s, LANGUAGE=%s" % (
+                    sys.stdout.encoding,
+                    os.getenv("LANG"),
+                    os.getenv("LANGUAGE"),
+                )
+                logging.getLogger("variety").exception(
+                    "Errors while logging. Locale info: %s" % locale_info
+                )
                 # TODO gather and log more info here
             except:
                 pass
-            new_msg = 'Errors while logging. Locale info: %s' % locale_info
+            new_msg = "Errors while logging. Locale info: %s" % locale_info
 
         return super().makeRecord(name, level, fn, lno, new_msg, *args, **kwargs)
 
@@ -86,7 +94,7 @@ import logging
 
 import gi
 
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk, Gdk, GObject  # pylint: disable=E0611
 
@@ -96,8 +104,8 @@ from variety import ThumbsWindow
 from variety.Util import Util, ModuleProfiler
 from variety_lib.helpers import set_up_logging
 
-DBUS_KEY = 'com.peterlevi.Variety'
-DBUS_PATH = '/com/peterlevi/Variety'
+DBUS_KEY = "com.peterlevi.Variety"
+DBUS_PATH = "/com/peterlevi/Variety"
 
 
 class VarietyService(dbus.service.Object):
@@ -106,7 +114,7 @@ class VarietyService(dbus.service.Object):
         bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
 
-    @dbus.service.method(dbus_interface=DBUS_KEY, in_signature='as', out_signature='s')
+    @dbus.service.method(dbus_interface=DBUS_KEY, in_signature="as", out_signature="s")
     def process_command(self, arguments):
         result = self.variety_window.process_command(arguments, initial_run=False)
         return "" if result is None else result
@@ -129,9 +137,11 @@ def check_quit():
         return
 
     logging.getLogger("variety").info("Terminating signal received, quitting...")
-    safe_print(_("Terminating signal received, quitting..."),
-               "Terminating signal received, quitting...",
-               file=sys.stderr)
+    safe_print(
+        _("Terminating signal received, quitting..."),
+        "Terminating signal received, quitting...",
+        file=sys.stderr,
+    )
 
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
@@ -157,9 +167,11 @@ def main():
     if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
             arguments = ["--preferences"]
-        safe_print(_("Variety is already running. Sending the command to the running instance."),
-                   "Variety is already running. Sending the command to the running instance.",
-                   file=sys.stderr)
+        safe_print(
+            _("Variety is already running. Sending the command to the running instance."),
+            "Variety is already running. Sending the command to the running instance.",
+            file=sys.stderr,
+        )
         method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
         result = method(arguments)
         if result:

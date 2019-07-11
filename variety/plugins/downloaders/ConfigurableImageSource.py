@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
+
 from variety.plugins.downloaders.ImageSource import ImageSource
 
 
@@ -22,6 +23,7 @@ class ConfigurableImageSource(ImageSource, metaclass=abc.ABCMeta):
     Implements searchable image sources.
     TODO: This plugin type is still in ideation phase, very early WIP. Not used for now.
     """
+
     def __init__(self):
         super().__init__()
 

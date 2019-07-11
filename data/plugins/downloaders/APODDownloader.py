@@ -14,12 +14,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import random
 import logging
+import random
 
 from variety import _
-from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import Util
 
 logger = logging.getLogger("variety")
 

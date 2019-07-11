@@ -1,24 +1,24 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import Gtk # pylint: disable=E0611
-
-from variety_lib.helpers import get_builder
+from gi.repository import Gtk  # pylint: disable=E0611
 
 from variety import _
+from variety_lib.helpers import get_builder
+
 
 class WelcomeDialog(Gtk.Dialog):
     __gtype_name__ = "WelcomeDialog"
@@ -29,8 +29,8 @@ class WelcomeDialog(Gtk.Dialog):
         
         Returns a fully instantiated WelcomeDialog object.
         """
-        builder = get_builder('WelcomeDialog')
-        new_object = builder.get_object('welcome_dialog')
+        builder = get_builder("WelcomeDialog")
+        new_object = builder.get_object("welcome_dialog")
         new_object.finish_initializing(builder)
         return new_object
 
@@ -45,6 +45,7 @@ class WelcomeDialog(Gtk.Dialog):
         # Get a reference to the builder and set up the signals.
         self.builder = builder
         self.ui = builder.get_ui(self)
+
 
 if __name__ == "__main__":
     dialog = WelcomeDialog()
