@@ -1,29 +1,29 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import os
-
 import logging
-from requests.exceptions import HTTPError
+import os
 import urllib.parse
-from variety.Util import Util
+
 from PIL import Image
+from requests.exceptions import HTTPError
 
 from variety import _
+from variety.Util import Util
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 
 class ImageFetcher:
@@ -31,36 +31,43 @@ class ImageFetcher:
     def url_ok(url, use_whitelist, hosts_whitelist):
         try:
             p = urllib.parse.urlparse(url)
-            if p.scheme in ['http', 'https']:
+            if p.scheme in ["http", "https"]:
                 if use_whitelist:
                     for host in hosts_whitelist:
                         h = host.strip().lower()
                         if h and p.netloc.lower().find(h) >= 0:
                             return True
                 else:
-                    return p.path.lower().endswith(('.jpg', '.jpeg', '.png', '.tiff'))
+                    return p.path.lower().endswith((".jpg", ".jpeg", ".png", ".tiff"))
                     # skip gif - they are usually small images
             return False
         except Exception:
             return False
 
     @staticmethod
-    def fetch(url, to_folder, origin_url=None,
-              source_type=None, source_location=None, source_name=None,
-              extra_metadata=None,
-              progress_reporter=lambda a, b: None, verbose=True):
+    def fetch(
+        url,
+        to_folder,
+        origin_url=None,
+        source_type=None,
+        source_location=None,
+        source_name=None,
+        extra_metadata=None,
+        progress_reporter=lambda a, b: None,
+        verbose=True,
+    ):
         reported = verbose
         try:
             logger.info(lambda: "Trying to fetch URL %s to %s " % (url, to_folder))
             if verbose:
                 progress_reporter(_("Fetching"), url)
 
-            if url.startswith('javascript:'):
+            if url.startswith("javascript:"):
                 if verbose:
                     progress_reporter(_("Not an image"), url)
                 return None
 
-            if url.find('://') < 0:
+            if url.find("://") < 0:
                 url = "file://" + url
 
             r = Util.request(url, stream=True)
@@ -91,8 +98,9 @@ class ImageFetcher:
                     logger.info(lambda: "Local file already exists (%s)" % filename)
                     return filename
                 else:
-                    logger.info(lambda:
-                        "File with same name already exists, but from different imageURL; renaming new download")
+                    logger.info(
+                        lambda: "File with same name already exists, but from different imageURL; renaming new download"
+                    )
                     filename = Util.find_unique_name(filename)
 
             logger.info(lambda: "Fetching to " + filename)
@@ -100,8 +108,8 @@ class ImageFetcher:
                 reported = True
                 progress_reporter(_("Fetching"), url)
 
-            local_filepath_partial = filename + '.partial'
-            with open(local_filepath_partial, 'wb') as f:
+            local_filepath_partial = filename + ".partial"
+            with open(local_filepath_partial, "wb") as f:
                 Util.request_write_to(r, f)
 
             try:
@@ -117,10 +125,12 @@ class ImageFetcher:
                 Util.safe_unlink(local_filepath_partial)
                 return None
 
-            metadata = {"sourceType": source_type or 'fetched',
-                        "sourceName": source_name or "Fetched",
-                        "sourceURL": origin_url or url,
-                        "imageURL": url}
+            metadata = {
+                "sourceType": source_type or "fetched",
+                "sourceName": source_name or "Fetched",
+                "sourceURL": origin_url or url,
+                "imageURL": url,
+            }
             if source_location:
                 metadata["sourceLocation"] = source_location
             metadata.update(extra_metadata or {})
@@ -137,20 +147,24 @@ class ImageFetcher:
                 if isinstance(e, HTTPError) and e.response.status_code in (403, 404):
                     progress_reporter(
                         _("Sorry, got %s error...") % str(e.response.status_code),
-                        _("This means the link is no longer valid"))
+                        _("This means the link is no longer valid"),
+                    )
                 else:
                     progress_reporter(
                         _("Fetch failed for some reason"),
-                        _("To get more information, please run Variety from terminal with -v option and retry the action"))
+                        _(
+                            "To get more information, please run Variety from terminal with -v option and retry the action"
+                        ),
+                    )
             return None
 
     @staticmethod
     def extract_filename_from_content_disposition(cd):
-        parts = cd.split(';')
+        parts = cd.split(";")
         for p in parts:
             p = p.strip()
             if p.startswith("filename="):
-                name = p[p.find('=') + 1:]
+                name = p[p.find("=") + 1 :]
                 if name[0] in ['"', "'"]:
                     name = name[1:]
                 if name[-1] in ['"', "'"]:

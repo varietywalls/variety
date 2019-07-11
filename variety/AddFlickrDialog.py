@@ -1,32 +1,32 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
-from gi.repository import Gtk, Gdk # pylint: disable=E0611
-from variety.FlickrDownloader import FlickrDownloader
-from variety.Options import Options
-
-from variety_lib.helpers import get_builder
-
-from variety import _
 
 import logging
 import threading
 import urllib.parse
 
-logger = logging.getLogger('variety')
+from gi.repository import Gdk, Gtk  # pylint: disable=E0611
+
+from variety import _
+from variety.FlickrDownloader import FlickrDownloader
+from variety.Options import Options
+from variety_lib.helpers import get_builder
+
+logger = logging.getLogger("variety")
+
 
 class AddFlickrDialog(Gtk.Dialog):
     __gtype_name__ = "AddFlickrDialog"
@@ -37,8 +37,8 @@ class AddFlickrDialog(Gtk.Dialog):
         
         Returns a fully instantiated AddFlickrDialog object.
         """
-        builder = get_builder('AddFlickrDialog')
-        new_object = builder.get_object('add_flickr_dialog')
+        builder = get_builder("AddFlickrDialog")
+        new_object = builder.get_object("add_flickr_dialog")
         new_object.finish_initializing(builder)
         return new_object
 
@@ -59,11 +59,11 @@ class AddFlickrDialog(Gtk.Dialog):
         self.edited_row = edited_row
 
         location = edited_row[2]
-        s = location.split(';')
+        s = location.split(";")
         params = {}
         for x in s:
-            if len(x) and x.find(':') > 0:
-                k, v = x.split(':')
+            if len(x) and x.find(":") > 0:
+                k, v = x.split(":")
                 params[k.lower()] = urllib.parse.unquote_plus(v)
 
         if "text" in params:
@@ -73,15 +73,14 @@ class AddFlickrDialog(Gtk.Dialog):
             self.ui.tags.set_text(params["tags"])
 
         if "user" in params:
-            if '://' not in params["user"]:
+            if "://" not in params["user"]:
                 params["user"] = "https://" + params["user"]
             self.ui.user_url.set_text(params["user"])
 
         if "group" in params:
-            if '://' not in params["group"]:
+            if "://" not in params["group"]:
                 params["group"] = "https://" + params["group"]
             self.ui.group_url.set_text(params["group"])
-
 
     def on_btn_ok_clicked(self, widget, data=None):
         """The user has elected to save the changes.
@@ -105,10 +104,16 @@ class AddFlickrDialog(Gtk.Dialog):
         search = ""
 
         if len(self.ui.tags.get_text().strip()):
-            search +=  "tags:" + ','.join([urllib.parse.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(',')]) + ";"
+            search += (
+                "tags:"
+                + ",".join(
+                    [urllib.parse.quote_plus(t.strip()) for t in self.ui.tags.get_text().split(",")]
+                )
+                + ";"
+            )
 
         if len(self.ui.text.get_text().strip()):
-            search +=  "text:" + urllib.parse.quote_plus(self.ui.text.get_text().strip()) +";"
+            search += "text:" + urllib.parse.quote_plus(self.ui.text.get_text().strip()) + ";"
 
         self.error = ""
 
@@ -117,7 +122,11 @@ class AddFlickrDialog(Gtk.Dialog):
             self.show_spinner()
             u = FlickrDownloader.obtain_userid(user_url)
             if u[0]:
-                search += "user:" + self.ui.user_url.get_text().replace("http://", "").replace("https://", "") + ";"
+                search += (
+                    "user:"
+                    + self.ui.user_url.get_text().replace("http://", "").replace("https://", "")
+                    + ";"
+                )
                 search += "user_id:" + u[2] + ";"
             else:
                 self.error = self.error + "\n" + u[1]
@@ -127,7 +136,11 @@ class AddFlickrDialog(Gtk.Dialog):
             self.show_spinner()
             g = FlickrDownloader.obtain_groupid(group_url)
             if g[0]:
-                search += "group:" + self.ui.group_url.get_text().replace("http://", "").replace("https://", "") + ";"
+                search += (
+                    "group:"
+                    + self.ui.group_url.get_text().replace("http://", "").replace("https://", "")
+                    + ";"
+                )
                 search += "group_id:" + g[2]
             else:
                 self.error = self.error + "\n" + g[1]
@@ -153,7 +166,9 @@ class AddFlickrDialog(Gtk.Dialog):
                         break
             else:
                 if len(search):
-                    self.parent.on_add_dialog_okay(Options.SourceType.FLICKR, search, self.edited_row)
+                    self.parent.on_add_dialog_okay(
+                        Options.SourceType.FLICKR, search, self.edited_row
+                    )
                 self.destroy()
 
         finally:
@@ -165,6 +180,7 @@ class AddFlickrDialog(Gtk.Dialog):
         Called before the dialog returns Gtk.ResponseType.CANCEL for run()
         """
         self.destroy()
+
 
 if __name__ == "__main__":
     dialog = AddFlickrDialog()

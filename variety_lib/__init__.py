@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-'''facade - makes variety_lib package easy to refactor
+"""facade - makes variety_lib package easy to refactor
 
-while keeping its api constant'''
-from . varietyconfig import get_version
+while keeping its api constant"""
+from .varietyconfig import get_version

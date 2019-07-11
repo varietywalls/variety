@@ -16,10 +16,14 @@
 
 """Code to add AppIndicator."""
 
-from gi.repository import Gtk  # pylint: disable=E0611
+import logging
 import os
 
+from gi.repository import Gtk  # pylint: disable=E0611
+
+from variety import _
 from variety.Util import Util
+from variety_lib import varietyconfig
 
 THEME_ICON_NAME = "variety-indicator"
 THEME_ICON_NAME_DARK = "variety-indicator-dark"
@@ -42,11 +46,6 @@ except (ValueError, ImportError):
     _indicator_backend = "fallback tray"
     use_appindicator = False
 
-from variety_lib import varietyconfig
-
-from variety import _
-
-import logging
 
 logger = logging.getLogger("variety")
 

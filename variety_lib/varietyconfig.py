@@ -14,25 +14,23 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-__all__ = [
-    'project_path_not_found',
-    'get_data_file',
-    'get_data_path',
-    ]
+__all__ = ["project_path_not_found", "get_data_file", "get_data_path"]
 
 try:
     from .variety_build_settings import __variety_data_directory__
 except ImportError:
     # Variety's data directory. This is set by setup.py for permanent installations, but defaults to ../data
     # for easy development / running from source.
-    __variety_data_directory__ = '../data'
-__license__ = 'GPL-3'
-__version__ = '0.8.0-dev1'
+    __variety_data_directory__ = "../data"
+__license__ = "GPL-3"
+__version__ = "0.8.0-dev1"
 
 import os
 
+
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
+
 
 def get_data_file(*path_segments):
     """Get the full path to a data file.
@@ -53,8 +51,7 @@ def get_data_path():
     """
 
     # Get pathname absolute or relative.
-    path = os.path.join(
-        os.path.dirname(__file__), __variety_data_directory__)
+    path = os.path.join(os.path.dirname(__file__), __variety_data_directory__)
 
     abs_data_path = os.path.abspath(path)
     if not os.path.exists(abs_data_path):

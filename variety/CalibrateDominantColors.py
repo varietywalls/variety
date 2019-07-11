@@ -26,16 +26,16 @@ for f in sorted(os.listdir(dir)):
         except Exception:
             print("oops for " + f)
             raise
-            #pass
+            # pass
 
-#print "\n----results----"
-#for fuzzy in xrange(10):
+# print "\n----results----"
+# for fuzzy in xrange(10):
 #    print fuzzy
 #    for k, v in m.items():
 #        if v == fuzzy:
 #            print k
 #
-#print "no match:"
-#for k, v in m.items():
+# print "no match:"
+# for k, v in m.items():
 #    if v == -1:
 #        print k

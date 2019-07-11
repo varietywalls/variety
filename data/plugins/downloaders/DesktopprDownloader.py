@@ -17,11 +17,11 @@
 import logging
 
 from variety import _
-from variety.Util import Util
-from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.downloaders.DefaultDownloader import QueueItem
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import Util
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 
 class DesktopprDownloader(SimpleDownloader):
@@ -33,7 +33,7 @@ class DesktopprDownloader(SimpleDownloader):
             "name": "DesktopprDownloader",
             "description": DesktopprDownloader.DESCRIPTION,
             "author": "Peter Levi",
-            "version": "0.1"
+            "version": "0.1",
         }
 
     def get_source_type(self):

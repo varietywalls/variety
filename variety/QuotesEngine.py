@@ -1,29 +1,28 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import random
-import time
-from variety.plugins.IQuoteSource import IQuoteSource
-
 import logging
+import random
 import threading
-
-logger = logging.getLogger('variety')
+import time
 
 from variety import _
+from variety.plugins.IQuoteSource import IQuoteSource
+
+logger = logging.getLogger("variety")
 
 
 class QuotesEngine:
@@ -143,7 +142,7 @@ class QuotesEngine:
 
         self.choose_some_quote()
 
-        self.used = self.used[self.position:]
+        self.used = self.used[self.position :]
         self.position = 0
         if self.quote:
             self.used.insert(0, self.quote)
@@ -166,12 +165,17 @@ class QuotesEngine:
 
         while self.running:
             try:
-                while not self.parent.options.quotes_change_enabled or \
-                                (time.time() - self.last_change_time) < self.parent.options.quotes_change_interval:
+                while (
+                    not self.parent.options.quotes_change_enabled
+                    or (time.time() - self.last_change_time)
+                    < self.parent.options.quotes_change_interval
+                ):
                     if not self.running:
                         return
                     now = time.time()
-                    wait_more = self.parent.options.quotes_change_interval - max(0, (now - self.last_change_time))
+                    wait_more = self.parent.options.quotes_change_interval - max(
+                        0, (now - self.last_change_time)
+                    )
                     if self.parent.options.quotes_change_enabled:
                         self.change_event.wait(max(0, wait_more))
                     else:
@@ -193,8 +197,13 @@ class QuotesEngine:
 
         while self.running:
             try:
-                while self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10:
-                    logger.info(lambda: "Quotes prepared buffer contains %s quotes, fetching a quote" % len(self.prepared))
+                while (
+                    self.running and self.parent.options.quotes_enabled and len(self.prepared) < 10
+                ):
+                    logger.info(
+                        lambda: "Quotes prepared buffer contains %s quotes, fetching a quote"
+                        % len(self.prepared)
+                    )
                     quote = self.get_one_quote()
                     if quote:
                         with self.prepared_lock:
@@ -225,35 +234,43 @@ class QuotesEngine:
         category, search = ("random", "")
         if keywords or authors:
             category, search = random.choice(
-                [("keyword", k) for k in keywords] + [("author", a) for a in authors])
+                [("keyword", k) for k in keywords] + [("author", a) for a in authors]
+            )
 
         plugins = list(self.plugins)
         if not plugins:
-            self.parent.show_notification(_("No quote plugins"), _("There are no quote plugins installed"))
+            self.parent.show_notification(
+                _("No quote plugins"), _("There are no quote plugins installed")
+            )
             raise Exception("No quote plugins")
         if keywords or authors:
             plugins = [p for p in self.plugins if p["plugin"].supports_search()]
             if not plugins:
                 self.parent.show_notification(
                     _("No suitable quote plugins"),
-                    _("You have no quote plugins which support searching by keywords and authors"))
+                    _("You have no quote plugins which support searching by keywords and authors"),
+                )
                 raise Exception("No quote plugins")
 
         error_plugins = []
         count_plugins = len(plugins)
         while self.running and self.parent.options.quotes_enabled:
             if not plugins:
-                if time.time() - self.last_error_notification_time > 3600 and len(self.prepared) + len(
-                        self.used) < 5:
+                if (
+                    time.time() - self.last_error_notification_time > 3600
+                    and len(self.prepared) + len(self.used) < 5
+                ):
                     self.last_error_notification_time = time.time()
                     if len(error_plugins) == count_plugins:
                         self.parent.show_notification(
                             _("Could not fetch quotes"),
-                            _("Quotes services may be down, we will continue trying"))
+                            _("Quotes services may be down, we will continue trying"),
+                        )
                     else:
                         self.parent.show_notification(
                             _("Could not find quotes"),
-                            _("Maybe you are searching for something very obscure?"))
+                            _("Maybe you are searching for something very obscure?"),
+                        )
                 return None
 
             plugin = random.choice(plugins)

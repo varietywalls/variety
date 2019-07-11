@@ -16,12 +16,15 @@
 import abc
 import collections
 import logging
+
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 
-Throttling = collections.namedtuple('Throttling', ['min_download_interval', 'min_fill_queue_interval'])
+Throttling = collections.namedtuple(
+    "Throttling", ["min_download_interval", "min_fill_queue_interval"]
+)
 
 
 class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
@@ -128,10 +131,14 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         try:
             logger.info(lambda: "%s: parsing serverside options" % name)
             options = self.get_server_options()
-            logger.info(lambda: "%s serverside options: %s" % (self.get_source_name(), str(options)))
+            logger.info(
+                lambda: "%s serverside options: %s" % (self.get_source_name(), str(options))
+            )
         except Exception:
-            logger.info(lambda: "Could not parse %s serverside options, using defaults %d, %d" % (
-                name, min_download_interval, min_fill_queue_interval))
+            logger.info(
+                lambda: "Could not parse %s serverside options, using defaults %d, %d"
+                % (name, min_download_interval, min_fill_queue_interval)
+            )
             return defaults
 
         try:

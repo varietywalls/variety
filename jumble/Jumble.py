@@ -1,26 +1,27 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import os
 import imp
-import logging
 import inspect
+import logging
+import os
+
 from .IPlugin import IPlugin
 
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 
 class Jumble:
@@ -48,8 +49,13 @@ class Jumble:
 
     def _walk_plugin_classes(self):
         for module, path in self._walk_modules():
+
             def is_plugin(cls):
-                return inspect.isclass(cls) and issubclass(cls, IPlugin) and cls.__module__ == module.__name__
+                return (
+                    inspect.isclass(cls)
+                    and issubclass(cls, IPlugin)
+                    and cls.__module__ == module.__name__
+                )
 
             for name, cls in inspect.getmembers(module, is_plugin):
                 yield cls, path
@@ -94,10 +100,14 @@ class Jumble:
         by default both are returned
         :return: all matching plugins, as hashes {"plugin": plugin, "class": plugin_class, "info": info}
         """
-        return sorted([p for p in self.plugins if
-                       (not clazz or issubclass(p["class"], clazz)) and
-                       (not typename or p["class"].__name__ == typename) and
-                       (not name or p["info"]["name"] == name) and
-                       (active is None or p["plugin"].is_active() == active)],
-                      key=lambda p: p["info"]["name"])
-
+        return sorted(
+            [
+                p
+                for p in self.plugins
+                if (not clazz or issubclass(p["class"], clazz))
+                and (not typename or p["class"].__name__ == typename)
+                and (not name or p["info"]["name"] == name)
+                and (active is None or p["plugin"].is_active() == active)
+            ],
+            key=lambda p: p["info"]["name"],
+        )

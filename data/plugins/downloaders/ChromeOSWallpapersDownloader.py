@@ -13,16 +13,14 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import random
 import logging
+import random
 
 from variety import _
-from variety.Util import Util
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import Util
 
-MANIFEST_URL = (
-    "https://storage.googleapis.com/chromeos-wallpaper-public/manifest_en.json"
-)
+MANIFEST_URL = "https://storage.googleapis.com/chromeos-wallpaper-public/manifest_en.json"
 
 logger = logging.getLogger("variety")
 

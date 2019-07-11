@@ -13,13 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import random
 import logging
+import random
 
 from variety import _
-from variety.Util import Util
-from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.downloaders.ImageSource import Throttling
+from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import Util
 
 # Credits: Using the data prepared by limhenry @ https://github.com/limhenry/earthview
 DATA_URL = "https://raw.githubusercontent.com/limhenry/earthview/3cd868a932cd652c4373c0f6ea8618a96b08be4e/wallpaper%20changer/data.json"

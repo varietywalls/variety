@@ -13,21 +13,21 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import os
 import hashlib
-from configobj import ConfigObj
-from configobj import DuplicateError
+import logging
+import os
+
+from configobj import ConfigObj, DuplicateError
 from variety.Util import Util
 from variety_lib import varietyconfig
 
-import logging
-
-logger = logging.getLogger('variety')
+logger = logging.getLogger("variety")
 
 TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 
+
 class Options:
-    OUTDATED_HASHES = {'clock_filter': ['dca6bd2dfa2b8c4e2db8801e39208f7f']}
+    OUTDATED_HASHES = {"clock_filter": ["dca6bd2dfa2b8c4e2db8801e39208f7f"]}
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
     IMAGE_SOURCES = []  # set by VarietyWindow at start
 
@@ -57,24 +57,11 @@ class Options:
             REDDIT,
         }
 
-        DL_TYPES = {
-            FLICKR,
-            MEDIA_RSS,
-            WALLHAVEN,
-            REDDIT,
-        }
+        DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
 
-        EDITABLE_DL_TYPES = {
-            FLICKR,
-            MEDIA_RSS,
-            WALLHAVEN,
-            REDDIT,
-        }
+        EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
 
-        REMOVABLE_TYPES = {
-            FOLDER,
-            IMAGE,
-        } | EDITABLE_DL_TYPES
+        REMOVABLE_TYPES = {FOLDER, IMAGE} | EDITABLE_DL_TYPES
 
     class LightnessMode:
         DARK = 0
@@ -148,7 +135,9 @@ class Options:
 
             try:
                 favorites_ops_text = config["favorites_operations"]
-                self.favorites_operations = list([x.strip().split(':') for x in favorites_ops_text.split(';') if x])
+                self.favorites_operations = list(
+                    [x.strip().split(":") for x in favorites_ops_text.split(";") if x]
+                )
             except Exception:
                 pass
 
@@ -163,18 +152,22 @@ class Options:
                 pass
 
             try:
-                self.clipboard_use_whitelist = config["clipboard_use_whitelist"].lower() in TRUTH_VALUES
+                self.clipboard_use_whitelist = (
+                    config["clipboard_use_whitelist"].lower() in TRUTH_VALUES
+                )
             except Exception:
                 pass
 
             try:
-                self.clipboard_hosts = config["clipboard_hosts"].lower().split(',')
+                self.clipboard_hosts = config["clipboard_hosts"].lower().split(",")
             except Exception:
                 pass
 
             try:
                 icon = config["icon"]
-                if icon in ["Light", "Dark", "Current", "None"] or (os.access(icon, os.R_OK) and Util.is_image(icon)):
+                if icon in ["Light", "Dark", "Current", "None"] or (
+                    os.access(icon, os.R_OK) and Util.is_image(icon)
+                ):
                     self.icon = icon
             except Exception:
                 pass
@@ -332,7 +325,7 @@ class Options:
                 pass
 
             try:
-                self.quotes_disabled_sources = config["quotes_disabled_sources"].strip().split('|')
+                self.quotes_disabled_sources = config["quotes_disabled_sources"].strip().split("|")
             except Exception:
                 pass
 
@@ -382,28 +375,36 @@ class Options:
                 pass
 
             try:
-                self.slideshow_sources_enabled = config["slideshow_sources_enabled"].lower() in TRUTH_VALUES
+                self.slideshow_sources_enabled = (
+                    config["slideshow_sources_enabled"].lower() in TRUTH_VALUES
+                )
             except Exception:
                 pass
 
             try:
-                self.slideshow_favorites_enabled = config["slideshow_favorites_enabled"].lower() in TRUTH_VALUES
+                self.slideshow_favorites_enabled = (
+                    config["slideshow_favorites_enabled"].lower() in TRUTH_VALUES
+                )
             except Exception:
                 pass
 
             try:
-                self.slideshow_downloads_enabled = config["slideshow_downloads_enabled"].lower() in TRUTH_VALUES
+                self.slideshow_downloads_enabled = (
+                    config["slideshow_downloads_enabled"].lower() in TRUTH_VALUES
+                )
             except Exception:
                 pass
 
             try:
-                self.slideshow_custom_enabled = config["slideshow_custom_enabled"].lower() in TRUTH_VALUES
+                self.slideshow_custom_enabled = (
+                    config["slideshow_custom_enabled"].lower() in TRUTH_VALUES
+                )
             except Exception:
                 pass
 
             try:
                 custom_path = config["slideshow_custom_folder"]
-                if custom_path in ('None', 'Default') or not os.path.isdir(custom_path):
+                if custom_path in ("None", "Default") or not os.path.isdir(custom_path):
                     self.slideshow_custom_folder = Util.get_xdg_pictures_folder()
                 else:
                     self.slideshow_custom_folder = custom_path
@@ -412,7 +413,13 @@ class Options:
 
             try:
                 slideshow_sort_order = config["slideshow_sort_order"]
-                if slideshow_sort_order in ["Random", "Name, asc", "Name, desc", "Date, asc", "Date, desc"]:
+                if slideshow_sort_order in [
+                    "Random",
+                    "Name, asc",
+                    "Name, desc",
+                    "Date, asc",
+                    "Date, desc",
+                ]:
                     self.slideshow_sort_order = slideshow_sort_order
             except Exception:
                 pass
@@ -461,16 +468,15 @@ class Options:
                         self.sources.append(Options.parse_source(v))
                     except Exception:
                         logger.debug(lambda: "Cannot parse source: " + v, exc_info=True)
-                        logger.info('Ignoring no longer supported source %s', v)
+                        logger.info("Ignoring no longer supported source %s", v)
 
             # automatically append sources for all simple downloaders we have
             source_types = set(s[1] for s in self.sources)
             for downloader in sorted(self.SIMPLE_DOWNLOADERS, key=lambda dl: dl.get_source_type()):
                 if downloader.get_source_type() not in source_types:
-                    self.sources.append([
-                        True,
-                        downloader.get_source_type(),
-                        downloader.get_description()])
+                    self.sources.append(
+                        [True, downloader.get_source_type(), downloader.get_description()]
+                    )
 
             self.parse_autosources()
 
@@ -499,16 +505,18 @@ class Options:
                 current_hash = hashlib.md5(config[key].encode()).hexdigest()
                 if current_hash in outdated_hashes:
                     # entry is outdated: delete it and use the default
-                    logger.warning(lambda: "Option " + key + " has an outdated value, using the new default")
+                    logger.warning(
+                        lambda: "Option " + key + " has an outdated value, using the new default"
+                    )
                     changed = True
                     del config[key]
         return changed
 
     def parse_autosources(self):
         try:
-            with open(varietyconfig.get_data_file("config", "sources.txt"), encoding='utf8') as f:
+            with open(varietyconfig.get_data_file("config", "sources.txt"), encoding="utf8") as f:
                 for line in f:
-                    if not line.strip() or line.strip().startswith('#'):
+                    if not line.strip() or line.strip().startswith("#"):
                         continue
                     try:
                         s = Options.parse_source(line.strip())
@@ -522,9 +530,9 @@ class Options:
 
     def parse_autofilters(self):
         try:
-            with open(varietyconfig.get_data_file("config", "filters.txt"), encoding='utf8') as f:
+            with open(varietyconfig.get_data_file("config", "filters.txt"), encoding="utf8") as f:
                 for line in f:
-                    if not line.strip() or line.strip().startswith('#'):
+                    if not line.strip() or line.strip().startswith("#"):
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
@@ -537,13 +545,13 @@ class Options:
 
     @staticmethod
     def parse_source(v):
-        s = v.strip().split('|')
+        s = v.strip().split("|")
         enabled = s[0].lower() in TRUTH_VALUES
         return [enabled, s[1], s[2]]
 
     @staticmethod
     def parse_filter(v):
-        s = v.strip().split('|')
+        s = v.strip().split("|")
         enabled = s[0].lower() in TRUTH_VALUES
         return [enabled, s[1], s[2]]
 
@@ -572,12 +580,18 @@ class Options:
         self.quota_size = 500
 
         self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
-        self.favorites_operations = [["Downloaded", "Copy"], ["Fetched", "Move"], ["Others", "Copy"]]
+        self.favorites_operations = [
+            ["Downloaded", "Copy"],
+            ["Fetched", "Move"],
+            ["Others", "Copy"],
+        ]
 
         self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(',')
+        self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(
+            ","
+        )
 
         self.icon = "Light"
 
@@ -640,7 +654,11 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [True, Options.SourceType.FLICKR, "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;"],
+            [
+                True,
+                Options.SourceType.FLICKR,
+                "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;",
+            ],
         ]
 
         self.filters = [
@@ -649,16 +667,20 @@ class Options:
             [False, "Heavy blur", "-blur 120x40"],
             [False, "Oil painting", "-paint 6"],
             [False, "Charcoal painting", "-charcoal 3"],
-            [False, "Pencil sketch", """-colorspace gray \( +clone -tile ~/.config/variety/pencil_tile.png -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \) -fx 'u*.2+v*.8'"""],
+            [
+                False,
+                "Pencil sketch",
+                """-colorspace gray \( +clone -tile ~/.config/variety/pencil_tile.png -draw "color 0,0 reset" +clone +swap -compose color_dodge -composite \) -fx 'u*.2+v*.8'""",
+            ],
             [False, "Pointilism", "-spread 10 -noise 3"],
-            [False, "Pixellate", "-scale 3% -scale 3333%"]
+            [False, "Pixellate", "-scale 3% -scale 3333%"],
         ]
 
     def write(self):
         try:
-            config = ConfigObj(self.configfile, encoding='utf8', default_encoding='utf8')
+            config = ConfigObj(self.configfile, encoding="utf8", default_encoding="utf8")
         except Exception:
-            config = ConfigObj(encoding='utf8', default_encoding='utf8')
+            config = ConfigObj(encoding="utf8", default_encoding="utf8")
             config.filename = self.configfile
 
         try:
@@ -675,17 +697,21 @@ class Options:
             config["quota_size"] = str(self.quota_size)
 
             config["favorites_folder"] = Util.collapseuser(self.favorites_folder)
-            config["favorites_operations"] = ';'.join(':'.join(x) for x in self.favorites_operations)
+            config["favorites_operations"] = ";".join(
+                ":".join(x) for x in self.favorites_operations
+            )
 
             config["fetched_folder"] = Util.collapseuser(self.fetched_folder)
             config["clipboard_enabled"] = str(self.clipboard_enabled)
             config["clipboard_use_whitelist"] = str(self.clipboard_use_whitelist)
-            config["clipboard_hosts"] = ','.join(self.clipboard_hosts)
+            config["clipboard_hosts"] = ",".join(self.clipboard_hosts)
 
             config["icon"] = self.icon
 
             config["desired_color_enabled"] = str(self.desired_color_enabled)
-            config["desired_color"] = " ".join(map(str, self.desired_color)) if self.desired_color else "None"
+            config["desired_color"] = (
+                " ".join(map(str, self.desired_color)) if self.desired_color else "None"
+            )
             config["min_size_enabled"] = str(self.min_size_enabled)
             config["min_size"] = str(self.min_size)
             config["use_landscape_enabled"] = str(self.use_landscape_enabled)
@@ -716,7 +742,7 @@ class Options:
             config["quotes_bg_color"] = " ".join(map(str, self.quotes_bg_color))
             config["quotes_bg_opacity"] = str(self.quotes_bg_opacity)
             config["quotes_text_shadow"] = str(self.quotes_text_shadow)
-            config["quotes_disabled_sources"] = '|'.join(self.quotes_disabled_sources)
+            config["quotes_disabled_sources"] = "|".join(self.quotes_disabled_sources)
             config["quotes_tags"] = self.quotes_tags
             config["quotes_authors"] = self.quotes_authors
             config["quotes_change_enabled"] = str(self.quotes_change_enabled)
@@ -760,7 +786,7 @@ class Options:
         config.write()
 
     def read_config(self):
-        config = ConfigObj(raise_errors=False, encoding='utf8', default_encoding='utf8')
+        config = ConfigObj(raise_errors=False, encoding="utf8", default_encoding="utf8")
         config.filename = self.configfile
         try:
             config.reload()
@@ -772,7 +798,7 @@ class Options:
 if __name__ == "__main__":
     formatter = logging.Formatter("%(levelname)s:%(name)s: %(funcName)s() '%(message)s'")
 
-    logger = logging.getLogger('variety')
+    logger = logging.getLogger("variety")
     logger_sh = logging.StreamHandler()
     logger_sh.setFormatter(formatter)
     logger.addHandler(logger_sh)
