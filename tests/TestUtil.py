@@ -17,13 +17,10 @@
 
 import os
 import os.path
-import sys
 import time
 import unittest
 
 from variety.Util import Util, cache, debounce, throttle
-
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestUtil(unittest.TestCase):

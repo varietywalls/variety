@@ -16,20 +16,17 @@
 ### END LICENSE
 import os
 import shutil
-import sys
 import unittest
 
 from jumble.Jumble import Jumble
 from tests import setup_test_logging
 from variety import Util
 
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
-
 setup_test_logging()
 
 
 def get_plugin_downloader(typename):
-    p = Jumble(["../data/plugins"])
+    p = Jumble(["data/plugins"])
     p.load()
     return p.get_plugins(typename=typename)[0]["plugin"]
 

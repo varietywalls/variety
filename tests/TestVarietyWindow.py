@@ -15,13 +15,9 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import os.path
-import sys
 import unittest
 
 from variety.VarietyWindow import VarietyWindow
-
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestVarietyWindow(unittest.TestCase):
