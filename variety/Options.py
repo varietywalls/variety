@@ -370,6 +370,12 @@ class Options:
                 pass
 
             try:
+                self.quotes_max_length = int(config["quotes_max_length"])
+                self.quotes_max_length = max(0, self.quotes_max_length)
+            except Exception:
+                pass
+
+            try:
                 self.quotes_favorites_file = os.path.expanduser(config["quotes_favorites_file"])
             except Exception:
                 pass
@@ -635,6 +641,7 @@ class Options:
         self.quotes_width = 70
         self.quotes_hpos = 100
         self.quotes_vpos = 40
+        self.quotes_max_length = 250
         self.quotes_favorites_file = os.path.expanduser("~/.config/variety/favorite_quotes.txt")
 
         self.slideshow_sources_enabled = True
@@ -750,6 +757,7 @@ class Options:
             config["quotes_width"] = str(self.quotes_width)
             config["quotes_hpos"] = str(self.quotes_hpos)
             config["quotes_vpos"] = str(self.quotes_vpos)
+            config["quotes_max_length"] = str(self.quotes_max_length)
             config["quotes_favorites_file"] = Util.collapseuser(self.quotes_favorites_file)
 
             config["slideshow_sources_enabled"] = str(self.slideshow_sources_enabled)

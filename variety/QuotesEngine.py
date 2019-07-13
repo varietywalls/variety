@@ -292,7 +292,7 @@ class QuotesEngine:
 
                     if quotes:
                         for q in quotes:
-                            if len(q["quote"]) < 250:
+                            if len(q["quote"]) < self.parent.options.quotes_max_length:
                                 cached[q["quote"]] = q
 
                 except Exception:
