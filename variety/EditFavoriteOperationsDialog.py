@@ -16,7 +16,6 @@
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
-from variety import _
 from variety_lib.helpers import get_builder
 
 

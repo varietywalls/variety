@@ -75,7 +75,6 @@ def set_up_logging(verbose):
         logger.addHandler(logger_file)
     except Exception:
         logger.exception("Could not create file logger")
-        pass
 
     lib_logger = logging.getLogger("variety_lib")
     lib_logger_sh = logging.StreamHandler()
