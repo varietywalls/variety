@@ -15,14 +15,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import os.path
-import sys
 import unittest
 
 from tests.TestDownloader import test_download_one_for
 from variety.MediaRssDownloader import MediaRssDownloader
-
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class TestMediaRssDownloader(unittest.TestCase):
