@@ -14,4 +14,4 @@ fi
 echo 'Running isort'
 isort -rc "$@"
 echo 'Running Black'
-black -l 100 -t py35 "$@"
+black --line-length 100 --target-version py35 "$@"
