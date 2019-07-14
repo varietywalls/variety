@@ -16,7 +16,6 @@
 
 import logging
 
-from variety import _
 from variety_lib.AboutDialog import AboutDialog
 
 logger = logging.getLogger("variety")

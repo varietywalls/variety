@@ -195,7 +195,7 @@ class ThumbsManager:
         menu.append(Gtk.SeparatorMenuItem.new())
 
         def close(widget):
-            self.hide(gdk_thread=True, force=True)
+            self.hide(force=True)
 
         close_item = Gtk.MenuItem(_("Close"))
         close_item.connect("activate", close)
@@ -255,15 +255,9 @@ class ThumbsManager:
         return rating_menu
 
     def repaint(self):
-        self.hide(gdk_thread=True, keep_settings=True)
+        self.hide(keep_settings=True)
         if self.images:
-            self.show(
-                self.images,
-                gdk_thread=True,
-                screen=self.screen,
-                type=self.type,
-                folders=self.folders,
-            )
+            self.show(self.images, screen=self.screen, type=self.type, folders=self.folders)
 
     def set_position(self, position):
         logger.info(lambda: "Setting thumbs position " + str(position))
@@ -317,34 +311,30 @@ class ThumbsManager:
             else:
                 self.thumbs_window.mark_active(file=file)
 
-    def show(self, images, gdk_thread=False, screen=None, type=None, folders=None):
+    def show(self, images, screen=None, type=None, folders=None):
         with self.show_thumbs_lock:
             self.type = type
             self.images = images
             self.screen = screen
             self.folders = folders
 
-            try:
-                if self.thumbs_window:
-                    try:
-                        if not gdk_thread:
-                            Gdk.threads_enter()
+            def _go():
+                try:
+                    if self.thumbs_window:
                         self.thumbs_window.destroy()
                         self.thumbs_window = None
-                    finally:
-                        if not gdk_thread:
-                            Gdk.threads_leave()
 
-                if len(self.images) > 0:
-                    self.initialize_thumbs_window(gdk_thread=gdk_thread)
-            except Exception:
-                logger.exception(lambda: "Could not create thumbs window:")
+                    if len(self.images) > 0:
+                        self.initialize_thumbs_window()
+                except Exception:
+                    logger.exception(lambda: "Could not create thumbs window:")
 
-    def initialize_thumbs_window(self, gdk_thread=False):
-        try:
-            if not gdk_thread:
-                Gdk.threads_enter()
-            options = self.load_options()
+            Util.add_mainloop_task(_go)
+
+    def initialize_thumbs_window(self):
+        options = self.load_options()
+
+        def _go():
             self.thumbs_window = ThumbsWindow(
                 screen=self.screen, position=options.position, breadth=options.breadth
             )
@@ -365,16 +355,15 @@ class ThumbsManager:
             self.thumbs_window.connect("clicked", self.on_click)
 
             def _on_close(window, event):
-                self.hide(gdk_thread=True, force=True)
+                self.hide(force=True)
 
             self.thumbs_window.connect("delete-event", _on_close)
 
             self.mark_active(self.active_file, self.active_position)
 
             self.thumbs_window.start(self.images)
-        finally:
-            if not gdk_thread:
-                Gdk.threads_leave()
+
+        Util.add_mainloop_task(_go)
 
     def load_options(self):
         options = ThumbsManager.Options()
@@ -409,7 +398,7 @@ class ThumbsManager:
         except Exception:
             logger.exception(lambda: "Could not save ui.conf")
 
-    def hide(self, gdk_thread=False, force=True, keep_settings=False):
+    def hide(self, force=True, keep_settings=False):
         if force:
             self.pinned = False
 
@@ -423,33 +412,28 @@ class ThumbsManager:
             self.folders = None
 
         if self.thumbs_window:
-            try:
-                try:
-                    if not gdk_thread:
-                        Gdk.threads_enter()
-                    self.thumbs_window.destroy()
-                    self.thumbs_window = None
-                    self.parent.update_indicator(is_gtk_thread=True, auto_changed=False)
-                finally:
-                    if not gdk_thread:
-                        Gdk.threads_leave()
-            except Exception:
-                pass
 
-    def remove_image(self, file, gdk_thread=True):
+            def _go():
+                self.thumbs_window.destroy()
+                self.thumbs_window = None
+
+            Util.add_mainloop_task(_go)
+            self.parent.update_indicator(auto_changed=False)
+
+    def remove_image(self, file):
         self.images = [f for f in self.images if f != file]
         if self.thumbs_window:
             if self.thumbs_window.fits_in_screen(+1000):
                 self.repaint()
             else:
-                self.thumbs_window.remove_image(file, gdk_thread)
+                self.thumbs_window.remove_image(file)
 
-    def add_image(self, file, gdk_thread=True):
+    def add_image(self, file):
         self.images.insert(0, file)
         if not self.thumbs_window:
-            self.initialize_thumbs_window(gdk_thread=gdk_thread)
+            self.initialize_thumbs_window()
         else:
-            self.thumbs_window.add_image(file, gdk_thread, at_front=True)
+            self.thumbs_window.add_image(file, at_front=True)
 
     def is_showing(self, type):
         return self.type == type

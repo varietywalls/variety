@@ -34,7 +34,7 @@ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety.Util import Util
+from variety.Util import Util, on_gtk
 from variety_lib import varietyconfig
 from variety_lib.PreferencesDialog import PreferencesDialog
 from variety_lib.varietyconfig import get_data_file
@@ -103,12 +103,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.set_status_message(msg)
 
+    @on_gtk
     def set_status_message(self, msg):
-        def _update_ui():
-            self.ui.status_message.set_visible(msg)
-            self.ui.status_message.set_markup(msg)
-
-        GObject.idle_add(_update_ui)
+        self.ui.status_message.set_visible(msg)
+        self.ui.status_message.set_markup(msg)
 
     def reload(self):
         try:
@@ -341,7 +339,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.loading = False
 
             def _idle_finish_loading():
-                GObject.idle_add(_finish_loading)
+                Util.add_mainloop_task(_finish_loading)
 
             timer = threading.Timer(1, _idle_finish_loading)
             timer.start()
@@ -775,7 +773,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if not source_rows:
                 return
 
-            self.parent.thumbs_manager.hide(gdk_thread=False, force=True)
+            self.parent.thumbs_manager.hide(force=True)
 
             images = []
             folders = []
@@ -816,16 +814,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     to_show.insert(0, self.focused_image)
                     self.focused_image = None
                 self.parent.thumbs_manager.show(
-                    to_show,
-                    gdk_thread=False,
-                    screen=self.get_screen(),
-                    folders=folders,
-                    type=thumbs_type,
+                    to_show, screen=self.get_screen(), folders=folders, type=thumbs_type
                 )
                 if pin:
                     self.parent.thumbs_manager.pin()
                 if thumbs_type:
-                    self.parent.update_indicator(is_gtk_thread=False, auto_changed=False)
+                    self.parent.update_indicator(auto_changed=False)
 
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
@@ -1141,7 +1135,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 chooser.destroy()
             except Exception:
                 pass
-        self.parent.thumbs_manager.hide(gdk_thread=True, force=False)
+        self.parent.thumbs_manager.hide(force=False)
 
     def on_downloaded_changed(self, widget=None):
         self.delayed_apply()
@@ -1161,6 +1155,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 important=True,
             )
 
+    @on_gtk
     def update_real_download_folder(self):
         if not Util.same_file_paths(
             self.parent.options.download_folder, self.parent.real_download_folder

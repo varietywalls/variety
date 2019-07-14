@@ -45,7 +45,7 @@ class QuoteWriter:
             finally:
                 done_event.set()
 
-        GObject.idle_add(go)
+        Util.add_mainloop_task(go)
         done_event.wait()
         if exception[0]:
             raise exception[0]  # pylint: disable=raising-bad-type

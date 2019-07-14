@@ -874,3 +874,11 @@ class Util:
             os.unlink(filepath)
         except Exception:
             logger.exception(lambda: "Could not delete {}, ignoring".format(filepath))
+
+
+def on_gtk(f):
+    @functools.wraps(f)
+    def wrapped(*args):
+        Util.add_mainloop_task(f, *args)
+
+    return wrapped

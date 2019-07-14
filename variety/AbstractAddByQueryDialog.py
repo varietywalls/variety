@@ -18,6 +18,8 @@ import threading
 
 from gi.repository import Gdk, Gtk  # pylint: disable=E0611
 
+from variety.Util import Util
+
 
 class AbstractAddByQueryDialog(Gtk.Dialog):
     def validate(self, query):
@@ -61,23 +63,21 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
         self.destroy()
 
     def ok_thread(self):
-        try:
-            Gdk.threads_enter()
+        def _start_ui():
             self.ui.message.set_visible(True)
             self.ui.buttonbox.set_sensitive(False)
             self.ui.query.set_sensitive(False)
             self.ui.spinner.set_visible(True)
             self.ui.spinner.start()
             self.ui.error.set_label("")
-        finally:
-            Gdk.threads_leave()
+
+        Util.add_mainloop_task(_start_ui)
 
         query = self.ui.query.get_text().strip()
 
         final_query, invalid_msg = self.validate(query)
 
-        try:
-            Gdk.threads_enter()
+        def _stop_ui():
             if invalid_msg:
                 self.ui.buttonbox.set_sensitive(True)
                 self.ui.error.set_label(invalid_msg)
@@ -89,5 +89,5 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
             else:
                 self.commit(final_query)
                 self.destroy()
-        finally:
-            Gdk.threads_leave()
+
+        Util.add_mainloop_task(_stop_ui)

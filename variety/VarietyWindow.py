@@ -45,7 +45,7 @@ from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety.RedditDownloader import RedditDownloader
 from variety.ThumbsManager import ThumbsManager
-from variety.Util import Util, debounce, throttle
+from variety.Util import Util, debounce, on_gtk, throttle
 from variety.VarietyOptionParser import VarietyOptionParser
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.WelcomeDialog import WelcomeDialog
@@ -244,7 +244,6 @@ class VarietyWindow(Gtk.Window):
                 self.preferences_dialog.set_keep_above(True)
                 self.preferences_dialog.present()
                 self.preferences_dialog.set_keep_above(False)
-                self.preferences_dialog.present()
             else:
                 logger.debug(lambda: "reload and show existing but non-visible preferences_dialog")
                 self.preferences_dialog.reload()
@@ -253,6 +252,8 @@ class VarietyWindow(Gtk.Window):
             self.create_preferences_dialog()
             self.preferences_dialog.show()
             # destroy command moved into dialog to allow for a help button
+
+        self.preferences_dialog.present()
 
     def prepare_config_folder(self):
         self.config_folder = os.path.expanduser("~/.config/variety")
@@ -362,8 +363,6 @@ class VarietyWindow(Gtk.Window):
         for k, v in sorted(self.options.__dict__.items()):
             logger.info(lambda: "%s = %s" % (k, v))
 
-    #        pprint(self.options.__dict__, indent=0)
-
     def get_real_download_folder(self):
         subfolder = "Downloaded by Variety"
         dl = self.options.download_folder
@@ -386,7 +385,7 @@ class VarietyWindow(Gtk.Window):
     def prepare_download_folder(self):
         self.real_download_folder = self.get_real_download_folder()
         if self.preferences_dialog:
-            GObject.idle_add(self.preferences_dialog.update_real_download_folder)
+            self.preferences_dialog.update_real_download_folder()
 
         Util.makedirs(self.real_download_folder)
         dl_folder_file = os.path.join(self.real_download_folder, DL_FOLDER_FILE)
@@ -410,7 +409,7 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
-        GObject.idle_add(self.update_indicator_icon)
+        self.update_indicator_icon()
 
         self.prepare_download_folder()
 
@@ -519,10 +518,7 @@ class VarietyWindow(Gtk.Window):
         ):
             self.no_effects_on = None
 
-        def _update_indicator():
-            self.update_indicator(auto_changed=False)
-
-        GObject.idle_add(_update_indicator)
+        self.update_indicator(auto_changed=False)
 
         if self.previous_options is None or self.options.filters != self.previous_options.filters:
             threading.Timer(0.1, self.refresh_wallpaper).start()
@@ -718,7 +714,7 @@ class VarietyWindow(Gtk.Window):
                 holder.copy_to_favorites.set_visible(True)
                 holder.move_to_favorites.set_visible(True)
 
-    def update_indicator(self, file=None, is_gtk_thread=True, auto_changed=None):
+    def update_indicator(self, file=None, auto_changed=None):
         if not file:
             file = self.current
         if auto_changed is None:
@@ -770,10 +766,7 @@ class VarietyWindow(Gtk.Window):
             favs_op = self.determine_favorites_operation(file)
             image_source = self.get_source(file)
 
-            if not is_gtk_thread:
-                Gdk.threads_enter()
-
-            try:
+            def _gtk_update():
                 rating_menu = None
                 if deleteable:
                     rating_menu = ThumbsManager.create_rating_menu(file, self)
@@ -785,9 +778,8 @@ class VarietyWindow(Gtk.Window):
                         and self.quote_favorites_contents.find(self.current_quote_to_text()) == -1
                     )
 
-                for i in range(
-                    5
-                ):  # if only done once, the menu is not always updated for some reason
+                for i in range(3):
+                    # if only done once, the menu is not always updated for some reason
                     self.ind.prev.set_sensitive(self.position < len(self.used) - 1)
                     if getattr(self.ind, "prev_main", None):
                         self.ind.prev_main.set_sensitive(self.position < len(self.used) - 1)
@@ -888,9 +880,8 @@ class VarietyWindow(Gtk.Window):
                     self.ind.no_effects.handler_block(self.ind.no_effects_handler_id)
                     self.ind.no_effects.set_active(self.no_effects_on == file)
                     self.ind.no_effects.handler_unblock(self.ind.no_effects_handler_id)
-            finally:
-                if not is_gtk_thread:
-                    Gdk.threads_leave()
+
+            Util.add_mainloop_task(_gtk_update)
 
             # delay enabling Move/Copy operations after automatic changes - protect from inadvertent clicks
             if auto_changed:
@@ -1057,7 +1048,7 @@ class VarietyWindow(Gtk.Window):
 
                 if varietyconfig.get_version() in self.server_options.get("outdated_versions", []):
                     self.show_notification("Version unsupported", OUTDATED_MSG)
-                    GObject.idle_add(self.on_quit)
+                    self.on_quit()
             except Exception:
                 logger.exception(lambda: "Could not fetch Variety serverside options")
                 if attempts < 5:
@@ -1426,7 +1417,7 @@ class VarietyWindow(Gtk.Window):
                 to_set = self.apply_copyto_operation(to_set)
 
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)
-                self.update_indicator(filename, is_gtk_thread=False)
+                self.update_indicator(filename)
                 self.set_desktop_wallpaper(to_set, filename, refresh_level)
                 self.current = filename
 
@@ -1436,7 +1427,7 @@ class VarietyWindow(Gtk.Window):
                         if self.ind:
                             self.ind.set_icon(self.current)
 
-                    GObject.idle_add(_set_icon_to_current)
+                    Util.add_mainloop_task(_set_icon_to_current)
 
                 if refresh_level == VarietyWindow.RefreshLevel.ALL:
                     self.last_change_time = time.time()
@@ -1610,19 +1601,16 @@ class VarietyWindow(Gtk.Window):
 
             def _add():
                 if at_front:
-                    self.thumbs_manager.add_image(added_image, gdk_thread=False)
+                    self.thumbs_manager.add_image(added_image)
                 else:
-                    self.thumbs_manager.show(self.used[:100], gdk_thread=False, type="history")
+                    self.thumbs_manager.show(self.used[:100], type="history")
                     self.thumbs_manager.pin()
 
             add_timer = threading.Timer(0, _add)
             add_timer.start()
 
     def refresh_thumbs_downloads(self, added_image):
-        def _update_indicator():
-            self.update_indicator(auto_changed=False)
-
-        GObject.idle_add(_update_indicator)
+        self.update_indicator(auto_changed=False)
 
         should_show = self.thumbs_manager.is_showing("downloads") or (
             self.thumbs_manager.get_folders() is not None
@@ -1633,7 +1621,7 @@ class VarietyWindow(Gtk.Window):
         if should_show:
 
             def _add():
-                self.thumbs_manager.add_image(added_image, gdk_thread=False)
+                self.thumbs_manager.add_image(added_image)
 
             add_timer = threading.Timer(0, _add)
             add_timer.start()
@@ -1896,7 +1884,7 @@ class VarietyWindow(Gtk.Window):
                             _("Deleting to trash failed, check variety.log for more information."),
                         )
 
-                GObject.idle_add(_go)
+                Util.add_mainloop_task(_go)
         except Exception:
             logger.exception(lambda: "Exception in move_to_trash")
 
@@ -2010,6 +1998,7 @@ class VarietyWindow(Gtk.Window):
 
         return "copy"
 
+    @on_gtk
     def on_quit(self, widget=None):
         logger.info(lambda: "Quitting")
         if self.running:
@@ -2039,7 +2028,7 @@ class VarietyWindow(Gtk.Window):
                 self.options.quotes_enabled = False
                 if self.current:
                     logger.debug(lambda: "Cleaning up clock & quotes")
-                    GObject.idle_add(
+                    Util.add_mainloop_task(
                         lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS)
                     )
 
@@ -2048,26 +2037,24 @@ class VarietyWindow(Gtk.Window):
             logger.debug(lambda: "Remaining threads: ")
             for t in threading.enumerate():
                 logger.debug(lambda: "%s, %s" % (t.name, getattr(t, "_Thread__target", None)))
-            GObject.idle_add(Gtk.main_quit)
+            Util.add_mainloop_task(Gtk.main_quit)
 
+    @on_gtk
     def first_run(self):
-        def _go():
-            fr_file = os.path.join(self.config_folder, ".firstrun")
-            first_run = not os.path.exists(fr_file)
-            if first_run:
-                self.show_welcome_dialog()
-                if not self.running:
-                    return
+        fr_file = os.path.join(self.config_folder, ".firstrun")
+        first_run = not os.path.exists(fr_file)
+        if first_run:
+            self.show_welcome_dialog()
+            if not self.running:
+                return
 
-            if first_run:
-                with open(fr_file, "w") as f:
-                    f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        if first_run:
+            with open(fr_file, "w") as f:
+                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-            if first_run:
-                self.create_autostart_entry()
-                self.on_mnu_preferences_activate()
-
-        Util.add_mainloop_task(_go)
+        if first_run:
+            self.create_autostart_entry()
+            self.on_mnu_preferences_activate()
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
@@ -2533,6 +2520,7 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
         except Exception:
             logger.exception(lambda: "Could not process passed command")
 
+    @on_gtk
     def update_indicator_icon(self):
         if self.options.icon != "None":
             if self.ind is None:
@@ -2653,7 +2641,7 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
                     else:
                         self.show_notification(_("Image source already exists, enabling it"))
 
-                GObject.idle_add(_add)
+                Util.add_mainloop_task(_add)
 
             elif command == "set-wallpaper":
                 image_url = args["image_url"][0]
@@ -2777,24 +2765,24 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
 
     def show_hide_history(self, widget=None):
         if self.thumbs_manager.is_showing("history"):
-            self.thumbs_manager.hide(gdk_thread=True, force=True)
+            self.thumbs_manager.hide(force=True)
         else:
-            self.thumbs_manager.show(self.used[:100], gdk_thread=True, type="history")
+            self.thumbs_manager.show(self.used[:100], type="history")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
     def show_hide_downloads(self, widget=None):
         if self.thumbs_manager.is_showing("downloads"):
-            self.thumbs_manager.hide(gdk_thread=True, force=True)
+            self.thumbs_manager.hide(force=True)
         else:
-            self.thumbs_manager.show(self.downloaded[:100], gdk_thread=True, type="downloads")
+            self.thumbs_manager.show(self.downloaded[:100], type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
     def show_hide_wallpaper_selector(self, widget=None):
         pref_dialog = self.get_preferences_dialog()
         if self.thumbs_manager.is_showing("selector"):
-            self.thumbs_manager.hide(gdk_thread=True, force=True)
+            self.thumbs_manager.hide(force=True)
         else:
             rows = [r for r in pref_dialog.ui.sources.get_model() if r[0]]
 
@@ -2906,13 +2894,13 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
     def prev_quote(self, widget=None):
         if self.quotes_engine and self.options.quotes_enabled:
             self.quote = self.quotes_engine.prev_quote()
-            GObject.idle_add(self.update_indicator)
+            self.update_indicator()
             self.refresh_texts()
 
     def next_quote(self, widget=None, bypass_history=False):
         if self.quotes_engine and self.options.quotes_enabled:
             self.quote = self.quotes_engine.next_quote(bypass_history)
-            GObject.idle_add(self.update_indicator)
+            self.update_indicator()
             self.refresh_texts()
 
     def quote_copy_to_clipboard(self, widget=None):
