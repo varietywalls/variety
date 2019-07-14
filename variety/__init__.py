@@ -145,7 +145,7 @@ def check_quit():
 
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
-        GObject.idle_add(VARIETY_WINDOW.on_quit)
+        VARIETY_WINDOW.on_quit()
     Util.start_force_exit_thread(10)
 
 
@@ -212,11 +212,5 @@ def main():
     bus.call_on_disconnection(window.on_quit)
 
     window.start(arguments)
-
     GObject.timeout_add(2000, check_quit)
-    GObject.threads_init()
-    Gdk.threads_init()
-    Gdk.threads_enter()
-
     Gtk.main()
-    Gdk.threads_leave()

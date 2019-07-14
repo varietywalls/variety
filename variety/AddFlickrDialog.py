@@ -23,6 +23,7 @@ from gi.repository import Gdk, Gtk  # pylint: disable=E0611
 from variety import _
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
+from variety.Util import Util, on_gtk
 from variety_lib.helpers import get_builder
 
 logger = logging.getLogger("variety")
@@ -89,16 +90,13 @@ class AddFlickrDialog(Gtk.Dialog):
         """
         threading.Timer(0, self.ok_thread).start()
 
+    @on_gtk
     def show_spinner(self):
-        try:
-            Gdk.threads_enter()
-            self.ui.buttonbox.set_sensitive(False)
-            self.ui.message.set_visible(True)
-            self.ui.spinner.set_visible(True)
-            self.ui.spinner.start()
-            self.ui.error.set_label("")
-        finally:
-            Gdk.threads_leave()
+        self.ui.buttonbox.set_sensitive(False)
+        self.ui.message.set_visible(True)
+        self.ui.spinner.set_visible(True)
+        self.ui.spinner.start()
+        self.ui.error.set_label("")
 
     def ok_thread(self):
         search = ""
@@ -150,9 +148,7 @@ class AddFlickrDialog(Gtk.Dialog):
             if FlickrDownloader.count_search_results(search) <= 0:
                 self.error = _("No images found")
 
-        try:
-            Gdk.threads_enter()
-
+        def _stop_ui():
             self.ui.buttonbox.set_sensitive(True)
             self.ui.spinner.stop()
             self.ui.spinner.set_visible(False)
@@ -171,8 +167,7 @@ class AddFlickrDialog(Gtk.Dialog):
                     )
                 self.destroy()
 
-        finally:
-            Gdk.threads_leave()
+        Util.add_mainloop_task(_stop_ui)
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.

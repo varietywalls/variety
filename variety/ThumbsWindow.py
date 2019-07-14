@@ -21,6 +21,8 @@ import time
 
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk
 
+from variety.Util import Util, on_gtk
+
 logger = logging.getLogger("variety")
 
 
@@ -120,8 +122,11 @@ class ThumbsWindow(Gtk.Window):
     def pin(self, widget=None):
         self.pinned = True
 
+    @on_gtk
     def start(self, images):
         self.images = images
+
+        self._show()
 
         thumbs_thread = threading.Thread(target=self._thumbs_thread)
         thumbs_thread.daemon = True
@@ -131,59 +136,46 @@ class ThumbsWindow(Gtk.Window):
         autoscroll_thread.daemon = True
         autoscroll_thread.start()
 
+    def _show(self):
+        self.set_default_size(1, 1)
+        logger.debug(lambda: "Showing thumb window %s, %d" % (str(self), time.time()))
+        if self.position == ThumbsWindow.BOTTOM:
+            self.move(self.screen_width // 2, self.screen_height - self.breadth)
+        elif self.position == ThumbsWindow.TOP:
+            self.move(self.screen_width // 2, 0)
+        elif self.position == ThumbsWindow.LEFT:
+            self.move(0, self.screen_height // 2)
+        elif self.position == ThumbsWindow.RIGHT:
+            self.move(self.screen_width - self.screen_height, self.screen_height // 2)
+        else:
+            raise Exception("Unsupported thumbs position: " + str(self.position))
+        self.show_all()
+
     def _thumbs_thread(self):
         logger.debug(lambda: "Starting thumb thread %s, %d" % (str(self), time.time()))
         try:
             self.total_width = 0
-            shown = False
 
             for i, file in enumerate(self.images):
                 if not self.running:
-                    try:
-                        Gdk.threads_enter()
-                        self.destroy()
-                    finally:
-                        Gdk.threads_leave()
+                    Util.add_mainloop_task(self.destroy)
                     return
 
-                if not shown:
-                    try:
-                        Gdk.threads_enter()
-                        self.set_default_size(10, 10)
-                        logger.debug(
-                            lambda: "Showing thumb window %s, %d" % (str(self), time.time())
-                        )
-                        self.show_all()
-                        if self.position == ThumbsWindow.BOTTOM:
-                            self.move(self.screen_width // 2, self.screen_height - self.breadth)
-                        elif self.position == ThumbsWindow.TOP:
-                            self.move(self.screen_width // 2, 0)
-                        elif self.position == ThumbsWindow.LEFT:
-                            self.move(0, self.screen_height // 2)
-                        elif self.position == ThumbsWindow.RIGHT:
-                            self.move(
-                                self.screen_width - self.screen_height, self.screen_height // 2
-                            )
-                        else:
-                            raise Exception("Unsupported thumbs position: " + str(self.position))
-                        shown = True
-                    finally:
-                        Gdk.threads_leave()
+                self.add_image(file, at_front=False)
 
-                self.add_image(file, gdk_thread=False, at_front=False)
-
-                # we must yield from time to time, or GTK/cairo errors abound
-                still_visible = self.total_width < (
-                    self.screen_width if self.is_horizontal() else self.screen_height
-                )
-                time.sleep(0.02 if still_visible else 0.02)
+                # TODO: test and decide if still necessary:
+                # # we must yield from time to time, or GTK/cairo errors abound
+                # still_visible = self.total_width < (
+                #     self.screen_width if self.is_horizontal() else self.screen_height
+                # )
+                # time.sleep(0.02 if still_visible else 0.02)
 
                 self.image_count = i
 
         except Exception:
             logger.exception(lambda: "Error while creating thumbs:")
 
-    def add_image(self, file, gdk_thread=False, at_front=False):
+    def add_image(self, file, at_front=False):
         try:
             if self.is_horizontal():
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(file, 10000, self.breadth)
@@ -196,10 +188,7 @@ class ThumbsWindow(Gtk.Window):
             )
             pixbuf = None
 
-        try:
-            if not gdk_thread:
-                Gdk.threads_enter()
-
+        def _go():
             image_size = (
                 0
                 if not pixbuf
@@ -272,12 +261,10 @@ class ThumbsWindow(Gtk.Window):
 
             self.update_size()
 
-        finally:
-            if not gdk_thread:
-                Gdk.threads_leave()
+            if file == self.active_file or position == self.active_position:
+                self.mark_active(self.active_file, self.active_position)
 
-        if file == self.active_file or position == self.active_position:
-            self.mark_active(self.active_file, self.active_position)
+        Util.add_mainloop_task(_go)
 
     def update_size(self):
         if (
@@ -304,26 +291,19 @@ class ThumbsWindow(Gtk.Window):
                 self.scroll.set_min_content_height(min(self.total_width, self.screen_height))
 
     # TODO this method is buggy when width < screen and scrollbar not shown - a blank space remains
-    def remove_image(self, image, gdk_thread=True):
-        try:
-            if not gdk_thread:
-                Gdk.threads_enter()
+    @on_gtk
+    def remove_image(self, image):
+        for info in self.all:
+            if info["file"] == image:
+                eventbox = info["eventbox"]
+                thumb = info["thumb"]
+                self.box.remove(eventbox)
+                eventbox.destroy()
+                thumb.destroy()
+                self.total_width -= info["size"]
+                self.update_size()
 
-            for info in self.all:
-                if info["file"] == image:
-                    eventbox = info["eventbox"]
-                    thumb = info["thumb"]
-                    self.box.remove(eventbox)
-                    eventbox.destroy()
-                    thumb.destroy()
-                    self.total_width -= info["size"]
-                    self.update_size()
-
-            self.all = [info for info in self.all if info["file"] != image]
-
-        finally:
-            if not gdk_thread:
-                Gdk.threads_leave()
+        self.all = [info for info in self.all if info["file"] != image]
 
     def mark_active(self, file=None, position=None):
         def _mark():
@@ -428,8 +408,7 @@ class ThumbsWindow(Gtk.Window):
             x = self.mouse_position[0]
             y = self.mouse_position[1]
 
-            try:
-                Gdk.threads_enter()
+            def _go():
                 if self.is_horizontal() and y > 0:
                     self.autoscroll_step(
                         self.scroll.get_hadjustment(), self.scroll.get_min_content_width(), x
@@ -438,10 +417,8 @@ class ThumbsWindow(Gtk.Window):
                     self.autoscroll_step(
                         self.scroll.get_vadjustment(), self.scroll.get_min_content_height(), y
                     )
-            except Exception:
-                pass
-            finally:
-                Gdk.threads_leave()
+
+            Util.add_mainloop_task(_go)
 
             last_update = time.time()
 
@@ -461,10 +438,5 @@ if __name__ == "__main__":
 
     print("starting")
     win.start(images)
-
-    GObject.threads_init()
-    Gdk.threads_init()
-    Gdk.threads_enter()
     print("gtk main")
     Gtk.main()
-    Gdk.threads_leave()
