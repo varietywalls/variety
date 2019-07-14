@@ -1109,7 +1109,7 @@ class VarietyWindow(Gtk.Window):
     def register_downloaded_file(self, file):
         if not self.downloaded or self.downloaded[0] != file:
             self.downloaded.insert(0, file)
-            self.downloaded = self.downloaded[:100]
+            self.downloaded = self.downloaded[:1000]
             self.refresh_thumbs_downloads(file)
 
             if file.startswith(self.options.download_folder):
@@ -1603,7 +1603,7 @@ class VarietyWindow(Gtk.Window):
                 if at_front:
                     self.thumbs_manager.add_image(added_image)
                 else:
-                    self.thumbs_manager.show(self.used[:100], type="history")
+                    self.thumbs_manager.show(self.used, type="history")
                     self.thumbs_manager.pin()
 
             add_timer = threading.Timer(0, _add)
@@ -2767,7 +2767,7 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
         if self.thumbs_manager.is_showing("history"):
             self.thumbs_manager.hide(force=True)
         else:
-            self.thumbs_manager.show(self.used[:100], type="history")
+            self.thumbs_manager.show(self.used, type="history")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 
@@ -2775,7 +2775,7 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
         if self.thumbs_manager.is_showing("downloads"):
             self.thumbs_manager.hide(force=True)
         else:
-            self.thumbs_manager.show(self.downloaded[:100], type="downloads")
+            self.thumbs_manager.show(self.downloaded, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 

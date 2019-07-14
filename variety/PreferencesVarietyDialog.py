@@ -805,7 +805,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                     Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000)
                 )
                 random.shuffle(folder_images)
-                to_show = images + folder_images[:100]
+                to_show = images + folder_images
                 if hasattr(self, "focused_image") and self.focused_image is not None:
                     try:
                         to_show.remove(self.focused_image)
