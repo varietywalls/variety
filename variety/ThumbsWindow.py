@@ -162,14 +162,6 @@ class ThumbsWindow(Gtk.Window):
                     return
 
                 self.add_image(file, at_front=False)
-
-                # TODO: test and decide if still necessary:
-                # # we must yield from time to time, or GTK/cairo errors abound
-                # still_visible = self.total_width < (
-                #     self.screen_width if self.is_horizontal() else self.screen_height
-                # )
-                # time.sleep(0.02 if still_visible else 0.02)
-
                 self.image_count = i
 
         except Exception:
