@@ -22,6 +22,7 @@ import logging
 import os
 import random
 import re
+import shutil
 import string
 import subprocess
 import sys
@@ -30,10 +31,9 @@ import time
 import urllib.parse
 from functools import wraps
 
+import bs4
 import requests
 from PIL import Image
-
-import bs4
 from variety_lib import get_version
 
 # fmt: off
@@ -853,13 +853,7 @@ class Util:
 
     @staticmethod
     def check_variety_slideshow_present():
-        try:
-            subprocess.check_call(
-                ["which", "variety-slideshow"], stderr=subprocess.PIPE, stdout=subprocess.PIPE
-            )
-            return True
-        except:
-            return False
+        return bool(shutil.which("variety-slideshow"))
 
     @staticmethod
     def convert_to_filename(url):
