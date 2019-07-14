@@ -49,10 +49,15 @@ class ThumbsManager:
 
     SIZES = [x * 30 for x in range(2, 11)]
 
+    UNLIMITED = "Unlimited"
+
+    LIMITS = [10, 50, 100, 200, 500, 1000, 2000, UNLIMITED]
+
     class Options:
         def __init__(self):
             self.position = ThumbsWindow.BOTTOM
             self.breadth = 120
+            self.limit = 200
 
     def __init__(self, parent):
         self.parent = parent
@@ -98,6 +103,18 @@ class ThumbsManager:
             item.connect("activate", _set_size)
             size_menu.append(item)
 
+        limit_menu = Gtk.Menu()
+        for limit in ThumbsManager.LIMITS:
+            item = Gtk.CheckMenuItem(str(limit))
+            item.set_draw_as_radio(True)
+            item.set_active(options.limit == limit)
+
+            def _set_limit(widget, limit=limit):
+                self.set_limit(limit)
+
+            item.connect("activate", _set_limit)
+            limit_menu.append(item)
+
         position_item = Gtk.MenuItem(_("Position"))
         position_item.set_submenu(position_menu)
         menu.append(position_item)
@@ -105,6 +122,10 @@ class ThumbsManager:
         size_item = Gtk.MenuItem(_("Size"))
         size_item.set_submenu(size_menu)
         menu.append(size_item)
+
+        limit_item = Gtk.MenuItem(_("Maximum Shown Images"))
+        limit_item.set_submenu(limit_menu)
+        menu.append(limit_item)
 
         menu.append(Gtk.SeparatorMenuItem.new())
 
@@ -257,7 +278,9 @@ class ThumbsManager:
     def repaint(self):
         self.hide(keep_settings=True)
         if self.images:
-            self.show(self.images, screen=self.screen, type=self.type, folders=self.folders)
+            self.show(
+                self.unlimited_images, screen=self.screen, type=self.type, folders=self.folders
+            )
 
     def set_position(self, position):
         logger.info(lambda: "Setting thumbs position " + str(position))
@@ -270,6 +293,13 @@ class ThumbsManager:
         logger.info(lambda: "Setting thumbs size " + str(size))
         options = self.load_options()
         options.breadth = size
+        self.save_options(options)
+        self.repaint()
+
+    def set_limit(self, limit):
+        logger.info(lambda: "Setting thumbs limit " + str(limit))
+        options = self.load_options()
+        options.limit = limit
         self.save_options(options)
         self.repaint()
 
@@ -312,9 +342,12 @@ class ThumbsManager:
                 self.thumbs_window.mark_active(file=file)
 
     def show(self, images, screen=None, type=None, folders=None):
+        options = self.load_options()
         with self.show_thumbs_lock:
+            self.unlimited_images = images
             self.type = type
-            self.images = images
+            limit = len(self.unlimited_images) if options.limit == self.UNLIMITED else options.limit
+            self.images = self.unlimited_images[:limit]
             self.screen = screen
             self.folders = folders
 
@@ -367,8 +400,6 @@ class ThumbsManager:
 
     def load_options(self):
         options = ThumbsManager.Options()
-        options.position = ThumbsWindow.BOTTOM
-        options.breadth = 120
         try:
             config = ConfigObj(os.path.join(self.parent.config_folder, "ui.conf"))
             try:
@@ -381,9 +412,19 @@ class ThumbsManager:
                 options.breadth = int(config["thumbs_size"])
             except Exception:
                 logger.exception(lambda: "Missing or bad thumbs_size option in ui.conf")
+
+            try:
+                options.limit = (
+                    int(config["thumbs_limit"])
+                    if config["thumbs_limit"] != self.UNLIMITED
+                    else self.UNLIMITED
+                )
+            except Exception:
+                logger.exception(lambda: "Missing or bad thumbs_limit option in ui.conf")
         except Exception:
             logger.exception(lambda: "Could not read ui.conf")
 
+        self.save_options(options)
         return options
 
     def save_options(self, options):
@@ -392,6 +433,7 @@ class ThumbsManager:
             try:
                 config["thumbs_position"] = ThumbsManager.R_POSITIONS[options.position]
                 config["thumbs_size"] = options.breadth
+                config["thumbs_limit"] = str(options.limit)
                 config.write()
             except Exception:
                 logger.exception(lambda: "Missing or bad thumbs_position option in ui.conf")
