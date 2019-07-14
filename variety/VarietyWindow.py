@@ -310,26 +310,6 @@ class VarietyWindow(Gtk.Window):
         self.wallpaper_folder = os.path.join(self.config_folder, "wallpaper")
         Util.makedirs(self.wallpaper_folder)
 
-        # TODO: Sort of hacky to have filter-related code here, they should be more isolated
-        pencil_tile_filename = os.path.join(self.config_folder, "pencil_tile.png")
-        if not os.path.exists(pencil_tile_filename):
-
-            def _generate_pencil_tile():
-                logger.info(
-                    lambda: "Missing pencil_tile.png file, generating it "
-                    + varietyconfig.get_data_file("media", "pencil_tile.png")
-                )
-                try:
-                    os.system(
-                        "convert -size 1000x1000 xc: +noise Random -virtual-pixel tile "
-                        "-motion-blur 0x20+135 -charcoal 2 -resize 50%% %s"
-                        % shlex.quote(pencil_tile_filename)
-                    )
-                except Exception:
-                    logger.exception(lambda: "Could not generate pencil_tile.png")
-
-            threading.Timer(0, _generate_pencil_tile).start()
-
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):
             try:

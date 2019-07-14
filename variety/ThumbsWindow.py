@@ -192,7 +192,6 @@ class ThumbsWindow(Gtk.Window):
             thumb = Gtk.Image()
             if pixbuf:
                 thumb.set_from_pixbuf(pixbuf)
-            #            thumb.set_from_icon_name("folder", Gtk.IconSize.MENU)
             thumb.set_visible(True)
 
             overlay = Gtk.Overlay()

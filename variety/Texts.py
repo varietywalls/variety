@@ -22,7 +22,6 @@ FILTERS = {
     "Heavy blur": _("Heavy blur"),
     "Soft blur": _("Soft blur"),
     "Oil painting": _("Oil painting"),
-    "Pencil sketch": _("Pencil sketch"),
     "Pointilism": _("Pointilism"),
     "Pixellate": _("Pixellate"),
 }
