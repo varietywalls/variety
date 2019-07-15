@@ -1132,15 +1132,17 @@ class VarietyWindow(Gtk.Window):
         if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
             self.download_folder_size = self.get_folder_size(self.real_download_folder)
             logger.info(
-                lambda: "Refreshed download folder size: %d mb",
-                self.download_folder_size / (1024.0 * 1024.0),
+                lambda: "Refreshed download folder size: {} mb".format(
+                    self.download_folder_size / (1024.0 * 1024.0)
+                )
             )
 
         mb_quota = self.options.quota_size * 1024 * 1024
         if self.download_folder_size > 0.95 * mb_quota:
             logger.info(
-                lambda: "Purging oldest files from download folder %s, current size: %d mb"
-                % (self.real_download_folder, int(self.download_folder_size / (1024.0 * 1024.0)))
+                lambda: "Purging oldest files from download folder {}, current size: {} mb".format(
+                    self.real_download_folder, int(self.download_folder_size / (1024.0 * 1024.0))
+                )
             )
             files = []
             for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
@@ -1154,15 +1156,16 @@ class VarietyWindow(Gtk.Window):
                 file = files[i][0]
                 if file != self.current:
                     try:
-                        logger.debug(lambda: "Deleting old file in downloaded: " + file)
+                        logger.debug(lambda: "Deleting old file in downloaded: {}".format(file))
                         self.remove_from_queues(file)
                         Util.safe_unlink(file)
                         self.download_folder_size -= files[i][1]
                         Util.safe_unlink(file + ".metadata.json")
                     except Exception:
                         logger.exception(
-                            lambda: "Could not delete some file while purging download folder: "
-                            + file
+                            lambda: "Could not delete some file while purging download folder: {}".format(
+                                file
+                            )
                         )
                 i += 1
             self.prepare_event.set()
