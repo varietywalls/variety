@@ -29,7 +29,6 @@ import sys
 import threading
 import time
 import urllib.parse
-from functools import wraps
 
 import bs4
 import requests
@@ -93,7 +92,7 @@ class throttle(object):
         self.timer = None
 
     def __call__(self, fn):
-        @wraps(fn)
+        @functools.wraps(fn)
         def wrapper(*args, **kwargs):
             try:
                 self.timer.cancel()
@@ -125,7 +124,7 @@ def cache(ttl_seconds=100 * 365 * 24 * 3600, debug=False):
     def decorate(f):
         _cache = {}
 
-        @wraps(f)
+        @functools.wraps(f)
         def decorated(*args):
             cached = _cache.get(args)
             if not cached or cached["timestamp"] < datetime.datetime.now() - datetime.timedelta(
@@ -868,6 +867,16 @@ class Util:
             os.unlink(filepath)
         except Exception:
             logger.exception(lambda: "Could not delete {}, ignoring".format(filepath))
+
+    @staticmethod
+    def copy_with_replace(from_path, to_path, search_for, replace_with):
+        with open(from_path, "r") as file:
+            data = file.read()
+        data = data.replace(search_for, replace_with)
+        with open(to_path + ".partial", "w") as file:
+            file.write(data)
+            file.flush()
+        os.rename(to_path + ".partial", to_path)
 
 
 def on_gtk(f):

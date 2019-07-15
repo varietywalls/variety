@@ -30,7 +30,7 @@ import webbrowser
 from PIL import Image as PILImage
 
 from jumble.Jumble import Jumble
-from variety import _, indicator
+from variety import DEFAULT_PROFILE_PATH, _, get_profile_path, indicator
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
@@ -46,7 +46,7 @@ from variety.QuoteWriter import QuoteWriter
 from variety.RedditDownloader import RedditDownloader
 from variety.ThumbsManager import ThumbsManager
 from variety.Util import Util, debounce, on_gtk, throttle
-from variety.VarietyOptionParser import VarietyOptionParser
+from variety.VarietyOptionParser import parse_options
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.WelcomeDialog import WelcomeDialog
 from variety_lib import varietyconfig
@@ -256,12 +256,14 @@ class VarietyWindow(Gtk.Window):
         self.preferences_dialog.present()
 
     def prepare_config_folder(self):
-        self.config_folder = os.path.expanduser("~/.config/variety")
+        self.config_folder = get_profile_path()
         Util.makedirs(self.config_folder)
 
-        shutil.copy(
+        Util.copy_with_replace(
             varietyconfig.get_data_file("config", "variety.conf"),
             os.path.join(self.config_folder, "variety_latest_default.conf"),
+            DEFAULT_PROFILE_PATH,
+            get_profile_path(expanded=False),
         )
 
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
@@ -269,7 +271,12 @@ class VarietyWindow(Gtk.Window):
                 lambda: "Missing config file, copying it from "
                 + varietyconfig.get_data_file("config", "variety.conf")
             )
-            shutil.copy(varietyconfig.get_data_file("config", "variety.conf"), self.config_folder)
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("config", "variety.conf"),
+                os.path.join(self.config_folder, "variety.conf"),
+                DEFAULT_PROFILE_PATH,
+                get_profile_path(expanded=False),
+            )
 
         if not os.path.exists(os.path.join(self.config_folder, "ui.conf")):
             logger.info(
@@ -289,8 +296,11 @@ class VarietyWindow(Gtk.Window):
                 lambda: "Missing set_wallpaper file, copying it from "
                 + varietyconfig.get_data_file("scripts", "set_wallpaper")
             )
-            shutil.copy(
-                varietyconfig.get_data_file("scripts", "set_wallpaper"), self.scripts_folder
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("scripts", "set_wallpaper"),
+                os.path.join(self.scripts_folder, "set_wallpaper"),
+                DEFAULT_PROFILE_PATH.replace("~", "$HOME"),
+                get_profile_path(expanded=True),
             )
 
         if not os.path.exists(os.path.join(self.scripts_folder, "get_wallpaper")):
@@ -298,8 +308,11 @@ class VarietyWindow(Gtk.Window):
                 lambda: "Missing get_wallpaper file, copying it from "
                 + varietyconfig.get_data_file("scripts", "get_wallpaper")
             )
-            shutil.copy(
-                varietyconfig.get_data_file("scripts", "get_wallpaper"), self.scripts_folder
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("scripts", "get_wallpaper"),
+                os.path.join(self.scripts_folder, "get_wallpaper"),
+                DEFAULT_PROFILE_PATH.replace("~", "$HOME"),
+                get_profile_path(expanded=True),
             )
 
         # make all scripts executable:
@@ -2170,7 +2183,7 @@ class VarietyWindow(Gtk.Window):
         dialog.run()
         dialog.destroy()
         self.dialogs.remove(dialog)
-        subprocess.call(["gedit", "~/.config/variety/variety.conf"])
+        subprocess.call(["gedit", os.path.join(self.config_folder, "variety.conf")])
         self.reload_config()
 
     def on_pause_resume(self, widget=None, change_enabled=None):
@@ -2199,230 +2212,12 @@ class VarietyWindow(Gtk.Window):
         self.update_indicator(auto_changed=False)
         self.clear_prepared_queue()
 
-    @staticmethod
-    def parse_options(arguments, report_errors=True):
-        """Support for command line options"""
-        usage = _(
-            """%prog [options] [files or urls]
-
-Passing local files will add them to Variety's queue.
-Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.
-
-To set a specific wallpaper: %prog --set /some/local/image.jpg
-"""
-        )
-        parser = VarietyOptionParser(
-            usage=usage,
-            version="%%prog %s" % varietyconfig.get_version(),
-            report_errors=report_errors,
-        )
-
-        parser.add_option(
-            "-v",
-            "--verbose",
-            action="count",
-            dest="verbose",
-            default=0,
-            help=_(
-                "Show logging messages (-vv to -vvvvv will profile various parts of Variety with increasing detail"
-            ),
-        )
-
-        parser.add_option(
-            "-q",
-            "--quit",
-            action="store_true",
-            dest="quit",
-            help=_("Make the running instance quit"),
-        )
-
-        parser.add_option(
-            "--get",
-            "--get-wallpaper",
-            "--current",
-            "--show-current",
-            action="store_true",
-            dest="show_current",
-            help=_(
-                "Print the current wallpaper location. Used only when the application is already running."
-            ),
-        )
-
-        parser.add_option(
-            "--set",
-            "--set-wallpaper",
-            action="store",
-            dest="set_wallpaper",
-            help=_("Set the given file as wallpaper, absolute path required"),
-        )
-
-        parser.add_option(
-            "-n", "--next", action="store_true", dest="next", help=_("Show Next wallpaper")
-        )
-
-        parser.add_option(
-            "-p",
-            "--previous",
-            action="store_true",
-            dest="previous",
-            help=_("Show Previous wallpaper"),
-        )
-
-        parser.add_option(
-            "--fast-forward",
-            action="store_true",
-            dest="fast_forward",
-            help=_("Show Next wallpaper, skipping the forward history"),
-        )
-
-        parser.add_option(
-            "-t",
-            "--trash",
-            action="store_true",
-            dest="trash",
-            help=_(
-                "Move current wallpaper to Trash. Used only when the application is already running."
-            ),
-        )
-
-        parser.add_option(
-            "-f",
-            "--favorite",
-            action="store_true",
-            dest="favorite",
-            help=_(
-                "Copy current wallpaper to Favorites. Used only when the application is already running."
-            ),
-        )
-
-        parser.add_option(
-            "--move-to-favorites",
-            action="store_true",
-            dest="movefavorite",
-            help=_(
-                "Move current wallpaper to Favorites. Used only when the application is already running."
-            ),
-        )
-
-        parser.add_option(
-            "--pause", action="store_true", dest="pause", help=_("Pause on current image")
-        )
-
-        parser.add_option(
-            "--resume", action="store_true", dest="resume", help=_("Resume regular image changes")
-        )
-
-        parser.add_option(
-            "--toggle-pause",
-            action="store_true",
-            dest="toggle_pause",
-            help=_("Toggle Pause/Resume state"),
-        )
-
-        parser.add_option(
-            "--quotes-next", action="store_true", dest="quotes_next", help=_("Show Next quote")
-        )
-
-        parser.add_option(
-            "--quotes-previous",
-            action="store_true",
-            dest="quotes_previous",
-            help=_("Show Previous quote"),
-        )
-
-        parser.add_option(
-            "--quotes-fast-forward",
-            action="store_true",
-            dest="quotes_fast_forward",
-            help=_("Show Next quote, skipping the forward history"),
-        )
-
-        parser.add_option(
-            "--quotes-toggle-pause",
-            action="store_true",
-            dest="quotes_toggle_pause",
-            help=_("Toggle Quotes Pause/Resume state"),
-        )
-
-        parser.add_option(
-            "--quotes-save-favorite",
-            action="store_true",
-            dest="quotes_save_favorite",
-            help=_("Save the current quote to Favorites"),
-        )
-
-        parser.add_option(
-            "--history", action="store_true", dest="history", help=_("Toggle History display")
-        )
-
-        parser.add_option(
-            "--downloads",
-            action="store_true",
-            dest="downloads",
-            help=_("Toggle Recent Downloads display"),
-        )
-
-        parser.add_option(
-            "--preferences",
-            "--show-preferences",
-            action="store_true",
-            dest="preferences",
-            help=_("Show Preferences dialog"),
-        )
-
-        parser.add_option(
-            "--selector",
-            "--show-selector",
-            action="store_true",
-            dest="selector",
-            help=_(
-                "Show manual wallpaper selector - the thumbnail bar filled with images from the active image sources"
-            ),
-        )
-
-        parser.add_option(
-            "--set-option",
-            action="append",
-            dest="set_options",
-            nargs=2,
-            help=_(
-                "Sets and applies an option. "
-                "The option names are the same that are used in Variety's config file ~/.config/variety/variety.conf. "
-                "Multiple options can be set in a single command. "
-                "Example: 'variety --set-option icon Dark --set-option clock_enabled True'. "
-                "USE WITH CAUTION: You are changing the settings file directly in an unguarded way."
-            ),
-        )
-
-        options, args = parser.parse_args(arguments)
-
-        if report_errors:
-            if (options.next or options.fast_forward) and options.previous:
-                parser.error(
-                    _("options --next/--fast-forward and --previous are mutually exclusive")
-                )
-
-            if options.trash and options.favorite:
-                parser.error(_("options --trash and --favorite are mutually exclusive"))
-
-            if options.pause and options.resume:
-                parser.error(_("options --pause and --resume are mutually exclusive"))
-
-            if (options.quotes_next or options.quotes_fast_forward) and options.quotes_previous:
-                parser.error(
-                    _(
-                        "options --quotes-next/--quotes-fast-forward and --quotes-previous are mutually exclusive"
-                    )
-                )
-
-        return options, args
-
     def process_command(self, arguments, initial_run):
         try:
             arguments = [str(arg) for arg in arguments]
             logger.info(lambda: "Received command: " + str(arguments))
 
-            options, args = self.parse_options(arguments, report_errors=False)
+            options, args = parse_options(arguments, report_errors=False)
 
             if options.quit:
                 self.on_quit()
