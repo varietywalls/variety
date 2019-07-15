@@ -20,10 +20,9 @@ import urllib.parse
 
 from gi.repository import Gdk, Gtk  # pylint: disable=E0611
 
-from variety import _
 from variety.FlickrDownloader import FlickrDownloader
 from variety.Options import Options
-from variety.Util import Util, on_gtk
+from variety.Util import Util, _, on_gtk
 from variety_lib.helpers import get_builder
 
 logger = logging.getLogger("variety")

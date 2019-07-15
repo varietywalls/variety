@@ -22,9 +22,8 @@ import webbrowser
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk
 
 from configobj import ConfigObj
-from variety import _
 from variety.ThumbsWindow import ThumbsWindow
-from variety.Util import Util
+from variety.Util import Util, _
 from variety_lib import varietyconfig
 
 logger = logging.getLogger("variety")

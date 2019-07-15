@@ -21,8 +21,7 @@ import os
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
-from variety import _
-from variety.Util import Util
+from variety.Util import Util, _
 from variety_lib import varietyconfig
 
 THEME_ICON_NAME = "variety-indicator"

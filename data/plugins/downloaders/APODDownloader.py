@@ -17,9 +17,8 @@
 import logging
 import random
 
-from variety import _
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
-from variety.Util import Util
+from variety.Util import Util, _
 
 logger = logging.getLogger("variety")
 

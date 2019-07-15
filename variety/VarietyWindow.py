@@ -30,7 +30,7 @@ import webbrowser
 from PIL import Image as PILImage
 
 from jumble.Jumble import Jumble
-from variety import DEFAULT_PROFILE_PATH, _, get_profile_path, indicator
+from variety import indicator
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
@@ -41,11 +41,12 @@ from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
+from variety.profile import DEFAULT_PROFILE_PATH, get_profile_path
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety.RedditDownloader import RedditDownloader
 from variety.ThumbsManager import ThumbsManager
-from variety.Util import Util, debounce, on_gtk, throttle
+from variety.Util import Util, _, debounce, on_gtk, throttle
 from variety.VarietyOptionParser import parse_options
 from variety.WallhavenDownloader import WallhavenDownloader
 from variety.WelcomeDialog import WelcomeDialog

@@ -25,7 +25,7 @@ import threading
 
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 
-from variety import Texts, _, get_profile_path
+from variety import Texts
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
@@ -34,7 +34,8 @@ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety.Util import Util, on_gtk
+from variety.profile import get_profile_path
+from variety.Util import Util, _, on_gtk
 from variety_lib import varietyconfig
 from variety_lib.PreferencesDialog import PreferencesDialog
 from variety_lib.varietyconfig import get_data_file

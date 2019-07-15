@@ -16,6 +16,7 @@
 import codecs
 import datetime
 import functools
+import gettext
 import hashlib
 import json
 import logging
@@ -39,6 +40,7 @@ from variety_lib import get_version
 import gi  # isort:skip
 gi.require_version("GExiv2", "0.10")
 gi.require_version("PangoCairo", "1.0")
+gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkPixbuf, GExiv2, Gio, GLib, Pango  # isort:skip
 # fmt: on
 
@@ -47,6 +49,11 @@ USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger("variety")
+
+
+def _(text):
+    """Returns the translated form of text."""
+    return gettext.gettext(text)
 
 
 def debounce(seconds):
@@ -885,3 +892,28 @@ def on_gtk(f):
         Util.add_mainloop_task(f, *args)
 
     return wrapped
+
+
+def safe_print(text, ascii_text=None, file=sys.stdout):
+    """
+    Python's print throws UnicodeEncodeError if the terminal encoding is borked. This version tries print, then logging, then printing the ascii text when one is present.
+    If does not throw exceptions even if it fails.
+    :param text: Text to print, str or unicode, possibly with non-ascii symbols in it
+    :param ascii_text: optional. Original untranslated ascii version of the text when present.
+    """
+    try:
+        print(text, file=file)
+    except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
+        try:
+            logging.getLogger("variety").error(
+                "Error printing non-ascii text, terminal encoding is %s" % sys.stdout.encoding
+            )
+            if ascii_text:
+                try:
+                    print(ascii_text)
+                    return
+                except:
+                    pass
+            logging.getLogger("variety").warning(text)
+        except:
+            pass
