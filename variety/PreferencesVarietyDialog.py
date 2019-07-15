@@ -25,7 +25,7 @@ import threading
 
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 
-from variety import Texts, _
+from variety import Texts, _, get_profile_path
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
@@ -309,7 +309,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.quotes_sources_grid.attach(cb, i % 4, i // 4, 1, 1)
                 self.quotes_sources_checkboxes.append(cb)
 
-            self.ui.tips_buffer.set_text("\n\n".join(Texts.TIPS))
+            self.ui.tips_buffer.set_text(
+                "\n\n".join(
+                    [
+                        tip.replace("{PROFILE_PATH}", get_profile_path(expanded=False))
+                        for tip in Texts.TIPS
+                    ]
+                )
+            )
 
             try:
                 with open(get_data_file("ui/changes.txt")) as f:

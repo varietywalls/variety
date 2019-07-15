@@ -49,54 +49,6 @@ def get_media_file(media_file_name):
     return "file:///" + media_filename
 
 
-class NullHandler(logging.Handler):
-    def emit(self, record):
-        pass
-
-
-def set_up_logging(verbose):
-    # add a handler to prevent basicConfig
-    root = logging.getLogger()
-    null_handler = NullHandler()
-    root.addHandler(null_handler)
-
-    formatter = logging.Formatter("%(levelname)s: %(asctime)s: %(funcName)s() '%(message)s'")
-
-    logger = logging.getLogger("variety")
-    logger_sh = logging.StreamHandler()
-    logger_sh.setFormatter(formatter)
-    logger.addHandler(logger_sh)
-
-    try:
-        logger_file = logging.FileHandler(
-            os.path.join(os.path.expanduser("~/.config/variety/"), "variety.log"), "w"
-        )
-        logger_file.setFormatter(formatter)
-        logger.addHandler(logger_file)
-    except Exception:
-        logger.exception("Could not create file logger")
-
-    lib_logger = logging.getLogger("variety_lib")
-    lib_logger_sh = logging.StreamHandler()
-    lib_logger_sh.setFormatter(formatter)
-    lib_logger.addHandler(lib_logger_sh)
-
-    logger.setLevel(logging.INFO)
-    # Set the logging level to show debug messages.
-    if verbose >= 2:
-        logger.setLevel(logging.DEBUG)
-    elif not verbose:
-        # If we're not in verbose mode, only log these messages to file. This prevents
-        # flooding syslog and/or ~/.xsession-errors depending on how variety was started:
-        # (https://bugs.launchpad.net/variety/+bug/1685003)
-        # XXX: We should /really/ make the internal debug logging use logging.debug,
-        # this is really just a bandaid patch.
-        logger_sh.setLevel(logging.WARNING)
-
-    if verbose >= 3:
-        lib_logger.setLevel(logging.DEBUG)
-
-
 def get_help_uri(page=None):
     # help_uri from source tree - default language
     here = os.path.dirname(__file__)

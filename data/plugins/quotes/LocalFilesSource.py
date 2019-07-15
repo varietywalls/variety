@@ -17,7 +17,7 @@ import logging
 import os
 import re
 
-from variety import _
+from variety import _, get_profile_path
 from variety.plugins.IQuoteSource import IQuoteSource
 
 logger = logging.getLogger("variety")
@@ -34,10 +34,10 @@ class LocalFilesSource(IQuoteSource):
             "name": "Local text files",
             "description": _(
                 "Displays quotes, defined in local text files.\n"
-                "Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+                "Put your own txt files in: {}pluginconfig/quotes/.\n"
                 "The file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\n"
                 "Example: http://rvelthuis.de/zips/quotes.txt"
-            ),
+            ).format(get_profile_path(expanded=False)),
             "author": "Peter Levi",
             "version": "0.1",
         }

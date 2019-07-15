@@ -18,6 +18,7 @@ import logging
 import os
 
 from configobj import ConfigObj, DuplicateError
+from variety import get_profile_path
 from variety.Util import Util
 from variety_lib import varietyconfig
 
@@ -68,7 +69,7 @@ class Options:
         LIGHT = 1
 
     def __init__(self):
-        self.configfile = os.path.expanduser("~/.config/variety/variety.conf")
+        self.configfile = os.path.join(get_profile_path(), "variety.conf")
 
     def read(self):
         self.set_defaults()
@@ -581,18 +582,18 @@ class Options:
 
         self.download_enabled = True
         self.download_interval = 600
-        self.download_folder = os.path.expanduser("~/.config/variety/Downloaded")
+        self.download_folder = os.path.join(get_profile_path(), "Downloaded")
         self.quota_enabled = True
         self.quota_size = 500
 
-        self.favorites_folder = os.path.expanduser("~/.config/variety/Favorites")
+        self.favorites_folder = os.path.join(get_profile_path(), "Favorites")
         self.favorites_operations = [
             ["Downloaded", "Copy"],
             ["Fetched", "Move"],
             ["Others", "Copy"],
         ]
 
-        self.fetched_folder = os.path.expanduser("~/.config/variety/Fetched")
+        self.fetched_folder = os.path.join(get_profile_path(), "Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
         self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(
@@ -642,7 +643,7 @@ class Options:
         self.quotes_hpos = 100
         self.quotes_vpos = 40
         self.quotes_max_length = 250
-        self.quotes_favorites_file = os.path.expanduser("~/.config/variety/favorite_quotes.txt")
+        self.quotes_favorites_file = os.path.join(get_profile_path(), "favorite_quotes.txt")
 
         self.slideshow_sources_enabled = True
         self.slideshow_favorites_enabled = True

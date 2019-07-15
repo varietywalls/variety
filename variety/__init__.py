@@ -23,6 +23,24 @@ import os
 import sys
 
 
+DEFAULT_PROFILE_PATH = "~/.config/variety/"
+
+
+__profile_path = DEFAULT_PROFILE_PATH
+
+
+def _set_profile_path(profile_path):
+    global __profile_path
+    __profile_path = profile_path
+    if not __profile_path.endswith("/"):
+        __profile_path += "/"
+
+
+def get_profile_path(expanded=True):
+    global __profile_path
+    return os.path.expanduser(__profile_path) if expanded else __profile_path
+
+
 def _(text):
     """Returns the translated form of text."""
     return gettext.gettext(text)
@@ -102,7 +120,6 @@ from variety import VarietyWindow
 from variety import ThumbsManager
 from variety import ThumbsWindow
 from variety.Util import Util, ModuleProfiler
-from variety_lib.helpers import set_up_logging
 
 DBUS_KEY = "com.peterlevi.Variety"
 DBUS_PATH = "/com/peterlevi/Variety"
@@ -149,18 +166,61 @@ def check_quit():
     Util.start_force_exit_thread(10)
 
 
+def set_up_logging(verbose):
+    # add a handler to prevent basicConfig
+    root = logging.getLogger()
+    null_handler = logging.NullHandler()
+    root.addHandler(null_handler)
+
+    formatter = logging.Formatter("%(levelname)s: %(asctime)s: %(funcName)s() '%(message)s'")
+
+    logger = logging.getLogger("variety")
+    logger_sh = logging.StreamHandler()
+    logger_sh.setFormatter(formatter)
+    logger.addHandler(logger_sh)
+
+    try:
+        logger_file = logging.FileHandler(os.path.join(get_profile_path(), "variety.log"), "w")
+        logger_file.setFormatter(formatter)
+        logger.addHandler(logger_file)
+    except Exception:
+        logger.exception("Could not create file logger")
+
+    lib_logger = logging.getLogger("variety_lib")
+    lib_logger_sh = logging.StreamHandler()
+    lib_logger_sh.setFormatter(formatter)
+    lib_logger.addHandler(lib_logger_sh)
+
+    logger.setLevel(logging.INFO)
+    # Set the logging level to show debug messages.
+    if verbose >= 2:
+        logger.setLevel(logging.DEBUG)
+    elif not verbose:
+        # If we're not in verbose mode, only log these messages to file. This prevents
+        # flooding syslog and/or ~/.xsession-errors depending on how variety was started:
+        # (https://bugs.launchpad.net/variety/+bug/1685003)
+        # XXX: We should /really/ make the internal debug logging use logging.debug,
+        # this is really just a bandaid patch.
+        logger_sh.setLevel(logging.WARNING)
+
+    if verbose >= 3:
+        lib_logger.setLevel(logging.DEBUG)
+
+
 def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
     signal.signal(signal.SIGTERM, sigint_handler)
     signal.signal(signal.SIGQUIT, sigint_handler)
 
-    Util.makedirs(os.path.expanduser("~/.config/variety/"))
-
     arguments = sys.argv[1:]
 
     # validate arguments
-    options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
+    from variety import VarietyOptionParser
+
+    options, args = VarietyOptionParser.parse_options(arguments)
+    _set_profile_path(options.profile)
+    Util.makedirs(get_profile_path())
 
     bus = dbus.SessionBus()
     # ensure singleton
@@ -182,6 +242,7 @@ def main():
     # set_up_logging must be called after the DBus checks, only by one running instance,
     # or the log file can be corrupted
     set_up_logging(options.verbose)
+    logging.getLogger("variety").info(lambda: "Using profile folder {}".format(get_profile_path()))
 
     if options.verbose >= 3:
         profiler = ModuleProfiler()
