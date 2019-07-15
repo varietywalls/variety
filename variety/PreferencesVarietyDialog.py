@@ -34,7 +34,7 @@ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety.profile import get_profile_path
+from variety.profile import get_autostart_file_path, get_profile_path
 from variety.Util import Util, _, on_gtk
 from variety_lib import varietyconfig
 from variety_lib.PreferencesDialog import PreferencesDialog
@@ -118,9 +118,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options = Options()
             self.options.read()
 
-            self.ui.autostart.set_active(
-                os.path.isfile(os.path.expanduser("~/.config/autostart/variety.desktop"))
-            )
+            self.ui.autostart.set_active(os.path.isfile(get_autostart_file_path()))
 
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
@@ -1084,7 +1082,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 dialog.destroy()
 
     def update_autostart(self):
-        file = os.path.expanduser("~/.config/autostart/variety.desktop")
+        file = get_autostart_file_path()
 
         if not self.ui.autostart.get_active():
             if os.path.exists(file):
