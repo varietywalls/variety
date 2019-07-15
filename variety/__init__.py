@@ -30,10 +30,16 @@ __profile_path = DEFAULT_PROFILE_PATH
 
 
 def _set_profile_path(profile_path):
+    # if just a name is passed instead of a full path, put it under ~/.config/variety-profiles
+    if not "/" in profile_path:
+        profile_path = "~/.config/variety-profiles/{}".format(profile_path)
+
+    # make sure profile path has a trailing slash
+    if not profile_path.endswith("/"):
+        profile_path += "/"
+
     global __profile_path
     __profile_path = profile_path
-    if not __profile_path.endswith("/"):
-        __profile_path += "/"
 
 
 def get_profile_path(expanded=True):
@@ -121,17 +127,33 @@ from variety import ThumbsManager
 from variety import ThumbsWindow
 from variety.Util import Util, ModuleProfiler
 
-DBUS_KEY = "com.peterlevi.Variety"
+
+def get_dbus_key():
+    """
+    DBus key for Variety.
+    Variety uses a different key per profile, so several instances can run simultaneously if
+    running with different profiles.
+    Command any instance from the terminal by passing explicitly the same --profile options as it
+    was started with.
+    :return: the dbus key
+    """
+    profile_path = os.path.normpath(get_profile_path())
+    if profile_path == os.path.normpath(os.path.expanduser(DEFAULT_PROFILE_PATH)):
+        return "com.peterlevi.Variety"
+    else:
+        return "com.peterlevi.Variety_{}".format(Util.md5(profile_path))
+
+
 DBUS_PATH = "/com/peterlevi/Variety"
 
 
 class VarietyService(dbus.service.Object):
     def __init__(self, variety_window):
         self.variety_window = variety_window
-        bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
+        bus_name = dbus.service.BusName(get_dbus_key(), bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
 
-    @dbus.service.method(dbus_interface=DBUS_KEY, in_signature="as", out_signature="s")
+    @dbus.service.method(dbus_interface=get_dbus_key(), in_signature="as", out_signature="s")
     def process_command(self, arguments):
         result = self.variety_window.process_command(arguments, initial_run=False)
         return "" if result is None else result
@@ -219,12 +241,13 @@ def main():
     from variety import VarietyOptionParser
 
     options, args = VarietyOptionParser.parse_options(arguments)
-    _set_profile_path(options.profile)
+    _set_profile_path(options.profile or DEFAULT_PROFILE_PATH)
     Util.makedirs(get_profile_path())
 
+    # ensure singleton per profile
     bus = dbus.SessionBus()
-    # ensure singleton
-    if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+    dbus_key = get_dbus_key()
+    if bus.request_name(dbus_key) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
             arguments = ["--preferences"]
         safe_print(
@@ -232,7 +255,7 @@ def main():
             "Variety is already running. Sending the command to the running instance.",
             file=sys.stderr,
         )
-        method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+        method = bus.get_object(dbus_key, DBUS_PATH).get_dbus_method("process_command")
         result = method(arguments)
         if result:
             safe_print(result)

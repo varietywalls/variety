@@ -66,11 +66,18 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
         action="store",
         dest="profile",
         help=_(
-            "Full path to the configuration folder Variety should use. "
-            "By default this is ~/.config/variety/. "
-            "Use only when initially starting Variety - changing the profile path requires restart."
+            "Profile name or full path to the configuration folder Variety should use. "
+            "If not specified, this is ~/.config/variety/. "
+            "If just a name is used instead of a full path, the profile folder will be "
+            "~/.config/variety-profiles/<name>. "
+            "Use only when initially starting Variety - changing the profile path requires "
+            "restart. Several instances of Variety can be started when using different profiles, "
+            "each with its own separate configuration. This can be used for example to control "
+            "several different screens or workspaces under desktop environments like XFCE which "
+            "allow this. To pass commands to a running instance, pass the same --profile "
+            "argument as the one it was started with in subsequent commands."
         ),
-        default="~/.config/variety/",
+        default=None,
     )
 
     parser.add_option(
