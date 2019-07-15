@@ -41,7 +41,12 @@ from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
-from variety.profile import DEFAULT_PROFILE_PATH, get_profile_path
+from variety.profile import (
+    DEFAULT_PROFILE_PATH,
+    get_autostart_file_path,
+    get_profile_path,
+    is_default_profile,
+)
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
 from variety.RedditDownloader import RedditDownloader
@@ -2153,7 +2158,7 @@ class VarietyWindow(Gtk.Window):
                 upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
 
                 # Upgrade the autostart entry, if there is one
-                if os.path.exists(os.path.expanduser("~/.config/autostart/variety.desktop")):
+                if os.path.exists(get_autostart_file_path()):
                     logger.info(lambda: "Updating Variety autostart desktop entry")
                     self.create_autostart_entry()
 
@@ -2786,20 +2791,27 @@ class VarietyWindow(Gtk.Window):
         try:
             logger.info(lambda: "Creating autostart entry")
 
+            profile_path = get_profile_path()
+            name = (
+                "Variety"
+                if is_default_profile()
+                else "Variety (Profile: {})".format(os.path.basename(profile_path[:-1]))
+            )
+
             content = (
                 "[Desktop Entry]\n"
-                "Name=Variety\n"
-                "Comment=Variety Wallpaper Changer\n"
+                + "Name={}\n".format(name)
+                + "Comment=Variety Wallpaper Changer\n"
                 "Icon=variety\n"
-                "Exec=variety\n"
-                "Terminal=false\n"
+                + "Exec=variety --profile {}\n".format(profile_path)
+                + "Terminal=false\n"
                 "Type=Application\n"
                 "X-GNOME-Autostart-Delay=20\n"
             )
 
-            Util.makedirs(os.path.expanduser("~/.config/autostart/"))
-
-            path = os.path.expanduser("~/.config/autostart/variety.desktop")
+            autostart_file_path = get_autostart_file_path()
+            Util.makedirs(os.path.dirname(autostart_file_path))
+            path = autostart_file_path
             with open(path, "w") as f:
                 f.write(content)
         except:

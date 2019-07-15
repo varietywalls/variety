@@ -42,3 +42,10 @@ def get_profile_id():
     Returns a dbus-and-filename-friendly identificator of the profile path
     """
     return Util.md5(os.path.normpath(get_profile_path()))
+
+
+def get_autostart_file_path():
+    if is_default_profile():
+        return os.path.expanduser("~/.config/autostart/variety.desktop")
+    else:
+        return os.path.expanduser("~/.config/autostart/variety-{}.desktop".format(get_profile_id()))
