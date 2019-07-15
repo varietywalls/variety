@@ -17,10 +17,9 @@ import logging
 import random
 import urllib.parse
 
-from variety import _
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource, Throttling
-from variety.Util import Util
+from variety.Util import Util, _
 
 SEARCH_URL = (
     "https://wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc"

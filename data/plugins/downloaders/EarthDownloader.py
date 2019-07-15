@@ -18,8 +18,8 @@ import logging
 import os
 import shutil
 
-from variety import _
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.Util import _
 
 logger = logging.getLogger("variety")
 

@@ -19,8 +19,8 @@ import random
 import threading
 import time
 
-from variety import _
 from variety.plugins.IQuoteSource import IQuoteSource
+from variety.Util import _
 
 logger = logging.getLogger("variety")
 

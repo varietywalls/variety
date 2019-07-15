@@ -17,8 +17,9 @@ import logging
 import os
 import re
 
-from variety import _, get_profile_path
 from variety.plugins.IQuoteSource import IQuoteSource
+from variety.profile import get_profile_path
+from variety.Util import _
 
 logger = logging.getLogger("variety")
 

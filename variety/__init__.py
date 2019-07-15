@@ -15,66 +15,24 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import dbus, dbus.service, dbus.glib
 import gettext
 import logging
-
-gettext.textdomain("variety")
 import os
+import signal
 import sys
 
+import gi
 
-DEFAULT_PROFILE_PATH = "~/.config/variety/"
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GObject  # pylint: disable=E0611
 
-
-__profile_path = DEFAULT_PROFILE_PATH
-
-
-def _set_profile_path(profile_path):
-    # if just a name is passed instead of a full path, put it under ~/.config/variety-profiles
-    if not "/" in profile_path:
-        profile_path = "~/.config/variety-profiles/{}".format(profile_path)
-
-    # make sure profile path has a trailing slash
-    if not profile_path.endswith("/"):
-        profile_path += "/"
-
-    global __profile_path
-    __profile_path = profile_path
+from variety import VarietyWindow, ThumbsManager, ThumbsWindow
+from variety.profile import set_profile_path, get_profile_path, is_default_profile, get_profile_id
+from variety.Util import Util, _, ModuleProfiler, safe_print
 
 
-def get_profile_path(expanded=True):
-    global __profile_path
-    return os.path.expanduser(__profile_path) if expanded else __profile_path
-
-
-def _(text):
-    """Returns the translated form of text."""
-    return gettext.gettext(text)
-
-
-def safe_print(text, ascii_text=None, file=sys.stdout):
-    """
-    Python's print throws UnicodeEncodeError if the terminal encoding is borked. This version tries print, then logging, then printing the ascii text when one is present.
-    If does not throw exceptions even if it fails.
-    :param text: Text to print, str or unicode, possibly with non-ascii symbols in it
-    :param ascii_text: optional. Original untranslated ascii version of the text when present.
-    """
-    try:
-        print(text, file=file)
-    except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
-        try:
-            logging.getLogger("variety").error(
-                "Error printing non-ascii text, terminal encoding is %s" % sys.stdout.encoding
-            )
-            if ascii_text:
-                try:
-                    print(ascii_text)
-                    return
-                except:
-                    pass
-            logging.getLogger("variety").warning(text)
-        except:
-            pass
+gettext.textdomain("variety")
 
 
 class SafeLogger(logging.Logger):
@@ -112,23 +70,8 @@ logging.setLoggerClass(SafeLogger)
 # reload(sys)
 # sys.setdefaultencoding('UTF8')
 
-import signal
-import dbus, dbus.service, dbus.glib
-import logging
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-
-from gi.repository import Gtk, Gdk, GObject  # pylint: disable=E0611
-
-from variety import VarietyWindow
-from variety import ThumbsManager
-from variety import ThumbsWindow
-from variety.Util import Util, ModuleProfiler
-
-
-def get_dbus_key():
+def _get_dbus_key():
     """
     DBus key for Variety.
     Variety uses a different key per profile, so several instances can run simultaneously if
@@ -137,11 +80,10 @@ def get_dbus_key():
     was started with.
     :return: the dbus key
     """
-    profile_path = os.path.normpath(get_profile_path())
-    if profile_path == os.path.normpath(os.path.expanduser(DEFAULT_PROFILE_PATH)):
+    if is_default_profile():
         return "com.peterlevi.Variety"
     else:
-        return "com.peterlevi.Variety_{}".format(Util.md5(profile_path))
+        return "com.peterlevi.Variety_{}".format(get_profile_id())
 
 
 DBUS_PATH = "/com/peterlevi/Variety"
@@ -150,10 +92,10 @@ DBUS_PATH = "/com/peterlevi/Variety"
 class VarietyService(dbus.service.Object):
     def __init__(self, variety_window):
         self.variety_window = variety_window
-        bus_name = dbus.service.BusName(get_dbus_key(), bus=dbus.SessionBus())
+        bus_name = dbus.service.BusName(_get_dbus_key(), bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
 
-    @dbus.service.method(dbus_interface=get_dbus_key(), in_signature="as", out_signature="s")
+    @dbus.service.method(dbus_interface=_get_dbus_key(), in_signature="as", out_signature="s")
     def process_command(self, arguments):
         result = self.variety_window.process_command(arguments, initial_run=False)
         return "" if result is None else result
@@ -164,15 +106,15 @@ VARIETY_WINDOW = None
 terminate = False
 
 
-def sigint_handler(*args):
+def _sigint_handler(*args):
     global terminate
     terminate = True
 
 
-def check_quit():
+def _check_quit():
     global terminate
     if not terminate:
-        GObject.timeout_add(1000, check_quit)
+        GObject.timeout_add(1000, _check_quit)
         return
 
     logging.getLogger("variety").info("Terminating signal received, quitting...")
@@ -188,7 +130,7 @@ def check_quit():
     Util.start_force_exit_thread(10)
 
 
-def set_up_logging(verbose):
+def _set_up_logging(verbose):
     # add a handler to prevent basicConfig
     root = logging.getLogger()
     null_handler = logging.NullHandler()
@@ -231,9 +173,9 @@ def set_up_logging(verbose):
 
 def main():
     # Ctrl-C
-    signal.signal(signal.SIGINT, sigint_handler)
-    signal.signal(signal.SIGTERM, sigint_handler)
-    signal.signal(signal.SIGQUIT, sigint_handler)
+    signal.signal(signal.SIGINT, _sigint_handler)
+    signal.signal(signal.SIGTERM, _sigint_handler)
+    signal.signal(signal.SIGQUIT, _sigint_handler)
 
     arguments = sys.argv[1:]
 
@@ -241,12 +183,12 @@ def main():
     from variety import VarietyOptionParser
 
     options, args = VarietyOptionParser.parse_options(arguments)
-    _set_profile_path(options.profile or DEFAULT_PROFILE_PATH)
+    set_profile_path(options.profile)
     Util.makedirs(get_profile_path())
 
     # ensure singleton per profile
     bus = dbus.SessionBus()
-    dbus_key = get_dbus_key()
+    dbus_key = _get_dbus_key()
     if bus.request_name(dbus_key) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
         if not arguments:
             arguments = ["--preferences"]
@@ -264,7 +206,7 @@ def main():
     # set up logging
     # set_up_logging must be called after the DBus checks, only by one running instance,
     # or the log file can be corrupted
-    set_up_logging(options.verbose)
+    _set_up_logging(options.verbose)
     logging.getLogger("variety").info(lambda: "Using profile folder {}".format(get_profile_path()))
 
     if options.verbose >= 3:
@@ -296,5 +238,5 @@ def main():
     bus.call_on_disconnection(window.on_quit)
 
     window.start(arguments)
-    GObject.timeout_add(2000, check_quit)
+    GObject.timeout_add(2000, _check_quit)
     Gtk.main()

@@ -19,10 +19,9 @@ import random
 import re
 import urllib.parse
 
-from variety import _
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource
-from variety.Util import Util
+from variety.Util import Util, _
 
 logger = logging.getLogger("variety")
 

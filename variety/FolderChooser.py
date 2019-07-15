@@ -19,8 +19,7 @@ import os.path
 
 from gi.repository import Gtk
 
-from variety import _
-from variety.Util import Util
+from variety.Util import Util, _
 
 logger = logging.getLogger("variety")
 

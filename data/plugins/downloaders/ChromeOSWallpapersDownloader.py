@@ -16,9 +16,8 @@
 import logging
 import random
 
-from variety import _
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
-from variety.Util import Util
+from variety.Util import Util, _
 
 MANIFEST_URL = "https://storage.googleapis.com/chromeos-wallpaper-public/manifest_en.json"
 

@@ -16,7 +16,7 @@
 
 import optparse
 
-from variety import _, safe_print
+from variety.Util import _, safe_print
 from variety_lib import varietyconfig
 
 

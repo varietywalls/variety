@@ -16,10 +16,10 @@
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
-from variety import _
 from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
 from variety.Options import Options
 from variety.RedditDownloader import RedditDownloader
+from variety.Util import _
 from variety_lib.helpers import get_builder
 
 
