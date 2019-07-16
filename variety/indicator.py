@@ -26,6 +26,7 @@ from variety_lib import varietyconfig
 
 THEME_ICON_NAME = "variety-indicator"
 THEME_ICON_NAME_DARK = "variety-indicator-dark"
+THEME_ICON_NAME_NUM = "variety-indicator-num{}"
 
 try:
     import gi
@@ -386,6 +387,14 @@ class Indicator:
                 return
             else:
                 icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
+        elif icon in ["1", "2", "3", "4"]:
+            if Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME_NUM.format(icon)):
+                set_from_theme_icon(THEME_ICON_NAME_NUM.format(icon))
+                return
+            else:
+                icon_path = varietyconfig.get_data_file(
+                    "media", "variety-indicator-num{}.png".format(icon)
+                )
         elif icon and os.access(icon, os.R_OK) and Util.is_image(icon):
             icon_path = icon
         else:

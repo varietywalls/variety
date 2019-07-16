@@ -45,6 +45,7 @@ from variety.profile import (
     DEFAULT_PROFILE_PATH,
     get_autostart_file_path,
     get_profile_path,
+    get_profile_short_name,
     is_default_profile,
 )
 from variety.QuotesEngine import QuotesEngine
@@ -2791,11 +2792,10 @@ class VarietyWindow(Gtk.Window):
         try:
             logger.info(lambda: "Creating autostart entry")
 
-            profile_path = get_profile_path()
             name = (
                 "Variety"
                 if is_default_profile()
-                else "Variety (Profile: {})".format(os.path.basename(profile_path[:-1]))
+                else "Variety (Profile: {})".format(get_profile_short_name())
             )
 
             content = (
@@ -2803,7 +2803,7 @@ class VarietyWindow(Gtk.Window):
                 + "Name={}\n".format(name)
                 + "Comment=Variety Wallpaper Changer\n"
                 "Icon=variety\n"
-                + "Exec=variety --profile {}\n".format(profile_path)
+                + "Exec=variety --profile {}\n".format(get_profile_path())
                 + "Terminal=false\n"
                 "Type=Application\n"
                 "X-GNOME-Autostart-Delay=20\n"
