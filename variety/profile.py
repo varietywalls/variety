@@ -28,6 +28,10 @@ def get_profile_path(expanded=True):
     return os.path.expanduser(__profile_path) if expanded else __profile_path
 
 
+def get_profile_short_name():
+    return os.path.basename(get_profile_path()[:-1])
+
+
 def is_default_profile():
     """
     Are we using the default profile or a custom profile?

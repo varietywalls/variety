@@ -34,7 +34,12 @@ from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety.profile import get_autostart_file_path, get_profile_path
+from variety.profile import (
+    get_autostart_file_path,
+    get_profile_path,
+    get_profile_short_name,
+    is_default_profile,
+)
 from variety.Util import Util, _, on_gtk
 from variety_lib import varietyconfig
 from variety_lib.PreferencesDialog import PreferencesDialog
@@ -77,6 +82,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         if not Util.check_variety_slideshow_present():
             self.ui.notebook.remove_page(2)
+
+        if not is_default_profile():
+            self.set_title(
+                _("Variety Preferences") + _(" (Profile: {})".format(get_profile_short_name()))
+            )
 
         self.reload()
 
@@ -144,12 +154,20 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.icon.set_active(0)
             elif self.options.icon == "Dark":
                 self.ui.icon.set_active(1)
-            elif self.options.icon == "Current":
+            elif self.options.icon == "1":
                 self.ui.icon.set_active(2)
-            elif self.options.icon == "None":
-                self.ui.icon.set_active(4)
-            else:
+            elif self.options.icon == "2":
                 self.ui.icon.set_active(3)
+            elif self.options.icon == "3":
+                self.ui.icon.set_active(4)
+            elif self.options.icon == "4":
+                self.ui.icon.set_active(5)
+            elif self.options.icon == "Current":
+                self.ui.icon.set_active(6)
+            elif self.options.icon == "None":
+                self.ui.icon.set_active(7)
+            else:
+                self.ui.icon.set_active(8)
                 self.ui.icon_chooser.set_filename(self.options.icon)
 
             if self.options.favorites_operations == [["/", "Copy"]]:
@@ -936,10 +954,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
             elif self.ui.icon.get_active() == 1:
                 self.options.icon = "Dark"
             elif self.ui.icon.get_active() == 2:
-                self.options.icon = "Current"
-            elif self.ui.icon.get_active() == 4:
-                self.options.icon = "None"
+                self.options.icon = "1"
             elif self.ui.icon.get_active() == 3:
+                self.options.icon = "2"
+            elif self.ui.icon.get_active() == 4:
+                self.options.icon = "3"
+            elif self.ui.icon.get_active() == 5:
+                self.options.icon = "4"
+            elif self.ui.icon.get_active() == 6:
+                self.options.icon = "Current"
+            elif self.ui.icon.get_active() == 7:
+                self.options.icon = "None"
+            elif self.ui.icon.get_active() == 8:
                 file = self.ui.icon_chooser.get_filename()
                 if file and os.access(file, os.R_OK):
                     self.options.icon = file
