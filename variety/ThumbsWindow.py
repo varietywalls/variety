@@ -21,6 +21,7 @@ import time
 
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk
 
+from variety.profile import get_profile_wm_class
 from variety.Util import Util, on_gtk
 
 logger = logging.getLogger("variety")
@@ -37,6 +38,8 @@ class ThumbsWindow(Gtk.Window):
     def __init__(self, screen=None, position=BOTTOM, breadth=120):
         logger.debug(lambda: "Creating thumb window %s, %d" % (str(self), time.time()))
         super(ThumbsWindow, self).__init__()
+
+        self.set_wmclass(get_profile_wm_class(), get_profile_wm_class())
 
         self.running = True
 

@@ -32,6 +32,12 @@ def get_profile_short_name():
     return os.path.basename(get_profile_path()[:-1])
 
 
+def get_profile_wm_class():
+    return "Variety" + (
+        "" if is_default_profile() else "(Profile: {})".format(get_profile_short_name())
+    )
+
+
 def is_default_profile():
     """
     Are we using the default profile or a custom profile?

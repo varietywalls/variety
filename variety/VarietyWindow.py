@@ -22,6 +22,7 @@ import shlex
 import shutil
 import stat
 import subprocess
+import sys
 import threading
 import time
 import urllib.parse
@@ -46,6 +47,7 @@ from variety.profile import (
     get_autostart_file_path,
     get_profile_path,
     get_profile_short_name,
+    get_profile_wm_class,
     is_default_profile,
 )
 from variety.QuotesEngine import QuotesEngine
@@ -269,8 +271,7 @@ class VarietyWindow(Gtk.Window):
         Util.copy_with_replace(
             varietyconfig.get_data_file("config", "variety.conf"),
             os.path.join(self.config_folder, "variety_latest_default.conf"),
-            DEFAULT_PROFILE_PATH,
-            get_profile_path(expanded=False),
+            {DEFAULT_PROFILE_PATH: get_profile_path(expanded=False)},
         )
 
         if not os.path.exists(os.path.join(self.config_folder, "variety.conf")):
@@ -281,8 +282,7 @@ class VarietyWindow(Gtk.Window):
             Util.copy_with_replace(
                 varietyconfig.get_data_file("config", "variety.conf"),
                 os.path.join(self.config_folder, "variety.conf"),
-                DEFAULT_PROFILE_PATH,
-                get_profile_path(expanded=False),
+                {DEFAULT_PROFILE_PATH: get_profile_path(expanded=False)},
             )
 
         if not os.path.exists(os.path.join(self.config_folder, "ui.conf")):
@@ -306,8 +306,7 @@ class VarietyWindow(Gtk.Window):
             Util.copy_with_replace(
                 varietyconfig.get_data_file("scripts", "set_wallpaper"),
                 os.path.join(self.scripts_folder, "set_wallpaper"),
-                DEFAULT_PROFILE_PATH.replace("~", "$HOME"),
-                get_profile_path(expanded=True),
+                {DEFAULT_PROFILE_PATH.replace("~", "$HOME"): get_profile_path(expanded=True)},
             )
 
         if not os.path.exists(os.path.join(self.scripts_folder, "get_wallpaper")):
@@ -318,8 +317,7 @@ class VarietyWindow(Gtk.Window):
             Util.copy_with_replace(
                 varietyconfig.get_data_file("scripts", "get_wallpaper"),
                 os.path.join(self.scripts_folder, "get_wallpaper"),
-                DEFAULT_PROFILE_PATH.replace("~", "$HOME"),
-                get_profile_path(expanded=True),
+                {DEFAULT_PROFILE_PATH.replace("~", "$HOME"): get_profile_path(expanded=True)},
             )
 
         # make all scripts executable:
@@ -329,6 +327,49 @@ class VarietyWindow(Gtk.Window):
 
         self.wallpaper_folder = os.path.join(self.config_folder, "wallpaper")
         Util.makedirs(self.wallpaper_folder)
+
+        self.create_desktop_entry()
+
+    def create_desktop_entry(self):
+        """
+        Creates a profile-specific desktop entry in ~/.local/share/applications
+        This ensures Variety's icon context menu is for the correct profile, and also that
+        application's windows will be correctly grouped by profile.
+        """
+        if is_default_profile():
+            return
+
+        try:
+            desktop_file_folder = os.path.expanduser("~/.local/share/applications")
+            profile_name = get_profile_short_name()
+            desktop_file_path = os.path.join(
+                desktop_file_folder, "variety-profile-{}.desktop".format(profile_name)
+            )
+
+            should_notify = not os.path.exists(desktop_file_path)
+
+            Util.makedirs(desktop_file_folder)
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("variety-profile.desktop.template"),
+                desktop_file_path,
+                {
+                    "{PROFILE_PATH}": get_profile_path(expanded=True),
+                    "{PROFILE_NAME}": profile_name,
+                    "{VARIETY_PATH}": os.path.abspath(sys.argv[0]),
+                    "{WM_CLASS}": get_profile_wm_class(),
+                },
+            )
+
+            if should_notify:
+                self.show_notification(
+                    _("Variety: New desktop entry"),
+                    _(
+                        'We created a new desktop entry to run Variety with profile "{}". '
+                        "Find it in the application launcher."
+                    ).format(get_profile_short_name()),
+                )
+        except Exception:
+            logger.exception(lambda: "Could not create desktop entry for a run with --profile")
 
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):

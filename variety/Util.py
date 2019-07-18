@@ -34,6 +34,7 @@ import urllib.parse
 import bs4
 import requests
 from PIL import Image
+
 from variety_lib import get_version
 
 # fmt: off
@@ -876,10 +877,11 @@ class Util:
             logger.exception(lambda: "Could not delete {}, ignoring".format(filepath))
 
     @staticmethod
-    def copy_with_replace(from_path, to_path, search_for, replace_with):
+    def copy_with_replace(from_path, to_path, search_replace_map):
         with open(from_path, "r") as file:
             data = file.read()
-        data = data.replace(search_for, replace_with)
+        for search, replace in search_replace_map.items():
+            data = data.replace(search, replace)
         with open(to_path + ".partial", "w") as file:
             file.write(data)
             file.flush()

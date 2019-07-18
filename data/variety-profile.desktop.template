@@ -1,0 +1,38 @@
+[Desktop Entry]
+Name=Variety (Profile: {PROFILE_NAME})
+Comment=Variety Wallpaper Changer, running with profile {PROFILE_NAME}
+Categories=GNOME;GTK;Utility;
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} %U
+MimeType=text/uri-list;x-scheme-handler/variety;x-scheme-handler/vrty;
+Icon=variety
+Terminal=false
+Type=Application
+StartupNotify=false
+Actions=Next;Previous;PauseResume;History;Preferences;
+Keywords=Wallpaper;Changer;Change;Download;Downloader;Variety;
+StartupWMClass={WM_CLASS}
+
+[Desktop Action Next]
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} --next
+Name=Next
+OnlyShowIn=Unity;
+
+[Desktop Action Previous]
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} --previous
+Name=Previous
+OnlyShowIn=Unity;
+
+[Desktop Action PauseResume]
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} --toggle-pause
+Name=Pause / Resume
+OnlyShowIn=Unity;
+
+[Desktop Action History]
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} --history
+Name=History
+OnlyShowIn=Unity;
+
+[Desktop Action Preferences]
+Exec={VARIETY_PATH} --profile {PROFILE_PATH} --preferences
+Name=Preferences
+OnlyShowIn=Unity;
