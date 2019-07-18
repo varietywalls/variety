@@ -190,7 +190,7 @@ def main():
     bus = dbus.SessionBus()
     dbus_key = _get_dbus_key()
     if bus.request_name(dbus_key) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
-        if not arguments:
+        if not arguments or (options.profile and len(arguments) <= 2):
             arguments = ["--preferences"]
         safe_print(
             _("Variety is already running. Sending the command to the running instance."),

@@ -38,6 +38,7 @@ from variety.profile import (
     get_autostart_file_path,
     get_profile_path,
     get_profile_short_name,
+    get_profile_wm_class,
     is_default_profile,
 )
 from variety.Util import Util, _, on_gtk
@@ -83,10 +84,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if not Util.check_variety_slideshow_present():
             self.ui.notebook.remove_page(2)
 
-        if not is_default_profile():
-            self.set_title(
-                _("Variety Preferences") + _(" (Profile: {})".format(get_profile_short_name()))
-            )
+        profile_suffix = (
+            "" if is_default_profile() else " (Profile: {})".format(get_profile_short_name())
+        )
+        self.set_title(_("Variety Preferences") + _(profile_suffix))
+        self.set_wmclass(get_profile_wm_class(), get_profile_wm_class())
 
         self.reload()
 
