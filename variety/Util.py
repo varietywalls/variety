@@ -887,6 +887,10 @@ class Util:
             file.flush()
         os.rename(to_path + ".partial", to_path)
 
+    @staticmethod
+    def get_exec_path():
+        return os.path.abspath(sys.argv[0])
+
 
 def on_gtk(f):
     @functools.wraps(f)

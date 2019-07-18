@@ -22,7 +22,6 @@ import shlex
 import shutil
 import stat
 import subprocess
-import sys
 import threading
 import time
 import urllib.parse
@@ -45,6 +44,7 @@ from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
 from variety.profile import (
     DEFAULT_PROFILE_PATH,
     get_autostart_file_path,
+    get_desktop_file_name,
     get_profile_path,
     get_profile_short_name,
     get_profile_wm_class,
@@ -329,47 +329,6 @@ class VarietyWindow(Gtk.Window):
         Util.makedirs(self.wallpaper_folder)
 
         self.create_desktop_entry()
-
-    def create_desktop_entry(self):
-        """
-        Creates a profile-specific desktop entry in ~/.local/share/applications
-        This ensures Variety's icon context menu is for the correct profile, and also that
-        application's windows will be correctly grouped by profile.
-        """
-        if is_default_profile():
-            return
-
-        try:
-            desktop_file_folder = os.path.expanduser("~/.local/share/applications")
-            profile_name = get_profile_short_name()
-            desktop_file_path = os.path.join(
-                desktop_file_folder, "variety-profile-{}.desktop".format(profile_name)
-            )
-
-            should_notify = not os.path.exists(desktop_file_path)
-
-            Util.makedirs(desktop_file_folder)
-            Util.copy_with_replace(
-                varietyconfig.get_data_file("variety-profile.desktop.template"),
-                desktop_file_path,
-                {
-                    "{PROFILE_PATH}": get_profile_path(expanded=True),
-                    "{PROFILE_NAME}": profile_name,
-                    "{VARIETY_PATH}": os.path.abspath(sys.argv[0]),
-                    "{WM_CLASS}": get_profile_wm_class(),
-                },
-            )
-
-            if should_notify:
-                self.show_notification(
-                    _("Variety: New desktop entry"),
-                    _(
-                        'We created a new desktop entry to run Variety with profile "{}". '
-                        "Find it in the application launcher."
-                    ).format(get_profile_short_name()),
-                )
-        except Exception:
-            logger.exception(lambda: "Could not create desktop entry for a run with --profile")
 
     def register_clipboard(self):
         def clipboard_changed(clipboard, event):
@@ -2829,33 +2788,70 @@ class VarietyWindow(Gtk.Window):
         self.no_effects_on = self.current if no_effects else None
         self.refresh_wallpaper()
 
+    def create_desktop_entry(self):
+        """
+        Creates a profile-specific desktop entry in ~/.local/share/applications
+        This ensures Variety's icon context menu is for the correct profile, and also that
+        application's windows will be correctly grouped by profile.
+        """
+        if is_default_profile():
+            return
+
+        try:
+            desktop_file_folder = os.path.expanduser("~/.local/share/applications")
+            profile_name = get_profile_short_name()
+            desktop_file_path = os.path.join(desktop_file_folder, get_desktop_file_name())
+
+            should_notify = not os.path.exists(desktop_file_path)
+
+            Util.makedirs(desktop_file_folder)
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("variety-profile.desktop.template"),
+                desktop_file_path,
+                {
+                    "{PROFILE_PATH}": get_profile_path(expanded=True),
+                    "{PROFILE_NAME}": (profile_name),
+                    "{VARIETY_PATH}": Util.get_exec_path(),
+                    "{WM_CLASS}": get_profile_wm_class(),
+                },
+            )
+
+            if should_notify:
+                self.show_notification(
+                    _("Variety: New desktop entry"),
+                    _(
+                        "We created a new desktop entry in ~/.local/share/applications "
+                        'to run Variety with profile "{}". Find it in the application launcher.'
+                    ).format(profile_name),
+                )
+        except Exception:
+            logger.exception(lambda: "Could not create desktop entry for a run with --profile")
+
     def create_autostart_entry(self):
         try:
-            logger.info(lambda: "Creating autostart entry")
-
-            name = (
-                "Variety"
-                if is_default_profile()
-                else "Variety (Profile: {})".format(get_profile_short_name())
-            )
-
-            content = (
-                "[Desktop Entry]\n"
-                + "Name={}\n".format(name)
-                + "Comment=Variety Wallpaper Changer\n"
-                "Icon=variety\n"
-                + "Exec=variety --profile {}\n".format(get_profile_path())
-                + "Terminal=false\n"
-                "Type=Application\n"
-                "X-GNOME-Autostart-Delay=20\n"
-            )
-
             autostart_file_path = get_autostart_file_path()
             Util.makedirs(os.path.dirname(autostart_file_path))
-            path = autostart_file_path
-            with open(path, "w") as f:
-                f.write(content)
-        except:
+            should_notify = not os.path.exists(autostart_file_path)
+
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("variety-autostart.desktop.template"),
+                autostart_file_path,
+                {
+                    "{PROFILE_PATH}": get_profile_path(expanded=True),
+                    "{VARIETY_PATH}": Util.get_exec_path(),
+                    "{WM_CLASS}": get_profile_wm_class(),
+                },
+            )
+
+            if should_notify:
+                self.show_notification(
+                    _("Variety: Created autostart desktop entry"),
+                    _(
+                        "We created a new desktop entry in ~/.config/autostart. "
+                        "Variety should start automatically on next restart."
+                    ),
+                )
+        except Exception:
             logger.exception(lambda: "Error while creating autostart desktop entry")
             self.show_notification(
                 _("Could not create autostart entry"),
