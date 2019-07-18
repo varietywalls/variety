@@ -33,9 +33,7 @@ def get_profile_short_name():
 
 
 def get_profile_wm_class():
-    return "Variety" + (
-        "" if is_default_profile() else "(Profile: {})".format(get_profile_short_name())
-    )
+    return "Variety" + ("" if is_default_profile() else " (Profile: {})".format(get_profile_path()))
 
 
 def is_default_profile():
@@ -51,11 +49,15 @@ def get_profile_id():
     """
     Returns a dbus-and-filename-friendly identificator of the profile path
     """
-    return Util.md5(os.path.normpath(get_profile_path()))
+    return Util.md5(os.path.normpath(get_profile_path()))[:10]
+
+
+def get_desktop_file_name():
+    if is_default_profile():
+        return "variety.desktop"
+    else:
+        return "variety-{}-{}.desktop".format(get_profile_short_name(), get_profile_id())
 
 
 def get_autostart_file_path():
-    if is_default_profile():
-        return os.path.expanduser("~/.config/autostart/variety.desktop")
-    else:
-        return os.path.expanduser("~/.config/autostart/variety-{}.desktop".format(get_profile_id()))
+    return os.path.join(os.path.expanduser("~/.config/autostart"), get_desktop_file_name())
