@@ -110,6 +110,10 @@ class VarietyWindow(Gtk.Window):
         "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
     }
 
+    # How many downloads to keep in the unseen_downloads queue.
+    # Provides a buffer for scrolling quickly through wallpapers.
+    DL_QUEUE_SIZE = 10
+
     @classmethod
     def get_instance(cls):
         return VarietyWindow.instance
@@ -147,9 +151,6 @@ class VarietyWindow(Gtk.Window):
         self.prepared = []
         self.prepared_cleared = False
         self.prepared_lock = threading.Lock()
-        self.prepared_from_downloads = []
-
-        self.downloaded = []
 
         self.register_clipboard()
 
@@ -163,6 +164,7 @@ class VarietyWindow(Gtk.Window):
         self.server_options = {}
         self.load_banned()
         self.load_history()
+        self.load_unseen_downloads()
         self.post_filter_filename = None
 
         if self.position < len(self.used):
@@ -384,9 +386,6 @@ class VarietyWindow(Gtk.Window):
 
     def prepare_download_folder(self):
         self.real_download_folder = self.get_real_download_folder()
-        if self.preferences_dialog:
-            self.preferences_dialog.update_real_download_folder()
-
         Util.makedirs(self.real_download_folder)
         dl_folder_file = os.path.join(self.real_download_folder, DL_FOLDER_FILE)
         if not os.path.exists(dl_folder_file):
@@ -535,7 +534,6 @@ class VarietyWindow(Gtk.Window):
         with self.prepared_lock:
             self.prepared_cleared = True
             self.prepared = []
-            self.prepared_from_downloads = []
             self.prepare_event.set()
         self.image_count = -1
 
@@ -642,11 +640,35 @@ class VarietyWindow(Gtk.Window):
     def load_banned(self):
         self.banned = set()
         try:
-            with open(os.path.join(self.config_folder, "banned.txt"), encoding="utf8") as f:
+            partial = os.path.join(self.config_folder, "banned.txt.partial")
+            with open(partial, encoding="utf8") as f:
                 for line in f:
                     self.banned.add(line.strip())
+            os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.info(lambda: "Missing or invalid banned URLs list, no URLs will be banned")
+
+    def load_unseen_downloads(self):
+        self.unseen_downloads = []
+        try:
+            with open(
+                os.path.join(self.config_folder, "unseen_downloads.txt"), encoding="utf8"
+            ) as f:
+                for line in f:
+                    if os.access(line.strip(), os.R_OK):
+                        self.unseen_downloads.append(line.strip())
+        except Exception:
+            pass
+
+    def save_unseen_downloads(self):
+        try:
+            partial = os.path.join(self.config_folder, "unseen_downloads.txt.partial")
+            with open(partial, "w", encoding="utf8") as f:
+                for file in self.unseen_downloads:
+                    f.write(file + "\n")
+            os.rename(partial, os.path.join(self.config_folder, "unseen_downloads.txt"))
+        except Exception:
+            logger.exception("Could not save unseen_downloads.txt")
 
     def start_clock_thread(self):
         if not self.clock_thread and self.options.clock_enabled:
@@ -820,8 +842,17 @@ class VarietyWindow(Gtk.Window):
                     self.ind.history.set_active(self.thumbs_manager.is_showing("history"))
                     self.ind.history.handler_unblock(self.ind.history_handler_id)
 
-                    self.ind.downloads.set_visible(self.options.download_enabled)
-                    self.ind.downloads.set_sensitive(len(self.downloaded) > 0)
+                    self.ind.downloads.set_visible(len(self.downloaders) > 0)
+                    downloaded = list(
+                        Util.list_files(
+                            files=[],
+                            folders=[self.real_download_folder],
+                            filter_func=Util.is_image,
+                            max_files=1,
+                            randomize=False,
+                        )
+                    )
+                    self.ind.downloads.set_sensitive(len(downloaded) > 0)
                     self.ind.downloads.handler_block(self.ind.downloads_handler_id)
                     self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
                     self.ind.downloads.handler_unblock(self.ind.downloads_handler_id)
@@ -1026,6 +1057,8 @@ class VarietyWindow(Gtk.Window):
                         lambda: "After search prepared buffer contains %s images"
                         % len(self.prepared)
                     )
+
+                self.dl_event.set()
             except Exception:
                 logger.exception(lambda: "Error in prepare thread:")
 
@@ -1062,40 +1095,28 @@ class VarietyWindow(Gtk.Window):
         return sum(1 for d in self.downloaders if not d.is_refresher()) > 0
 
     def download_thread(self):
-        self.last_dl_time = time.time()
         while self.running:
+            if len(self.unseen_downloads) >= VarietyWindow.DL_QUEUE_SIZE or not self.downloaders:
+                self.dl_event.wait()
+                continue
+
+            if not self.running:
+                return
+
+            if not self.downloaders:
+                continue
+
             try:
-                while (
-                    not self.options.download_enabled
-                    or (time.time() - self.last_dl_time) < self.options.download_interval
-                ):
-                    if not self.running:
-                        return
-                    now = time.time()
-                    wait_more = self.options.download_interval - max(0, (now - self.last_dl_time))
-                    if self.options.download_enabled:
-                        self.dl_event.wait(max(0, wait_more))
-                    else:
-                        self.dl_event.wait()
-                    self.dl_event.clear()
+                self.purge_downloaded()
 
-                if not self.running:
-                    return
-                if not self.options.download_enabled:
-                    continue
+                # download from a random downloader (gives equal chance to all)
+                downloader = random.choice(self.downloaders)
+                self.download_one_from(downloader)
 
-                self.last_dl_time = time.time()
-                if self.downloaders:
-                    self.purge_downloaded()
-
-                    # download from a random downloader (gives equal chance to all)
-                    downloader = self.downloaders[random.randint(0, len(self.downloaders) - 1)]
-                    self.download_one_from(downloader)
-
-                    # Also refresh the images for all the refreshers - these need to be updated regularly
-                    for dl in self.downloaders:
-                        if dl.is_refresher() and dl != downloader:
-                            dl.download_one()
+                # Also refresh the images for all refreshers - these need to be updated regularly
+                for dl in self.downloaders:
+                    if dl.is_refresher() and dl != downloader:
+                        dl.download_one()
 
             except Exception:
                 logger.exception(lambda: "Could not download wallpaper:")
@@ -1103,17 +1124,12 @@ class VarietyWindow(Gtk.Window):
     def trigger_download(self):
         if self.downloaders:
             logger.info(lambda: "Triggering one download")
-            self.last_dl_time = 0
             self.dl_event.set()
 
     def register_downloaded_file(self, file):
-        if not self.downloaded or self.downloaded[0] != file:
-            self.downloaded.insert(0, file)
-            self.downloaded = self.downloaded[:1000]
-            self.refresh_thumbs_downloads(file)
-
-            if file.startswith(self.options.download_folder):
-                self.download_folder_size += os.path.getsize(file)
+        self.refresh_thumbs_downloads(file)
+        if file.startswith(self.options.download_folder):
+            self.download_folder_size += os.path.getsize(file)
 
     def download_one_from(self, downloader):
         file = downloader.download_one()
@@ -1121,14 +1137,16 @@ class VarietyWindow(Gtk.Window):
             self.register_downloaded_file(file)
 
             if downloader.is_refresher() or self.image_ok(file, 0):
-                # give priority to newly-downloaded images - prepared_from_downloads are later prepended to self.prepared
-                logger.info(
-                    lambda: "Adding downloaded file %s to prepared_from_downloads queue" % file
-                )
+                # give priority to newly-downloaded images - unseen_downloads are later
+                # used with priority over self.prepared
+                logger.info(lambda: "Adding downloaded file %s to unseen_downloads queue" % file)
                 with self.prepared_lock:
-                    self.prepared_from_downloads.append(file)
+                    self.unseen_downloads.append(file)
+                    self.save_unseen_downloads()
+
             else:
-                # image is not ok, but still notify prepare thread that there is a new image - it might be "desperate"
+                # image is not ok, but still notify prepare thread that there is a new image -
+                # it might be "desperate"
                 self.prepare_event.set()
 
     def purge_downloaded(self):
@@ -1136,7 +1154,7 @@ class VarietyWindow(Gtk.Window):
             return
 
         if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
-            self.download_folder_size = self.get_folder_size(self.real_download_folder)
+            self.download_folder_size = Util.get_folder_size(self.real_download_folder)
             logger.info(
                 lambda: "Refreshed download folder size: {} mb".format(
                     self.download_folder_size / (1024.0 * 1024.0)
@@ -1175,15 +1193,6 @@ class VarietyWindow(Gtk.Window):
                         )
                 i += 1
             self.prepare_event.set()
-
-    @staticmethod
-    def get_folder_size(start_path):
-        total_size = 0
-        for dirpath, dirnames, filenames in os.walk(start_path):
-            for f in filenames:
-                fp = os.path.join(dirpath, f)
-                total_size += os.path.getsize(fp)
-        return total_size
 
     class RefreshLevel:
         ALL = 0
@@ -1529,10 +1538,10 @@ class VarietyWindow(Gtk.Window):
             img = None
 
             with self.prepared_lock:
-                # prepend the prepared_from_downloads queue and clear it:
-                random.shuffle(self.prepared_from_downloads)
-                self.prepared[0:0] = self.prepared_from_downloads
-                self.prepared_from_downloads = []
+                # with some big chance, use one of the unseen_downloads
+                if random.random() < self.options.download_preference_ratio:
+                    unseen = random.choice(self.unseen_downloads)
+                    self.prepared.insert(0, unseen)
 
                 for prep in self.prepared:
                     if prep != self.current and os.access(prep, os.R_OK):
@@ -1577,10 +1586,14 @@ class VarietyWindow(Gtk.Window):
             if len(self.used) == 0 or self.used[0] != img:
                 self.used.insert(0, img)
                 self.refresh_thumbs_history(img, at_front)
-
             self.position = 0
             if len(self.used) > 1000:
                 self.used = self.used[:1000]
+
+            self.unseen_downloads.remove(img)
+            self.save_unseen_downloads()
+            self.dl_event.set()
+
             self.auto_changed = auto_changed
             self.last_change_time = time.time()
             self.set_wp_throttled(img)
@@ -1615,10 +1628,15 @@ class VarietyWindow(Gtk.Window):
     def refresh_thumbs_downloads(self, added_image):
         self.update_indicator(auto_changed=False)
 
-        should_show = self.thumbs_manager.is_showing("downloads") or (
-            self.thumbs_manager.get_folders() is not None
-            and sum(1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f))
-            > 0
+        should_show = added_image not in self.thumbs_manager.images and (
+            self.thumbs_manager.is_showing("downloads")
+            or (
+                self.thumbs_manager.get_folders() is not None
+                and sum(
+                    1 for f in self.thumbs_manager.get_folders() if Util.file_in(added_image, f)
+                )
+                > 0
+            )
         )
 
         if should_show:
@@ -1904,7 +1922,7 @@ class VarietyWindow(Gtk.Window):
             0, self.position - sum(1 for f in self.used[: self.position] if f == file)
         )
         self.used = [f for f in self.used if f != file]
-        self.downloaded = [f for f in self.downloaded if f != file]
+        self.unseen_downloads = [f for f in self.used if f != file]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
 
@@ -1913,7 +1931,7 @@ class VarietyWindow(Gtk.Window):
             0, self.position - sum(1 for f in self.used[: self.position] if Util.file_in(f, folder))
         )
         self.used = [f for f in self.used if not Util.file_in(f, folder)]
-        self.downloaded = [f for f in self.downloaded if not Util.file_in(f, folder)]
+        self.unseen_downloads = [f for f in self.unseen_downloads if not Util.file_in(f, folder)]
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
@@ -1946,7 +1964,6 @@ class VarietyWindow(Gtk.Window):
                 if ok:
                     new_file = os.path.join(self.options.favorites_folder, os.path.basename(file))
                     self.used = [(new_file if f == file else f) for f in self.used]
-                    self.downloaded = [(new_file if f == file else f) for f in self.downloaded]
                     with self.prepared_lock:
                         self.prepared = [(new_file if f == file else f) for f in self.prepared]
                         self.prepare_event.set()
@@ -2560,7 +2577,16 @@ class VarietyWindow(Gtk.Window):
         if self.thumbs_manager.is_showing("downloads"):
             self.thumbs_manager.hide(force=True)
         else:
-            self.thumbs_manager.show(self.downloaded, type="downloads")
+            downloaded = list(
+                Util.list_files(
+                    files=[],
+                    folders=[self.real_download_folder],
+                    filter_func=Util.is_image,
+                    randomize=False,
+                )
+            )
+            downloaded = sorted(downloaded, key=lambda f: os.stat(f).st_mtime, reverse=True)
+            self.thumbs_manager.show(downloaded, type="downloads")
             self.thumbs_manager.pin()
         self.update_indicator(auto_changed=False)
 

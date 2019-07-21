@@ -16,6 +16,8 @@
 import abc
 import collections
 import logging
+import time
+from datetime import timedelta
 
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 
@@ -23,15 +25,15 @@ logger = logging.getLogger("variety")
 
 
 Throttling = collections.namedtuple(
-    "Throttling", ["min_download_interval", "min_fill_queue_interval"]
+    "Throttling", ["max_downloads_per_hour", "max_queue_fills_per_hour"]
 )
 
 
 class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
     def __init__(self):
         super().__init__()
-        self.last_download_time = 0
-        self.last_fill_time = 0
+        self._last_download_times = []
+        self._last_queue_fill_times = []
         self.variety = None
 
     def set_variety(self, variety):
@@ -93,14 +95,13 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
 
     def get_default_throttling(self):
         """
-        Throttling serves to avoid overloading servers when multiple Variety users use the source simultaneously.
-        It is normally controlled via a remote config, but defaults should be provided for the cases
-        when the remote config is not set or cannot be fetched.
+        Throttling serves to avoid overloading servers when multiple Variety users use the source 
+        simultaneously. It is normally controlled via a remote config, but defaults should be 
+        provided for the cases when the remote config is not set or cannot be fetched.
         All downloaders for the same source are throttled together.
-        :return: a Throttling namedtuple with min_download_interval (in seconds)
-        and min_fill_queue_interval (in seconds)
+        :return: a Throttling namedtuple
         """
-        return Throttling(min_download_interval=0, min_fill_queue_interval=0)
+        return Throttling(max_downloads_per_hour=None, max_queue_fills_per_hour=None)
 
     def get_server_options_key(self):
         """
@@ -125,30 +126,61 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         """
         defaults = self.get_default_throttling()
 
-        min_download_interval, min_fill_queue_interval = defaults
+        max_downloads_per_hour, max_queue_fills_per_hour = defaults
         name = self.get_source_name()
 
         try:
-            logger.info(lambda: "%s: parsing serverside options" % name)
+            logger.info(lambda: "{}: parsing serverside options".format(name))
             options = self.get_server_options()
             logger.info(
-                lambda: "%s serverside options: %s" % (self.get_source_name(), str(options))
+                lambda: "{} serverside options: {}".format(self.get_source_name(), str(options))
             )
         except Exception:
             logger.info(
-                lambda: "Could not parse %s serverside options, using defaults %d, %d"
-                % (name, min_download_interval, min_fill_queue_interval)
+                lambda: "Could not parse {} serverside options, using defaults {}, {}".format(
+                    name, max_downloads_per_hour, max_queue_fills_per_hour
+                )
             )
             return defaults
 
         try:
-            min_download_interval = int(options["min_download_interval"])
+            max_downloads_per_hour = int(options["max_downloads_per_hour"])
         except Exception:
-            logger.exception(lambda: "Bad or missing min_download_interval")
+            pass
 
         try:
-            min_fill_queue_interval = int(options["min_fill_queue_interval"])
+            max_queue_fills_per_hour = int(options["max_queue_fills_per_hour"])
         except Exception:
-            logger.exception(lambda: "Bad or missing min_fill_queue_interval")
+            pass
 
-        return Throttling(min_download_interval, min_fill_queue_interval)
+        return Throttling(max_downloads_per_hour, max_queue_fills_per_hour)
+
+    def _count_last_hour_downloads(self):
+        now = time.time()
+        self._last_download_times = [t for t in self._last_download_times if now - t < 3600]
+        return len(self._last_download_times)
+
+    def is_download_allowed(self):
+        max_downloads_per_hour, _ = self.get_throttling()
+        return (
+            max_downloads_per_hour is None
+            or self._count_last_hour_downloads() < max_downloads_per_hour
+        )
+
+    def register_download(self):
+        self._last_download_times.append(time.time())
+
+    def _count_last_hour_queue_fills(self):
+        now = time.time()
+        self._last_queue_fill_times = [t for t in self._last_queue_fill_times if now - t < 3600]
+        return len(self._last_queue_fill_times)
+
+    def is_fill_queue_allowed(self):
+        _, max_queue_fills_per_hour = self.get_throttling()
+        return (
+            max_queue_fills_per_hour is None
+            or self._count_last_hour_queue_fills() < max_queue_fills_per_hour
+        )
+
+    def register_fill_queue(self):
+        self._last_queue_fill_times.append(time.time())

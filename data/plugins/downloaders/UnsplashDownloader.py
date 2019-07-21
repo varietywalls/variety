@@ -62,7 +62,7 @@ class UnsplashDownloader(SimpleDownloader):
         return "unsplash_v2"
 
     def get_default_throttling(self):
-        return Throttling(min_download_interval=600, min_fill_queue_interval=1800)
+        return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=3)
 
     def fill_queue(self):
         if time.time() - UnsplashDownloader.rate_limiting_started_time < 3600:
@@ -71,7 +71,7 @@ class UnsplashDownloader(SimpleDownloader):
             )
             return []
 
-        page = random.randint(1, 250)
+        page = random.randint(1, 4500)
         url = "https://api.unsplash.com/photos/?page=%d&per_page=30&client_id=%s" % (
             page,
             UnsplashDownloader.CLIENT_ID,

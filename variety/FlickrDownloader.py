@@ -50,7 +50,7 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
         return "flickr"
 
     def get_default_throttling(self):
-        return Throttling(min_download_interval=60, min_fill_queue_interval=600)
+        return Throttling(max_downloads_per_hour=120, max_queue_fills_per_hour=20)
 
     def parse_location(self):
         s = self.config.split(";")

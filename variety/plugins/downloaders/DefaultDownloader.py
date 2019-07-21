@@ -17,7 +17,6 @@ import abc
 import collections
 import logging
 import os
-import time
 
 from variety.plugins.downloaders.Downloader import Downloader
 from variety.Util import Util
@@ -117,12 +116,12 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             raise Exception("update_download_folder was not called before downloading")
 
         name = self.get_source_name()
-        min_download_interval, min_fill_queue_interval = self.source.get_throttling()
+        max_downloads_per_hour, max_queue_fills_per_hour = self.source.get_throttling()
 
-        if time.time() - self.source.last_download_time < min_download_interval:
+        if not self.source.is_download_allowed():
             logger.info(
-                lambda: "%s: Minimal interval between downloads is %d, skip this attempt"
-                % (name, min_download_interval)
+                lambda: "%s: max_downloads_per_hour of %d reached, skip this attempt"
+                % (name, max_downloads_per_hour)
             )
             return None
 
@@ -130,14 +129,14 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         logger.info(lambda: "%s: Queue size: %d" % (name, len(self.queue)))
 
         if not self.queue:
-            if time.time() - self.source.last_fill_time < min_fill_queue_interval:
+            if not self.source.is_fill_queue_allowed():
                 logger.info(
-                    lambda: "%s: Queue empty, but minimal interval between fill attempts is %d, "
-                    "will try again later" % (name, min_fill_queue_interval)
+                    lambda: "%s: Queue empty, but max_queue_fills_per_hour of %d reached, "
+                    "will try again later" % (name, max_queue_fills_per_hour)
                 )
                 return None
 
-            self.source.last_fill_time = time.time()
+            self.source.register_fill_queue()
             logger.info(lambda: "%s: Filling queue" % name)
             items = self.fill_queue()
             for item in items:
@@ -149,7 +148,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         else:
             logger.info(lambda: "%s: Queue populated with %d URLs" % (name, len(self.queue)))
 
-        self.source.last_download_time = time.time()
+        self.source.register_download()
         queue_item = self.queue.pop()
         return self.download_queue_item(queue_item)
 

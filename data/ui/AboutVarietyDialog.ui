@@ -1,14 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <!-- interface-requires about_variety_dialog 1.0 -->
+  <requires lib="gtk+" version="3.0"/>
+  <requires lib="about_variety_dialog" version="1.0"/>
   <object class="AboutVarietyDialog" id="about_variety_dialog">
-    <property translatable="yes" name="copyright">Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors</property><property name="can_focus">False</property>
+    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">About Variety</property>
     <property name="icon">../media/variety128.png</property>
     <property name="type_hint">normal</property>
     <property name="program_name">Variety</property>
     <property name="version">placeholder version</property>
+    <property name="copyright" translatable="yes">Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors</property>
     <property name="comments" translatable="yes">An automatic wallpaper changer, downloader and manager.</property>
     <property name="website">https://launchpad.net/variety</property>
     <property name="website_label" translatable="yes">http://peterlevi.com/variety</property>
@@ -28,10 +31,17 @@
     <property name="authors">Copyright (c) 2012-2019, Peter Levi, James Lu &amp; Variety contributors</property>
     <property name="logo">../media/variety128.png</property>
     <property name="license_type">gpl-3-0</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -46,9 +56,6 @@
             <property name="pack_type">end</property>
             <property name="position">0</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
     </child>
