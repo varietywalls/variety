@@ -61,7 +61,7 @@ class EarthviewDownloader(SimpleDownloader):
     def get_default_throttling(self):
         # throttle this source, as otherwise maps "overpower" all other types of images
         # with Variety's default settings, and we have no other way to control source "weights"
-        return Throttling(min_download_interval=600, min_fill_queue_interval=0)
+        return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=None)
 
     def download_queue_item(self, item):
         region = item["Region"]
