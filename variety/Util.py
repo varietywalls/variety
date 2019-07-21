@@ -50,6 +50,7 @@ USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger("variety")
+gettext.textdomain("variety")
 
 
 def _(text):

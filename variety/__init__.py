@@ -16,7 +16,6 @@
 ### END LICENSE
 
 import dbus, dbus.service, dbus.glib
-import gettext
 import logging
 import os
 import signal
@@ -26,13 +25,6 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject  # pylint: disable=E0611
-
-from variety import VarietyWindow, ThumbsManager, ThumbsWindow
-from variety.profile import set_profile_path, get_profile_path, is_default_profile, get_profile_id
-from variety.Util import Util, _, ModuleProfiler, safe_print
-
-
-gettext.textdomain("variety")
 
 
 class SafeLogger(logging.Logger):
@@ -64,6 +56,13 @@ class SafeLogger(logging.Logger):
 
 
 logging.setLoggerClass(SafeLogger)
+
+
+# these must be after the setLoggerClass call, as they obtain the variety logger
+from variety import VarietyWindow, ThumbsManager, ThumbsWindow
+from variety.profile import set_profile_path, get_profile_path, is_default_profile, get_profile_id
+from variety.Util import Util, _, ModuleProfiler, safe_print
+
 
 # # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
 # Still, generally considerd bad practice, may cause some deep hidden errors, as various Python stuff depends on it
