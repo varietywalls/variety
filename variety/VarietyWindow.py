@@ -788,6 +788,16 @@ class VarietyWindow(Gtk.Window):
             favs_op = self.determine_favorites_operation(file)
             image_source = self.get_source(file)
 
+            downloaded = list(
+                Util.list_files(
+                    files=[],
+                    folders=[self.real_download_folder],
+                    filter_func=Util.is_image,
+                    max_files=1,
+                    randomize=False,
+                )
+            )
+
             def _gtk_update():
                 rating_menu = None
                 if deleteable:
@@ -843,15 +853,6 @@ class VarietyWindow(Gtk.Window):
                     self.ind.history.handler_unblock(self.ind.history_handler_id)
 
                     self.ind.downloads.set_visible(len(self.downloaders) > 0)
-                    downloaded = list(
-                        Util.list_files(
-                            files=[],
-                            folders=[self.real_download_folder],
-                            filter_func=Util.is_image,
-                            max_files=1,
-                            randomize=False,
-                        )
-                    )
                     self.ind.downloads.set_sensitive(len(downloaded) > 0)
                     self.ind.downloads.handler_block(self.ind.downloads_handler_id)
                     self.ind.downloads.set_active(self.thumbs_manager.is_showing("downloads"))
@@ -1098,6 +1099,7 @@ class VarietyWindow(Gtk.Window):
         while self.running:
             if len(self.unseen_downloads) >= VarietyWindow.DL_QUEUE_SIZE or not self.downloaders:
                 self.dl_event.wait()
+                self.dl_event.clear()
                 continue
 
             if not self.running:
@@ -1107,7 +1109,8 @@ class VarietyWindow(Gtk.Window):
                 continue
 
             try:
-                self.purge_downloaded()
+                if random.random() < 0.05:
+                    self.purge_downloaded()
 
                 # download from a random downloader (gives equal chance to all)
                 downloader = random.choice(self.downloaders)
@@ -1117,7 +1120,6 @@ class VarietyWindow(Gtk.Window):
                 for dl in self.downloaders:
                     if dl.is_refresher() and dl != downloader:
                         dl.download_one()
-
             except Exception:
                 logger.exception(lambda: "Could not download wallpaper:")
 
