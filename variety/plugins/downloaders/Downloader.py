@@ -126,6 +126,9 @@ class Downloader(abc.ABC):
         """
         return self.config
 
+    def get_identifier(self):
+        return self.target_folder
+
     def get_full_descriptor(self):
         """
         Returns a dict object that will be persisted and loaded along with the config string.
