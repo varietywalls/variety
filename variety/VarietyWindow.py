@@ -1103,7 +1103,7 @@ class VarietyWindow(Gtk.Window):
             available_downloaders = self._available_downloaders(now)
 
             if (
-                len(self.unseen_downloads) >= VarietyWindow.DL_QUEUE_SIZE
+                len(self._enabled_unseen_downloads()) >= VarietyWindow.DL_QUEUE_SIZE
                 or not available_downloaders
             ):
                 self.dl_event.wait()
@@ -1130,6 +1130,11 @@ class VarietyWindow(Gtk.Window):
             dl
             for dl in self.downloaders
             if self.downloaders_meta[dl.get_identifier()].get("last_download_failure", 0) < now - 60
+            and (
+                not dl.is_refresher()
+                or self.downloaders_meta[dl.get_identifier()].get("last_download_success", 0)
+                < now - 60
+            )
         ]
 
     def trigger_download(self):
@@ -1146,6 +1151,9 @@ class VarietyWindow(Gtk.Window):
         file = downloader.download_one()
         if file:
             self.register_downloaded_file(file)
+            self.downloaders_meta[downloader.get_identifier()][
+                "last_download_success"
+            ] = time.time()
 
             if downloader.is_refresher() or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - unseen_downloads are later
@@ -1558,7 +1566,7 @@ class VarietyWindow(Gtk.Window):
                 if random.random() < self.options.download_preference_ratio:
                     enabled_unseen_downloads = self._enabled_unseen_downloads()
                     if enabled_unseen_downloads:
-                        unseen = random.choice(enabled_unseen_downloads)
+                        unseen = random.choice(list(enabled_unseen_downloads))
                         self.prepared.insert(0, unseen)
 
                 for prep in self.prepared:
@@ -1623,7 +1631,7 @@ class VarietyWindow(Gtk.Window):
                 self.unseen_downloads.remove(img)
                 self.save_unseen_downloads()
                 self.dl_event.set()
-            except ValueError:
+            except KeyError:
                 pass
 
             self.auto_changed = auto_changed
