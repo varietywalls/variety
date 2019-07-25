@@ -1466,6 +1466,7 @@ class VarietyWindow(Gtk.Window):
 
     def image_ok(self, img, fuzziness):
         try:
+            img = os.path.normpath(img)
             if Util.is_animated_gif(img):
                 return False
 
@@ -1479,7 +1480,11 @@ class VarietyWindow(Gtk.Window):
                     width = self.image_colors_cache[img][3]
                     height = self.image_colors_cache[img][4]
                 else:
-                    i = PILImage.open(img)
+                    try:
+                        i = PILImage.open(img)
+                    except Exception as e:
+                        logger.debug("Could not PILImage.open image %s: moving on", img, exc_info=True)
+                        raise
                     width = i.size[0]
                     height = i.size[1]
 
@@ -1547,7 +1552,10 @@ class VarietyWindow(Gtk.Window):
         if not file:
             file = self.current
         if file:
-            subprocess.Popen(["xdg-open", os.path.realpath(file)])
+            if os.name == 'nt':
+                subprocess.Popen(["explorer", os.path.realpath(file)])
+            else:
+                subprocess.Popen(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
@@ -1811,6 +1819,10 @@ class VarietyWindow(Gtk.Window):
                     GObject.idle_add(lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS))
 
             Util.start_force_exit_thread(15)
+
+            # On windows we need to destroy the indicator otherwise it won't disappear until hovered over
+            self.ind.destroy_indicator()
+
             logger.debug(lambda: "OK, waiting for other loops to finish")
             logger.debug(lambda: 'Remaining threads: ')
             for t in threading.enumerate():
@@ -2306,7 +2318,14 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
             file = None
 
-            if os.access(script, os.X_OK):
+            if os.name == 'nt':
+                import ctypes
+                # https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-systemparametersinfow#SPI_GETDESKWALLPAPER
+                SPI_GETDESKWALLPAPER = 0x0073
+                wallpaper = ctypes.create_unicode_buffer(200)
+                ctypes.windll.user32.SystemParametersInfoW(SPI_GETDESKWALLPAPER, 200, wallpaper, 0)
+                file = wallpaper.value
+            elif os.access(script, os.X_OK):
                 logger.debug(lambda: "Running get_wallpaper script")
                 try:
                     output = subprocess.check_output(script).decode().strip()
@@ -2346,16 +2365,31 @@ To set a specific wallpaper: %prog /some/local/image.jpg --next""")
 
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
-        if os.access(script, os.X_OK):
+        if os.name == 'nt':
+            import ctypes
+            # Windows code for setting a wallpaper
+            WINDOWS_WALLPAPER_STYLE_STRETCH = "2"
+            try:
+                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallpaperStyle", WINDOWS_WALLPAPER_STYLE_STRETCH)
+                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallPaper", original_file)
+            except FileNotFoundError as e:
+                logger.exception(lambda: "Exception when calling execute_set_desktop_wallpaper: %s" % str(e))
+
+            # https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-systemparametersinfow#SPI_SETDESKWALLPAPER
+            SPI_SETDESKWALLPAPER = 0x0014
+            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, original_file , 0)
+        elif os.access(script, os.X_OK):
             auto = "manual" if not self.auto_changed else \
                 ("auto" if refresh_level == VarietyWindow.RefreshLevel.ALL else "refresh")
-            logger.debug(lambda: "Running set_wallpaper script with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
+            logger.debug(lambda: "Running execute_set_desktop_wallpaper with parameters: %s, %s, %s" % (wallpaper, auto, original_file))
             try:
                 subprocess.check_call(["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file])
             except subprocess.CalledProcessError as e:
                 if e.returncode == 124:
                     logger.error(lambda: "Timeout while running set_wallpaper script, killed")
                 logger.exception(lambda: "Exception when calling set_wallpaper script: %d" % e.returncode)
+            except Exception as e:
+                logger.exception(lambda: "Exception when calling set_wallpaper script: %s" % str(e))
         else:
             logger.error(lambda: "set_wallpaper script is missing or not executable: " + script)
             if self.gsettings:

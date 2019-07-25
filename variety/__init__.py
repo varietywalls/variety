@@ -21,6 +21,7 @@ import logging
 gettext.textdomain('variety')
 import os
 import sys
+import socket
 
 def _(text):
     """Returns the translated form of text."""
@@ -81,7 +82,6 @@ logging.setLoggerClass(SafeLogger)
 # sys.setdefaultencoding('UTF8')
 
 import signal
-import dbus, dbus.service, dbus.glib
 import logging
 
 import gi
@@ -99,18 +99,158 @@ from variety_lib.helpers import set_up_logging
 DBUS_KEY = 'com.peterlevi.Variety'
 DBUS_PATH = '/com/peterlevi/Variety'
 
+class IVarietyService():
+    def __init__(self):
+        pass
 
-class VarietyService(dbus.service.Object):
-    def __init__(self, variety_window):
-        self.variety_window = variety_window
-        bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
+    # Command to start the listener thread (or do nothing if not singleton)
+    def start_listener(self):
+        pass
 
-    @dbus.service.method(dbus_interface=DBUS_KEY, in_signature='as', out_signature='s')
-    def process_command(self, arguments):
-        result = self.variety_window.process_command(arguments, initial_run=False)
-        return "" if result is None else result
+    # Send command to the listener thread of the master process
+    def send_command(self):
+        pass
 
+    # Set the variety window for this class
+    def set_variety_window(self, variety_window):
+        pass
+
+    # Return whether or not this service is the current master service
+    def is_master(self):
+        pass
+
+if os.name == 'nt':
+    import asyncio
+    import threading
+    import pickle
+    class VarietyService(IVarietyService, threading.Thread):
+        def __init__(self):
+            super(IVarietyService, self).__init__()
+            super(threading.Thread, self).__init__()
+
+        @staticmethod
+        def unix_sockets_supported():
+            # Maybe some day for windows: https://bugs.python.org/issue33408
+            return hasattr(socket, 'AF_UNIX')
+
+        @staticmethod
+        def get_sock_file():
+            return os.path.join(os.path.expanduser("~/.config/variety/"), "ipc.sock")
+
+        @staticmethod
+        def start_server(cb, loop):
+            if not VarietyService.unix_sockets_supported():
+                return asyncio.start_server(cb, '127.0.0.1', 8888, loop=loop)
+            else:
+                return asyncio.start_unix_server(cb, '127.0.0.1', path=VarietyService.get_sock_file(), loop=loop)
+
+        @staticmethod
+        def open_connection(loop):
+            if not VarietyService.unix_sockets_supported():
+                return asyncio.open_connection('127.0.0.1', 8888, loop=loop)
+            else:
+                return asyncio.open_unix_connection(path=VarietyService.get_sock_file(), loop=loop)
+
+        class CommandServerThread(threading.Thread):
+            def set_variety_service(self, service):
+                self.service = service
+
+            def run(self):
+                self.coro = VarietyService.start_server(self.process_command_server, loop=self.service.loop)
+                try:
+                    self.server = self.service.loop.run_until_complete(self.coro)
+                    # Serve requests until Ctrl+C is pressed
+                    try:
+                        self.service.loop.run_until_complete(self.server.wait_closed())
+                    except KeyboardInterrupt:
+                        pass
+                except OSError:
+                    # Not the master
+                    self.coro = None
+                    self.server = None
+
+            async def process_command_server(self, reader, writer):
+                data = await reader.read()
+                arguments = pickle.loads(data)
+                result = self.service.variety_window.process_command(arguments, initial_run=False)
+                writer.write("".encode() if result is None else result.encode())
+                # Write eof so that reader knows to stop reading
+                writer.write_eof()
+                writer.close()
+
+        def start_listener(self):
+            self.loop = asyncio.get_event_loop()
+
+            # Fire up command server thread
+            self.server_thread = self.CommandServerThread()
+            self.server_thread.set_variety_service(self)
+            self.server_thread.start()
+
+            # Will exit as soon as thread exits if could not bind
+            self.server_thread.join(timeout=2)
+            # If we can't bind, this is a client and thread will be dead.
+            self.master = self.server_thread.is_alive()
+
+        async def process_command_client(self, arguments, loop):
+            reader, writer = await VarietyService.open_connection(loop)
+            # Write out the request as a pickle
+            writer.write(pickle.dumps(arguments))
+            # Terminate with eof
+            writer.write_eof()
+            # Read the response
+            data = await reader.read()
+            # Clean up
+            writer.close()
+            return data
+
+        def send_command(self, arguments):
+            if not arguments:
+                arguments = ["--preferences"]
+            safe_print(_("Variety is already running. Sending the command to the running instance."),
+                    "Variety is already running. Sending the command to the running instance.")
+            self.loop = asyncio.get_event_loop()
+            result = self.loop.run_until_complete(
+                self.process_command_client(arguments, self.loop))
+            self.loop.close()
+            return result
+
+        def set_variety_window(self, variety_window):
+            self.variety_window = variety_window
+
+        def is_master(self):
+            return self.master
+else:
+    import dbus, dbus.service, dbus.glib
+    class VarietyService(IVarietyService, dbus.service.Object):
+        def __init__(self, variety_window):
+            super().__init__()
+
+        # Initialize the underlying dbus setup
+        def start_listener(self):
+            bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
+            dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
+            self.bus = dbus.SessionBus()
+
+        def set_variety_window(self, variety_window):
+            self.variety_window = variety_window
+            self.bus.call_on_disconnection(self.variety_window.on_quit)
+
+        def is_master(self):
+            return self.bus.request_name(DBUS_KEY) == dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER
+
+        # This is for command requests coming from external
+        @dbus.service.method(dbus_interface=DBUS_KEY, in_signature='as', out_signature='s')
+        def process_command(self, arguments):
+            result = self.variety_window.process_command(arguments, initial_run=False)
+            return "" if result is None else result
+
+        def send_command(self, arguments):
+            if not arguments:
+                arguments = ["--preferences"]
+            safe_print(_("Variety is already running. Sending the command to the running instance."),
+                    "Variety is already running. Sending the command to the running instance.")
+            method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+            return method(arguments)
 
 VARIETY_WINDOW = None
 
@@ -142,7 +282,8 @@ def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, sigint_handler)
     signal.signal(signal.SIGTERM, sigint_handler)
-    signal.signal(signal.SIGQUIT, sigint_handler)
+    if hasattr(signal, 'SIGQUIT'):
+        signal.signal(signal.SIGQUIT, sigint_handler)
 
     Util.makedirs(os.path.expanduser("~/.config/variety/"))
 
@@ -150,19 +291,6 @@ def main():
 
     # validate arguments
     options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
-
-    bus = dbus.SessionBus()
-    # ensure singleton
-    if bus.request_name(DBUS_KEY) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
-        if not arguments:
-            arguments = ["--preferences"]
-        safe_print(_("Variety is already running. Sending the command to the running instance."),
-                   "Variety is already running. Sending the command to the running instance.")
-        method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
-        result = method(arguments)
-        if result:
-            safe_print(result)
-        return
 
     # set up logging
     # set_up_logging must be called after the DBus checks, only by one running instance,
@@ -193,10 +321,14 @@ def main():
     window = VarietyWindow.VarietyWindow()
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
-    service = VarietyService(window)
-
-    bus.call_on_disconnection(window.on_quit)
-
+    service = VarietyService()
+    service.set_variety_window(window)
+    service.start_listener()
+    if not service.is_master():
+        result = service.send_command(arguments)
+        if result:
+            safe_print(result)
+        return
     window.start(arguments)
 
     GObject.timeout_add(2000, check_quit)
