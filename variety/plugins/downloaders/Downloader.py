@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 import abc
+import json
 import os
 
 from variety.Util import Util
@@ -32,6 +33,7 @@ class Downloader(abc.ABC):
         self.config = config
         self.full_descriptor = full_descriptor
         self.target_folder = None  # initialized post construction by update_download_folder
+        self.state = None
 
     def get_variety(self):
         """
@@ -53,7 +55,26 @@ class Downloader(abc.ABC):
         if len(filename) + len(global_download_folder) > 160:
             filename = filename[: (150 - len(global_download_folder))] + Util.md5(filename)[:10]
         self.target_folder = os.path.join(global_download_folder, filename)
+        self._load_state()
         return self.target_folder
+
+    def _load_state(self):
+        try:
+            with open(os.path.join(self.target_folder, "state.json")) as f:
+                self.state = json.load(f)
+        except Exception:
+            self.state = {}
+
+    def save_state(self):
+        """
+        Persists the state as json inside the downloader's target folder.
+        state is a dict that is used internally by Variety, but the downloaders can also use it
+        keeping any sort of state is necessary for the downloader.
+        """
+        if self.target_folder is None:
+            raise Exception("update_download_folder was not called before save_state")
+        with open(os.path.join(self.target_folder, "state.json"), "w") as f:
+            json.dump(self.state, f)
 
     def get_local_filename(self, url):
         """
