@@ -113,7 +113,7 @@ class VarietyWindow(Gtk.Window):
 
     # How many downloads to keep in the unseen_downloads queue.
     # Provides a buffer for scrolling quickly through wallpapers.
-    DL_QUEUE_SIZE = 10
+    DL_QUEUE_SIZE = 20
 
     @classmethod
     def get_instance(cls):
@@ -165,7 +165,6 @@ class VarietyWindow(Gtk.Window):
         self.server_options = {}
         self.load_banned()
         self.load_history()
-        self.load_unseen_downloads()
         self.post_filter_filename = None
 
         if self.position < len(self.used):
@@ -435,7 +434,6 @@ class VarietyWindow(Gtk.Window):
             self.folders.append(self.options.fetched_folder)
 
         self.downloaders = []
-        self.downloaders_meta = defaultdict(dict)
         self.download_folder_size = -1
 
         if self.size_options_changed():
@@ -649,28 +647,6 @@ class VarietyWindow(Gtk.Window):
             os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.info(lambda: "Missing or invalid banned URLs list, no URLs will be banned")
-
-    def load_unseen_downloads(self):
-        self.unseen_downloads = set()
-        try:
-            with open(
-                os.path.join(self.config_folder, "unseen_downloads.txt"), encoding="utf8"
-            ) as f:
-                for line in f:
-                    if os.access(line.strip(), os.R_OK):
-                        self.unseen_downloads.add(line.strip())
-        except Exception:
-            pass
-
-    def save_unseen_downloads(self):
-        try:
-            partial = os.path.join(self.config_folder, "unseen_downloads.txt.partial")
-            with open(partial, "w", encoding="utf8") as f:
-                for file in self.unseen_downloads:
-                    f.write(file + "\n")
-            os.rename(partial, os.path.join(self.config_folder, "unseen_downloads.txt"))
-        except Exception:
-            logger.exception("Could not save unseen_downloads.txt")
 
     def start_clock_thread(self):
         if not self.clock_thread and self.options.clock_enabled:
@@ -1099,42 +1075,41 @@ class VarietyWindow(Gtk.Window):
 
     def download_thread(self):
         while self.running:
-            now = time.time()
-            available_downloaders = self._available_downloaders(now)
-
-            if (
-                len(self._enabled_unseen_downloads()) >= VarietyWindow.DL_QUEUE_SIZE
-                or not available_downloaders
-            ):
-                self.dl_event.wait()
-                self.dl_event.clear()
-                continue
-
             try:
+                now = time.time()
+                available_downloaders = self._available_downloaders(now)
+
+                if (
+                    len(self._enabled_unseen_downloads()) >= VarietyWindow.DL_QUEUE_SIZE
+                    or not available_downloaders
+                ):
+                    self.dl_event.wait()
+                    self.dl_event.clear()
+                    continue
+
                 if random.random() < 0.05:
                     self.purge_downloaded()
 
-                # download from a random downloader (gives equal chance to all)
-                downloader = random.choice(available_downloaders)
+                # download from the downloader with the smallest unseen queue
+                downloader = sorted(
+                    available_downloaders, key=lambda dl: len(dl.state.get("unseen_downloads", []))
+                )[0]
                 self.download_one_from(downloader)
 
-                # Also refresh the images for all refreshers - these need to be updated regularly
+                # Also refresh the images for all refreshers that haven't downloaded recently -
+                # these need to be updated regularly
                 for dl in available_downloaders:
                     if dl.is_refresher() and dl != downloader:
                         dl.download_one()
             except Exception:
-                logger.exception(lambda: "Could not download wallpaper:")
+                logger.exception(lambda: "Exception in download_thread:")
 
     def _available_downloaders(self, now):
         return [
             dl
             for dl in self.downloaders
-            if self.downloaders_meta[dl.get_identifier()].get("last_download_failure", 0) < now - 60
-            and (
-                not dl.is_refresher()
-                or self.downloaders_meta[dl.get_identifier()].get("last_download_success", 0)
-                < now - 60
-            )
+            if dl.state.get("last_download_failure", 0) < now - 60
+            and (not dl.is_refresher() or dl.state.get("last_download_success", 0) < now - 60)
         ]
 
     def trigger_download(self):
@@ -1148,20 +1123,24 @@ class VarietyWindow(Gtk.Window):
             self.download_folder_size += os.path.getsize(file)
 
     def download_one_from(self, downloader):
-        file = downloader.download_one()
+        try:
+            file = downloader.download_one()
+        except:
+            logger.exception(lambda: "Could not download wallpaper:")
+            file = None
+
         if file:
             self.register_downloaded_file(file)
-            self.downloaders_meta[downloader.get_identifier()][
-                "last_download_success"
-            ] = time.time()
+            downloader.state["last_download_success"] = time.time()
 
             if downloader.is_refresher() or self.image_ok(file, 0):
                 # give priority to newly-downloaded images - unseen_downloads are later
                 # used with priority over self.prepared
-                logger.info(lambda: "Adding downloaded file %s to unseen_downloads queue" % file)
+                logger.info(lambda: "Adding downloaded file %s to unseen_downloads" % file)
                 with self.prepared_lock:
-                    self.unseen_downloads.add(file)
-                    self.save_unseen_downloads()
+                    unseen = set(downloader.state.get("unseen_downloads", []))
+                    unseen.add(file)
+                    downloader.state["unseen_downloads"] = [f for f in unseen if os.path.exists(f)]
 
             else:
                 # image is not ok, but still notify prepare thread that there is a new image -
@@ -1169,9 +1148,9 @@ class VarietyWindow(Gtk.Window):
                 self.prepare_event.set()
         else:
             # register as download failure for this downloader
-            self.downloaders_meta[downloader.get_identifier()][
-                "last_download_failure"
-            ] = time.time()
+            downloader.state["last_download_failure"] = time.time()
+
+        downloader.save_state()
 
     def purge_downloaded(self):
         if not self.options.quota_enabled:
@@ -1606,12 +1585,22 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not change wallpaper")
 
     def _enabled_unseen_downloads(self):
-        # filter unseen_downloads to just the currently enabled downloaders:
-        download_folders = set(dl.target_folder for dl in self.downloaders)
-        enabled_unseen_downloads = set(
-            u for u in self.unseen_downloads if os.path.dirname(u) in download_folders
-        )
+        # collect the unseen_downloads from the currently enabled downloaders:
+        enabled_unseen_downloads = set()
+        for dl in self.downloaders:
+            for file in dl.state.get("unseen_downloads", []):
+                if os.path.exists(file):
+                    enabled_unseen_downloads.add(file)
         return enabled_unseen_downloads
+
+    def _remove_from_unseen(self, file):
+        for dl in self.downloaders:
+            unseen = set(dl.state.get("unseen_downloads", []))
+            if file in unseen:
+                unseen.remove(file)
+                dl.state["unseen_downloads"] = [f for f in unseen if os.path.exists(f)]
+                dl.save_state()
+                self.dl_event.set()
 
     def set_wallpaper(self, img, auto_changed=False):
         logger.info(lambda: "Calling set_wallpaper with " + img)
@@ -1627,12 +1616,7 @@ class VarietyWindow(Gtk.Window):
             if len(self.used) > 1000:
                 self.used = self.used[:1000]
 
-            try:
-                self.unseen_downloads.remove(img)
-                self.save_unseen_downloads()
-                self.dl_event.set()
-            except KeyError:
-                pass
+            self._remove_from_unseen(img)
 
             self.auto_changed = auto_changed
             self.last_change_time = time.time()
@@ -1962,7 +1946,7 @@ class VarietyWindow(Gtk.Window):
             0, self.position - sum(1 for f in self.used[: self.position] if f == file)
         )
         self.used = [f for f in self.used if f != file]
-        self.unseen_downloads = set(f for f in self.unseen_downloads if f != file)
+        self._remove_from_unseen(file)
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if f != file]
 
@@ -1971,7 +1955,6 @@ class VarietyWindow(Gtk.Window):
             0, self.position - sum(1 for f in self.used[: self.position] if Util.file_in(f, folder))
         )
         self.used = [f for f in self.used if not Util.file_in(f, folder)]
-        self.unseen_downloads = set(f for f in self.unseen_downloads if not Util.file_in(f, folder))
         with self.prepared_lock:
             self.prepared = [f for f in self.prepared if not Util.file_in(f, folder)]
 
