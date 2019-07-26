@@ -3223,7 +3223,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
-                        <property name="margin_top">15</property>
+                        <property name="margin_top">20</property>
                         <property name="label" translatable="yes">Favorites Operations</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -3322,7 +3322,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="halign">start</property>
                         <property name="valign">start</property>
                         <property name="margin_left">15</property>
-                        <property name="margin_top">10</property>
+                        <property name="margin_top">18</property>
                         <property name="label" translatable="yes">Login Screen Support</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -3713,6 +3713,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="receives_default">True</property>
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
+                        <property name="margin_left">15</property>
                         <property name="relief">none</property>
                         <property name="uri">http://peterlevi.com/variety</property>
                       </object>
@@ -3726,6 +3727,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
+                        <property name="margin_left">15</property>
                         <property name="margin_top">10</property>
                         <property name="label" translatable="yes">Report a bug or request a feature</property>
                         <attributes>
@@ -3746,6 +3748,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="receives_default">True</property>
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
+                        <property name="margin_left">15</property>
                         <property name="relief">none</property>
                         <property name="uri">https://github.com/varietywalls/variety/issues</property>
                       </object>
