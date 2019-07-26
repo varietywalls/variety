@@ -26,7 +26,6 @@ import threading
 import time
 import urllib.parse
 import webbrowser
-from collections import defaultdict
 
 from PIL import Image as PILImage
 
@@ -38,6 +37,7 @@ from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
+from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
@@ -1745,7 +1745,9 @@ class VarietyWindow(Gtk.Window):
                     if info.get("sfwRating", 100) < 100:
                         return False
 
-                    blacklisted = set(k.lower() for k in info.get("keywords", []))
+                    blacklisted = (
+                        set(k.lower() for k in info.get("keywords", [])) & SAFE_MODE_BLACKLIST
+                    )
                     if len(blacklisted) > 0:
                         return False
                 except Exception:
