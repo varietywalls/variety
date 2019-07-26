@@ -164,7 +164,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
     def is_unsafe(self, extra_metadata):
         if self.is_safe_mode_enabled() and "keywords" in extra_metadata:
             blacklisted = set(k.lower() for k in extra_metadata["keywords"]) & SAFE_MODE_BLACKLIST
-            return True, blacklisted if len(blacklisted) > 0 else False, []
+            return (True, blacklisted) if len(blacklisted) > 0 else (False, [])
         return False, []
 
     def is_size_inadequate(self, width, height):
