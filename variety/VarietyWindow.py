@@ -111,10 +111,8 @@ class VarietyWindow(Gtk.Window):
         "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
     }
 
-    # How many downloads to keep in the unseen_downloads queue.
-    # Provides a buffer for scrolling quickly through wallpapers.
-    DL_QUEUE_SIZE = 30
-    DL_QUEUE_PER_DOWNLOADER = 7
+    # How many unseen_downloads max to for every downloader.
+    MAX_UNSEEN_PER_DOWNLOADER = 10
 
     @classmethod
     def get_instance(cls):
@@ -1038,7 +1036,7 @@ class VarietyWindow(Gtk.Window):
                         % len(self.prepared)
                     )
 
-                self.dl_event.set()
+                self.trigger_download()
             except Exception:
                 logger.exception(lambda: "Error in prepare thread:")
 
@@ -1079,11 +1077,8 @@ class VarietyWindow(Gtk.Window):
             try:
                 available_downloaders = self._available_downloaders()
 
-                if (
-                    len(self._enabled_unseen_downloads()) >= VarietyWindow.DL_QUEUE_SIZE
-                    or not available_downloaders
-                ):
-                    self.dl_event.wait()
+                if not available_downloaders:
+                    self.dl_event.wait(180)
                     self.dl_event.clear()
                     continue
 
@@ -1101,6 +1096,9 @@ class VarietyWindow(Gtk.Window):
                 for dl in available_downloaders:
                     if dl.is_refresher() and dl != downloader:
                         dl.download_one()
+
+                # give some breathing room between downloads
+                time.sleep(1)
             except Exception:
                 logger.exception(lambda: "Exception in download_thread:")
 
@@ -1111,13 +1109,12 @@ class VarietyWindow(Gtk.Window):
             for dl in self.downloaders
             if dl.state.get("last_download_failure", 0) < now - 60
             and (not dl.is_refresher() or dl.state.get("last_download_success", 0) < now - 60)
-            and len(dl.state.get("unseen_downloads", [])) <= VarietyWindow.DL_QUEUE_PER_DOWNLOADER
+            and len(dl.state.get("unseen_downloads", [])) <= VarietyWindow.MAX_UNSEEN_PER_DOWNLOADER
         ]
 
     def trigger_download(self):
-        if self.downloaders:
-            logger.info(lambda: "Triggering one download")
-            self.dl_event.set()
+        logger.info(lambda: "Triggering download thread to check if download needed")
+        self.dl_event.set()
 
     def register_downloaded_file(self, file):
         self.refresh_thumbs_downloads(file)
@@ -1611,7 +1608,11 @@ class VarietyWindow(Gtk.Window):
                 unseen.remove(file)
                 dl.state["unseen_downloads"] = [f for f in unseen if os.path.exists(f)]
                 dl.save_state()
-                self.dl_event.set()
+
+                # trigger download after some interval to reduce resource usage while the wallpaper changes
+                delay_dl_timer = threading.Timer(2, self.trigger_download)
+                delay_dl_timer.daemon = True
+                delay_dl_timer.start()
 
     def set_wallpaper(self, img, auto_changed=False):
         logger.info(lambda: "Calling set_wallpaper with " + img)
