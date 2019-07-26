@@ -3912,16 +3912,38 @@ Peter Levi</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label33">
+                  <object class="GtkBox" id="donate_bitcoin_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">end</property>
                     <property name="margin_left">30</property>
                     <property name="margin_right">30</property>
-                    <property name="margin_top">50</property>
-                    <property name="label" translatable="yes">&lt;i&gt;For Bitcoin and other payment methods please go to &lt;a href="http://peterlevi.com/variety/"&gt;Variety's website&lt;/a&gt;.&lt;/i&gt;</property>
-                    <property name="use_markup">True</property>
-                    <property name="wrap">True</property>
+                    <property name="margin_top">10</property>
+                    <child>
+                      <object class="GtkLabel" id="donate_bitcoin_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_right">10</property>
+                        <property name="label" translatable="yes">To donate in Bitcoin, please send to this wallet:</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="donate_bitcoin_address">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="editable">False</property>
+                        <property name="text" translatable="yes">1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
