@@ -1538,13 +1538,22 @@ class VarietyWindow(Gtk.Window):
             notification.set_urgency(Notify.Urgency.NORMAL)
             notification.show()
 
+    def _has_local_sources(self):
+        return (
+            sum(1 for s in self.options.sources if s[0] and s[1] in Options.SourceType.LOCAL_TYPES)
+            > 0
+        )
+
     def change_wallpaper(self, widget=None):
         try:
             img = None
 
             with self.prepared_lock:
                 # with some big probability, use one of the unseen_downloads
-                if random.random() < self.options.download_preference_ratio:
+                if (
+                    random.random() < self.options.download_preference_ratio
+                    or not self._has_local_sources()
+                ):
                     enabled_unseen_downloads = self._enabled_unseen_downloads()
                     if enabled_unseen_downloads:
                         unseen = random.choice(list(enabled_unseen_downloads))
