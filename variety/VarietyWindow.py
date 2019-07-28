@@ -1213,14 +1213,14 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
+        cmd = "convert %s -scale %dx%d^ " % (Util.shlex_quote(filename), w, h)
 
         logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + " "
 
-        cmd += shlex.quote(target_file)
-        cmd = cmd.replace("%FILEPATH%", shlex.quote(filename))
-        cmd = cmd.replace("%FILENAME%", shlex.quote(os.path.basename(filename)))
+        cmd += Util.shlex_quote(target_file)
+        cmd = cmd.replace("%FILEPATH%", Util.shlex_quote(filename))
+        cmd = cmd.replace("%FILENAME%", Util.shlex_quote(os.path.basename(filename)))
 
         logger.info(lambda: "ImageMagick filter cmd: " + cmd)
         return cmd.encode("utf-8")
@@ -1231,7 +1231,7 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
+        cmd = "convert %s -scale %dx%d^ " % (Util.shlex_quote(filename), w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
         clock_filter = self.options.clock_filter
@@ -1245,7 +1245,7 @@ class VarietyWindow(Gtk.Window):
 
         cmd += clock_filter
         cmd += " "
-        cmd += shlex.quote(target_file)
+        cmd += Util.shlex_quote(target_file)
         logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode("utf-8")
 
@@ -1310,9 +1310,12 @@ class VarietyWindow(Gtk.Window):
                         self.wallpaper_folder, "wallpaper-filter-%s.jpg" % Util.random_hash()
                     )
                     cmd = self.build_imagemagick_filter_cmd(to_set, target_file)
-                    if os.name == 'nt':
-                        cmd = cmd.decode()
                     if cmd:
+                        if os.name == 'nt':
+                            cmd = cmd.decode()
+                            # Quick fix - brackets explicitly stop imagemagick from being parsed correctly on windows
+                            cmd = cmd.replace("\(", "(")
+                            cmd = cmd.replace("\)", ")")
                         result = os.system(cmd)
                         if result == 0:  # success
                             to_set = target_file
@@ -1355,6 +1358,8 @@ class VarietyWindow(Gtk.Window):
                     self.wallpaper_folder, "wallpaper-clock-%s.jpg" % Util.random_hash()
                 )
                 cmd = self.build_imagemagick_clock_cmd(to_set, target_file)
+                if os.name == 'nt':
+                    cmd = cmd.decode()
                 result = os.system(cmd)
                 if result == 0:  # success
                     to_set = target_file
@@ -2549,13 +2554,13 @@ class VarietyWindow(Gtk.Window):
             WINDOWS_WALLPAPER_STYLE_STRETCH = "2"
             try:
                 Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallpaperStyle", WINDOWS_WALLPAPER_STYLE_STRETCH)
-                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallPaper", original_file)
+                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallPaper", wallpaper)
             except FileNotFoundError as e:
                 logger.exception(lambda: "Exception when calling execute_set_desktop_wallpaper: %s" % str(e))
 
             # https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-systemparametersinfow#SPI_SETDESKWALLPAPER
             SPI_SETDESKWALLPAPER = 0x0014
-            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, original_file , 0)
+            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, wallpaper , 0)
         elif os.access(script, os.X_OK):
             auto = (
                 "manual"

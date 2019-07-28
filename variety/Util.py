@@ -24,6 +24,7 @@ import os
 import random
 import re
 import shutil
+import shlex
 import string
 import subprocess
 import sys
@@ -944,6 +945,15 @@ class Util:
                 pass
         finally:
             winreg.CloseKey(key)
+
+    @staticmethod
+    def shlex_quote(s):
+        if os.name != 'nt':
+            return shlex.quote(s)
+        else:
+            # shlex.quote does not play nicely with windows shell, so just always-quote
+            return '"%s"' % s
+
 
 def on_gtk(f):
     @functools.wraps(f)
