@@ -1,21 +1,24 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import Gtk, Gdk # pylint: disable=E0611
 import threading
+
+from gi.repository import Gdk, Gtk  # pylint: disable=E0611
+
+from variety.Util import Util
 
 
 class AbstractAddByQueryDialog(Gtk.Dialog):
@@ -60,23 +63,21 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
         self.destroy()
 
     def ok_thread(self):
-        try:
-            Gdk.threads_enter()
+        def _start_ui():
             self.ui.message.set_visible(True)
             self.ui.buttonbox.set_sensitive(False)
             self.ui.query.set_sensitive(False)
             self.ui.spinner.set_visible(True)
             self.ui.spinner.start()
             self.ui.error.set_label("")
-        finally:
-            Gdk.threads_leave()
+
+        Util.add_mainloop_task(_start_ui)
 
         query = self.ui.query.get_text().strip()
 
         final_query, invalid_msg = self.validate(query)
 
-        try:
-            Gdk.threads_enter()
+        def _stop_ui():
             if invalid_msg:
                 self.ui.buttonbox.set_sensitive(True)
                 self.ui.error.set_label(invalid_msg)
@@ -88,5 +89,5 @@ class AbstractAddByQueryDialog(Gtk.Dialog):
             else:
                 self.commit(final_query)
                 self.destroy()
-        finally:
-            Gdk.threads_leave()
+
+        Util.add_mainloop_task(_stop_ui)

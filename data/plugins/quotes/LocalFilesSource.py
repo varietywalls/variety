@@ -13,11 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import logging
 import os
 import re
+
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety import _
-import logging
+from variety.profile import get_profile_path
+from variety.Util import _
 
 logger = logging.getLogger("variety")
 
@@ -31,12 +33,14 @@ class LocalFilesSource(IQuoteSource):
     def get_info(cls):
         return {
             "name": "Local text files",
-            "description": _("Displays quotes, defined in local text files.\n"
-                             "Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-                             "The file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\n"
-                             "Example: http://rvelthuis.de/zips/quotes.txt"),
+            "description": _(
+                "Displays quotes, defined in local text files.\n"
+                "Put your own txt files in: {}pluginconfig/quotes/.\n"
+                "The file format is:\n\nquote -- author\n.\nsecond quote -- another author\n.\netc...\n\n"
+                "Example: http://rvelthuis.de/zips/quotes.txt"
+            ).format(get_profile_path(expanded=False)),
             "author": "Peter Levi",
-            "version": "0.1"
+            "version": "0.1",
         }
 
     def supports_search(self):
@@ -67,19 +71,25 @@ class LocalFilesSource(IQuoteSource):
     def load(self, path):
         try:
             logger.info(lambda: "Loading quotes file %s" % path)
-            with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
                 s = f.read()
-                for q in re.split(r'(^\.$|^%$)', s, flags=re.MULTILINE):
+                for q in re.split(r"(^\.$|^%$)", s, flags=re.MULTILINE):
                     try:
                         if q.strip() and len(q.strip()) > 5:
-                            parts = q.split('-- ')
-                            quote = ' '.join(parts[0].split())
+                            parts = q.split("-- ")
+                            quote = parts[0]
                             if quote[0] == quote[-1] == '"':
                                 quote = "\u201C%s\u201D" % quote[1:-1]
                             author = parts[1].strip() if len(parts) > 1 else None
-                            self.quotes.append({"quote": quote, "author": author, "sourceName": os.path.basename(path)})
+                            self.quotes.append(
+                                {
+                                    "quote": quote,
+                                    "author": author,
+                                    "sourceName": os.path.basename(path),
+                                }
+                            )
                     except Exception:
-                        logger.debug(lambda: 'Could not process local quote %s' % q)
+                        logger.debug(lambda: "Could not process local quote %s" % q)
         except Exception:
             logger.exception(lambda: "Could not load quotes file %s" % path)
 
@@ -87,8 +97,11 @@ class LocalFilesSource(IQuoteSource):
         return self.quotes
 
     def get_for_author(self, author):
-        return [q for q in self.quotes if q["author"] and q["author"].lower().find(author.lower()) >= 0]
+        return [
+            q for q in self.quotes if q["author"] and q["author"].lower().find(author.lower()) >= 0
+        ]
 
     def get_for_keyword(self, keyword):
-        return self.get_for_author(keyword) + \
-               [q for q in self.quotes if q["quote"].lower().find(keyword.lower()) >= 0]
+        return self.get_for_author(keyword) + [
+            q for q in self.quotes if q["quote"].lower().find(keyword.lower()) >= 0
+        ]

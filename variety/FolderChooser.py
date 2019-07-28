@@ -1,26 +1,28 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import os.path
-from gi.repository import Gtk
-from variety.Util import Util
-from variety import _
 import logging
+import os.path
 
-logger = logging.getLogger('variety')
+from gi.repository import Gtk
+
+from variety.Util import Util, _
+
+logger = logging.getLogger("variety")
+
 
 class FolderChooser:
     def __init__(self, button, on_change=None):
@@ -62,8 +64,11 @@ class FolderChooser:
     def browse(self, widget=None):
         try:
             self.chooser = Gtk.FileChooserDialog(
-                _("Choose a folder"), parent=self.button.get_toplevel(), action=Gtk.FileChooserAction.SELECT_FOLDER,
-                buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("OK"), Gtk.ResponseType.OK])
+                _("Choose a folder"),
+                parent=self.button.get_toplevel(),
+                action=Gtk.FileChooserAction.SELECT_FOLDER,
+                buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("OK"), Gtk.ResponseType.OK],
+            )
             self.chooser.set_filename(self.folder)
             self.chooser.set_select_multiple(False)
             self.chooser.set_local_only(False)

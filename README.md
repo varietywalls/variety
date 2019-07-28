@@ -35,8 +35,8 @@ To install Variety from source, you will need Git, Python 3.5+ and [distutils-ex
 - Python 3 libraries:
     - BeautifulSoup4
     - lxml
-    - Cairo bindings for Python 3 (e.g. Debian/Ubuntu [python3-cairo](https://packages.debian.org/sid/python3-cairo))
-    - Cairo PyGObject integration (e.g. Debian/Ubuntu [python3-gi-cairo](https://packages.debian.org/sid/python3-gi-cairo))
+    - Pycairo
+    - PyGObject, built with Cairo integration
     - ConfigObj
     - Pillow
     - pkg_resources (from setuptools)

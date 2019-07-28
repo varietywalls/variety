@@ -123,7 +123,16 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
     # Plasma 5.7 introduced a new feature to set the wallpaper via a qdbus script:
     # https://github.com/KDE/plasma-workspace/commit/903cbfd7e267a4812a6ec222eb7e1b5dd775686f
     if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '5' ]]; then
-        qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+
+        # Try to find the Qt 5 version of qdbus. For systems using qtchooser, the binary name is 'qdbus'
+        # and the Qt version can be selected via the QT_SELECT environment variable.
+        if command -v qdbus-qt5 &>/dev/null; then
+            qdbus_command=qdbus-qt5
+        else
+            qdbus_command=qdbus
+        fi
+
+        QT_SELECT=5 $qdbus_command org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
         var allDesktops = desktops();
         for (i=0; i < allDesktops.length; i++) {
             d = allDesktops[i];
@@ -154,20 +163,6 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
         cp "$WP" "$NEWWP"
         touch "$NEWWP"
     fi
-fi
-
-# Cinnamon, for cases when it is detectable
-if [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
-    gsettings set org.cinnamon.background picture-uri "file://$WP" 2> /dev/null
-    if [ "$(gsettings get org.cinnamon.background picture-options)" == "'none'" ]; then
-        gsettings set org.cinnamon.background picture-options 'zoom'
-    fi
-
-    gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
-    if [ "$(gsettings get org.cinnamon.desktop.background picture-options)" == "'none'" ]; then
-        gsettings set org.cinnamon.desktop.background picture-options 'zoom'
-    fi
-    exit 0
 fi
 
 # Gnome 3, Unity
@@ -231,6 +226,9 @@ gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
+if [ "$(gsettings get org.cinnamon.desktop.background picture-options)" == "'none'" ]; then
+	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+fi
 
 # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
 gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null

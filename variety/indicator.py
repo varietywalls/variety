@@ -16,35 +16,39 @@
 
 """Code to add AppIndicator."""
 
-from gi.repository import Gtk # pylint: disable=E0611
+import logging
 import os
 
-from variety.Util import Util
+from gi.repository import Gtk  # pylint: disable=E0611
+
+from variety.Util import Util, _
+from variety_lib import varietyconfig
 
 THEME_ICON_NAME = "variety-indicator"
 THEME_ICON_NAME_DARK = "variety-indicator-dark"
+THEME_ICON_NAME_NUM = "variety-indicator-num{}"
 
 try:
     import gi
+
     try:
-        gi.require_version('AyatanaAppIndicator3', '0.1')
-        from gi.repository import AyatanaAppIndicator3 as AppIndicator3 # pylint: disable=E0611
-        _indicator_backend = 'AyatanaAppIndicator3'  # Just a dummy value we use for logging
+        gi.require_version("AyatanaAppIndicator3", "0.1")
+        from gi.repository import AyatanaAppIndicator3 as AppIndicator3  # pylint: disable=E0611
+
+        _indicator_backend = "AyatanaAppIndicator3"  # Just a dummy value we use for logging
     except (ValueError, ImportError):
-        gi.require_version('AppIndicator3', '0.1')
-        from gi.repository import AppIndicator3 # pylint: disable=E0611
-        _indicator_backend = 'AppIndicator3'
+        gi.require_version("AppIndicator3", "0.1")
+        from gi.repository import AppIndicator3  # pylint: disable=E0611
+
+        _indicator_backend = "AppIndicator3"
     use_appindicator = True
 except (ValueError, ImportError):
-    _indicator_backend = 'fallback tray'
+    _indicator_backend = "fallback tray"
     use_appindicator = False
 
-from variety_lib import varietyconfig
 
-from variety import _
+logger = logging.getLogger("variety")
 
-import logging
-logger = logging.getLogger('variety')
 
 class Indicator:
     def __init__(self, window):
@@ -115,8 +119,10 @@ class Indicator:
 
         self.fast_forward = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward.set_use_underline(True)
+
         def _fast_forward(widget):
             window.next_wallpaper(widget, bypass_history=True)
+
         self.fast_forward.connect("activate", _fast_forward)
         self.image_menu.append(self.fast_forward)
 
@@ -145,8 +151,10 @@ class Indicator:
         self.no_effects = Gtk.CheckMenuItem(_("Show without effects"))
         self.no_effects.set_active(False)
         self.no_effects.set_use_underline(True)
+
         def _toggle_no_effects(widget=None):
             window.toggle_no_effects(self.no_effects.get_active())
+
         self.no_effects_handler_id = self.no_effects.connect("toggled", _toggle_no_effects)
         self.image_menu.append(self.no_effects)
 
@@ -180,8 +188,10 @@ class Indicator:
 
         self.fast_forward_quote = Gtk.MenuItem(_("_Next, skipping forward history"))
         self.fast_forward_quote.set_use_underline(True)
+
         def _fast_forward_quote(widget):
             window.next_quote(widget, bypass_history=True)
+
         self.fast_forward_quote.connect("activate", _fast_forward_quote)
         self.quotes_menu.append(self.fast_forward_quote)
 
@@ -229,9 +239,11 @@ class Indicator:
 
         self.quotes_preferences = Gtk.MenuItem(_("Preferences..."))
         self.quotes_preferences.set_use_underline(True)
+
         def _quotes_prefs(widget=None):
             window.preferences_dialog.ui.notebook.set_current_page(1)
             window.on_mnu_preferences_activate()
+
         self.quotes_preferences.connect("activate", _quotes_prefs)
         self.quotes_menu.append(self.quotes_preferences)
 
@@ -239,7 +251,6 @@ class Indicator:
         self.quotes_disable.set_use_underline(True)
         self.quotes_disable.connect("activate", window.disable_quotes)
         self.quotes_menu.append(self.quotes_disable)
-
 
         self.quotes = Gtk.MenuItem(_("_Quote"))
         self.quotes.set_use_underline(True)
@@ -257,7 +268,9 @@ class Indicator:
         self.selector = Gtk.CheckMenuItem(_("_Wallpaper Selector"))
         self.selector.set_active(False)
         self.selector.set_use_underline(True)
-        self.selector_handler_id = self.selector.connect("toggled", window.show_hide_wallpaper_selector)
+        self.selector_handler_id = self.selector.connect(
+            "toggled", window.show_hide_wallpaper_selector
+        )
         self.menu.append(self.selector)
 
         self.downloads = Gtk.CheckMenuItem(_("Recent _Downloads"))
@@ -272,9 +285,11 @@ class Indicator:
             self.slideshow.connect("activate", window.on_start_slideshow)
             self.menu.append(self.slideshow)
         else:
-            logger.warning('Variety Slideshow is not installed. This is an optional extension '
-                           'adding pan-and-zoom slideshows to Variety: see '
-                           'https://github.com/peterlevi/variety-slideshow for details')
+            logger.warning(
+                "Variety Slideshow is not installed. This is an optional extension "
+                "adding pan-and-zoom slideshows to Variety: see "
+                "https://github.com/peterlevi/variety-slideshow for details"
+            )
 
         self.menu.append(Gtk.SeparatorMenuItem.new())
 
@@ -291,7 +306,7 @@ class Indicator:
         self.menu.append(self.donate)
 
         self.quit = Gtk.MenuItem(_("Quit"))
-        self.quit.connect("activate",window.on_quit)
+        self.quit.connect("activate", window.on_quit)
         self.menu.append(self.quit)
 
         self.menu.show_all()
@@ -301,7 +316,7 @@ class Indicator:
             self.status_icon.set_visible(False)
 
     def create_indicator(self, window):
-        logger.info('indicator backend: %s', _indicator_backend)
+        logger.info("indicator backend: %s", _indicator_backend)
         self.indicator = None
         self.status_icon = None
         self.visible = True
@@ -331,7 +346,9 @@ class Indicator:
 
         icon_path = varietyconfig.get_data_file("media", "variety-indicator.png")
         if use_appindicator:
-            self.indicator = AppIndicator3.Indicator.new('variety', '', AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
+            self.indicator = AppIndicator3.Indicator.new(
+                "variety", "", AppIndicator3.IndicatorCategory.APPLICATION_STATUS
+            )
             self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
             self.indicator.set_icon(icon_path)
             self.indicator.connect("scroll-event", window.on_indicator_scroll)
@@ -382,6 +399,14 @@ class Indicator:
                 return
             else:
                 icon_path = varietyconfig.get_data_file("media", "variety-indicator-dark.png")
+        elif icon in ["1", "2", "3", "4"]:
+            if Gtk.IconTheme.get_default().has_icon(THEME_ICON_NAME_NUM.format(icon)):
+                set_from_theme_icon(THEME_ICON_NAME_NUM.format(icon))
+                return
+            else:
+                icon_path = varietyconfig.get_data_file(
+                    "media", "variety-indicator-num{}.png".format(icon)
+                )
         elif icon and os.access(icon, os.R_OK) and Util.is_image(icon):
             icon_path = icon
         else:
@@ -396,6 +421,7 @@ class Indicator:
 
     def get_visible(self):
         return self.visible
+
 
 def new_application_indicator(window):
     ind = Indicator(window)

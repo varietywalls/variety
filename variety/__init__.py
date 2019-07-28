@@ -15,40 +15,16 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import gettext
 import logging
-
-gettext.textdomain('variety')
 import os
+import signal
 import sys
 import socket
 
-def _(text):
-    """Returns the translated form of text."""
-    return gettext.gettext(text)
+import gi
 
-def safe_print(text, ascii_text=None):
-    """
-    Python's print throws UnicodeEncodeError if the terminal encoding is borked. This version tries print, then logging, then printing the ascii text when one is present.
-    If does not throw exceptions even if it fails.
-    :param text: Text to print, str or unicode, possibly with non-ascii symbols in it
-    :param ascii_text: optional. Original untranslated ascii version of the text when present.
-    """
-    try:
-        print(text)
-    except:  # UnicodeEncodeError can happen here if the terminal is strangely configured, but we are playing safe and catching everything
-        try:
-            logging.getLogger("variety").error(
-                'Error printing non-ascii text, terminal encoding is %s' % sys.stdout.encoding)
-            if ascii_text:
-                try:
-                    print(ascii_text)
-                    return
-                except:
-                    pass
-            logging.getLogger("variety").warning(text)
-        except:
-            pass
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GObject  # pylint: disable=E0611
 
 
 class SafeLogger(logging.Logger):
@@ -61,43 +37,58 @@ class SafeLogger(logging.Logger):
         try:
             new_msg = msg if isinstance(msg, str) else msg()
         except:
-            locale_info = 'Unknown'
+            locale_info = "Unknown"
             try:
-                locale_info = 'Terminal encoding=%s, LANG=%s, LANGUAGE=%s' % (
-                    sys.stdout.encoding, os.getenv('LANG'), os.getenv('LANGUAGE'))
-                logging.getLogger("variety").exception('Errors while logging. Locale info: %s' % locale_info)
+                locale_info = "Terminal encoding=%s, LANG=%s, LANGUAGE=%s" % (
+                    sys.stdout.encoding,
+                    os.getenv("LANG"),
+                    os.getenv("LANGUAGE"),
+                )
+                logging.getLogger("variety").exception(
+                    "Errors while logging. Locale info: %s" % locale_info
+                )
                 # TODO gather and log more info here
             except:
                 pass
-            new_msg = 'Errors while logging. Locale info: %s' % locale_info
+            new_msg = "Errors while logging. Locale info: %s" % locale_info
 
         return super().makeRecord(name, level, fn, lno, new_msg, *args, **kwargs)
 
 
 logging.setLoggerClass(SafeLogger)
 
+
+# these must be after the setLoggerClass call, as they obtain the variety logger
+from variety import VarietyWindow, ThumbsManager, ThumbsWindow
+from variety.profile import set_profile_path, get_profile_path, is_default_profile, get_profile_id
+from variety.Util import Util, _, ModuleProfiler, safe_print
+
+
 # # Change default encoding from ascii to UTF8 - works OK on Linux and prevents various UnicodeEncodeErrors/UnicodeDecodeErrors
 # Still, generally considerd bad practice, may cause some deep hidden errors, as various Python stuff depends on it
 # reload(sys)
 # sys.setdefaultencoding('UTF8')
 
-import signal
-import logging
-
 import gi
 
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gtk, Gdk, GObject  # pylint: disable=E0611
+def _get_dbus_key():
+    """
+    DBus key for Variety.
+    Variety uses a different key per profile, so several instances can run simultaneously if
+    running with different profiles.
+    Command any instance from the terminal by passing explicitly the same --profile options as it
+    was started with.
+    :return: the dbus key
+    """
+    if is_default_profile():
+        return "com.peterlevi.Variety"
+    else:
+        return "com.peterlevi.Variety_{}".format(get_profile_id())
 
-from variety import VarietyWindow
-from variety import ThumbsManager
-from variety import ThumbsWindow
-from variety.Util import Util, ModuleProfiler
-from variety_lib.helpers import set_up_logging
 
-DBUS_KEY = 'com.peterlevi.Variety'
-DBUS_PATH = '/com/peterlevi/Variety'
+DBUS_PATH = "/com/peterlevi/Variety"
 
 class IVarietyService():
     def __init__(self):
@@ -257,45 +248,92 @@ VARIETY_WINDOW = None
 terminate = False
 
 
-def sigint_handler(*args):
+def _sigint_handler(*args):
     global terminate
     terminate = True
 
 
-def check_quit():
+def _check_quit():
     global terminate
     if not terminate:
-        GObject.timeout_add(1000, check_quit)
+        GObject.timeout_add(1000, _check_quit)
         return
 
     logging.getLogger("variety").info("Terminating signal received, quitting...")
-    safe_print(_("Terminating signal received, quitting..."),
-               "Terminating signal received, quitting...")
+    safe_print(
+        _("Terminating signal received, quitting..."),
+        "Terminating signal received, quitting...",
+        file=sys.stderr,
+    )
 
     global VARIETY_WINDOW
     if VARIETY_WINDOW:
-        GObject.idle_add(VARIETY_WINDOW.on_quit)
+        VARIETY_WINDOW.on_quit()
     Util.start_force_exit_thread(10)
+
+
+def _set_up_logging(verbose):
+    # add a handler to prevent basicConfig
+    root = logging.getLogger()
+    null_handler = logging.NullHandler()
+    root.addHandler(null_handler)
+
+    formatter = logging.Formatter("%(levelname)s: %(asctime)s: %(funcName)s() '%(message)s'")
+
+    logger = logging.getLogger("variety")
+    logger_sh = logging.StreamHandler()
+    logger_sh.setFormatter(formatter)
+    logger.addHandler(logger_sh)
+
+    try:
+        logger_file = logging.FileHandler(os.path.join(get_profile_path(), "variety.log"), "w")
+        logger_file.setFormatter(formatter)
+        logger.addHandler(logger_file)
+    except Exception:
+        logger.exception("Could not create file logger")
+
+    lib_logger = logging.getLogger("variety_lib")
+    lib_logger_sh = logging.StreamHandler()
+    lib_logger_sh.setFormatter(formatter)
+    lib_logger.addHandler(lib_logger_sh)
+
+    logger.setLevel(logging.INFO)
+    # Set the logging level to show debug messages.
+    if verbose >= 2:
+        logger.setLevel(logging.DEBUG)
+    elif not verbose:
+        # If we're not in verbose mode, only log these messages to file. This prevents
+        # flooding syslog and/or ~/.xsession-errors depending on how variety was started:
+        # (https://bugs.launchpad.net/variety/+bug/1685003)
+        # XXX: We should /really/ make the internal debug logging use logging.debug,
+        # this is really just a bandaid patch.
+        logger_sh.setLevel(logging.WARNING)
+
+    if verbose >= 3:
+        lib_logger.setLevel(logging.DEBUG)
 
 
 def main():
     # Ctrl-C
-    signal.signal(signal.SIGINT, sigint_handler)
-    signal.signal(signal.SIGTERM, sigint_handler)
+    signal.signal(signal.SIGINT, _sigint_handler)
+    signal.signal(signal.SIGTERM, _sigint_handler)
     if hasattr(signal, 'SIGQUIT'):
-        signal.signal(signal.SIGQUIT, sigint_handler)
-
-    Util.makedirs(os.path.expanduser("~/.config/variety/"))
+        signal.signal(signal.SIGQUIT, _sigint_handler)
 
     arguments = sys.argv[1:]
 
     # validate arguments
-    options, args = VarietyWindow.VarietyWindow.parse_options(arguments)
+    from variety import VarietyOptionParser
+
+    options, args = VarietyOptionParser.parse_options(arguments)
+    set_profile_path(options.profile)
+    Util.makedirs(get_profile_path())
 
     # set up logging
     # set_up_logging must be called after the DBus checks, only by one running instance,
     # or the log file can be corrupted
-    set_up_logging(options.verbose)
+    _set_up_logging(options.verbose)
+    logging.getLogger("variety").info(lambda: "Using profile folder {}".format(get_profile_path()))
 
     if options.verbose >= 3:
         profiler = ModuleProfiler()
@@ -330,11 +368,5 @@ def main():
             safe_print(result)
         return
     window.start(arguments)
-
-    GObject.timeout_add(2000, check_quit)
-    GObject.threads_init()
-    Gdk.threads_init()
-    Gdk.threads_enter()
-
+    GObject.timeout_add(2000, _check_quit)
     Gtk.main()
-    Gdk.threads_leave()
