@@ -37,6 +37,7 @@ from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
+from variety.PrivacyNoticeDialog import PrivacyNoticeDialog
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -136,6 +137,16 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             self.gsettings = None
 
+        self.prepare_config_folder()
+        self.dialogs = []
+
+        fr_file = os.path.join(self.config_folder, ".firstrun")
+        first_run = not os.path.exists(fr_file)
+
+        if first_run:  # Make setup dialogs block so that privacy notice appears
+            self.show_welcome_dialog()
+            self.show_privacy_dialog()
+
         self.thumbs_manager = ThumbsManager(self)
 
         self.quotes_engine = None
@@ -143,7 +154,6 @@ class VarietyWindow(Gtk.Window):
         self.quote_favorites_contents = ""
         self.clock_thread = None
 
-        self.prepare_config_folder()
         self.perform_upgrade()
 
         self.events = []
@@ -189,9 +199,8 @@ class VarietyWindow(Gtk.Window):
 
         self.start_threads()
 
-        self.dialogs = []
-
-        self.first_run()
+        if first_run:
+            self.first_run(fr_file)
 
         def _delayed():
             self.create_preferences_dialog()
@@ -2097,21 +2106,15 @@ class VarietyWindow(Gtk.Window):
             Util.add_mainloop_task(Gtk.main_quit)
 
     @on_gtk
-    def first_run(self):
-        fr_file = os.path.join(self.config_folder, ".firstrun")
-        first_run = not os.path.exists(fr_file)
-        if first_run:
-            self.show_welcome_dialog()
-            if not self.running:
-                return
+    def first_run(self, fr_file):
+        if not self.running:
+            return
 
-        if first_run:
-            with open(fr_file, "w") as f:
-                f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        with open(fr_file, "w") as f:
+            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-        if first_run:
-            self.create_autostart_entry()
-            self.on_mnu_preferences_activate()
+        self.create_autostart_entry()
+        self.on_mnu_preferences_activate()
 
     def write_current_version(self):
         current_version = varietyconfig.get_version()
@@ -2231,6 +2234,25 @@ class VarietyWindow(Gtk.Window):
         self.dialogs.append(dialog)
         dialog.run()
         dialog.destroy()
+
+    def show_privacy_dialog(self):
+        dialog = PrivacyNoticeDialog()
+        ok = False
+
+        def _on_accept(button):
+            dialog.destroy()
+            self.dialogs.remove(dialog)
+            ok = True
+
+        def _on_close(button):
+            if not ok:
+                self.on_quit()
+
+        dialog.ui.accept_button.connect("clicked", _on_accept)
+        dialog.ui.reject_button.connect("clicked", _on_close)
+        dialog.connect("delete-event", _on_close)
+        self.dialogs.append(dialog)
+        dialog.run()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(
