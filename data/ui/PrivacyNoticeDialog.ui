@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkDialog" id="OnlineSourcesConfirmationDialog">
+  <object class="GtkDialog" id="PrivacyNoticeDialog">
     <property name="width_request">960</property>
     <property name="height_request">200</property>
     <property name="can_focus">False</property>
@@ -29,14 +29,16 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
-            <property name="layout_style">spread</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
+            <property name="layout_style">center</property>
             <child>
               <object class="GtkButton" id="button1">
-                <property name="label" translatable="yes">Enable Online Sources</property>
+                <property name="label" translatable="yes">Accept</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="action_name">enable</property>
+                <property name="action_name">accept</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -46,7 +48,7 @@
             </child>
             <child>
               <object class="GtkButton" id="button2">
-                <property name="label" translatable="yes">Disable Online Sources</property>
+                <property name="label" translatable="yes">Reject</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -77,7 +79,7 @@
               <object class="GtkLabel" id="title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">&lt;span font="14" weight="bold"&gt;Privacy Notice: Online Source Downloads&lt;/span&gt;</property>
+                <property name="label" translatable="yes">&lt;span font="14" weight="bold"&gt;Privacy Notice&lt;/span&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -103,13 +105,11 @@
               <object class="GtkLabel" id="maintext">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">Variety supports automatically downloading wallpapers from online sources such as Bing, Flickr, Unsplash, and Wallhaven.
-
-In order to support these downloads, Variety needs to periodically collect and report information to remote servers. This includes:
+                <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">In order to support downloads from online sources, Variety needs to periodically collect and report some information to remote servers. This includes:
 
 1. API rate limiting settings from gist.github.com &lt;a href="https://github.com/site/privacy"&gt;(privacy policy)&lt;/a&gt;
 
-2. Per the Unsplash API terms, Variety is required to report Unsplash images when they are displayed, and when they are automatically displayed / rotated on the desktop.
+2. Per the Unsplash API terms, Variety is required to track and report Unsplash images when they are first downloaded, and when they are automatically displayed / rotated on the desktop.
 
 Other web sources may collect information about your device (IP address, etc.) when Variety makes a request to download an image. In all cases, Variety does not attempt to send any personally identifiable information.</property>
                 <property name="use_markup">True</property>
