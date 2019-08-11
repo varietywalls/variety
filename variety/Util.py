@@ -55,6 +55,8 @@ gettext.textdomain("variety")
 
 def _(text):
     """Returns the translated form of text."""
+    if not text or not text.strip():
+        return text
     return gettext.gettext(text)
 
 
