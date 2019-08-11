@@ -84,9 +84,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.notebook.remove_page(2)
 
         profile_suffix = (
-            "" if is_default_profile() else " (Profile: {})".format(get_profile_short_name())
+            "" if is_default_profile() else _(" (Profile: {})").format(get_profile_short_name())
         )
-        self.set_title(_("Variety Preferences") + _(profile_suffix))
+        self.set_title(_("Variety Preferences") + profile_suffix)
         self.set_wmclass(get_profile_wm_class(), get_profile_wm_class())
 
         self.reload()
