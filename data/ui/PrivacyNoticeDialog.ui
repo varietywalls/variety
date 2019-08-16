@@ -12,6 +12,7 @@
     <property name="has_focus">True</property>
     <property name="valign">baseline</property>
     <property name="title" translatable="yes">Variety - Privacy Notice</property>
+    <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">960</property>
     <property name="default_height">200</property>
@@ -23,7 +24,7 @@
     <child internal-child="vbox">
       <object class="GtkBox" id="internal-gtkbox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can_focus">True</property>
         <property name="halign">center</property>
         <property name="valign">center</property>
         <property name="margin_left">2</property>
@@ -34,7 +35,7 @@
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="action-area">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can_focus">True</property>
             <property name="margin_top">10</property>
             <property name="margin_bottom">10</property>
             <property name="layout_style">center</property>
@@ -43,9 +44,7 @@
                 <property name="label" translatable="yes">Accept</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="action_name">accept</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -58,9 +57,7 @@
                 <property name="label" translatable="yes">Reject</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="action_name">disable</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -81,7 +78,7 @@
             <property name="width_request">300</property>
             <property name="height_request">200</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can_focus">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
@@ -139,9 +136,5 @@ Other web sources may collect information about your device (IP address, etc.) w
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-3">accept_button</action-widget>
-      <action-widget response="-2">reject_button</action-widget>
-    </action-widgets>
   </object>
 </interface>
