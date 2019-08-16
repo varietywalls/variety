@@ -1,7 +1,7 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
-# Copyright (c) 2012-2018, Peter Levi <peterlevi@peterlevi.com>
-# Copyright (c) 2017-2018, James Lu <james@overdrivenetworks.com>
+# Copyright (c) 2012-2019, Peter Levi <peterlevi@peterlevi.com>
+# Copyright (c) 2017-2019, James Lu <james@overdrivenetworks.com>
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
@@ -22,6 +22,7 @@ import shlex
 import shutil
 import stat
 import subprocess
+import sys
 import threading
 import time
 import urllib.parse
@@ -2239,14 +2240,15 @@ class VarietyWindow(Gtk.Window):
         dialog = PrivacyNoticeDialog()
         ok = False
 
-        def _on_accept(button):
+        def _on_accept(*args):
             dialog.destroy()
             self.dialogs.remove(dialog)
             ok = True
 
-        def _on_close(button):
+        def _on_close(*args):
             if not ok:
-                self.on_quit()
+                # At this point we shouldn't have much to clean up yet!
+                sys.exit(1)
 
         dialog.ui.accept_button.connect("clicked", _on_accept)
         dialog.ui.reject_button.connect("clicked", _on_close)
