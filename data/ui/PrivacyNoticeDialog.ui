@@ -36,25 +36,12 @@
           <object class="GtkButtonBox" id="action-area">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="margin_top">10</property>
+            <property name="margin_top">20</property>
             <property name="margin_bottom">10</property>
-            <property name="layout_style">center</property>
-            <child>
-              <object class="GtkButton" id="accept_button">
-                <property name="label" translatable="yes">Accept</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
+            <property name="layout_style">spread</property>
             <child>
               <object class="GtkButton" id="reject_button">
-                <property name="label" translatable="yes">Reject</property>
+                <property name="label" translatable="yes">Reject and Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -63,6 +50,23 @@
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="accept_button">
+                <property name="label" translatable="yes">Accept and Continue</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
+                <property name="is_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -79,6 +83,10 @@
             <property name="height_request">200</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
@@ -112,11 +120,11 @@
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">In order to support downloads from online sources, Variety needs to periodically collect and report some information to remote servers. This includes:
 
-1. API rate limiting settings from gist.github.com &lt;a href="https://github.com/site/privacy"&gt;(privacy policy)&lt;/a&gt;
+1. Fetching API rate limiting settings defined by the Variety team from gist.github.com &lt;a href="https://github.com/site/privacy"&gt;(privacy policy)&lt;/a&gt;
 
-2. Per the &lt;a href="https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines"&gt;Unsplash API terms&lt;/a&gt;, Variety is required to track and report Unsplash images when they are first downloaded, and when they are automatically displayed / rotated on the desktop.
+2. Some image sources (e.g. &lt;a href="https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines"&gt;Unsplash&lt;/a&gt;) require us to track and report statistics of images when they are first downloaded and when they are automatically displayed / rotated on the desktop.
 
-Other web sources may collect information about your device (IP address, etc.) when Variety makes a request to download an image. In all cases, Variety does not attempt to send any personally identifiable information.</property>
+Other web sources may collect information about your device (IP address, etc.) when Variety makes a request to download an image. In all cases, Variety does not send any personally identifiable information.</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
               </object>
