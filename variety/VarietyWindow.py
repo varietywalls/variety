@@ -2251,6 +2251,7 @@ class VarietyWindow(Gtk.Window):
                 sys.exit(1)
 
         dialog.ui.accept_button.connect("clicked", _on_accept)
+        dialog.ui.accept_button.grab_focus()
         dialog.ui.reject_button.connect("clicked", _on_close)
         dialog.connect("delete-event", _on_close)
         self.dialogs.append(dialog)
