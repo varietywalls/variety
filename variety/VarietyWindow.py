@@ -38,12 +38,12 @@ from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
-from variety.PrivacyNoticeDialog import PrivacyNoticeDialog
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
+from variety.PrivacyNoticeDialog import PrivacyNoticeDialog
 from variety.profile import (
     DEFAULT_PROFILE_PATH,
     get_autostart_file_path,
@@ -2238,22 +2238,19 @@ class VarietyWindow(Gtk.Window):
 
     def show_privacy_dialog(self):
         dialog = PrivacyNoticeDialog()
-        ok = False
 
         def _on_accept(*args):
             dialog.destroy()
             self.dialogs.remove(dialog)
-            ok = True
 
         def _on_close(*args):
-            if not ok:
-                # At this point we shouldn't have much to clean up yet!
-                sys.exit(1)
+            # At this point we shouldn't have much to clean up yet!
+            sys.exit(1)
 
         dialog.ui.accept_button.connect("clicked", _on_accept)
-        dialog.ui.accept_button.grab_focus()
         dialog.ui.reject_button.connect("clicked", _on_close)
         dialog.connect("delete-event", _on_close)
+        dialog.ui.accept_button.grab_focus()
         self.dialogs.append(dialog)
         dialog.run()
 
