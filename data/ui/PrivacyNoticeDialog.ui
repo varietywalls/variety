@@ -13,7 +13,7 @@
     <property name="valign">baseline</property>
     <property name="title" translatable="yes">Variety - Privacy Notice</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-always</property>
     <property name="default_width">960</property>
     <property name="default_height">200</property>
     <property name="icon_name">variety</property>
@@ -36,9 +36,10 @@
           <object class="GtkButtonBox" id="action-area">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="margin_top">20</property>
+            <property name="margin_right">15</property>
+            <property name="margin_top">15</property>
             <property name="margin_bottom">10</property>
-            <property name="layout_style">spread</property>
+            <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="reject_button">
                 <property name="label" translatable="yes">Reject and Quit</property>
@@ -74,6 +75,7 @@
             <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="padding">5</property>
+            <property name="pack_type">end</property>
             <property name="position">4</property>
           </packing>
         </child>
@@ -92,7 +94,7 @@
               <object class="GtkLabel" id="title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">&lt;span font="14" weight="bold"&gt;Privacy Notice&lt;/span&gt;</property>
+                <property name="label" translatable="yes">&lt;span font="15" weight="bold"&gt;Privacy Notice&lt;/span&gt;</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -118,13 +120,16 @@
               <object class="GtkLabel" id="maintext">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">In order to support downloads from online sources, Variety needs to periodically collect and report some information to remote servers. This includes:
+                <property name="margin_top">15</property>
+                <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">Before we start, here are some things you need to be aware of and agree to:
 
-1. Fetching API rate limiting settings defined by the Variety team from gist.github.com &lt;a href="https://github.com/site/privacy"&gt;(privacy policy)&lt;/a&gt;
+&lt;b&gt;Variety is an open-source application, provided as is, without any warranties&lt;/b&gt;. By using it, you agree to the terms and conditions of the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.en.html"&gt;GNU GPLv3 license&lt;/a&gt; under which it is distributed.  
 
-2. Some image sources (e.g. &lt;a href="https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines"&gt;Unsplash&lt;/a&gt;) require us to track and report statistics of images when they are first downloaded and when they are automatically displayed / rotated on the desktop.
+&lt;b&gt;Variety is an internet-connected application.&lt;/b&gt; Variety downloads images from the internet. Web servers it downloads from may collect information about your device, like IP address. Variety does not send any personally identifiable information. By using Variety, you accept its use of internet connectivity.
 
-Other web sources may collect information about your device (IP address, etc.) when Variety makes a request to download an image. In all cases, Variety does not send any personally identifiable information.</property>
+&lt;b&gt;Variety fetches and applies rate limiting settings defined by the development team.&lt;/b&gt; This may affect the rate at which it downloads new images, but it helps ensure Variety can work regardless of how many people are running it. These settings will be downloaded from gist.github.com where we host them.
+
+&lt;b&gt;Some image sources require us to track additional information when enabled.&lt;/b&gt; For example the terms of &lt;a href="https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines"&gt;Unsplash&lt;/a&gt; require us to track and report when users download and view images from Unsplash.</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
               </object>
