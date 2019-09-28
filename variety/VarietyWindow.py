@@ -1256,6 +1256,15 @@ class VarietyWindow(Gtk.Window):
         clock_filter = clock_filter.replace("%CLOCK_FONT_SIZE", clock_font_size)
         clock_filter = clock_filter.replace("%DATE_FONT_NAME", date_font_name)
         clock_filter = clock_filter.replace("%DATE_FONT_SIZE", date_font_size)
+        if os.name != 'nt':
+            clock_filter = clock_filter.replace("%CLOCK_FONT_FILE", "`fc-match -f \"%%{file[0]}\" \"%CLOCK_FONT_NAME\"`")
+            clock_filter = clock_filter.replace("%DATE_FONT_FILE", "`fc-match -f \"%%{file[0]}\" \"%DATE_FONT_NAME\"`")
+        else:
+            clock_font_file = subprocess.check_output(["fc-match.exe", "-f", "%{file[0]}", clock_font_name])
+            date_font_file = subprocess.check_output(["fc-match.exe", "-f", "%{file[0]}", date_font_name])
+            clock_filter = clock_filter.replace("%CLOCK_FONT_FILE", clock_font_file.decode())
+            clock_filter = clock_filter.replace("%DATE_FONT_FILE", date_font_file.decode())
+
         return clock_filter
 
     @staticmethod
