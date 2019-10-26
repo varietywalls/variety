@@ -405,7 +405,7 @@ class Util:
         for folder in folders:
             if os.path.isdir(folder):
                 try:
-                    for root, subFolders, files in os.walk(folder):
+                    for root, subFolders, files in os.walk(folder, followlinks=True):
                         if randomize:
                             random.shuffle(files)
                             random.shuffle(subFolders)
