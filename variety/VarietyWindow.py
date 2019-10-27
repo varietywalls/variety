@@ -1485,6 +1485,9 @@ class VarietyWindow(Gtk.Window):
         all_images = list(self.list_images())
         self.image_count = len(all_images)
 
+        # add just the first image of each album to the selection,
+        # otherwise albums will get an enormous part of the screentime, as they act as
+        # "black holes" - once we start them, we stay there until done
         for album in self.albums:
             all_images.append(album["images"][0])
 
