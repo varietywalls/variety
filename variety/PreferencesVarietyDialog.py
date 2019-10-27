@@ -399,13 +399,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 ),
             ),
             (
-                _("Album (order by filename)"),
+                _("Sequential Albums (order by filename)"),
                 lambda widget: self.on_add_folders_clicked(
                     widget, source_type=Options.SourceType.ALBUM_FILENAME
                 ),
             ),
             (
-                _("Album (order by date)"),
+                _("Sequential Albums (order by date)"),
                 lambda widget: self.on_add_folders_clicked(
                     widget, source_type=Options.SourceType.ALBUM_DATE
                 ),
@@ -590,8 +590,22 @@ class PreferencesVarietyDialog(PreferencesDialog):
         chooser.destroy()
 
     def on_add_folders_clicked(self, widget=None, source_type=Options.SourceType.FOLDER):
+        if source_type == Options.SourceType.FOLDER:
+            title = _(
+                "Add Folders - Only add the root folders, subfolders are searched recursively"
+            )
+        elif source_type == Options.SourceType.ALBUM_FILENAME:
+            title = _(
+                "Add Sequential Albums (ordered by filename). Subfolders are searched recursively."
+            )
+        elif source_type == Options.SourceType.ALBUM_DATE:
+            title = _(
+                "Add Sequential Albums (ordered by date). Subfolders are searched recursively."
+            )
+        else:
+            raise Exception("Unsuppoted source_type {}".format(source_type))
         chooser = Gtk.FileChooserDialog(
-            _("Add Folders - Only add the root folders, subfolders are searched recursively"),
+            title,
             parent=self,
             action=Gtk.FileChooserAction.SELECT_FOLDER,
             buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK],
