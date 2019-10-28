@@ -29,7 +29,6 @@ from variety import Texts
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddRedditDialog import AddRedditDialog
-from variety.AddSourceDialog import AddSourceDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
@@ -346,6 +345,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_favorites_operations_changed()
             self.update_clipboard_state()
 
+            self.build_add_button_menu()
+
             self.update_status_message()
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
@@ -359,7 +360,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
             timer.start()
 
     def on_add_button_clicked(self, widget=None):
-        self.show_dialog(AddSourceDialog())
+        def position(*args, **kwargs):
+            button_alloc = self.ui.add_button.get_allocation()
+            window_pos = self.ui.add_button.get_window().get_position()
+            return (
+                button_alloc.x + window_pos[0],
+                button_alloc.y + button_alloc.height + window_pos[1],
+                True,
+            )
+
+        self.add_menu.popup(
+            None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time()
+        )
 
     def on_remove_sources_clicked(self, widget=None):
         def position(*args, **kwargs):
@@ -374,6 +386,47 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.build_remove_button_menu().popup(
             None, self.ui.remove_sources, position, None, 0, Gtk.get_current_event_time()
         )
+
+    def build_add_button_menu(self):
+        self.add_menu = Gtk.Menu()
+
+        items = [
+            (_("Images"), self.on_add_images_clicked),
+            (
+                _("Folders"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.FOLDER
+                ),
+            ),
+            (
+                _("Sequential Albums (order by filename)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_FILENAME
+                ),
+            ),
+            (
+                _("Sequential Albums (order by date)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_DATE
+                ),
+            ),
+            "-",
+            (_("Flickr"), self.on_add_flickr_clicked),
+            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
+            (_("Reddit"), self.on_add_reddit_clicked),
+            (_("Media RSS"), self.on_add_mediarss_clicked),
+        ]
+
+        for x in items:
+            if x == "-":
+                item = Gtk.SeparatorMenuItem.new()
+            else:
+                item = Gtk.MenuItem()
+                item.set_label(x[0])
+                item.connect("activate", x[1])
+            self.add_menu.append(item)
+
+        self.add_menu.show_all()
 
     def build_remove_button_menu(self):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -509,7 +562,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         chooser.connect("update-preview", update_preview)
 
-    def on_add_images(self):
+    def on_add_images_clicked(self, widget=None):
         chooser = Gtk.FileChooserDialog(
             _("Add Images"),
             parent=self,
@@ -536,7 +589,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
         chooser.destroy()
 
-    def on_add_folders(self, source_type=Options.SourceType.FOLDER):
+    def on_add_folders_clicked(self, widget=None, source_type=Options.SourceType.FOLDER):
         if source_type == Options.SourceType.FOLDER:
             title = _(
                 "Add Folders - Only add the root folders, subfolders are searched recursively"
@@ -800,16 +853,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
 
-    def on_add_mediarss(self):
+    def on_add_mediarss_clicked(self, widget=None):
         self.show_dialog(AddMediaRssDialog())
 
-    def on_add_reddit(self):
+    def on_add_reddit_clicked(self, widget=None):
         self.show_dialog(AddRedditDialog())
 
-    def on_add_flickr(self):
+    def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
 
-    def on_add_wallhaven(self):
+    def on_add_wallhaven_clicked(self, widget=None):
         self.show_dialog(AddWallhavenDialog())
 
     def show_dialog(self, dialog):
