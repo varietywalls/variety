@@ -391,39 +391,53 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu = Gtk.Menu()
 
         items = [
-            (_("Images"), self.on_add_images_clicked),
+            (_("Images"), _("Add individual wallpaper images"), self.on_add_images_clicked),
             (
                 _("Folders"),
+                _("Searched recursively for up to 10000 images, shown in random order"),
                 lambda widget: self.on_add_folders_clicked(
                     widget, source_type=Options.SourceType.FOLDER
                 ),
             ),
             (
                 _("Sequential Albums (order by filename)"),
+                _("Searched recursively for images, shown in sequence (by filename)"),
                 lambda widget: self.on_add_folders_clicked(
                     widget, source_type=Options.SourceType.ALBUM_FILENAME
                 ),
             ),
             (
                 _("Sequential Albums (order by date)"),
+                _("Searched recursively for images, shown in sequence (by file date)"),
                 lambda widget: self.on_add_folders_clicked(
                     widget, source_type=Options.SourceType.ALBUM_DATE
                 ),
             ),
             "-",
-            (_("Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Reddit"), self.on_add_reddit_clicked),
-            (_("Media RSS"), self.on_add_mediarss_clicked),
+            (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
+            (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
+            (
+                _("Reddit"),
+                _("Fetch images from a given subreddit or user"),
+                self.on_add_reddit_clicked,
+            ),
+            (_("Media RSS"), _("Fetch images from a MediaRSS feed"), self.on_add_mediarss_clicked),
         ]
 
         for x in items:
             if x == "-":
                 item = Gtk.SeparatorMenuItem.new()
+                item.set_margin_top(15)
+                item.set_margin_bottom(15)
             else:
                 item = Gtk.MenuItem()
-                item.set_label(x[0])
-                item.connect("activate", x[1])
+                label = Gtk.Label("<b>{}</b>\n{}".format(x[0], x[1]))
+                label.set_margin_top(6)
+                label.set_margin_bottom(6)
+                label.set_xalign(0)
+                label.set_use_markup(True)
+                item.add(label)
+                item.connect("activate", x[2])
             self.add_menu.append(item)
 
         self.add_menu.show_all()
