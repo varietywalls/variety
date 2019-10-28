@@ -445,6 +445,8 @@ class VarietyWindow(Gtk.Window):
         self.downloaders = []
         self.download_folder_size = -1
 
+        self.albums = []
+
         if self.size_options_changed():
             logger.info(lambda: "Size/landscape settings changed - purging downloaders cache")
             self.create_downloaders_cache()
@@ -454,6 +456,22 @@ class VarietyWindow(Gtk.Window):
 
             if not enabled:
                 continue
+
+            # prepare a cache for albums to avoid walking those folders on every change
+            if type in (Options.SourceType.ALBUM_FILENAME, Options.SourceType.ALBUM_DATE):
+                images = Util.list_files(folders=(location,), filter_func=Util.is_image)
+                if type == Options.SourceType.ALBUM_FILENAME:
+                    images = sorted(images)
+                elif type == Options.SourceType.ALBUM_DATE:
+                    images = sorted(images, key=os.path.getmtime)
+                else:
+                    raise Exception("Unsupported album type")
+
+                if images:
+                    self.albums.append({"path": os.path.normpath(location), "images": images})
+
+                continue
+
             if type not in self.options.get_downloader_source_types():
                 continue
 
@@ -611,7 +629,7 @@ class VarietyWindow(Gtk.Window):
 
         if type == Options.SourceType.IMAGE:
             return None
-        if type == Options.SourceType.FOLDER:
+        elif type in Options.SourceType.LOCAL_PATH_TYPES:
             return location
         elif type == Options.SourceType.FAVORITES:
             return self.options.favorites_folder
@@ -1466,6 +1484,13 @@ class VarietyWindow(Gtk.Window):
     def select_random_images(self, count):
         all_images = list(self.list_images())
         self.image_count = len(all_images)
+
+        # add just the first image of each album to the selection,
+        # otherwise albums will get an enormous part of the screentime, as they act as
+        # "black holes" - once we start them, we stay there until done
+        for album in self.albums:
+            all_images.append(album["images"][0])
+
         random.shuffle(all_images)
         return all_images[:count]
 
@@ -1555,26 +1580,36 @@ class VarietyWindow(Gtk.Window):
         try:
             img = None
 
-            with self.prepared_lock:
-                # with some big probability, use one of the unseen_downloads
-                if (
-                    random.random() < self.options.download_preference_ratio
-                    or not self._has_local_sources()
-                ):
-                    enabled_unseen_downloads = self._enabled_unseen_downloads()
-                    if enabled_unseen_downloads:
-                        unseen = random.choice(list(enabled_unseen_downloads))
-                        self.prepared.insert(0, unseen)
+            # check if current is part of an album, and show next image in the album
+            if self.current:
+                for album in self.albums:
+                    if os.path.normpath(self.current).startswith(album["path"]):
+                        index = album["images"].index(self.current)
+                        if 0 <= index < len(album["images"]) - 1:
+                            img = album["images"][index + 1]
+                            break
 
-                for prep in self.prepared:
-                    if prep != self.current and os.access(prep, os.R_OK):
-                        img = prep
-                        try:
-                            self.prepared.remove(img)
-                        except ValueError:
-                            pass
-                        self.prepare_event.set()
-                        break
+            if not img:
+                with self.prepared_lock:
+                    # with some big probability, use one of the unseen_downloads
+                    if (
+                        random.random() < self.options.download_preference_ratio
+                        or not self._has_local_sources()
+                    ):
+                        enabled_unseen_downloads = self._enabled_unseen_downloads()
+                        if enabled_unseen_downloads:
+                            unseen = random.choice(list(enabled_unseen_downloads))
+                            self.prepared.insert(0, unseen)
+
+                    for prep in self.prepared:
+                        if prep != self.current and os.access(prep, os.R_OK):
+                            img = prep
+                            try:
+                                self.prepared.remove(img)
+                            except ValueError:
+                                pass
+                            self.prepare_event.set()
+                            break
 
             if not img:
                 logger.info(lambda: "No images yet in prepared buffer, using some random image")

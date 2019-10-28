@@ -391,22 +391,53 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu = Gtk.Menu()
 
         items = [
-            (_("Images"), self.on_add_images_clicked),
-            (_("Folders"), self.on_add_folders_clicked),
+            (_("Images"), _("Add individual wallpaper images"), self.on_add_images_clicked),
+            (
+                _("Folders"),
+                _("Searched recursively for up to 10000 images, shown in random order"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.FOLDER
+                ),
+            ),
+            (
+                _("Sequential Albums (order by filename)"),
+                _("Searched recursively for images, shown in sequence (by filename)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_FILENAME
+                ),
+            ),
+            (
+                _("Sequential Albums (order by date)"),
+                _("Searched recursively for images, shown in sequence (by file date)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_DATE
+                ),
+            ),
             "-",
-            (_("Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Reddit"), self.on_add_reddit_clicked),
-            (_("Media RSS"), self.on_add_mediarss_clicked),
+            (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
+            (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
+            (
+                _("Reddit"),
+                _("Fetch images from a given subreddit or user"),
+                self.on_add_reddit_clicked,
+            ),
+            (_("Media RSS"), _("Fetch images from a MediaRSS feed"), self.on_add_mediarss_clicked),
         ]
 
         for x in items:
             if x == "-":
                 item = Gtk.SeparatorMenuItem.new()
+                item.set_margin_top(15)
+                item.set_margin_bottom(15)
             else:
                 item = Gtk.MenuItem()
-                item.set_label(x[0])
-                item.connect("activate", x[1])
+                label = Gtk.Label("<b>{}</b>\n{}".format(x[0], x[1]))
+                label.set_margin_top(6)
+                label.set_margin_bottom(6)
+                label.set_xalign(0)
+                label.set_use_markup(True)
+                item.add(label)
+                item.connect("activate", x[2])
             self.add_menu.append(item)
 
         self.add_menu.show_all()
@@ -572,9 +603,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
         chooser.destroy()
 
-    def on_add_folders_clicked(self, widget=None):
+    def on_add_folders_clicked(self, widget=None, source_type=Options.SourceType.FOLDER):
+        if source_type == Options.SourceType.FOLDER:
+            title = _(
+                "Add Folders - Only add the root folders, subfolders are searched recursively"
+            )
+        elif source_type == Options.SourceType.ALBUM_FILENAME:
+            title = _(
+                "Add Sequential Albums (ordered by filename). Subfolders are searched recursively."
+            )
+        elif source_type == Options.SourceType.ALBUM_DATE:
+            title = _(
+                "Add Sequential Albums (ordered by date). Subfolders are searched recursively."
+            )
+        else:
+            raise Exception("Unsuppoted source_type {}".format(source_type))
         chooser = Gtk.FileChooserDialog(
-            _("Add Folders - Only add the root folders, subfolders are searched recursively"),
+            title,
             parent=self,
             action=Gtk.FileChooserAction.SELECT_FOLDER,
             buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK],
@@ -587,7 +632,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if response == Gtk.ResponseType.OK:
             folders = list(chooser.get_filenames())
             folders = [f for f in folders if os.path.isdir(f)]
-            self.add_sources(Options.SourceType.FOLDER, folders)
+            self.add_sources(source_type, folders)
 
         self.dialog = None
         chooser.destroy()
@@ -597,14 +642,18 @@ class PreferencesVarietyDialog(PreferencesDialog):
         existing = {}
         for i, r in enumerate(self.ui.sources.get_model()):
             if r[1] == type:
-                if type == Options.SourceType.FOLDER:
+                if type in (
+                    Options.SourceType.FOLDER,
+                    Options.SourceType.ALBUM_FILENAME,
+                    Options.SourceType.ALBUM_DATE,
+                ):
                     existing[os.path.normpath(r[2])] = r, i
                 else:
                     existing[self.model_row_to_source(r)[2]] = r, i
 
         newly_added = 0
         for f in locations:
-            if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
+            if type in Options.SourceType.LOCAL_PATH_TYPES:
                 f = os.path.normpath(f)
             elif type not in Options.SourceType.EDITABLE_DL_TYPES:
                 f = (
@@ -664,6 +713,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if len(rows) == 1:
             self.edit_source(model[rows[0]])
 
+    def on_open_folder_clicked(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        if len(rows) != 1:
+            return
+        row = model[rows[0]]
+        type = row[1]
+        if type in Options.SourceType.LOCAL_PATH_TYPES:
+            subprocess.Popen(["xdg-open", os.path.realpath(row[2])])
+        elif type == Options.SourceType.FAVORITES:
+            subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
+        elif type == Options.SourceType.FETCHED:
+            subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
+        else:
+            subprocess.Popen(
+                ["xdg-open", self.parent.get_folder_of_source(self.model_row_to_source(row))]
+            )
+
     def on_use_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
         for row in model:
@@ -678,13 +744,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def edit_source(self, edited_row):
         type = edited_row[1]
 
-        if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
-            subprocess.Popen(["xdg-open", os.path.realpath(edited_row[2])])
-        elif type == Options.SourceType.FAVORITES:
-            subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
-        elif type == Options.SourceType.FETCHED:
-            subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
-        elif type in Options.SourceType.EDITABLE_DL_TYPES:
+        if type in Options.SourceType.EDITABLE_DL_TYPES:
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLHAVEN:
@@ -696,10 +756,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
-        elif type in Options.get_downloader_source_types():
-            subprocess.Popen(
-                ["xdg-open", self.parent.get_folder_of_source(self.model_row_to_source(edited_row))]
-            )
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -716,26 +772,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.edit_source.set_sensitive(False)
         self.ui.edit_source.set_label(_("Edit..."))
+        self.ui.open_folder.set_sensitive(len(rows) == 1)
+        self.ui.open_folder.set_label(_("Open Folder"))
 
         if len(rows) == 1:
             source = model[rows[0]]
             type = source[1]
             if type == Options.SourceType.IMAGE:
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("View Image"))
-            elif type in [
-                Options.SourceType.FOLDER,
-                Options.SourceType.FAVORITES,
-                Options.SourceType.FETCHED,
-            ]:
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Open Folder"))
+                self.ui.open_folder.set_label(_("View Image"))
             elif type in Options.SourceType.EDITABLE_DL_TYPES:
                 self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Edit..."))
-            elif type in Options.get_downloader_source_types():
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Open Folder"))
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
@@ -796,7 +842,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 folder_images = list(
                     Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000)
                 )
-                random.shuffle(folder_images)
+                if len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_FILENAME:
+                    folder_images = sorted(folder_images)
+                elif len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_DATE:
+                    folder_images = sorted(folder_images, key=os.path.getmtime)
+                else:
+                    random.shuffle(folder_images)
                 to_show = images + folder_images
                 if hasattr(self, "focused_image") and self.focused_image is not None:
                     try:

@@ -51,7 +51,7 @@ class WallhavenDownloader(ImageSource, DefaultDownloader):
         return "wallhaven"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=180, max_queue_fills_per_hour=20)
+        return Throttling(max_downloads_per_hour=360, max_queue_fills_per_hour=40)
 
     def parse_location(self):
         if self.config.startswith(("http://", "https://")):

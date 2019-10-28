@@ -36,6 +36,8 @@ class Options:
         # local files and folders
         IMAGE = "image"
         FOLDER = "folder"
+        ALBUM_FILENAME = "album (by filename)"
+        ALBUM_DATE = "album (by date)"
 
         # special local folders
         FAVORITES = "favorites"
@@ -50,6 +52,8 @@ class Options:
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
             FOLDER,
+            ALBUM_FILENAME,
+            ALBUM_DATE,
             FAVORITES,
             FETCHED,
             FLICKR,
@@ -58,13 +62,15 @@ class Options:
             REDDIT,
         }
 
-        LOCAL_TYPES = {IMAGE, FOLDER, FAVORITES, FETCHED}
+        LOCAL_PATH_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE}
+
+        LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
         DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
 
         EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
 
-        REMOVABLE_TYPES = {FOLDER, IMAGE} | EDITABLE_DL_TYPES
+        REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 
     class LightnessMode:
         DARK = 0
