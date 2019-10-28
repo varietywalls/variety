@@ -629,7 +629,7 @@ class VarietyWindow(Gtk.Window):
 
         if type == Options.SourceType.IMAGE:
             return None
-        if type in Options.SourceType.LOCAL_PATH_TYPES:
+        elif type in Options.SourceType.LOCAL_PATH_TYPES:
             return location
         elif type == Options.SourceType.FAVORITES:
             return self.options.favorites_folder
