@@ -31,6 +31,8 @@ class Options:
     OUTDATED_HASHES = {"clock_filter": ["dca6bd2dfa2b8c4e2db8801e39208f7f"]}
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
     IMAGE_SOURCES = []  # set by VarietyWindow at start
+    CONFIGURABLE_IMAGE_SOURCES = []  # set by VarietyWindow at start
+    CONFIGURABLE_IMAGE_SOURCES_MAP = {}  # set by VarietyWindow at start
 
     class SourceType:
         # local files and folders
@@ -572,8 +574,20 @@ class Options:
         return Options.SourceType.DL_TYPES | Options.get_plugin_source_types()
 
     @staticmethod
+    def get_editable_source_types():
+        return Options.SourceType.EDITABLE_DL_TYPES | Options.get_configurable_plugin_source_types()
+
+    @staticmethod
+    def get_removable_source_types():
+        return Options.SourceType.REMOVABLE_TYPES | Options.get_editable_source_types()
+
+    @staticmethod
     def get_plugin_source_types():
         return set(dl.get_source_type() for dl in Options.IMAGE_SOURCES)
+
+    @staticmethod
+    def get_configurable_plugin_source_types():
+        return set(dl.get_source_type() for dl in Options.CONFIGURABLE_IMAGE_SOURCES)
 
     def set_defaults(self):
         self.change_enabled = True

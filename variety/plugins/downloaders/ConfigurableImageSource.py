@@ -21,14 +21,16 @@ from variety.plugins.downloaders.ImageSource import ImageSource
 class ConfigurableImageSource(ImageSource, metaclass=abc.ABCMeta):
     """
     Implements searchable image sources.
-    TODO: This plugin type is still in ideation phase, very early WIP. Not used for now.
+    TODO: This plugin type is still in ideation phase, WIP.
     """
 
-    def __init__(self):
-        super().__init__()
-
     @abc.abstractmethod
-    def search(self, config):
+    def validate(self, config):
+        """
+        Example valid: return formatted(query), None
+        Example invalid: return query, _('Not a proper XYZ query')
+        """
+        # TODO allow also returning full_descriptor, propagete all the way to persisted source tuple
         pass
 
     @abc.abstractmethod
@@ -36,5 +38,13 @@ class ConfigurableImageSource(ImageSource, metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_ui_config_help_string(self):
+    def get_ui_instruction(self):
+        pass
+
+    @abc.abstractmethod
+    def get_ui_short_instruction(self):
+        pass
+
+    @abc.abstractmethod
+    def get_ui_short_description(self):
         pass

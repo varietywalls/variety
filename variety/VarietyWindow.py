@@ -38,6 +38,7 @@ from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
+from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -207,8 +208,7 @@ class VarietyWindow(Gtk.Window):
             self.create_preferences_dialog()
 
             for plugin in self.jumble.get_plugins(clazz=IVarietyPlugin):
-                prepare_earth_timer = threading.Timer(0, plugin["plugin"].on_variety_start_complete)
-                prepare_earth_timer.start()
+                threading.Timer(0, plugin["plugin"].on_variety_start_complete).start()
 
         GObject.timeout_add(1000, _delayed)
 
@@ -402,13 +402,18 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
     def load_downloader_plugins(self):
-        Options.IMAGE_SOURCES = [
-            p["plugin"] for p in self.jumble.get_plugins(ImageSource, active=True)
+        Options.IMAGE_SOURCES = [p["plugin"] for p in self.jumble.get_plugins(ImageSource)]
+        Options.CONFIGURABLE_IMAGE_SOURCES = [
+            p for p in Options.IMAGE_SOURCES if isinstance(p, ConfigurableImageSource)
         ]
+        Options.CONFIGURABLE_IMAGE_SOURCES_MAP = {
+            s.get_source_type(): s for s in Options.CONFIGURABLE_IMAGE_SOURCES
+        }
         Options.SIMPLE_DOWNLOADERS = [
             p for p in Options.IMAGE_SOURCES if isinstance(p, SimpleDownloader)
         ]
         for image_source in Options.IMAGE_SOURCES:
+            image_source.activate()
             image_source.set_variety(self)
 
     def reload_config(self):
@@ -620,6 +625,9 @@ class VarietyWindow(Gtk.Window):
             for dl in Options.SIMPLE_DOWNLOADERS:
                 if dl.get_source_type() == type:
                     return dl
+            for source in Options.CONFIGURABLE_IMAGE_SOURCES:
+                if source.get_source_type() == type:
+                    return source.create_downloader(location)
 
         raise Exception("Unknown downloader type")
 

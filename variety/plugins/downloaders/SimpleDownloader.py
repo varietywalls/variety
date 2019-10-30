@@ -29,5 +29,4 @@ class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
     def __init__(self):
         ImageSource.__init__(self)
         DefaultDownloader.__init__(self, source=self)
-        IPlugin.activate(self)
         self.queue = []
