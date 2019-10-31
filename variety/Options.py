@@ -46,7 +46,6 @@ class Options:
         FETCHED = "fetched"
 
         # predefined configurable sources
-        MEDIA_RSS = "mediarss"
         FLICKR = "flickr"
         WALLHAVEN = "wallhaven"
 
@@ -58,7 +57,6 @@ class Options:
             FAVORITES,
             FETCHED,
             FLICKR,
-            MEDIA_RSS,
             WALLHAVEN,
         }
 
@@ -66,9 +64,9 @@ class Options:
 
         LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
-        DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN}
+        DL_TYPES = {FLICKR, WALLHAVEN}
 
-        EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN}
+        EDITABLE_DL_TYPES = {FLICKR, WALLHAVEN}
 
         REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 

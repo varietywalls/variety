@@ -28,7 +28,6 @@ from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
-from variety.AddMediaRssDialog import AddMediaRssDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
@@ -416,7 +415,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             "-",
             (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
             (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Media RSS"), _("Fetch images from a MediaRSS feed"), self.on_add_mediarss_clicked),
         ]
 
         for source in sorted(
@@ -753,8 +751,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLHAVEN:
                 self.dialog = AddWallhavenDialog()
-            elif type == Options.SourceType.MEDIA_RSS:
-                self.dialog = AddMediaRssDialog()
             elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
                 self.dialog = AddConfigurableDialog()
                 self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
@@ -871,9 +867,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
-
-    def on_add_mediarss_clicked(self, widget=None):
-        self.show_dialog(AddMediaRssDialog())
 
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())

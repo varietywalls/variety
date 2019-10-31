@@ -36,7 +36,6 @@ from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
-from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
@@ -616,8 +615,6 @@ class VarietyWindow(Gtk.Window):
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
-        elif type == Options.SourceType.MEDIA_RSS:
-            return MediaRssDownloader(self, location)
         else:
             for dl in Options.SIMPLE_DOWNLOADERS:
                 if dl.get_source_type() == type:

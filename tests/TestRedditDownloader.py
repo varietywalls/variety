@@ -17,12 +17,13 @@
 
 import unittest
 
-from data.plugins.downloaders.RedditSource import RedditDownloader, RedditSource
+from data.plugins.downloaders.RedditDownloader import RedditDownloader
+from data.plugins.downloaders.RedditSource import RedditSource
 from tests.TestDownloader import test_download_one_for
 from variety.AttrDict import AttrDict
 
 
-class TestRedditSource(unittest.TestCase):
+class TestRedditDownloader(unittest.TestCase):
     def test_download_one(self):
         source = RedditSource()
         test_download_one_for(self, source.create_downloader("http://www.reddit.com/r/AutumnPorn/"))
