@@ -29,7 +29,6 @@ from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddMediaRssDialog import AddMediaRssDialog
-from variety.AddRedditDialog import AddRedditDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
@@ -417,22 +416,17 @@ class PreferencesVarietyDialog(PreferencesDialog):
             "-",
             (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
             (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (
-                _("Reddit"),
-                _("Fetch images from a given subreddit or user"),
-                self.on_add_reddit_clicked,
-            ),
             (_("Media RSS"), _("Fetch images from a MediaRSS feed"), self.on_add_mediarss_clicked),
         ]
 
-        for source in self.options.CONFIGURABLE_IMAGE_SOURCES:
-            items.append(
-                (
-                    source.get_source_name(),
-                    source.get_ui_short_description(),
-                    lambda widget: self.on_add_configurable(source),
-                )
-            )
+        for source in sorted(
+            self.options.CONFIGURABLE_IMAGE_SOURCES, key=lambda s: s.get_source_name()
+        ):
+
+            def _click(widget, source=source):
+                self.on_add_configurable(source)
+
+            items.append((source.get_source_name(), source.get_ui_short_description(), _click))
 
         for x in items:
             if x == "-":
@@ -759,8 +753,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog = AddFlickrDialog()
             elif type == Options.SourceType.WALLHAVEN:
                 self.dialog = AddWallhavenDialog()
-            elif type == Options.SourceType.REDDIT:
-                self.dialog = AddRedditDialog()
             elif type == Options.SourceType.MEDIA_RSS:
                 self.dialog = AddMediaRssDialog()
             elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
@@ -882,9 +874,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_mediarss_clicked(self, widget=None):
         self.show_dialog(AddMediaRssDialog())
-
-    def on_add_reddit_clicked(self, widget=None):
-        self.show_dialog(AddRedditDialog())
 
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())

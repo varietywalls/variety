@@ -131,14 +131,13 @@ class Downloader(abc.ABC):
         """
         return self.get_config()
 
-    @abc.abstractmethod
     def get_description(self):
         """
         User-friendly description of this downloader to show in UI (in the list of sources).
         E.g. "Downloads random images from site X", or "Images from Flickr user XXX"
         :return: description
         """
-        pass
+        return self.config
 
     def get_config(self):
         """

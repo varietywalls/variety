@@ -49,7 +49,6 @@ class Options:
         MEDIA_RSS = "mediarss"
         FLICKR = "flickr"
         WALLHAVEN = "wallhaven"
-        REDDIT = "reddit"
 
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
@@ -61,16 +60,15 @@ class Options:
             FLICKR,
             MEDIA_RSS,
             WALLHAVEN,
-            REDDIT,
         }
 
         LOCAL_PATH_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE}
 
         LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
-        DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
+        DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN}
 
-        EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
+        EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN}
 
         REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 

@@ -56,7 +56,6 @@ from variety.profile import (
 )
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
-from variety.RedditDownloader import RedditDownloader
 from variety.ThumbsManager import ThumbsManager
 from variety.Util import Util, _, debounce, on_gtk, throttle
 from variety.VarietyOptionParser import parse_options
@@ -617,8 +616,6 @@ class VarietyWindow(Gtk.Window):
             return FlickrDownloader(self, location)
         elif type == Options.SourceType.WALLHAVEN:
             return WallhavenDownloader(self, location)
-        elif type == Options.SourceType.REDDIT:
-            return RedditDownloader(self, location)
         elif type == Options.SourceType.MEDIA_RSS:
             return MediaRssDownloader(self, location)
         else:
