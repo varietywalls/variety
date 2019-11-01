@@ -28,7 +28,6 @@ from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
-from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
@@ -414,7 +413,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             ),
             "-",
             (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
         ]
 
         for source in sorted(
@@ -749,8 +747,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if type in Options.get_editable_source_types():
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
-            elif type == Options.SourceType.WALLHAVEN:
-                self.dialog = AddWallhavenDialog()
             elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
                 self.dialog = AddConfigurableDialog()
                 self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
@@ -870,9 +866,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
-
-    def on_add_wallhaven_clicked(self, widget=None):
-        self.show_dialog(AddWallhavenDialog())
 
     def on_add_configurable(self, source):
         dialog = AddConfigurableDialog()

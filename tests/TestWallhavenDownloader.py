@@ -17,16 +17,17 @@
 
 import unittest
 
+from data.plugins.downloaders.WallhavenDownloader import WallhavenDownloader
+from data.plugins.downloaders.WallhavenSource import WallhavenSource
 from tests.TestDownloader import test_download_one_for
-from variety.WallhavenDownloader import WallhavenDownloader
 
 
 class TestWallhavenDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, WallhavenDownloader(None, "landscape"))
+        test_download_one_for(self, WallhavenSource().create_downloader("landscape"))
 
     def test_fill_queue(self):
-        dl = WallhavenDownloader(None, "nature")
+        dl = WallhavenSource().create_downloader("nature")
         queue = dl.fill_queue()
         self.assertTrue(len(queue) > 0)
 

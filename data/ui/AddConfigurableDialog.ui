@@ -4,7 +4,7 @@
   <requires lib="gtk+" version="3.0"/>
   <requires lib="add_configurable_dialog" version="1.0"/>
   <object class="AddConfigurableDialog" id="add_configurable_dialog">
-    <property name="width_request">700</property>
+    <property name="width_request">960</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title">Title</property>

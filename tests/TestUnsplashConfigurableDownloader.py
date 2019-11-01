@@ -17,32 +17,28 @@
 
 import unittest
 
-from data.plugins.downloaders.MediaRSSDownloader import MediaRSSDownloader
-from data.plugins.downloaders.MediaRSSSource import MediaRSSSource
+from data.plugins.downloaders.UnsplashConfigurableSource import UnsplashConfigurableSource
 from tests.TestDownloader import test_download_one_for
+from variety.AttrDict import AttrDict
 
 
-class TestMediaRssDownloader(unittest.TestCase):
+class TestUnsplashConfigurableDownloader(unittest.TestCase):
+    def _source(self):
+        parent = AttrDict()
+        parent.options.safe_mode = True
+        parent.size_ok = lambda x, y: True
+
+        source = UnsplashConfigurableSource()
+        source.set_variety(parent)
+        return source
+
     def test_download_one(self):
-        test_download_one_for(
-            self,
-            MediaRSSSource().create_downloader(
-                "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"
-            ),
-        )
+        test_download_one_for(self, self._source().create_downloader("landscape"))
 
-    def test_validate_deviantart(self):
-        self.assertTrue(
-            MediaRSSDownloader.validate(
-                "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"
-            )
-        )
-
-    def test_validate_non_media_rss(self):
-        self.assertFalse(MediaRSSDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
-
-    def test_validate_non_rss(self):
-        self.assertFalse(MediaRSSDownloader.validate("http://google.com"))
+    def test_fill_queue(self):
+        dl = self._source().create_downloader("nature")
+        queue = dl.fill_queue()
+        self.assertTrue(len(queue) > 0)
 
 
 if __name__ == "__main__":

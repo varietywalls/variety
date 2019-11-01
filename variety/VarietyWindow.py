@@ -58,7 +58,6 @@ from variety.QuoteWriter import QuoteWriter
 from variety.ThumbsManager import ThumbsManager
 from variety.Util import Util, _, debounce, on_gtk, throttle
 from variety.VarietyOptionParser import parse_options
-from variety.WallhavenDownloader import WallhavenDownloader
 from variety.WelcomeDialog import WelcomeDialog
 from variety_lib import varietyconfig
 
@@ -613,8 +612,6 @@ class VarietyWindow(Gtk.Window):
     def create_downloader(self, type, location):
         if type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
-        elif type == Options.SourceType.WALLHAVEN:
-            return WallhavenDownloader(self, location)
         else:
             for dl in Options.SIMPLE_DOWNLOADERS:
                 if dl.get_source_type() == type:

@@ -47,7 +47,6 @@ class Options:
 
         # predefined configurable sources
         FLICKR = "flickr"
-        WALLHAVEN = "wallhaven"
 
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
@@ -57,16 +56,15 @@ class Options:
             FAVORITES,
             FETCHED,
             FLICKR,
-            WALLHAVEN,
         }
 
         LOCAL_PATH_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE}
 
         LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
-        DL_TYPES = {FLICKR, WALLHAVEN}
+        DL_TYPES = {FLICKR}
 
-        EDITABLE_DL_TYPES = {FLICKR, WALLHAVEN}
+        EDITABLE_DL_TYPES = {FLICKR}
 
         REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 
