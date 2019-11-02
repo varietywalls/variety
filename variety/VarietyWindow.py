@@ -1141,7 +1141,8 @@ class VarietyWindow(Gtk.Window):
 
     def trigger_download(self):
         logger.info(lambda: "Triggering download thread to check if download needed")
-        self.dl_event.set()
+        if getattr(self, "dl_event"):
+            self.dl_event.set()
 
     def register_downloaded_file(self, file):
         self.refresh_thumbs_downloads(file)

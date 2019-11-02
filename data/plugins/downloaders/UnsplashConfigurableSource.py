@@ -71,7 +71,7 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             else:
                 return config, _("Oops, this didn't work. Is the remote service up?")
 
-    def create_downloader(self, config, full_descriptor=None):
+    def create_downloader(self, config):
         return self.UnsplashConfigurableDownloader(self, config)
 
     def get_ui_instruction(self):

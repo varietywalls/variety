@@ -21,17 +21,15 @@ from variety.Util import Util
 
 
 class Downloader(abc.ABC):
-    def __init__(self, source, config=None, full_descriptor=None):
+    def __init__(self, source, config=None):
         """
         Create a downloader for an image source
         :param source: the image source this downloader is associated with
         :param config: optional, see get_config()
-        :param full_descriptor: optional, see get_full_descriptor()
         """
         super().__init__()
         self.source = source
         self.config = config
-        self.full_descriptor = full_descriptor
         self.target_folder = None  # initialized post construction by update_download_folder
         self.state = None
 
@@ -148,16 +146,6 @@ class Downloader(abc.ABC):
 
     def get_identifier(self):
         return self.target_folder
-
-    def get_full_descriptor(self):
-        """
-        Returns a dict object that will be persisted and loaded along with the config string.
-        This allows the downloader to cache information associated with the config without having
-        to make http calls every time it is loaded.
-        E.g. this could be the user ID of the Flickr user associated with the config string.
-        :return:
-        """
-        return self.full_descriptor
 
     def get_folder_name(self):
         """

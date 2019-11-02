@@ -69,5 +69,5 @@ class MediaRSSSource(ConfigurableImageSource):
         )
         return url, None if valid else error
 
-    def create_downloader(self, config, full_descriptor=None):
+    def create_downloader(self, config):
         return MediaRSSDownloader(self, config)

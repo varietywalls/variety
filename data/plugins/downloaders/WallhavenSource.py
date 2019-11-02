@@ -71,5 +71,5 @@ class WallhavenSource(ConfigurableImageSource):
         valid = WallhavenDownloader.validate(query)
         return query, None if valid else _("No images found")
 
-    def create_downloader(self, config, full_descriptor=None):
+    def create_downloader(self, config):
         return WallhavenDownloader(self, config)

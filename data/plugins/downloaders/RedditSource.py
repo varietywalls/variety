@@ -84,5 +84,5 @@ class RedditSource(ConfigurableImageSource):
             )
             return query, _("We could not find any image submissions there.")
 
-    def create_downloader(self, config, full_descriptor=None):
+    def create_downloader(self, config):
         return RedditDownloader(self, config)
