@@ -29,6 +29,10 @@ logger = logging.getLogger("variety")
 random.seed()
 
 
+class UnsupportedConfig(Exception):
+    pass
+
+
 class UnsplashConfigurableSource(ConfigurableImageSource):
     class UnsplashConfigurableDownloader(UnsplashDownloader):
         def __init__(self, source, config):
@@ -45,7 +49,30 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             return super(DefaultDownloader, self).get_folder_name()
 
         def get_unsplash_api_url(self):
-            return "{}&query={}".format(super().get_unsplash_api_url(), self.config)
+            self.config = self.config.replace("http://", "https://")
+            params = {}
+            if self.config.startswith("https://"):
+                if self.config.startswith("https://unsplash.com/s/photos/"):
+                    query = self.config.replace("https://unsplash.com/s/photos/", "").split("/")[0]
+                    params["query"] = query
+                elif self.config.startswith("https://unsplash.com/@"):
+                    username = self.config.replace("https://unsplash.com/@", "").split("/")[0]
+                    params["username"] = username
+                elif self.config.startswith("https://unsplash.com/collections/"):
+                    collections = self.config.replace(
+                        "https://unsplash.com/collections/", ""
+                    ).split("/")[0]
+                    params["collections"] = collections
+                else:
+                    raise UnsupportedConfig()
+            else:
+                params["query"] = self.config
+
+            return (
+                super().get_unsplash_api_url()
+                + "&"
+                + "&".join(f"{key}={value}" for key, value in params.items())
+            )
 
     @classmethod
     def get_info(cls):
@@ -65,6 +92,8 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             data = Util.fetch_json(url)
             valid = "errors" not in data
             return config, None if valid else _("No images found")
+        except UnsupportedConfig:
+            return config, _("We do not support this type of URL")
         except Exception as e:
             if isinstance(e, HTTPError) and e.response.status_code == 404:
                 return config, _("No images found")
@@ -77,13 +106,15 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
     def get_ui_instruction(self):
         return _(
             "We use the <a href='https://unsplash.com'>Unsplash</a> API to fetch random images "
-            "that match the given search term. Note that the Unsplash API is rate-limited, so "
-            "Variety reduces the rate at which it fetches new images from the Unsplash sources "
-            "you have enabled."
+            "that match the given search term or URL. The Unsplash API is rate-limited, so "
+            "Variety fetches images from Unsplash sources as a reduced rate.\n"
+            "\n"
+            "Please specify either a search keyword, or the URL of a search result, user or "
+            "collection."
         )
 
     def get_ui_short_instruction(self):
-        return _("Search keyword: ")
+        return _("Search keyword or URL: ")
 
     def get_ui_short_description(self):
         return _("Fetches images from Unsplash.com for a given criteria")

@@ -38,6 +38,6 @@ class TestJumble(unittest.TestCase):
     def test_load(self):
         p = Jumble(["data/plugins"])
         p.load()
-        self.assertEqual(10, len(p.get_plugins()))
-        self.assertEqual(10, len(p.get_plugins(IPlugin)))
+        self.assertEqual(14, len(p.get_plugins()))
+        self.assertEqual(14, len(p.get_plugins(IPlugin)))
         self.assertEqual(1, len(p.get_plugins(name="Goodreads")))
