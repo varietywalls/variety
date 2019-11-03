@@ -92,7 +92,9 @@ class UnsplashDownloader(SimpleDownloader):
                 if self.is_size_inadequate(width, height):
                     continue
 
-                image_url = item["urls"]["full"]
+                image_url = item["urls"]["full"] + "&w={}".format(
+                    max(1980, int(Util.get_screen_width() * 1.2))
+                )
                 origin_url = item["links"]["html"] + UnsplashDownloader.UTM_PARAMS
 
                 extra_metadata = {

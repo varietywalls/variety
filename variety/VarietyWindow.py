@@ -1063,7 +1063,10 @@ class VarietyWindow(Gtk.Window):
                         % len(self.prepared)
                     )
 
-                self.trigger_download()
+                # trigger download after some interval to reduce resource usage while the wallpaper changes
+                delay_dl_timer = threading.Timer(2, self.trigger_download)
+                delay_dl_timer.daemon = True
+                delay_dl_timer.start()
             except Exception:
                 logger.exception(lambda: "Error in prepare thread:")
 

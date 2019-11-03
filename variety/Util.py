@@ -904,6 +904,10 @@ class Util:
                     total_size += os.path.getsize(fp)
         return total_size
 
+    @staticmethod
+    def get_screen_width():
+        return Gdk.Screen.get_default().get_width()
+
 
 def on_gtk(f):
     @functools.wraps(f)

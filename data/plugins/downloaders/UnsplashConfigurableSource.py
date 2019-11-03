@@ -110,7 +110,9 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             "Variety fetches images from Unsplash sources as a reduced rate.\n"
             "\n"
             "Please specify either a search keyword, or the URL of a search result, user or "
-            "collection."
+            "collection.\n"
+            "Example: <a href='https://unsplash.com/collections/3863203/desktop-wallpapers'>https://unsplash.com/collections/3863203/desktop-wallpapers</a>\n"
+            "Example: <a href='https://unsplash.com/@pawel_czerwinski'>https://unsplash.com/@pawel_czerwinski</a>"
         )
 
     def get_ui_short_instruction(self):
