@@ -64,7 +64,7 @@ class TestFlickrDownloader(unittest.TestCase):
 
     def test_get_image_url(self):
         self.assertEqual(
-            "https://live.staticflickr.com/8426/7527967456_946cc5d94b_o.jpg",
+            "https://live.staticflickr.com/8426/7527967456_41f8ae5caf_k.jpg",
             FlickrDownloader.get_image_url("https://www.flickr.com/photos/peter-levi/7527967456/"),
         )
 
