@@ -64,6 +64,12 @@ class UnsplashDownloader(SimpleDownloader):
     def get_default_throttling(self):
         return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=3)
 
+    def get_unsplash_api_url(self):
+        return "https://api.unsplash.com/photos/random?count=30&client_id={}{}".format(
+            UnsplashDownloader.CLIENT_ID,
+            "&orientation=landscape" if self.get_variety().options.use_landscape_enabled else "",
+        )
+
     def fill_queue(self):
         if time.time() - UnsplashDownloader.rate_limiting_started_time < 3600:
             logger.info(
@@ -71,11 +77,7 @@ class UnsplashDownloader(SimpleDownloader):
             )
             return []
 
-        page = random.randint(1, 4500)
-        url = "https://api.unsplash.com/photos/?page=%d&per_page=30&client_id=%s" % (
-            page,
-            UnsplashDownloader.CLIENT_ID,
-        )
+        url = self.get_unsplash_api_url()
         logger.info(lambda: "Filling Unsplash queue from " + url)
 
         r = Util.request(url)
@@ -90,7 +92,9 @@ class UnsplashDownloader(SimpleDownloader):
                 if self.is_size_inadequate(width, height):
                     continue
 
-                image_url = item["urls"]["full"]
+                image_url = item["urls"]["full"] + "&w={}".format(
+                    max(1980, int(Util.get_screen_width() * 1.2))
+                )
                 origin_url = item["links"]["html"] + UnsplashDownloader.UTM_PARAMS
 
                 extra_metadata = {

@@ -26,10 +26,8 @@ import threading
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 
 from variety import Texts
+from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
-from variety.AddMediaRssDialog import AddMediaRssDialog
-from variety.AddRedditDialog import AddRedditDialog
-from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
@@ -415,14 +413,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
             ),
             "-",
             (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), _("Fetch images from Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (
-                _("Reddit"),
-                _("Fetch images from a given subreddit or user"),
-                self.on_add_reddit_clicked,
-            ),
-            (_("Media RSS"), _("Fetch images from a MediaRSS feed"), self.on_add_mediarss_clicked),
         ]
+
+        for source in sorted(
+            self.options.CONFIGURABLE_IMAGE_SOURCES, key=lambda s: s.get_source_name()
+        ):
+
+            def _click(widget, source=source):
+                self.on_add_configurable(source)
+
+            items.append((source.get_source_name(), source.get_ui_short_description(), _click))
 
         for x in items:
             if x == "-":
@@ -448,7 +448,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         has_downloaders = False
         for row in rows:
             type = model[row][1]
-            if type in Options.SourceType.EDITABLE_DL_TYPES:
+            if type in Options.get_editable_source_types():
                 has_downloaders = True
 
         self.remove_menu = Gtk.Menu()
@@ -655,7 +655,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         for f in locations:
             if type in Options.SourceType.LOCAL_PATH_TYPES:
                 f = os.path.normpath(f)
-            elif type not in Options.SourceType.EDITABLE_DL_TYPES:
+            elif type not in Options.get_editable_source_types():
                 f = (
                     list(existing.keys())[0] if existing else None
                 )  # reuse the already existing location, do not add another one
@@ -691,14 +691,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if delete_files:
             for row in rows:
                 type = model[row][1]
-                if type in Options.SourceType.EDITABLE_DL_TYPES:
+                if type in Options.get_editable_source_types():
                     source = self.model_row_to_source(model[row])
                     self.parent.delete_files_of_source(source)
 
         # store the treeiters from paths
         iters = []
         for row in rows:
-            if model[row][1] in Options.SourceType.REMOVABLE_TYPES:
+            if model[row][1] in Options.get_removable_source_types():
                 iters.append(model.get_iter(row))
         # remove the rows (treeiters)
         for i in iters:
@@ -744,15 +744,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def edit_source(self, edited_row):
         type = edited_row[1]
 
-        if type in Options.SourceType.EDITABLE_DL_TYPES:
+        if type in Options.get_editable_source_types():
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
-            elif type == Options.SourceType.WALLHAVEN:
-                self.dialog = AddWallhavenDialog()
-            elif type == Options.SourceType.REDDIT:
-                self.dialog = AddRedditDialog()
-            elif type == Options.SourceType.MEDIA_RSS:
-                self.dialog = AddMediaRssDialog()
+            elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
+                self.dialog = AddConfigurableDialog()
+                self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
@@ -780,7 +777,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             type = source[1]
             if type == Options.SourceType.IMAGE:
                 self.ui.open_folder.set_label(_("View Image"))
-            elif type in Options.SourceType.EDITABLE_DL_TYPES:
+            elif type in Options.get_editable_source_types():
                 self.ui.edit_source.set_sensitive(True)
 
         def timer_func():
@@ -793,7 +790,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.show_timer.start()
 
         for row in rows:
-            if model[row][1] not in Options.SourceType.REMOVABLE_TYPES:
+            if model[row][1] not in Options.get_removable_source_types():
                 self.ui.remove_sources.set_sensitive(False)
                 return
 
@@ -867,17 +864,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
 
-    def on_add_mediarss_clicked(self, widget=None):
-        self.show_dialog(AddMediaRssDialog())
-
-    def on_add_reddit_clicked(self, widget=None):
-        self.show_dialog(AddRedditDialog())
-
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
 
-    def on_add_wallhaven_clicked(self, widget=None):
-        self.show_dialog(AddWallhavenDialog())
+    def on_add_configurable(self, source):
+        dialog = AddConfigurableDialog()
+        dialog.set_source(source)
+        self.show_dialog(dialog)
 
     def show_dialog(self, dialog):
         self.dialog = dialog

@@ -36,8 +36,8 @@ from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
-from variety.MediaRssDownloader import MediaRssDownloader
 from variety.Options import Options
+from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -55,11 +55,9 @@ from variety.profile import (
 )
 from variety.QuotesEngine import QuotesEngine
 from variety.QuoteWriter import QuoteWriter
-from variety.RedditDownloader import RedditDownloader
 from variety.ThumbsManager import ThumbsManager
 from variety.Util import Util, _, debounce, on_gtk, throttle
 from variety.VarietyOptionParser import parse_options
-from variety.WallhavenDownloader import WallhavenDownloader
 from variety.WelcomeDialog import WelcomeDialog
 from variety_lib import varietyconfig
 
@@ -207,8 +205,7 @@ class VarietyWindow(Gtk.Window):
             self.create_preferences_dialog()
 
             for plugin in self.jumble.get_plugins(clazz=IVarietyPlugin):
-                prepare_earth_timer = threading.Timer(0, plugin["plugin"].on_variety_start_complete)
-                prepare_earth_timer.start()
+                threading.Timer(0, plugin["plugin"].on_variety_start_complete).start()
 
         GObject.timeout_add(1000, _delayed)
 
@@ -402,13 +399,18 @@ class VarietyWindow(Gtk.Window):
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
     def load_downloader_plugins(self):
-        Options.IMAGE_SOURCES = [
-            p["plugin"] for p in self.jumble.get_plugins(ImageSource, active=True)
+        Options.IMAGE_SOURCES = [p["plugin"] for p in self.jumble.get_plugins(ImageSource)]
+        Options.CONFIGURABLE_IMAGE_SOURCES = [
+            p for p in Options.IMAGE_SOURCES if isinstance(p, ConfigurableImageSource)
         ]
+        Options.CONFIGURABLE_IMAGE_SOURCES_MAP = {
+            s.get_source_type(): s for s in Options.CONFIGURABLE_IMAGE_SOURCES
+        }
         Options.SIMPLE_DOWNLOADERS = [
             p for p in Options.IMAGE_SOURCES if isinstance(p, SimpleDownloader)
         ]
         for image_source in Options.IMAGE_SOURCES:
+            image_source.activate()
             image_source.set_variety(self)
 
     def reload_config(self):
@@ -610,16 +612,13 @@ class VarietyWindow(Gtk.Window):
     def create_downloader(self, type, location):
         if type == Options.SourceType.FLICKR:
             return FlickrDownloader(self, location)
-        elif type == Options.SourceType.WALLHAVEN:
-            return WallhavenDownloader(self, location)
-        elif type == Options.SourceType.REDDIT:
-            return RedditDownloader(self, location)
-        elif type == Options.SourceType.MEDIA_RSS:
-            return MediaRssDownloader(self, location)
         else:
             for dl in Options.SIMPLE_DOWNLOADERS:
                 if dl.get_source_type() == type:
                     return dl
+            for source in Options.CONFIGURABLE_IMAGE_SOURCES:
+                if source.get_source_type() == type:
+                    return source.create_downloader(location)
 
         raise Exception("Unknown downloader type")
 
@@ -1064,7 +1063,10 @@ class VarietyWindow(Gtk.Window):
                         % len(self.prepared)
                     )
 
-                self.trigger_download()
+                # trigger download after some interval to reduce resource usage while the wallpaper changes
+                delay_dl_timer = threading.Timer(2, self.trigger_download)
+                delay_dl_timer.daemon = True
+                delay_dl_timer.start()
             except Exception:
                 logger.exception(lambda: "Error in prepare thread:")
 
@@ -1142,7 +1144,8 @@ class VarietyWindow(Gtk.Window):
 
     def trigger_download(self):
         logger.info(lambda: "Triggering download thread to check if download needed")
-        self.dl_event.set()
+        if getattr(self, "dl_event"):
+            self.dl_event.set()
 
     def register_downloaded_file(self, file):
         self.refresh_thumbs_downloads(file)

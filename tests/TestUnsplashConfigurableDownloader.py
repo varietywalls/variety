@@ -17,17 +17,33 @@
 
 import unittest
 
-from data.plugins.downloaders.WallhavenDownloader import WallhavenDownloader
-from data.plugins.downloaders.WallhavenSource import WallhavenSource
+from data.plugins.downloaders.UnsplashConfigurableSource import UnsplashConfigurableSource
 from tests.TestDownloader import test_download_one_for
+from variety.AttrDict import AttrDict
 
 
-class TestWallhavenDownloader(unittest.TestCase):
+class TestUnsplashConfigurableDownloader(unittest.TestCase):
+    def _source(self):
+        parent = AttrDict()
+        parent.size_ok = lambda x, y: True
+        source = UnsplashConfigurableSource()
+        source.set_variety(parent)
+        return source
+
     def test_download_one(self):
-        test_download_one_for(self, WallhavenSource().create_downloader("landscape"))
+        test_download_one_for(self, self._source().create_downloader("landscape"))
+
+    def test_validate(self):
+        source = self._source()
+        self.assertIsNone(source.validate("nature")[1])
+        self.assertIsNone(source.validate("https://unsplash.com/s/photos/landscape")[1])
+        self.assertIsNone(source.validate("https://unsplash.com/@fotografierende")[1])
+        self.assertIsNone(
+            source.validate("https://unsplash.com/collections/3694365/gradient-nation")[1]
+        )
 
     def test_fill_queue(self):
-        dl = WallhavenSource().create_downloader("nature")
+        dl = self._source().create_downloader("nature")
         queue = dl.fill_queue()
         self.assertTrue(len(queue) > 0)
 

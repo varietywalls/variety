@@ -18,7 +18,6 @@ import random
 import urllib.parse
 
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
-from variety.plugins.downloaders.ImageSource import ImageSource, Throttling
 from variety.Util import Util, _
 
 SEARCH_URL = (
@@ -30,28 +29,10 @@ logger = logging.getLogger("variety")
 random.seed()
 
 
-class WallhavenDownloader(ImageSource, DefaultDownloader):
-    def __init__(self, parent, location):
-        ImageSource.__init__(self)
-        DefaultDownloader.__init__(self, source=self, config=location)
-        self.set_variety(parent)
+class WallhavenDownloader(DefaultDownloader):
+    def __init__(self, source, location):
+        DefaultDownloader.__init__(self, source=source, config=location)
         self.parse_location()
-
-    @classmethod
-    def get_info(cls):
-        raise Exception("Not yet implemented as a plugin")
-
-    def get_description(self):
-        return _("Images from Wallhaven.cc")
-
-    def get_source_name(self):
-        return "Wallhaven.cc"
-
-    def get_source_type(self):
-        return "wallhaven"
-
-    def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=360, max_queue_fills_per_hour=40)
 
     def parse_location(self):
         if self.config.startswith(("http://", "https://")):
