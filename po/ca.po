@@ -1,4 +1,4 @@
-# Chinese (Simplified) translation for variety
+# Catalan translation for variety
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the variety package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2017-09-18 20:45-0700\n"
-"PO-Revision-Date: 2014-07-15 23:54+0000\n"
-"Last-Translator: kaiman <kaigfm@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"PO-Revision-Date: 2016-09-15 17:37+0000\n"
+"Last-Translator: Davidmp <rbndavid@gmail.com>\n"
+"Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,84 +19,90 @@ msgstr ""
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
-msgstr "从 Goodreads.com 获取箴言"
+msgstr "Obté cites de Goodreads.com"
 
 #: ../variety/Texts.py:20
 msgid "Keep original"
-msgstr "保持原始"
+msgstr "Conserva l'original"
 
 #: ../variety/Texts.py:21
 msgid "Grayscale"
-msgstr "灰度"
+msgstr "Escala de grisos"
 
 #: ../variety/Texts.py:22
 msgid "Heavy blur"
-msgstr ""
+msgstr "Molt desenfocat"
 
 #: ../variety/Texts.py:23
 msgid "Soft blur"
-msgstr ""
+msgstr "Una mica desenfocat"
 
 #: ../variety/Texts.py:24
 msgid "Oil painting"
-msgstr "油画"
+msgstr "Pintura a l'oli"
 
 #: ../variety/Texts.py:25
 msgid "Pencil sketch"
-msgstr ""
+msgstr "Esbós a llapis"
 
 #: ../variety/Texts.py:26
 msgid "Pointilism"
-msgstr ""
+msgstr "Puntillisme"
 
 #: ../variety/Texts.py:27
 msgid "Pixellate"
-msgstr ""
+msgstr "Pixela"
 
 #: ../variety/Texts.py:31
 msgid "The Favorites folder"
-msgstr ""
+msgstr "La carpeta de favorits"
 
 #: ../variety/Texts.py:32
 msgid "The Fetched folder"
-msgstr ""
+msgstr "La carpeta de recuperats"
 
 #: ../variety/Texts.py:35
 msgid ""
 "Recommended by Variety. Adapts to your taste as you mark images as favorite "
 "or trash."
 msgstr ""
+"Recomanat pel Variety. S'adapta al vostres gustos a mesura que marqueu "
+"imatges com a favorites o les elimineu."
 
 #: ../variety/Texts.py:37
 msgid ""
 "Latest favorites by the other users of Variety. [May contain NSFW images]"
 msgstr ""
+"Les últimes favorites d'altres usuaris del Variety. [Pot contenir imatges "
+"NSFW]"
 
 #: ../variety/Texts.py:38
 msgid "Random wallpapers from Desktoppr.co"
-msgstr ""
+msgstr "Fons de pantalla aleatoris des de  Desktoppr.co"
 
 #: ../variety/Texts.py:39
 msgid "NASA's Astronomy Picture of the Day"
-msgstr ""
+msgstr "Imatge astronòmica de la NASA del dia"
 
 #: ../variety/Texts.py:41
 msgid "World Sunlight Map - live wallpaper from Die.net"
-msgstr ""
+msgstr "Mapa amb llum de dia del món - fons animat de Die.net"
 
 #: ../variety/Texts.py:42
 msgid "Bing Photo of the Day"
-msgstr ""
+msgstr "Foto del dia de Bing"
 
 #: ../variety/Texts.py:43
 msgid "High-resolution photos from Unsplash.com"
-msgstr ""
+msgstr "Fotos d'alta resolució des d'Unsplash.com"
 
 #: ../variety/Texts.py:47
 msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
 msgstr ""
+"Podeu canviar el fons de pantalla endavant i enrere movent la roda del "
+"ratolí sobre la icona indicadora."
 
 #: ../variety/Texts.py:48
 msgid ""
@@ -105,6 +111,10 @@ msgid ""
 "~/.config/variety/scripts. There are examples there for various desktop "
 "environments."
 msgstr ""
+"Si voleu executar ordres personalitzades cada vegada que canvia el fons de "
+"pantalla o si utilitzeu un entorn d'escriptori alternatiu; si us plau, "
+"editeu els scripts a ~/.config/variety/scripts. Hi ha exemples per a "
+"diversos entorns d'escriptori."
 
 #: ../variety/Texts.py:49
 msgid ""
@@ -112,6 +122,9 @@ msgid ""
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
+"El Variety es pot controlar des de la línia d'ordres i es pot usar per "
+"definir dreceres de teclat per a les operacions d'ús més freqüent. Executeu "
+"«variety --help» per veure totes les ordres disponibles."
 
 #: ../variety/Texts.py:50
 msgid ""
@@ -119,6 +132,10 @@ msgid ""
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
+"Podeu deixar anar enllaços o fitxers a la icona de llançament per baixar-los "
+"i usar-los com a fons de pantalla. Per a una baixada més ràpidar des d'un "
+"lloc específic, també podeu usar el monitoratge del porta-retalls (vegeu la "
+"pestanya \"Baixada manual\")."
 
 #: ../variety/Texts.py:51
 msgid ""
@@ -126,6 +143,9 @@ msgid ""
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
+"L'aplicació d'un bon filtre de desenfocament és una bona manera d'aconseguir "
+"fons de pantalla d'aspecte abstracte i discrets però coloristes, semblant en "
+"esperit al que ve per defecte a l'Ubuntu."
 
 #: ../variety/Texts.py:52
 msgid ""
@@ -134,6 +154,10 @@ msgid ""
 "an example. Every filter is just a line of options to be passed to "
 "ImageMagick's convert command."
 msgstr ""
+"Afegir uns filtres personalitzats és bastant fàcil: obriu "
+"~/.config/variety/variety.conf en un editor i useu els filtres existents com "
+"a exemple. Cada filtre és simplement una línia d'opcions que ha de passar a "
+"l'odre de conversió de l'ImageMagick."
 
 #: ../variety/Texts.py:53
 msgid ""
@@ -144,12 +168,23 @@ msgid ""
 "thumbnail view of all of them. Please mind that thumbnail view is limited to "
 "several hundred randomly selected images."
 msgstr ""
+"Quan seleccioneu una font d'imatge, les seves imatges es mostren a una "
+"finestra a la part inferior de la pantalla. Cliqueu aquí a una imatge per "
+"establir-la com a fons de pantalla. Feu un clic amb el botó dret del ratolí "
+"per tancar la finestra, per modificar la seva aparença o per realitzar "
+"operacions amb fitxers. Podeu seleccionar fonts múltiples d'imatges per "
+"crear una vista de miniatures «fusionada» de totes. Si us plau tingueu en "
+"compte que aquesta vista de miniatures està limitada a uns quants centenars "
+"d'imatges seleccionades aleatòriament."
 
 #: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
 msgstr ""
+"Per habilitar les notificacions d'escriptori quan el fons canviï, "
+"descomenteu les dues línies del final de  "
+"~/.config/variety/scripts/set_wallpaper."
 
 #: ../variety/Texts.py:55
 msgid ""
@@ -158,6 +193,10 @@ msgid ""
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
+"La icona de l'indicador del Variety també es pot tematitzar. Si trieu "
+"l'opció \"Clara\" per a la icona, el Variety primer comprovarà si el tema "
+"actual GTK té una icona anomenada \"variety-indicator\" i l'usarà en comptes "
+"de la icona clara inclosa."
 
 #: ../variety/Texts.py:56
 msgid ""
@@ -167,26 +206,32 @@ msgid ""
 "~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
 "source. This file is also compatible with the Unix fortune utility."
 msgstr ""
+"Quan trieu escollir desar cites als favorits, es desen per defecte a "
+"~/.config/variety/favorite_quotes.txt. Aquest fitxer és compatible amb la "
+"font de cites del fitxer local del Variety. Si el voleu usar, copieu-lo a "
+"~/.config/variety/pluginconfig/quotes/ i habiliteu la font de cites dels "
+"fitxers locals. Aquest fitxer també és compatible amb la utilitat de fortuna "
+"d'Unix."
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:1
 msgid "Login to VRTY.ORG"
-msgstr ""
+msgstr "Entreu a VRTY.ORG"
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:2
 msgid "Username: "
-msgstr ""
+msgstr "Nom d'usuari: "
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:3
 msgid "Password: "
-msgstr ""
+msgstr "Contrasenya: "
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:4
 msgid "No account? Register here"
-msgstr ""
+msgstr "No en teniu compte? Registreu-vos-hi aquí"
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:5
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Heu oblidat la contrasenya?"
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:6
 msgid ""
@@ -194,130 +239,139 @@ msgid ""
 "browser and click the link <span weight=\"bold\">\"Trigger Variety "
 "login\"</span> in your profile."
 msgstr ""
+"Consell: també podeu entrar a <a href=\"https://vrty.org\">VRTY.ORG</a> amb "
+"un navegador i clicar a l'enllaç <span weight=\"bold\">\"Trigger Variety "
+"login\"</span> del vostre perfil."
 
 #: ../data/ui/LoginOrRegisterDialog.ui.h:7
 msgid "Login"
-msgstr ""
+msgstr "Inicia la sessió"
 
 #: ../variety/PreferencesVarietyDialog.py:254
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: ../variety/PreferencesVarietyDialog.py:377
 #: ../variety/PreferencesVarietyDialog.py:543
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
-msgstr "图片"
+msgstr "Imatges"
 
 #: ../variety/PreferencesVarietyDialog.py:378
 msgid "Folders"
-msgstr "文件夹"
+msgstr "Carpetes"
 
 #: ../variety/PreferencesVarietyDialog.py:380 ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
-msgstr ""
+msgstr "Flickr"
 
 #: ../variety/PreferencesVarietyDialog.py:381
 #: ../data/ui/AddWallhavenDialog.ui.h:2
 msgid "Wallhaven.cc"
-msgstr ""
+msgstr "Wallhaven.cc"
 
 #: ../variety/PreferencesVarietyDialog.py:382 ../data/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
-msgstr ""
+msgstr "Reddit"
 
 #: ../variety/PreferencesVarietyDialog.py:383
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
-msgstr ""
+msgstr "Mitjans RSS"
 
 #: ../variety/PreferencesVarietyDialog.py:408
 msgid "Remove the source, keep the files"
-msgstr "从源里移除，但保留文件"
+msgstr "Elimina la font, mantén els fitxers"
 
 #: ../variety/PreferencesVarietyDialog.py:409
 msgid "Remove the sources, keep the files"
-msgstr "从源里移除，但保留文件"
+msgstr "Elimina les fonts, mantén els fitxers"
 
 #: ../variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source and delete the downloaded files"
-msgstr "移除源，并且删除已下载文件"
+msgstr "Elimina la font i esblrra els fitxers descarregats"
 
 #: ../variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources and delete the downloaded files"
-msgstr "移除源，并且删除已下载文件"
+msgstr "Elimina les fonts i esborra els fitxers descarregats"
 
 #: ../variety/PreferencesVarietyDialog.py:450
 msgid "World Sunlight Map enabled"
-msgstr "启用世界鸟瞰地图"
+msgstr "Mapa  del món amb llum de dia habilitat"
 
 #: ../variety/PreferencesVarietyDialog.py:451
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
-msgstr "世界鸟瞰地图下载间隔要求不大于30分钟。配置之前是自动调整的"
+msgstr ""
+"Usar el World Sunlight Map requereix tenir activats la baixada i el canvi a "
+"intervals de 30 minuts o menys. Els paràmetres s'han ajustat automàticament."
 
 #: ../variety/PreferencesVarietyDialog.py:536
 msgid "Add Images"
-msgstr "添加图片"
+msgstr "Afegeix les imatges"
 
 #: ../variety/PreferencesVarietyDialog.py:537
 #: ../variety/PreferencesVarietyDialog.py:561 ../variety/FolderChooser.py:66
 msgid "Cancel"
-msgstr "取消"
+msgstr "Cancel·la"
 
 #: ../variety/PreferencesVarietyDialog.py:537
 #: ../variety/PreferencesVarietyDialog.py:561
 msgid "Add"
-msgstr "添加"
+msgstr "Afegeix"
 
 #: ../variety/PreferencesVarietyDialog.py:559
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
-msgstr "增加文件夹-只需要添加顶层文件夹，子文件夹会自动添加"
+msgstr ""
+"Afegeix carpetes - Solament afegeix les carpetes arrel, les subcarpetes són "
+"cercades recursivament"
 
 #: ../variety/PreferencesVarietyDialog.py:689
 #: ../variety/PreferencesVarietyDialog.py:702
 #: ../data/ui/PreferencesVarietyDialog.ui.h:170
 msgid "Edit..."
-msgstr "编辑..."
+msgstr "Edita..."
 
 #: ../variety/PreferencesVarietyDialog.py:696
 msgid "View Image"
-msgstr "浏览图像"
+msgstr "Visualitza la imatge"
 
 #: ../variety/PreferencesVarietyDialog.py:699
 msgid "Open Folder"
-msgstr "打开文件夹"
+msgstr "Obre la carpeta"
 
 #: ../variety/PreferencesVarietyDialog.py:1070
 msgid "Recommended images source disabled"
-msgstr ""
+msgstr "Font recomanada d'imatges inhabilitada"
 
 #: ../variety/PreferencesVarietyDialog.py:1098
 #: ../variety/PreferencesVarietyDialog.py:1117
 #: ../variety/PreferencesVarietyDialog.py:1125
 msgid "No write permissions"
-msgstr "没有写权限"
+msgstr "No teniu permisos d'escriptura"
 
 #: ../variety/PreferencesVarietyDialog.py:1105
 msgid "Limit disabled"
-msgstr "限制取消"
+msgstr "S'ha deshabilitat el límit"
 
 #: ../variety/PreferencesVarietyDialog.py:1106
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
-msgstr "自动修改下载文件夹关闭大小限制， 防止意外的数据丢失"
+msgstr ""
+"Si canvieu la carpeta de descàrrega, automàticament es desactivarà el límit "
+"en la mida per prevenir la pèrdua accidental de dades"
 
 #: ../variety/PreferencesVarietyDialog.py:1112
 #, python-format
 msgid "Actual download folder: %s "
-msgstr "实际下载文件夹：%s "
+msgstr "Carpeta de baixades actual: %s "
 
 #: ../variety/PreferencesVarietyDialog.py:1192
 msgid "Could not adjust permissions"
-msgstr "不能修改权限"
+msgstr "No s'han pogut ajustar els permisos"
 
 #: ../variety/PreferencesVarietyDialog.py:1193
 #, python-format
@@ -325,33 +379,33 @@ msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
-"你需要手动运行命令：\n"
+"Podeu intentar d'executar manualment aquesta ordre:\n"
 "sudo chmod %s \"%s\""
 
 #: ../variety/PreferencesVarietyDialog.py:1225
 msgid "Logged in as: "
-msgstr ""
+msgstr "Heu entrat com a "
 
 #: ../variety/PreferencesVarietyDialog.py:1227
 msgid "Anonymous"
-msgstr ""
+msgstr "Anònim"
 
 #: ../variety/PreferencesVarietyDialog.py:1228
 #: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgid "Login or register"
-msgstr ""
+msgstr "Entreu o registreu-vos-hi"
 
 #: ../variety/PreferencesVarietyDialog.py:1228
 msgid "Switch user"
-msgstr ""
+msgstr "Canvia l'usuari"
 
 #: ../data/ui/WelcomeDialog.ui.h:1
 msgid "Welcome to Variety!"
-msgstr "Variety 欢迎您!"
+msgstr "Benvigut al Variety!"
 
 #: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
-msgstr "继续"
+msgstr "Continua"
 
 #: ../data/ui/WelcomeDialog.ui.h:3
 msgid ""
@@ -360,6 +414,10 @@ msgid ""
 "online sources. It runs quietly in the background - to control it, click "
 "this icon in your system tray:"
 msgstr ""
+"El Variety és un canviador de fons de pantalla automàtic. Canvia el fons de "
+"l'escriptori de forma regular usant imatges locals o imatges baixades de "
+"diverses fonts en línia. S'executa tranquil·lament en un segon pla. Per "
+"controlar-lo, cliqueu en aquesta icona a la safata del sistema:"
 
 #: ../data/ui/WelcomeDialog.ui.h:4
 msgid ""
@@ -367,15 +425,20 @@ msgid ""
 "from Bulgaria. If you like it, please <a "
 "href=\"http://peterlevi.com/variety/donate/\">donate</a>."
 msgstr ""
+"El Variety és programari de codi obert, creat per Peter Levi, un "
+"desenvolupador de programari búlgar. Si us agrada, si us plau, feu una "
+"donació a <a href=\"http://peterlevi.com/variety/donate/\"></a>."
 
 #: ../data/ui/WelcomeDialog.ui.h:5
 msgid ""
 "Now please take some time to set your preferences on the following screens."
 msgstr ""
+"Ara, si us plau, dediqueu una estona a configurar les preferències a les "
+"pantalles següents."
 
 #: ../data/ui/WelcomeDialog.ui.h:6
 msgid "KDE Users - Important, please read:"
-msgstr "KDE用户 - 重要， 请阅读"
+msgstr "Usuaris del KDE: és important; si us plau, llegiu el següent:"
 
 #: ../data/ui/WelcomeDialog.ui.h:7
 msgid ""
@@ -384,178 +447,186 @@ msgid ""
 "href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">please read "
 "and follow the instructions here</a>."
 msgstr ""
+"Sembla que feu servir el KDE. Al KDE 4 és impossible establir el fons de "
+"pantalla des de dins d'un programa. No hi ha API per fer-ho. Perquè el  "
+"Variety funcioni, <a href=\"http://peterlevi.com/variety/2014/05/variety-and-"
+"kde/\">si us plau, llegiu i seguiu les instruccions d'aquí</a>."
 
 #: ../variety/LoginOrRegisterDialog.py:80
 #, python-format
 msgid "Oops, server returned error (%s)"
-msgstr ""
+msgstr "El servidor ha retornat un error (%s)"
 
 #: ../variety/LoginOrRegisterDialog.py:85
 msgid "Could not connect to server"
-msgstr ""
+msgstr "No s'ha pogut conectar amb el servidor"
 
 #: ../variety/indicator.py:54 ../variety/indicator.py:101
 #: ../variety/indicator.py:180
 msgid "_Next"
-msgstr "下一个(_N)"
+msgstr "Següe_nt"
 
 #: ../variety/indicator.py:59 ../variety/indicator.py:106
 #: ../variety/indicator.py:185
 msgid "_Previous"
-msgstr "上一个(_P)"
+msgstr "_Anterior"
 
 #: ../variety/indicator.py:66
 msgid "Current desktop wallpaper"
-msgstr "当前桌面壁纸"
+msgstr "Fons de pantalla actual"
 
 #: ../variety/indicator.py:70
 msgid "Show origin"
-msgstr ""
+msgstr "Mostra'n l'origen"
 
 #: ../variety/indicator.py:81 ../variety/VarietyWindow.py:666
 #: ../variety/ThumbsManager.py:144
 msgid "Copy to _Favorites"
-msgstr "拷贝到收藏夹(_F)"
+msgstr "Copia-ho als _favorits"
 
 #. both
 #: ../variety/indicator.py:86 ../variety/VarietyWindow.py:675
 #: ../data/ui/PreferencesVarietyDialog.ui.h:167
 msgid "Move to Favorites"
-msgstr "移动到收藏夹"
+msgstr "Desplaça-ho als favorits"
 
 #: ../variety/indicator.py:92 ../variety/ThumbsManager.py:160
 msgid "Delete to _Trash"
-msgstr "移动到回收站(_T)"
+msgstr "Elimina a la _paperera"
 
 #: ../variety/indicator.py:111 ../variety/indicator.py:190
 msgid "_Next, skipping forward history"
-msgstr ""
+msgstr "_Següent, omet l'historial que segueix"
 
 #: ../variety/indicator.py:119
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
-"Tip: 在缩略图上滚动滚轮\n"
-"可以向前或向后切换"
+"Consell: moveu la rodeta sobre la icona\n"
+"per a Següent i Anterior"
 
 #: ../variety/indicator.py:125 ../variety/indicator.py:199
 #: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
 msgid "Pause on current"
-msgstr ""
+msgstr "Atura't a l'actual"
 
 #: ../variety/indicator.py:129
 msgid "_Image"
-msgstr ""
+msgstr "_Imatge"
 
 #: ../variety/indicator.py:136 ../variety/ThumbsManager.py:167
 msgid "Where is it from?"
-msgstr ""
+msgstr "D'on és?"
 
 #: ../variety/indicator.py:140
 msgid "Show without effects"
-msgstr ""
+msgstr "Mostra-ho sense efectes"
 
 #: ../variety/indicator.py:148
 msgid "Google Image Search"
-msgstr ""
+msgstr "Cerca d'imatges de Google"
 
 #: ../variety/indicator.py:154 ../variety/indicator.py:237
 #: ../data/ui/FacebookPublishDialog.ui.h:2
 msgid "Share on Facebook"
-msgstr "分享到 Facebook"
+msgstr "Comparteix al Facebook"
 
 #: ../variety/indicator.py:161 ../variety/ThumbsManager.py:136
 msgid "Set EXIF Rating"
-msgstr ""
+msgstr "Establiu la puntuació d'EXIF"
 
 #: ../variety/indicator.py:172
 msgid "Report NSFW image"
-msgstr ""
+msgstr "Informa d'una imatge incompleta i no adequada per a la feina"
 
 #: ../variety/indicator.py:205 ../variety/VarietyWindow.py:820
 msgid "Save to Favorites"
-msgstr ""
+msgstr "Desa-ho als favortis"
 
 #: ../variety/indicator.py:210
 msgid "View Favorites..."
-msgstr ""
+msgstr "Mostra els favorits..."
 
 #: ../variety/indicator.py:217
 msgid "Copy to Clipboard"
-msgstr "复制到剪贴板"
+msgstr "Copia al porta-retalls"
 
 #: ../variety/indicator.py:227
 msgid "Google Quote"
-msgstr ""
+msgstr "Cita de Google"
 
 #: ../variety/indicator.py:232
 msgid "Google Author"
-msgstr ""
+msgstr "Autor de Google"
 
 #: ../variety/indicator.py:244 ../variety/indicator.py:298
 msgid "Preferences..."
-msgstr "首选项..."
+msgstr "Preferències..."
 
 #: ../variety/indicator.py:252
 msgid "Turn off"
-msgstr "关闭"
+msgstr "Desactiva"
 
 #: ../variety/indicator.py:258
 msgid "_Quote"
-msgstr ""
+msgstr "_Cita"
 
 #: ../variety/indicator.py:265
 msgid "_History"
-msgstr "历史(_H)"
+msgstr "_Historial"
 
 #: ../variety/indicator.py:271
 msgid "_Wallpaper Selector"
-msgstr ""
+msgstr "Se_lector de fons"
 
 #: ../variety/indicator.py:277
 msgid "Recent _Downloads"
-msgstr "最近下载(_D)"
+msgstr "Baixa_des recents"
 
 #: ../variety/indicator.py:292
 msgid "Start Slideshow"
-msgstr ""
+msgstr "Inicia la presentació"
 
 #: ../variety/indicator.py:302
 msgid "About"
-msgstr "关于"
+msgstr "Quant a"
 
 #: ../variety/indicator.py:306 ../data/ui/PreferencesVarietyDialog.ui.h:196
 msgid "Donate"
-msgstr "捐赠"
+msgstr "Feu una donació"
 
 #: ../variety/indicator.py:310
 msgid "Quit"
-msgstr "退出"
+msgstr "Surt"
 
 #: ../variety/indicator.py:428
 msgid "_Safe mode"
-msgstr ""
+msgstr "Mode _segur"
 
 #: ../variety/AddMediaRssDialog.py:40
 msgid ""
 "This does not seem to be a valid Media RSS feed URL or there is no content "
 "there."
-msgstr "输入不是一个合法的RSS链接或者RSS链接里面没有内容"
+msgstr ""
+"Això no sembla que sigui un URL de canal RSS de mitjans de comunicació vàlid "
+"o no té contingut."
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
 msgid "Variety - VRTY.ORG"
-msgstr ""
+msgstr "Variety - VRTY.ORG"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
 msgid "No, thanks"
-msgstr ""
+msgstr "No, gràcies"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
 msgstr ""
+"<span font=\"14\" weight=\"bold\">Us presentem <a "
+"href=\"https://vrty.org\">VRTY.ORG</a>! Hi voleu participar?</span>"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
@@ -564,6 +635,10 @@ msgid ""
 "to find and add new image sources to Variety, and to follow other users' "
 "favorites."
 msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> connecta els usuaris del Variety "
+"amb gustos similars i proporciona maneres molt convenients per canviar el "
+"fons de pantalla, per trobar i afegir fonts d'imatges noves al Variety i per "
+"seguir els favorits d'altres usuaris."
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
@@ -573,138 +648,155 @@ msgid ""
 "href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
 "service and the privacy policy here.</a>"
 msgstr ""
+"La participació no demana cap esforç, el vostre perfil es farà "
+"automàticament, a mesura que us agradin o no les imatges baixades pel "
+"Variety. El vostre perfil no es compartirà amb terceres persones si no és "
+"que opteu per fer-lo públic. <a href='http://peterlevi.com/variety/vrty-"
+"org/'>Llegiu més detalls sobre el servei i la política de privacitat "
+"aquí.</a>"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
 msgstr ""
+"La participació és necessària per a algunes característiques del Variety com "
+"ara <span weight=\"bold\">la sincronització de favorits entre "
+"ordinadors</span>."
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:107
 msgid "Participate in VRTY.ORG"
-msgstr ""
+msgstr "Participeu a VRTY.ORG"
 
 #: ../data/ui/AddPanoramioDialog.ui.h:1
 msgid "Variety - add Panoramio image source"
-msgstr ""
+msgstr "Variety - afegeix la font d'imatges Panoramio"
 
 #: ../data/ui/AddPanoramioDialog.ui.h:2
 msgid "Panoramio"
-msgstr ""
+msgstr "Panoramio"
 
 #: ../data/ui/AddPanoramioDialog.ui.h:3
 msgid "Please zoom over your area of interest."
-msgstr ""
+msgstr "Si us plau, magnifiqueu sobre la vostra àrea d'interès."
 
 #: ../data/ui/FacebookPublishDialog.ui.h:1
 msgid "Variety - Publish to Facebook"
-msgstr "Variety - 发布到 Facebook"
+msgstr "Variety - publica al Facebook"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:3
 msgid ""
 "Publish a link to the current wallpaper on Facebook. Include this text along "
 "with the link (or just leave empty):"
 msgstr ""
+"Publica un enllaç del fons de pantalla actual al Facebook. Inclou aquest "
+"text a l'enllaç (o simplement deixeu-ho en blanc):"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:4
 msgid "Use current quote"
-msgstr ""
+msgstr "Usa la cita actual"
 
 #: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2676
 msgid "Do not ask anymore, always use the text above"
-msgstr "总是用上面的文字不再提问"
+msgstr "No ho tornis a preguntar, usa sempre el text de dalt"
 
 #: ../variety/AddWallhavenDialog.py:38 ../variety/AddFlickrDialog.py:138
 msgid "No images found"
-msgstr "没有找到图像"
+msgstr "No s'ha trobat cap imatge"
 
 #: ../variety/VarietyWindow.py:662 ../variety/VarietyWindow.py:820
 #: ../variety/VarietyWindow.py:2835
 msgid "Already in Favorites"
-msgstr "收藏夹中已存在"
+msgstr "Ja és als favorits"
 
 #: ../variety/VarietyWindow.py:667 ../variety/ThumbsManager.py:151
 msgid "Move to _Favorites"
-msgstr "移动到收藏夹(_F)"
+msgstr "Desplaça-ho als _favorits"
 
 #: ../variety/VarietyWindow.py:697 ../variety/ThumbsManager.py:119
 msgid "Fetched: Show Origin"
-msgstr "抓到数据"
+msgstr "Obtingut: mostra l'origen"
 
 #: ../variety/VarietyWindow.py:699 ../variety/VarietyWindow.py:810
 #: ../variety/ThumbsManager.py:121
 #, python-format
 msgid "View at %s"
-msgstr "在%s浏览"
+msgstr "Mostra-ho a %s"
 
 #: ../variety/VarietyWindow.py:749
 msgid "Unknown"
-msgstr ""
+msgstr "Desconegut"
 
 #: ../variety/VarietyWindow.py:761
 msgid "Safe mode: On"
-msgstr ""
+msgstr "Mode segur: activat"
 
 #: ../variety/VarietyWindow.py:761
 msgid "Turn Safe mode on"
-msgstr ""
+msgstr "Activa el mode segur"
 
 #: ../variety/VarietyWindow.py:780
 #, python-format
 msgid "Author: %s"
-msgstr ""
+msgstr "Autor: %s"
 
 #: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
 msgid "Resume regular changes"
-msgstr ""
+msgstr "Continua els canvis regulars"
 
 #: ../variety/VarietyWindow.py:952
 msgid "Filtering too strict?"
-msgstr "匹配规则过于严格？"
+msgstr "El filtre és massa estricte?"
 
 #: ../variety/VarietyWindow.py:953
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
-msgstr "Varity用您目前的图片规则匹配到的图片太少"
+msgstr ""
+"El Variety troba massa poques imatges que coincideixin amb els vostres "
+"criteris de cerca"
 
 #: ../variety/VarietyWindow.py:1451
 msgid "Please add more image sources or wait for some downloads"
-msgstr "请增加更多的图片源或者等待下载结束"
+msgstr "Si us plau, afegiu més fonts d'imatges o espereu algunes baixades"
 
 #: ../variety/VarietyWindow.py:1453
 msgid "Please add more image sources"
-msgstr "请增加更多的图片源"
+msgstr "Si us plau, afegiu més fonts d'imatges"
 
 #: ../variety/VarietyWindow.py:1454
 msgid "No more wallpapers"
-msgstr "没有更多的桌面图片"
+msgstr "Ja no hi ha més fons de pantalla"
 
 #: ../variety/VarietyWindow.py:1660
 msgid "Current wallpaper is not in the image sources"
-msgstr "当前的桌面图片不在图片源中"
+msgstr "El fons actual no és a les fonts d'imatges"
 
 #: ../variety/VarietyWindow.py:1695
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
-msgstr "不能移动到 %s。你可能没有相应的权限移动该文件。"
+msgstr ""
+"No s'ha pogut desplaçar a %s. Probablement no teniu permisos per desplaçar "
+"aquest fitxer."
 
 #: ../variety/VarietyWindow.py:1697
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
-msgstr "不能复制到 %s。你可能没有相应的权限复制该文件。"
+msgstr ""
+"No s'ha pogut copiar a %s. Probablement no teniu permisos per copiar aquest "
+"fitxer."
 
 #: ../variety/VarietyWindow.py:1717 ../variety/VarietyWindow.py:1745
 #: ../variety/VarietyWindow.py:1750
 msgid "Cannot delete"
-msgstr "无法删除"
+msgstr "No es pot esborrar"
 
 #: ../variety/VarietyWindow.py:1718
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
-msgstr "你没有权限删除 %s 到回收站。"
+msgstr "No temiu permisos per enviar %s a la paperera."
 
 #: ../variety/VarietyWindow.py:1746
 msgid "Deleting to trash failed, check variety.log for more information."
@@ -718,7 +810,7 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:1908
 msgid "Anonymous usage statistics"
-msgstr ""
+msgstr "Estadístiques d'ús anònimes"
 
 #: ../variety/VarietyWindow.py:1909
 msgid ""
@@ -726,12 +818,17 @@ msgid ""
 "These help us make it better and are not shared with anyone. \n"
 "To read more or turn them off, go to \"Sync and social\""
 msgstr ""
+"El Variety recopila estadístiques d'ús anònimes.\n"
+"Això ens ajuda a fer-lo millor i no es comparteixen amb ningú.\n"
+"Per llegir-ne més o desactivar-les, aneu a \"Sincronització i social\"."
 
 #: ../variety/VarietyWindow.py:2092
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
-msgstr "将要打开文本编辑器编辑配置文件。在您保存关闭文本编辑器后应用更改"
+msgstr ""
+"Obriré un editor amb el fitxer de configuració i aplicaré els canvis després "
+"que els deseu i tanqueu l'editor."
 
 #: ../variety/VarietyWindow.py:2130
 msgid ""
@@ -743,102 +840,121 @@ msgid ""
 "\n"
 "To set a specific wallpaper: %prog /some/local/image.jpg --next"
 msgstr ""
+"%prog [opcions] [fitxers o urls]\n"
+"\n"
+"Passar els fitxers locals els afegirà a la cua del Variety.\n"
+"Passar URL remots farà que el Variety els porti a la carpeta d'obtinguts i "
+"els posi a la cua.\n"
+"\n"
+"Per establir un fons específic: %prog /some/local/image.jpg --next"
 
 #: ../variety/VarietyWindow.py:2140
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
-msgstr "显示日志消息(-vv 显示更详细的debug消息, -vvv 用来debug varity的库文件"
+msgstr ""
+"Mostra els missatges de registre (-vv mostra fins i tot missatges de "
+"depuració més precisos, -vvv també depura variety_lib)"
 
 #: ../variety/VarietyWindow.py:2144
 msgid "Make the running instance quit"
-msgstr "让运行中的实例退出"
+msgstr "Fes que surti la instància en execució"
 
 #: ../variety/VarietyWindow.py:2148
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
-msgstr "打印当前桌面图片地址。 只有当Variety运行时可用"
+msgstr ""
+"Imprimeix la ubicació del fons actual. S'usa només quan l'aplicació ja "
+"s'executa."
 
 #: ../variety/VarietyWindow.py:2152
 msgid "Show Next wallpaper"
-msgstr "显示下一壁纸"
+msgstr "Mostra el fons de pantalla següent"
 
 #: ../variety/VarietyWindow.py:2156
 msgid "Show Previous wallpaper"
-msgstr "显示前一壁纸"
+msgstr "Mostra el fons de pantalla anterior"
 
 #: ../variety/VarietyWindow.py:2160
 msgid "Show Next wallpaper, skipping the forward history"
-msgstr "显示下一张壁纸， 跳过前一壁纸历史"
+msgstr "Mostra el fons de pantalla següent i omet l'historial que segueix"
 
 #: ../variety/VarietyWindow.py:2164
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
-msgstr "删除当前壁纸。程序运行时可用"
+msgstr ""
+"Desplaça el fons de pantalla actual a la paperera. S'usa només quan "
+"l'aplicació ja s'executa."
 
 #: ../variety/VarietyWindow.py:2168
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
-msgstr "拷贝当前壁纸到Favorites."
+msgstr ""
+"Copia el fons de pantalla actual als favorits. S'usa només quan l'aplicació "
+"ja s'executa."
 
 #: ../variety/VarietyWindow.py:2172
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
-msgstr "剪切当前壁纸到Favorites."
+msgstr ""
+"Desplaça el fons de pantalla actual als favorits. S'usa només quan "
+"l'aplicació ja s'executa."
 
 #: ../variety/VarietyWindow.py:2176
 msgid "Pause on current image"
-msgstr ""
+msgstr "Pausa a la imatge actual"
 
 #: ../variety/VarietyWindow.py:2180
 msgid "Resume regular image changes"
-msgstr ""
+msgstr "Continua els canvis regulars d'imatges"
 
 #: ../variety/VarietyWindow.py:2184
 msgid "Toggle Pause/Resume state"
-msgstr "切换 暂停/继续 状态"
+msgstr "Commuta l'estat de pausa / continua"
 
 #: ../variety/VarietyWindow.py:2188
 msgid "Show Next quote"
-msgstr "显示下一箴言"
+msgstr "Mostra la cita següent"
 
 #: ../variety/VarietyWindow.py:2192
 msgid "Show Previous quote"
-msgstr "显示前一箴言"
+msgstr "Mostra la cita anterior"
 
 #: ../variety/VarietyWindow.py:2196
 msgid "Show Next quote, skipping the forward history"
-msgstr "显示下一箴言，跳过向前显示历史"
+msgstr "Mostra la cita següent i omet l'historial que segueix"
 
 #: ../variety/VarietyWindow.py:2200
 msgid "Toggle Quotes Pause/Resume state"
-msgstr "切换箴言 暂停/继续 状态"
+msgstr "Commuta l'estat de pausa / continua de cites"
 
 #: ../variety/VarietyWindow.py:2204
 msgid "Save the current quote to Favorites"
-msgstr ""
+msgstr "Desa la cita actual als favorits"
 
 #: ../variety/VarietyWindow.py:2208
 msgid "Toggle History display"
-msgstr "切换历史显示"
+msgstr "Commuta la vista de l'historial"
 
 #: ../variety/VarietyWindow.py:2212
 msgid "Toggle Recent Downloads display"
-msgstr "切换最近下载现实"
+msgstr "Commuta la vista de les baixades recents"
 
 #: ../variety/VarietyWindow.py:2216
 msgid "Show Preferences dialog"
-msgstr "现实首选项对话框"
+msgstr "Mostra el diàleg de preferències"
 
 #: ../variety/VarietyWindow.py:2220
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
+"Mostra el selector manual de fons de pantalla, amb la barra de miniatures "
+"plena d'imatges de les fonts actives."
 
 #: ../variety/VarietyWindow.py:2224
 msgid ""
@@ -848,126 +964,141 @@ msgid ""
 "option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
 "file directly in an unguarded way."
 msgstr ""
+"Estableix i aplica una opció. Els noms de les opcions són els mateixos que "
+"s'usen al fitxer de configuració del Variety ~/.config/variety/variety.conf. "
+"Es poden establir opcions múltiples amb una sola ordre.  Exemple: \"variety -"
+"-set-option icon Dark --set-option clock_enabled True\". USEU-HO AMB "
+"PRUDÈNCIA: esteu canviant el fitxer de configuració directament sense "
+"protecció."
 
 #: ../variety/VarietyWindow.py:2238
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
-msgstr "选项 --next/--fast-forward 和 --previous 是互斥的"
+msgstr ""
+"Les opcions --next/--fast-forward i --previous són mútuament excloents."
 
 #: ../variety/VarietyWindow.py:2241
 msgid "options --trash and --favorite are mutually exclusive"
-msgstr "选项 --trash 和 --favorite 是互斥的"
+msgstr "Les opcions --trash i --favorite són mútuament excloents"
 
 #: ../variety/VarietyWindow.py:2244
 msgid "options --pause and --resume are mutually exclusive"
-msgstr "选项 --parse 和 --resume 是互斥的"
+msgstr "les opcions--pause i --resume són mútuament excloents."
 
 #: ../variety/VarietyWindow.py:2247
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
-msgstr "选项 --qutoes-next/--quotes-fast-forward 和 --quotes-previous 是互斥的"
+msgstr ""
+"Les opcions --quotes-next/--quotes-fast-forward i --quotes-previous  són "
+"mútuament excloents."
 
 #: ../variety/VarietyWindow.py:2364 ../variety/ImageFetcher.py:60
 #: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
-msgstr "不是一个图像"
+msgstr "No és una imatge"
 
 #: ../variety/VarietyWindow.py:2369
 msgid "Added to queue"
-msgstr "加入队列"
+msgstr "S'ha afegit a la cua"
 
 #: ../variety/VarietyWindow.py:2370 ../variety/VarietyWindow.py:2376
 msgid "Press Next to see it"
-msgstr "点击下一步查看"
+msgstr "Premeu següent per veure-ho"
 
 #: ../variety/VarietyWindow.py:2376
 msgid "Fetched"
-msgstr "获取完毕"
+msgstr "Obtingut"
 
 #: ../variety/VarietyWindow.py:2422
 msgid "Unsupported source type"
-msgstr ""
+msgstr "Tipus de font no admesa"
 
 #: ../variety/VarietyWindow.py:2423 ../variety/VarietyWindow.py:2471
 msgid "Are you running the most recent version of Variety?"
-msgstr ""
+msgstr "Executeu l'última versió del Variety?"
 
 #: ../variety/VarietyWindow.py:2429
 msgid "New image source added"
-msgstr ""
+msgstr "S'ha afegit una font d'imatges nova"
 
 #: ../variety/VarietyWindow.py:2431
 msgid "Image source already exists, enabling it"
-msgstr ""
+msgstr "La font d'imatges ja existeix, s'habilitarà"
 
 #: ../variety/VarietyWindow.py:2457
 msgid "Fetched and applied"
-msgstr ""
+msgstr "Obtingut i aplicat"
 
 #: ../variety/VarietyWindow.py:2467
 msgid "It works!"
-msgstr ""
+msgstr "Funciona!"
 
 #: ../variety/VarietyWindow.py:2467
 msgid "Yay, Variety links work. Great!"
-msgstr ""
+msgstr "Bé, els enllaços del Variety funcionen. Genial!"
 
 #: ../variety/VarietyWindow.py:2471
 msgid "Unsupported command"
-msgstr ""
+msgstr "Ordre no admesa"
 
 #: ../variety/VarietyWindow.py:2473
 msgid "Could not process the given variety:// URL"
-msgstr ""
+msgstr "No s'ha pogut precessar la variety:// URL donada"
 
 #: ../variety/VarietyWindow.py:2474
 msgid "Run with logging enabled to see details"
-msgstr ""
+msgstr "Executeu-ho amb la depuració habilitada per veure'n els detalls"
 
 #: ../variety/VarietyWindow.py:2673
 msgid "Do not ask anymore, always use the current quote"
-msgstr ""
+msgstr "No ho tornis a preguntar, usa sempre la cita actual"
 
 #: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
 msgid "Published"
-msgstr "已发布"
+msgstr "Publicat"
 
 #: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
 msgid "You may open your Facebook feed to see the post"
-msgstr "您可以打开您的Facebook feed来查看发布"
+msgstr "Podeu obrir el vostre canal de Facebook per veure'n l'apunt"
 
 #: ../variety/VarietyWindow.py:2711 ../variety/VarietyWindow.py:2740
 msgid "Could not publish"
-msgstr "不能发布"
+msgstr "No s'ha pogut publicar"
 
 #: ../variety/VarietyWindow.py:2903
 msgid "Could not create autostart entry"
-msgstr ""
+msgstr "No s'ha pogut crear una entrada d'inici automàtic"
 
 #: ../variety/VarietyWindow.py:2904
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
-msgstr "创建autostart desktop entry错误. 请从控制台重新运行程序（增加-v选项）"
+msgstr ""
+"S'ha produït un error mentre es creava l'entrada d'autoarrencada a "
+"l'escriptori\n"
+"Si us plau executeu-lo des d'una terminal amb l'etiqueta -v i torneu a "
+"provar."
 
 #: ../variety/VarietyWindow.py:2954
 msgid "No images"
-msgstr ""
+msgstr "Sense imatges"
 
 #: ../variety/VarietyWindow.py:2954
 msgid "There are no images in the slideshow folders"
-msgstr ""
+msgstr "No hi ha imatges a les carpetes de presentació"
 
 #: ../variety/VarietyWindow.py:2989
 msgid "Wallhaven image sources disabled"
-msgstr ""
+msgstr "Fonts d'imatges de Wallhaven desactiades"
 
 #: ../variety/VarietyWindow.py:2990
 msgid ""
 "Please google \"Python SNI SSL error\" if you want to fix the problem "
 "yourself."
 msgstr ""
+"Si us plau, cerqueu al Google \"Python SNI SSL error\" si voleu solucionar "
+"el problema vós mateix."
 
 #: ../variety/VarietyWindow.py:2996
 msgid ""
@@ -980,34 +1111,47 @@ msgid ""
 "\n"
 "This operation will ask for superuser privileges. "
 msgstr ""
+"Hi ha incompatibilitats d'SSL entre la vostra versió de Python i alguns "
+"llocs https com ara Wallhaven. En podeu <a "
+"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
+"doesnt-give-sni-support/\">trobar més informació aquí</a>.\n"
+"\n"
+"Voleu instal·lar les dependències de Python necessàries per solucionar el "
+"problema? \n"
+"Aquesta operació demanarà privilegis de superusuari. "
 
 #: ../variety/VarietyWindow.py:3001
 msgid "Variety - SSL error. Install dependencies?"
-msgstr ""
+msgstr "Variety: error SSL. En voleu instal·lar les dependències?"
 
 #: ../variety/VarietyWindow.py:3022
 msgid "Installing..."
-msgstr ""
+msgstr "S'està instal·lant..."
 
 #: ../variety/VarietyWindow.py:3023
 #, python-format
 msgid ""
 "Installation will take a minute or two. Please be patient. Log file is at %s"
 msgstr ""
+"La instal·lació durarà un minut o dos. Si us plau, tingueu paciència. El "
+"fitxer de registre és a %s"
 
 #: ../variety/VarietyWindow.py:3036
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr ""
+"S'han instal·lat les dependències. Si us plau, reinicieu el Variety ara."
 
 #: ../variety/VarietyWindow.py:3037
 msgid ""
 "If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
 "and seek another solution."
 msgstr ""
+"Si l'error SSL persisteix, haureu de cercar a Google \"Python SNI SSL "
+"error\" i buscar-ne una altra solució."
 
 #: ../variety/VarietyWindow.py:3040
 msgid "Failure. Wallhaven sources disabled."
-msgstr ""
+msgstr "Fallada. Les fonts de Wallhaven estan inhabilitades."
 
 #: ../variety/VarietyWindow.py:3041
 #, python-format
@@ -1015,15 +1159,18 @@ msgid ""
 "SSL-related dependencies were not installed successfully. Please see %s or "
 "google \"Python SNI SSL error\" and seek another solution."
 msgstr ""
+"Les dependències relacionades amb SSL no s'han instal·lat correctament. Si "
+"us plau, vegeu %s o cerqueu al Google \"Python SNI SSL error\" i busqueu una "
+"altra solució."
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:1
 msgid "Variety - Facebook Sharing"
-msgstr "Variety - 分享到Facebook"
+msgstr "Variety: compartició de Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
 #: ../data/ui/PreferencesVarietyDialog.ui.h:171
 msgid "Facebook Sharing"
-msgstr "Facebook分享"
+msgstr "Compartició de Facebook"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:3
 msgid ""
@@ -1051,14 +1198,38 @@ msgid ""
 "token that will be valid for a couple of weeks. After its validity expires "
 "you will be asked to login again."
 msgstr ""
+"Esteu fent una compartició per Facebook per primer cop. Compartir des del "
+"Variety està disponible per a imatges que provenen de fonts en línia i per a "
+"cites. Funciona de la manera següent: \n"
+"\n"
+"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
+"El Facebook s'obrirà al navegador predeterminat. Se us demanarà d'iniciar-hi "
+"sessió si encara no ho heu fet. \n"
+"\n"
+"<span font_weight=\"bold\">2. Authorize Variety to publish to your "
+"feed.</span>\n"
+"Se us preguntarà si voleu permetre que Variety publiqui al vostre canal en "
+"nom vostre. El Variety només usarà aquest permís per publicar les imatges i "
+"les cites que digueu, res més.\n"
+"\n"
+"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
+"with Variety or xdg-open</span>\n"
+"Se us redirigirà a una pàgina amb instruccions per associar  els enllaços "
+"\"variety://\" amb el Variety al navegador. Si us plau, seguiu aquestes "
+"instruccions per completar-ne la configuració. Només cal fer-ho una vegada.\n"
+"\n"
+"No es desa localment cap contrasenya ni cap informació d'entrada, només un "
+"testimoni de OAuth Facebook que serà vàlid durant un parell de setmanes. "
+"Quan en caduqui la validesa, se us demanarà d'iniciar la sessió una altra "
+"vegada."
 
 #: ../data/plugins/quotes/QuotationsPageSource.py:35
 msgid "Fetches quotes from TheQuotationsPage.com"
-msgstr "从 QuotationsPage.com 获取箴言"
+msgstr "Obté cites de TheQuotationsPage.com"
 
 #: ../data/ui/AddRedditDialog.ui.h:1
 msgid "Variety - add Reddit feed"
-msgstr ""
+msgstr "Variety - afegeix un canal de Reddit"
 
 #: ../data/ui/AddRedditDialog.ui.h:3
 msgid ""
@@ -1073,14 +1244,25 @@ msgid ""
 "href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
 "reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 msgstr ""
+"Escriviu el nom d'un subreddit o enganxeu-hi l'URL complet d'un subreddit o "
+"d'un usuari <a href=\"http://reddit.com\">Reddit</a> user. Podeu especificar-"
+"hi l'ordre de classificació i el període de temps que desitgeu. El Variety "
+"usarà apunts per dirigir les imatges o pàgines d'Imgur d'entre les primeres "
+"100 entrades retornades per Reddit.\n"
+"\n"
+"Exemple: podeu especificar senzillament \"còmics\" or <a "
+"href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
+"Exemple: els millors apunts del mes: <a "
+"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 
 #: ../data/ui/AddRedditDialog.ui.h:7
 msgid "URL or name of a subreddit: "
-msgstr ""
+msgstr "URL o nom d'un subreddit: "
 
 #: ../data/ui/AddRedditDialog.ui.h:8
 msgid "Just a moment to check what's there"
-msgstr ""
+msgstr "Només un moment per mirar què hi ha aquí"
 
 #: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddWallhavenDialog.ui.h:10
 #: ../data/ui/AddMediaRssDialog.ui.h:6 ../data/ui/AddFlickrDialog.ui.h:17
@@ -1089,11 +1271,11 @@ msgstr "  "
 
 #: ../data/ui/SmartRegisterDialog.ui.h:1
 msgid "Variety - VRTY.ORG registration"
-msgstr ""
+msgstr "Variety - registre a VRTY.ORG"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:2
 msgid "Would you like to register?"
-msgstr ""
+msgstr "Us hi voleu registrar?"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:3
 msgid ""
@@ -1104,16 +1286,25 @@ msgid ""
 "you will not lose your profile and favorite wallpapers if you reinstall your "
 "OS."
 msgstr ""
+"Podeu participar a <a href=\"https://vrty.org\">VRTY.ORG</a> anònimament, "
+"però registrar-s'hi habilita algunes caraterístiques interessants, com ara "
+"la <span weight=\"bold\">sincronització</span> de favorits entre ordinadors "
+"i les <span weight=\"bold\">recomanacions personalitzades</span>. També "
+"assegura que no es perdin el perfil ni els fons preferits si reinstal·leu el "
+"sistema."
 
 #: ../data/ui/SmartRegisterDialog.ui.h:4
 msgid "Registration is very easy and does not require any personal data."
-msgstr ""
+msgstr "Registrar-s'hi és molt fàcil i no cal cap dada personal."
 
 #: ../data/ui/SmartRegisterDialog.ui.h:5
 msgid ""
 "If you choose to participate anonymously, you can register later from the "
 "<span weight=\"bold\">\"Sync and social\"</span> page in Preferences."
 msgstr ""
+"Si trieu participar-hi anònimament, us hi podeu registrar més tard des de la "
+"pàgina <span weight=\"bold\">\"Sincronització i social\"</span> de les "
+"preferències."
 
 #: ../data/ui/SmartRegisterDialog.ui.h:6
 msgid ""
@@ -1123,97 +1314,105 @@ msgid ""
 "from the <span font_weight=\"bold\">\"Sync and social\"</span> page in "
 "Preferences."
 msgstr ""
+"Ui, no s'ha pogut connectar a VRTY.ORG. El servidor pot haver caigut. Si us "
+"plau, espereu uns minuts i torneu-ho a intentar o bé trieu <span "
+"font_weight=\"bold\">\"Participeu-hi anònimament\"</span> i registreu-vos-hi "
+"més tard des de la pàgina <span weight=\"bold\">\"Sincronització i "
+"social\"</span> de les preferències."
 
 #: ../data/ui/SmartRegisterDialog.ui.h:7
 msgid ""
 "Please continue the registration and follow the instructions in the browser "
 "tab we opened."
 msgstr ""
+"Si us plau, continueu el registre i seguiu les instruccions de la pestanya "
+"del navegador que s'ha obert."
 
 #: ../data/ui/SmartRegisterDialog.ui.h:8
 msgid "I will participate anonymously"
-msgstr ""
+msgstr "Hi participaré anònimament"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:9
 msgid "I'm registered, let me login"
-msgstr ""
+msgstr "Ja hi estic registrat, permet-me entrar-hi"
 
 #: ../data/ui/SmartRegisterDialog.ui.h:10
 msgid "Register here"
-msgstr ""
+msgstr "Registreu-vos aquí"
 
 #: ../variety/FolderChooser.py:65
 msgid "Choose a folder"
-msgstr "选择一个文件夹"
+msgstr "Trieu una carpeta"
 
 #: ../variety/FolderChooser.py:66
 msgid "OK"
-msgstr "确定"
+msgstr "D’acord"
 
 #: ../variety/__init__.py:147
 msgid "Terminating signal received, quitting..."
-msgstr "收到退出信号，正在退出"
+msgstr "S'ha rebut el senyal de terminació, se sortirà..."
 
 #: ../variety/__init__.py:202
 msgid ""
 "Variety is already running. Sending the command to the running instance."
-msgstr "Variey正在运行. 发送命令到正在运行的实例"
+msgstr ""
+"El Variety ja s'està executant. S'envia l'ordre a la instància que s'executa."
 
 #: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Bottom"
-msgstr "底部"
+msgstr "A baix"
 
 #: ../variety/ThumbsManager.py:42
 msgid "Top"
-msgstr "顶部"
+msgstr "A dalt"
 
 #: ../variety/ThumbsManager.py:43
 msgid "Left"
-msgstr "左侧"
+msgstr "A l'esquerra"
 
 #: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Right"
-msgstr "右侧"
+msgstr "Dreta"
 
 #: ../variety/ThumbsManager.py:94
 msgid "Position"
-msgstr "位置"
+msgstr "Posició"
 
 #: ../variety/ThumbsManager.py:98 ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Size"
-msgstr "大小"
+msgstr "Mida"
 
 #: ../variety/ThumbsManager.py:109
 msgid "Show Containing Folder"
-msgstr "显示包含的文件夹"
+msgstr "Mostra la carpeta que la conté"
 
 #: ../variety/ThumbsManager.py:178
 msgid "Close"
-msgstr "关闭"
+msgstr "Tanca"
 
 #: ../variety/ThumbsManager.py:198
 msgid "Could not set EXIF rating"
-msgstr ""
+msgstr "No s'ha pogut establir la puntuació d'EXIF"
 
 #: ../variety/ThumbsManager.py:217
 msgid "Unrated"
-msgstr "未评级的"
+msgstr "Sense puntuació"
 
 #: ../variety/ThumbsManager.py:224
 msgid "Rejected"
-msgstr "已拒绝"
+msgstr "Rebutjada"
 
 #: ../variety/ThumbsManager.py:326
 msgid "Variety History"
-msgstr "Variety 历史"
+msgstr "Historial del Variety"
 
 #: ../variety/ThumbsManager.py:328
 msgid "Variety Recent Downloads"
-msgstr "Variety 最近下载"
+msgstr "Baixades recents del Variety"
 
 #: ../variety/ThumbsManager.py:330
 msgid "Variety Images"
-msgstr "Variety 图片"
+msgstr "Imatges del Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:1
 msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
@@ -1221,15 +1420,15 @@ msgstr "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:2
 msgid "About Variety"
-msgstr "关于 Variety"
+msgstr "Quant al Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:3
 msgid "An automatic wallpaper changer, downloader and manager."
-msgstr "一个壁纸自动切换、下载和管理软件。"
+msgstr "Un canviador, descarregador i gestor de fons de pantalla automàtic."
 
 #: ../data/ui/AboutVarietyDialog.ui.h:4
 msgid "http://peterlevi.com/variety"
-msgstr ""
+msgstr "http://peterlevi.com/variety"
 
 #: ../data/ui/AboutVarietyDialog.ui.h:5
 msgid ""
@@ -1247,38 +1446,51 @@ msgid ""
 "# You should have received a copy of the GNU General Public License along \n"
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
+"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
+"# Aquest programa és programari lliure: el podeu redistribuir o modificar \n"
+"# d'acord amb els termes de la GNU General Public License, versió 3, tal com "
+"\n"
+"# l'ha publicat la Free Software Foundation.\n"
+"# \n"
+"# Aquest programa es distribueix amb l'esperança que sigui útil, però \n"
+"# SENSE CAP GARANTIA; sense ni tan sols les garanties implícites de \n"
+"# COMERCIALITAT, QUALITAT SATISFACTÒRIA, o ADEQUACIÓ A UN PROPÒSIT \n"
+"# CONCRET.  Vegeu la GNU General Public License per a més detalls.\n"
+"# \n"
+"# You should have received a copy of the GNU General Public License along \n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 
 #: ../variety.desktop.in.h:1
 msgid "Variety"
-msgstr ""
+msgstr "Variety"
 
 #: ../variety.desktop.in.h:2
 msgid "Variety Wallpaper Changer"
-msgstr "Variety 壁纸切换器"
+msgstr "Canviador de fons de pantalla Variety"
 
 #: ../variety.desktop.in.h:3
 msgid "Next"
-msgstr "下一个"
+msgstr "Següent"
 
 #: ../variety.desktop.in.h:4
 msgid "Previous"
-msgstr "上一个"
+msgstr "Anterior"
 
 #: ../variety.desktop.in.h:5
 msgid "Pause / Resume"
-msgstr "暂停 / 恢复"
+msgstr "Pausa / Continua"
 
 #: ../variety.desktop.in.h:6
 msgid "History"
-msgstr "历史"
+msgstr "Historial"
 
 #: ../variety.desktop.in.h:7
 msgid "Preferences"
-msgstr "首选项"
+msgstr "Preferències"
 
 #: ../data/ui/AddWallhavenDialog.ui.h:1
 msgid "Variety - add Wallhaven.cc image source"
-msgstr ""
+msgstr "Variety - afegeix la font d'imatges Wallhaven.cc"
 
 #: ../data/ui/AddWallhavenDialog.ui.h:3
 msgid ""
@@ -1298,14 +1510,29 @@ msgid ""
 "better images and Relevance will provide closer matches when searching for "
 "phrases or colors."
 msgstr ""
+"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a> propociona una varietat "
+"d'opcions de cerca d'imatges. A continuació podeu especificar paraules clau "
+"per buscar o consulteu <a href=\"http://wallhaven.cc\">Wallhaven.cc</a>, "
+"configureu aquí els criteris de cerca, assegureu-vos que us satisfan els "
+"resultats i enganxeu l'adreça URL Wallhaven completa a la casella.\n"
+"\n"
+"Si especifiqueu paraules clau, s'utilitzaran les imatges adequades per a la "
+"feina que més agraden i que coincideixen amb totes les paraules clau. \n"
+"\n"
+"Si especifiqueu un URL Wallhaven; si us plau, trieu amb cura els criteris de "
+"classificació. El Variety demana regularment imatges, però utilitza només "
+"algunes dels diversos centenars que en resulten. Aleatori o Data significarà "
+"que la font de la imatge tindrà un temps de vida més llarg, fins que "
+"s'esgoti. Favorites proporcionarà imatges millors i la rellevància "
+"proporcionarà coinciències més precises quan es busquin frases o colors."
 
 #: ../data/ui/AddWallhavenDialog.ui.h:8
 msgid "Enter keywords or paste URL here: "
-msgstr "输入关键字或粘贴URL于此： "
+msgstr "Escriviu les paraules clau o enganxeu l'URL aquí: "
 
 #: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
 msgid "Just a moment to check this search"
-msgstr "稍待片刻"
+msgstr "Només un moment per fer aquesta cerca"
 
 #: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
@@ -1321,10 +1548,21 @@ msgid ""
 "\n"
 "Example: http://rvelthuis.de/zips/quotes.txt"
 msgstr ""
+"Mostra cites, definides en fitxers de text locals.\n"
+"Poseu els vostres fitxers de text a ~/.config/variety/pluginconfig/quotes/.\n"
+"El format del fitxer és el següent:\n"
+"\n"
+"cita -- autor\n"
+".\n"
+"segona cita -- un altre autor\n"
+".\n"
+"etc.\n"
+"\n"
+"Exemple: http://rvelthuis.de/zips/quotes.txt"
 
 #: ../data/ui/AddMediaRssDialog.ui.h:1
 msgid "Variety - add Media RSS feed"
-msgstr ""
+msgstr "Variety - afegeix un canal RSS de mitjans de comunicació"
 
 #: ../data/ui/AddMediaRssDialog.ui.h:3
 msgid ""
@@ -1338,40 +1576,52 @@ msgid ""
 "href=\"http://www.flickr.com\">Flickr</a>, <a "
 "href=\"http://interfacelift.com\">InterfaceLIFT</a>."
 msgstr ""
+"Si us plau, enganxeu l'URL del RSS de mitjans de comunicació a continuació. "
+"Tingueu en compte que només s'admeten canals RSS de mitjans de comunicació, "
+"no canals RSS arbitraris. Els canals RSS de mitjans de comunicació tenen "
+"contingut multimèdia: etiquetes de contingut que s'enllaçen directament amb "
+"el contingut de la imatge. Alguns exemples de llocs que proporcionen canals "
+"RSS d'aquest tipus: <a href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
+"href=\"http://www.deviantart.com\">deviantART</a>, <a "
+"href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
+"href=\"http://www.flickr.com\">Flickr</a>, <a "
+"href=\"http://interfacelift.com\">InterfaceLIFT</a>."
 
 #: ../data/ui/AddMediaRssDialog.ui.h:4
 msgid "Paste the URL of the Media RSS feed here: "
-msgstr ""
+msgstr "Enganxeu aquí  l'URL del canal RSS de mitjans de comunicació: "
 
 #: ../data/ui/AddMediaRssDialog.ui.h:5
 msgid "Just a moment to check what's at that URL"
-msgstr ""
+msgstr "Només un moment per mirar què hi ha a aquesta URL"
 
 #: ../variety/FacebookHelper.py:116
 msgid "Authorization successful"
-msgstr ""
+msgstr "Autorització correcta"
 
 #: ../variety/FacebookHelper.py:116
 msgid "Publishing..."
-msgstr ""
+msgstr "S'està publicant..."
 
 #: ../variety/FacebookHelper.py:121
 msgid "Authorization failed"
-msgstr ""
+msgstr "L'autorització ha fallat"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
 msgid "Copy to Favorites vs. Move to Favorites"
-msgstr ""
+msgstr "Copia als favorits contra Desplaça als favorits"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
 msgid "Reset to Default"
-msgstr "重置为默认值"
+msgstr "Restableix al valor predeterminat"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
 msgid ""
 "Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
 "menu depending on the image location:"
 msgstr ""
+"Seleccioneu si preferiu «Copia als favorits» o «Desplaça als favorits» al "
+"menú segons la ubicació de la imatge:"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
 msgid ""
@@ -1389,18 +1639,32 @@ msgid ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 msgstr ""
+"Si us plau, introduïu una entrada per línia, cada entrada amb la forma "
+"<Carpeta>:<Copia, mou o ambdós>, on la carpeta es pot baixar, obtenir, "
+"altres o un camí de carpeta específic.\n"
+"L'ordre és important. Quan es mostra una imatge, la primera carpeta de la "
+"llista que contingui la imatge determinarà quines operacions es mostraran al "
+"menú del Variety. \"Altres\" fa coincidir qualsevol fitxer i hauria de ser "
+"l'últim de la llista.\n"
+"\n"
+"Exemple:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
 msgid "VRTY.ORG integration"
-msgstr ""
+msgstr "Integració de VRTY.ORG"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
 msgid "This feature requires VRTY.ORG integration"
-msgstr ""
+msgstr "Aquesta característica requereix integració de VRTY.ORG"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:3
 msgid "Enable VRTY.ORG integration"
-msgstr ""
+msgstr "Habilita la integració de  VRTY.ORG"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:4
 msgid ""
@@ -1415,36 +1679,53 @@ msgid ""
 "href=\"https://vrty.org\">VRTY.ORG</a> - a valuable resource for all users "
 "of Variety."
 msgstr ""
+"Per a aquesta característica el Variety necessita permís per recopilar dades "
+"de les imatges que us agraden o no i de les fonts en línia que teniu "
+"habilitades.\n"
+"\n"
+"Les dades recopilades són anònimes per defecte i abasten només imatges que "
+"ha baixat el Variety, mai imatges que ja tingueu a les carpetes locals, que "
+"podrien ser privades.\n"
+"\n"
+"Aquestes dades ens ajuden a proporcionar imatges millors a tothom i alimenta "
+" <a href=\"https://vrty.org\">VRTY.ORG</a> - una font valuosa per a tots els "
+"usuaris del Variety."
 
 #: ../variety/AddRedditDialog.py:43
 msgid "This does not seem to be a valid Reddit URL"
-msgstr ""
+msgstr "No sembla que sigui una URL de Reddit vàlida"
 
 #: ../variety/AddRedditDialog.py:46
 msgid "We could not find any image submissions there."
-msgstr ""
+msgstr "No hi hem pogut trobar cap entrada d'imatge."
 
 #: ../data/plugins/quotes/QuotesDaddySource.py:31
 msgid ""
 "Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
 "Does not support searching by tags or authors."
 msgstr ""
+"Obté cites del canal RSS QuotesDaddy's daily quotes.\n"
+"No admet cercar per etiquetes ni autors."
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
-msgstr "Variety - 添加 Flickr 作为图像来源"
+msgstr "Variety - afegeix Flickr com a font d'imatges"
 
 #: ../data/ui/AddFlickrDialog.ui.h:3
 msgid ""
 "Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
 "Photos that match all of the chosen criteria will be downloaded. Leave "
 "unneeded criteria empty."
-msgstr "请指定Flickr的搜图规则。所有满足搜图规则的图片将被下载"
+msgstr ""
+"Si us plau, especifiqueu el criteri de cerca de <a "
+"href=\"http://flickr.com\">Flickr</a>. Es baixaran les fotos que "
+"coincideixin amb tots els criteris escollits. Deixeu en blanc els criteris "
+"que no siguin necessaris."
 
 #: ../data/ui/AddFlickrDialog.ui.h:4
 #: ../data/ui/PreferencesVarietyDialog.ui.h:60
 msgid "Tags: "
-msgstr "标记： "
+msgstr "Etiquetes: "
 
 #: ../data/ui/AddFlickrDialog.ui.h:5
 msgid ""
@@ -1452,12 +1733,13 @@ msgid ""
 "simultaneosly in order to match.\n"
 "Example: yellow,car"
 msgstr ""
-"不同标签用逗号分隔。包括所有标签的图片才可被选中\n"
-"例子: yellow, car"
+"Una llista separada per comes de les etiquetes. Una fotografia les ha de "
+"contenir totes al mateix temps per coincidir-hi.\n"
+"Exemple: groc, cotxe."
 
 #: ../data/ui/AddFlickrDialog.ui.h:7
 msgid "User: "
-msgstr "用户名： "
+msgstr "Usuari: "
 
 #: ../data/ui/AddFlickrDialog.ui.h:8
 msgid ""
@@ -1465,10 +1747,14 @@ msgid ""
 "Example: <a href=\"http://www.flickr.com/photos/peter-"
 "levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 msgstr ""
+"Si us plau, introduïu l'URL a la galeria de fotos de l'usuari o a una de les "
+"fotos.\n"
+"Exemple: <a href=\"http://www.flickr.com/photos/peter-"
+"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui.h:10
 msgid "Group: "
-msgstr "群组： "
+msgstr "Grup: "
 
 #: ../data/ui/AddFlickrDialog.ui.h:11
 msgid ""
@@ -1477,10 +1763,14 @@ msgid ""
 "href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
 "s/wallpapers/</a>"
 msgstr ""
+"Si us plau, introduïu l' URL del grup.\n"
+"Exemple: <a "
+"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
+"s/wallpapers/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui.h:13
 msgid "Text:"
-msgstr "文本："
+msgstr "Text:"
 
 #: ../data/ui/AddFlickrDialog.ui.h:14
 msgid ""
@@ -1488,52 +1778,53 @@ msgid ""
 "prepending them with -.\n"
 "Example: apple -pie"
 msgstr ""
-"搜索图片标题，描述和标签。 用“-”除去不需要的项\n"
-"例子：apple - pie(搜索苹果图片，但是不要苹果派的图片)"
+"Cerca de text lliure als títols, descripcions i etiquetes de les "
+"fotografies. Per excloure'n termes avantposeu-hi -.\n"
+"Exemple: pastís -de poma."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
 msgid "seconds"
-msgstr "秒"
+msgstr "segons"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:2
 msgid "minutes"
-msgstr "分钟"
+msgstr "minuts"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:3
 msgid "hours"
-msgstr "小时"
+msgstr "hores"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:4
 msgid "days"
-msgstr "天"
+msgstr "dies"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:5
 msgid "Variety Preferences"
-msgstr "Variety 首选项"
+msgstr "Preferències del Variety"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:6
 msgid "General"
-msgstr "基本设置"
+msgstr "General"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:7
 msgid "Start Variety when the computer starts"
-msgstr "启动时同时启动Variety"
+msgstr "Inicia el Variety quan s'iniciï l'ordinador"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:8
 msgid "Change wallpaper every "
-msgstr "切换壁纸每 "
+msgstr "Canvia el fons cada "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:9
 msgid "Minimum interval is 5 seconds"
-msgstr "最小间隔是5秒"
+msgstr "L'interval mínim és de 5 segons"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:10
 msgid "Change wallpaper on start"
-msgstr "启动时切换壁纸"
+msgstr "Canvia el fons en iniciar"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:12
 msgid "Safe mode. Avoid NSFW and sketchy images"
-msgstr ""
+msgstr "Mode segur. Evita imatges incompletes i no adequades per a la feina"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:13
 msgid ""
@@ -1541,66 +1832,69 @@ msgid ""
 "href=\"http://peterlevi.com/variety/2016/08/introducing-safe-mode/\">Read "
 "more here</a></i>"
 msgstr ""
+"<i>Característica experimental. Depèn de les puntuacions de la comunitat. <a "
+"href=\"http://peterlevi.com/variety/2016/08/introducing-safe-mode/\">Llegiu-"
+"ne més aquí.</a></i>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:14
 msgid "Enabled"
-msgstr "启用"
+msgstr "Habilitat"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:15
 msgid "Type"
-msgstr "类型"
+msgstr "Tipus"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "Location"
-msgstr "位置"
+msgstr "Ubicació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "_Add..."
-msgstr "添加(_A)..."
+msgstr "_Afegeix..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "Add images, folders or online image sources"
-msgstr "添加图片，文件夹或联机图片源"
+msgstr "Afegeix imatges, carpetes o fonts d'imatges en línia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "_Edit..."
-msgstr "编辑(_E)..."
+msgstr "_Edita..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Edit the selected source"
-msgstr "编辑被选中的源"
+msgstr "Edita la font seleccionada"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "_Remove..."
-msgstr "删除(_R)..."
+msgstr "Sup_rimeix..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "Remove selected image sources"
-msgstr "删除被选中的图片源"
+msgstr "Elimina les fonts d'imatges seleccionades"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "_Use"
-msgstr "使用(_U)"
+msgstr "_Usa"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Enable the selected sources and disable all others"
-msgstr "启用选中的源同时禁用其他的源。"
+msgstr "Habilita les fonts seleccionades i inhabilita totes les altres"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "Download a wallpaper every "
-msgstr "下载一张壁纸每 "
+msgstr "Baixa un fons cada "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Minimum interval is one minute"
-msgstr "最小间隔是一分钟"
+msgstr "L'interval mínim és d'un minut"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "to "
-msgstr "到 "
+msgstr "a "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Actual download folder "
-msgstr "实际下载文件夹 "
+msgstr "Carpeta de baixades actual "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid ""
@@ -1608,160 +1902,171 @@ msgid ""
 "valuable files in it. Variety will maintain the limit regardless of what is "
 "in the download folder."
 msgstr ""
+"Atenció: no useu aquesta opció si feu servir una carpeta de baixades "
+"personalitzada amb fitxers importants a dins. El Variety en mantindrà el "
+"límit sense tenir en compte el que hi ha a la carpeta."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "Limit download folder to "
-msgstr "存放下载文件的文件夹容量限制为 "
+msgstr "Limita la carpeta de baixades a "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Minimum size is 50 MB"
-msgstr "最小尺寸为 50 MB"
+msgstr "La mida mínima és de 50 MB"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "MB by deleting oldest files when necessary"
-msgstr "MB 必要时删除最早的文件"
+msgstr "MB per eliminar els fitxers més antics quan calgui"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Favorites"
-msgstr "收藏夹"
+msgstr "Favorits"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Copy favorite wallpapers to "
-msgstr "拷贝收藏壁纸到 "
+msgstr "Copia els fons favorits a "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Filters"
-msgstr "修饰"
+msgstr "Filtres"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
-msgstr "用下面的修饰风格随机应用于当前显示的壁纸（归功于神奇的ImageMagick）："
+msgstr ""
+"Aplica aquests filtres aleatòriament als fons que es mostren (gràcies al "
+"magnífic ImageMagick):"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:37
 msgid "Quotes"
-msgstr "箴言"
+msgstr "Cites"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:38
 msgid "Show random wise quotes on the desktop"
-msgstr "在桌面显示随机的智慧箴言"
+msgstr "Mostra cites sàvies aleatòriament a l'escriptori"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Text color: "
-msgstr "文字颜色 "
+msgstr "Color del text: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "Text font: "
-msgstr "文字字体: "
+msgstr "Tipus de lletra del text: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "Backdrop color: "
-msgstr "背景色： "
+msgstr "Color del fons: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Backdrop opacity: "
-msgstr "背景透明度： "
+msgstr "Opacitat del fons: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid " Transparent"
-msgstr " 透明"
+msgstr " Transparent"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid "Opaque"
-msgstr "不透明"
+msgstr "Opac"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Draw a text shadow"
-msgstr "显示文字阴影"
+msgstr "Dibuixa una ombra de text"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Appearance"
-msgstr "外观"
+msgstr "Aparença"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Quotes area width: "
-msgstr "箴言区域宽度 "
+msgstr "Amplada de l'àrea de cites: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Narrow "
-msgstr "窄 "
+msgstr "Estreta "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Wide"
-msgstr "宽"
+msgstr "Ampla"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid "Horizontal position: "
-msgstr "水平位置 "
+msgstr "Posició horitzontal: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "Left "
-msgstr "左侧 "
+msgstr "Esquerra "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Vertical position: "
-msgstr "竖直位置 "
+msgstr "Posició vertical: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Top "
-msgstr "顶部 "
+msgstr "A dalt "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Placement"
-msgstr "位置"
+msgstr "Ubicació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Show quotes from these sources: "
-msgstr "显示箴言从如下源： "
+msgstr "Mostra cites d'aquestes fonts: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
 msgstr ""
+"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>Més "
+"connectors</a></small>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Show only these tags and authors. Leave empty to show random quotes."
-msgstr "仅显示如下标签和作者的，留空则随机显示箴言。"
+msgstr ""
+"Mostra només aquestes etiquetes i autors. Deixeu-ho en blanc perquè es "
+"mostrin les cites aleatòriament."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Example: funny, inspirational"
-msgstr "例如：funny, inspirational"
+msgstr "Exemple: divertit, inspirat"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Example: Albert Einstein, Voltaire"
-msgstr "例如：Albert Einstein, Voltaire"
+msgstr "Exemple: Albert Einstein, Voltaire"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Authors: "
-msgstr "作者： "
+msgstr "Autors: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Sources and filtering"
-msgstr "源和过滤器"
+msgstr "Fonts i filtratge"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "Change quote every "
-msgstr "切换箴言每 "
+msgstr "Canvia la cita cada "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Minimum interval is 10 seconds"
-msgstr "最小间隔为10 秒"
+msgstr "L'interval mínim és de 10 segons"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "Regular change"
-msgstr "切换规则"
+msgstr "Canvi regular"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Clock"
-msgstr "时钟"
+msgstr "Rellotge"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
-msgstr "显示一个漂亮的大数字时钟，用于显示当前时间和日期。"
+msgstr ""
+"Mostra un rellotge digital bonic i gros a l'escriptori que indiqui l'hora i "
+"la data actuals"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid ""
@@ -1769,16 +2074,17 @@ msgid ""
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
 "in ~/.config/variety/variety_latest_default.conf as a guide."
 msgstr ""
-"要配置时钟的外观可编辑Variety的配置文件中的clock_filter属性。可以参照~/.config/variety/variety_latest_"
-"default.conf中的内容。"
+"Per configurar l'aparença del rellotge editeu la propietat clock_filter del "
+"fitxer de configuració del Variety (~/.config/variety/variety.conf). Useu "
+"els comentaris de ~/.config/variety/variety_latest_default.conf com a guia."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Clock font: "
-msgstr "时钟字体： "
+msgstr "Tipus de lletra del rellotge: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Date font: "
-msgstr "日期字体： "
+msgstr "Tipus de lletra de la data: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid ""
@@ -1788,142 +2094,149 @@ msgid ""
 "href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Read "
 "here</a>."
 msgstr ""
+"No funciona? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Llegiu aquí</a>. "
+"Com configurar més el rellotge? <a "
+"href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Llegiu "
+"aquí</a>."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Effects"
-msgstr "特效"
+msgstr "Efectes"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Images for slideshow"
-msgstr ""
+msgstr "Imatges per a la presentació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid "Favorite images"
-msgstr ""
+msgstr "Imatges favorites"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid "Images in all enabled image sources"
-msgstr ""
+msgstr "Imatges de totes les fonts d'imatges habilitades"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid "All images in the Downloads folder"
-msgstr ""
+msgstr "Totes les imatges de la carpeta de baixades"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Custom folder (includes images in subfolders) "
-msgstr ""
+msgstr "Carpeta personalitzada (inclou les imatges de les subcarpetes) "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Order of images in slideshow "
-msgstr ""
+msgstr "Ordre de les imatges de la presentació "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid "Random"
-msgstr ""
+msgstr "Aleatori"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "By name, A to Z"
-msgstr ""
+msgstr "Per nom, de la A a la Z"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "By name, Z to A"
-msgstr ""
+msgstr "Per nom, de la Z a la A"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "By date, oldest first"
-msgstr ""
+msgstr "Per data, primer la més antiga"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "By date, newest first"
-msgstr ""
+msgstr "Per data, primer la més nova"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "Screen"
-msgstr ""
+msgstr "Pantalla"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "Run on monitor"
-msgstr ""
+msgstr "Executa al monitor"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:88
 msgid "Window mode for the slideshow "
-msgstr ""
+msgstr "Mode de la finestra per a la presentació "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:89
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantalla completa"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:90
 msgid "Desktop (stays below other windows)"
-msgstr ""
+msgstr "Escriptori (es manté sota d'altres finestres)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:91
 msgid "Maximized window"
-msgstr ""
+msgstr "Finestra maximitzada"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Normal window"
-msgstr ""
+msgstr "Finestra normal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgid "Dynamics"
-msgstr ""
+msgstr "Dinàmica"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgid "Interval between image changes "
-msgstr ""
+msgstr "Interval entre canvis d'imatge "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgid " seconds"
-msgstr ""
+msgstr " segons"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "Quick fade "
-msgstr ""
+msgstr "Atenuació ràpida "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "Slow fade"
-msgstr ""
+msgstr "Atenuació lenta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Less zoom"
-msgstr ""
+msgstr "Menys zoom"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "More zoom"
-msgstr ""
+msgstr "Més zoom"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:100
 msgid "Less pan"
-msgstr ""
+msgstr "Menys abast"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:101
 msgid "More pan"
-msgstr ""
+msgstr "Més abast"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Torna als valors predeterminats"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "Changes on this page take effect after the slideshow is restarted"
 msgstr ""
+"Els canvis en aquesta pàgina tenen efecte després que es reinicia la "
+"presentació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "Start slideshow now"
-msgstr ""
+msgstr "Inicia la presentació ara"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Slideshow"
-msgstr ""
+msgstr "Presentació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:106
 msgid "VRTY.ORG"
-msgstr ""
+msgstr "VRTY.ORG"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:108
 msgid "VRTY.ORG is in beta and will take some time to mature"
-msgstr ""
+msgstr "VRTY.ORG és beta i trigarà una mica a madurar"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:109
 msgid ""
@@ -1932,30 +2245,40 @@ msgid ""
 "to add new image sources to Variety, and to follow other users' favorites. "
 "It is fueled by the favorite images of all participating users."
 msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> connecta usuaris del Variety amb "
+"gustos similars i proporciona maneres molt convenients per canviar el fons "
+"de pantalls, per afegir fonts d'imatges noves al Variety i per seguir els "
+"favorits d'altres usuaris. S'alimenta de les imatges favorites de tots els "
+"usuaris que hi participen."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:110
 msgid ""
 "Could not create user - no connection to VRTY.ORG. We will try again later."
 msgstr ""
+"No es pot crear l'usuari. No hi ha connexió a VRTY.ORG. Es tornarà a "
+"intentar més tard."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:112
 msgid ""
 "Registration enables cool features like synchronization of favorite images "
 "and sources between computers and personalized recommendations."
 msgstr ""
+"Registrar-s'hi habilita característiques interessants com ara la "
+"sincronització d'imatges favorites i de fonts entre ordinadors i "
+"recomanacions personalitzades."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:113 ../variety/Smart.py:635
 #: ../variety/Smart.py:684
 msgid "Sync"
-msgstr ""
+msgstr "Sincronitza"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgid "Synchronize favorite images between computers"
-msgstr ""
+msgstr "Sincronitza les imatges favorites entre ordinadors"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:115
 msgid "Requires VRTY.ORG enabled and logged in."
-msgstr ""
+msgstr "Cal tenir VRTY.ORG habilitat i haver-hi entrat."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:116
 msgid ""
@@ -1963,10 +2286,13 @@ msgid ""
 "to this computer. You need to be logged in with the same VRTY.ORG user "
 "everywhere. Sync will not delete any images."
 msgstr ""
+"Les imatges favorites d'altres ordinadors es baixaran automàticament a "
+"aquest ordinador. Heu d'entrar a VRTY.ORG amb el mateix usuari a tot arreu. "
+"La sincronització no eliminarà cap imatge."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:117
 msgid "Privacy policy"
-msgstr ""
+msgstr "Política de privacitat"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:118
 msgid ""
@@ -1977,14 +2303,21 @@ msgid ""
 "href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
 "service and the privacy policy here.</a>"
 msgstr ""
+"El Variety envia dades només de les imatges que ha baixat, mai d'imatges que "
+"ja tingueu a les carpetes locals, que podrien ser privades, i la "
+"sincronització no funciona per a aquest tipus d'imatges. Les dades "
+"recopilades no es comparteixen amb terceres persones si no és que vulgueu "
+"fer públic el vostre perfil. <a href='http://peterlevi.com/variety/vrty-"
+"org/'>Llegiu més detalls sobre el servei i la política de privacitat "
+"aquí.</a>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:119
 msgid "Usage statistics"
-msgstr ""
+msgstr "Estadístiques d'ús"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:120
 msgid "Help make Variety better by sending anonymous usage statistics"
-msgstr ""
+msgstr "Ajudeu a fer millor el Variety enviant estadístiques d'ús anònimes."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:121
 msgid ""
@@ -1992,22 +2325,26 @@ msgid ""
 "it. They also include general info about your OS version and monitor setup. "
 "Collected data is not shared with anyone."
 msgstr ""
+"Aquestes estadístiques ens ajuden a millorar el Variety a través d'entendre "
+"com els usuaris hi interaccionen. També inclouen informació general sobre la "
+"versió del sistema operatiu i la configuració del monitor. Les dades "
+"recopilades no es comparteixen amb ningú."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:122
 msgid "Sync and social"
-msgstr ""
+msgstr "Sincronització i social"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Fetch folder"
-msgstr "存放获取图片的文件夹"
+msgstr "Carpeta d'obtenció"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Save manually downloaded wallpapers to "
-msgstr "手动保存下载的壁纸到 "
+msgstr "Desa els fons baixats manualment a "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Drag and drop"
-msgstr "拖放"
+msgstr "Arossegueu-ho i deixeu-ho anar"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid ""
@@ -2017,146 +2354,151 @@ msgid ""
 "To show the icon in the launcher choose About or Preferences. You may wish "
 "to lock it there for easy drag-and-drop access."
 msgstr ""
+"La icona del Variety del llançador serveix com a destinació per deixar-hi "
+"anar elements. Si hi deixeu anar qualsevol URL o fitxer, es desarà a la "
+"carpeta d'obtenció. Podeu prémer \"Següent\" per veure-ho a l'escriptori.\n"
+"Per mostrar la icona al llançador, trieu \"Quant a\" o \"Preferències\". "
+"Potser voldríeu bloquejar-la-hi per tenir més fàcil deixar-hi anar elements."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "Clipboard monitoring"
-msgstr "监视剪贴板"
+msgstr "Monitoratge del porta-retalls"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid "Monitor clipboard for image URLs and fetch them"
-msgstr "监视剪贴板中图片的URL并获取它们"
+msgstr "Monitora el porta-retalls per a URLs d'imatges i obtén-les"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "But fetch only when the URL host is one of these:"
-msgstr "仅获取下面网站之一的图片"
+msgstr "Però obtén-les només quan l'URL amfitrió sigui un dels següents:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Manual downloading"
-msgstr "手动下载"
+msgstr "Baixada manual"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "When possible use images that:"
-msgstr "用到图片之处："
+msgstr "Quan sigui possible usa imatges que:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "Have landscape orientation"
-msgstr "保持景观取向"
+msgstr "Tinguin una orientació apaïsada"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "Are big at least "
-msgstr "大小至少是 "
+msgstr "Tinguin una mida mínima del "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid "80"
-msgstr ""
+msgstr "80"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:140
 #, no-c-format
 msgid "% of the screen resolution"
-msgstr "% 的屏幕分辨率"
+msgstr "% de la resolució de la pantalla"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Color"
-msgstr "颜色"
+msgstr "Color"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Are dark or light:"
-msgstr "暗或亮："
+msgstr "Siguin fosques o clares:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
-msgstr "暗色"
+msgstr "Fosques"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
-msgstr "加亮"
+msgstr "Clares"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Contain this color: "
-msgstr "包括该色彩： "
+msgstr "Continguin aquest color: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid "(Takes effect after some initial searching)"
-msgstr ""
+msgstr "(Té efecte després d'una cerca inicial)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:147
 msgid "Rating"
-msgstr "评分"
+msgstr "Puntuació"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:148
 msgid "Have EXIF rating at least "
-msgstr ""
+msgstr "Tinguin una puntuació d'EXIF d'un mínim de "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:152
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:154
 msgid "Color and size"
-msgstr "色彩与尺寸"
+msgstr "Color i mida"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:155
 msgid "Indicator Icon"
-msgstr "指示器图标"
+msgstr "Icona indicadora"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:156
 msgid "Indicator icon:"
-msgstr "指示器图标："
+msgstr "Icona indicadora:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:157
 msgctxt "Icon option"
 msgid "Light"
-msgstr "加亮"
+msgstr "Clara"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:158
 msgctxt "Icon option"
 msgid "Dark"
-msgstr "暗色"
+msgstr "Fosca"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:159
 msgctxt "Icon option"
 msgid "Use current wallpaper"
-msgstr "用当前壁纸"
+msgstr "Usa el fons actual"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:160
 msgctxt "Icon option"
 msgid "Custom image..."
-msgstr "定制图片"
+msgstr "Imatge personalitzada..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:161
 msgctxt "Icon option"
 msgid "None"
-msgstr "无"
+msgstr "Cap"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:162
 msgid "Select an icon"
-msgstr "选择图标"
+msgstr "Seleccioneu una icona"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:163
 msgid ""
@@ -2164,40 +2506,44 @@ msgid ""
 "from the launcher quicklist. Run \"variety --help\" to see all available "
 "commands."
 msgstr ""
-"当图标隐藏时，可以通过命令或启动器图标的上下文菜单中控制Variety。运行\"variety --help\" 可以看到所有可用的命令。"
+"Quan la icona està amagada, el Variety es pot controlar des de la línia "
+"d'ordres o bé des de la llista ràpida del llançador. Executeu \"variety --"
+"help\" per veure totes les ordres disponibles."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:164
 msgid "Favorites Operations"
-msgstr "收藏夹操作"
+msgstr "Operacions favorites"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:165
 msgid "Favorites operations to show in main menu:"
-msgstr "在主菜单显示收藏夹操作"
+msgstr "Operacions favorites per mostrar al menú principal:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:166
 msgid "Copy to Favorites"
-msgstr "拷贝到收藏夹"
+msgstr "Copia als favorits"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:168
 msgid "Both Copy and Move"
-msgstr "拷贝且移动"
+msgstr "Copia i també desplaça"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:169
 msgid "Depends on folder..."
-msgstr "依赖文件夹..."
+msgstr "Depèn de la carpeta..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:172
 msgid "Display dialog to customize the Facebook post before publishing"
 msgstr ""
+"Mostra el diàleg per personalitzar l'apunt del Facebook abans de publicar-lo"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:173
 msgid "Login Screen Support"
-msgstr "登录屏支持"
+msgstr "Suport de la pantalla d'entrada"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:174
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
-msgstr "确认登录屏壁纸由Variety设置"
+msgstr ""
+"Assegura que els fons establerts pel Variety s'usin a la pantalla d'entrada"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:175
 msgid ""
@@ -2208,70 +2554,81 @@ msgid ""
 "not encrypted, and /usr/share/backgrounds if it is. Please use with care on "
 "multiuser systems."
 msgstr ""
+"<b>Avís de privacitat:</b> per mostrar el vostre fons, el LightDM necessita "
+"permisos de lectura per a la imatge. Amb aquesta opció activada, el Variety "
+"copiarà els fons a una carpeta pública i en canviarà els permisos perquè "
+"siguin llegibles per a tothom. Per defecte, la carpeta és ~/Imatges, si no "
+"teniu encriptada la carpeta personal, i /usr/share/backgrounds si ho està. "
+"Si us plau, useu-ho amb compte en sistemes amb més d'un usuari."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:176
 msgid "Copy wallpaper image files to this folder: "
-msgstr "复制壁纸图片到该文件夹： "
+msgstr "Copia els fitxers de fons a aquesta carpeta: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:177
 msgid "Reset to default"
-msgstr "重置为默认设置"
+msgstr "Restableix als valors predeterminats"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:178
 msgid "Still doesn't work?"
-msgstr "还不能工作？"
+msgstr "Encara no funciona?"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:179
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
-msgstr "貌似你的主文件夹被加密了，因此其中的文件夹不能使用。"
+msgstr ""
+"Sembla que la vostra carpeta personal està encriptada; per tant, no "
+"funcionarà usar-hi carpetes dins."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:180
 msgid "You don't have write permissions for this folder."
-msgstr "你没有这个文件夹的写权限："
+msgstr "No teniu permisos d'escriptura per a aquesta carpeta."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:181
 msgid "Permissions do not allow LightDM to read files from this folder."
-msgstr "该文件夹没有赋予LightDM读文件的权限"
+msgstr ""
+"Els permisos no permeten que el LightDM llegeixi fitxers d'aquesta carpeta."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:182
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
-msgstr "Variety能够调整权限，但你必须提供超级用户的权限。"
+msgstr ""
+"El Variety en pot ajustar els permisos, però haureu de proporcionar "
+"privilegis de superusuari."
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:183
 msgid "Customize"
-msgstr "自定义"
+msgstr "Personalitza"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:184
 msgid "Tips and tricks"
-msgstr "提示和窍门"
+msgstr "Consells i trucs"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:185
 msgid "Recent changes"
-msgstr "最近切换"
+msgstr "Canvis recents"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:186
 msgid "Visit website"
-msgstr "浏览网站"
+msgstr "Visiteu-ne el lloc web"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:187
 msgid "Report a bug or request a feature"
-msgstr "报告BUG或申请特性"
+msgstr "Informeu d'un error o demaneu una característica"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:188
 msgid "Send feedback"
-msgstr "发送反馈"
+msgstr "Envia comentaris"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:189
 msgid "Donate to Variety"
-msgstr "捐赠 Variety"
+msgstr "Feu una donació al Variety"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:190
 msgid "Donate via PayPal"
-msgstr "通过PayPal捐赠"
+msgstr "Feu una donació per PayPal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:191
 msgid ""
@@ -2283,108 +2640,126 @@ msgid ""
 "Thank you,\n"
 "Peter Levi"
 msgstr ""
+"Estic desenvolupant el Variety durant el meu temps lliure, que en general "
+"significa les últimes hores després que els meus fills se'n vagin a dormir. "
+"Qualsevol quantitat que doneu serà apreciada. Em mostrarà que el Variety és "
+"valorat per vosaltres, els usuaris, i em motivarà a continuar treballant-hi "
+"activament.\n"
+"\n"
+"Gràcies,\n"
+"Peter Levi"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:195
 msgid ""
 "<i>For Bitcoin and other payment methods please go to <a "
 "href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
 msgstr ""
+"<i>Per a Bitcoin i altres mètodes de pagament, si us plau, aneu al <a "
+"href=\"http://peterlevi.com/variety/\">lloc web del Variety</a>.</i>"
 
 #: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
 msgid "Fetching"
-msgstr "正在获取"
+msgstr "S'està obtenint"
 
 #. too small - delete and do not use
 #: ../variety/ImageFetcher.py:116
 msgid "Image too small, ignoring it"
-msgstr "图片太小略过它"
+msgstr "La imatge és massa petita, s'ignorarà"
 
 #: ../variety/ImageFetcher.py:138
 #, python-format
 msgid "Sorry, got %s error..."
-msgstr ""
+msgstr "Discupleu, s'ha obtingut l'error %s..."
 
 #: ../variety/ImageFetcher.py:139
 msgid "This means the link is no longer valid"
-msgstr ""
+msgstr "Això vol dir que l'enllaç ja no és vàlid."
 
 #: ../variety/ImageFetcher.py:142
 msgid "Fetch failed for some reason"
-msgstr "因为某些原因获取失败"
+msgstr "L'obtenció ha fallat per algun motiu"
 
 #: ../variety/ImageFetcher.py:143
 msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
-msgstr "要获取更多信息，请在终端中以 -v 参数运行 Variety 然后重试操作"
+msgstr ""
+"Per obtenir-ne més informació, si us plau executeu el Variety des del "
+"terminal amb l'opció -v i torneu a provar l'acció"
 
 #: ../variety/Smart.py:119
 msgid ""
 "Your smart_user.json config file appears broken. You may have to login again "
 "to VRTY.ORG."
 msgstr ""
+"El vostre fitxer de configuració smart_user.json sembla malmès. Pot ser que "
+"hàgiu d'entrar un altre cop a VRTY.ORG."
 
 #: ../variety/Smart.py:211
 msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
 msgstr ""
+"Les vostres credencials de VRTY.ORG probablement estan caducades. Si us "
+"plau, torneu a entrar-hi."
 
 #: ../variety/Smart.py:636
 #, python-format
 msgid "Fetching %d images"
-msgstr ""
+msgstr "S'obtenen %d imatges"
 
 #: ../variety/Smart.py:636
 msgid "Fetching 1 image"
-msgstr ""
+msgstr "S'està obtenint 1 imatge"
 
 #: ../variety/Smart.py:684
 msgid "Finished"
-msgstr ""
+msgstr "Finalitzat"
 
 #: ../variety/Smart.py:705
 #, python-format
 msgid "Logged in as %s"
-msgstr ""
+msgstr "S'ha entrat com a %s"
 
 #: ../variety/Smart.py:717
 #, python-format
 msgid ""
 "Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
-msgstr ""
+msgstr "Voleu entrar a VRTY.ORG com a <span font_weight=\"bold\">%s</span>?"
 
 #: ../variety/Smart.py:718
 msgid "VRTY.ORG login confirmation"
-msgstr ""
+msgstr "Confirmació d'entrada a VRTY.ORG"
 
 #: ../variety/QuotesEngine.py:232
 msgid "No quote plugins"
-msgstr "没有箴言插件"
+msgstr "Sense connectors de citació"
 
 #: ../variety/QuotesEngine.py:232
 msgid "There are no quote plugins installed"
-msgstr "箴言插件没安装"
+msgstr "No hi ha cap connector de citació instal·lat"
 
 #: ../variety/QuotesEngine.py:238
 msgid "No suitable quote plugins"
-msgstr "没合适的箴言插件"
+msgstr "No hi ha cap connector de citació adient"
 
 #: ../variety/QuotesEngine.py:239
 msgid ""
 "You have no quote plugins which support searching by keywords and authors"
-msgstr "没支持搜索关键字和作者的箴言插件"
+msgstr ""
+"No teniu connectors de citació que admetin la cerca per paraules clau i per "
+"autors"
 
 #: ../variety/QuotesEngine.py:251
 msgid "Could not fetch quotes"
-msgstr "不能获取箴言"
+msgstr "No s'han pogut obtenir citacions"
 
 #: ../variety/QuotesEngine.py:252
 msgid "Quotes services may be down, we will continue trying"
-msgstr ""
+msgstr "El servei de citacions pot haver caigut. Es continuarà intentant"
 
 #: ../variety/QuotesEngine.py:255
 msgid "Could not find quotes"
-msgstr ""
+msgstr "No s'han pogut trobar citacions"
 
 #: ../variety/QuotesEngine.py:256
 msgid "Maybe you are searching for something very obscure?"
-msgstr ""
+msgstr "Potser busqueu alguna cosa molt amagada?"

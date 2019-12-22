@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This regenerates the pot file into po/variety.pot
+# This file must then be uploaded to https://translations.launchpad.net/variety/trunk/+translations-upload
+
+cd po || cd ../po
+xgettext -k_ -kN_ -L Glade -o variety.pot \
+    ../variety/*.py \
+    ../variety/**/*.py \
+    ../variety_lib/*.py \
+    ../data/plugins/**/*.py \
+    ../jumble/*.py \
+    ../data/ui/*.ui
