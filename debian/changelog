@@ -1,3 +1,21 @@
+variety (0.8.0) bionic; urgency=medium
+
+0.8.0
+
+  * Image sources are now plugins
+  * Add support for sequential albums
+  * Add support for multiple simultaneously running Variety profiles (--profile command option)
+  * Add a Privacy Notice dialog
+  * Add two new sources (ChromeOS Wallpapers and Google Earth View Wallpapers)
+  * Download linked to wallpaper changing, not configured as a separate interval
+  * Add a dedicated --set/--set-wallpaper option
+  * Make the thumbs display much faster
+  * Fix bugs related to GTK threading usage
+  * Mulitple bugfixes
+  * Dev process: Use auformatting on all Python files (black, isort)
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sun, 22 Dec 2019 10:38:00 +0200
+
 variety (0.7.2) bionic; urgency=medium
 
   * Add support for Sway, bspwm
