@@ -18,7 +18,7 @@ import random
 
 from requests import HTTPError
 
-from data.plugins.downloaders.UnsplashDownloader import UnsplashDownloader
+from variety.plugins.builtin.downloaders.UnsplashDownloader import UnsplashDownloader
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import Throttling

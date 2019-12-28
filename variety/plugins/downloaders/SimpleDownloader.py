@@ -15,7 +15,6 @@
 ### END LICENSE
 import abc
 
-from jumble.IPlugin import IPlugin
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource
 

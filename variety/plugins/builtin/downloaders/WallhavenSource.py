@@ -16,7 +16,7 @@
 import logging
 import random
 
-from downloaders.WallhavenDownloader import WallhavenDownloader
+from variety.plugins.builtin.downloaders.WallhavenDownloader import WallhavenDownloader
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.Util import _

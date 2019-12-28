@@ -17,9 +17,9 @@
 
 import unittest
 
-from data.plugins.downloaders.MediaRSSDownloader import MediaRSSDownloader
-from data.plugins.downloaders.MediaRSSSource import MediaRSSSource
 from tests.TestDownloader import test_download_one_for
+from variety.plugins.builtin.downloaders.MediaRSSDownloader import MediaRSSDownloader
+from variety.plugins.builtin.downloaders.MediaRSSSource import MediaRSSSource
 
 
 class TestMediaRssDownloader(unittest.TestCase):

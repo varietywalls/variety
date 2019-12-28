@@ -16,7 +16,7 @@
 import logging
 import random
 
-from downloaders.MediaRSSDownloader import MediaRSSDownloader
+from variety.plugins.builtin.downloaders.MediaRSSDownloader import MediaRSSDownloader
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.Util import _
 

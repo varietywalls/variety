@@ -27,7 +27,7 @@ setup_test_logging()
 
 
 def get_plugin_downloader(typename):
-    p = Jumble(["data/plugins"])
+    p = Jumble(["variety/plugins/builtin"])
     p.load()
     plugin = p.get_plugins(typename=typename)[0]["plugin"]
     parent = AttrDict()

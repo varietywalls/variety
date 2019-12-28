@@ -17,10 +17,10 @@
 
 import unittest
 
-from data.plugins.downloaders.RedditDownloader import RedditDownloader
-from data.plugins.downloaders.RedditSource import RedditSource
 from tests.TestDownloader import test_download_one_for
 from variety.AttrDict import AttrDict
+from variety.plugins.builtin.downloaders.RedditDownloader import RedditDownloader
+from variety.plugins.builtin.downloaders.RedditSource import RedditSource
 
 
 class TestRedditDownloader(unittest.TestCase):

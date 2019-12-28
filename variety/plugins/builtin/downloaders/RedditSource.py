@@ -17,7 +17,7 @@
 import logging
 import random
 
-from data.plugins.downloaders.RedditDownloader import RedditDownloader
+from variety.plugins.builtin.downloaders.RedditDownloader import RedditDownloader
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.Util import _
 

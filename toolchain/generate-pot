@@ -7,6 +7,5 @@ xgettext -k_ -kN_ -L Glade -o variety.pot \
     ../variety/*.py \
     ../variety/**/*.py \
     ../variety_lib/*.py \
-    ../data/plugins/**/*.py \
     ../jumble/*.py \
     ../data/ui/*.ui

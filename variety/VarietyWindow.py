@@ -180,7 +180,7 @@ class VarietyWindow(Gtk.Window):
 
         logger.info(lambda: "Using data_path %s" % varietyconfig.get_data_path())
         self.jumble = Jumble(
-            [os.path.join(varietyconfig.get_data_path(), "plugins"), self.plugins_folder]
+            [os.path.join(os.path.dirname(__file__), "plugins", "builtin"), self.plugins_folder]
         )
 
         setattr(self.jumble, "parent", self)

@@ -17,9 +17,8 @@
 
 import unittest
 
-from data.plugins.downloaders.WallhavenDownloader import WallhavenDownloader
-from data.plugins.downloaders.WallhavenSource import WallhavenSource
 from tests.TestDownloader import test_download_one_for
+from variety.plugins.builtin.downloaders.WallhavenSource import WallhavenSource
 
 
 class TestWallhavenDownloader(unittest.TestCase):

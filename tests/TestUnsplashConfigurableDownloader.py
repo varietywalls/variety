@@ -17,9 +17,11 @@
 
 import unittest
 
-from data.plugins.downloaders.UnsplashConfigurableSource import UnsplashConfigurableSource
 from tests.TestDownloader import test_download_one_for
 from variety.AttrDict import AttrDict
+from variety.plugins.builtin.downloaders.UnsplashConfigurableSource import (
+    UnsplashConfigurableSource,
+)
 
 
 class TestUnsplashConfigurableDownloader(unittest.TestCase):

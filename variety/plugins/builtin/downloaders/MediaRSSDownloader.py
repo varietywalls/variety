@@ -20,7 +20,6 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
-from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
 logger = logging.getLogger("variety")
