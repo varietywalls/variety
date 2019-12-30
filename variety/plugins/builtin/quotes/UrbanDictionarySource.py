@@ -25,7 +25,7 @@ class UrbanDictionarySource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "UrbanDictionary Definitions",
+            "name": "UrbanDictionary",
             "description": _("Displays definitions from UrbanDictionary"),
             "author": "James Miller",
             "version": "0.1",
