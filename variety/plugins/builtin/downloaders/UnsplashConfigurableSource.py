@@ -71,7 +71,7 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             return (
                 super().get_unsplash_api_url()
                 + "&"
-                + "&".join(f"{key}={value}" for key, value in params.items())
+                + "&".join("{}={}".format(key, value) for key, value in params.items())
             )
 
     @classmethod
