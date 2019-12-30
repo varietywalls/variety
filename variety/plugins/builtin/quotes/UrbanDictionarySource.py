@@ -32,7 +32,7 @@ class UrbanDictionarySource(IQuoteSource):
         }
 
     def get_random(self):
-        dict_dict = requests.get("http://api.urbandictionary.com/v0/random").json()
+        dict_dict = requests.get("https://api.urbandictionary.com/v0/random").json()
 
         def _clean(s):
             return s.strip().replace("[", "").replace("]", "")
