@@ -28,10 +28,10 @@ class FortuneSource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "Fortunes",
+            "name": "UNIX fortune program",
             "description": _(
                 "Displays quotes using the UNIX fortune program. "
-                "You may want to install additional fortunes packs, e.g. fortunes-bofh-excuses."
+                "You may want to install additional fortune packs, e.g. fortunes-bofh-excuses."
             ),
             "author": "Dan Jones",
             "version": "0.1",
@@ -41,10 +41,7 @@ class FortuneSource(IQuoteSource):
         fortune = subprocess.check_output(["fortune"]).decode().strip()
         q = fortune.split("--")
         quote = q[0].strip()
-        if len(q) > 1:
-            s = q[1].strip()
-            author = s
-        else:
-            author = None
-
-        return [{"quote": quote, "author": author, "sourceName": "Fortune Program", "link": None}]
+        author = q[1].strip() if len(q) > 1 else None
+        return [
+            {"quote": quote, "author": author, "sourceName": "UNIX fortune program", "link": None}
+        ]

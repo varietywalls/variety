@@ -25,8 +25,8 @@ class UrbanDictionarySource(IQuoteSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "UrbanDictionary",
-            "description": _("Displays definitions from UrbanDictionary"),
+            "name": "Urban Dictionary",
+            "description": _("Displays definitions from Urban Dictionary"),
             "author": "James Miller",
             "version": "0.1",
         }
@@ -53,7 +53,7 @@ class UrbanDictionarySource(IQuoteSource):
                 {
                     "quote": quote,
                     "author": entry["author"],
-                    "sourceName": "UrbanDictionary",
+                    "sourceName": "Urban Dictionary",
                     "link": entry["permalink"],
                 }
             )

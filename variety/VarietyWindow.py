@@ -2233,7 +2233,8 @@ class VarietyWindow(Gtk.Window):
                 logger.info(lambda: "Performing upgrade to 0.8.2")
                 options = Options()
                 options.read()
-                options.quotes_disabled_sources.append("UrbanDictionary")
+                if not "Urban Dictionary" in options.quotes_disabled_sources:
+                    options.quotes_disabled_sources.append("Urban Dictionary")
                 options.write()
 
             # Perform on every upgrade to an newer version:
