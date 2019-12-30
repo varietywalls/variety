@@ -1,6 +1,7 @@
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 ### BEGIN LICENSE
 # Copyright (c) 2019, James Miller
+# Copyright (c) 2019, Peter Levi <peterlevi@peterlevi.com>
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
@@ -39,14 +40,14 @@ class UrbanDictionarySource(IQuoteSource):
 
         result = []
         for entry in dict_dict["list"]:
+            word = entry["word"]
+            definition = _clean(entry["definition"])
+            example = _clean(entry["example"])
             quote = (
-                '"'
-                + entry["word"]
-                + '"'
+                '"{}"'.format(word)
                 + "\n\n"
-                + _clean(entry["definition"])
-                + "\n\nExample:\n"
-                + _clean(entry["example"].strip())
+                + definition
+                + ("\n\nExample:\n{}".format(example) if example else "")
             )
 
             result.append(
