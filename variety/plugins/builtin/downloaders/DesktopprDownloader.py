@@ -47,8 +47,14 @@ class DesktopprDownloader(SimpleDownloader):
     def get_folder_name(self):
         return "Desktoppr"
 
+    def download_queue_item(self, queue_item):
+        origin_url, image_url, extra_metadata = queue_item
+        return self.save_locally(
+            origin_url, image_url, extra_metadata=extra_metadata, request_kwargs={"verify": False}
+        )
+
     def fill_queue(self):
-        response = Util.fetch_json("https://api.desktoppr.co/1/wallpapers/random")
+        response = Util.fetch_json("https://api.desktoppr.co/1/wallpapers/random", verify=False)
 
         if response["response"]["review_state"] != "safe":
             logger.info(lambda: "Non-safe image returned by Desktoppr, skipping")

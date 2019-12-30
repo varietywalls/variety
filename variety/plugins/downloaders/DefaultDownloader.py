@@ -186,6 +186,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         extra_metadata=None,
         local_filename=None,
         request_headers=None,
+        request_kwargs=None,
     ):
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
@@ -229,7 +230,9 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             return None
 
         try:
-            r = Util.request(image_url, stream=True, headers=request_headers)
+            r = Util.request(
+                image_url, stream=True, headers=request_headers, **(request_kwargs or {})
+            )
             with open(local_filepath_partial, "wb") as f:
                 Util.request_write_to(r, f)
         except Exception as e:

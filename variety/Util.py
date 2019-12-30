@@ -601,7 +601,7 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
+    def request(url, data=None, stream=False, method=None, timeout=5, headers=None, verify=True):
         if url.startswith("//"):
             url = "http:" + url
         headers = headers or {}
@@ -616,6 +616,7 @@ class Util:
                 stream=stream,
                 allow_redirects=True,
                 timeout=timeout,
+                verify=verify,
             )
             r.raise_for_status()
             return r
@@ -629,24 +630,24 @@ class Util:
             f.write(chunk)
 
     @staticmethod
-    def fetch(url, data=None):
-        return Util.request(url, data).text
+    def fetch(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).text
 
     @staticmethod
-    def fetch_bytes(url, data=None):
-        return Util.request(url, data).content
+    def fetch_bytes(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).content
 
     @staticmethod
-    def fetch_json(url, data=None):
-        return Util.request(url, data).json()
+    def fetch_json(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).json()
 
     @staticmethod
-    def html_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.fetch(url, data), "lxml")
+    def html_soup(url, data=None, **request_kwargs):
+        return bs4.BeautifulSoup(Util.fetch(url, data, **request_kwargs), "lxml")
 
     @staticmethod
-    def xml_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.fetch(url, data), "xml")
+    def xml_soup(url, data=None, **request_kwargs):
+        return bs4.BeautifulSoup(Util.fetch(url, data, **request_kwargs), "xml")
 
     @staticmethod
     def folderpath(folder):
