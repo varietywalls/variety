@@ -495,6 +495,7 @@ class Util:
                 "imageURL",
                 "author",
                 "authorURL",
+                "noOriginPage",
             ]:
                 if "Xmp.variety." + k in m:
                     info[k] = m["Xmp.variety." + k]

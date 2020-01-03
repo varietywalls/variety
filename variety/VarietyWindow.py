@@ -759,6 +759,8 @@ class VarietyWindow(Gtk.Window):
                 if "Fetched" in self.source_name:
                     self.source_name = None
                     label = _("Fetched: Show Origin")
+                elif "noOriginPage" in info:
+                    label = _("Source: %s") % self.source_name
                 else:
                     label = _("View at %s") % self.source_name
 
@@ -836,7 +838,7 @@ class VarietyWindow(Gtk.Window):
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
-                    self.ind.show_origin.set_sensitive(True)
+                    self.ind.show_origin.set_sensitive("noOriginPage" not in info)
                     if label:
                         self.ind.show_origin.set_label(label)
 
