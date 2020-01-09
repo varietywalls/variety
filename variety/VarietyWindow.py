@@ -2231,6 +2231,14 @@ class VarietyWindow(Gtk.Window):
                     source[2] = source[2].replace("alpha.wallhaven.cc", "wallhaven.cc")
                 options.write()
 
+            if Util.compare_versions(last_version, "0.8.2") < 0:
+                logger.info(lambda: "Performing upgrade to 0.8.2")
+                options = Options()
+                options.read()
+                if not "Urban Dictionary" in options.quotes_disabled_sources:
+                    options.quotes_disabled_sources.append("Urban Dictionary")
+                options.write()
+
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
