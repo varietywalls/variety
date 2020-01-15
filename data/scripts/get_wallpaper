@@ -5,6 +5,7 @@
 # This is needed by Variety at start to ensure History->Back works OK to revert back to the pre-Variety wallpaper.
 
 desktop="$DESKTOP_SESSION"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # Gnome 3, Unity:
 if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
@@ -20,11 +21,11 @@ elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
         if [ "$desktop" == "Lubuntu" ]; then
             desktop="lubuntu"  # Curse this inconsistency in cases
         fi
-        grep wallpaper=/ "$HOME/.config/pcmanfm/$desktop/desktop-items-0.conf" | sed -e 's/wallpaper=//g'
+        grep -F "wallpaper=/" "$CONFIG_DIR/pcmanfm/$desktop/desktop-items-0.conf" | sed -e 's/wallpaper=//g'
 
 # LXQt/PCmanFM-qt
 elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
-        grep wallpaper=/ ~/.config/pcmanfm-qt/lxqt/settings.conf | sed -e 's/wallpaper=//g'
+        grep -F "wallpaper=/" "$CONFIG_DIR/pcmanfm-qt/lxqt/settings.conf" | sed -e 's/wallpaper=//g'
 
 # MATE
 elif [ "$XDG_CURRENT_DESKTOP" == "MATE" ]; then
@@ -36,7 +37,7 @@ elif [ "$desktop" == "Cinnamon" ] || [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ];
 
 # KDE Plasma 5
 elif [ "$XDG_CURRENT_DESKTOP" == "KDE" ] && [ "$KDE_SESSION_VERSION" == "5" ]; then
-        grep 'Image=' ~/.config/plasma-org.kde.plasma.desktop-appletsrc | sed 's/Image=//'
+        grep -F 'Image=' "$CONFIG_DIR/plasma-org.kde.plasma.desktop-appletsrc" | sed 's/Image=//'
 
 # Trinity
 elif [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
