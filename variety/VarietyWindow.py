@@ -2981,7 +2981,7 @@ class VarietyWindow(Gtk.Window):
                     _("Variety: Created autostart desktop entry"),
                     _(
                         "We created a new desktop entry in ~/.config/autostart. "
-                        "Variety should start automatically on next restart."
+                        "Variety should start automatically on next login."
                     ),
                 )
         except Exception:
