@@ -29,6 +29,7 @@ import urllib.parse
 import webbrowser
 
 from PIL import Image as PILImage
+from gi.repository import GLib
 
 from jumble.Jumble import Jumble
 from variety import indicator
@@ -2931,7 +2932,7 @@ class VarietyWindow(Gtk.Window):
             return
 
         try:
-            desktop_file_folder = os.path.expanduser("~/.local/share/applications")
+            desktop_file_folder = os.path.join(GLib.get_user_data_dir(), "applications")
             profile_name = get_profile_short_name()
             desktop_file_path = os.path.join(desktop_file_folder, get_desktop_file_name())
 
@@ -2953,9 +2954,9 @@ class VarietyWindow(Gtk.Window):
                 self.show_notification(
                     _("Variety: New desktop entry"),
                     _(
-                        "We created a new desktop entry in ~/.local/share/applications "
+                        "We created a new desktop entry in {}/applications "
                         'to run Variety with profile "{}". Find it in the application launcher.'
-                    ).format(profile_name),
+                    ).format(GLib.get_user_data_dir(), profile_name),
                 )
         except Exception:
             logger.exception(lambda: "Could not create desktop entry for a run with --profile")
@@ -2980,8 +2981,10 @@ class VarietyWindow(Gtk.Window):
                 self.show_notification(
                     _("Variety: Created autostart desktop entry"),
                     _(
-                        "We created a new desktop entry in ~/.config/autostart. "
-                        "Variety should start automatically on next login."
+                        "We created a new desktop entry in {}/autostart. "
+                        "Variety should start automatically on next login.".format(
+                            GLib.get_user_config_dir()
+                        )
                     ),
                 )
         except Exception:
