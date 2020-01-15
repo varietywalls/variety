@@ -1,8 +1,9 @@
 import os
 
 from variety.Util import Util
+from gi.repository import GLib
 
-DEFAULT_PROFILE_PATH = "~/.config/variety/"
+DEFAULT_PROFILE_PATH = os.path.join(GLib.get_user_config_dir(), "variety")
 
 __profile_path = DEFAULT_PROFILE_PATH
 
@@ -12,12 +13,12 @@ def set_profile_path(profile_path):
         profile_path = DEFAULT_PROFILE_PATH
 
     # if just a name is passed instead of a full path, put it under ~/.config/variety-profiles
-    if not "/" in profile_path:
-        profile_path = "~/.config/variety-profiles/{}".format(profile_path)
+    if not os.sep in profile_path:
+        profile_path = os.path.join(GLib.get_user_config_dir(), "variety-profiles", profile_path)
 
     # make sure profile path has a trailing slash
-    if not profile_path.endswith("/"):
-        profile_path += "/"
+    if not profile_path.endswith(os.sep):
+        profile_path += os.sep
 
     global __profile_path
     __profile_path = profile_path
@@ -60,4 +61,4 @@ def get_desktop_file_name():
 
 
 def get_autostart_file_path():
-    return os.path.join(os.path.expanduser("~/.config/autostart"), get_desktop_file_name())
+    return os.path.join(GLib.get_user_config_dir(), "autostart", get_desktop_file_name())
