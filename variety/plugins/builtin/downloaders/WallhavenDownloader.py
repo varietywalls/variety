@@ -21,8 +21,10 @@ from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.Util import Util, _
 
 SEARCH_URL = (
-    "https://wallhaven.cc/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc"
+    "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
 )
+
+WALLPAPER_INFO_URL = "https://wallhaven.cc/api/v1/w/%s"
 
 logger = logging.getLogger("variety")
 
@@ -41,6 +43,16 @@ class WallhavenDownloader(DefaultDownloader):
         else:
             # interpret location as keywords
             self.url = SEARCH_URL % urllib.parse.quote(self.config)
+            return
+
+        # Use Wallhaven API
+        if self.config.startswith("https://wallhaven.cc/search"):
+            self.url = self.config.replace("https://wallhaven.cc/search", "https://wallhaven.cc/api/v1/search")
+        elif self.config.startswith("https://wallhaven.cc/tag"):
+            # location is an URL, use it
+            self.url = self.config.replace("https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:")
+
+        self.wallpaper_info_url = WALLPAPER_INFO_URL
 
     def search(self, page=None):
         url = self.url
@@ -50,53 +62,44 @@ class WallhavenDownloader(DefaultDownloader):
 
         logger.info(lambda: "Performing wallhaven search: url=%s" % url)
 
-        soup = Util.html_soup(url)
+        response = Util.fetch_json(url)
 
         result_count = None
         try:
-            result_count = int(
-                soup.find("header", {"class": "listing-header"})
-                .find("h1")
-                .text.split()[0]
-                .replace(",", "")
-            )
+            result_count = response["meta"]["total"]
         except:
             pass
 
-        return soup, result_count
+        return response, result_count
 
     @staticmethod
     def validate(location):
         logger.info(lambda: "Validating Wallhaven location " + location)
         try:
             s, count = WallhavenDownloader(None, location).search()
-            wall = s.find("figure", {"class": "thumb"})
-            if not wall:
-                return False
-            link = wall.find("a", {"class": "preview"})
-            return link is not None
+            return count > 0
         except Exception:
             logger.exception(lambda: "Error while validating wallhaven search")
             return False
 
     def download_queue_item(self, queue_item):
-        wallpaper_url = queue_item
+        wallpaper_url = queue_item["url"]
         logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
-        s = Util.html_soup(wallpaper_url)
-        src_url = s.find("img", id="wallpaper")["src"]
+        src_url = queue_item["path"]
         logger.info(lambda: "Image src URL: " + src_url)
 
         extra_metadata = {}
         try:
+            wallpaper_info = Util.fetch_json(self.wallpaper_info_url % urllib.parse.quote(queue_item["id"]))
             extra_metadata["keywords"] = [
-                el.text.strip() for el in s.find_all("a", {"class": "tagname"})
+                tag["name"] for tag in wallpaper_info["data"]["tags"]
             ]
         except:
             pass
 
         try:
-            purity = s.find("div", "sidebar-content").find("label", "purity").text.lower()
+            purity = queue_item["purity"]
             sfw_rating = {"sfw": 100, "sketchy": 50, "nsfw": 0}[purity]
             extra_metadata["sfwRating"] = sfw_rating
 
@@ -126,10 +129,10 @@ class WallhavenDownloader(DefaultDownloader):
         else:
             s, count = self.search()
 
-        thumbs = s.find_all("figure", {"class": "thumb"})
-        for thumb in thumbs:
+        results = s["data"]
+        for result in results:
             try:
-                p = list(map(int, thumb.find("span", {"class": "wall-res"}).contents[0].split("x")))
+                p = result["resolution"].split("x")
                 width = p[0]
                 height = p[1]
                 if self.is_size_inadequate(width, height):
@@ -138,13 +141,7 @@ class WallhavenDownloader(DefaultDownloader):
                 # missing or unparseable resolution - consider ok
                 pass
 
-            try:
-                link = thumb.find("a", {"class": "preview"})["href"]
-                if self.is_in_banned(link):
-                    continue
-                queue.append(link)
-            except Exception:
-                logger.debug(lambda: "Missing link for thumbnail")
+            queue.append(result)
 
         random.shuffle(queue)
 
