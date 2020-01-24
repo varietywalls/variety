@@ -67,6 +67,12 @@ class WallhavenSource(ConfigurableImageSource):
     def get_ui_short_description(self):
         return _("Fetch images from Wallhaven.cc for a given criteria")
 
+    def get_ui_use_apikey_or_not_text(self):
+        return _("Use apikey?")
+
+    def get_ui_apikey_instruction(self):
+        return _("API Key: ")
+
     def validate(self, query):
         valid = WallhavenDownloader.validate(query)
         return query, None if valid else _("No images found")
