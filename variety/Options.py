@@ -48,6 +48,8 @@ class Options:
         # predefined configurable sources
         FLICKR = "flickr"
 
+        WALLHAVEN = "wallhaven"
+
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
             FOLDER,
