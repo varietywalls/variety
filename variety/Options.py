@@ -18,6 +18,7 @@ import logging
 import os
 
 from configobj import ConfigObj, DuplicateError
+
 from variety.profile import get_profile_path
 from variety.Util import Util
 from variety_lib import varietyconfig
