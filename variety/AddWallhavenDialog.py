@@ -17,11 +17,10 @@ import urllib
 from urllib.parse import urlencode
 
 from gi.repository import Gdk, Gtk  # pylint: disable=E0611
-from variety.plugins.builtin.downloaders.WallhavenDownloader import WallhavenDownloader
 
-from variety.Util import Util
 from variety.AddConfigurableDialog import AddConfigurableDialog
-
+from variety.plugins.builtin.downloaders.WallhavenDownloader import WallhavenDownloader
+from variety.Util import Util
 from variety_lib.helpers import get_builder
 
 
@@ -59,10 +58,10 @@ class AddWallhavenDialog(AddConfigurableDialog):
 
         location = WallhavenDownloader(None, original_location).url
         url_parts, params = self.parse_location(location)
-        if 'usekey' in params:
-            self.ui.use_apikey_or_not.set_active(params['usekey'][0])
-        if 'apikey' in params:
-            self.ui.apikey.set_text(params['apikey'][0])
+        if "usekey" in params:
+            self.ui.use_apikey_or_not.set_active(params["usekey"][0])
+        if "apikey" in params:
+            self.ui.apikey.set_text(params["apikey"][0])
 
     @staticmethod
     def parse_location(location):
@@ -92,16 +91,16 @@ class AddWallhavenDialog(AddConfigurableDialog):
 
         valition_empty_apikey = False
         invalid_msg = None
-        if (usekey):
+        if usekey:
             apikey = self.ui.apikey.get_text().strip()
             if apikey is None or apikey == "":
                 valition_empty_apikey = True
                 invalid_msg = "Please type your apikey."
             else:
                 # Append params to the original url, so that we can access those NSFW images or other settings
-                if '&apikey=' not in query:
+                if "&apikey=" not in query:
                     query = query + "&apikey=" + apikey
-                if '&usekey=' not in query:
+                if "&usekey=" not in query:
                     query = query + "&usekey=" + str(usekey)
 
         else:
@@ -142,15 +141,15 @@ class AddWallhavenDialog(AddConfigurableDialog):
         """ Remove apikey and usekey from url """
         if len(queries) == 0:
             path = url_parts.path
-            if path is not None or path != '':
-                num_fields = 1 + path.count('&') + path.count(';')
-                pairs = [s2 for s1 in path.split('&') for s2 in s1.split(';')]
+            if path is not None or path != "":
+                num_fields = 1 + path.count("&") + path.count(";")
+                pairs = [s2 for s1 in path.split("&") for s2 in s1.split(";")]
             parsed_result = {}
             for name_value in pairs:
-                nv = name_value.split('=', 1)
+                nv = name_value.split("=", 1)
                 name = nv[0]
                 if len(nv) != 2:
-                    parsed_result[name] = ''
+                    parsed_result[name] = ""
                     continue
                 if len(nv):
                     value = nv[1]
@@ -160,12 +159,12 @@ class AddWallhavenDialog(AddConfigurableDialog):
 
             path_pairs = []
             for pair in queries:
-                if queries[pair] != '':
+                if queries[pair] != "":
                     path_pairs.append(pair + "=" + str(queries[pair]))
                 else:
                     path_pairs.append(pair)
 
-            new_path = '&'.join(path_pairs)
+            new_path = "&".join(path_pairs)
             url_parts = url_parts._replace(path=new_path)
             return url_parts.geturl()
 
@@ -175,10 +174,10 @@ class AddWallhavenDialog(AddConfigurableDialog):
 
     @staticmethod
     def del_api_key(queries):
-        if 'apikey' in queries:
-            del queries['apikey']
-        if 'usekey' in queries:
-            del queries['usekey']
+        if "apikey" in queries:
+            del queries["apikey"]
+        if "usekey" in queries:
+            del queries["usekey"]
 
         return queries
 
@@ -186,7 +185,7 @@ class AddWallhavenDialog(AddConfigurableDialog):
         self.ui.apikey.set_sensitive(False)
 
     # Be called when click 'Use apikey?' button
-    def on_use_apikey_enabled_toggled(self,  widget=None):
+    def on_use_apikey_enabled_toggled(self, widget=None):
         self.ui.apikey.set_sensitive(self.ui.use_apikey_or_not.get_active())
 
 

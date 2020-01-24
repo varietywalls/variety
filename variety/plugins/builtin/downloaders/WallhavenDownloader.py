@@ -20,9 +20,7 @@ import urllib.parse
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.Util import Util, _
 
-SEARCH_URL = (
-    "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
-)
+SEARCH_URL = "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
 
 WALLPAPER_INFO_URL = "https://wallhaven.cc/api/v1/w/%s"
 
@@ -47,10 +45,14 @@ class WallhavenDownloader(DefaultDownloader):
 
         # Use Wallhaven API
         if self.config.startswith("https://wallhaven.cc/search"):
-            self.url = self.config.replace("https://wallhaven.cc/search", "https://wallhaven.cc/api/v1/search")
+            self.url = self.config.replace(
+                "https://wallhaven.cc/search", "https://wallhaven.cc/api/v1/search"
+            )
         elif self.config.startswith("https://wallhaven.cc/tag"):
             # location is an URL, use it
-            self.url = self.config.replace("https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:")
+            self.url = self.config.replace(
+                "https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:"
+            )
 
         self.wallpaper_info_url = WALLPAPER_INFO_URL
 
@@ -91,10 +93,10 @@ class WallhavenDownloader(DefaultDownloader):
 
         extra_metadata = {}
         try:
-            wallpaper_info = Util.fetch_json(self.wallpaper_info_url % urllib.parse.quote(queue_item["id"]))
-            extra_metadata["keywords"] = [
-                tag["name"] for tag in wallpaper_info["data"]["tags"]
-            ]
+            wallpaper_info = Util.fetch_json(
+                self.wallpaper_info_url % urllib.parse.quote(queue_item["id"])
+            )
+            extra_metadata["keywords"] = [tag["name"] for tag in wallpaper_info["data"]["tags"]]
         except:
             pass
 
