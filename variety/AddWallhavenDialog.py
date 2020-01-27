@@ -65,9 +65,6 @@ class AddWallhavenDialog(AddConfigurableDialog):
 
     @staticmethod
     def parse_location(location):
-        if not location.startswith(("http://", "https://", "?q=")):
-            location = "?q=" + location
-
         url_parts = urllib.parse.urlparse(location)
         params = urllib.parse.parse_qs(url_parts.query)
 
@@ -87,6 +84,7 @@ class AddWallhavenDialog(AddConfigurableDialog):
         Util.add_mainloop_task(_start_ui)
 
         query = self.ui.query.get_text().strip()
+        query = WallhavenDownloader(None, query).web_url
         usekey = self.ui.use_apikey_or_not.get_active()
 
         valition_empty_apikey = False
@@ -104,7 +102,6 @@ class AddWallhavenDialog(AddConfigurableDialog):
                     query = query + "&usekey=" + str(usekey)
 
         else:
-            # query = WallhavenDownloader(None, query).url
             url_parts, queries = self.parse_location(query)
             query = self.clean_url(url_parts, queries)
 
@@ -142,7 +139,6 @@ class AddWallhavenDialog(AddConfigurableDialog):
         if len(queries) == 0:
             path = url_parts.path
             if path is not None or path != "":
-                num_fields = 1 + path.count("&") + path.count(";")
                 pairs = [s2 for s1 in path.split("&") for s2 in s1.split(";")]
             parsed_result = {}
             for name_value in pairs:

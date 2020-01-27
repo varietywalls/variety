@@ -20,7 +20,9 @@ import urllib.parse
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.Util import Util, _
 
-SEARCH_URL = "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
+WEB_DOMAIN_SEARCH = "https://wallhaven.cc/search"
+
+API_SAFE_SEARCH_URL = "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
 
 WALLPAPER_INFO_URL = "https://wallhaven.cc/api/v1/w/%s"
 
@@ -37,20 +39,18 @@ class WallhavenDownloader(DefaultDownloader):
     def parse_location(self):
         if self.config.startswith(("http://", "https://")):
             # location is an URL, use it
-            self.url = self.config.replace("http://", "https://")
+            self.web_url = self.config.replace("http://", "https://")
         else:
             # interpret location as keywords
-            self.url = SEARCH_URL % urllib.parse.quote(self.config)
-            return
+            self.url = API_SAFE_SEARCH_URL % self.config
+            self.web_url = WEB_DOMAIN_SEARCH + "?q=" + self.config
 
         # Use Wallhaven API
-        if self.config.startswith("https://wallhaven.cc/search"):
-            self.url = self.config.replace(
-                "https://wallhaven.cc/search", "https://wallhaven.cc/api/v1/search"
-            )
-        elif self.config.startswith("https://wallhaven.cc/tag"):
+        if self.web_url.startswith(WEB_DOMAIN_SEARCH):
+            self.url = self.web_url.replace(WEB_DOMAIN_SEARCH, "https://wallhaven.cc/api/v1/search")
+        elif self.web_url.startswith("https://wallhaven.cc/tag"):
             # location is an URL, use it
-            self.url = self.config.replace(
+            self.url = self.web_url.replace(
                 "https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:"
             )
 
