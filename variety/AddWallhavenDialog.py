@@ -50,6 +50,7 @@ class AddWallhavenDialog(AddConfigurableDialog):
     def set_source(self, source):
         super().set_source(source)
         self.ui.use_apikey_or_not.set_label(source.get_ui_use_apikey_or_not_text())
+        self.ui.getting_api_key_instruction.set_markup(source.get_api_key_instruction())
         self.ui.apikey_instruction.set_text(source.get_ui_apikey_instruction())
 
     def set_edited_row(self, edited_row):

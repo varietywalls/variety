@@ -58,7 +58,12 @@ class WallhavenSource(ConfigurableImageSource):
             "If you specify a Wallhaven URL, please choose the sorting criteria carefully - Variety regularly "
             "requests images, but uses only images from the first several hundred returned. Random or Date will "
             "mean this image source will have a longer 'lifetime' till it is exhausted. Favorites will provide "
-            "better images and Relevance will provide closer matches when searching for phrases or colors."
+            "better images and Relevance will provide closer matches when searching for phrases or colors.\n"
+            "\n"
+            "You can setup <a href='https://wallhaven.cc/settings/account'>your own API key</a> to gain "
+            "access to <b>not-safe-for-work</b> images, please use this feature carefully. Note that you may need "
+            "to login <a href='http://wallhaven.cc'>Wallhaven.cc</a> to get your own API key "
+            "in <b>Account Settings</b> under <b>API Key</b>"
         )
 
     def get_ui_short_instruction(self):
@@ -68,7 +73,10 @@ class WallhavenSource(ConfigurableImageSource):
         return _("Fetch images from Wallhaven.cc for a given criteria")
 
     def get_ui_use_apikey_or_not_text(self):
-        return _("Use apikey?")
+        return _("Use API key?")
+
+    def get_api_key_instruction(self):
+        return _("(<a href='https://wallhaven.cc/settings/account'>Get API key</a>)")
 
     def get_ui_apikey_instruction(self):
         return _("API Key: ")
