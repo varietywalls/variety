@@ -96,7 +96,7 @@ class AddWallhavenDialog(AddConfigurableDialog):
                 valition_empty_apikey = True
                 invalid_msg = "Please type your apikey."
             else:
-                # Append params to the original url, so that we can access those NSFW images or other settings
+                # Append apikey to the original url, so that we can access those NSFW images or other settings
                 if "&apikey=" not in query:
                     query = query + "&apikey=" + apikey
                 if "&usekey=" not in query:
@@ -130,13 +130,13 @@ class AddWallhavenDialog(AddConfigurableDialog):
         Util.add_mainloop_task(_stop_ui)
 
     def clean_location(self, location):
-        """ Remove apikey and usekey from url """
+        """ Remove apikey and usekey from a given url """
         url_parts, queries = self.parse_location(location)
         return self.clean_url(url_parts, queries)
 
     @staticmethod
     def clean_url(url_parts, queries):
-        """ Remove apikey and usekey from url """
+        """ Remove apikey and usekey from a given url """
         if len(queries) == 0:
             path = url_parts.path
             if path is not None or path != "":
