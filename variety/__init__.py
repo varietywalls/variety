@@ -213,24 +213,33 @@ if os.name == 'nt':
 else:
     import dbus, dbus.service, dbus.glib
     class VarietyService(IVarietyService, dbus.service.Object):
-        def __init__(self, variety_window):
-            super().__init__()
+        def __init__(self):
+            super(IVarietyService, self).__init__()
+            self.bus = dbus.SessionBus()
+            self.dbus_key = _get_dbus_key()
+            self.master = None
 
         # Initialize the underlying dbus setup
         def start_listener(self):
-            bus_name = dbus.service.BusName(DBUS_KEY, bus=dbus.SessionBus())
-            dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
-            self.bus = dbus.SessionBus()
+            self.bus_name = dbus.service.BusName(self.dbus_key, bus=dbus.SessionBus())
+            dbus.service.Object.__init__(self, self.bus_name, DBUS_PATH)
+            pass
 
         def set_variety_window(self, variety_window):
             self.variety_window = variety_window
             self.bus.call_on_disconnection(self.variety_window.on_quit)
 
         def is_master(self):
-            return self.bus.request_name(DBUS_KEY) == dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER
+            if self.master is not None:
+                return self.master
+            elif self.bus.request_name(self.dbus_key) == dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+                self.master = True
+            else:
+                self.master = False
+            return self.master
 
         # This is for command requests coming from external
-        @dbus.service.method(dbus_interface=DBUS_KEY, in_signature='as', out_signature='s')
+        @dbus.service.method(dbus_interface=_get_dbus_key(), in_signature='as', out_signature='s')
         def process_command(self, arguments):
             result = self.variety_window.process_command(arguments, initial_run=False)
             return "" if result is None else result
@@ -240,7 +249,7 @@ else:
                 arguments = ["--preferences"]
             safe_print(_("Variety is already running. Sending the command to the running instance."),
                     "Variety is already running. Sending the command to the running instance.")
-            method = bus.get_object(DBUS_KEY, DBUS_PATH).get_dbus_method("process_command")
+            method = self.bus.get_object(self.dbus_key, DBUS_PATH).get_dbus_method("process_command")
             return method(arguments)
 
 VARIETY_WINDOW = None
@@ -360,13 +369,13 @@ def main():
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
     service = VarietyService()
-    service.set_variety_window(window)
-    service.start_listener()
     if not service.is_master():
         result = service.send_command(arguments)
         if result:
             safe_print(result)
         return
+    service.set_variety_window(window)
+    service.start_listener()
     window.start(arguments)
     GObject.timeout_add(2000, _check_quit)
     Gtk.main()
