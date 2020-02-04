@@ -20,29 +20,14 @@ import re
 import urllib.parse
 
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
-from variety.plugins.downloaders.ImageSource import ImageSource
-from variety.Util import Util, _
+from variety.Util import Util
 
 logger = logging.getLogger("variety")
 
-random.seed()
 
-
-class RedditDownloader(ImageSource, DefaultDownloader):
-    def __init__(self, parent, url):
-        ImageSource.__init__(self)
-        DefaultDownloader.__init__(self, source=self, config=url)
-        self.set_variety(parent)
-
-    @classmethod
-    def get_info(cls):
-        raise Exception("Not yet implemented as a plugin")
-
-    def get_source_type(self):
-        return "reddit"
-
-    def get_description(self):
-        return _("Images from subreddits at Reddit")
+class RedditDownloader(DefaultDownloader):
+    def __init__(self, source, url):
+        DefaultDownloader.__init__(self, source=source, config=url)
 
     @staticmethod
     def build_json_url(url):
@@ -58,25 +43,6 @@ class RedditDownloader(ImageSource, DefaultDownloader):
             + ("&" if p.query else "")
             + "limit=100"
         )
-
-    @staticmethod
-    def validate(url, parent=None):
-        logger.info(lambda: "Validating Reddit url " + url)
-        try:
-            if not url.startswith("http://") and not url.startswith("https://"):
-                url = "http://" + url
-
-            if not "//reddit.com" in url and not "//www.reddit.com" in url:
-                return False
-
-            dl = RedditDownloader(parent, url)
-            queue = dl.fill_queue()
-            return len(queue) > 0
-        except Exception:
-            logger.exception(
-                lambda: "Error while validating URL, probably no image posts for this URL"
-            )
-            return False
 
     def fill_queue(self):
         logger.info(lambda: "Reddit URL: " + self.config)

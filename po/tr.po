@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-16 21:43-0700\n"
-"PO-Revision-Date: 2018-07-24 23:26+ZONE\n"
-"Last-Translator: Yaşar Çiv <yasarciv67@gmail.com>\n"
-"Language-Team: LANGUAGE <https://www.notabug.org/milislinux/ceviriler>\n"
-"Language: tr\n"
+"POT-Creation-Date: 2017-09-18 20:45-0700\n"
+"PO-Revision-Date: 2019-11-28 11:27+0000\n"
+"Last-Translator: Yaşar Çiv <yasarciv@protonmail.com>\n"
+"Language-Team: Launchpad Turkish Translators <https://launchpad.net/~lp-l10n-"
+"tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2019-12-22 09:06+0000\n"
+"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
+"Language: tr\n"
 "X-Language: tr_TR\n"
 "X-Source-Language: C\n"
 
@@ -135,10 +136,10 @@ msgid ""
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
-"Onları indirmek ve onları duvar kağıtları olarak kullanmak için başlatıcı "
-"simgesine görüntü bağlantıları veya dosyaları bırakabilirsiniz. Belirli bir "
-"siteden daha hızlı indirme için pano izleme de kullanabilirsiniz (bkz. "
-"\"Elle indirme\" sekmesi)."
+"İndirmek ve duvar kağıdı olarak kullanmak için başlatıcı simgesine resim "
+"bağlantıları veya dosyaları bırakabilirsiniz. Belirli bir siteden daha hızlı "
+"indirme için pano izleme de kullanabilirsiniz (bkz. \"Elle indirme\" "
+"sekmesi)."
 
 #: ../variety/Texts.py:51
 msgid ""
@@ -165,8 +166,8 @@ msgstr ""
 #: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
-"bottom of the screen. Click an image there to set is as wallpaper. "
-"Right-click to close the window, to modify its appearance or to perform file "
+"bottom of the screen. Click an image there to set is as wallpaper. Right-"
+"click to close the window, to modify its appearance or to perform file "
 "operations. You can select multiple image sources to create a \"merged\" "
 "thumbnail view of all of them. Please mind that thumbnail view is limited to "
 "several hundred randomly selected images."
@@ -215,59 +216,93 @@ msgstr ""
 "ve Yerel Dosyalar alıntı kaynağını etkinleştirin. Bu dosya aynı zamanda Unix "
 "fortune programı ile uyumludur."
 
-#: ../variety/PreferencesVarietyDialog.py:245
+#: ../data/ui/LoginOrRegisterDialog.ui.h:1
+msgid "Login to VRTY.ORG"
+msgstr "VRTY.ORG girişi yap"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:2
+msgid "Username: "
+msgstr "Kullanıcı adı: "
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:3
+msgid "Password: "
+msgstr "Şifre: "
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:4
+msgid "No account? Register here"
+msgstr "Hesap yok mu? Buraya kayıt ol"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:5
+msgid "Forgot your password?"
+msgstr "Şifrenizi mi unuttunuz?"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:6
+msgid ""
+"Tip: You can also login to <a href=\"https://vrty.org\">VRTY.ORG</a> in a "
+"browser and click the link <span weight=\"bold\">\"Trigger Variety "
+"login\"</span> in your profile."
+msgstr ""
+"İpucu: Ayrıca bir tarayıcıda <a href=\"https://vrty.org\">VRTY.ORG</a> "
+"sitesine giriş yapabilir ve profilinizdeki <span weight=\"bold\">\"Trigger "
+"Variety login\"</span> bağlantısını tıklayabilirsiniz."
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:7
+msgid "Login"
+msgstr "Giriş"
+
+#: ../variety/PreferencesVarietyDialog.py:254
 msgid "All"
 msgstr "Tümü"
 
-#: ../variety/PreferencesVarietyDialog.py:366
-#: ../variety/PreferencesVarietyDialog.py:532
+#: ../variety/PreferencesVarietyDialog.py:377
+#: ../variety/PreferencesVarietyDialog.py:543
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr "Resimler"
 
-#: ../variety/PreferencesVarietyDialog.py:367
+#: ../variety/PreferencesVarietyDialog.py:378
 msgid "Folders"
 msgstr "Dizinler"
 
-#: ../variety/PreferencesVarietyDialog.py:369 ../data/ui/AddFlickrDialog.ui.h:2
+#: ../variety/PreferencesVarietyDialog.py:380 ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr "Flickr"
 
-#: ../variety/PreferencesVarietyDialog.py:370
+#: ../variety/PreferencesVarietyDialog.py:381
 #: ../data/ui/AddWallhavenDialog.ui.h:2
 msgid "Wallhaven.cc"
 msgstr "Wallhaven.cc"
 
-#: ../variety/PreferencesVarietyDialog.py:371 ../data/ui/AddRedditDialog.ui.h:2
+#: ../variety/PreferencesVarietyDialog.py:382 ../data/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
 msgstr "Reddit"
 
-#: ../variety/PreferencesVarietyDialog.py:372
+#: ../variety/PreferencesVarietyDialog.py:383
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr "Medya RSS"
 
-#: ../variety/PreferencesVarietyDialog.py:397
+#: ../variety/PreferencesVarietyDialog.py:408
 msgid "Remove the source, keep the files"
 msgstr "Kaynağı kaldır, dosyaları sakla"
 
-#: ../variety/PreferencesVarietyDialog.py:398
+#: ../variety/PreferencesVarietyDialog.py:409
 msgid "Remove the sources, keep the files"
 msgstr "Kaynakları kaldır, dosyaları sakla"
 
-#: ../variety/PreferencesVarietyDialog.py:405
+#: ../variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source and delete the downloaded files"
 msgstr "Kaynağı kaldır ve indirilen dosyaları sil"
 
-#: ../variety/PreferencesVarietyDialog.py:406
+#: ../variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources and delete the downloaded files"
 msgstr "Kaynakları kaldır ve indirilen dosyaları sil"
 
-#: ../variety/PreferencesVarietyDialog.py:439
+#: ../variety/PreferencesVarietyDialog.py:450
 msgid "World Sunlight Map enabled"
 msgstr "Dünya Güneş Işığı Haritası etkin"
 
-#: ../variety/PreferencesVarietyDialog.py:440
+#: ../variety/PreferencesVarietyDialog.py:451
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
@@ -276,52 +311,56 @@ msgstr ""
 "işleminin 30 dakikaveya daha kısa aralıklarla etkinleştirilmesini "
 "gerektirir. Ayarlar otomatik olarak ayarlandı."
 
-#: ../variety/PreferencesVarietyDialog.py:525
+#: ../variety/PreferencesVarietyDialog.py:536
 msgid "Add Images"
 msgstr "Resimleri Ekle"
 
-#: ../variety/PreferencesVarietyDialog.py:526
-#: ../variety/PreferencesVarietyDialog.py:550 ../variety/FolderChooser.py:66
+#: ../variety/PreferencesVarietyDialog.py:537
+#: ../variety/PreferencesVarietyDialog.py:561 ../variety/FolderChooser.py:66
 msgid "Cancel"
 msgstr "Vazgeç"
 
-#: ../variety/PreferencesVarietyDialog.py:526
-#: ../variety/PreferencesVarietyDialog.py:550
+#: ../variety/PreferencesVarietyDialog.py:537
+#: ../variety/PreferencesVarietyDialog.py:561
 msgid "Add"
 msgstr "Ekle"
 
-#: ../variety/PreferencesVarietyDialog.py:548
+#: ../variety/PreferencesVarietyDialog.py:559
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
 "Dizinleri Ekle - Sadece kök dizinleri ekleyin, alt dizinler tekrarlı olarak "
 "aranır"
 
-#: ../variety/PreferencesVarietyDialog.py:678
-#: ../variety/PreferencesVarietyDialog.py:691
-#: ../data/ui/PreferencesVarietyDialog.ui.h:151
+#: ../variety/PreferencesVarietyDialog.py:689
+#: ../variety/PreferencesVarietyDialog.py:702
+#: ../data/ui/PreferencesVarietyDialog.ui.h:170
 msgid "Edit..."
 msgstr "Düzenle..."
 
-#: ../variety/PreferencesVarietyDialog.py:685
+#: ../variety/PreferencesVarietyDialog.py:696
 msgid "View Image"
 msgstr "Resmi Görüntüle"
 
-#: ../variety/PreferencesVarietyDialog.py:688
+#: ../variety/PreferencesVarietyDialog.py:699
 msgid "Open Folder"
 msgstr "Dizin Aç"
 
-#: ../variety/PreferencesVarietyDialog.py:1065
-#: ../variety/PreferencesVarietyDialog.py:1084
-#: ../variety/PreferencesVarietyDialog.py:1092
+#: ../variety/PreferencesVarietyDialog.py:1070
+msgid "Recommended images source disabled"
+msgstr "Önerilen resim kaynağı devre dışı"
+
+#: ../variety/PreferencesVarietyDialog.py:1098
+#: ../variety/PreferencesVarietyDialog.py:1117
+#: ../variety/PreferencesVarietyDialog.py:1125
 msgid "No write permissions"
 msgstr "Yazma izni yok"
 
-#: ../variety/PreferencesVarietyDialog.py:1072
+#: ../variety/PreferencesVarietyDialog.py:1105
 msgid "Limit disabled"
 msgstr "Sınır devre dışı"
 
-#: ../variety/PreferencesVarietyDialog.py:1073
+#: ../variety/PreferencesVarietyDialog.py:1106
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
@@ -329,16 +368,16 @@ msgstr ""
 "İndirme dizinini değiştirmek, yanlışlıkla veri kaybını önlemek için boyut "
 "sınırını otomatik olarak kapatır"
 
-#: ../variety/PreferencesVarietyDialog.py:1079
+#: ../variety/PreferencesVarietyDialog.py:1112
 #, python-format
 msgid "Actual download folder: %s "
 msgstr "Gerçek indirme dizini: %s "
 
-#: ../variety/PreferencesVarietyDialog.py:1159
+#: ../variety/PreferencesVarietyDialog.py:1192
 msgid "Could not adjust permissions"
 msgstr "İzinler ayarlanamadı"
 
-#: ../variety/PreferencesVarietyDialog.py:1160
+#: ../variety/PreferencesVarietyDialog.py:1193
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
@@ -347,11 +386,28 @@ msgstr ""
 "Bu komutu elle çalıştırmayı deneyebilirsiniz:\n"
 "sudo chmod %s \"%s\""
 
+#: ../variety/PreferencesVarietyDialog.py:1225
+msgid "Logged in as: "
+msgstr "Oturumu açan: "
+
+#: ../variety/PreferencesVarietyDialog.py:1227
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: ../variety/PreferencesVarietyDialog.py:1228
+#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+msgid "Login or register"
+msgstr "Giriş yap yada kayıt ol"
+
+#: ../variety/PreferencesVarietyDialog.py:1228
+msgid "Switch user"
+msgstr "Kullanıcı değiştir"
+
 #: ../data/ui/WelcomeDialog.ui.h:1
 msgid "Welcome to Variety!"
 msgstr "Variety'e hoşgeldiniz!"
 
-#: ../data/ui/WelcomeDialog.ui.h:2
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
 msgid "Continue"
 msgstr "Devam"
 
@@ -383,6 +439,22 @@ msgid ""
 msgstr ""
 "Şimdi tercihlerinizi aşağıdaki ekranlarda ayarlamak için biraz zaman ayırın."
 
+#: ../data/ui/WelcomeDialog.ui.h:6
+msgid "KDE Users - Important, please read:"
+msgstr "KDE Kullanıcıları - Önemli, lütfen okuyun:"
+
+#: ../data/ui/WelcomeDialog.ui.h:7
+msgid ""
+"You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper "
+"from inside a program - there is no API for this. To make Variety work, <a "
+"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">please read "
+"and follow the instructions here</a>."
+msgstr ""
+"KDE'de çalışıyor gibi görünüyorsunuz. KDE 4'te duvar kağıdını program "
+"içinden çıkarmak mümkün değildir - bunun için API yoktur. Variety'nin "
+"çalışması için <a href=\"http://peterlevi.com/variety/2014/05/variety-and-"
+"kde/\"> lütfen buradaki talimatları okuyun ve uygulayın</a>."
+
 #: ../variety/LoginOrRegisterDialog.py:80
 #, python-format
 msgid "Oops, server returned error (%s)"
@@ -392,44 +464,44 @@ msgstr "Amanın, sunucu hata verdi (%s)"
 msgid "Could not connect to server"
 msgstr "Sunucuya bağlanılamadı"
 
-#: ../variety/indicator.py:60 ../variety/indicator.py:107
-#: ../variety/indicator.py:178
+#: ../variety/indicator.py:54 ../variety/indicator.py:101
+#: ../variety/indicator.py:180
 msgid "_Next"
 msgstr "_Sonraki"
 
-#: ../variety/indicator.py:65 ../variety/indicator.py:112
-#: ../variety/indicator.py:183
+#: ../variety/indicator.py:59 ../variety/indicator.py:106
+#: ../variety/indicator.py:185
 msgid "_Previous"
 msgstr "_Önceki"
 
-#: ../variety/indicator.py:72
+#: ../variety/indicator.py:66
 msgid "Current desktop wallpaper"
 msgstr "Şimdiki masaüstü duvar kağıdı"
 
-#: ../variety/indicator.py:76
+#: ../variety/indicator.py:70
 msgid "Show origin"
 msgstr "Kökeni göster"
 
-#: ../variety/indicator.py:87 ../variety/VarietyWindow.py:642
+#: ../variety/indicator.py:81 ../variety/VarietyWindow.py:666
 #: ../variety/ThumbsManager.py:144
 msgid "Copy to _Favorites"
 msgstr "_Sık Kullanılanlara Kopyala"
 
 #. both
-#: ../variety/indicator.py:92 ../variety/VarietyWindow.py:651
-#: ../data/ui/PreferencesVarietyDialog.ui.h:148
+#: ../variety/indicator.py:86 ../variety/VarietyWindow.py:675
+#: ../data/ui/PreferencesVarietyDialog.ui.h:167
 msgid "Move to Favorites"
 msgstr "Sık Kullanılanlara Taşı"
 
-#: ../variety/indicator.py:98 ../variety/ThumbsManager.py:160
+#: ../variety/indicator.py:92 ../variety/ThumbsManager.py:160
 msgid "Delete to _Trash"
 msgstr "_Çöpe Gönder"
 
-#: ../variety/indicator.py:117 ../variety/indicator.py:188
+#: ../variety/indicator.py:111 ../variety/indicator.py:190
 msgid "_Next, skipping forward history"
 msgstr "_İleri, ilerleme geçmişi atlanarak"
 
-#: ../variety/indicator.py:125
+#: ../variety/indicator.py:119
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
@@ -437,95 +509,103 @@ msgstr ""
 "İpucu: İleri veya Geri için simge\n"
 "üzerinde kaydırma tekerleği kullan"
 
-#: ../variety/indicator.py:131 ../variety/indicator.py:197
-#: ../variety/VarietyWindow.py:773 ../variety/VarietyWindow.py:787
+#: ../variety/indicator.py:125 ../variety/indicator.py:199
+#: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
 msgid "Pause on current"
 msgstr "Geçerlide duraklat"
 
-#: ../variety/indicator.py:135
+#: ../variety/indicator.py:129
 msgid "_Image"
 msgstr "_Resim"
 
-#: ../variety/indicator.py:142 ../variety/ThumbsManager.py:167
+#: ../variety/indicator.py:136 ../variety/ThumbsManager.py:167
 msgid "Where is it from?"
 msgstr "Bu nereden?"
 
-#: ../variety/indicator.py:146
+#: ../variety/indicator.py:140
 msgid "Show without effects"
 msgstr "Etkiler olmadan göster"
 
-#: ../variety/indicator.py:154
+#: ../variety/indicator.py:148
 msgid "Google Image Search"
 msgstr "Google Resim Arama"
 
-#: ../variety/indicator.py:160 ../variety/indicator.py:235
+#: ../variety/indicator.py:154 ../variety/indicator.py:237
 #: ../data/ui/FacebookPublishDialog.ui.h:2
 msgid "Share on Facebook"
 msgstr "Facebook'ta Paylaş"
 
-#: ../variety/indicator.py:167 ../variety/ThumbsManager.py:136
+#: ../variety/indicator.py:161 ../variety/ThumbsManager.py:136
 msgid "Set EXIF Rating"
 msgstr "EXIF Puanını Ayarla"
 
-#: ../variety/indicator.py:203 ../variety/VarietyWindow.py:790
+#: ../variety/indicator.py:172
+msgid "Report NSFW image"
+msgstr "NSFW resmini bildir"
+
+#: ../variety/indicator.py:205 ../variety/VarietyWindow.py:820
 msgid "Save to Favorites"
 msgstr "Sık Kullanılanlara Kaydet"
 
-#: ../variety/indicator.py:208
+#: ../variety/indicator.py:210
 msgid "View Favorites..."
 msgstr "Sık Kullanılanları Görüntüle..."
 
-#: ../variety/indicator.py:215
+#: ../variety/indicator.py:217
 msgid "Copy to Clipboard"
 msgstr "Panoya Kopyala"
 
-#: ../variety/indicator.py:225
+#: ../variety/indicator.py:227
 msgid "Google Quote"
 msgstr "Google Alıntısı"
 
-#: ../variety/indicator.py:230
+#: ../variety/indicator.py:232
 msgid "Google Author"
 msgstr "Google Yazarı"
 
-#: ../variety/indicator.py:242 ../variety/indicator.py:296
+#: ../variety/indicator.py:244 ../variety/indicator.py:298
 msgid "Preferences..."
 msgstr "Tercihler..."
 
-#: ../variety/indicator.py:250
+#: ../variety/indicator.py:252
 msgid "Turn off"
 msgstr "Kapat"
 
-#: ../variety/indicator.py:256
+#: ../variety/indicator.py:258
 msgid "_Quote"
 msgstr "_Alıntı"
 
-#: ../variety/indicator.py:263
+#: ../variety/indicator.py:265
 msgid "_History"
 msgstr "_Geçmiş"
 
-#: ../variety/indicator.py:269
+#: ../variety/indicator.py:271
 msgid "_Wallpaper Selector"
 msgstr "Duvar Kağıdı Seçici"
 
-#: ../variety/indicator.py:275
+#: ../variety/indicator.py:277
 msgid "Recent _Downloads"
 msgstr "Son _İndirilenler"
 
-#: ../variety/indicator.py:290
+#: ../variety/indicator.py:292
 msgid "Start Slideshow"
 msgstr "Slayt Gösterisi Başlat"
 
-#: ../variety/indicator.py:300
+#: ../variety/indicator.py:302
 msgid "About"
 msgstr "Hakkında"
 
-#: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui.h:177
+#: ../variety/indicator.py:306 ../data/ui/PreferencesVarietyDialog.ui.h:196
 msgid "Donate"
 msgstr "Bağış Yap"
 
-#: ../variety/indicator.py:308
+#: ../variety/indicator.py:310
 msgid "Quit"
 msgstr "Çık"
+
+#: ../variety/indicator.py:428
+msgid "_Safe mode"
+msgstr "_Güvenli mod"
 
 #: ../variety/AddMediaRssDialog.py:40
 msgid ""
@@ -534,6 +614,73 @@ msgid ""
 msgstr ""
 "Bu geçerli bir Medya RSS besleme URL'si gibi görünmüyor veya orada içerik "
 "yok."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
+msgid "Variety - VRTY.ORG"
+msgstr "Variety - VRTY.ORG"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
+msgid "No, thanks"
+msgstr "Hayır, teşekkürler"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+msgid ""
+"<span font=\"14\" weight=\"bold\">Introducing <a "
+"href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
+msgstr ""
+"<span font=\"14\" weight=\"bold\">tanıtım <a "
+"href=\"https://vrty.org\">VRTY.ORG</a>!  Katılmak ister misin?</span>"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+msgid ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
+"similar tastes and provides super-convenient ways to change your wallpaper, "
+"to find and add new image sources to Variety, and to follow other users' "
+"favorites."
+msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> Variety kullanıcılarını benzer "
+"zevklerle birbirine bağlar ve duvar kağıdınızı değiştirmek, yeni resim "
+"kaynakları bulmak ve eklemek ve diğer kullanıcıların sık kullandıklarını "
+"takip etmek için süper kullanışlı yöntemler sunar."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+msgid ""
+"Participation takes no effort - your profile will be built automatically, as "
+"you like or dislike images downloaded by Variety. Your profile will not be "
+"shared with third parties, unless you opt-in to make it public. <a "
+"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
+"service and the privacy policy here.</a>"
+msgstr ""
+"Katılım çaba gerektirmez - Variety tarafından indirilen resimleri beğenir "
+"veya beğenmezseniz, profiliniz otomatik olarak oluşturulur. Herkese açık "
+"olmayı seçmezseniz, profiliniz üçüncü şahıslarla paylaşılmayacaktır. <a "
+"href='http://peterlevi.com/variety/vrty-org/'> Hizmet ve gizlilik politikası "
+"hakkında daha fazla ayrıntıyı buradan okuyun.</a>"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+msgid ""
+"Participation is required for some features of Variety such as <span "
+"weight=\"bold\">synchronization of favorites between computers</span>."
+msgstr ""
+"<span weight=\"bold\">Bilgisayarlar arasında sık kullanılanların "
+"eşzamanlaması</span> gibi bazı özellikler için katılım gereklidir."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+msgid "Participate in VRTY.ORG"
+msgstr "VTRY.ORG'a katılın"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:1
+msgid "Variety - add Panoramio image source"
+msgstr "Variety - Panoramio görüntü kaynağı ekle"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:2
+msgid "Panoramio"
+msgstr "Panoramio"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:3
+msgid "Please zoom over your area of interest."
+msgstr "Lütfen ilgi alanınızı yakınlaştırın."
 
 #: ../data/ui/FacebookPublishDialog.ui.h:1
 msgid "Variety - Publish to Facebook"
@@ -551,7 +698,7 @@ msgstr ""
 msgid "Use current quote"
 msgstr "Geçerli alıntıyı kullan"
 
-#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2578
+#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2676
 msgid "Do not ask anymore, always use the text above"
 msgstr "Artık sorma, her zaman yukarıdaki metni kullan"
 
@@ -559,64 +706,73 @@ msgstr "Artık sorma, her zaman yukarıdaki metni kullan"
 msgid "No images found"
 msgstr "Resim bulunamadı"
 
-#: ../variety/VarietyWindow.py:638 ../variety/VarietyWindow.py:790
-#: ../variety/VarietyWindow.py:2737
+#: ../variety/VarietyWindow.py:662 ../variety/VarietyWindow.py:820
+#: ../variety/VarietyWindow.py:2835
 msgid "Already in Favorites"
 msgstr "Zaten Sık Kullanılanlarda"
 
-#: ../variety/VarietyWindow.py:643 ../variety/ThumbsManager.py:151
+#: ../variety/VarietyWindow.py:667 ../variety/ThumbsManager.py:151
 msgid "Move to _Favorites"
 msgstr "_Sık Kullanılanlara Taşı"
 
-#: ../variety/VarietyWindow.py:673 ../variety/ThumbsManager.py:119
+#: ../variety/VarietyWindow.py:697 ../variety/ThumbsManager.py:119
 msgid "Fetched: Show Origin"
 msgstr "Getirildi: Kökeni Göster"
 
-#: ../variety/VarietyWindow.py:675 ../variety/VarietyWindow.py:780
+#: ../variety/VarietyWindow.py:699 ../variety/VarietyWindow.py:810
 #: ../variety/ThumbsManager.py:121
 #, python-format
 msgid "View at %s"
 msgstr "%s'de görüntüle"
 
-#: ../variety/VarietyWindow.py:725
+#: ../variety/VarietyWindow.py:749
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: ../variety/VarietyWindow.py:750
+#: ../variety/VarietyWindow.py:761
+msgid "Safe mode: On"
+msgstr "Güvenli Mod: Açık"
+
+#: ../variety/VarietyWindow.py:761
+msgid "Turn Safe mode on"
+msgstr "Güvenli modu aç"
+
+#: ../variety/VarietyWindow.py:780
 #, python-format
 msgid "Author: %s"
 msgstr "Yazar: %s"
 
-#: ../variety/VarietyWindow.py:773 ../variety/VarietyWindow.py:787
+#: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
 msgid "Resume regular changes"
 msgstr "Düzenli değişiklikleri devam ettir"
 
-#: ../variety/VarietyWindow.py:922
+#: ../variety/VarietyWindow.py:952
 msgid "Filtering too strict?"
 msgstr "Süzme çok mu katı?"
 
-#: ../variety/VarietyWindow.py:923
+#: ../variety/VarietyWindow.py:953
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr "Variety, resim süzme ölçütlerinize uyan çok az resim buluyor"
 
-#: ../variety/VarietyWindow.py:1404
+#: ../variety/VarietyWindow.py:1451
 msgid "Please add more image sources or wait for some downloads"
-msgstr "Lütfen daha fazla resim kaynağı ekleyin yada bazı indirmeleri bekleyin"
+msgstr ""
+"Lütfen daha fazla resim kaynağı ekleyin yada bazı indirmeleri bekleyin"
 
-#: ../variety/VarietyWindow.py:1406
+#: ../variety/VarietyWindow.py:1453
 msgid "Please add more image sources"
 msgstr "Lütfen daha fazla resim kaynağı ekleyin"
 
-#: ../variety/VarietyWindow.py:1407
+#: ../variety/VarietyWindow.py:1454
 msgid "No more wallpapers"
 msgstr "Daha fazla duvar kağıdı yok"
 
-#: ../variety/VarietyWindow.py:1621
+#: ../variety/VarietyWindow.py:1660
 msgid "Current wallpaper is not in the image sources"
 msgstr "Geçerli duvar kağıdı resim kaynaklarında değil"
 
-#: ../variety/VarietyWindow.py:1656
+#: ../variety/VarietyWindow.py:1695
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
@@ -624,7 +780,7 @@ msgstr ""
 "%s konumuna taşınamadı. Büyük olasılıkla bu dosyayı taşımak için izinleriniz "
 "yok."
 
-#: ../variety/VarietyWindow.py:1658
+#: ../variety/VarietyWindow.py:1697
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
@@ -632,23 +788,23 @@ msgstr ""
 "%s konumuna kopyalanamadı. Büyük olasılıkla bu dosyayı kopyalamak için "
 "izniniz yok."
 
-#: ../variety/VarietyWindow.py:1678 ../variety/VarietyWindow.py:1706
-#: ../variety/VarietyWindow.py:1711
+#: ../variety/VarietyWindow.py:1717 ../variety/VarietyWindow.py:1745
+#: ../variety/VarietyWindow.py:1750
 msgid "Cannot delete"
 msgstr "Silinemedi"
 
-#: ../variety/VarietyWindow.py:1679
+#: ../variety/VarietyWindow.py:1718
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
 msgstr "%s dosyasını çöp kutusuna göndermek için izniniz yok."
 
-#: ../variety/VarietyWindow.py:1707
+#: ../variety/VarietyWindow.py:1746
 msgid "Deleting to trash failed, check variety.log for more information."
 msgstr ""
 "Çöpe gönderme başarısız, daha fazla bilgi için variety.log dosyasını kontrol "
 "edin."
 
-#: ../variety/VarietyWindow.py:1712
+#: ../variety/VarietyWindow.py:1751
 msgid ""
 "Deleting to trash failed because no suitable program is installed. Please "
 "install gvfs (gvfs-bin), trash-cli, or konqueror."
@@ -656,7 +812,22 @@ msgstr ""
 "Uygun program yüklenmediği için çöpe gönderme başarısız oldu. Lütfen gvfs "
 "(gvfs-bin), trash-cli veya konqueror kurun."
 
-#: ../variety/VarietyWindow.py:2005
+#: ../variety/VarietyWindow.py:1908
+msgid "Anonymous usage statistics"
+msgstr "Anonim kullanım istatistikleri"
+
+#: ../variety/VarietyWindow.py:1909
+msgid ""
+"Variety collects anonymous usage statistics. \n"
+"These help us make it better and are not shared with anyone. \n"
+"To read more or turn them off, go to \"Sync and social\""
+msgstr ""
+"Variety anonim kullanım istatistikleri toplar. \n"
+"Bunlar daha iyi hale getirmemize yardımcı olur ve kimseyle paylaşılmaz. \n"
+"Daha fazla okumak veya bunları kapatmak için \"Eşzamanlama ve sosyal\" e "
+"gidin\""
+
+#: ../variety/VarietyWindow.py:2092
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
@@ -664,7 +835,7 @@ msgstr ""
 "Yapılandırma dosyasıyla bir editör açacağım ve sen değişiklikleri kaydedip "
 "kapattıktan sonra değişiklikleri uygulayacağım."
 
-#: ../variety/VarietyWindow.py:2043
+#: ../variety/VarietyWindow.py:2130
 msgid ""
 "%prog [options] [files or urls]\n"
 "\n"
@@ -682,7 +853,7 @@ msgstr ""
 "\n"
 "Belirli bir duvar kağıdını ayarlamak için: %prog /some/local/resim.jpg --next"
 
-#: ../variety/VarietyWindow.py:2053
+#: ../variety/VarietyWindow.py:2140
 msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
@@ -690,11 +861,11 @@ msgstr ""
 "Kayıt mesajlarını göster (-vv daha da iyi hata ayıklama mesajlarını "
 "gösterir, -vvv debugs variety_lib)"
 
-#: ../variety/VarietyWindow.py:2057
+#: ../variety/VarietyWindow.py:2144
 msgid "Make the running instance quit"
 msgstr "Çalışan örneğini bırak"
 
-#: ../variety/VarietyWindow.py:2061
+#: ../variety/VarietyWindow.py:2148
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
@@ -702,19 +873,19 @@ msgstr ""
 "Geçerli duvar kağıdı konumunu yazdır. Sadece uygulama zaten çalışıyorsa "
 "kullanılır."
 
-#: ../variety/VarietyWindow.py:2065
+#: ../variety/VarietyWindow.py:2152
 msgid "Show Next wallpaper"
 msgstr "Sonraki Duvar Kağıdını Göster"
 
-#: ../variety/VarietyWindow.py:2069
+#: ../variety/VarietyWindow.py:2156
 msgid "Show Previous wallpaper"
 msgstr "Önceki Duvar Kağıdını Göster"
 
-#: ../variety/VarietyWindow.py:2073
+#: ../variety/VarietyWindow.py:2160
 msgid "Show Next wallpaper, skipping the forward history"
 msgstr "İlerleme geçmişini atlayarak Sonraki duvar kağıdını göster"
 
-#: ../variety/VarietyWindow.py:2077
+#: ../variety/VarietyWindow.py:2164
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
@@ -722,7 +893,7 @@ msgstr ""
 "Geçerli duvar kağıdını Çöpe taşı. Sadece uygulama zaten çalışıyorsa "
 "kullanılır."
 
-#: ../variety/VarietyWindow.py:2081
+#: ../variety/VarietyWindow.py:2168
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -730,7 +901,7 @@ msgstr ""
 "Geçerli duvar kağıdını Sık Kullanılanlara kopyala. Sadece uygulama zaten "
 "çalışıyorsa kullanılır."
 
-#: ../variety/VarietyWindow.py:2085
+#: ../variety/VarietyWindow.py:2172
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
@@ -738,51 +909,51 @@ msgstr ""
 "Geçerli duvar kağıdını Sık Kullanılanlara taşı. Sadece uygulama zaten "
 "çalışıyorsa kullanılır."
 
-#: ../variety/VarietyWindow.py:2089
+#: ../variety/VarietyWindow.py:2176
 msgid "Pause on current image"
 msgstr "Geçerli resimde durakla"
 
-#: ../variety/VarietyWindow.py:2093
+#: ../variety/VarietyWindow.py:2180
 msgid "Resume regular image changes"
 msgstr "Düzenli resim değişikliklerine devam et"
 
-#: ../variety/VarietyWindow.py:2097
+#: ../variety/VarietyWindow.py:2184
 msgid "Toggle Pause/Resume state"
 msgstr "Durdurma/Devam Geçişi durumu"
 
-#: ../variety/VarietyWindow.py:2101
+#: ../variety/VarietyWindow.py:2188
 msgid "Show Next quote"
 msgstr "Sonraki alıntıyı göster"
 
-#: ../variety/VarietyWindow.py:2105
+#: ../variety/VarietyWindow.py:2192
 msgid "Show Previous quote"
 msgstr "Önceki alıntıyı göster"
 
-#: ../variety/VarietyWindow.py:2109
+#: ../variety/VarietyWindow.py:2196
 msgid "Show Next quote, skipping the forward history"
 msgstr "İlerleme geçmişini atlayarak Sonraki alıntıyı göster"
 
-#: ../variety/VarietyWindow.py:2113
+#: ../variety/VarietyWindow.py:2200
 msgid "Toggle Quotes Pause/Resume state"
 msgstr "Alıntıların Geçişini Durdur/Devam durumu"
 
-#: ../variety/VarietyWindow.py:2117
+#: ../variety/VarietyWindow.py:2204
 msgid "Save the current quote to Favorites"
 msgstr "Geçerli alıntıyı Sık Kullanılanlara kaydet"
 
-#: ../variety/VarietyWindow.py:2121
+#: ../variety/VarietyWindow.py:2208
 msgid "Toggle History display"
 msgstr "Tarih görünümünü değiştir"
 
-#: ../variety/VarietyWindow.py:2125
+#: ../variety/VarietyWindow.py:2212
 msgid "Toggle Recent Downloads display"
 msgstr "Son İndirilenler ekranını değiştir"
 
-#: ../variety/VarietyWindow.py:2129
+#: ../variety/VarietyWindow.py:2216
 msgid "Show Preferences dialog"
 msgstr "Tercihler iletişim kutusunu göster"
 
-#: ../variety/VarietyWindow.py:2133
+#: ../variety/VarietyWindow.py:2220
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
@@ -790,13 +961,13 @@ msgstr ""
 "Elle duvar kağıdı seçiciyi göster - etkin resim kaynaklarından görüntülerle "
 "dolu küçük resim çubuğu"
 
-#: ../variety/VarietyWindow.py:2137
+#: ../variety/VarietyWindow.py:2224
 msgid ""
 "Sets and applies an option. The option names are the same that are used in "
 "Variety's config file ~/.config/variety/variety.conf. Multiple options can "
-"be set in a single command. Example: 'variety --set-option icon Dark "
-"--set-option clock_enabled True'. USE WITH CAUTION: You are changing the "
-"settings file directly in an unguarded way."
+"be set in a single command. Example: 'variety --set-option icon Dark --set-"
+"option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
+"file directly in an unguarded way."
 msgstr ""
 "Bir seçenek belirler ve uygular. Seçenek isimleri Variety'nin yapılandırma "
 "dosyası ~/.config/variety/variety.conf'da kullanılanla aynıdır. Tek bir "
@@ -804,107 +975,107 @@ msgstr ""
 "Dark --set-option clock_enabled True'. DİKKATLİ KULLAN: Ayar dosyasını "
 "doğrudan korumasız bir şekilde değiştiriyorsunuz."
 
-#: ../variety/VarietyWindow.py:2151
+#: ../variety/VarietyWindow.py:2238
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 "seçenekler --next/--fast-forward ve --previous karşılıklı olarak "
 "ayrıcalıklıdır"
 
-#: ../variety/VarietyWindow.py:2154
+#: ../variety/VarietyWindow.py:2241
 msgid "options --trash and --favorite are mutually exclusive"
 msgstr "seçenekler --trash ve --favorite karşılıklı olarak ayrıcalıklıdır"
 
-#: ../variety/VarietyWindow.py:2157
+#: ../variety/VarietyWindow.py:2244
 msgid "options --pause and --resume are mutually exclusive"
 msgstr "seçenekler --pause ve --resume karşılıklı olarak ayrıcalıklıdır"
 
-#: ../variety/VarietyWindow.py:2160
+#: ../variety/VarietyWindow.py:2247
 msgid ""
-"options --quotes-next/--quotes-fast-forward and --quotes-previous "
-"aremutually exclusive"
+"options --quotes-next/--quotes-fast-forward and --quotes-previous are "
+"mutually exclusive"
 msgstr ""
-"seçenekler --quotes-next/--quotes-fast-forward and --quotes-previous "
-"karşılıklı olarak ayrıcalıklıdır"
+"--quotes-next/--quotes-fast-forward ve --quotes-previous seçenekleri "
+"birbirini dışlar"
 
-#: ../variety/VarietyWindow.py:2277 ../variety/ImageFetcher.py:60
+#: ../variety/VarietyWindow.py:2364 ../variety/ImageFetcher.py:60
 #: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
 #: ../variety/ImageFetcher.py:110
 msgid "Not an image"
 msgstr "Bir Resim değil"
 
-#: ../variety/VarietyWindow.py:2282
+#: ../variety/VarietyWindow.py:2369
 msgid "Added to queue"
 msgstr "Sıraya eklendi"
 
-#: ../variety/VarietyWindow.py:2283 ../variety/VarietyWindow.py:2289
+#: ../variety/VarietyWindow.py:2370 ../variety/VarietyWindow.py:2376
 msgid "Press Next to see it"
 msgstr "Görmek için İleri'ye basın"
 
-#: ../variety/VarietyWindow.py:2289
+#: ../variety/VarietyWindow.py:2376
 msgid "Fetched"
 msgstr "Getirildi"
 
-#: ../variety/VarietyWindow.py:2335
+#: ../variety/VarietyWindow.py:2422
 msgid "Unsupported source type"
 msgstr "Desteklenmeyen kaynak türü"
 
-#: ../variety/VarietyWindow.py:2336 ../variety/VarietyWindow.py:2373
+#: ../variety/VarietyWindow.py:2423 ../variety/VarietyWindow.py:2471
 msgid "Are you running the most recent version of Variety?"
 msgstr "Variety'nin en son sürümünü mü kullanıyorsunuz?"
 
-#: ../variety/VarietyWindow.py:2342
+#: ../variety/VarietyWindow.py:2429
 msgid "New image source added"
 msgstr "Yeni resim kaynağı eklendi"
 
-#: ../variety/VarietyWindow.py:2344
+#: ../variety/VarietyWindow.py:2431
 msgid "Image source already exists, enabling it"
 msgstr "Resim kaynağı zaten var, onu etkinleştirin"
 
-#: ../variety/VarietyWindow.py:2365
+#: ../variety/VarietyWindow.py:2457
 msgid "Fetched and applied"
 msgstr "Getirildi ve uygulandı"
 
-#: ../variety/VarietyWindow.py:2369
+#: ../variety/VarietyWindow.py:2467
 msgid "It works!"
 msgstr "İşe yarıyor!"
 
-#: ../variety/VarietyWindow.py:2369
+#: ../variety/VarietyWindow.py:2467
 msgid "Yay, Variety links work. Great!"
 msgstr "Variety bağlantıları çalışıyor. Harika!"
 
-#: ../variety/VarietyWindow.py:2373
+#: ../variety/VarietyWindow.py:2471
 msgid "Unsupported command"
 msgstr "Desteklenmeyen komut"
 
-#: ../variety/VarietyWindow.py:2375
+#: ../variety/VarietyWindow.py:2473
 msgid "Could not process the given variety:// URL"
 msgstr "Verilen variety:// URL işlenemedi"
 
-#: ../variety/VarietyWindow.py:2376
+#: ../variety/VarietyWindow.py:2474
 msgid "Run with logging enabled to see details"
 msgstr "Ayrıntıları görmek için günlüğe kaydetme ile çalıştır"
 
-#: ../variety/VarietyWindow.py:2575
+#: ../variety/VarietyWindow.py:2673
 msgid "Do not ask anymore, always use the current quote"
 msgstr "Artık sorma, her zaman geçerli alıntıyı kullan"
 
-#: ../variety/VarietyWindow.py:2610 ../variety/VarietyWindow.py:2639
+#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
 msgid "Published"
 msgstr "Yayınlanan"
 
-#: ../variety/VarietyWindow.py:2610 ../variety/VarietyWindow.py:2639
+#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
 msgid "You may open your Facebook feed to see the post"
 msgstr "Yayını görmek için Facebook akışınızı açabilirsiniz"
 
-#: ../variety/VarietyWindow.py:2613 ../variety/VarietyWindow.py:2642
+#: ../variety/VarietyWindow.py:2711 ../variety/VarietyWindow.py:2740
 msgid "Could not publish"
 msgstr "Yayınlanamadı"
 
-#: ../variety/VarietyWindow.py:2805
+#: ../variety/VarietyWindow.py:2903
 msgid "Could not create autostart entry"
 msgstr "Otomatik başlatma girişi oluşturulamadı"
 
-#: ../variety/VarietyWindow.py:2806
+#: ../variety/VarietyWindow.py:2904
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
@@ -912,19 +1083,19 @@ msgstr ""
 "Otomatik başlatma masaüstü girişi oluşturulurken bir hata oluştu\n"
 "Lütfen bir terminalden -v bayrağıyla çalıştırın ve tekrar deneyin."
 
-#: ../variety/VarietyWindow.py:2856
+#: ../variety/VarietyWindow.py:2954
 msgid "No images"
 msgstr "Resim yok"
 
-#: ../variety/VarietyWindow.py:2856
+#: ../variety/VarietyWindow.py:2954
 msgid "There are no images in the slideshow folders"
 msgstr "Slayt gösterisi dizinlerinde resim yok"
 
-#: ../variety/VarietyWindow.py:2889
+#: ../variety/VarietyWindow.py:2989
 msgid "Wallhaven image sources disabled"
 msgstr "Wallhaven resim kaynakları devre dışı"
 
-#: ../variety/VarietyWindow.py:2890
+#: ../variety/VarietyWindow.py:2990
 msgid ""
 "Please google \"Python SNI SSL error\" if you want to fix the problem "
 "yourself."
@@ -932,12 +1103,12 @@ msgstr ""
 "Sorunu kendiniz düzeltmek istiyorsanız lütfen google'da \"Python SNI SSL "
 "hatası\" arayın."
 
-#: ../variety/VarietyWindow.py:2896
+#: ../variety/VarietyWindow.py:2996
 msgid ""
 "There are SSL incompatibilities between your version of Python and some "
 "https sites like Wallhaven. You can <a "
-"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/\">read "
-"more about the issue here</a>.\n"
+"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
+"doesnt-give-sni-support/\">read more about the issue here</a>.\n"
 "\n"
 "Do you want to install the Python dependencies required to fix this problem? "
 "\n"
@@ -945,33 +1116,34 @@ msgid ""
 msgstr ""
 "Python sürümü ile Wallhaven gibi bazı https siteleri arasında SSL "
 "uyumsuzlukları var. <a "
-"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-doesnt-give-sni-support/\">buradaki "
-"sorun hakkında daha fazla bilgi edinebilirsiniz</a>.\n"
+"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
+"doesnt-give-sni-support/\">buradaki sorun hakkında daha fazla bilgi "
+"edinebilirsiniz</a>.\n"
 "\n"
 "Bu sorunu çözmek için gereken Python bağımlılıklarını yüklemek istiyor "
 "musunuz? \n"
 "Bu işlem süper kullanıcı ayrıcalıkları isteyecek. "
 
-#: ../variety/VarietyWindow.py:2901
+#: ../variety/VarietyWindow.py:3001
 msgid "Variety - SSL error. Install dependencies?"
 msgstr "Variety - SSL hatası. Bağımlılıklar kurulsun mu?"
 
-#: ../variety/VarietyWindow.py:2922
+#: ../variety/VarietyWindow.py:3022
 msgid "Installing..."
 msgstr "Kuruluyor..."
 
-#: ../variety/VarietyWindow.py:2923
+#: ../variety/VarietyWindow.py:3023
 #, python-format
 msgid ""
 "Installation will take a minute or two. Please be patient. Log file is at %s"
 msgstr ""
 "Kurulum bir iki dakika sürecek. Lütfen sabırlı olun. Günlük dosyası %s 'de"
 
-#: ../variety/VarietyWindow.py:2936
+#: ../variety/VarietyWindow.py:3036
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr "Bağımlılıklar kuruldu. Lütfen şimdi Variety'i tekrar başlatın."
 
-#: ../variety/VarietyWindow.py:2937
+#: ../variety/VarietyWindow.py:3037
 msgid ""
 "If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
 "and seek another solution."
@@ -979,11 +1151,11 @@ msgstr ""
 "SSL hataları devam ederse, \"Python SNI SSL hatası\" için google'a "
 "başvurmanız ve başka bir çözüm aramanız gerekir."
 
-#: ../variety/VarietyWindow.py:2940
+#: ../variety/VarietyWindow.py:3040
 msgid "Failure. Wallhaven sources disabled."
 msgstr "Başarısız. Wallhaven kaynakları devre dışı."
 
-#: ../variety/VarietyWindow.py:2941
+#: ../variety/VarietyWindow.py:3041
 #, python-format
 msgid ""
 "SSL-related dependencies were not installed successfully. Please see %s or "
@@ -997,7 +1169,7 @@ msgid "Variety - Facebook Sharing"
 msgstr "Variety - Facebook Paylaşımı"
 
 #: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:152
+#: ../data/ui/PreferencesVarietyDialog.ui.h:171
 msgid "Facebook Sharing"
 msgstr "Facebook Paylaşımı"
 
@@ -1070,7 +1242,8 @@ msgid ""
 "Example: You may specify simply 'comics' or <a "
 "href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
 "Example: Top posts from the month: <a "
-"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www.reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
+"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 msgstr ""
 "Alt alanın adını girin veya alt alanın tam adresini veya <a "
 "href=\"http://reddit.com\">Reddit</a> kullanıcıyı yapıştırın. İsterseniz "
@@ -1079,9 +1252,11 @@ msgstr ""
 "yönlendirmek için yayınları kullanacaktır.\n"
 "\n"
 "Örnek: Basitçe 'çizgi romanlar' veya <a "
-"href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>belirtebilirsiniz.\n"
+"href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>bel"
+"irtebilirsiniz.\n"
 "Örnek: Ayın en iyi yayınları: <a "
-"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www.reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
+"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
 
 #: ../data/ui/AddRedditDialog.ui.h:7
 msgid "URL or name of a subreddit: "
@@ -1091,86 +1266,79 @@ msgstr "URL veya bir alt alanın adı: "
 msgid "Just a moment to check what's there"
 msgstr "Orada ne olduğunu kontrol etmek için sadece bir dakika"
 
-#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddWallhavenDialog.ui.h:10 ../data/ui/AddMediaRssDialog.ui.h:6
+#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddWallhavenDialog.ui.h:10
+#: ../data/ui/AddMediaRssDialog.ui.h:6 ../data/ui/AddFlickrDialog.ui.h:17
 msgid "  "
 msgstr "  "
 
-#: ../data/ui/AddFlickrDialog.ui.h:1
-msgid "Variety - add Flickr as an image source"
-msgstr "Variety - Flickr'ı bir resim kaynağı olarak ekle"
+#: ../data/ui/SmartRegisterDialog.ui.h:1
+msgid "Variety - VRTY.ORG registration"
+msgstr "Variety - VRTY.ORG kaydı"
 
-#: ../data/ui/AddFlickrDialog.ui.h:3
+#: ../data/ui/SmartRegisterDialog.ui.h:2
+msgid "Would you like to register?"
+msgstr "Kayıt olmak ister misiniz?"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:3
 msgid ""
-"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
-"Photos that match all of the chosen criteria will be downloaded. Leave "
-"unneeded criteria empty."
+"You may participate in <a href=\"https://vrty.org\">VRTY.ORG</a> "
+"anonymously, but registration enables some very nice features, such as <span "
+"weight=\"bold\">synchronization</span> of favorites between computers and "
+"<span weight=\"bold\">personalized recommendations</span>. It also ensures "
+"you will not lose your profile and favorite wallpapers if you reinstall your "
+"OS."
 msgstr ""
-"Lütfen <a href=\"http://flickr.com\">Flickr</a> arama kriterlerini belirtin. "
-"Seçilen kriterlerin hepsine uyan fotoğraflar indirilecektir. Gereksiz "
-"kriterleri boş bırakın."
+"Anonim olarak <a href=\"https://vrty.org\">VRTY.ORG</a> katılımı "
+"yapabilirsiniz, ancak kayıt olmak, bilgisayarlar arasında sık "
+"kullanılanların eşzamanlaması ve kişiselleştirilmiş öneriler gibi bazı çok "
+"güzel özellikler sağlar. Ayrıca, işletim sisteminizi yeniden yüklerseniz "
+"profilinizi ve sık kullanılan duvar kağıtlarınızı kaybetmemenizi sağlar."
 
-#: ../data/ui/AddFlickrDialog.ui.h:4
-#: ../data/ui/PreferencesVarietyDialog.ui.h:58
-msgid "Tags: "
-msgstr "Etiketler: "
+#: ../data/ui/SmartRegisterDialog.ui.h:4
+msgid "Registration is very easy and does not require any personal data."
+msgstr "Kayıt çok kolaydır ve herhangi bir kişisel veri gerektirmez."
 
-#: ../data/ui/AddFlickrDialog.ui.h:5
+#: ../data/ui/SmartRegisterDialog.ui.h:5
 msgid ""
-"A comma-separated list of tags. A photo has to contain all of them "
-"simultaneosly in order to match.\n"
-"Example: yellow,car"
+"If you choose to participate anonymously, you can register later from the "
+"<span weight=\"bold\">\"Sync and social\"</span> page in Preferences."
 msgstr ""
-"Virgülle ayrılmış bir etiket listesi. Bir fotoğrafın eşleşmesi için hepsini "
-"aynı anda içermesi gerekir.\n"
-"Örnek: sarı,araba"
+"Anonim olarak katılmayı seçerseniz, Tercihler'deki <span "
+"weight=\"bold\">\"Eşzamanlama ve sosyal\"</span> sayfasından daha sonra "
+"kayıt olabilirsiniz."
 
-#: ../data/ui/AddFlickrDialog.ui.h:7
-msgid "User: "
-msgstr "Kullanıcı: "
-
-#: ../data/ui/AddFlickrDialog.ui.h:8
+#: ../data/ui/SmartRegisterDialog.ui.h:6
 msgid ""
-"Please insert the URL to the user's photostream or to one of their photos.\n"
-"Example: <a "
-"href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+"Oops, we could not connect to VRTY.ORG. Server might be down. Please wait a "
+"couple of minutes and try again or choose <span "
+"font_weight=\"bold\">\"Participate anonymously\"</span> and register later "
+"from the <span font_weight=\"bold\">\"Sync and social\"</span> page in "
+"Preferences."
 msgstr ""
-"Lütfen URL'yi kullanıcının fotoğraf akışına veya fotoğraflarından birine "
-"ekleyin.\n"
-"Örnek: <a "
-"href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+"Hay aksi, VRTY.ORG'a bağlanamadık. Sunucu kapalı olabilir. Lütfen birkaç "
+"dakika bekleyin ve tekrar deneyin ya da <span font_weight=\"bold\">\"Anonim "
+"olarak katıl\"</span> öğesini seçin ve daha sonra Tercihler'deki <span "
+"font_weight=\"bold\">\"Eşzamanlama ve sosyal\"</span> sayfasından kaydolun."
 
-#: ../data/ui/AddFlickrDialog.ui.h:10
-msgid "Group: "
-msgstr "Grup: "
-
-#: ../data/ui/AddFlickrDialog.ui.h:11
+#: ../data/ui/SmartRegisterDialog.ui.h:7
 msgid ""
-"Please insert the group's URL.\n"
-"Example: <a "
-"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+"Please continue the registration and follow the instructions in the browser "
+"tab we opened."
 msgstr ""
-"Lütfen grubun URL'sini ekleyin.\n"
-"Örnek: <a "
-"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+"Lütfen kayıt işlemine devam edin ve açtığımız tarayıcı sekmesindeki "
+"talimatları izleyin."
 
-#: ../data/ui/AddFlickrDialog.ui.h:13
-msgid "Text:"
-msgstr "Metin:"
+#: ../data/ui/SmartRegisterDialog.ui.h:8
+msgid "I will participate anonymously"
+msgstr "Anonim olarak katılacağım"
 
-#: ../data/ui/AddFlickrDialog.ui.h:14
-msgid ""
-"Free text search in photos' titles, descriptions and tags. Exclude terms by "
-"prepending them with -.\n"
-"Example: apple -pie"
-msgstr ""
-"Fotoğrafların başlıklarında, açıklamalarında ve etiketlerinde serbest metin "
-"araması. Şartları - ile hazırlayarak hariç tutun.\n"
-"Örnek: apple -pie"
+#: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr "Kayıtlıyım, giriş yapayım"
 
-#: ../data/ui/AddFlickrDialog.ui.h:16 ../data/ui/AddWallhavenDialog.ui.h:9
-msgid "Just a moment to check this search"
-msgstr "Bu aramayı kontrol etmek için sadece bir dakika"
+#: ../data/ui/SmartRegisterDialog.ui.h:10
+msgid "Register here"
+msgstr "Buraya kayıt ol"
 
 #: ../variety/FolderChooser.py:65
 msgid "Choose a folder"
@@ -1189,7 +1357,7 @@ msgid ""
 "Variety is already running. Sending the command to the running instance."
 msgstr "Variety zaten çalışıyor. Komutu çalışan örneğe gönderme."
 
-#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui.h:53
+#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui.h:55
 msgid "Bottom"
 msgstr "Alt"
 
@@ -1201,7 +1369,7 @@ msgstr "Üst"
 msgid "Left"
 msgstr "Sol"
 
-#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui.h:50
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui.h:52
 msgid "Right"
 msgstr "Sağ"
 
@@ -1209,7 +1377,7 @@ msgstr "Sağ"
 msgid "Position"
 msgstr "Konum"
 
-#: ../variety/ThumbsManager.py:98 ../data/ui/PreferencesVarietyDialog.ui.h:114
+#: ../variety/ThumbsManager.py:98 ../data/ui/PreferencesVarietyDialog.ui.h:133
 msgid "Size"
 msgstr "Boyut"
 
@@ -1363,6 +1531,10 @@ msgstr ""
 msgid "Enter keywords or paste URL here: "
 msgstr "Anahtar kelimeleri girin veya URL'yi buraya yapıştırın: "
 
+#: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
+msgid "Just a moment to check this search"
+msgstr "Bu aramayı kontrol etmek için sadece bir dakika"
+
 #: ../data/plugins/quotes/LocalFilesSource.py:34
 msgid ""
 "Displays quotes, defined in local text files.\n"
@@ -1425,33 +1597,17 @@ msgstr "Medya RSS beslemesinin URL'sini buraya yapıştırın: "
 msgid "Just a moment to check what's at that URL"
 msgstr "Bu URL'de ne olduğunu kontrol etmek için sadece bir dakika"
 
-#: ../variety/FacebookHelper.py:115
+#: ../variety/FacebookHelper.py:116
 msgid "Authorization successful"
 msgstr "Yetkilendirme başarılı"
 
-#: ../variety/FacebookHelper.py:115
+#: ../variety/FacebookHelper.py:116
 msgid "Publishing..."
 msgstr "Yayınlama..."
 
-#: ../variety/FacebookHelper.py:120
+#: ../variety/FacebookHelper.py:121
 msgid "Authorization failed"
 msgstr "Yetkilendirme başarısız"
-
-#: ../variety/AddRedditDialog.py:43
-msgid "This does not seem to be a valid Reddit URL"
-msgstr "Bu geçerli bir Reddit URL'si gibi görünmüyor"
-
-#: ../variety/AddRedditDialog.py:46
-msgid "We could not find any image submissions there."
-msgstr "Orada herhangi bir resim gönderisi bulamadık."
-
-#: ../data/plugins/quotes/QuotesDaddySource.py:31
-msgid ""
-"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
-"Does not support searching by tags or authors."
-msgstr ""
-"QuotesDaddy'nin günlük RSS beslemesinden alıntılar getirir.\n"
-"Etiketlere veya yazarlara göre arama yapmayı desteklemiyor."
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
 msgid "Copy to Favorites vs. Move to Favorites"
@@ -1499,6 +1655,133 @@ msgstr ""
 "\t/resimler/DüzenlenmişAlbümler:Kopyala\n"
 "\tDiğerleri:Her ikiside"
 
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
+msgid "VRTY.ORG integration"
+msgstr "VRTY.ORG entegrasyonu"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
+msgid "This feature requires VRTY.ORG integration"
+msgstr "Bu özellik VRTY.ORG entegrasyonu gerektirir"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:3
+msgid "Enable VRTY.ORG integration"
+msgstr "VRTY.ORG entegrasyonunu etkinleştir"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:4
+msgid ""
+"For this feature Variety needs permission to collect data about the images "
+"you like or dislike and the online sources you have enabled.\n"
+"\n"
+"Collected data is anonymous by default and covers only images which Variety "
+"downloaded, never images you already had in your local folders that might be "
+"private.\n"
+"\n"
+"This data helps us provide better images for everyone and fuels <a "
+"href=\"https://vrty.org\">VRTY.ORG</a> - a valuable resource for all users "
+"of Variety."
+msgstr ""
+"Bu özellik için Variety, beğendiğiniz veya beğenmediğiniz resimler ve "
+"etkinleştirdiğiniz çevrimiçi kaynaklar hakkında veri toplamak için izine "
+"ihtiyaç duyar.\n"
+"\n"
+"Toplanan veriler varsayılan olarak anonimdir ve yalnızca Variety'nin "
+"indirdiği resimleri kapsar, hiçbir zaman yerel dizinlerinizde özel "
+"olabilecek resimleri almaz.\n"
+"\n"
+"Bu veriler, herkes için daha iyi resimler sağlamamıza ve <a "
+"href=\"https://vrty.org\">VRTY.ORG</a> sitesine malzeme bulmamıza yardımcı "
+"oluyor - tüm Variety kullanıcıları için değerli bir kaynak."
+
+#: ../variety/AddRedditDialog.py:43
+msgid "This does not seem to be a valid Reddit URL"
+msgstr "Bu geçerli bir Reddit URL'si gibi görünmüyor"
+
+#: ../variety/AddRedditDialog.py:46
+msgid "We could not find any image submissions there."
+msgstr "Orada herhangi bir resim gönderisi bulamadık."
+
+#: ../data/plugins/quotes/QuotesDaddySource.py:31
+msgid ""
+"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
+"Does not support searching by tags or authors."
+msgstr ""
+"QuotesDaddy'nin günlük RSS beslemesinden alıntılar getirir.\n"
+"Etiketlere veya yazarlara göre arama yapmayı desteklemiyor."
+
+#: ../data/ui/AddFlickrDialog.ui.h:1
+msgid "Variety - add Flickr as an image source"
+msgstr "Variety - Flickr'ı bir resim kaynağı olarak ekle"
+
+#: ../data/ui/AddFlickrDialog.ui.h:3
+msgid ""
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria. "
+"Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
+msgstr ""
+"Lütfen <a href=\"http://flickr.com\">Flickr</a> arama kriterlerini belirtin. "
+"Seçilen kriterlerin hepsine uyan fotoğraflar indirilecektir. Gereksiz "
+"kriterleri boş bırakın."
+
+#: ../data/ui/AddFlickrDialog.ui.h:4
+#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+msgid "Tags: "
+msgstr "Etiketler: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:5
+msgid ""
+"A comma-separated list of tags. A photo has to contain all of them "
+"simultaneosly in order to match.\n"
+"Example: yellow,car"
+msgstr ""
+"Virgülle ayrılmış bir etiket listesi. Bir fotoğrafın eşleşmesi için hepsini "
+"aynı anda içermesi gerekir.\n"
+"Örnek: sarı,araba"
+
+#: ../data/ui/AddFlickrDialog.ui.h:7
+msgid "User: "
+msgstr "Kullanıcı: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:8
+msgid ""
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/peter-"
+"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+msgstr ""
+"Lütfen URL'yi kullanıcının fotoğraf akışına veya fotoğraflarından birine "
+"ekleyin.\n"
+"Örnek: <a href=\"http://www.flickr.com/photos/peter-"
+"levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui.h:10
+msgid "Group: "
+msgstr "Grup: "
+
+#: ../data/ui/AddFlickrDialog.ui.h:11
+msgid ""
+"Please insert the group's URL.\n"
+"Example: <a "
+"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
+"s/wallpapers/</a>"
+msgstr ""
+"Lütfen grubun URL'sini ekleyin.\n"
+"Örnek: <a "
+"href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/group"
+"s/wallpapers/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui.h:13
+msgid "Text:"
+msgstr "Metin:"
+
+#: ../data/ui/AddFlickrDialog.ui.h:14
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by "
+"prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+"Fotoğrafların başlıklarında, açıklamalarında ve etiketlerinde serbest metin "
+"araması. Şartları - ile hazırlayarak hariç tutun.\n"
+"Örnek: apple -pie"
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
 msgid "seconds"
 msgstr "saniye"
@@ -1540,66 +1823,80 @@ msgid "Change wallpaper on start"
 msgstr "Başlangıçta duvar kağıdını değiştir"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:12
+msgid "Safe mode. Avoid NSFW and sketchy images"
+msgstr "Güvenli mod. NSFW ve kabataslak görüntülerden kaçının"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:13
+msgid ""
+"<i>Experimental feature. Relies on community ratings. <a "
+"href=\"http://peterlevi.com/variety/2016/08/introducing-safe-mode/\">Read "
+"more here</a></i>"
+msgstr ""
+"<i>Deneysel özellik. Topluluk derecelendirmelerine dayanır. <a "
+"href=\"http://peterlevi.com/variety/2016/08/introducing-safe-mode/\">Daha "
+"fazlasını burada okuyun</a></i>"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:14
 msgid "Enabled"
 msgstr "Etkin"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:13
+#: ../data/ui/PreferencesVarietyDialog.ui.h:15
 msgid "Type"
 msgstr "Tür"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:14
+#: ../data/ui/PreferencesVarietyDialog.ui.h:16
 msgid "Location"
 msgstr "Konum"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:15
+#: ../data/ui/PreferencesVarietyDialog.ui.h:17
 msgid "_Add..."
 msgstr "_Ekle..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:16
+#: ../data/ui/PreferencesVarietyDialog.ui.h:18
 msgid "Add images, folders or online image sources"
 msgstr "Resimler, dizinler veya çevrimiçi resim kaynakları ekle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:17
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
 msgid "_Edit..."
 msgstr "_Düzenle..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:18
+#: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Edit the selected source"
 msgstr "Seçilen kaynağı düzenle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+#: ../data/ui/PreferencesVarietyDialog.ui.h:21
 msgid "_Remove..."
 msgstr "_Kaldır..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:20
+#: ../data/ui/PreferencesVarietyDialog.ui.h:22
 msgid "Remove selected image sources"
 msgstr "Seçilen resim kaynaklarını kaldır"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:21
+#: ../data/ui/PreferencesVarietyDialog.ui.h:23
 msgid "_Use"
 msgstr "_Kullan"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:22
+#: ../data/ui/PreferencesVarietyDialog.ui.h:24
 msgid "Enable the selected sources and disable all others"
 msgstr "Seçilen kaynakları etkinleştir ve diğerlerini devre dışı bırak"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:23
+#: ../data/ui/PreferencesVarietyDialog.ui.h:25
 msgid "Download a wallpaper every "
 msgstr "Her duvar kağıdını indirin "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:24
+#: ../data/ui/PreferencesVarietyDialog.ui.h:26
 msgid "Minimum interval is one minute"
 msgstr "En az aralık bir dakikadır"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:25
+#: ../data/ui/PreferencesVarietyDialog.ui.h:27
 msgid "to "
-msgstr ""
+msgstr "doğru "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:26
+#: ../data/ui/PreferencesVarietyDialog.ui.h:28
 msgid "Actual download folder "
 msgstr "Gerçek indirme dizini "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:27
+#: ../data/ui/PreferencesVarietyDialog.ui.h:29
 msgid ""
 "Caution: do NOT use this option if you use a custom download folder with "
 "valuable files in it. Variety will maintain the limit regardless of what is "
@@ -1609,31 +1906,31 @@ msgstr ""
 "seçeneği KULLANMAYIN. Variety, indirme dizininde ne olduğuna bakılmaksızın "
 "sınırı koruyacaktır."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:28
+#: ../data/ui/PreferencesVarietyDialog.ui.h:30
 msgid "Limit download folder to "
 msgstr "İndirme dizinini sınırla "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:29
+#: ../data/ui/PreferencesVarietyDialog.ui.h:31
 msgid "Minimum size is 50 MB"
 msgstr "En az boyut 50 MB"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:30
+#: ../data/ui/PreferencesVarietyDialog.ui.h:32
 msgid "MB by deleting oldest files when necessary"
 msgstr "MB Gerektiğinde en eski dosyaları silerek"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:31
+#: ../data/ui/PreferencesVarietyDialog.ui.h:33
 msgid "Favorites"
 msgstr "Sık Kullanılanlar"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:32
+#: ../data/ui/PreferencesVarietyDialog.ui.h:34
 msgid "Copy favorite wallpapers to "
 msgstr "Sık kullanılan duvar kağıtlarını kopyala "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:33
+#: ../data/ui/PreferencesVarietyDialog.ui.h:35
 msgid "Filters"
 msgstr "Süzgeçler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:34
+#: ../data/ui/PreferencesVarietyDialog.ui.h:36
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
@@ -1641,83 +1938,83 @@ msgstr ""
 "Bu süzgeçleri görüntülenen duvar kağıtlarına rastgele uygulayın (harika "
 "ImageMagick'e teşekkürler):"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:35
+#: ../data/ui/PreferencesVarietyDialog.ui.h:37
 msgid "Quotes"
 msgstr "Alıntılar"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:36
+#: ../data/ui/PreferencesVarietyDialog.ui.h:38
 msgid "Show random wise quotes on the desktop"
 msgstr "Masaüstünde rastgele akıllı alıntıları göster"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:37
+#: ../data/ui/PreferencesVarietyDialog.ui.h:39
 msgid "Text color: "
 msgstr "Metin rengi: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:38
+#: ../data/ui/PreferencesVarietyDialog.ui.h:40
 msgid "Text font: "
 msgstr "Metin yazı tipi: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:39
+#: ../data/ui/PreferencesVarietyDialog.ui.h:41
 msgid "Backdrop color: "
 msgstr "Zemin rengi: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:40
+#: ../data/ui/PreferencesVarietyDialog.ui.h:42
 msgid "Backdrop opacity: "
 msgstr "Zemin matlığı: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:41
+#: ../data/ui/PreferencesVarietyDialog.ui.h:43
 msgid " Transparent"
 msgstr " Saydam"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:42
+#: ../data/ui/PreferencesVarietyDialog.ui.h:44
 msgid "Opaque"
 msgstr "Mat"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:43
+#: ../data/ui/PreferencesVarietyDialog.ui.h:45
 msgid "Draw a text shadow"
 msgstr "Metin gölgesi çiz"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:44
+#: ../data/ui/PreferencesVarietyDialog.ui.h:46
 msgid "Appearance"
 msgstr "Görünüm"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:45
+#: ../data/ui/PreferencesVarietyDialog.ui.h:47
 msgid "Quotes area width: "
 msgstr "Alıntıların alan genişliği: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:46
+#: ../data/ui/PreferencesVarietyDialog.ui.h:48
 msgid "Narrow "
 msgstr "Dar "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:47
+#: ../data/ui/PreferencesVarietyDialog.ui.h:49
 msgid "Wide"
 msgstr "Geniş"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:48
+#: ../data/ui/PreferencesVarietyDialog.ui.h:50
 msgid "Horizontal position: "
 msgstr "Yatay konum: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:49
+#: ../data/ui/PreferencesVarietyDialog.ui.h:51
 msgid "Left "
 msgstr "Sol "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:51
+#: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Vertical position: "
 msgstr "Dikey konum: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52
+#: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Top "
 msgstr "Üst "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:54
+#: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Placement"
 msgstr "Yerleştirme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55
+#: ../data/ui/PreferencesVarietyDialog.ui.h:57
 msgid "Show quotes from these sources: "
 msgstr "Bu kaynaklardan alıntıları göster: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:56
+#: ../data/ui/PreferencesVarietyDialog.ui.h:58
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
@@ -1725,52 +2022,52 @@ msgstr ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>Daha fazla "
 "eklenti</a></small>"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:57
+#: ../data/ui/PreferencesVarietyDialog.ui.h:59
 msgid "Show only these tags and authors. Leave empty to show random quotes."
 msgstr ""
 "Sadece bu etiketleri ve yazarları göster. Rastgele alıntıları göstermek için "
 "boş bırakın."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:59
+#: ../data/ui/PreferencesVarietyDialog.ui.h:61
 msgid "Example: funny, inspirational"
 msgstr "Örnek: komik, ilham verici"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:60
+#: ../data/ui/PreferencesVarietyDialog.ui.h:62
 msgid "Example: Albert Einstein, Voltaire"
 msgstr "Örnek: Albert Einstein, Voltaire"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:61
+#: ../data/ui/PreferencesVarietyDialog.ui.h:63
 msgid "Authors: "
 msgstr "Yazarlar: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:62
+#: ../data/ui/PreferencesVarietyDialog.ui.h:64
 msgid "Sources and filtering"
 msgstr "Kaynaklar ve süzme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:63
+#: ../data/ui/PreferencesVarietyDialog.ui.h:65
 msgid "Change quote every "
 msgstr "Her alıntıyı değiştir "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:64
+#: ../data/ui/PreferencesVarietyDialog.ui.h:66
 msgid "Minimum interval is 10 seconds"
 msgstr "En az aralık 10 saniyedir"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:65
+#: ../data/ui/PreferencesVarietyDialog.ui.h:67
 msgid "Regular change"
 msgstr "Düzenli değişim"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:66
+#: ../data/ui/PreferencesVarietyDialog.ui.h:68
 msgid "Clock"
 msgstr "Saat"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:67
+#: ../data/ui/PreferencesVarietyDialog.ui.h:69
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
 msgstr ""
 "Masaüstünde şu anki saati ve tarihi gösteren güzel bir dijital saat göster"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:68
+#: ../data/ui/PreferencesVarietyDialog.ui.h:70
 msgid ""
 "To configure the clock's appearance edit the clock_filter property in "
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
@@ -1781,15 +2078,15 @@ msgstr ""
 "~/.config/variety/variety_latest_default.conf dosyasındaki yorumları kılavuz "
 "olarak kullanın."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:69
+#: ../data/ui/PreferencesVarietyDialog.ui.h:71
 msgid "Clock font: "
 msgstr "Saat yazı tipi: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:70
+#: ../data/ui/PreferencesVarietyDialog.ui.h:72
 msgid "Date font: "
 msgstr "Tarih yazı tipi: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:71
+#: ../data/ui/PreferencesVarietyDialog.ui.h:73
 msgid ""
 "These don't work? <a "
 "href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
@@ -1803,149 +2100,254 @@ msgstr ""
 "href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Burayı "
 "okuyun</a>."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:72
+#: ../data/ui/PreferencesVarietyDialog.ui.h:74
 msgid "Effects"
 msgstr "Etkiler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:73
+#: ../data/ui/PreferencesVarietyDialog.ui.h:75
 msgid "Images for slideshow"
 msgstr "Slayt gösterisi için resimler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:74
+#: ../data/ui/PreferencesVarietyDialog.ui.h:76
 msgid "Favorite images"
 msgstr "Sık kullanılan resimler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:75
+#: ../data/ui/PreferencesVarietyDialog.ui.h:77
 msgid "Images in all enabled image sources"
 msgstr "Tüm etkin resim kaynaklarındaki resimler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:76
+#: ../data/ui/PreferencesVarietyDialog.ui.h:78
 msgid "All images in the Downloads folder"
 msgstr "İndirilenler dizinindeki tüm resimler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:77
+#: ../data/ui/PreferencesVarietyDialog.ui.h:79
 msgid "Custom folder (includes images in subfolders) "
 msgstr "Özel dizin (alt dizinlerdeki görüntüleri içerir) "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:78
+#: ../data/ui/PreferencesVarietyDialog.ui.h:80
 msgid "Order of images in slideshow "
 msgstr "Slayt gösterisindeki resimlerin sırası "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:79
+#: ../data/ui/PreferencesVarietyDialog.ui.h:81
 msgid "Random"
 msgstr "Rastgele"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:80
+#: ../data/ui/PreferencesVarietyDialog.ui.h:82
 msgid "By name, A to Z"
 msgstr "A'dan Z'ye isimle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:81
+#: ../data/ui/PreferencesVarietyDialog.ui.h:83
 msgid "By name, Z to A"
 msgstr "Z'den A'ya isimle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:82
+#: ../data/ui/PreferencesVarietyDialog.ui.h:84
 msgid "By date, oldest first"
 msgstr "En eski tarihle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:83
+#: ../data/ui/PreferencesVarietyDialog.ui.h:85
 msgid "By date, newest first"
 msgstr "En yeni tarihle"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:84
+#: ../data/ui/PreferencesVarietyDialog.ui.h:86
 msgid "Screen"
 msgstr "Ekran"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:85
+#: ../data/ui/PreferencesVarietyDialog.ui.h:87
 msgid "Run on monitor"
 msgstr "Monitörde çalıştır"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:86
+#: ../data/ui/PreferencesVarietyDialog.ui.h:88
 msgid "Window mode for the slideshow "
 msgstr "Slayt gösterisi için pencere modu "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:87
+#: ../data/ui/PreferencesVarietyDialog.ui.h:89
 msgid "Fullscreen"
 msgstr "Tam ekran"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:88
+#: ../data/ui/PreferencesVarietyDialog.ui.h:90
 msgid "Desktop (stays below other windows)"
 msgstr "Masaüstü (diğer pencerelerin altında kalır)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:89
+#: ../data/ui/PreferencesVarietyDialog.ui.h:91
 msgid "Maximized window"
 msgstr "Büyütülen pencere"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:90
+#: ../data/ui/PreferencesVarietyDialog.ui.h:92
 msgid "Normal window"
 msgstr "Normal pencere"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:91
+#: ../data/ui/PreferencesVarietyDialog.ui.h:93
 msgid "Dynamics"
 msgstr "Dinamik"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:92
+#: ../data/ui/PreferencesVarietyDialog.ui.h:94
 msgid "Interval between image changes "
 msgstr "Görüntü değişiklikleri arasındaki mesafe "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:93
+#: ../data/ui/PreferencesVarietyDialog.ui.h:95
 msgid " seconds"
 msgstr " saniye"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:94
+#: ../data/ui/PreferencesVarietyDialog.ui.h:96
 msgid "Quick fade "
 msgstr "Hızlı solma "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:95
+#: ../data/ui/PreferencesVarietyDialog.ui.h:97
 msgid "Slow fade"
 msgstr "Yavaş solma"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:96
+#: ../data/ui/PreferencesVarietyDialog.ui.h:98
 msgid "Less zoom"
 msgstr "Daha az yakınlaştırma"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:97
+#: ../data/ui/PreferencesVarietyDialog.ui.h:99
 msgid "More zoom"
 msgstr "Daha fazla yakınlaştırma"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:98
-msgid "Less pan"
-msgstr ""
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:99
-msgid "More pan"
-msgstr ""
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:100
+msgid "Less pan"
+msgstr "Daha az göster"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+msgid "More pan"
+msgstr "Daha fazla göster"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "Reset to defaults"
 msgstr "Varsayılana sıfırla"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:101
+#: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "Changes on this page take effect after the slideshow is restarted"
 msgstr ""
 "Slayt gösterisi yeniden başlatıldıktan sonra bu sayfadaki değişiklikler "
 "etkili olur"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:102
+#: ../data/ui/PreferencesVarietyDialog.ui.h:104
 msgid "Start slideshow now"
 msgstr "Slay gösterisini şimdi başlat"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:103
+#: ../data/ui/PreferencesVarietyDialog.ui.h:105
 msgid "Slideshow"
 msgstr "Slayt gösterisi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:104
+#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+msgid "VRTY.ORG"
+msgstr "VRTY.ORG"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:108
+msgid "VRTY.ORG is in beta and will take some time to mature"
+msgstr "VRTY.ORG betadır ve olgunlaşması biraz zaman alacak"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+msgid ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
+"similar tastes and provides super-convenient ways to change your wallpaper, "
+"to add new image sources to Variety, and to follow other users' favorites. "
+"It is fueled by the favorite images of all participating users."
+msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a>, Variety kullanıcılarını benzer "
+"zevklerle birbirine bağlar ve duvar kağıdınızı değiştirmek, yeni resim "
+"kaynakları eklemek ve diğerler kullanıcıların sık kullanılanlarını takip "
+"etmek için süper kullanışlı yollar sunar. Tüm katılımcı kullanıcıların en "
+"sevdiği resimler tarafından beslenir."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+msgid ""
+"Could not create user - no connection to VRTY.ORG. We will try again later."
+msgstr ""
+"Kullanıcı oluşturulamadı -  VRTY.ORG sitesine bağlantı yok. Daha sonra "
+"tekrar deneyeceğiz."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+msgid ""
+"Registration enables cool features like synchronization of favorite images "
+"and sources between computers and personalized recommendations."
+msgstr ""
+"Kayıt, sık kullanılan resimlerin ve kaynakların bilgisayarlar ve "
+"kişiselleştirilmiş öneriler arasında eşzamanlaması gibi harika özellikleri "
+"sağlar."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113 ../variety/Smart.py:635
+#: ../variety/Smart.py:684
+msgid "Sync"
+msgstr "Eşzamanla"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:114
+msgid "Synchronize favorite images between computers"
+msgstr "Sık kullanılan resimleri bilgisayarlarınız arasında eşzamanlayın"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+msgid "Requires VRTY.ORG enabled and logged in."
+msgstr "VRTY.ORG etkin ve giriş yapılmış olmayı gerektirir."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+msgid ""
+"Your favorite images from other computers will be automatically downloaded "
+"to this computer. You need to be logged in with the same VRTY.ORG user "
+"everywhere. Sync will not delete any images."
+msgstr ""
+"Diğer bilgisayarlardan en sevdiğiniz resimler otomatik olarak bu bilgisayara "
+"indirilecektir. Her yerde aynı VRTY.ORG kullanıcısıyla giriş yapmış olmanız "
+"gerekir. Eşzamanlama hiçbir resmi silmez."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+msgid "Privacy policy"
+msgstr "Gizlilik politikası"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+msgid ""
+"Variety sends data only for images it downloaded, never for images you "
+"already had in your local folders that might be private, and Sync does not "
+"work for such images. Collected data is not shared with third parties, "
+"unless you opt-in to make your profile public. <a "
+"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
+"service and the privacy policy here.</a>"
+msgstr ""
+"Variety, yalnızca indirdiği resimler için veri gönderir, yerel "
+"dizinlerinizde zaten özel olabilecek görüntüler için asla veri göndermez ve "
+"eşzamanlama bu tür görüntüler için çalışmaz. Profilinizi herkese açık "
+"tutmayı seçmezseniz, toplanan veriler üçüncü taraflarla paylaşılmaz. <a "
+"href='http://peterlevi.com/variety/vrty-org/'> burada hizmet ve gizlilik "
+"politikası hakkında daha fazla ayrıntı okuyun.</a>"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+msgid "Usage statistics"
+msgstr "Kullanım istatistikleri"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:120
+msgid "Help make Variety better by sending anonymous usage statistics"
+msgstr ""
+"Anonim kullanım istatistikleri göndererek Variety'yi daha iyi hale getirmeye "
+"yardımcı olun"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+msgid ""
+"These stats help us improve Variety by understanding how users interact with "
+"it. They also include general info about your OS version and monitor setup. "
+"Collected data is not shared with anyone."
+msgstr ""
+"Bu istatistikler, kullanıcıların onunla nasıl etkileşimde bulunduğunu "
+"anlayarak Variety'yi geliştirmemize yardımcı olur. Ayrıca, işletim sistemi "
+"sürümünüz ve monitör kurulumunuz hakkında genel bilgiler de içerir. Toplanan "
+"veriler kimseyle paylaşılmaz."
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+msgid "Sync and social"
+msgstr "Eşzamanlama ve sosyal"
+
+#: ../data/ui/PreferencesVarietyDialog.ui.h:123
 msgid "Fetch folder"
 msgstr "Dizini getir"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:105
+#: ../data/ui/PreferencesVarietyDialog.ui.h:124
 msgid "Save manually downloaded wallpapers to "
 msgstr "Elle indirilen duvar kağıtlarını kaydet "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:106
+#: ../data/ui/PreferencesVarietyDialog.ui.h:125
 msgid "Drag and drop"
 msgstr "Sürükle ve bırak"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+#: ../data/ui/PreferencesVarietyDialog.ui.h:126
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL "
 "or file on it and it will be saved to your fetch folder. You can then press "
@@ -1960,153 +2362,153 @@ msgstr ""
 "Başlatıcıdaki simgeyi göstermek için Hakkında veya Tercihler'i seçin. Kolay "
 "sürükle-bırak erişimi için orada kilitlemek isteyebilirsiniz."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:109
+#: ../data/ui/PreferencesVarietyDialog.ui.h:128
 msgid "Clipboard monitoring"
 msgstr "Pano izleme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:110
+#: ../data/ui/PreferencesVarietyDialog.ui.h:129
 msgid "Monitor clipboard for image URLs and fetch them"
 msgstr "Resim URL'leri için panoya göz atın ve onları getirin"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:111
+#: ../data/ui/PreferencesVarietyDialog.ui.h:130
 msgid "But fetch only when the URL host is one of these:"
 msgstr "Ancak, yalnızca URL sunucusu bunlardan biri olduğunda getir:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:112
+#: ../data/ui/PreferencesVarietyDialog.ui.h:131
 msgid "Manual downloading"
 msgstr "Elle indirme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
+#: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "When possible use images that:"
 msgstr "Mümkün olduğunda görüntüleri kullanın:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:115
+#: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "Have landscape orientation"
 msgstr "Manzara yönlendirmesi var"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:116
+#: ../data/ui/PreferencesVarietyDialog.ui.h:135
 msgid "Are big at least "
 msgstr "En azından büyükler "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:117
+#: ../data/ui/PreferencesVarietyDialog.ui.h:136
 msgid "50"
 msgstr "50"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:118
+#: ../data/ui/PreferencesVarietyDialog.ui.h:137
 msgid "80"
 msgstr "80"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:119
+#: ../data/ui/PreferencesVarietyDialog.ui.h:138
 msgid "100"
 msgstr "100"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:121
+#: ../data/ui/PreferencesVarietyDialog.ui.h:140
 #, no-c-format
 msgid "% of the screen resolution"
 msgstr "Ekran çözünürlüğünün yüzdesi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:122
+#: ../data/ui/PreferencesVarietyDialog.ui.h:141
 msgid "Color"
 msgstr "Renk"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:123
+#: ../data/ui/PreferencesVarietyDialog.ui.h:142
 msgid "Are dark or light:"
 msgstr "Koyu veya aydınlık:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:124
+#: ../data/ui/PreferencesVarietyDialog.ui.h:143
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
 msgstr "Koyu"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:125
+#: ../data/ui/PreferencesVarietyDialog.ui.h:144
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
 msgstr "Aydınlık"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:126
+#: ../data/ui/PreferencesVarietyDialog.ui.h:145
 msgid "Contain this color: "
 msgstr "Bu rengi içerir: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:127
+#: ../data/ui/PreferencesVarietyDialog.ui.h:146
 msgid "(Takes effect after some initial searching)"
 msgstr "(İlk aramadan sonra etkili olur)"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:128
+#: ../data/ui/PreferencesVarietyDialog.ui.h:147
 msgid "Rating"
 msgstr "Değerlendirme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:129
+#: ../data/ui/PreferencesVarietyDialog.ui.h:148
 msgid "Have EXIF rating at least "
 msgstr "En az EXIF değerlendirmesi var "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:130
+#: ../data/ui/PreferencesVarietyDialog.ui.h:149
 msgid "1"
 msgstr "1"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:131
+#: ../data/ui/PreferencesVarietyDialog.ui.h:150
 msgid "2"
 msgstr "2"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:132
+#: ../data/ui/PreferencesVarietyDialog.ui.h:151
 msgid "3"
 msgstr "3"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133
+#: ../data/ui/PreferencesVarietyDialog.ui.h:152
 msgid "4"
 msgstr "4"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:134
+#: ../data/ui/PreferencesVarietyDialog.ui.h:153
 msgid "5"
 msgstr "5"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:135
+#: ../data/ui/PreferencesVarietyDialog.ui.h:154
 msgid "Color and size"
 msgstr "Renk ve boyut"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:136
+#: ../data/ui/PreferencesVarietyDialog.ui.h:155
 msgid "Indicator Icon"
 msgstr "Gösterge Simgesi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:137
+#: ../data/ui/PreferencesVarietyDialog.ui.h:156
 msgid "Indicator icon:"
 msgstr "Gösterge simgesi:"
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:138
+#: ../data/ui/PreferencesVarietyDialog.ui.h:157
 msgctxt "Icon option"
 msgid "Light"
 msgstr "Aydınlık"
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:139
+#: ../data/ui/PreferencesVarietyDialog.ui.h:158
 msgctxt "Icon option"
 msgid "Dark"
 msgstr "Koyu"
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:140
+#: ../data/ui/PreferencesVarietyDialog.ui.h:159
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Geçerli duvar kağıdını kullan"
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:141
+#: ../data/ui/PreferencesVarietyDialog.ui.h:160
 msgctxt "Icon option"
 msgid "Custom image..."
 msgstr "Özel resim..."
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:142
+#: ../data/ui/PreferencesVarietyDialog.ui.h:161
 msgctxt "Icon option"
 msgid "None"
 msgstr "Yok"
 
 # Simge seçeneği
-#: ../data/ui/PreferencesVarietyDialog.ui.h:143
+#: ../data/ui/PreferencesVarietyDialog.ui.h:162
 msgid "Select an icon"
 msgstr "Bir simge seç"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:144
+#: ../data/ui/PreferencesVarietyDialog.ui.h:163
 msgid ""
 "When the icon is hidden, Variety can be controlled from the command line, or "
 "from the launcher quicklist. Run \"variety --help\" to see all available "
@@ -2116,42 +2518,43 @@ msgstr ""
 "listesinden kontrol edilebilir. Kullanılabilir tüm komutları görmek için "
 "\"variety --help\" komutunu çalıştırın."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:145
+#: ../data/ui/PreferencesVarietyDialog.ui.h:164
 msgid "Favorites Operations"
 msgstr "Sık Kullanılanlar İşlemleri"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:146
+#: ../data/ui/PreferencesVarietyDialog.ui.h:165
 msgid "Favorites operations to show in main menu:"
 msgstr "Ana menüde gösterilecek sık kullanılan işlemler:"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:147
+#: ../data/ui/PreferencesVarietyDialog.ui.h:166
 msgid "Copy to Favorites"
 msgstr "Sık kullanılanlara kopyala"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:149
+#: ../data/ui/PreferencesVarietyDialog.ui.h:168
 msgid "Both Copy and Move"
 msgstr "Hem Kopyala hem de Taşı"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:150
+#: ../data/ui/PreferencesVarietyDialog.ui.h:169
 msgid "Depends on folder..."
 msgstr "Dizine bağlı ..."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:153
+#: ../data/ui/PreferencesVarietyDialog.ui.h:172
 msgid "Display dialog to customize the Facebook post before publishing"
-msgstr "Yayınlamadan önce Facebook yayınını özelleştirmek için iletişim kutusu"
+msgstr ""
+"Yayınlamadan önce Facebook yayınını özelleştirmek için iletişim kutusu"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:154
+#: ../data/ui/PreferencesVarietyDialog.ui.h:173
 msgid "Login Screen Support"
 msgstr "Giriş Ekranı Desteği"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:155
+#: ../data/ui/PreferencesVarietyDialog.ui.h:174
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr ""
 "Variety tarafından ayarlanan duvar kağıtlarının giriş ekranında "
 "kullanılacağından emin olun"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:156
+#: ../data/ui/PreferencesVarietyDialog.ui.h:175
 msgid ""
 "<b>Privacy warning:</b> To show your wallpaper LightDM needs read "
 "permissions over the image. With this option on, Variety will copy the "
@@ -2167,19 +2570,19 @@ msgstr ""
 "dizin, ev dizininiz şifrelenmemişse ve /usr/share/backgrounds ise ~/Pictures "
 "dizinidir. Çok kullanıcılı sistemlerde dikkatli kullanın."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:157
+#: ../data/ui/PreferencesVarietyDialog.ui.h:176
 msgid "Copy wallpaper image files to this folder: "
 msgstr "Duvar kağıdı görüntü dosyalarını bu dizine kopyalayın: "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:158
+#: ../data/ui/PreferencesVarietyDialog.ui.h:177
 msgid "Reset to default"
 msgstr "Varsayılana sıfırla"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:159
+#: ../data/ui/PreferencesVarietyDialog.ui.h:178
 msgid "Still doesn't work?"
 msgstr "Hala çalışmıyor mu?"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:160
+#: ../data/ui/PreferencesVarietyDialog.ui.h:179
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
@@ -2187,15 +2590,15 @@ msgstr ""
 "Ev dizininiz şifreli görünüyor, bu yüzden içindeki dizinleri kullanmak işe "
 "yaramayacak."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:161
+#: ../data/ui/PreferencesVarietyDialog.ui.h:180
 msgid "You don't have write permissions for this folder."
 msgstr "Bu dizin için yazma izniniz yok."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:162
+#: ../data/ui/PreferencesVarietyDialog.ui.h:181
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr "İzinler, LightDM'nin bu dizindeki dosyaları okumasına izin vermez."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:163
+#: ../data/ui/PreferencesVarietyDialog.ui.h:182
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
@@ -2203,39 +2606,39 @@ msgstr ""
 "Variety izinleri ayarlayabilir, ancak süper kullanıcı ayrıcalıkları vermeniz "
 "gerekir."
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:164
+#: ../data/ui/PreferencesVarietyDialog.ui.h:183
 msgid "Customize"
 msgstr "Özelleştirme"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:165
+#: ../data/ui/PreferencesVarietyDialog.ui.h:184
 msgid "Tips and tricks"
 msgstr "Ipuçları ve Püf noktaları"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:166
+#: ../data/ui/PreferencesVarietyDialog.ui.h:185
 msgid "Recent changes"
 msgstr "Son değişiklikler"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:167
+#: ../data/ui/PreferencesVarietyDialog.ui.h:186
 msgid "Visit website"
 msgstr "Siteyi ziyaret et"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:168
+#: ../data/ui/PreferencesVarietyDialog.ui.h:187
 msgid "Report a bug or request a feature"
 msgstr "Bir hatayı bildirin veya bir özellik isteyin"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:169
+#: ../data/ui/PreferencesVarietyDialog.ui.h:188
 msgid "Send feedback"
 msgstr "Geribildirim gönder"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:170
+#: ../data/ui/PreferencesVarietyDialog.ui.h:189
 msgid "Donate to Variety"
 msgstr "Variety'e bağış yap"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:171
+#: ../data/ui/PreferencesVarietyDialog.ui.h:190
 msgid "Donate via PayPal"
 msgstr "PayPal ile bağış yapın"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:172
+#: ../data/ui/PreferencesVarietyDialog.ui.h:191
 msgid ""
 "I am developing Variety in my spare time, which usually means the late hours "
 "after my kids go to bed. Any amount you donate will be appreciated. It will "
@@ -2254,7 +2657,7 @@ msgstr ""
 "Teşekkür ederim,\n"
 "Peter Levi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:176
+#: ../data/ui/PreferencesVarietyDialog.ui.h:195
 msgid ""
 "<i>For Bitcoin and other payment methods please go to <a "
 "href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
@@ -2293,6 +2696,49 @@ msgid ""
 msgstr ""
 "Daha fazla bilgi almak için, lütfen Variety'yi terminalden -v seçeneğiyle "
 "çalıştırın ve eylemi yeniden deneyin"
+
+#: ../variety/Smart.py:119
+msgid ""
+"Your smart_user.json config file appears broken. You may have to login again "
+"to VRTY.ORG."
+msgstr ""
+"smart_user.json config dosyanız bozuk görünüyor. VRTY.ORG’a tekrar giriş "
+"yapmanız gerekebilir."
+
+#: ../variety/Smart.py:211
+msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
+msgstr ""
+"VRTY.ORG kimlik bilgileriniz muhtemelen eski. Lütfen yeniden giriş yapın."
+
+#: ../variety/Smart.py:636
+#, python-format
+msgid "Fetching %d images"
+msgstr "%d resim getirildi"
+
+#: ../variety/Smart.py:636
+msgid "Fetching 1 image"
+msgstr "1  resim getirildi"
+
+#: ../variety/Smart.py:684
+msgid "Finished"
+msgstr "Bitti"
+
+#: ../variety/Smart.py:705
+#, python-format
+msgid "Logged in as %s"
+msgstr "%s olarak oturum açıldı"
+
+#: ../variety/Smart.py:717
+#, python-format
+msgid ""
+"Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
+msgstr ""
+"VRTY.ORG'a <span font_weight=\"bold\">%s</span> olarak giriş yapmak istiyor "
+"musunuz?"
+
+#: ../variety/Smart.py:718
+msgid "VRTY.ORG login confirmation"
+msgstr "VRTY.ORG giriş onayı"
 
 #: ../variety/QuotesEngine.py:232
 msgid "No quote plugins"

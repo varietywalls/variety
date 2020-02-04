@@ -60,7 +60,7 @@ class ChromeOSWallpapersDownloader(SimpleDownloader):
     def download_queue_item(self, item):
         image_url = item["base_url"] + "_high_resolution.jpg"
         origin_url = item["dynamic_url"]
-        extra_metadata = {}
+        extra_metadata = {"noOriginPage": "yes"}
         if "tags" in item:
             extra_metadata["keywords"] = [
                 self.tags[str(tag)] for tag in item["tags"] if str(tag) in self.tags

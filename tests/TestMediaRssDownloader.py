@@ -18,31 +18,31 @@
 import unittest
 
 from tests.TestDownloader import test_download_one_for
-from variety.MediaRssDownloader import MediaRssDownloader
+from variety.plugins.builtin.downloaders.MediaRSSDownloader import MediaRSSDownloader
+from variety.plugins.builtin.downloaders.MediaRSSSource import MediaRSSSource
 
 
 class TestMediaRssDownloader(unittest.TestCase):
     def test_download_one(self):
         test_download_one_for(
             self,
-            MediaRssDownloader(
-                None,
-                "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation",
+            MediaRSSSource().create_downloader(
+                "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"
             ),
         )
 
     def test_validate_deviantart(self):
         self.assertTrue(
-            MediaRssDownloader.validate(
+            MediaRSSDownloader.validate(
                 "http://backend.deviantart.com/rss.xml?q=boost%3Apopular+leaves&type=deviation"
             )
         )
 
     def test_validate_non_media_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
+        self.assertFalse(MediaRSSDownloader.validate("http://www.dnevnik.bg/rss/?page=index"))
 
     def test_validate_non_rss(self):
-        self.assertFalse(MediaRssDownloader.validate("http://google.com"))
+        self.assertFalse(MediaRSSDownloader.validate("http://google.com"))
 
 
 if __name__ == "__main__":

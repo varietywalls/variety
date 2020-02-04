@@ -14,36 +14,38 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from gi.repository import Gtk  # pylint: disable=E0611
+from gi.repository import Gtk # pylint: disable=E0611
 
-from variety.AbstractAddByQueryDialog import AbstractAddByQueryDialog
-from variety.Options import Options
-from variety.Util import _
-from variety.WallhavenDownloader import WallhavenDownloader
 from variety_lib.helpers import get_builder
 
 
-class AddWallhavenDialog(AbstractAddByQueryDialog):
-    __gtype_name__ = "AddWallhavenDialog"
+class PrivacyNoticeDialog(Gtk.Dialog):
+    __gtype_name__ = "PrivacyNoticeDialog"
 
     def __new__(cls):
-        builder = get_builder("AddWallhavenDialog")
-        new_object = builder.get_object("add_wallhaven_dialog")
+        """Special static method that's automatically called by Python when
+        constructing a new instance of this class.
+
+        Returns a fully instantiated PrivacyNoticeDialog object.
+        """
+        builder = get_builder('PrivacyNoticeDialog')
+        new_object = builder.get_object('PrivacyNoticeDialog')
         new_object.finish_initializing(builder)
         return new_object
 
-    def validate(self, query):
-        valid = WallhavenDownloader.validate(query)
-        return query, None if valid else _("No images found")
+    def finish_initializing(self, builder):
+        """Called when we're finished initializing.
 
-    def commit(self, final_query):
-        if len(final_query):
-            self.parent.on_add_dialog_okay(
-                Options.SourceType.WALLHAVEN, final_query, self.edited_row
-            )
-
+        finish_initalizing should be called after parsing the ui definition
+        and creating a PrivacyNoticeDialog object with it in order to
+        finish initializing the start of the new PrivacyNoticeDialog
+        instance.
+        """
+        # Get a reference to the builder and set up the signals.
+        self.builder = builder
+        self.ui = builder.get_ui(self)
 
 if __name__ == "__main__":
-    dialog = AddWallhavenDialog()
+    dialog = PrivacyNoticeDialog()
     dialog.show()
     Gtk.main()

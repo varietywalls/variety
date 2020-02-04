@@ -66,9 +66,15 @@ class BingDownloader(SimpleDownloader):
                     continue
 
                 image_url = "https://www.bing.com" + item["url"]
-                filename = item["url"].split("/")[-1]
-                name = filename[0 : filename.find("_EN")]
-                src_url = "https://www.bing.com/gallery/#images/%s" % name
+
+                copyrightlink = item["copyrightlink"]
+                if not "javascript:" in copyrightlink:
+                    src_url = copyrightlink
+                else:
+                    filename = item["url"].split("/")[-1]
+                    name = filename[0 : filename.find("_EN")]
+                    src_url = "https://www.bing.com/gallery/#images/%s" % name
+
                 try:
                     date = datetime.strptime(item["startdate"], "%Y%m%d").strftime("%Y-%m-%d")
                 except:

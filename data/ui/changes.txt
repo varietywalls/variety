@@ -1,3 +1,18 @@
+0.8.0 - 0.8.2
+    Image sources are now plugins
+    Add support for sequential albums
+    Add support for multiple simultaneously running Variety profiles (--profile command option)
+    Add a Privacy Notice dialog
+    Add support for configurable Unsplash sources
+    Add two new sources (ChromeOS Wallpapers and Google Earth View Wallpapers)
+    Added Urban Dictionary and UNIX fortune program as quote sources
+    Download linked to wallpaper changing, not configured as a separate interval
+    Add a dedicated --set/--set-wallpaper option
+    Make the thumbs display much faster
+    Fix bugs related to GTK threading usage
+    Mulitple bugfixes
+    Dev process: Use auformatting on all Python files (black, isort)
+
 0.7.2
     Add support for Sway, bspwm
     Enable AwesomeWM support by default

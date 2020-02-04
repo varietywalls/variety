@@ -15,7 +15,6 @@
 ### END LICENSE
 import abc
 
-from jumble.IPlugin import IPlugin
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.plugins.downloaders.ImageSource import ImageSource
 
@@ -29,5 +28,4 @@ class SimpleDownloader(ImageSource, DefaultDownloader, metaclass=abc.ABCMeta):
     def __init__(self):
         ImageSource.__init__(self)
         DefaultDownloader.__init__(self, source=self)
-        IPlugin.activate(self)
         self.queue = []

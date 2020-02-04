@@ -44,6 +44,8 @@ To install Variety from source, you will need Git, Python 3.5+ and [distutils-ex
     - *Optional*: httplib2 (for more quotes sources)
 - *Optional*: imagemagick (for wallpaper filters)
 - *Optional*: feh or nitrogen: used by default to set wallpapers on i3, openbox, and other WMs
+- *Optional*: libayatana-indicator (for AppIndicator support)
+- *Optional*: for tray icon support on GNOME, the [GNOME AppIndicator extension](https://github.com/ubuntu/gnome-shell-extension-appindicator)
 
 See `debian/control` for an equivalent list of runtime dependencies on Debian/Ubuntu.
 

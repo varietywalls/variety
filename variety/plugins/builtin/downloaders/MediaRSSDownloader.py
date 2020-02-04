@@ -20,7 +20,6 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
-from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.Util import Util
 
 logger = logging.getLogger("variety")
@@ -31,24 +30,9 @@ MEDIA_NS = "{http://search.yahoo.com/mrss/}"
 VARIETY_NS = "{http://vrty.org/}"
 
 
-class MediaRssDownloader(ImageSource, DefaultDownloader):
-    def __init__(self, parent, url):
-        ImageSource.__init__(self)
-        DefaultDownloader.__init__(self, source=self, config=url)
-        self.set_variety(parent)
-
-    @classmethod
-    def get_info(cls):
-        raise Exception("Not yet implemented as a plugin")
-
-    def get_source_name(self):
-        return "MediaRSS"
-
-    def get_source_type(self):
-        return "mediarss"
-
-    def get_description(self):
-        return _("Images from MediaRSS feeds")
+class MediaRSSDownloader(DefaultDownloader):
+    def __init__(self, source, url):
+        DefaultDownloader.__init__(self, source=source, config=url)
 
     @staticmethod
     def fetch(url):
@@ -74,11 +58,11 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
             if not url.startswith("http://") and not url.startswith("https://"):
                 url = "https://" + url
 
-            s = MediaRssDownloader.fetch(url)
+            s = MediaRSSDownloader.fetch(url)
             walls = [
                 x.attrib["url"]
                 for x in s.findall(".//{0}content".format(MEDIA_NS))
-                if MediaRssDownloader.is_valid_content(x)
+                if MediaRSSDownloader.is_valid_content(x)
             ]
             return len(walls) > 0
         except Exception:
@@ -115,7 +99,7 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                     # find the largest image in the group
                     for c in group.findall("{0}content".format(MEDIA_NS)):
                         try:
-                            if MediaRssDownloader.is_valid_content(c):
+                            if MediaRSSDownloader.is_valid_content(c):
                                 if content is None:
                                     content = (
                                         c
@@ -128,7 +112,7 @@ class MediaRssDownloader(ImageSource, DefaultDownloader):
                 else:
                     content = item.find("{0}content".format(MEDIA_NS))
 
-                if not MediaRssDownloader.is_valid_content(content):
+                if not MediaRSSDownloader.is_valid_content(content):
                     continue
 
                 source_name = None

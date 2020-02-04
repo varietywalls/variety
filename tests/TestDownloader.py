@@ -21,14 +21,19 @@ import unittest
 from jumble.Jumble import Jumble
 from tests import setup_test_logging
 from variety import Util
+from variety.AttrDict import AttrDict
 
 setup_test_logging()
 
 
 def get_plugin_downloader(typename):
-    p = Jumble(["data/plugins"])
+    p = Jumble(["variety/plugins/builtin"])
     p.load()
-    return p.get_plugins(typename=typename)[0]["plugin"]
+    plugin = p.get_plugins(typename=typename)[0]["plugin"]
+    parent = AttrDict()
+    parent.size_ok = lambda x, y: True
+    plugin.set_variety(parent)
+    return plugin
 
 
 def test_download_one_for(test_case, dl):

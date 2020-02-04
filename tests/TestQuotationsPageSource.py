@@ -22,7 +22,7 @@ from jumble.Jumble import Jumble
 
 class TestQuotationsPageSource(unittest.TestCase):
     def test_get_random(self):
-        p = Jumble(["data/plugins"])
+        p = Jumble(["variety/plugins/builtin"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
         q = source["plugin"].get_random()
@@ -30,7 +30,7 @@ class TestQuotationsPageSource(unittest.TestCase):
         self.assertEqual("TheQuotationsPage.com", q[0]["sourceName"])
 
     def test_get_for_author(self):
-        p = Jumble(["data/plugins"])
+        p = Jumble(["variety/plugins/builtin"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
         q = source["plugin"].get_for_author("voltaire")
@@ -39,7 +39,7 @@ class TestQuotationsPageSource(unittest.TestCase):
         self.assertEqual("Voltaire", q[0]["author"])
 
     def test_get_for_keyword(self):
-        p = Jumble(["data/plugins"])
+        p = Jumble(["variety/plugins/builtin"])
         p.load()
         source = p.get_plugins(typename="QuotationsPageSource")[0]
         q = source["plugin"].get_for_keyword("funny")

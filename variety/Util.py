@@ -56,6 +56,8 @@ gettext.textdomain("variety")
 
 def _(text):
     """Returns the translated form of text."""
+    if not text or not text.strip():
+        return text
     return gettext.gettext(text)
 
 
@@ -404,7 +406,7 @@ class Util:
         for folder in folders:
             if os.path.isdir(folder):
                 try:
-                    for root, subFolders, files in os.walk(folder):
+                    for root, subFolders, files in os.walk(folder, followlinks=True):
                         if randomize:
                             random.shuffle(files)
                             random.shuffle(subFolders)
@@ -494,6 +496,7 @@ class Util:
                 "imageURL",
                 "author",
                 "authorURL",
+                "noOriginPage",
             ]:
                 if "Xmp.variety." + k in m:
                     info[k] = m["Xmp.variety." + k]
@@ -600,7 +603,7 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
+    def request(url, data=None, stream=False, method=None, timeout=5, headers=None, verify=True):
         if url.startswith("//"):
             url = "http:" + url
         headers = headers or {}
@@ -615,6 +618,7 @@ class Util:
                 stream=stream,
                 allow_redirects=True,
                 timeout=timeout,
+                verify=verify,
             )
             r.raise_for_status()
             return r
@@ -628,24 +632,24 @@ class Util:
             f.write(chunk)
 
     @staticmethod
-    def fetch(url, data=None):
-        return Util.request(url, data).text
+    def fetch(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).text
 
     @staticmethod
-    def fetch_bytes(url, data=None):
-        return Util.request(url, data).content
+    def fetch_bytes(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).content
 
     @staticmethod
-    def fetch_json(url, data=None):
-        return Util.request(url, data).json()
+    def fetch_json(url, data=None, **request_kwargs):
+        return Util.request(url, data, **request_kwargs).json()
 
     @staticmethod
-    def html_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.fetch(url, data), "lxml")
+    def html_soup(url, data=None, **request_kwargs):
+        return bs4.BeautifulSoup(Util.fetch(url, data, **request_kwargs), "lxml")
 
     @staticmethod
-    def xml_soup(url, data=None):
-        return bs4.BeautifulSoup(Util.fetch(url, data), "xml")
+    def xml_soup(url, data=None, **request_kwargs):
+        return bs4.BeautifulSoup(Util.fetch(url, data, **request_kwargs), "xml")
 
     @staticmethod
     def folderpath(folder):
@@ -954,6 +958,19 @@ class Util:
             # shlex.quote does not play nicely with windows shell, so just always-quote
             return '"%s"' % s
 
+    @staticmethod
+    def get_folder_size(start_path):
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk(start_path):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                if not os.path.islink(fp):
+                    total_size += os.path.getsize(fp)
+        return total_size
+
+    @staticmethod
+    def get_screen_width():
+        return Gdk.Screen.get_default().get_width()
 
 def on_gtk(f):
     @functools.wraps(f)

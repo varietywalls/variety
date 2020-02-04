@@ -22,7 +22,7 @@ from jumble.Jumble import Jumble
 
 class TestGoodreadsSource(unittest.TestCase):
     def test_get_for_author(self):
-        p = Jumble(["data/plugins"])
+        p = Jumble(["variety/plugins/builtin"])
         p.load()
         source = p.get_plugins(typename="GoodreadsSource")[0]
         q = source["plugin"].get_for_author("Вежинов")

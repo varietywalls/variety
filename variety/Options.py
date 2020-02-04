@@ -31,38 +31,42 @@ class Options:
     OUTDATED_HASHES = {"clock_filter": ["dca6bd2dfa2b8c4e2db8801e39208f7f"]}
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
     IMAGE_SOURCES = []  # set by VarietyWindow at start
+    CONFIGURABLE_IMAGE_SOURCES = []  # set by VarietyWindow at start
+    CONFIGURABLE_IMAGE_SOURCES_MAP = {}  # set by VarietyWindow at start
 
     class SourceType:
         # local files and folders
         IMAGE = "image"
         FOLDER = "folder"
+        ALBUM_FILENAME = "album (by filename)"
+        ALBUM_DATE = "album (by date)"
 
         # special local folders
         FAVORITES = "favorites"
         FETCHED = "fetched"
 
         # predefined configurable sources
-        MEDIA_RSS = "mediarss"
         FLICKR = "flickr"
-        WALLHAVEN = "wallhaven"
-        REDDIT = "reddit"
 
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
             FOLDER,
+            ALBUM_FILENAME,
+            ALBUM_DATE,
             FAVORITES,
             FETCHED,
             FLICKR,
-            MEDIA_RSS,
-            WALLHAVEN,
-            REDDIT,
         }
 
-        DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
+        LOCAL_PATH_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE}
 
-        EDITABLE_DL_TYPES = {FLICKR, MEDIA_RSS, WALLHAVEN, REDDIT}
+        LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
-        REMOVABLE_TYPES = {FOLDER, IMAGE} | EDITABLE_DL_TYPES
+        DL_TYPES = {FLICKR}
+
+        EDITABLE_DL_TYPES = {FLICKR}
+
+        REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 
     class LightnessMode:
         DARK = 0
@@ -101,19 +105,14 @@ class Options:
                 pass
 
             try:
-                self.download_enabled = config["download_enabled"].lower() in TRUTH_VALUES
-            except Exception:
-                pass
-
-            try:
-                self.download_interval = int(config["download_interval"])
-                if self.download_interval < 60:
-                    self.download_interval = 60
-            except Exception:
-                pass
-
-            try:
                 self.download_folder = os.path.expanduser(config["download_folder"])
+            except Exception:
+                pass
+
+            try:
+                self.download_preference_ratio = max(
+                    0, min(1, float(config["download_preference_ratio"]))
+                )
             except Exception:
                 pass
 
@@ -123,9 +122,7 @@ class Options:
                 pass
 
             try:
-                self.quota_size = int(config["quota_size"])
-                if self.quota_size < 50:
-                    self.quota_size = 50
+                self.quota_size = max(50, int(config["quota_size"]))
             except Exception:
                 pass
 
@@ -571,8 +568,20 @@ class Options:
         return Options.SourceType.DL_TYPES | Options.get_plugin_source_types()
 
     @staticmethod
+    def get_editable_source_types():
+        return Options.SourceType.EDITABLE_DL_TYPES | Options.get_configurable_plugin_source_types()
+
+    @staticmethod
+    def get_removable_source_types():
+        return Options.SourceType.REMOVABLE_TYPES | Options.get_editable_source_types()
+
+    @staticmethod
     def get_plugin_source_types():
         return set(dl.get_source_type() for dl in Options.IMAGE_SOURCES)
+
+    @staticmethod
+    def get_configurable_plugin_source_types():
+        return set(dl.get_source_type() for dl in Options.CONFIGURABLE_IMAGE_SOURCES)
 
     def set_defaults(self):
         self.change_enabled = True
@@ -580,11 +589,10 @@ class Options:
         self.change_interval = 300
         self.safe_mode = False
 
-        self.download_enabled = True
-        self.download_interval = 600
         self.download_folder = os.path.join(get_profile_path(), "Downloaded")
+        self.download_preference_ratio = 0.9
         self.quota_enabled = True
-        self.quota_size = 500
+        self.quota_size = 1000
 
         self.favorites_folder = os.path.join(get_profile_path(), "Favorites")
         self.favorites_operations = [
@@ -692,9 +700,8 @@ class Options:
             config["change_interval"] = str(self.change_interval)
             config["safe_mode"] = str(self.safe_mode)
 
-            config["download_enabled"] = str(self.download_enabled)
-            config["download_interval"] = str(self.download_interval)
             config["download_folder"] = Util.collapseuser(self.download_folder)
+            config["download_preference_ratio"] = str(self.download_preference_ratio)
 
             config["quota_enabled"] = str(self.quota_enabled)
             config["quota_size"] = str(self.quota_size)

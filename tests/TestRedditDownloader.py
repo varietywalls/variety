@@ -19,12 +19,14 @@ import unittest
 
 from tests.TestDownloader import test_download_one_for
 from variety.AttrDict import AttrDict
-from variety.RedditDownloader import RedditDownloader
+from variety.plugins.builtin.downloaders.RedditDownloader import RedditDownloader
+from variety.plugins.builtin.downloaders.RedditSource import RedditSource
 
 
 class TestRedditDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, RedditDownloader(None, "http://www.reddit.com/r/AutumnPorn/"))
+        source = RedditSource()
+        test_download_one_for(self, source.create_downloader("http://www.reddit.com/r/AutumnPorn/"))
 
     def test_build_json_url(self):
         self.assertEqual(
@@ -44,26 +46,26 @@ class TestRedditDownloader(unittest.TestCase):
 
     def test_validate(self):
         parent = AttrDict()
-
         parent.options.safe_mode = True
-        self.assertTrue(RedditDownloader.validate("http://www.reddit.com/r/comics", parent))
-        self.assertFalse(RedditDownloader.validate("http://www.reddit.com/r/nsfw/", parent))
+
+        source = RedditSource()
+        source.set_variety(parent)
+
+        def _validate(url):
+            return source.validate(url)[1] is None
+
+        self.assertTrue(_validate("http://www.reddit.com/r/comics"))
+        self.assertFalse(_validate("http://www.reddit.com/r/nsfw/"))
 
         parent.options.safe_mode = False
-        self.assertTrue(RedditDownloader.validate("http://www.reddit.com/r/comics", parent))
-        self.assertTrue(RedditDownloader.validate("http://www.reddit.com/r/nsfw/", parent))
+        self.assertTrue(_validate("http://www.reddit.com/r/comics"))
+        self.assertTrue(_validate("http://www.reddit.com/r/nsfw/"))
 
-        self.assertTrue(RedditDownloader.validate("http://www.reddit.com/r/AutumnPorn/"))
-        self.assertTrue(
-            RedditDownloader.validate("http://www.reddit.com/r/AutumnPorn/top?sort=top&t=month")
-        )
-        self.assertFalse(RedditDownloader.validate("http://www.reddit.com/r/bestof/"))
-        self.assertFalse(
-            RedditDownloader.validate("http://www.reddit.com/r/dhkjregfhjregfjfdrejh/")
-        )
-        self.assertFalse(
-            RedditDownloader.validate("http://www.notreddit.com/r/dhkjregfhjregfjfdrejh/")
-        )
+        self.assertTrue(_validate("http://www.reddit.com/r/AutumnPorn/"))
+        self.assertTrue(_validate("http://www.reddit.com/r/AutumnPorn/top?sort=top&t=month"))
+        self.assertFalse(_validate("http://www.reddit.com/r/bestof/"))
+        self.assertFalse(_validate("http://www.reddit.com/r/dhkjregfhjregfjfdrejh/"))
+        self.assertFalse(_validate("http://www.notreddit.com/r/dhkjregfhjregfjfdrejh/"))
 
 
 if __name__ == "__main__":

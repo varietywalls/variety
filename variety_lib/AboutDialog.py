@@ -16,6 +16,8 @@
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
+from variety.profile import get_profile_wm_class
+
 from .helpers import get_builder
 
 
@@ -46,3 +48,4 @@ class AboutDialog(Gtk.AboutDialog):
         # Get a reference to the builder and set up the signals.
         self.builder = builder
         self.ui = builder.get_ui(self)
+        self.set_wmclass(get_profile_wm_class(), get_profile_wm_class())

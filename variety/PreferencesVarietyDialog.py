@@ -26,10 +26,8 @@ import threading
 from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 
 from variety import Texts
+from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
-from variety.AddMediaRssDialog import AddMediaRssDialog
-from variety.AddRedditDialog import AddRedditDialog
-from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
@@ -69,7 +67,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         PreferencesVarietyDialog.add_image_preview(self.ui.icon_chooser, 64)
         self.loading = False
 
-        self.dl_chooser = FolderChooser(self.ui.download_folder_chooser, self.on_downloaded_changed)
         self.fav_chooser = FolderChooser(
             self.ui.favorites_folder_chooser, self.on_favorites_changed
         )
@@ -85,9 +82,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.notebook.remove_page(2)
 
         profile_suffix = (
-            "" if is_default_profile() else " (Profile: {})".format(get_profile_short_name())
+            "" if is_default_profile() else _(" (Profile: {})").format(get_profile_short_name())
         )
-        self.set_title(_("Variety Preferences") + _(profile_suffix))
+        self.set_title(_("Variety Preferences") + profile_suffix)
         self.set_wmclass(get_profile_wm_class(), get_profile_wm_class())
 
         self.reload()
@@ -136,15 +133,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.set_change_interval(self.options.change_interval)
             self.ui.change_on_start.set_active(self.options.change_on_start)
 
-            self.ui.download_enabled.set_active(self.options.download_enabled)
-            self.set_download_interval(self.options.download_interval)
-
-            self.dl_chooser.set_folder(os.path.expanduser(self.options.download_folder))
-            self.update_real_download_folder()
-
-            self.ui.quota_enabled.set_active(self.options.quota_enabled)
-            self.ui.quota_size.set_text(str(self.options.quota_size))
-
             self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
 
             self.fetched_chooser.set_folder(os.path.expanduser(self.options.fetched_folder))
@@ -167,9 +155,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
             elif self.options.icon == "Current":
                 self.ui.icon.set_active(6)
             elif self.options.icon == "None":
-                self.ui.icon.set_active(7)
-            else:
                 self.ui.icon.set_active(8)
+            else:
+                self.ui.icon.set_active(7)
                 self.ui.icon_chooser.set_filename(self.options.icon)
 
             if self.options.favorites_operations == [["/", "Copy"]]:
@@ -344,7 +332,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 logger.warning(lambda: "Missing ui/changes.txt file")
 
             self.on_change_enabled_toggled()
-            self.on_download_enabled_toggled()
             self.on_sources_selection_changed()
             self.on_desired_color_enabled_toggled()
             self.on_min_size_enabled_toggled()
@@ -402,22 +389,55 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.add_menu = Gtk.Menu()
 
         items = [
-            (_("Images"), self.on_add_images_clicked),
-            (_("Folders"), self.on_add_folders_clicked),
+            (_("Images"), _("Add individual wallpaper images"), self.on_add_images_clicked),
+            (
+                _("Folders"),
+                _("Searched recursively for up to 10000 images, shown in random order"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.FOLDER
+                ),
+            ),
+            (
+                _("Sequential Albums (order by filename)"),
+                _("Searched recursively for images, shown in sequence (by filename)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_FILENAME
+                ),
+            ),
+            (
+                _("Sequential Albums (order by date)"),
+                _("Searched recursively for images, shown in sequence (by file date)"),
+                lambda widget: self.on_add_folders_clicked(
+                    widget, source_type=Options.SourceType.ALBUM_DATE
+                ),
+            ),
             "-",
-            (_("Flickr"), self.on_add_flickr_clicked),
-            (_("Wallhaven.cc"), self.on_add_wallhaven_clicked),
-            (_("Reddit"), self.on_add_reddit_clicked),
-            (_("Media RSS"), self.on_add_mediarss_clicked),
+            (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
         ]
+
+        for source in sorted(
+            self.options.CONFIGURABLE_IMAGE_SOURCES, key=lambda s: s.get_source_name()
+        ):
+
+            def _click(widget, source=source):
+                self.on_add_configurable(source)
+
+            items.append((source.get_source_name(), source.get_ui_short_description(), _click))
 
         for x in items:
             if x == "-":
                 item = Gtk.SeparatorMenuItem.new()
+                item.set_margin_top(15)
+                item.set_margin_bottom(15)
             else:
                 item = Gtk.MenuItem()
-                item.set_label(x[0])
-                item.connect("activate", x[1])
+                label = Gtk.Label("<b>{}</b>\n{}".format(x[0], x[1]))
+                label.set_margin_top(6)
+                label.set_margin_bottom(6)
+                label.set_xalign(0)
+                label.set_use_markup(True)
+                item.add(label)
+                item.connect("activate", x[2])
             self.add_menu.append(item)
 
         self.add_menu.show_all()
@@ -428,7 +448,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         has_downloaders = False
         for row in rows:
             type = model[row][1]
-            if type in Options.SourceType.EDITABLE_DL_TYPES:
+            if type in Options.get_editable_source_types():
                 has_downloaders = True
 
         self.remove_menu = Gtk.Menu()
@@ -480,18 +500,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.set_change_interval(refresh_time)
                 updated = True
 
-            if not self.ui.download_enabled.get_active():
-                self.ui.download_enabled.set_active(True)
-                updated = True
-            if self.get_download_interval() > refresh_time:
-                self.set_download_interval(refresh_time)
-                updated = True
-
             if updated:
                 self.parent.show_notification(
                     refresher_dls[0].get_description(),
                     _(
-                        "Using this source requires both downloading and changing "
+                        "Using this source requires wallpaper changing "
                         "enabled at intervals of %d minutes or less. "
                         "Settings were adjusted automatically."
                     )
@@ -510,14 +523,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def set_change_interval(self, seconds):
         self.set_time(seconds, self.ui.change_interval_text, self.ui.change_interval_time_unit)
-
-    def set_download_interval(self, seconds):
-        self.set_time(
-            seconds,
-            self.ui.download_interval_text,
-            self.ui.download_interval_time_unit,
-            times=(60, 60 * 60, 24 * 60 * 60),
-        )
 
     def set_quotes_change_interval(self, seconds):
         self.set_time(
@@ -545,14 +550,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.change_interval_time_unit,
             5,
             self.options.change_interval,
-        )
-
-    def get_download_interval(self):
-        return self.read_time(
-            self.ui.download_interval_text,
-            self.ui.download_interval_time_unit,
-            60,
-            self.options.download_interval,
         )
 
     def get_quotes_change_interval(self):
@@ -606,9 +603,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
         chooser.destroy()
 
-    def on_add_folders_clicked(self, widget=None):
+    def on_add_folders_clicked(self, widget=None, source_type=Options.SourceType.FOLDER):
+        if source_type == Options.SourceType.FOLDER:
+            title = _(
+                "Add Folders - Only add the root folders, subfolders are searched recursively"
+            )
+        elif source_type == Options.SourceType.ALBUM_FILENAME:
+            title = _(
+                "Add Sequential Albums (ordered by filename). Subfolders are searched recursively."
+            )
+        elif source_type == Options.SourceType.ALBUM_DATE:
+            title = _(
+                "Add Sequential Albums (ordered by date). Subfolders are searched recursively."
+            )
+        else:
+            raise Exception("Unsuppoted source_type {}".format(source_type))
         chooser = Gtk.FileChooserDialog(
-            _("Add Folders - Only add the root folders, subfolders are searched recursively"),
+            title,
             parent=self,
             action=Gtk.FileChooserAction.SELECT_FOLDER,
             buttons=[_("Cancel"), Gtk.ResponseType.CANCEL, _("Add"), Gtk.ResponseType.OK],
@@ -621,7 +632,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if response == Gtk.ResponseType.OK:
             folders = list(chooser.get_filenames())
             folders = [f for f in folders if os.path.isdir(f)]
-            self.add_sources(Options.SourceType.FOLDER, folders)
+            self.add_sources(source_type, folders)
 
         self.dialog = None
         chooser.destroy()
@@ -631,16 +642,20 @@ class PreferencesVarietyDialog(PreferencesDialog):
         existing = {}
         for i, r in enumerate(self.ui.sources.get_model()):
             if r[1] == type:
-                if type == Options.SourceType.FOLDER:
+                if type in (
+                    Options.SourceType.FOLDER,
+                    Options.SourceType.ALBUM_FILENAME,
+                    Options.SourceType.ALBUM_DATE,
+                ):
                     existing[os.path.normpath(r[2])] = r, i
                 else:
                     existing[self.model_row_to_source(r)[2]] = r, i
 
         newly_added = 0
         for f in locations:
-            if type == Options.SourceType.FOLDER or type == Options.SourceType.IMAGE:
+            if type in Options.SourceType.LOCAL_PATH_TYPES:
                 f = os.path.normpath(f)
-            elif type not in Options.SourceType.EDITABLE_DL_TYPES:
+            elif type not in Options.get_editable_source_types():
                 f = (
                     list(existing.keys())[0] if existing else None
                 )  # reuse the already existing location, do not add another one
@@ -676,14 +691,14 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if delete_files:
             for row in rows:
                 type = model[row][1]
-                if type in Options.SourceType.EDITABLE_DL_TYPES:
+                if type in Options.get_editable_source_types():
                     source = self.model_row_to_source(model[row])
                     self.parent.delete_files_of_source(source)
 
         # store the treeiters from paths
         iters = []
         for row in rows:
-            if model[row][1] in Options.SourceType.REMOVABLE_TYPES:
+            if model[row][1] in Options.get_removable_source_types():
                 iters.append(model.get_iter(row))
         # remove the rows (treeiters)
         for i in iters:
@@ -697,6 +712,23 @@ class PreferencesVarietyDialog(PreferencesDialog):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
         if len(rows) == 1:
             self.edit_source(model[rows[0]])
+
+    def on_open_folder_clicked(self, widget=None):
+        model, rows = self.ui.sources.get_selection().get_selected_rows()
+        if len(rows) != 1:
+            return
+        row = model[rows[0]]
+        type = row[1]
+        if type in Options.SourceType.LOCAL_PATH_TYPES:
+            subprocess.Popen(["xdg-open", os.path.realpath(row[2])])
+        elif type == Options.SourceType.FAVORITES:
+            subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
+        elif type == Options.SourceType.FETCHED:
+            subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
+        else:
+            subprocess.Popen(
+                ["xdg-open", self.parent.get_folder_of_source(self.model_row_to_source(row))]
+            )
 
     def on_use_clicked(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -712,28 +744,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
     def edit_source(self, edited_row):
         type = edited_row[1]
 
-        if type == Options.SourceType.IMAGE or type == Options.SourceType.FOLDER:
-            subprocess.Popen(["xdg-open", os.path.realpath(edited_row[2])])
-        elif type == Options.SourceType.FAVORITES:
-            subprocess.Popen(["xdg-open", self.parent.options.favorites_folder])
-        elif type == Options.SourceType.FETCHED:
-            subprocess.Popen(["xdg-open", self.parent.options.fetched_folder])
-        elif type in Options.SourceType.EDITABLE_DL_TYPES:
+        if type in Options.get_editable_source_types():
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
-            elif type == Options.SourceType.WALLHAVEN:
-                self.dialog = AddWallhavenDialog()
-            elif type == Options.SourceType.REDDIT:
-                self.dialog = AddRedditDialog()
-            elif type == Options.SourceType.MEDIA_RSS:
-                self.dialog = AddMediaRssDialog()
+            elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
+                self.dialog = AddConfigurableDialog()
+                self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
-        elif type in Options.get_downloader_source_types():
-            subprocess.Popen(
-                ["xdg-open", self.parent.get_folder_of_source(self.model_row_to_source(edited_row))]
-            )
 
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -750,26 +769,16 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         self.ui.edit_source.set_sensitive(False)
         self.ui.edit_source.set_label(_("Edit..."))
+        self.ui.open_folder.set_sensitive(len(rows) == 1)
+        self.ui.open_folder.set_label(_("Open Folder"))
 
         if len(rows) == 1:
             source = model[rows[0]]
             type = source[1]
             if type == Options.SourceType.IMAGE:
+                self.ui.open_folder.set_label(_("View Image"))
+            elif type in Options.get_editable_source_types():
                 self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("View Image"))
-            elif type in [
-                Options.SourceType.FOLDER,
-                Options.SourceType.FAVORITES,
-                Options.SourceType.FETCHED,
-            ]:
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Open Folder"))
-            elif type in Options.SourceType.EDITABLE_DL_TYPES:
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Edit..."))
-            elif type in Options.get_downloader_source_types():
-                self.ui.edit_source.set_sensitive(True)
-                self.ui.edit_source.set_label(_("Open Folder"))
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
@@ -781,7 +790,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.show_timer.start()
 
         for row in rows:
-            if model[row][1] not in Options.SourceType.REMOVABLE_TYPES:
+            if model[row][1] not in Options.get_removable_source_types():
                 self.ui.remove_sources.set_sensitive(False)
                 return
 
@@ -830,7 +839,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 folder_images = list(
                     Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000)
                 )
-                random.shuffle(folder_images)
+                if len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_FILENAME:
+                    folder_images = sorted(folder_images)
+                elif len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_DATE:
+                    folder_images = sorted(folder_images, key=os.path.getmtime)
+                else:
+                    random.shuffle(folder_images)
                 to_show = images + folder_images
                 if hasattr(self, "focused_image") and self.focused_image is not None:
                     try:
@@ -850,17 +864,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
 
-    def on_add_mediarss_clicked(self, widget=None):
-        self.show_dialog(AddMediaRssDialog())
-
-    def on_add_reddit_clicked(self, widget=None):
-        self.show_dialog(AddRedditDialog())
-
     def on_add_flickr_clicked(self, widget=None):
         self.show_dialog(AddFlickrDialog())
 
-    def on_add_wallhaven_clicked(self, widget=None):
-        self.show_dialog(AddWallhavenDialog())
+    def on_add_configurable(self, source):
+        dialog = AddConfigurableDialog()
+        dialog.set_source(source)
+        self.show_dialog(dialog)
 
     def show_dialog(self, dialog):
         self.dialog = dialog
@@ -880,7 +890,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def close(self):
-        self.ui.error_downloaded.set_label("")
         self.ui.error_favorites.set_label("")
         self.ui.error_fetched.set_label("")
 
@@ -921,19 +930,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.change_on_start = self.ui.change_on_start.get_active()
             self.options.change_interval = self.get_change_interval()
 
-            self.options.download_enabled = self.ui.download_enabled.get_active()
-            self.options.download_interval = self.get_download_interval()
-
-            self.options.quota_enabled = self.ui.quota_enabled.get_active()
-            try:
-                self.options.quota_size = int(self.ui.quota_size.get_text())
-                if self.options.quota_size < 50:
-                    self.options.quota_size = 50
-            except Exception:
-                logger.exception(lambda: "Could not understand quota size")
-
-            if os.access(self.dl_chooser.get_folder(), os.W_OK):
-                self.options.download_folder = self.dl_chooser.get_folder()
             if os.access(self.fav_chooser.get_folder(), os.W_OK):
                 self.options.favorites_folder = self.fav_chooser.get_folder()
             self.options.favorites_operations = self.favorites_operations
@@ -965,9 +961,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.icon = "4"
             elif self.ui.icon.get_active() == 6:
                 self.options.icon = "Current"
-            elif self.ui.icon.get_active() == 7:
-                self.options.icon = "None"
             elif self.ui.icon.get_active() == 8:
+                self.options.icon = "None"
+            elif self.ui.icon.get_active() == 7:
                 file = self.ui.icon_chooser.get_filename()
                 if file and os.access(file, os.R_OK):
                     self.options.icon = file
@@ -1132,19 +1128,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.quotes_change_enabled.get_active()
         )
 
-    def on_download_enabled_toggled(self, widget=None):
-        active = self.ui.download_enabled.get_active()
-        self.ui.download_interval_text.set_sensitive(active)
-        self.ui.download_interval_time_unit.set_sensitive(active)
-        self.ui.download_folder_chooser.set_sensitive(active)
-        self.ui.quota_enabled.set_sensitive(active)
-        self.ui.quota_size.set_sensitive(active)
-        self.on_quota_enabled_toggled()
-
-    def on_quota_enabled_toggled(self, widget=None):
-        active = self.ui.download_enabled.get_active() and self.ui.quota_enabled.get_active()
-        self.ui.quota_size.set_sensitive(active)
-
     def on_desired_color_enabled_toggled(self, widget=None):
         self.ui.desired_color.set_sensitive(self.ui.desired_color_enabled.get_active())
 
@@ -1164,40 +1147,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.dialog.destroy()
             except Exception:
                 pass
-        for chooser in (self.dl_chooser, self.fav_chooser, self.fetched_chooser):
+        for chooser in (self.fav_chooser, self.fetched_chooser):
             try:
                 chooser.destroy()
             except Exception:
                 pass
         self.parent.thumbs_manager.hide(force=False)
-
-    def on_downloaded_changed(self, widget=None):
-        self.delayed_apply()
-
-        if not os.access(self.dl_chooser.get_folder(), os.W_OK):
-            self.ui.error_downloaded.set_label(_("No write permissions"))
-        else:
-            self.ui.error_downloaded.set_label("")
-
-        if not self.loading and self.ui.quota_enabled.get_active():
-            self.ui.quota_enabled.set_active(False)
-            self.parent.show_notification(
-                _("Limit disabled"),
-                _(
-                    "Changing the download folder automatically turns off the size limit to prevent from accidental data loss"
-                ),
-                important=True,
-            )
-
-    @on_gtk
-    def update_real_download_folder(self):
-        if not Util.same_file_paths(
-            self.parent.options.download_folder, self.parent.real_download_folder
-        ):
-            self.ui.real_download_folder.set_visible(True)
-        self.ui.real_download_folder.set_text(
-            _("Actual download folder: %s ") % self.parent.real_download_folder
-        )
 
     def on_favorites_changed(self, widget=None):
         self.delayed_apply()
@@ -1231,7 +1186,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         self.dialog = None
 
     def on_icon_changed(self, widget=None):
-        self.ui.icon_chooser.set_visible(self.ui.icon.get_active() == 3)
+        self.ui.icon_chooser.set_visible(self.ui.icon.get_active() == 7)
 
     def on_favorites_operations_changed(self, widget=None):
         self.ui.edit_favorites_operations.set_visible(

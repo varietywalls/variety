@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-08-06 16:02+0300\n"
+"POT-Creation-Date: 2017-09-18 20:45-0700\n"
 "PO-Revision-Date: 2015-05-15 13:34+0000\n"
 "Last-Translator: M.W.Park <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-08-07 12:20+0000\n"
-"X-Generator: Launchpad (build 18169)\n"
+"X-Launchpad-Export-Date: 2019-12-22 09:06+0000\n"
+"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
 "Language: Occitan (post 1500); Provençal\n"
 "X-Loco-Source-Locale: ms_MY\n"
 "X-Loco-Parser: loco_parse_po\n"
@@ -20,167 +20,6 @@ msgstr ""
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
 msgstr "Goodreads.com으로부터 명언을 불러옵니다"
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:1
-msgid "Login to VRTY.ORG"
-msgstr "VRTY.ORG에 로그인하기"
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:2
-msgid "Username: "
-msgstr "사용자 이름: "
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:3
-msgid "Password: "
-msgstr "암호: "
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:4
-msgid "No account? Register here"
-msgstr "계정이 없으십니까? 여기서 회원 가입을 하십시오"
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:5
-msgid "Forgot your password?"
-msgstr "암호를 잊으셨습니까?"
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:6
-msgid ""
-"Tip: You can also login to <a href=\"https://vrty.org\">VRTY.ORG</a> in a "
-"browser and click the link <span weight=\"bold\">\"Trigger Variety "
-"login\"</span> in your profile."
-msgstr ""
-"비법: 또한, 당신은 브라우저에서 <a href=\"https://vrty.org\">VRTY.ORG</a>로 로그인을 하시고 당신의 "
-"프로필에서 <span weight=\"bold\">\"버라이어티 로그인이 작동되도록 합니다\"</span> 링크를 누르실 수 있습니다."
-
-#: ../data/ui/LoginOrRegisterDialog.ui.h:7
-msgid "Login"
-msgstr "로그인"
-
-#: ../variety/LoginOrRegisterDialog.py:80
-#, python-format
-msgid "Oops, server returned error (%s)"
-msgstr "앗, 서버가 오류를 반환했습니다(%s)"
-
-#: ../variety/LoginOrRegisterDialog.py:85
-msgid "Could not connect to server"
-msgstr "서버에 연결할 수 없습니다"
-
-#: ../variety/AddWallhavenDialog.py:38 ../variety/AddWallbaseDialog.py:38
-#: ../variety/AddFlickrDialog.py:138
-msgid "No images found"
-msgstr "이미지를 찾을 수 없습니다"
-
-#: ../data/ui/AddPanoramioDialog.ui.h:1
-msgid "Variety - add Panoramio image source"
-msgstr "버라이어티 - 파노라미오 이미지 소스를 추가합니다"
-
-#. (_("Wallbase.cc"), self.on_add_wallbase_clicked),
-#: ../data/ui/AddPanoramioDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:387
-msgid "Panoramio"
-msgstr "파노라미오"
-
-#: ../data/ui/AddPanoramioDialog.ui.h:3
-msgid "Please zoom over your area of interest."
-msgstr "당신이 관심 있는 부분을 확대하십시오."
-
-#: ../variety/FolderChooser.py:65
-msgid "Choose a folder"
-msgstr "폴더를 선택하십시오"
-
-#: ../variety/FolderChooser.py:66 ../variety/PreferencesVarietyDialog.py:543
-#: ../variety/PreferencesVarietyDialog.py:567
-msgid "Cancel"
-msgstr "취소"
-
-#: ../variety/FolderChooser.py:66
-msgid "OK"
-msgstr "확인"
-
-#: ../data/ui/AddWallhavenDialog.ui.h:1
-msgid "Variety - add Wallhaven.cc image source"
-msgstr "버라이어티 - Wallhaven.cc 이미지 소스를 추가합니다"
-
-#: ../data/ui/AddWallhavenDialog.ui.h:2
-#: ../variety/PreferencesVarietyDialog.py:385
-msgid "Wallhaven.cc"
-msgstr "Wallhaven.cc"
-
-#: ../data/ui/AddWallhavenDialog.ui.h:3
-msgid ""
-"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a> provides a variety of image "
-"search options. Below you can specify keywords to search for, or visit <a "
-"href=\"http://wallhaven.cc\">Wallhaven.cc</a>, setup your search criteria "
-"there, ensure you like the results, and paste the full Wallhaven URL in the "
-"box.\n"
-"\n"
-"If you specify keywords, the most liked safe-for-work images that match all "
-"of the keywords will be used. \n"
-"\n"
-"If you specify a Wallhaven URL, please choose the sorting criteria carefully "
-"- Variety regularly requests images, but uses only images from the first "
-"several hundred returned. Random or Date will mean this image source will "
-"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
-"better images and Relevance will provide closer matches when searching for "
-"phrases or colors."
-msgstr ""
-"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a>는 다양한 이미지 검색 선택 사항을 제공합니다. "
-"여기서 당신은 찾으려 하는 검색어의 키워드를 지정하시거나, <a "
-"href=\"http://wallhaven.cc\">Wallhaven.cc</a>를 방문하셔서, 당신에게 만족스러운 검색 결과를 확실하게 "
-"제공하는, 당신만의 검색 조건을 설정하시고, 검색 창에 전체 월헤이븐 URL을 입력하실 수 있습니다.\n"
-"\n"
-"만약 당신이 키워드를 지정했다면, 주로 사용될 키워드 중 아무 키워드랑 관련 있는 건전한 이미지가 나올 것입니다. \n"
-"\n"
-"만약 당신이 월헤이븐 URL을 지정했다면, 분류 조건을 주의 깊게 선택하십시오 - 보통 버라이어티는 이미지를 요구하지만, 맨 처음에 "
-"나오는 수백 개의 되돌려진 주소로부터 나타나는 이미지만 사용합니다. 무작위 검색 혹은 날짜별 검색은 이 이미지 소스가 소멸하기 전까지 더 "
-"긴 \"수명\"을 가짐을 뜻합니다. 즐겨찾기 검색은 더 나은 화질의 이미지를 제공하며 연관성 검색은 구절이나 색깔을 검색할 때 더 관련 "
-"있는 결과를 제공합니다."
-
-#: ../data/ui/AddWallhavenDialog.ui.h:8 ../data/ui/AddWallbaseDialog.ui.h:9
-msgid "Enter keywords or paste URL here: "
-msgstr "키워드를 입력하시거나 URL을 여기에 붙이십시오: "
-
-#: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
-#: ../data/ui/AddWallbaseDialog.ui.h:10
-msgid "Just a moment to check this search"
-msgstr "검색을 확인 중이니 잠시 기다리십시오"
-
-#: ../data/ui/AddWallhavenDialog.ui.h:10 ../data/ui/AddFlickrDialog.ui.h:17
-#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddMediaRssDialog.ui.h:6
-#: ../data/ui/AddWallbaseDialog.ui.h:11
-msgid "  "
-msgstr "  "
-
-#: ../variety/QuotesEngine.py:232
-msgid "No quote plugins"
-msgstr "명언 플러그인이 없습니다"
-
-#: ../variety/QuotesEngine.py:232
-msgid "There are no quote plugins installed"
-msgstr "설치된 명언 플러그인이 없습니다"
-
-#: ../variety/QuotesEngine.py:238
-msgid "No suitable quote plugins"
-msgstr "적합한 명언 플러그인이 없습니다"
-
-#: ../variety/QuotesEngine.py:239
-msgid ""
-"You have no quote plugins which support searching by keywords and authors"
-msgstr "당신은 키워드 및 저자 검색을 지원하는 명언 플러그인을 가지고 있지 않습니다"
-
-#: ../variety/QuotesEngine.py:251
-msgid "Could not fetch quotes"
-msgstr "명언을 불러올 수 없습니다"
-
-#: ../variety/QuotesEngine.py:252
-msgid "Quotes services may be down, we will continue trying"
-msgstr "명언 서비스가 다운된 것 같습니다, 계속 시도하고 있습니다"
-
-#: ../variety/QuotesEngine.py:255
-msgid "Could not find quotes"
-msgstr "명언을 찾을 수 없습니다"
-
-#: ../variety/QuotesEngine.py:256
-msgid "Maybe you are searching for something very obscure?"
-msgstr "아마 당신은 매우 불분명한 무언가를 찾는 중일지도 모릅니다?"
 
 #: ../variety/Texts.py:20
 msgid "Keep original"
@@ -255,19 +94,11 @@ msgstr ""
 
 #: ../variety/Texts.py:47
 msgid ""
-"If you use KDE, you need to perform some actions before Variety will work. "
-"Please read here: http://peterlevi.com/variety/2014/05/variety-and-kde/"
-msgstr ""
-"만약 당신이 KDE를 사용하신다면, 당신은 버라이어티가 실행되도록 만들기 이전에 몇몇 동작을 취하셔야 합니다. 여기로 들어가셔서 "
-"읽으십시오: http://peterlevi.com/variety/2014/05/variety-and-kde/"
-
-#: ../variety/Texts.py:48
-msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
 msgstr "당신은 지표 아이콘 위에서 마우스 휠을 스크롤 하시는 걸로 배경화면을 앞뒤로 바꾸실 수 있습니다."
 
-#: ../variety/Texts.py:49
+#: ../variety/Texts.py:48
 msgid ""
 "If you want to run custom commands every time the wallpaper changes or if "
 "you use an alternative desktop environment, please edit the scripts in "
@@ -277,7 +108,7 @@ msgstr ""
 "만약 당신이 매번 배경화면이 바뀌도록 하는 사용자 설정 명령어를 사용하고 싶거나 다른 데스크톱 환경을 사용하고 싶다면, "
 "~/.config/variety/scripts에서 스크립트를 편집하십시오. 여기에는 여러 데스크톱 환경을 위한 예시가 있습니다."
 
-#: ../variety/Texts.py:50
+#: ../variety/Texts.py:49
 msgid ""
 "Variety can be controlled from the command line and you can use this to "
 "define keyboard shortcuts for the operations you use most often. Run "
@@ -286,7 +117,7 @@ msgstr ""
 "버라이어티는 명령 줄 인터페이스로 제어할 수 있으며 당신은 이를 이용하여 주로 가장 많이 사용할 명령을 키보드 단축키로 지정할 수 "
 "있습니다. \"variety --help\"를 실행해서 모든 유효한 명령어를 보십시오."
 
-#: ../variety/Texts.py:51
+#: ../variety/Texts.py:50
 msgid ""
 "You can drop image links or files on the launcher icon to download them and "
 "use them as wallpapers. For quicker downloading from a specific site, you "
@@ -295,7 +126,7 @@ msgstr ""
 "당신은 이미지 링크 혹은 파일을 런처 아이콘에 내려놓는 걸로 내려받기 및 배경화면으로 사용하실 수 있습니다. 특정 사이트로부터 더 빠르게 "
 "내려받으시려면, 클립 보드 관리를 사용할 수 있습니다(\"수동 내려받기\" 탭을 보십시오)."
 
-#: ../variety/Texts.py:52
+#: ../variety/Texts.py:51
 msgid ""
 "Applying a heavy blurring filter is a great way to get abstract-looking and "
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
@@ -304,7 +135,7 @@ msgstr ""
 "강한 흐린 필터를 적용하는 것은 추상적인 분위기와 튀지 않게 만들면서도, 우분투에 있는 기본 배경화면과 같은 화려한 배경화면을 제공해주는 "
 "훌륭한 방법입니다."
 
-#: ../variety/Texts.py:53
+#: ../variety/Texts.py:52
 msgid ""
 "Adding your own custom filters is quite easy: open "
 "~/.config/variety/variety.conf in an editor and use the existing filters as "
@@ -314,7 +145,7 @@ msgstr ""
 "당신만의 사용자 설정 필터를 추가하는 건 쉬운 일입니다: ~/.config/variety/variety.conf를 편집기로 여셔서 기존에 "
 "있는 필터를 예시로써 사용하십시오. 모든 필터는 이미지매직의 변환 명령어로 넘겨져야 할 한 줄의 선택 사항일 뿐입니다."
 
-#: ../variety/Texts.py:54
+#: ../variety/Texts.py:53
 msgid ""
 "When you select an image source, its images are displayed in a window at the "
 "bottom of the screen. Click an image there to set is as wallpaper. Right-"
@@ -328,7 +159,7 @@ msgstr ""
 "모든 이미지 소스를 \"합쳐진\" 섬네일로 보기로 설정할 수 있습니다. 이 섬네일로 보기는 무작위로 선택된 백여 개의 이미지 제한을 "
 "가지고 있으므로 유의하십시오."
 
-#: ../variety/Texts.py:55
+#: ../variety/Texts.py:54
 msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of ~/.config/variety/scripts/set_wallpaper."
@@ -336,7 +167,7 @@ msgstr ""
 "바탕화면 알림을 사용하시려면 배경화면이 바뀔 때, ~/.config/variety/scripts/set_wallpaper의 밑에 있는 두 "
 "줄을 제거하십시오."
 
-#: ../variety/Texts.py:56
+#: ../variety/Texts.py:55
 msgid ""
 "Variety's indicator icon is themeable - if you you choose the \"Light\" "
 "option for the icon, Variety will first check if the current GTK theme has "
@@ -347,7 +178,7 @@ msgstr ""
 "처음으로 현재 GTK 테마가 \"버라이어티-지표\"라는 이름의 아이콘을 가졌는지를 확인하고 기본으로 있는 밝음 아이콘 대신에 이 아이콘을 "
 "사용할 것입니다."
 
-#: ../variety/Texts.py:57
+#: ../variety/Texts.py:56
 msgid ""
 "When you choose to save quotes to Favorites, these are by default saved to "
 "~/.config/variety/favorite_quotes.txt. This file is compatible with "
@@ -360,120 +191,161 @@ msgstr ""
 "~/.config/variety/pluginconfig/quotes/에 복사하시고 로컬 파일 명언 소스를 사용하십시오. 이 파일은 "
 "마찬가지로 유닉스 포천 프로그램과 호환이 됩니다."
 
-#: ../variety/PreferencesVarietyDialog.py:258
+#: ../data/ui/LoginOrRegisterDialog.ui.h:1
+msgid "Login to VRTY.ORG"
+msgstr "VRTY.ORG에 로그인하기"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:2
+msgid "Username: "
+msgstr "사용자 이름: "
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:3
+msgid "Password: "
+msgstr "암호: "
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:4
+msgid "No account? Register here"
+msgstr "계정이 없으십니까? 여기서 회원 가입을 하십시오"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:5
+msgid "Forgot your password?"
+msgstr "암호를 잊으셨습니까?"
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:6
+msgid ""
+"Tip: You can also login to <a href=\"https://vrty.org\">VRTY.ORG</a> in a "
+"browser and click the link <span weight=\"bold\">\"Trigger Variety "
+"login\"</span> in your profile."
+msgstr ""
+"비법: 또한, 당신은 브라우저에서 <a href=\"https://vrty.org\">VRTY.ORG</a>로 로그인을 하시고 당신의 "
+"프로필에서 <span weight=\"bold\">\"버라이어티 로그인이 작동되도록 합니다\"</span> 링크를 누르실 수 있습니다."
+
+#: ../data/ui/LoginOrRegisterDialog.ui.h:7
+msgid "Login"
+msgstr "로그인"
+
+#: ../variety/PreferencesVarietyDialog.py:254
 msgid "All"
 msgstr ""
 
-#: ../variety/PreferencesVarietyDialog.py:381
-#: ../variety/PreferencesVarietyDialog.py:549
+#: ../variety/PreferencesVarietyDialog.py:377
+#: ../variety/PreferencesVarietyDialog.py:543
 #: ../data/ui/PreferencesVarietyDialog.ui.h:11
 msgid "Images"
 msgstr "이미지"
 
-#: ../variety/PreferencesVarietyDialog.py:382
+#: ../variety/PreferencesVarietyDialog.py:378
 msgid "Folders"
 msgstr "폴더"
 
-#: ../variety/PreferencesVarietyDialog.py:384
-#: ../data/ui/AddFlickrDialog.ui.h:2
+#: ../variety/PreferencesVarietyDialog.py:380 ../data/ui/AddFlickrDialog.ui.h:2
 msgid "Flickr"
 msgstr "플리커"
 
-#: ../variety/PreferencesVarietyDialog.py:388
-#: ../data/ui/AddRedditDialog.ui.h:2
+#: ../variety/PreferencesVarietyDialog.py:381
+#: ../data/ui/AddWallhavenDialog.ui.h:2
+msgid "Wallhaven.cc"
+msgstr "Wallhaven.cc"
+
+#: ../variety/PreferencesVarietyDialog.py:382 ../data/ui/AddRedditDialog.ui.h:2
 msgid "Reddit"
 msgstr "레딧"
 
-#: ../variety/PreferencesVarietyDialog.py:389
+#: ../variety/PreferencesVarietyDialog.py:383
 #: ../data/ui/AddMediaRssDialog.ui.h:2
 msgid "Media RSS"
 msgstr "미디어 RSS"
 
-#: ../variety/PreferencesVarietyDialog.py:414
+#: ../variety/PreferencesVarietyDialog.py:408
 msgid "Remove the source, keep the files"
 msgstr "파일들을 유지한 채, 소스를 삭제합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:415
+#: ../variety/PreferencesVarietyDialog.py:409
 msgid "Remove the sources, keep the files"
 msgstr "파일들을 유지한 채, 소스들을 삭제합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:422
+#: ../variety/PreferencesVarietyDialog.py:416
 msgid "Remove the source and delete the downloaded files"
 msgstr "내려받은 파일들을 삭제하고 소스를 제거합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:423
+#: ../variety/PreferencesVarietyDialog.py:417
 msgid "Remove the sources and delete the downloaded files"
 msgstr "내려받은 파일들을 삭제하고 소스들을 제거합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:456
+#: ../variety/PreferencesVarietyDialog.py:450
 msgid "World Sunlight Map enabled"
 msgstr "월드 선라이트 맵을 사용했습니다"
 
-#: ../variety/PreferencesVarietyDialog.py:457
+#: ../variety/PreferencesVarietyDialog.py:451
 msgid ""
 "Using the World Sunlight Map requires both downloading and changing enabled "
 "at intervals of 30 minutes or less. Settings were adjusted automatically."
 msgstr ""
 "월드 선라이트 맵을 사용하시려면 내려받기 및 30분 이내의 배경화면 변경 설정이 필요합니다. 설정은 자동으로 변경되었습니다."
 
-#: ../variety/PreferencesVarietyDialog.py:542
+#: ../variety/PreferencesVarietyDialog.py:536
 msgid "Add Images"
 msgstr "이미지를 추가합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:543
-#: ../variety/PreferencesVarietyDialog.py:567
+#: ../variety/PreferencesVarietyDialog.py:537
+#: ../variety/PreferencesVarietyDialog.py:561 ../variety/FolderChooser.py:66
+msgid "Cancel"
+msgstr "취소"
+
+#: ../variety/PreferencesVarietyDialog.py:537
+#: ../variety/PreferencesVarietyDialog.py:561
 msgid "Add"
 msgstr "추가하기"
 
-#: ../variety/PreferencesVarietyDialog.py:565
+#: ../variety/PreferencesVarietyDialog.py:559
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr "폴더를 추가합니다 - 재귀 검색이 되는 루트 폴더, 하위 폴더만 추가합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:699
-#: ../variety/PreferencesVarietyDialog.py:712
+#: ../variety/PreferencesVarietyDialog.py:689
+#: ../variety/PreferencesVarietyDialog.py:702
 #: ../data/ui/PreferencesVarietyDialog.ui.h:170
 msgid "Edit..."
 msgstr "편집하기..."
 
-#: ../variety/PreferencesVarietyDialog.py:706
+#: ../variety/PreferencesVarietyDialog.py:696
 msgid "View Image"
 msgstr "이미지를 봅니다"
 
-#: ../variety/PreferencesVarietyDialog.py:709
+#: ../variety/PreferencesVarietyDialog.py:699
 msgid "Open Folder"
 msgstr "폴더를 엽니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1086
+#: ../variety/PreferencesVarietyDialog.py:1070
 msgid "Recommended images source disabled"
 msgstr "권장 이미지 소스 사용 해제"
 
-#: ../variety/PreferencesVarietyDialog.py:1114
-#: ../variety/PreferencesVarietyDialog.py:1133
-#: ../variety/PreferencesVarietyDialog.py:1141
+#: ../variety/PreferencesVarietyDialog.py:1098
+#: ../variety/PreferencesVarietyDialog.py:1117
+#: ../variety/PreferencesVarietyDialog.py:1125
 msgid "No write permissions"
 msgstr "쓰기 권한이 없습니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1121
+#: ../variety/PreferencesVarietyDialog.py:1105
 msgid "Limit disabled"
 msgstr "제한을 해제했습니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1122
+#: ../variety/PreferencesVarietyDialog.py:1106
 msgid ""
 "Changing the download folder automatically turns off the size limit to "
 "prevent from accidental data loss"
 msgstr "데이터 손실을 방지하기 위해 내려받기 폴더의 용량 제한을 자동으로 해제합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1128
+#: ../variety/PreferencesVarietyDialog.py:1112
 #, python-format
 msgid "Actual download folder: %s "
 msgstr "실제 내려받기 폴더: %s "
 
-#: ../variety/PreferencesVarietyDialog.py:1208
+#: ../variety/PreferencesVarietyDialog.py:1192
 msgid "Could not adjust permissions"
 msgstr "권한을 조정할 수 없습니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1209
+#: ../variety/PreferencesVarietyDialog.py:1193
 #, python-format
 msgid ""
 "You may try manually running this command:\n"
@@ -482,22 +354,1257 @@ msgstr ""
 "이 명령어를 직접 실행해보십시오:\n"
 "sudo chmod %s \"%s\""
 
-#: ../variety/PreferencesVarietyDialog.py:1241
+#: ../variety/PreferencesVarietyDialog.py:1225
 msgid "Logged in as: "
 msgstr "로그인되었습니다: "
 
-#: ../variety/PreferencesVarietyDialog.py:1243
+#: ../variety/PreferencesVarietyDialog.py:1227
 msgid "Anonymous"
 msgstr "익명"
 
-#: ../variety/PreferencesVarietyDialog.py:1244
+#: ../variety/PreferencesVarietyDialog.py:1228
 #: ../data/ui/PreferencesVarietyDialog.ui.h:111
 msgid "Login or register"
 msgstr "로그인 혹은 회원 가입을 합니다"
 
-#: ../variety/PreferencesVarietyDialog.py:1244
+#: ../variety/PreferencesVarietyDialog.py:1228
 msgid "Switch user"
 msgstr "사용자를 전환합니다"
+
+#: ../data/ui/WelcomeDialog.ui.h:1
+msgid "Welcome to Variety!"
+msgstr "버라이어티에 오신 걸 환영합니다!"
+
+#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
+msgid "Continue"
+msgstr "계속"
+
+#: ../data/ui/WelcomeDialog.ui.h:3
+msgid ""
+"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper "
+"on a regular basis using local images or images downloaded from various "
+"online sources. It runs quietly in the background - to control it, click "
+"this icon in your system tray:"
+msgstr ""
+"버라이어티는 자동 배경화면 바꾸기 프로그램입니다. 이 프로그램은 당신의 데스크톱 배경화면을 로컬 이미지 혹은 여러 온라인 소스로부터 "
+"내려받은 이미지를 사용해서 규칙적으로 회전하도록 합니다. 버리아어티는 배경화면에서 조용히 실행되며 - 제어하시려면, 당신의 시스템 알림 "
+"상자에 있는 아이콘을 누르십시오:"
+
+#: ../data/ui/WelcomeDialog.ui.h:4
+msgid ""
+"Variety is open-source software, created by Peter Levi, a software developer "
+"from Bulgaria. If you like it, please <a "
+"href=\"http://peterlevi.com/variety/donate/\">donate</a>."
+msgstr ""
+"버라이어티는 오픈-소스 소프트웨어이자, 불가리아의 소프트웨어 개발자인, 피터 레비에 의해 개발되었습니다. 만약 당신이 이 소프트웨어를 "
+"좋아하신다면, <a href=\"http://peterlevi.com/variety/donate/\">기부</a>를 하십시오."
+
+#: ../data/ui/WelcomeDialog.ui.h:5
+msgid ""
+"Now please take some time to set your preferences on the following screens."
+msgstr "지금부터 당신은 시간을 두셔서 다음 화면에 있는 당신만의 환경 설정을 설정하십시오."
+
+#: ../data/ui/WelcomeDialog.ui.h:6
+msgid "KDE Users - Important, please read:"
+msgstr "KDE 사용자들에게 - 다음에 나오는 문장은 중요한 요소이니, 읽으십시오:"
+
+#: ../data/ui/WelcomeDialog.ui.h:7
+msgid ""
+"You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper "
+"from inside a program - there is no API for this. To make Variety work, <a "
+"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">please read "
+"and follow the instructions here</a>."
+msgstr ""
+"당신은 KDE를 실행하고 계신듯합니다. KDE 4에서는 프로그램 안으로부터 배경화면을 설정하는 것이 불가능합니다 - 이를 위한 API가 "
+"없습니다. 버라이어티가 작동되기 위해서는, <a "
+"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">여기에 들어가셔서 "
+"지시문을 읽고 따르십시오</a>."
+
+#: ../variety/LoginOrRegisterDialog.py:80
+#, python-format
+msgid "Oops, server returned error (%s)"
+msgstr "앗, 서버가 오류를 반환했습니다(%s)"
+
+#: ../variety/LoginOrRegisterDialog.py:85
+msgid "Could not connect to server"
+msgstr "서버에 연결할 수 없습니다"
+
+#: ../variety/indicator.py:54 ../variety/indicator.py:101
+#: ../variety/indicator.py:180
+msgid "_Next"
+msgstr "다음(_N)"
+
+#: ../variety/indicator.py:59 ../variety/indicator.py:106
+#: ../variety/indicator.py:185
+msgid "_Previous"
+msgstr "이전(_P)"
+
+#: ../variety/indicator.py:66
+msgid "Current desktop wallpaper"
+msgstr "현재 데스크톱 배경화면"
+
+#: ../variety/indicator.py:70
+msgid "Show origin"
+msgstr "원본을 봅니다"
+
+#: ../variety/indicator.py:81 ../variety/VarietyWindow.py:666
+#: ../variety/ThumbsManager.py:144
+msgid "Copy to _Favorites"
+msgstr "즐겨찾기에 복사하기(_F)"
+
+#. both
+#: ../variety/indicator.py:86 ../variety/VarietyWindow.py:675
+#: ../data/ui/PreferencesVarietyDialog.ui.h:167
+msgid "Move to Favorites"
+msgstr "즐겨찾기로 이동합니다"
+
+#: ../variety/indicator.py:92 ../variety/ThumbsManager.py:160
+msgid "Delete to _Trash"
+msgstr "휴지통에 삭제하기(_T)"
+
+#: ../variety/indicator.py:111 ../variety/indicator.py:190
+msgid "_Next, skipping forward history"
+msgstr "다음(_N), 사용 기록을 앞으로 나아가는 걸 넘깁니다"
+
+#: ../variety/indicator.py:119
+msgid ""
+"Tip: Scroll wheel over icon\n"
+"for Next and Previous"
+msgstr ""
+"비법: 아이콘 위에 마우스 휠을 스크롤 하셔서\n"
+"앞뒤로 넘기십시오"
+
+#: ../variety/indicator.py:125 ../variety/indicator.py:199
+#: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
+msgid "Pause on current"
+msgstr "이미지 변경을 중지합니다."
+
+#: ../variety/indicator.py:129
+msgid "_Image"
+msgstr "이미지(_I)"
+
+#: ../variety/indicator.py:136 ../variety/ThumbsManager.py:167
+msgid "Where is it from?"
+msgstr "이것은 어디서 왔습니까?"
+
+#: ../variety/indicator.py:140
+msgid "Show without effects"
+msgstr "효과 없이 봅니다"
+
+#: ../variety/indicator.py:148
+msgid "Google Image Search"
+msgstr "구글 이미지 검색"
+
+#: ../variety/indicator.py:154 ../variety/indicator.py:237
+#: ../data/ui/FacebookPublishDialog.ui.h:2
+msgid "Share on Facebook"
+msgstr "페이스북으로 공유합니다"
+
+#: ../variety/indicator.py:161 ../variety/ThumbsManager.py:136
+msgid "Set EXIF Rating"
+msgstr "EXIF 평점 정하기"
+
+#: ../variety/indicator.py:172
+msgid "Report NSFW image"
+msgstr ""
+
+#: ../variety/indicator.py:205 ../variety/VarietyWindow.py:820
+msgid "Save to Favorites"
+msgstr "즐겨찾기에 저장하기"
+
+#: ../variety/indicator.py:210
+msgid "View Favorites..."
+msgstr "즐겨찾기 보기..."
+
+#: ../variety/indicator.py:217
+msgid "Copy to Clipboard"
+msgstr "클립보드에 복사하기"
+
+#: ../variety/indicator.py:227
+msgid "Google Quote"
+msgstr "구글 명언"
+
+#: ../variety/indicator.py:232
+msgid "Google Author"
+msgstr "구글 저자"
+
+#: ../variety/indicator.py:244 ../variety/indicator.py:298
+msgid "Preferences..."
+msgstr "환경 설정..."
+
+#: ../variety/indicator.py:252
+msgid "Turn off"
+msgstr "끕니다"
+
+#: ../variety/indicator.py:258
+msgid "_Quote"
+msgstr "명언(_Q)"
+
+#: ../variety/indicator.py:265
+msgid "_History"
+msgstr "사용 기록(_H)"
+
+#: ../variety/indicator.py:271
+msgid "_Wallpaper Selector"
+msgstr "배경화면 선택기(_W)"
+
+#: ../variety/indicator.py:277
+msgid "Recent _Downloads"
+msgstr "최근 내려받기 기록(_D)"
+
+#: ../variety/indicator.py:292
+msgid "Start Slideshow"
+msgstr ""
+
+#: ../variety/indicator.py:302
+msgid "About"
+msgstr "설명"
+
+#: ../variety/indicator.py:306 ../data/ui/PreferencesVarietyDialog.ui.h:196
+msgid "Donate"
+msgstr "기부하기"
+
+#: ../variety/indicator.py:310
+msgid "Quit"
+msgstr "끝내기"
+
+#: ../variety/indicator.py:428
+msgid "_Safe mode"
+msgstr ""
+
+#: ../variety/AddMediaRssDialog.py:40
+msgid ""
+"This does not seem to be a valid Media RSS feed URL or there is no content "
+"there."
+msgstr "이는 유효한 미디어 RSS 피드 URL이 아니거나 내용이 없는듯합니다."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
+msgid "Variety - VRTY.ORG"
+msgstr "버라이어티 - VRTY.ORG"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
+msgid "No, thanks"
+msgstr "고맙지만, 사양합니다"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
+msgid ""
+"<span font=\"14\" weight=\"bold\">Introducing <a "
+"href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
+msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG를 <span font=\"14\" "
+"weight=\"bold\">소개합니다</a>! 참여하고 싶습니까?</span>"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
+msgid ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
+"similar tastes and provides super-convenient ways to change your wallpaper, "
+"to find and add new image sources to Variety, and to follow other users' "
+"favorites."
+msgstr ""
+"<a href=\"https://vrty.org\">VRTY.ORG</a>는 같은 입맛을 가진 버라이어티 사용자와 연결을 해주고 당신의 "
+"배경화면을 아주-편리하게 바꾸는 방법을 제공하며, 버라이어티에 새로운 이미지 소스를 찾으시거나 추가하실 수 있고, 다른 사용자의 "
+"즐겨찾기를 따르실 수 있습니다."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
+msgid ""
+"Participation takes no effort - your profile will be built automatically, as "
+"you like or dislike images downloaded by Variety. Your profile will not be "
+"shared with third parties, unless you opt-in to make it public. <a "
+"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
+"service and the privacy policy here.</a>"
+msgstr ""
+"참여하는 건 몹시 어렵지 않습니다 - 버라이어티가 당신이 선호 혹은 비선호 이미지를 내려받는 것으로 바탕을 두므로, 당신의 프로필은 "
+"자동으로 생성될 것입니다. 당신이 이 프로필을 모두에게 공개해서 참여함으로 설정하지 않은 이상, 당신의 프로필은 제삼자와 공유되지 "
+"않습니다. <a href='http://peterlevi.com/variety/vrty-org/'>여기에 들어가셔서 이 서비스에 관한 더 "
+"자세한 사항과 개인 정보 보호 정책을 읽으십시오.</a>"
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+msgid ""
+"Participation is required for some features of Variety such as <span "
+"weight=\"bold\">synchronization of favorites between computers</span>."
+msgstr ""
+"<span weight=\"bold\">컴퓨터들 사이에서 즐겨찾기를 동기화합니다</span>와 같은 버라이어티의 몇몇 기능은 참여가 "
+"요구됩니다."
+
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
+#: ../data/ui/PreferencesVarietyDialog.ui.h:107
+msgid "Participate in VRTY.ORG"
+msgstr "VRTY.ORG에 참여합니다"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:1
+msgid "Variety - add Panoramio image source"
+msgstr "버라이어티 - 파노라미오 이미지 소스를 추가합니다"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:2
+msgid "Panoramio"
+msgstr "파노라미오"
+
+#: ../data/ui/AddPanoramioDialog.ui.h:3
+msgid "Please zoom over your area of interest."
+msgstr "당신이 관심 있는 부분을 확대하십시오."
+
+#: ../data/ui/FacebookPublishDialog.ui.h:1
+msgid "Variety - Publish to Facebook"
+msgstr "버라이어티 - 페이스북에 발표합니다"
+
+#: ../data/ui/FacebookPublishDialog.ui.h:3
+msgid ""
+"Publish a link to the current wallpaper on Facebook. Include this text along "
+"with the link (or just leave empty):"
+msgstr "페이스북에 현재 배경화면의 링크를 발표합니다. 이 문자를 링크와 함께 발표합니다(혹은 공란으로 남기셔도 됩니다):"
+
+#: ../data/ui/FacebookPublishDialog.ui.h:4
+msgid "Use current quote"
+msgstr "현재의 명언을 사용합니다"
+
+#: ../data/ui/FacebookPublishDialog.ui.h:5 ../variety/VarietyWindow.py:2676
+msgid "Do not ask anymore, always use the text above"
+msgstr "다시는 묻지 않습니다, 문자를 항상 위에 둬서 사용합니다"
+
+#: ../variety/AddWallhavenDialog.py:38 ../variety/AddFlickrDialog.py:138
+msgid "No images found"
+msgstr "이미지를 찾을 수 없습니다"
+
+#: ../variety/VarietyWindow.py:662 ../variety/VarietyWindow.py:820
+#: ../variety/VarietyWindow.py:2835
+msgid "Already in Favorites"
+msgstr "이미 즐겨찾기에 있습니다"
+
+#: ../variety/VarietyWindow.py:667 ../variety/ThumbsManager.py:151
+msgid "Move to _Favorites"
+msgstr "즐겨찾기로 이동합니다(_F)"
+
+#: ../variety/VarietyWindow.py:697 ../variety/ThumbsManager.py:119
+msgid "Fetched: Show Origin"
+msgstr "불러왔습니다: 원본을 봅니다"
+
+#: ../variety/VarietyWindow.py:699 ../variety/VarietyWindow.py:810
+#: ../variety/ThumbsManager.py:121
+#, python-format
+msgid "View at %s"
+msgstr "%s에서 봅니다"
+
+#: ../variety/VarietyWindow.py:749
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: ../variety/VarietyWindow.py:761
+msgid "Safe mode: On"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:761
+msgid "Turn Safe mode on"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:780
+#, python-format
+msgid "Author: %s"
+msgstr "저자: %s"
+
+#: ../variety/VarietyWindow.py:803 ../variety/VarietyWindow.py:817
+msgid "Resume regular changes"
+msgstr "정기적 변경을 재개합니다"
+
+#: ../variety/VarietyWindow.py:952
+msgid "Filtering too strict?"
+msgstr "필터를 매우 까다롭게 설정하시겠습니까?"
+
+#: ../variety/VarietyWindow.py:953
+msgid ""
+"Variety is finding too few images that match your image filtering criteria"
+msgstr "버라이어티는 당신의 필터 범위와 관련 있는 매우 적은 수의 이미지를 찾는 중입니다"
+
+#: ../variety/VarietyWindow.py:1451
+msgid "Please add more image sources or wait for some downloads"
+msgstr "더 많은 이미지 소스를 추가하시거나 몇몇 내려받기를 기다려주십시오"
+
+#: ../variety/VarietyWindow.py:1453
+msgid "Please add more image sources"
+msgstr "더 많은 이미지 소스를 추가하십시오"
+
+#: ../variety/VarietyWindow.py:1454
+msgid "No more wallpapers"
+msgstr "더는 배경화면은 없습니다"
+
+#: ../variety/VarietyWindow.py:1660
+msgid "Current wallpaper is not in the image sources"
+msgstr "현재 배경화면은 이미지 소스에 없습니다"
+
+#: ../variety/VarietyWindow.py:1695
+#, python-format
+msgid ""
+"Could not move to %s. You probably don't have permissions to move this file."
+msgstr "다음 %s. 로 이동할 수 없습니다 이 파일을 옮길 권한이 없는 것 같습니다."
+
+#: ../variety/VarietyWindow.py:1697
+#, python-format
+msgid ""
+"Could not copy to %s. You probably don't have permissions to copy this file."
+msgstr "다음 %s. 로 복사할 수 없습니다. 이 파일을 복사할 권한이 없는 것 같습니다."
+
+#: ../variety/VarietyWindow.py:1717 ../variety/VarietyWindow.py:1745
+#: ../variety/VarietyWindow.py:1750
+msgid "Cannot delete"
+msgstr "삭제할 수 없습니다"
+
+#: ../variety/VarietyWindow.py:1718
+#, python-format
+msgid "You don't have permissions to delete %s to Trash."
+msgstr "휴지통에 %s를 버릴 권한이 없습니다."
+
+#: ../variety/VarietyWindow.py:1746
+msgid "Deleting to trash failed, check variety.log for more information."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1751
+msgid ""
+"Deleting to trash failed because no suitable program is installed. Please "
+"install gvfs (gvfs-bin), trash-cli, or konqueror."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:1908
+msgid "Anonymous usage statistics"
+msgstr "익명의 사용 통계"
+
+#: ../variety/VarietyWindow.py:1909
+msgid ""
+"Variety collects anonymous usage statistics. \n"
+"These help us make it better and are not shared with anyone. \n"
+"To read more or turn them off, go to \"Sync and social\""
+msgstr ""
+"버라이어티는 익명의 사용 통계를 수집합니다. \n"
+"이는 버라이어티를 더 나은 프로그램으로 만들어주게 하며 아무에게도 공유되지 않습니다. \n"
+"\n"
+"더 자세한 사항을 읽으시거나 이를 안 보이게 설정하시려면, \"동기화와 소셜 네트워크\"로 가십시오"
+
+#: ../variety/VarietyWindow.py:2092
+msgid ""
+"I will open an editor with the config file and apply the changes after you "
+"save and close the editor."
+msgstr "설정 파일과 함께 편집기를 열 것이고 당신이 편집기를 저장 및 닫고 나서 변경 사항을 적용할 것입니다."
+
+#: ../variety/VarietyWindow.py:2130
+msgid ""
+"%prog [options] [files or urls]\n"
+"\n"
+"Passing local files will add them to Variety's queue.\n"
+"Passing remote URLs will make Variety fetch them to Fetched folder and place "
+"them in the queue.\n"
+"\n"
+"To set a specific wallpaper: %prog /some/local/image.jpg --next"
+msgstr ""
+"%prog [선택 사항] [파일 혹은 URL]\n"
+"\n"
+"로컬 파일을 넘김은 이를 버리아어티의 대기열에 추가할 것입니다.\n"
+"\n"
+"원격 URL을 넘김은 버라이어티가 이를 불러온 폴더에 불러올 것이며 대기열에 위치하도록 할 것입니다.\n"
+"\n"
+"\n"
+"특정 배경화면을 정하시려면 다음과 같은 명령어를 사용하십시오: %prog /some/local/image.jpg --next"
+
+#: ../variety/VarietyWindow.py:2140
+msgid ""
+"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
+"variety_lib too)"
+msgstr ""
+"로그 메시지를 봅니다(-vv는 디버깅 메시지를 보여주기도 하며, -vvv는 variety_lib를 디버깅을 해주기도 합니다)"
+
+#: ../variety/VarietyWindow.py:2144
+msgid "Make the running instance quit"
+msgstr "실행 중인 버라이어티를 즉시 종료합니다"
+
+#: ../variety/VarietyWindow.py:2148
+msgid ""
+"Print the current wallpaper location. Used only when the application is "
+"already running."
+msgstr "현재 배경화면 위치를 복사합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
+
+#: ../variety/VarietyWindow.py:2152
+msgid "Show Next wallpaper"
+msgstr "다음 배경화면 보기"
+
+#: ../variety/VarietyWindow.py:2156
+msgid "Show Previous wallpaper"
+msgstr "이전 배경화면 보기"
+
+#: ../variety/VarietyWindow.py:2160
+msgid "Show Next wallpaper, skipping the forward history"
+msgstr "다음 배경화면 보기, 사용기록을 앞으로 넘깁니다"
+
+#: ../variety/VarietyWindow.py:2164
+msgid ""
+"Move current wallpaper to Trash. Used only when the application is already "
+"running."
+msgstr "현재 배경화면을 휴지통에 이동합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
+
+#: ../variety/VarietyWindow.py:2168
+msgid ""
+"Copy current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr "현재 배경화면을 즐겨찾기에 복사합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
+
+#: ../variety/VarietyWindow.py:2172
+msgid ""
+"Move current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr "현재 배경화면을 즐겨찾기에 이동합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
+
+#: ../variety/VarietyWindow.py:2176
+msgid "Pause on current image"
+msgstr "이미지 변경을 중지합니다."
+
+#: ../variety/VarietyWindow.py:2180
+msgid "Resume regular image changes"
+msgstr "정기적 이미지 변경을 재개합니다"
+
+#: ../variety/VarietyWindow.py:2184
+msgid "Toggle Pause/Resume state"
+msgstr "일시 정지/재개 상태를 바꿉니다."
+
+#: ../variety/VarietyWindow.py:2188
+msgid "Show Next quote"
+msgstr "다음 명언 보기"
+
+#: ../variety/VarietyWindow.py:2192
+msgid "Show Previous quote"
+msgstr "이전 명언 보기"
+
+#: ../variety/VarietyWindow.py:2196
+msgid "Show Next quote, skipping the forward history"
+msgstr "다음 명언 보기, 사용기록을 앞으로 넘깁니다"
+
+#: ../variety/VarietyWindow.py:2200
+msgid "Toggle Quotes Pause/Resume state"
+msgstr "명언 일시 정지/재개 상태를 바꿉니다."
+
+#: ../variety/VarietyWindow.py:2204
+msgid "Save the current quote to Favorites"
+msgstr "현재 명언을 즐겨찾기에 저장하기"
+
+#: ../variety/VarietyWindow.py:2208
+msgid "Toggle History display"
+msgstr "사용 기록 표시창을 켭니다"
+
+#: ../variety/VarietyWindow.py:2212
+msgid "Toggle Recent Downloads display"
+msgstr "최근 내려받기 표시창을 켭니다"
+
+#: ../variety/VarietyWindow.py:2216
+msgid "Show Preferences dialog"
+msgstr "환경 설정 대화상자 보기"
+
+#: ../variety/VarietyWindow.py:2220
+msgid ""
+"Show manual wallpaper selector - the thumbnail bar filled with images from "
+"the active image sources"
+msgstr "수동 배경화면 선택기 보기 - 섬네일 창에 활성 이미지 소스로부터 받은 이미지로 선택합니다"
+
+#: ../variety/VarietyWindow.py:2224
+msgid ""
+"Sets and applies an option. The option names are the same that are used in "
+"Variety's config file ~/.config/variety/variety.conf. Multiple options can "
+"be set in a single command. Example: 'variety --set-option icon Dark --set-"
+"option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
+"file directly in an unguarded way."
+msgstr ""
+"선택 사항을 설정 및 적용을 합니다. 선택 사항 이름은 버라이어티의 설정 파일인 "
+"~/.config/variety/variety.conf에서 사용되는 선택 사항과 같습니다. 여러 개의 선택 사항은 단 하나의 명령어로 "
+"설정될 수 있습니다. 예시로: 'variety --set-option icon Dark --set-option clock_enabled "
+"True'와 같은 걸로 말입니다. 조심해서 다루십시오: 당신은 설정 파일을 직접 보호받지 않는 방법으로 바꾸고 계십니다."
+
+#: ../variety/VarietyWindow.py:2238
+msgid "options --next/--fast-forward and --previous are mutually exclusive"
+msgstr "선택 사항 --next/--fast-forward와 --previous는 상호 배타적입니다"
+
+#: ../variety/VarietyWindow.py:2241
+msgid "options --trash and --favorite are mutually exclusive"
+msgstr "선택 사항 --trash와 --favorite는 상호 배타적입니다"
+
+#: ../variety/VarietyWindow.py:2244
+msgid "options --pause and --resume are mutually exclusive"
+msgstr "선택 사항 --pause와 --resume은 상호 배타적입니다"
+
+#: ../variety/VarietyWindow.py:2247
+msgid ""
+"options --quotes-next/--quotes-fast-forward and --quotes-previous are "
+"mutually exclusive"
+msgstr ""
+"선택 사항 --quotes-next/--quotes-fast-forward와 --quotes-previous는 상호 배타적입니다"
+
+#: ../variety/VarietyWindow.py:2364 ../variety/ImageFetcher.py:60
+#: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
+#: ../variety/ImageFetcher.py:110
+msgid "Not an image"
+msgstr "이미지가 아닙니다"
+
+#: ../variety/VarietyWindow.py:2369
+msgid "Added to queue"
+msgstr "대기열에 추가됐습니다"
+
+#: ../variety/VarietyWindow.py:2370 ../variety/VarietyWindow.py:2376
+msgid "Press Next to see it"
+msgstr "다음을 누르셔서 보십시오"
+
+#: ../variety/VarietyWindow.py:2376
+msgid "Fetched"
+msgstr "불러왔습니다"
+
+#: ../variety/VarietyWindow.py:2422
+msgid "Unsupported source type"
+msgstr "지원되지 않는 소스 형태입니다"
+
+#: ../variety/VarietyWindow.py:2423 ../variety/VarietyWindow.py:2471
+msgid "Are you running the most recent version of Variety?"
+msgstr "지금 당신은 최신 버전의 버라이어티를 실행하고 계십니까?"
+
+#: ../variety/VarietyWindow.py:2429
+msgid "New image source added"
+msgstr "새로운 이미지 소스가 추가됐습니다"
+
+#: ../variety/VarietyWindow.py:2431
+msgid "Image source already exists, enabling it"
+msgstr "이미 이미지 소스가 존재합니다, 이 소스를 사용합니다"
+
+#: ../variety/VarietyWindow.py:2457
+msgid "Fetched and applied"
+msgstr "불러왔고 적용되었습니다"
+
+#: ../variety/VarietyWindow.py:2467
+msgid "It works!"
+msgstr "실행이 잘됩니다!"
+
+#: ../variety/VarietyWindow.py:2467
+msgid "Yay, Variety links work. Great!"
+msgstr "와, 버라이어티 링크가 실행이 잘됩니다. 매우 기쁩니다!"
+
+#: ../variety/VarietyWindow.py:2471
+msgid "Unsupported command"
+msgstr "지원되지 않는 명령어입니다"
+
+#: ../variety/VarietyWindow.py:2473
+msgid "Could not process the given variety:// URL"
+msgstr "주어진 버라이어티:// URL을 처리할 수 없습니다"
+
+#: ../variety/VarietyWindow.py:2474
+msgid "Run with logging enabled to see details"
+msgstr "로깅 사용과 같이 실행하여 자세한 사항을 봅니다"
+
+#: ../variety/VarietyWindow.py:2673
+msgid "Do not ask anymore, always use the current quote"
+msgstr "다시는 묻지 않습니다, 현재의 명언을 항상 사용합니다"
+
+#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
+msgid "Published"
+msgstr "발표됨"
+
+#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
+msgid "You may open your Facebook feed to see the post"
+msgstr "페이스북 피드를 열어 포스트를 볼 수 있습니다"
+
+#: ../variety/VarietyWindow.py:2711 ../variety/VarietyWindow.py:2740
+msgid "Could not publish"
+msgstr "발표를 할 수 없습니다"
+
+#: ../variety/VarietyWindow.py:2903
+msgid "Could not create autostart entry"
+msgstr "자동 실행 항목을 만들 수 없습니다"
+
+#: ../variety/VarietyWindow.py:2904
+msgid ""
+"An error occurred while creating the autostart desktop entry\n"
+"Please run from a terminal with the -v flag and try again."
+msgstr ""
+"데스크톱 자동 시작 항목을 설정하는 도중에 오류가 발생했습니다\n"
+"터미널에서 -v 플래그 옵션을 지정하시고 다시 시도하십시오."
+
+#: ../variety/VarietyWindow.py:2954
+msgid "No images"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2954
+msgid "There are no images in the slideshow folders"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2989
+msgid "Wallhaven image sources disabled"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2990
+msgid ""
+"Please google \"Python SNI SSL error\" if you want to fix the problem "
+"yourself."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:2996
+msgid ""
+"There are SSL incompatibilities between your version of Python and some "
+"https sites like Wallhaven. You can <a "
+"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
+"doesnt-give-sni-support/\">read more about the issue here</a>.\n"
+"\n"
+"Do you want to install the Python dependencies required to fix this problem? "
+"\n"
+"This operation will ask for superuser privileges. "
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3001
+msgid "Variety - SSL error. Install dependencies?"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3022
+msgid "Installing..."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3023
+#, python-format
+msgid ""
+"Installation will take a minute or two. Please be patient. Log file is at %s"
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3036
+msgid "Dependencies were installed. Please restart Variety now."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3037
+msgid ""
+"If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
+"and seek another solution."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3040
+msgid "Failure. Wallhaven sources disabled."
+msgstr ""
+
+#: ../variety/VarietyWindow.py:3041
+#, python-format
+msgid ""
+"SSL-related dependencies were not installed successfully. Please see %s or "
+"google \"Python SNI SSL error\" and seek another solution."
+msgstr ""
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:1
+msgid "Variety - Facebook Sharing"
+msgstr "버라이어티 - 페이스북으로 공유합니다"
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:2
+#: ../data/ui/PreferencesVarietyDialog.ui.h:171
+msgid "Facebook Sharing"
+msgstr "페이스북으로 공유합니다"
+
+#: ../data/ui/FacebookFirstRunDialog.ui.h:3
+msgid ""
+"You are sharing on Facebook for the first time. Sharing from Variety is "
+"available for images that come from online sources and for quotes. It works "
+"this way: \n"
+"\n"
+"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
+"Facebook will open in your default browser. You will be prompted to login if "
+"you are not already logged in. \n"
+"\n"
+"<span font_weight=\"bold\">2. Authorize Variety to publish to your "
+"feed.</span>\n"
+"You will be asked to allow Variety to publish to your feed on your behalf. "
+"Variety will only use this permission to publish those images and quotes "
+"that you tell it to, nothing else.\n"
+"\n"
+"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
+"with Variety or xdg-open</span>\n"
+"Then you will be redirected to a page with instructions to associate "
+"\"variety://\" links with Variety in your browser. Please follow these "
+"instructions to complete the setup. You have to do this only once.\n"
+"\n"
+"No passwords or login information is kept locally, just an OAuth Facebook "
+"token that will be valid for a couple of weeks. After its validity expires "
+"you will be asked to login again."
+msgstr ""
+"지금 당신은 처음으로 페이스북으로 공유하고 계십니다. 버라이어티에서 온라인 소스로부터 온 이미지 및 명언 공유가 가능합니다. 이 과정은 "
+"다음과 같은 방법으로 작동됩니다: \n"
+"\n"
+"<span font_weight=\"bold\">1. 페이스북으로 로그인을 합니다</span>\n"
+"페이스북은 당신의 기본 브라우저에서 열릴 것입니다. 만약 당신이 이미 로그인되어있지 않다면 페이스북은 당신이 로그인하도록 말할 것입니다. "
+"\n"
+"\n"
+"<span font_weight=\"bold\">2. 버라이어티를 허가하셔서 당신의 피드를 발표하십시오.</span>\n"
+"당신은 당신의 피드를 발표할 수 있게 버라이어티를 허가하도록 요구받을 것입니다. 버라이어티는 이 권한을 당신이 원하는 이미지 및 명언을 "
+"발표하는 데만 사용할 것이며, 그 외에는 사용하지 않을 것입니다.\n"
+"\n"
+"<span font_weight=\"bold\">3. 브라우저가 버라이어티나 xdg-오픈으로 버라이어티:// 링크를 열 수 있도록 "
+"설정하십시오</span>\n"
+"그러고 나서 당신은 브라우저에서 버라이어티와 함께 \"버라이어티://\" 링크에 관련된 지시문이 있는 페이지로 리다이렉트될 것입니다. "
+"다음과 같은 지시문을 따르셔서 설정을 완료하십시오. 당신은 이를 단 한 번만 하시면 됩니다.\n"
+"\n"
+"당신의 암호나 로그인 정보는 로컬에 보관되지 않으며, 몇 주 동안 유효한 OAuth 페이스북 토큰을 생성할 뿐입니다. 유효 기간이 "
+"만료되면 당신은 다시 로그인하도록 요구받을 것입니다."
+
+#: ../data/plugins/quotes/QuotationsPageSource.py:35
+msgid "Fetches quotes from TheQuotationsPage.com"
+msgstr "TheQuotationsPage.com으로부터 명언을 불러옵니다"
+
+#: ../data/ui/AddRedditDialog.ui.h:1
+msgid "Variety - add Reddit feed"
+msgstr "버라이어티 - 레딧 피드를 추가합니다"
+
+#: ../data/ui/AddRedditDialog.ui.h:3
+msgid ""
+"Enter the name of a subreddit or paste the full URL of a subreddit or a <a "
+"href=\"http://reddit.com\">Reddit</a> user. You may specify sort order and "
+"time period if you wish. Variety will use posts to direct images or to Imgur "
+"pages within the first 100 submissions returned by Reddit.\n"
+"\n"
+"Example: You may specify simply 'comics' or <a "
+"href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
+"Example: Top posts from the month: <a "
+"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
+"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
+msgstr ""
+
+#: ../data/ui/AddRedditDialog.ui.h:7
+msgid "URL or name of a subreddit: "
+msgstr "URL 혹은 서브레딧의 이름: "
+
+#: ../data/ui/AddRedditDialog.ui.h:8
+msgid "Just a moment to check what's there"
+msgstr "무엇이 있는지 확인 중이니 잠시 기다리십시오"
+
+#: ../data/ui/AddRedditDialog.ui.h:9 ../data/ui/AddWallhavenDialog.ui.h:10
+#: ../data/ui/AddMediaRssDialog.ui.h:6 ../data/ui/AddFlickrDialog.ui.h:17
+msgid "  "
+msgstr "  "
+
+#: ../data/ui/SmartRegisterDialog.ui.h:1
+msgid "Variety - VRTY.ORG registration"
+msgstr "버라이어티 - VRTY.ORG 회원 가입"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:2
+msgid "Would you like to register?"
+msgstr "회원 가입을 하시겠습니까?"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:3
+msgid ""
+"You may participate in <a href=\"https://vrty.org\">VRTY.ORG</a> "
+"anonymously, but registration enables some very nice features, such as <span "
+"weight=\"bold\">synchronization</span> of favorites between computers and "
+"<span weight=\"bold\">personalized recommendations</span>. It also ensures "
+"you will not lose your profile and favorite wallpapers if you reinstall your "
+"OS."
+msgstr ""
+"당신은 <a href=\"https://vrty.org\">VRTY.ORG</a> 에서 익명으로 참여하실 수 있지만, 회원 가입은 "
+"컴퓨터들 사이에서 즐겨찾기 및 <span weight=\"bold\">사용자 설정 추천</span>을 <span "
+"weight=\"bold\">동기화를 합니다</span> 같은, 매우 멋진 몇몇 기능을 사용할 수 있도록 해줍니다. 또한, 이 기능은 "
+"당신이 운영체제를 재설치하신다면 당신의 프로필과 선호하는 배경화면을 확실하게 잃지 않도록 해줍니다."
+
+#: ../data/ui/SmartRegisterDialog.ui.h:4
+msgid "Registration is very easy and does not require any personal data."
+msgstr "회원 가입은 매우 쉬우며 아무 개인 정보를 요구하지 않습니다."
+
+#: ../data/ui/SmartRegisterDialog.ui.h:5
+msgid ""
+"If you choose to participate anonymously, you can register later from the "
+"<span weight=\"bold\">\"Sync and social\"</span> page in Preferences."
+msgstr ""
+"만약 당신이 익명으로 참여함을 선택하셨다면, 당신은 환경 설정에 있는 <span weight=\"bold\">\"동기화와 소셜 "
+"네트워크\"</span> 페이지에서 나중에 가입하실 수 있습니다."
+
+#: ../data/ui/SmartRegisterDialog.ui.h:6
+msgid ""
+"Oops, we could not connect to VRTY.ORG. Server might be down. Please wait a "
+"couple of minutes and try again or choose <span "
+"font_weight=\"bold\">\"Participate anonymously\"</span> and register later "
+"from the <span font_weight=\"bold\">\"Sync and social\"</span> page in "
+"Preferences."
+msgstr ""
+"이런, 우리는 VRTY.ORG 서버를 연결할 수 없습니다. 서버가 잠시 다운된 상태일 수도 있습니다. 잠시 몇 분 동안 기다리시고 다시 "
+"접속을 시도하시거나 <span font_weight=\"bold\">\"익명으로 참여합니다\"</span>를 선택하시고 환경 설정에 있는 "
+"<span weight=\"bold\">\"동기화와 소셜 네트워크\"</span> 페이지에서 나중에 가입하십시오."
+
+#: ../data/ui/SmartRegisterDialog.ui.h:7
+msgid ""
+"Please continue the registration and follow the instructions in the browser "
+"tab we opened."
+msgstr "회원 가입을 계속하시고 우리가 브라우저 탭에 열은 지시문을 따르십시오."
+
+#: ../data/ui/SmartRegisterDialog.ui.h:8
+msgid "I will participate anonymously"
+msgstr "익명으로 참여할 것입니다"
+
+#: ../data/ui/SmartRegisterDialog.ui.h:9
+msgid "I'm registered, let me login"
+msgstr ""
+
+#: ../data/ui/SmartRegisterDialog.ui.h:10
+msgid "Register here"
+msgstr "여기서 회원 가입을 하십시오"
+
+#: ../variety/FolderChooser.py:65
+msgid "Choose a folder"
+msgstr "폴더를 선택하십시오"
+
+#: ../variety/FolderChooser.py:66
+msgid "OK"
+msgstr "확인"
+
+#: ../variety/__init__.py:147
+msgid "Terminating signal received, quitting..."
+msgstr "받은 신호를 중지하는 중입니다, 종료하는 중입니다..."
+
+#: ../variety/__init__.py:202
+msgid ""
+"Variety is already running. Sending the command to the running instance."
+msgstr "버라이어티가 이미 실행 중입니다. 실행 중인 인스턴스에 명령어를 보냅니다."
+
+#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui.h:55
+msgid "Bottom"
+msgstr "하단"
+
+#: ../variety/ThumbsManager.py:42
+msgid "Top"
+msgstr "상단"
+
+#: ../variety/ThumbsManager.py:43
+msgid "Left"
+msgstr "좌측"
+
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui.h:52
+msgid "Right"
+msgstr "우측"
+
+#: ../variety/ThumbsManager.py:94
+msgid "Position"
+msgstr "위치"
+
+#: ../variety/ThumbsManager.py:98 ../data/ui/PreferencesVarietyDialog.ui.h:133
+msgid "Size"
+msgstr "크기"
+
+#: ../variety/ThumbsManager.py:109
+msgid "Show Containing Folder"
+msgstr "들어있는 폴더를 봅니다"
+
+#: ../variety/ThumbsManager.py:178
+msgid "Close"
+msgstr "닫기"
+
+#: ../variety/ThumbsManager.py:198
+msgid "Could not set EXIF rating"
+msgstr "EXIF 평점을 정할 수 없습니다"
+
+#: ../variety/ThumbsManager.py:217
+msgid "Unrated"
+msgstr "무등급"
+
+#: ../variety/ThumbsManager.py:224
+msgid "Rejected"
+msgstr "거부됨"
+
+#: ../variety/ThumbsManager.py:326
+msgid "Variety History"
+msgstr "버라이어티 사용 기록"
+
+#: ../variety/ThumbsManager.py:328
+msgid "Variety Recent Downloads"
+msgstr "버라이어티 최근 내려받기 기록"
+
+#: ../variety/ThumbsManager.py:330
+msgid "Variety Images"
+msgstr "버라이어티 이미지"
+
+#: ../data/ui/AboutVarietyDialog.ui.h:1
+msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
+msgstr "저작권 (c) 2012, 피터 레비 <peterlevi@peterlevi.com>"
+
+#: ../data/ui/AboutVarietyDialog.ui.h:2
+msgid "About Variety"
+msgstr "버라이어티 설명"
+
+#: ../data/ui/AboutVarietyDialog.ui.h:3
+msgid "An automatic wallpaper changer, downloader and manager."
+msgstr "자동 배경화면 바꾸기, 내려받기 및 관리자 프로그램입니다."
+
+#: ../data/ui/AboutVarietyDialog.ui.h:4
+msgid "http://peterlevi.com/variety"
+msgstr "http://peterlevi.com/variety"
+
+#: ../data/ui/AboutVarietyDialog.ui.h:5
+msgid ""
+"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
+"# This program is free software: you can redistribute it and/or modify it \n"
+"# under the terms of the GNU General Public License version 3, as published "
+"\n"
+"# by the Free Software Foundation.\n"
+"# \n"
+"# This program is distributed in the hope that it will be useful, but \n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"# \n"
+"# You should have received a copy of the GNU General Public License along \n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+"# 저작권 (c) 2012, 피터 레비 <peterlevi@peterlevi.com>\n"
+"# 이 프로그램은 자유 소프트웨어입니다: 자유 소프트웨어 재단에 의하여 발표된, \n"
+"\n"
+"# GNU 일반 공중 사용 허가서 버전 3약관 아래에서 \n"
+"\n"
+"# 당신은 이 소프트웨어를 재배포하시거나/혹은 수정하실 수 있습니다.\n"
+"\n"
+"# \n"
+"\n"
+"# 이 프로그램은 이것이 매우 유용하게 사용될 것이라는 희망 내에서 배포되었지만, \n"
+"\n"
+"# 아무 보증이 없습니다; 설령 상업적 용도, 만족스러운 품질, 혹은 \n"
+"\n"
+"# 특정 목적을 위한 적합성 보증이 적용되지 않더라도 말입니다. \n"
+"\n"
+"# GNU 일반 공중 사용 허가서에서 더 자세한 사항을 보십시오.\n"
+"\n"
+"# \n"
+"\n"
+"# 당신은 이 프로그램과 같이 GNU 일반 공중 사용 허가서 복사본을 받으셔야 합니다. \n"
+"# 그렇지 않으면, <http://www.gnu.org/licenses/>을 보십시오.\n"
+
+#: ../variety.desktop.in.h:1
+msgid "Variety"
+msgstr "버라이어티"
+
+#: ../variety.desktop.in.h:2
+msgid "Variety Wallpaper Changer"
+msgstr "버라이어티 배경화면 바꾸기 프로그램"
+
+#: ../variety.desktop.in.h:3
+msgid "Next"
+msgstr "다음"
+
+#: ../variety.desktop.in.h:4
+msgid "Previous"
+msgstr "이전"
+
+#: ../variety.desktop.in.h:5
+msgid "Pause / Resume"
+msgstr "일시 정지 / 재개"
+
+#: ../variety.desktop.in.h:6
+msgid "History"
+msgstr "사용 기록"
+
+#: ../variety.desktop.in.h:7
+msgid "Preferences"
+msgstr "환경 설정"
+
+#: ../data/ui/AddWallhavenDialog.ui.h:1
+msgid "Variety - add Wallhaven.cc image source"
+msgstr "버라이어티 - Wallhaven.cc 이미지 소스를 추가합니다"
+
+#: ../data/ui/AddWallhavenDialog.ui.h:3
+msgid ""
+"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a> provides a variety of image "
+"search options. Below you can specify keywords to search for, or visit <a "
+"href=\"http://wallhaven.cc\">Wallhaven.cc</a>, setup your search criteria "
+"there, ensure you like the results, and paste the full Wallhaven URL in the "
+"box.\n"
+"\n"
+"If you specify keywords, the most liked safe-for-work images that match all "
+"of the keywords will be used. \n"
+"\n"
+"If you specify a Wallhaven URL, please choose the sorting criteria carefully "
+"- Variety regularly requests images, but uses only images from the first "
+"several hundred returned. Random or Date will mean this image source will "
+"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
+"better images and Relevance will provide closer matches when searching for "
+"phrases or colors."
+msgstr ""
+"<a href=\"http://wallhaven.cc\">Wallhaven.cc</a>는 다양한 이미지 검색 선택 사항을 제공합니다. "
+"여기서 당신은 찾으려 하는 검색어의 키워드를 지정하시거나, <a "
+"href=\"http://wallhaven.cc\">Wallhaven.cc</a>를 방문하셔서, 당신에게 만족스러운 검색 결과를 확실하게 "
+"제공하는, 당신만의 검색 조건을 설정하시고, 검색 창에 전체 월헤이븐 URL을 입력하실 수 있습니다.\n"
+"\n"
+"만약 당신이 키워드를 지정했다면, 주로 사용될 키워드 중 아무 키워드랑 관련 있는 건전한 이미지가 나올 것입니다. \n"
+"\n"
+"만약 당신이 월헤이븐 URL을 지정했다면, 분류 조건을 주의 깊게 선택하십시오 - 보통 버라이어티는 이미지를 요구하지만, 맨 처음에 "
+"나오는 수백 개의 되돌려진 주소로부터 나타나는 이미지만 사용합니다. 무작위 검색 혹은 날짜별 검색은 이 이미지 소스가 소멸하기 전까지 더 "
+"긴 \"수명\"을 가짐을 뜻합니다. 즐겨찾기 검색은 더 나은 화질의 이미지를 제공하며 연관성 검색은 구절이나 색깔을 검색할 때 더 관련 "
+"있는 결과를 제공합니다."
+
+#: ../data/ui/AddWallhavenDialog.ui.h:8
+msgid "Enter keywords or paste URL here: "
+msgstr "키워드를 입력하시거나 URL을 여기에 붙이십시오: "
+
+#: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
+msgid "Just a moment to check this search"
+msgstr "검색을 확인 중이니 잠시 기다리십시오"
+
+#: ../data/plugins/quotes/LocalFilesSource.py:34
+msgid ""
+"Displays quotes, defined in local text files.\n"
+"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
+"The file format is:\n"
+"\n"
+"quote -- author\n"
+".\n"
+"second quote -- another author\n"
+".\n"
+"etc...\n"
+"\n"
+"Example: http://rvelthuis.de/zips/quotes.txt"
+msgstr ""
+"명언을 표시합니다, 로컬 문자 파일에서 설정됩니다.\n"
+"당신만의 txt 파일을: ~/.config/variety/pluginconfig/quotes/에 넣으십시오.\n"
+"\n"
+"파일 형식은:\n"
+"\n"
+"명언 -- 저자\n"
+".\n"
+"두 번째 명언 -- 다른 저자\n"
+".\n"
+"등등... 입니다\n"
+"\n"
+"예: http://rvelthuis.de/zips/quotes.txt"
+
+#: ../data/ui/AddMediaRssDialog.ui.h:1
+msgid "Variety - add Media RSS feed"
+msgstr "버라이어티 - 미디어 RSS 피드를 추가합니다"
+
+#: ../data/ui/AddMediaRssDialog.ui.h:3
+msgid ""
+"Please paste the URL of the Media RSS feed below. Please note that only "
+"Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds "
+"contain media:content tags linking directly to the actual image content. "
+"Some examples of sites that provide Media RSS feeds are: <a "
+"href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
+"href=\"http://www.deviantart.com\">deviantART</a>, <a "
+"href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
+"href=\"http://www.flickr.com\">Flickr</a>, <a "
+"href=\"http://interfacelift.com\">InterfaceLIFT</a>."
+msgstr ""
+"밑에 있는 창에 미디어 RSS 피드의 URL을 붙어놓으십시오. 임의 RSS 피드가 아니라, 미디어 RSS 피드만을 지원한다는 점에 "
+"유의하십시오. 미디어 RSS 피드는 미디어를 함유하고 있습니다:내용 태그는 실제 이미지 내용과 바로 연결을 합니다. 미디어 RSS 피드를 "
+"제공하는 몇몇 사이트의 예시는: <a href=\"https://picasaweb.google.com/\">피카사</a>, <a "
+"href=\"http://www.deviantart.com\">디비언트아트</a>, <a \n"
+"href=\"http://www.smugmug.com/browse/\">스머그머그</a>, <a "
+"href=\"http://www.flickr.com\">플리커</a>, <a "
+"href=\"http://interfacelift.com\">인터페이스리프트</a>입니다."
+
+#: ../data/ui/AddMediaRssDialog.ui.h:4
+msgid "Paste the URL of the Media RSS feed here: "
+msgstr "여기에 미디어 RSS 피드의 URL을 붙어놓으십시오: "
+
+#: ../data/ui/AddMediaRssDialog.ui.h:5
+msgid "Just a moment to check what's at that URL"
+msgstr "URL에 무엇이 들었는지 확인하는 중이니 잠시 기다리십시오"
+
+#: ../variety/FacebookHelper.py:116
+msgid "Authorization successful"
+msgstr "인증에 성공하셨습니다"
+
+#: ../variety/FacebookHelper.py:116
+msgid "Publishing..."
+msgstr "발표하는 중입니다..."
+
+#: ../variety/FacebookHelper.py:121
+msgid "Authorization failed"
+msgstr "인증에 실패하셨습니다"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr "즐겨찾기에 복사하기 대 즐겨찾기로 이동하기"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
+msgid "Reset to Default"
+msgstr "기본 설정으로 초기화를 합니다"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
+"menu depending on the image location:"
+msgstr "이미지 위치에 따라 메뉴에서 당신의 즐겨찾기가 '즐겨찾기에 복사합니다' 혹은 '즐겨찾기로 이동합니다' 인지를 선택하십시오:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
+"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
+"folder path.\n"
+"Order is important. When an image is shown, the first folder in this list "
+"which contains the image will determine which operations will be shown in "
+"Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
+"한 줄마다 한 항목을 입력하시고, 내려받기, 불러올 수 있는 폴더, 다른 사항 혹은 특정 폴더 경로와 같은 각각 항목을 "
+"<폴더>:<복사합니다, 움직입니다, 혹은 두 개를 동시에 사용합니다>와 같은 형식으로 입력하십시오.\n"
+"여기서 중요한 것은 순서입니다. 이미지가 보일 때, 목록에서 이미지를 함유한 첫 번째 폴더는 버라이어티 메뉴에 보일 어떤 직업을 수행할지 "
+"정할 것입니다. '다른 사항'은 아무 파일과 관련시킬 것이며 목록의 끝 부분에 있어야 합니다.\n"
+"\n"
+"\n"
+"예:\n"
+"\n"
+"[tab]\n"
+"내려받은 폴더:복사합니다\n"
+"\n"
+"[tab]\n"
+"불러온 폴더:움직입니다\n"
+"\n"
+"[tab]\n"
+"/pics/RandomImages:움직입니다\n"
+"\n"
+"[tab]\n"
+"/pics/OrganizedAlbums:복사합니다\n"
+"\n"
+"[tab]\n"
+"다른 사항:두 개를 동시에 사용합니다"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
+msgid "VRTY.ORG integration"
+msgstr "VRTY.ORG 통합"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
+msgid "This feature requires VRTY.ORG integration"
+msgstr "이 기능은 VRTY.ORG 통합을 요구합니다"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:3
+msgid "Enable VRTY.ORG integration"
+msgstr "VRTY.ORG 통합을 사용합니다"
+
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:4
+msgid ""
+"For this feature Variety needs permission to collect data about the images "
+"you like or dislike and the online sources you have enabled.\n"
+"\n"
+"Collected data is anonymous by default and covers only images which Variety "
+"downloaded, never images you already had in your local folders that might be "
+"private.\n"
+"\n"
+"This data helps us provide better images for everyone and fuels <a "
+"href=\"https://vrty.org\">VRTY.ORG</a> - a valuable resource for all users "
+"of Variety."
+msgstr ""
+"이 기능은 버라이어티가 당신이 선호 혹은 비선호 하는 이미지 및 당신이 사용한 온라인 소스에 관한 자료를 수집할 수 있는 권한이 "
+"필요합니다.\n"
+"\n"
+"수집된 자료는 기본으로 익명 상태이고 버라이어티가 내려받은 이미지만 덮어씌웠으며, 절대로 당신이 개인적일지도 모르는 당신의 로컬 폴더에 "
+"이미 보유하고 있는 자료를 수집하지 않습니다.\n"
+"\n"
+"이 자료는 우리가 모두에게 더 나은 이미지를 제공하도록 하며 <a href=\"https://vrty.org\">VRTY.ORG</a>에 "
+"동력이 되어줍니다 - 버라이어티의 모든 사용자를 위한 귀중한 자료입니다."
+
+#: ../variety/AddRedditDialog.py:43
+msgid "This does not seem to be a valid Reddit URL"
+msgstr "이 주소는 유효하지 않은 레딧 URL인듯합니다"
+
+#: ../variety/AddRedditDialog.py:46
+msgid "We could not find any image submissions there."
+msgstr "우리는 이곳에서 아무 이미지 제안을 찾을 수 없습니다."
+
+#: ../data/plugins/quotes/QuotesDaddySource.py:31
+msgid ""
+"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
+"Does not support searching by tags or authors."
+msgstr ""
+"QuotesDaddy의 일일 명언 RSS 피드로부터 명언을 불러옵니다.\n"
+"태그나 저자 검색을 지원하지 않습니다."
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
@@ -568,824 +1675,6 @@ msgid ""
 msgstr ""
 "사진에 있는 제목, 설명과 태그로 검색하는 무료 문자 검색 기능입니다. 제외하고자 하는 항목 앞에는 -을 입력하십시오.\n"
 "예: 사과 -파이"
-
-#: ../variety/AddMediaRssDialog.py:40
-msgid ""
-"This does not seem to be a valid Media RSS feed URL or there is no content "
-"there."
-msgstr "이는 유효한 미디어 RSS 피드 URL이 아니거나 내용이 없는듯합니다."
-
-#: ../variety/VarietyWindow.py:646 ../variety/VarietyWindow.py:798
-#: ../variety/VarietyWindow.py:2729
-msgid "Already in Favorites"
-msgstr "이미 즐겨찾기에 있습니다"
-
-#: ../variety/VarietyWindow.py:650 ../variety/ThumbsManager.py:144
-#: ../variety/indicator.py:79
-msgid "Copy to _Favorites"
-msgstr "즐겨찾기에 복사하기(_F)"
-
-#: ../variety/VarietyWindow.py:651 ../variety/ThumbsManager.py:151
-msgid "Move to _Favorites"
-msgstr "즐겨찾기로 이동합니다(_F)"
-
-#. both
-#: ../variety/VarietyWindow.py:659
-#: ../data/ui/PreferencesVarietyDialog.ui.h:167 ../variety/indicator.py:84
-msgid "Move to Favorites"
-msgstr "즐겨찾기로 이동합니다"
-
-#: ../variety/VarietyWindow.py:681 ../variety/ThumbsManager.py:119
-msgid "Fetched: Show Origin"
-msgstr "불러왔습니다: 원본을 봅니다"
-
-#: ../variety/VarietyWindow.py:683 ../variety/VarietyWindow.py:788
-#: ../variety/ThumbsManager.py:121
-#, python-format
-msgid "View at %s"
-msgstr "%s에서 봅니다"
-
-#: ../variety/VarietyWindow.py:727
-msgid "Unknown"
-msgstr "알 수 없음"
-
-#: ../variety/VarietyWindow.py:739
-msgid "Safe mode: On"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:739
-msgid "Turn Safe mode on"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:758
-#, python-format
-msgid "Author: %s"
-msgstr "저자: %s"
-
-#: ../variety/VarietyWindow.py:781 ../variety/VarietyWindow.py:795
-#: ../variety/indicator.py:123 ../variety/indicator.py:198
-msgid "Pause on current"
-msgstr "이미지 변경을 중지합니다."
-
-#: ../variety/VarietyWindow.py:781 ../variety/VarietyWindow.py:795
-msgid "Resume regular changes"
-msgstr "정기적 변경을 재개합니다"
-
-#: ../variety/VarietyWindow.py:798 ../variety/indicator.py:204
-msgid "Save to Favorites"
-msgstr "즐겨찾기에 저장하기"
-
-#: ../variety/VarietyWindow.py:930
-msgid "Filtering too strict?"
-msgstr "필터를 매우 까다롭게 설정하시겠습니까?"
-
-#: ../variety/VarietyWindow.py:931
-msgid ""
-"Variety is finding too few images that match your image filtering criteria"
-msgstr "버라이어티는 당신의 필터 범위와 관련 있는 매우 적은 수의 이미지를 찾는 중입니다"
-
-#: ../variety/VarietyWindow.py:1403
-msgid "Please add more image sources or wait for some downloads"
-msgstr "더 많은 이미지 소스를 추가하시거나 몇몇 내려받기를 기다려주십시오"
-
-#: ../variety/VarietyWindow.py:1405
-msgid "Please add more image sources"
-msgstr "더 많은 이미지 소스를 추가하십시오"
-
-#: ../variety/VarietyWindow.py:1406
-msgid "No more wallpapers"
-msgstr "더는 배경화면은 없습니다"
-
-#: ../variety/VarietyWindow.py:1609
-msgid "Current wallpaper is not in the image sources"
-msgstr "현재 배경화면은 이미지 소스에 없습니다"
-
-#: ../variety/VarietyWindow.py:1644
-#, python-format
-msgid ""
-"Could not move to %s. You probably don't have permissions to move this file."
-msgstr "다음 %s. 로 이동할 수 없습니다 이 파일을 옮길 권한이 없는 것 같습니다."
-
-#: ../variety/VarietyWindow.py:1646
-#, python-format
-msgid ""
-"Could not copy to %s. You probably don't have permissions to copy this file."
-msgstr "다음 %s. 로 복사할 수 없습니다. 이 파일을 복사할 권한이 없는 것 같습니다."
-
-#: ../variety/VarietyWindow.py:1666 ../variety/VarietyWindow.py:1686
-msgid "Cannot delete"
-msgstr "삭제할 수 없습니다"
-
-#: ../variety/VarietyWindow.py:1667
-#, python-format
-msgid "You don't have permissions to delete %s to Trash."
-msgstr "휴지통에 %s를 버릴 권한이 없습니다."
-
-#: ../variety/VarietyWindow.py:1687
-msgid ""
-"Probably there is no utility for moving to Trash?\n"
-"Please install trash-cli or gvfs-bin or konquerer."
-msgstr ""
-"아마도 휴지통에 이동을 해주는 프로그램이 없을지도 모릅니다?\n"
-"트래시-cli나 gvfs-bin 혹은 컨커러를 설치하십시오."
-
-#: ../variety/VarietyWindow.py:1842
-msgid "Anonymous usage statistics"
-msgstr "익명의 사용 통계"
-
-#: ../variety/VarietyWindow.py:1843
-msgid ""
-"Variety collects anonymous usage statistics. \n"
-"These help us make it better and are not shared with anyone. \n"
-"To read more or turn them off, go to \"Sync and social\""
-msgstr ""
-"버라이어티는 익명의 사용 통계를 수집합니다. \n"
-"이는 버라이어티를 더 나은 프로그램으로 만들어주게 하며 아무에게도 공유되지 않습니다. \n"
-"\n"
-"더 자세한 사항을 읽으시거나 이를 안 보이게 설정하시려면, \"동기화와 소셜 네트워크\"로 가십시오"
-
-#: ../variety/VarietyWindow.py:1986
-msgid ""
-"I will open an editor with the config file and apply the changes after you "
-"save and close the editor."
-msgstr "설정 파일과 함께 편집기를 열 것이고 당신이 편집기를 저장 및 닫고 나서 변경 사항을 적용할 것입니다."
-
-#: ../variety/VarietyWindow.py:2024
-msgid ""
-"%prog [options] [files or urls]\n"
-"\n"
-"Passing local files will add them to Variety's queue.\n"
-"Passing remote URLs will make Variety fetch them to Fetched folder and place "
-"them in the queue.\n"
-"\n"
-"To set a specific wallpaper: %prog /some/local/image.jpg --next"
-msgstr ""
-"%prog [선택 사항] [파일 혹은 URL]\n"
-"\n"
-"로컬 파일을 넘김은 이를 버리아어티의 대기열에 추가할 것입니다.\n"
-"\n"
-"원격 URL을 넘김은 버라이어티가 이를 불러온 폴더에 불러올 것이며 대기열에 위치하도록 할 것입니다.\n"
-"\n"
-"\n"
-"특정 배경화면을 정하시려면 다음과 같은 명령어를 사용하십시오: %prog /some/local/image.jpg --next"
-
-#: ../variety/VarietyWindow.py:2034
-msgid ""
-"Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
-"variety_lib too)"
-msgstr ""
-"로그 메시지를 봅니다(-vv는 디버깅 메시지를 보여주기도 하며, -vvv는 variety_lib를 디버깅을 해주기도 합니다)"
-
-#: ../variety/VarietyWindow.py:2038
-msgid "Make the running instance quit"
-msgstr "실행 중인 버라이어티를 즉시 종료합니다"
-
-#: ../variety/VarietyWindow.py:2042
-msgid ""
-"Print the current wallpaper location. Used only when the application is "
-"already running."
-msgstr "현재 배경화면 위치를 복사합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
-
-#: ../variety/VarietyWindow.py:2046
-msgid "Show Next wallpaper"
-msgstr "다음 배경화면 보기"
-
-#: ../variety/VarietyWindow.py:2050
-msgid "Show Previous wallpaper"
-msgstr "이전 배경화면 보기"
-
-#: ../variety/VarietyWindow.py:2054
-msgid "Show Next wallpaper, skipping the forward history"
-msgstr "다음 배경화면 보기, 사용기록을 앞으로 넘깁니다"
-
-#: ../variety/VarietyWindow.py:2058
-msgid ""
-"Move current wallpaper to Trash. Used only when the application is already "
-"running."
-msgstr "현재 배경화면을 휴지통에 이동합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
-
-#: ../variety/VarietyWindow.py:2062
-msgid ""
-"Copy current wallpaper to Favorites. Used only when the application is "
-"already running."
-msgstr "현재 배경화면을 즐겨찾기에 복사합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
-
-#: ../variety/VarietyWindow.py:2066
-msgid ""
-"Move current wallpaper to Favorites. Used only when the application is "
-"already running."
-msgstr "현재 배경화면을 즐겨찾기에 이동합니다. 프로그램이 이미 실행 중일 때만 사용됩니다."
-
-#: ../variety/VarietyWindow.py:2070
-msgid "Pause on current image"
-msgstr "이미지 변경을 중지합니다."
-
-#: ../variety/VarietyWindow.py:2074
-msgid "Resume regular image changes"
-msgstr "정기적 이미지 변경을 재개합니다"
-
-#: ../variety/VarietyWindow.py:2078
-msgid "Toggle Pause/Resume state"
-msgstr "일시 정지/재개 상태를 바꿉니다."
-
-#: ../variety/VarietyWindow.py:2082
-msgid "Show Next quote"
-msgstr "다음 명언 보기"
-
-#: ../variety/VarietyWindow.py:2086
-msgid "Show Previous quote"
-msgstr "이전 명언 보기"
-
-#: ../variety/VarietyWindow.py:2090
-msgid "Show Next quote, skipping the forward history"
-msgstr "다음 명언 보기, 사용기록을 앞으로 넘깁니다"
-
-#: ../variety/VarietyWindow.py:2094
-msgid "Toggle Quotes Pause/Resume state"
-msgstr "명언 일시 정지/재개 상태를 바꿉니다."
-
-#: ../variety/VarietyWindow.py:2098
-msgid "Save the current quote to Favorites"
-msgstr "현재 명언을 즐겨찾기에 저장하기"
-
-#: ../variety/VarietyWindow.py:2102
-msgid "Toggle History display"
-msgstr "사용 기록 표시창을 켭니다"
-
-#: ../variety/VarietyWindow.py:2106
-msgid "Toggle Recent Downloads display"
-msgstr "최근 내려받기 표시창을 켭니다"
-
-#: ../variety/VarietyWindow.py:2110
-msgid "Show Preferences dialog"
-msgstr "환경 설정 대화상자 보기"
-
-#: ../variety/VarietyWindow.py:2114
-msgid ""
-"Show manual wallpaper selector - the thumbnail bar filled with images from "
-"the active image sources"
-msgstr "수동 배경화면 선택기 보기 - 섬네일 창에 활성 이미지 소스로부터 받은 이미지로 선택합니다"
-
-#: ../variety/VarietyWindow.py:2118
-msgid ""
-"Sets and applies an option. The option names are the same that are used in "
-"Variety's config file ~/.config/variety/variety.conf. Multiple options can "
-"be set in a single command. Example: 'variety --set-option icon Dark --set-"
-"option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
-"file directly in an unguarded way."
-msgstr ""
-"선택 사항을 설정 및 적용을 합니다. 선택 사항 이름은 버라이어티의 설정 파일인 "
-"~/.config/variety/variety.conf에서 사용되는 선택 사항과 같습니다. 여러 개의 선택 사항은 단 하나의 명령어로 "
-"설정될 수 있습니다. 예시로: 'variety --set-option icon Dark --set-option clock_enabled "
-"True'와 같은 걸로 말입니다. 조심해서 다루십시오: 당신은 설정 파일을 직접 보호받지 않는 방법으로 바꾸고 계십니다."
-
-#: ../variety/VarietyWindow.py:2132
-msgid "options --next/--fast-forward and --previous are mutually exclusive"
-msgstr "선택 사항 --next/--fast-forward와 --previous는 상호 배타적입니다"
-
-#: ../variety/VarietyWindow.py:2135
-msgid "options --trash and --favorite are mutually exclusive"
-msgstr "선택 사항 --trash와 --favorite는 상호 배타적입니다"
-
-#: ../variety/VarietyWindow.py:2138
-msgid "options --pause and --resume are mutually exclusive"
-msgstr "선택 사항 --pause와 --resume은 상호 배타적입니다"
-
-#: ../variety/VarietyWindow.py:2141
-msgid ""
-"options --quotes-next/--quotes-fast-forward and --quotes-previous are "
-"mutually exclusive"
-msgstr ""
-"선택 사항 --quotes-next/--quotes-fast-forward와 --quotes-previous는 상호 배타적입니다"
-
-#: ../variety/VarietyWindow.py:2258 ../variety/ImageFetcher.py:60
-#: ../variety/ImageFetcher.py:70 ../variety/ImageFetcher.py:77
-#: ../variety/ImageFetcher.py:110
-msgid "Not an image"
-msgstr "이미지가 아닙니다"
-
-#: ../variety/VarietyWindow.py:2263
-msgid "Added to queue"
-msgstr "대기열에 추가됐습니다"
-
-#: ../variety/VarietyWindow.py:2264 ../variety/VarietyWindow.py:2270
-msgid "Press Next to see it"
-msgstr "다음을 누르셔서 보십시오"
-
-#: ../variety/VarietyWindow.py:2270
-msgid "Fetched"
-msgstr "불러왔습니다"
-
-#: ../variety/VarietyWindow.py:2316
-msgid "Unsupported source type"
-msgstr "지원되지 않는 소스 형태입니다"
-
-#: ../variety/VarietyWindow.py:2317 ../variety/VarietyWindow.py:2365
-msgid "Are you running the most recent version of Variety?"
-msgstr "지금 당신은 최신 버전의 버라이어티를 실행하고 계십니까?"
-
-#: ../variety/VarietyWindow.py:2323
-msgid "New image source added"
-msgstr "새로운 이미지 소스가 추가됐습니다"
-
-#: ../variety/VarietyWindow.py:2325
-msgid "Image source already exists, enabling it"
-msgstr "이미 이미지 소스가 존재합니다, 이 소스를 사용합니다"
-
-#: ../variety/VarietyWindow.py:2351
-msgid "Fetched and applied"
-msgstr "불러왔고 적용되었습니다"
-
-#: ../variety/VarietyWindow.py:2361
-msgid "It works!"
-msgstr "실행이 잘됩니다!"
-
-#: ../variety/VarietyWindow.py:2361
-msgid "Yay, Variety links work. Great!"
-msgstr "와, 버라이어티 링크가 실행이 잘됩니다. 매우 기쁩니다!"
-
-#: ../variety/VarietyWindow.py:2365
-msgid "Unsupported command"
-msgstr "지원되지 않는 명령어입니다"
-
-#: ../variety/VarietyWindow.py:2367
-msgid "Could not process the given variety:// URL"
-msgstr "주어진 버라이어티:// URL을 처리할 수 없습니다"
-
-#: ../variety/VarietyWindow.py:2368
-msgid "Run with logging enabled to see details"
-msgstr "로깅 사용과 같이 실행하여 자세한 사항을 봅니다"
-
-#: ../variety/VarietyWindow.py:2567
-msgid "Do not ask anymore, always use the current quote"
-msgstr "다시는 묻지 않습니다, 현재의 명언을 항상 사용합니다"
-
-#: ../variety/VarietyWindow.py:2570 ../data/ui/FacebookPublishDialog.ui.h:5
-msgid "Do not ask anymore, always use the text above"
-msgstr "다시는 묻지 않습니다, 문자를 항상 위에 둬서 사용합니다"
-
-#: ../variety/VarietyWindow.py:2602 ../variety/VarietyWindow.py:2631
-msgid "Published"
-msgstr "발표됨"
-
-#: ../variety/VarietyWindow.py:2602 ../variety/VarietyWindow.py:2631
-msgid "You may open your Facebook feed to see the post"
-msgstr "페이스북 피드를 열어 포스트를 볼 수 있습니다"
-
-#: ../variety/VarietyWindow.py:2605 ../variety/VarietyWindow.py:2634
-msgid "Could not publish"
-msgstr "발표를 할 수 없습니다"
-
-#: ../variety/VarietyWindow.py:2797
-msgid "Could not create autostart entry"
-msgstr "자동 실행 항목을 만들 수 없습니다"
-
-#: ../variety/VarietyWindow.py:2798
-msgid ""
-"An error occurred while creating the autostart desktop entry\n"
-"Please run from a terminal with the -v flag and try again."
-msgstr ""
-"데스크톱 자동 시작 항목을 설정하는 도중에 오류가 발생했습니다\n"
-"터미널에서 -v 플래그 옵션을 지정하시고 다시 시도하십시오."
-
-#: ../variety/VarietyWindow.py:2848
-msgid "No images"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2848
-msgid "There are no images in the slideshow folders"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2883
-msgid "Wallhaven image sources disabled"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2884
-msgid ""
-"Please google \"Python SNI SSL error\" if you want to fix the problem "
-"yourself."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2890
-msgid ""
-"There are SSL incompatibilities between your version of Python and some "
-"https sites like Wallhaven. You can <a "
-"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
-"doesnt-give-sni-support/\">read more about the issue here</a>.\n"
-"\n"
-"Do you want to install the Python dependencies required to fix this problem? "
-"\n"
-"This operation will ask for superuser privileges. "
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2895
-msgid "Variety - SSL error. Install dependencies?"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2916
-msgid "Installing..."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2917
-#, python-format
-msgid ""
-"Installation will take a minute or two. Please be patient. Log file is at %s"
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2930
-msgid "Dependencies were installed. Please restart Variety now."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2931
-msgid ""
-"If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
-"and seek another solution."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2934
-msgid "Failure. Wallhaven sources disabled."
-msgstr ""
-
-#: ../variety/VarietyWindow.py:2935
-#, python-format
-msgid ""
-"SSL-related dependencies were not installed successfully. Please see %s or "
-"google \"Python SNI SSL error\" and seek another solution."
-msgstr ""
-
-#: ../data/ui/FacebookFirstRunDialog.ui.h:1
-msgid "Variety - Facebook Sharing"
-msgstr "버라이어티 - 페이스북으로 공유합니다"
-
-#: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:171
-msgid "Facebook Sharing"
-msgstr "페이스북으로 공유합니다"
-
-#: ../data/ui/FacebookFirstRunDialog.ui.h:3
-msgid ""
-"You are sharing on Facebook for the first time. Sharing from Variety is "
-"available for images that come from online sources and for quotes. It works "
-"this way: \n"
-"\n"
-"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
-"Facebook will open in your default browser. You will be prompted to login if "
-"you are not already logged in. \n"
-"\n"
-"<span font_weight=\"bold\">2. Authorize Variety to publish to your "
-"feed.</span>\n"
-"You will be asked to allow Variety to publish to your feed on your behalf. "
-"Variety will only use this permission to publish those images and quotes "
-"that you tell it to, nothing else.\n"
-"\n"
-"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
-"with Variety or xdg-open</span>\n"
-"Then you will be redirected to a page with instructions to associate "
-"\"variety://\" links with Variety in your browser. Please follow these "
-"instructions to complete the setup. You have to do this only once.\n"
-"\n"
-"No passwords or login information is kept locally, just an OAuth Facebook "
-"token that will be valid for a couple of weeks. After its validity expires "
-"you will be asked to login again."
-msgstr ""
-"지금 당신은 처음으로 페이스북으로 공유하고 계십니다. 버라이어티에서 온라인 소스로부터 온 이미지 및 명언 공유가 가능합니다. 이 과정은 "
-"다음과 같은 방법으로 작동됩니다: \n"
-"\n"
-"<span font_weight=\"bold\">1. 페이스북으로 로그인을 합니다</span>\n"
-"페이스북은 당신의 기본 브라우저에서 열릴 것입니다. 만약 당신이 이미 로그인되어있지 않다면 페이스북은 당신이 로그인하도록 말할 것입니다. "
-"\n"
-"\n"
-"<span font_weight=\"bold\">2. 버라이어티를 허가하셔서 당신의 피드를 발표하십시오.</span>\n"
-"당신은 당신의 피드를 발표할 수 있게 버라이어티를 허가하도록 요구받을 것입니다. 버라이어티는 이 권한을 당신이 원하는 이미지 및 명언을 "
-"발표하는 데만 사용할 것이며, 그 외에는 사용하지 않을 것입니다.\n"
-"\n"
-"<span font_weight=\"bold\">3. 브라우저가 버라이어티나 xdg-오픈으로 버라이어티:// 링크를 열 수 있도록 "
-"설정하십시오</span>\n"
-"그러고 나서 당신은 브라우저에서 버라이어티와 함께 \"버라이어티://\" 링크에 관련된 지시문이 있는 페이지로 리다이렉트될 것입니다. "
-"다음과 같은 지시문을 따르셔서 설정을 완료하십시오. 당신은 이를 단 한 번만 하시면 됩니다.\n"
-"\n"
-"당신의 암호나 로그인 정보는 로컬에 보관되지 않으며, 몇 주 동안 유효한 OAuth 페이스북 토큰을 생성할 뿐입니다. 유효 기간이 "
-"만료되면 당신은 다시 로그인하도록 요구받을 것입니다."
-
-#: ../data/ui/WelcomeDialog.ui.h:1
-msgid "Welcome to Variety!"
-msgstr "버라이어티에 오신 걸 환영합니다!"
-
-#: ../data/ui/WelcomeDialog.ui.h:2 ../data/ui/SmartFeaturesNoticeDialog.ui.h:3
-msgid "Continue"
-msgstr "계속"
-
-#: ../data/ui/WelcomeDialog.ui.h:3
-msgid ""
-"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper "
-"on a regular basis using local images or images downloaded from various "
-"online sources. It runs quietly in the background - to control it, click "
-"this icon in your system tray:"
-msgstr ""
-"버라이어티는 자동 배경화면 바꾸기 프로그램입니다. 이 프로그램은 당신의 데스크톱 배경화면을 로컬 이미지 혹은 여러 온라인 소스로부터 "
-"내려받은 이미지를 사용해서 규칙적으로 회전하도록 합니다. 버리아어티는 배경화면에서 조용히 실행되며 - 제어하시려면, 당신의 시스템 알림 "
-"상자에 있는 아이콘을 누르십시오:"
-
-#: ../data/ui/WelcomeDialog.ui.h:4
-msgid ""
-"Variety is open-source software, created by Peter Levi, a software developer "
-"from Bulgaria. If you like it, please <a "
-"href=\"http://peterlevi.com/variety/donate/\">donate</a>."
-msgstr ""
-"버라이어티는 오픈-소스 소프트웨어이자, 불가리아의 소프트웨어 개발자인, 피터 레비에 의해 개발되었습니다. 만약 당신이 이 소프트웨어를 "
-"좋아하신다면, <a href=\"http://peterlevi.com/variety/donate/\">기부</a>를 하십시오."
-
-#: ../data/ui/WelcomeDialog.ui.h:5
-msgid ""
-"Now please take some time to set your preferences on the following screens."
-msgstr "지금부터 당신은 시간을 두셔서 다음 화면에 있는 당신만의 환경 설정을 설정하십시오."
-
-#: ../data/ui/WelcomeDialog.ui.h:6
-msgid "KDE Users - Important, please read:"
-msgstr "KDE 사용자들에게 - 다음에 나오는 문장은 중요한 요소이니, 읽으십시오:"
-
-#: ../data/ui/WelcomeDialog.ui.h:7
-msgid ""
-"You appear to be running KDE. In KDE 4 it is impossible to set the wallpaper "
-"from inside a program - there is no API for this. To make Variety work, <a "
-"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">please read "
-"and follow the instructions here</a>."
-msgstr ""
-"당신은 KDE를 실행하고 계신듯합니다. KDE 4에서는 프로그램 안으로부터 배경화면을 설정하는 것이 불가능합니다 - 이를 위한 API가 "
-"없습니다. 버라이어티가 작동되기 위해서는, <a "
-"href=\"http://peterlevi.com/variety/2014/05/variety-and-kde/\">여기에 들어가셔서 "
-"지시문을 읽고 따르십시오</a>."
-
-#: ../data/ui/AddRedditDialog.ui.h:1
-msgid "Variety - add Reddit feed"
-msgstr "버라이어티 - 레딧 피드를 추가합니다"
-
-#: ../data/ui/AddRedditDialog.ui.h:3
-msgid ""
-"Enter the name of a subreddit or paste the full URL of a subreddit or a <a "
-"href=\"http://reddit.com\">Reddit</a> user. You may specify sort order and "
-"time period if you wish. Variety will use posts to direct images or to Imgur "
-"pages within the first 100 submissions returned by Reddit.\n"
-"\n"
-"Example: You may specify simply 'comics' or <a "
-"href=\"http://www.reddit.com/r/comics\">http://www.reddit.com/r/comics</a>\n"
-"Example: Top posts from the month: <a "
-"href=\"http://www.reddit.com/r/comics/top/?sort=top&amp;t=month\">http://www."
-"reddit.com/r/comics/top/?sort=top&amp;t=month</a>"
-msgstr ""
-
-#: ../data/ui/AddRedditDialog.ui.h:7
-msgid "URL or name of a subreddit: "
-msgstr "URL 혹은 서브레딧의 이름: "
-
-#: ../data/ui/AddRedditDialog.ui.h:8
-msgid "Just a moment to check what's there"
-msgstr "무엇이 있는지 확인 중이니 잠시 기다리십시오"
-
-#: ../data/ui/AddMediaRssDialog.ui.h:1
-msgid "Variety - add Media RSS feed"
-msgstr "버라이어티 - 미디어 RSS 피드를 추가합니다"
-
-#: ../data/ui/AddMediaRssDialog.ui.h:3
-msgid ""
-"Please paste the URL of the Media RSS feed below. Please note that only "
-"Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds "
-"contain media:content tags linking directly to the actual image content. "
-"Some examples of sites that provide Media RSS feeds are: <a "
-"href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
-"href=\"http://www.deviantart.com\">deviantART</a>, <a "
-"href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
-"href=\"http://www.flickr.com\">Flickr</a>, <a "
-"href=\"http://interfacelift.com\">InterfaceLIFT</a>."
-msgstr ""
-"밑에 있는 창에 미디어 RSS 피드의 URL을 붙어놓으십시오. 임의 RSS 피드가 아니라, 미디어 RSS 피드만을 지원한다는 점에 "
-"유의하십시오. 미디어 RSS 피드는 미디어를 함유하고 있습니다:내용 태그는 실제 이미지 내용과 바로 연결을 합니다. 미디어 RSS 피드를 "
-"제공하는 몇몇 사이트의 예시는: <a href=\"https://picasaweb.google.com/\">피카사</a>, <a "
-"href=\"http://www.deviantart.com\">디비언트아트</a>, <a \n"
-"href=\"http://www.smugmug.com/browse/\">스머그머그</a>, <a "
-"href=\"http://www.flickr.com\">플리커</a>, <a "
-"href=\"http://interfacelift.com\">인터페이스리프트</a>입니다."
-
-#: ../data/ui/AddMediaRssDialog.ui.h:4
-msgid "Paste the URL of the Media RSS feed here: "
-msgstr "여기에 미디어 RSS 피드의 URL을 붙어놓으십시오: "
-
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-msgid "Just a moment to check what's at that URL"
-msgstr "URL에 무엇이 들었는지 확인하는 중이니 잠시 기다리십시오"
-
-#: ../variety/AddRedditDialog.py:43
-msgid "This does not seem to be a valid Reddit URL"
-msgstr "이 주소는 유효하지 않은 레딧 URL인듯합니다"
-
-#: ../variety/AddRedditDialog.py:46
-msgid "We could not find any image submissions there."
-msgstr "우리는 이곳에서 아무 이미지 제안을 찾을 수 없습니다."
-
-#: ../variety/Smart.py:116
-msgid ""
-"Your smart_user.json config file appears broken. You may have to login again "
-"to VRTY.ORG."
-msgstr "당신의 smart_user.json 설정 파일이 올바르지 않은듯합니다. 당신은 VRTG.ORG에 다시 로그인하셔야 합니다."
-
-#: ../variety/Smart.py:208
-msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
-msgstr "당신의 VRTY.ORG 자격 증명이 오래된 것 같습니다. 다시 로그인하십시오."
-
-#: ../variety/Smart.py:628 ../variety/Smart.py:677
-#: ../data/ui/PreferencesVarietyDialog.ui.h:113
-msgid "Sync"
-msgstr "동기화"
-
-#: ../variety/Smart.py:629
-#, python-format
-msgid "Fetching %d images"
-msgstr "%d개의 이미지를 불러오는 중입니다"
-
-#: ../variety/Smart.py:629
-msgid "Fetching 1 image"
-msgstr "한 개의 이미지를 불러오는 중입니다"
-
-#: ../variety/Smart.py:677
-msgid "Finished"
-msgstr "완료되었습니다"
-
-#: ../variety/Smart.py:698
-#, python-format
-msgid "Logged in as %s"
-msgstr "%s로 로그인되었습니다"
-
-#: ../variety/Smart.py:710
-#, python-format
-msgid ""
-"Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
-msgstr "당신은 <span font_weight=\"bold\">%s</span>로 VRTY.ORG에 로그인하시는 걸 원하십니까?"
-
-#: ../variety/Smart.py:711
-msgid "VRTY.ORG login confirmation"
-msgstr "VRTY.ORG 로그인 확인"
-
-#: ../data/plugins/quotes/QuotationsPageSource.py:35
-msgid "Fetches quotes from TheQuotationsPage.com"
-msgstr "TheQuotationsPage.com으로부터 명언을 불러옵니다"
-
-#: ../variety/__init__.py:143
-msgid "Terminating signal received, quitting..."
-msgstr "받은 신호를 중지하는 중입니다, 종료하는 중입니다..."
-
-#: ../variety/__init__.py:198
-msgid ""
-"Variety is already running. Sending the command to the running instance."
-msgstr "버라이어티가 이미 실행 중입니다. 실행 중인 인스턴스에 명령어를 보냅니다."
-
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
-msgid "VRTY.ORG integration"
-msgstr "VRTY.ORG 통합"
-
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
-msgid "This feature requires VRTY.ORG integration"
-msgstr "이 기능은 VRTY.ORG 통합을 요구합니다"
-
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:3
-msgid "Enable VRTY.ORG integration"
-msgstr "VRTY.ORG 통합을 사용합니다"
-
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:4
-msgid ""
-"For this feature Variety needs permission to collect data about the images "
-"you like or dislike and the online sources you have enabled.\n"
-"\n"
-"Collected data is anonymous by default and covers only images which Variety "
-"downloaded, never images you already had in your local folders that might be "
-"private.\n"
-"\n"
-"This data helps us provide better images for everyone and fuels <a "
-"href=\"https://vrty.org\">VRTY.ORG</a> - a valuable resource for all users "
-"of Variety."
-msgstr ""
-"이 기능은 버라이어티가 당신이 선호 혹은 비선호 하는 이미지 및 당신이 사용한 온라인 소스에 관한 자료를 수집할 수 있는 권한이 "
-"필요합니다.\n"
-"\n"
-"수집된 자료는 기본으로 익명 상태이고 버라이어티가 내려받은 이미지만 덮어씌웠으며, 절대로 당신이 개인적일지도 모르는 당신의 로컬 폴더에 "
-"이미 보유하고 있는 자료를 수집하지 않습니다.\n"
-"\n"
-"이 자료는 우리가 모두에게 더 나은 이미지를 제공하도록 하며 <a href=\"https://vrty.org\">VRTY.ORG</a>에 "
-"동력이 되어줍니다 - 버라이어티의 모든 사용자를 위한 귀중한 자료입니다."
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
-msgid "Variety - VRTY.ORG"
-msgstr "버라이어티 - VRTY.ORG"
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
-msgid "No, thanks"
-msgstr "고맙지만, 사양합니다"
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
-msgid ""
-"<span font=\"14\" weight=\"bold\">Introducing <a "
-"href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
-msgstr ""
-"<a href=\"https://vrty.org\">VRTY.ORG를 <span font=\"14\" "
-"weight=\"bold\">소개합니다</a>! 참여하고 싶습니까?</span>"
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
-msgid ""
-"<a href=\"https://vrty.org\">VRTY.ORG</a> connects Variety users with "
-"similar tastes and provides super-convenient ways to change your wallpaper, "
-"to find and add new image sources to Variety, and to follow other users' "
-"favorites."
-msgstr ""
-"<a href=\"https://vrty.org\">VRTY.ORG</a>는 같은 입맛을 가진 버라이어티 사용자와 연결을 해주고 당신의 "
-"배경화면을 아주-편리하게 바꾸는 방법을 제공하며, 버라이어티에 새로운 이미지 소스를 찾으시거나 추가하실 수 있고, 다른 사용자의 "
-"즐겨찾기를 따르실 수 있습니다."
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
-msgid ""
-"Participation takes no effort - your profile will be built automatically, as "
-"you like or dislike images downloaded by Variety. Your profile will not be "
-"shared with third parties, unless you opt-in to make it public. <a "
-"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
-"service and the privacy policy here.</a>"
-msgstr ""
-"참여하는 건 몹시 어렵지 않습니다 - 버라이어티가 당신이 선호 혹은 비선호 이미지를 내려받는 것으로 바탕을 두므로, 당신의 프로필은 "
-"자동으로 생성될 것입니다. 당신이 이 프로필을 모두에게 공개해서 참여함으로 설정하지 않은 이상, 당신의 프로필은 제삼자와 공유되지 "
-"않습니다. <a href='http://peterlevi.com/variety/vrty-org/'>여기에 들어가셔서 이 서비스에 관한 더 "
-"자세한 사항과 개인 정보 보호 정책을 읽으십시오.</a>"
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
-msgid ""
-"Participation is required for some features of Variety such as <span "
-"weight=\"bold\">synchronization of favorites between computers</span>."
-msgstr ""
-"<span weight=\"bold\">컴퓨터들 사이에서 즐겨찾기를 동기화합니다</span>와 같은 버라이어티의 몇몇 기능은 참여가 "
-"요구됩니다."
-
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
-#: ../data/ui/PreferencesVarietyDialog.ui.h:107
-msgid "Participate in VRTY.ORG"
-msgstr "VRTY.ORG에 참여합니다"
-
-#: ../data/plugins/quotes/QuotesDaddySource.py:31
-msgid ""
-"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
-"Does not support searching by tags or authors."
-msgstr ""
-"QuotesDaddy의 일일 명언 RSS 피드로부터 명언을 불러옵니다.\n"
-"태그나 저자 검색을 지원하지 않습니다."
-
-#: ../data/ui/AboutVarietyDialog.ui.h:1
-msgid "Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>"
-msgstr "저작권 (c) 2012, 피터 레비 <peterlevi@peterlevi.com>"
-
-#: ../data/ui/AboutVarietyDialog.ui.h:2
-msgid "About Variety"
-msgstr "버라이어티 설명"
-
-#: ../data/ui/AboutVarietyDialog.ui.h:3
-msgid "An automatic wallpaper changer, downloader and manager."
-msgstr "자동 배경화면 바꾸기, 내려받기 및 관리자 프로그램입니다."
-
-#: ../data/ui/AboutVarietyDialog.ui.h:4
-msgid "http://peterlevi.com/variety"
-msgstr "http://peterlevi.com/variety"
-
-#: ../data/ui/AboutVarietyDialog.ui.h:5
-msgid ""
-"# Copyright (c) 2012, Peter Levi <peterlevi@peterlevi.com>\n"
-"# This program is free software: you can redistribute it and/or modify it \n"
-"# under the terms of the GNU General Public License version 3, as published "
-"\n"
-"# by the Free Software Foundation.\n"
-"# \n"
-"# This program is distributed in the hope that it will be useful, but \n"
-"# WITHOUT ANY WARRANTY; without even the implied warranties of \n"
-"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR \n"
-"# PURPOSE.  See the GNU General Public License for more details.\n"
-"# \n"
-"# You should have received a copy of the GNU General Public License along \n"
-"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
-msgstr ""
-"# 저작권 (c) 2012, 피터 레비 <peterlevi@peterlevi.com>\n"
-"# 이 프로그램은 자유 소프트웨어입니다: 자유 소프트웨어 재단에 의하여 발표된, \n"
-"\n"
-"# GNU 일반 공중 사용 허가서 버전 3약관 아래에서 \n"
-"\n"
-"# 당신은 이 소프트웨어를 재배포하시거나/혹은 수정하실 수 있습니다.\n"
-"\n"
-"# \n"
-"\n"
-"# 이 프로그램은 이것이 매우 유용하게 사용될 것이라는 희망 내에서 배포되었지만, \n"
-"\n"
-"# 아무 보증이 없습니다; 설령 상업적 용도, 만족스러운 품질, 혹은 \n"
-"\n"
-"# 특정 목적을 위한 적합성 보증이 적용되지 않더라도 말입니다. \n"
-"\n"
-"# GNU 일반 공중 사용 허가서에서 더 자세한 사항을 보십시오.\n"
-"\n"
-"# \n"
-"\n"
-"# 당신은 이 프로그램과 같이 GNU 일반 공중 사용 허가서 복사본을 받으셔야 합니다. \n"
-"# 그렇지 않으면, <http://www.gnu.org/licenses/>을 보십시오.\n"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:1
 msgid "seconds"
@@ -1597,10 +1886,6 @@ msgstr "수평 위치: "
 msgid "Left "
 msgstr "좌측 "
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:52 ../variety/ThumbsManager.py:44
-msgid "Right"
-msgstr "우측"
-
 #: ../data/ui/PreferencesVarietyDialog.ui.h:53
 msgid "Vertical position: "
 msgstr "수직 위치: "
@@ -1608,10 +1893,6 @@ msgstr "수직 위치: "
 #: ../data/ui/PreferencesVarietyDialog.ui.h:54
 msgid "Top "
 msgstr "상단 "
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:55 ../variety/ThumbsManager.py:41
-msgid "Bottom"
-msgstr "하단"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:56
 msgid "Placement"
@@ -1862,6 +2143,11 @@ msgid ""
 msgstr ""
 "회원 가입은 컴퓨터들 사이에서 선호하는 이미지 및 소스와 사용자 설정 추천을 동기화하는 것과 같은 멋진 기능을 사용할 수 있도록 해줍니다."
 
+#: ../data/ui/PreferencesVarietyDialog.ui.h:113 ../variety/Smart.py:635
+#: ../variety/Smart.py:684
+msgid "Sync"
+msgstr "동기화"
+
 #: ../data/ui/PreferencesVarietyDialog.ui.h:114
 msgid "Synchronize favorite images between computers"
 msgstr "컴퓨터들 사이에서 선호하는 이미지를 동기화합니다"
@@ -1962,10 +2248,6 @@ msgstr "수동 내려받기"
 #: ../data/ui/PreferencesVarietyDialog.ui.h:132
 msgid "When possible use images that:"
 msgstr "가능하다면 이러한 이미지를 사용합니다:"
-
-#: ../data/ui/PreferencesVarietyDialog.ui.h:133 ../variety/ThumbsManager.py:98
-msgid "Size"
-msgstr "크기"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:134
 msgid "Have landscape orientation"
@@ -2231,418 +2513,6 @@ msgid ""
 "href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
 msgstr ""
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:196 ../variety/indicator.py:305
-msgid "Donate"
-msgstr "기부하기"
-
-#: ../variety/FacebookHelper.py:116
-msgid "Authorization successful"
-msgstr "인증에 성공하셨습니다"
-
-#: ../variety/FacebookHelper.py:116
-msgid "Publishing..."
-msgstr "발표하는 중입니다..."
-
-#: ../variety/FacebookHelper.py:121
-msgid "Authorization failed"
-msgstr "인증에 실패하셨습니다"
-
-#: ../variety/ThumbsManager.py:42
-msgid "Top"
-msgstr "상단"
-
-#: ../variety/ThumbsManager.py:43
-msgid "Left"
-msgstr "좌측"
-
-#: ../variety/ThumbsManager.py:94
-msgid "Position"
-msgstr "위치"
-
-#: ../variety/ThumbsManager.py:109
-msgid "Show Containing Folder"
-msgstr "들어있는 폴더를 봅니다"
-
-#: ../variety/ThumbsManager.py:136 ../variety/indicator.py:159
-msgid "Set EXIF Rating"
-msgstr "EXIF 평점 정하기"
-
-#: ../variety/ThumbsManager.py:160 ../variety/indicator.py:90
-msgid "Delete to _Trash"
-msgstr "휴지통에 삭제하기(_T)"
-
-#: ../variety/ThumbsManager.py:167 ../variety/indicator.py:134
-msgid "Where is it from?"
-msgstr "이것은 어디서 왔습니까?"
-
-#: ../variety/ThumbsManager.py:178
-msgid "Close"
-msgstr "닫기"
-
-#: ../variety/ThumbsManager.py:198
-msgid "Could not set EXIF rating"
-msgstr "EXIF 평점을 정할 수 없습니다"
-
-#: ../variety/ThumbsManager.py:217
-msgid "Unrated"
-msgstr "무등급"
-
-#: ../variety/ThumbsManager.py:224
-msgid "Rejected"
-msgstr "거부됨"
-
-#: ../variety/ThumbsManager.py:324
-msgid "Variety History"
-msgstr "버라이어티 사용 기록"
-
-#: ../variety/ThumbsManager.py:326
-msgid "Variety Recent Downloads"
-msgstr "버라이어티 최근 내려받기 기록"
-
-#: ../variety/ThumbsManager.py:328
-msgid "Variety Images"
-msgstr "버라이어티 이미지"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:1
-msgid "Variety - add Wallbase.cc image source"
-msgstr "버라이어티 - Wallbase.cc 이미지 소스를 추가합니다"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:2
-msgid "Wallbase.cc"
-msgstr "Wallbase.cc"
-
-#: ../data/ui/AddWallbaseDialog.ui.h:3
-msgid ""
-"Wallbase.cc is permanently down. Use Wallhaven.cc instead. Support for "
-"Wallbase.cc will be dropped completely in a future release, please remove or "
-"update your existing Wallbase sources."
-msgstr ""
-"Wallbase.cc는 영구적으로 다운되었습니다. 대신에 Wallhaven.cc를 이용하십시오. Wallbase.cc에 대한 지원이 다음 "
-"버전에서 완전히 중단될 것이므로, 기존에 있는 당신의 월베이스 소스를 제거하거나 업데이트를 하십시오."
-
-#: ../data/ui/AddWallbaseDialog.ui.h:4
-msgid ""
-"<a href=\"http://wallbase.cc\">Wallbase.cc</a> provides a variety of image "
-"search options. Below you can specify keywords to search for, or visit <a "
-"href=\"http://wallbase.cc\">Wallbase.cc</a>, setup your search criteria "
-"there, ensure you like the results, and paste the full Wallbase URL in the "
-"box.\n"
-"\n"
-"If you specify keywords, the most liked safe-for-work images that match any "
-"of the keywords will be used. \n"
-"\n"
-"If you specify a Wallbase URL, please choose the sorting criteria carefully -"
-" Variety regularly requests images, but uses only images from the first "
-"several hundred returned. Random or Date will mean this image source will "
-"have a longer \"lifetime\" till it is exhausted. Favorites will provide "
-"better images and Relevance will provide closer matches when searching for "
-"phrases or colors."
-msgstr ""
-"<a href=\"http://wallbase.cc\">Wallbase.cc</a>는 다양한 이미지 검색 선택 사항을 제공합니다. 여기서 "
-"당신은 찾으려 하는 검색어의 키워드를 지정하시거나, <a href=\"http://wallbase.cc\">Wallbase.cc</a>를 "
-"방문하셔서, 당신에게 만족스러운 검색 결과를 확실하게 제공하는, 당신만의 검색 조건을 설정하시고, 검색 창에 전체 월베이스 URL을 "
-"입력하실 수 있습니다.\n"
-"\n"
-"만약 당신이 키워드를 지정했다면, 주로 사용될 키워드 중 아무 키워드랑 관련 있는 건전한 이미지가 나올 것입니다. \n"
-"\n"
-"만약 당신이 월베이스 URL을 지정했다면, 분류 조건을 주의 깊게 선택하십시오 - 보통 버라이어티는 이미지를 요구하지만, 맨 처음에 "
-"나오는 수백 개의 되돌려진 주소로부터 나타나는 이미지만 사용합니다. 무작위 검색 혹은 날짜별 검색은 이 이미지 소스가 소멸하기 전까지 더 "
-"긴 \"수명\"을 가짐을 뜻합니다. 즐겨찾기 검색은 더 나은 화질의 이미지를 제공하며 연관성 검색은 구절이나 색깔을 검색할 때 더 관련 "
-"있는 결과를 제공합니다."
-
-#: ../data/ui/FacebookPublishDialog.ui.h:1
-msgid "Variety - Publish to Facebook"
-msgstr "버라이어티 - 페이스북에 발표합니다"
-
-#: ../data/ui/FacebookPublishDialog.ui.h:2 ../variety/indicator.py:152
-#: ../variety/indicator.py:236
-msgid "Share on Facebook"
-msgstr "페이스북으로 공유합니다"
-
-#: ../data/ui/FacebookPublishDialog.ui.h:3
-msgid ""
-"Publish a link to the current wallpaper on Facebook. Include this text along "
-"with the link (or just leave empty):"
-msgstr "페이스북에 현재 배경화면의 링크를 발표합니다. 이 문자를 링크와 함께 발표합니다(혹은 공란으로 남기셔도 됩니다):"
-
-#: ../data/ui/FacebookPublishDialog.ui.h:4
-msgid "Use current quote"
-msgstr "현재의 명언을 사용합니다"
-
-#: ../data/ui/SmartRegisterDialog.ui.h:1
-msgid "Variety - VRTY.ORG registration"
-msgstr "버라이어티 - VRTY.ORG 회원 가입"
-
-#: ../data/ui/SmartRegisterDialog.ui.h:2
-msgid "Would you like to register?"
-msgstr "회원 가입을 하시겠습니까?"
-
-#: ../data/ui/SmartRegisterDialog.ui.h:3
-msgid ""
-"You may participate in <a href=\"https://vrty.org\">VRTY.ORG</a> "
-"anonymously, but registration enables some very nice features, such as <span "
-"weight=\"bold\">synchronization</span> of favorites between computers and "
-"<span weight=\"bold\">personalized recommendations</span>. It also ensures "
-"you will not lose your profile and favorite wallpapers if you reinstall your "
-"OS."
-msgstr ""
-"당신은 <a href=\"https://vrty.org\">VRTY.ORG</a> 에서 익명으로 참여하실 수 있지만, 회원 가입은 "
-"컴퓨터들 사이에서 즐겨찾기 및 <span weight=\"bold\">사용자 설정 추천</span>을 <span "
-"weight=\"bold\">동기화를 합니다</span> 같은, 매우 멋진 몇몇 기능을 사용할 수 있도록 해줍니다. 또한, 이 기능은 "
-"당신이 운영체제를 재설치하신다면 당신의 프로필과 선호하는 배경화면을 확실하게 잃지 않도록 해줍니다."
-
-#: ../data/ui/SmartRegisterDialog.ui.h:4
-msgid "Registration is very easy and does not require any personal data."
-msgstr "회원 가입은 매우 쉬우며 아무 개인 정보를 요구하지 않습니다."
-
-#: ../data/ui/SmartRegisterDialog.ui.h:5
-msgid ""
-"If you choose to participate anonymously, you can register later from the "
-"<span weight=\"bold\">\"Sync and social\"</span> page in Preferences."
-msgstr ""
-"만약 당신이 익명으로 참여함을 선택하셨다면, 당신은 환경 설정에 있는 <span weight=\"bold\">\"동기화와 소셜 "
-"네트워크\"</span> 페이지에서 나중에 가입하실 수 있습니다."
-
-#: ../data/ui/SmartRegisterDialog.ui.h:6
-msgid ""
-"Oops, we could not connect to VRTY.ORG. Server might be down. Please wait a "
-"couple of minutes and try again or choose <span "
-"font_weight=\"bold\">\"Participate anonymously\"</span> and register later "
-"from the <span font_weight=\"bold\">\"Sync and social\"</span> page in "
-"Preferences."
-msgstr ""
-"이런, 우리는 VRTY.ORG 서버를 연결할 수 없습니다. 서버가 잠시 다운된 상태일 수도 있습니다. 잠시 몇 분 동안 기다리시고 다시 "
-"접속을 시도하시거나 <span font_weight=\"bold\">\"익명으로 참여합니다\"</span>를 선택하시고 환경 설정에 있는 "
-"<span weight=\"bold\">\"동기화와 소셜 네트워크\"</span> 페이지에서 나중에 가입하십시오."
-
-#: ../data/ui/SmartRegisterDialog.ui.h:7
-msgid ""
-"Please continue the registration and follow the instructions in the browser "
-"tab we opened."
-msgstr "회원 가입을 계속하시고 우리가 브라우저 탭에 열은 지시문을 따르십시오."
-
-#: ../data/ui/SmartRegisterDialog.ui.h:8
-msgid "I will participate anonymously"
-msgstr "익명으로 참여할 것입니다"
-
-#: ../data/ui/SmartRegisterDialog.ui.h:9
-msgid "I'm registered, let me login"
-msgstr ""
-
-#: ../data/ui/SmartRegisterDialog.ui.h:10
-msgid "Register here"
-msgstr "여기서 회원 가입을 하십시오"
-
-#: ../variety.desktop.in.h:1
-msgid "Variety"
-msgstr "버라이어티"
-
-#: ../variety.desktop.in.h:2
-msgid "Variety Wallpaper Changer"
-msgstr "버라이어티 배경화면 바꾸기 프로그램"
-
-#: ../variety.desktop.in.h:3
-msgid "Next"
-msgstr "다음"
-
-#: ../variety.desktop.in.h:4
-msgid "Previous"
-msgstr "이전"
-
-#: ../variety.desktop.in.h:5
-msgid "Pause / Resume"
-msgstr "일시 정지 / 재개"
-
-#: ../variety.desktop.in.h:6
-msgid "History"
-msgstr "사용 기록"
-
-#: ../variety.desktop.in.h:7
-msgid "Preferences"
-msgstr "환경 설정"
-
-#: ../data/plugins/quotes/LocalFilesSource.py:34
-msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-"명언을 표시합니다, 로컬 문자 파일에서 설정됩니다.\n"
-"당신만의 txt 파일을: ~/.config/variety/pluginconfig/quotes/에 넣으십시오.\n"
-"\n"
-"파일 형식은:\n"
-"\n"
-"명언 -- 저자\n"
-".\n"
-"두 번째 명언 -- 다른 저자\n"
-".\n"
-"등등... 입니다\n"
-"\n"
-"예: http://rvelthuis.de/zips/quotes.txt"
-
-#: ../variety/indicator.py:52 ../variety/indicator.py:99
-#: ../variety/indicator.py:179
-msgid "_Next"
-msgstr "다음(_N)"
-
-#: ../variety/indicator.py:57 ../variety/indicator.py:104
-#: ../variety/indicator.py:184
-msgid "_Previous"
-msgstr "이전(_P)"
-
-#: ../variety/indicator.py:64
-msgid "Current desktop wallpaper"
-msgstr "현재 데스크톱 배경화면"
-
-#: ../variety/indicator.py:68
-msgid "Show origin"
-msgstr "원본을 봅니다"
-
-#: ../variety/indicator.py:109 ../variety/indicator.py:189
-msgid "_Next, skipping forward history"
-msgstr "다음(_N), 사용 기록을 앞으로 나아가는 걸 넘깁니다"
-
-#: ../variety/indicator.py:117
-msgid ""
-"Tip: Scroll wheel over icon\n"
-"for Next and Previous"
-msgstr ""
-"비법: 아이콘 위에 마우스 휠을 스크롤 하셔서\n"
-"앞뒤로 넘기십시오"
-
-#: ../variety/indicator.py:127
-msgid "_Image"
-msgstr "이미지(_I)"
-
-#: ../variety/indicator.py:138
-msgid "Show without effects"
-msgstr "효과 없이 봅니다"
-
-#: ../variety/indicator.py:146
-msgid "Google Image Search"
-msgstr "구글 이미지 검색"
-
-#: ../variety/indicator.py:171
-msgid "Report NSFW image"
-msgstr ""
-
-#: ../variety/indicator.py:209
-msgid "View Favorites..."
-msgstr "즐겨찾기 보기..."
-
-#: ../variety/indicator.py:216
-msgid "Copy to Clipboard"
-msgstr "클립보드에 복사하기"
-
-#: ../variety/indicator.py:226
-msgid "Google Quote"
-msgstr "구글 명언"
-
-#: ../variety/indicator.py:231
-msgid "Google Author"
-msgstr "구글 저자"
-
-#: ../variety/indicator.py:243 ../variety/indicator.py:297
-msgid "Preferences..."
-msgstr "환경 설정..."
-
-#: ../variety/indicator.py:251
-msgid "Turn off"
-msgstr "끕니다"
-
-#: ../variety/indicator.py:257
-msgid "_Quote"
-msgstr "명언(_Q)"
-
-#: ../variety/indicator.py:264
-msgid "_History"
-msgstr "사용 기록(_H)"
-
-#: ../variety/indicator.py:270
-msgid "_Wallpaper Selector"
-msgstr "배경화면 선택기(_W)"
-
-#: ../variety/indicator.py:276
-msgid "Recent _Downloads"
-msgstr "최근 내려받기 기록(_D)"
-
-#: ../variety/indicator.py:291
-msgid "Start Slideshow"
-msgstr ""
-
-#: ../variety/indicator.py:301
-msgid "About"
-msgstr "설명"
-
-#: ../variety/indicator.py:309
-msgid "Quit"
-msgstr "끝내기"
-
-#: ../variety/indicator.py:425
-msgid "_Safe mode"
-msgstr ""
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
-msgid "Copy to Favorites vs. Move to Favorites"
-msgstr "즐겨찾기에 복사하기 대 즐겨찾기로 이동하기"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
-msgid "Reset to Default"
-msgstr "기본 설정으로 초기화를 합니다"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
-msgid ""
-"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
-"menu depending on the image location:"
-msgstr "이미지 위치에 따라 메뉴에서 당신의 즐겨찾기가 '즐겨찾기에 복사합니다' 혹은 '즐겨찾기로 이동합니다' 인지를 선택하십시오:"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
-msgid ""
-"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
-"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
-"folder path.\n"
-"Order is important. When an image is shown, the first folder in this list "
-"which contains the image will determine which operations will be shown in "
-"Variety's menu. 'Others' matches any file and should be last in the list.\n"
-"\n"
-"Example:\n"
-"\tDownloaded:Copy\n"
-"\tFetched:Move\n"
-"\t/pics/RandomImages:Move\n"
-"\t/pics/OrganizedAlbums:Copy\n"
-"\tOthers:Both"
-msgstr ""
-"한 줄마다 한 항목을 입력하시고, 내려받기, 불러올 수 있는 폴더, 다른 사항 혹은 특정 폴더 경로와 같은 각각 항목을 "
-"<폴더>:<복사합니다, 움직입니다, 혹은 두 개를 동시에 사용합니다>와 같은 형식으로 입력하십시오.\n"
-"여기서 중요한 것은 순서입니다. 이미지가 보일 때, 목록에서 이미지를 함유한 첫 번째 폴더는 버라이어티 메뉴에 보일 어떤 직업을 수행할지 "
-"정할 것입니다. '다른 사항'은 아무 파일과 관련시킬 것이며 목록의 끝 부분에 있어야 합니다.\n"
-"\n"
-"\n"
-"예:\n"
-"\n"
-"[tab]\n"
-"내려받은 폴더:복사합니다\n"
-"\n"
-"[tab]\n"
-"불러온 폴더:움직입니다\n"
-"\n"
-"[tab]\n"
-"/pics/RandomImages:움직입니다\n"
-"\n"
-"[tab]\n"
-"/pics/OrganizedAlbums:복사합니다\n"
-"\n"
-"[tab]\n"
-"다른 사항:두 개를 동시에 사용합니다"
-
 #: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
 msgid "Fetching"
 msgstr "불러오는 중입니다"
@@ -2670,3 +2540,74 @@ msgid ""
 "To get more information, please run Variety from terminal with -v option and "
 "retry the action"
 msgstr "더 자세한 정보를 보시려면, 터미널에서 버라이어티를 -v 선택 사항과 같이 실행하시고 다시 시도하십시오"
+
+#: ../variety/Smart.py:119
+msgid ""
+"Your smart_user.json config file appears broken. You may have to login again "
+"to VRTY.ORG."
+msgstr "당신의 smart_user.json 설정 파일이 올바르지 않은듯합니다. 당신은 VRTG.ORG에 다시 로그인하셔야 합니다."
+
+#: ../variety/Smart.py:211
+msgid "Your VRTY.ORG credentials are probably outdated. Please login again."
+msgstr "당신의 VRTY.ORG 자격 증명이 오래된 것 같습니다. 다시 로그인하십시오."
+
+#: ../variety/Smart.py:636
+#, python-format
+msgid "Fetching %d images"
+msgstr "%d개의 이미지를 불러오는 중입니다"
+
+#: ../variety/Smart.py:636
+msgid "Fetching 1 image"
+msgstr "한 개의 이미지를 불러오는 중입니다"
+
+#: ../variety/Smart.py:684
+msgid "Finished"
+msgstr "완료되었습니다"
+
+#: ../variety/Smart.py:705
+#, python-format
+msgid "Logged in as %s"
+msgstr "%s로 로그인되었습니다"
+
+#: ../variety/Smart.py:717
+#, python-format
+msgid ""
+"Do you want to login to VRTY.ORG as <span font_weight=\"bold\">%s</span>?"
+msgstr "당신은 <span font_weight=\"bold\">%s</span>로 VRTY.ORG에 로그인하시는 걸 원하십니까?"
+
+#: ../variety/Smart.py:718
+msgid "VRTY.ORG login confirmation"
+msgstr "VRTY.ORG 로그인 확인"
+
+#: ../variety/QuotesEngine.py:232
+msgid "No quote plugins"
+msgstr "명언 플러그인이 없습니다"
+
+#: ../variety/QuotesEngine.py:232
+msgid "There are no quote plugins installed"
+msgstr "설치된 명언 플러그인이 없습니다"
+
+#: ../variety/QuotesEngine.py:238
+msgid "No suitable quote plugins"
+msgstr "적합한 명언 플러그인이 없습니다"
+
+#: ../variety/QuotesEngine.py:239
+msgid ""
+"You have no quote plugins which support searching by keywords and authors"
+msgstr "당신은 키워드 및 저자 검색을 지원하는 명언 플러그인을 가지고 있지 않습니다"
+
+#: ../variety/QuotesEngine.py:251
+msgid "Could not fetch quotes"
+msgstr "명언을 불러올 수 없습니다"
+
+#: ../variety/QuotesEngine.py:252
+msgid "Quotes services may be down, we will continue trying"
+msgstr "명언 서비스가 다운된 것 같습니다, 계속 시도하고 있습니다"
+
+#: ../variety/QuotesEngine.py:255
+msgid "Could not find quotes"
+msgstr "명언을 찾을 수 없습니다"
+
+#: ../variety/QuotesEngine.py:256
+msgid "Maybe you are searching for something very obscure?"
+msgstr "아마 당신은 매우 불분명한 무언가를 찾는 중일지도 모릅니다?"

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <!-- interface-requires add_media_rss_dialog 1.0 -->
-  <object class="AddMediaRssDialog" id="add_media_rss_dialog">
+  <requires lib="gtk+" version="3.0"/>
+  <requires lib="add_configurable_dialog" version="1.0"/>
+  <object class="AddConfigurableDialog" id="add_configurable_dialog">
+    <property name="width_request">960</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Variety - add Media RSS feed</property>
+    <property name="title">Title</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="width_request">600</property>
@@ -15,15 +20,61 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="buttonbox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="btn_cancel">
+                <property name="label">gtk-cancel</property>
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_ok">
+                <property name="label">gtk-ok</property>
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
+                <property name="margin_right">5</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
         <child>
-          <object class="GtkLabel" id="label3">
+          <object class="GtkLabel" id="title">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
             <property name="margin_left">10</property>
             <property name="margin_top">10</property>
             <property name="margin_bottom">15</property>
-            <property name="label" translatable="yes">Media RSS</property>
+            <property name="label">Title</property>
             <attributes>
               <attribute name="weight" value="bold"/>
               <attribute name="scale" value="2"/>
@@ -36,14 +87,14 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label1">
+          <object class="GtkLabel" id="instruction">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="halign">start</property>
             <property name="margin_left">10</property>
             <property name="margin_right">10</property>
             <property name="margin_bottom">15</property>
-            <property name="label" translatable="yes">Please paste the URL of the Media RSS feed below. Please note that only Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds contain media:content tags linking directly to the actual image content. Some examples of sites that provide Media RSS feeds are: &lt;a href="https://picasaweb.google.com/"&gt;Picasa&lt;/a&gt;, &lt;a href="http://www.deviantart.com"&gt;deviantART&lt;/a&gt;, &lt;a href="http://www.smugmug.com/browse/"&gt;SmugMug&lt;/a&gt;, &lt;a href="http://www.flickr.com"&gt;Flickr&lt;/a&gt;, &lt;a href="http://interfacelift.com"&gt;InterfaceLIFT&lt;/a&gt;.</property>
+            <property name="label">Instruction</property>
             <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
@@ -60,11 +111,12 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkLabel" id="label2">
+              <object class="GtkLabel" id="short_instruction">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_left">10</property>
-                <property name="label" translatable="yes">Paste the URL of the Media RSS feed here: </property>
+                <property name="label">Short Instruction</property>
+                <property name="use_markup">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -82,7 +134,6 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="activates_default">True</property>
-                <property name="invisible_char_set">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -106,7 +157,7 @@
             <child>
               <object class="GtkLabel" id="message">
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Just a moment to check what's at that URL</property>
+                <property name="label" translatable="yes">Just a moment to check for images</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -149,54 +200,6 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
-          </packing>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="buttonbox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="btn_cancel">
-                <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_ok">
-                <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="has_default">True</property>
-                <property name="receives_default">True</property>
-                <property name="margin_right">5</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">4</property>
           </packing>
         </child>
       </object>
