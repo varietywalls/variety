@@ -118,6 +118,17 @@ if os.name == 'nt':
         def __init__(self):
             super(IVarietyService, self).__init__()
             super(threading.Thread, self).__init__()
+            self.loop = asyncio.get_event_loop()
+
+            # Fire up command server thread
+            self.server_thread = self.CommandServerThread()
+            self.server_thread.set_variety_service(self)
+            self.server_thread.start()
+
+            # Will exit as soon as thread exits if could not bind
+            self.server_thread.join(timeout=2)
+            # If we can't bind, this is a client and thread will be dead.
+            self.master = self.server_thread.is_alive()
 
         @staticmethod
         def unix_sockets_supported():
@@ -170,17 +181,8 @@ if os.name == 'nt':
                 writer.close()
 
         def start_listener(self):
-            self.loop = asyncio.get_event_loop()
-
-            # Fire up command server thread
-            self.server_thread = self.CommandServerThread()
-            self.server_thread.set_variety_service(self)
-            self.server_thread.start()
-
-            # Will exit as soon as thread exits if could not bind
-            self.server_thread.join(timeout=2)
-            # If we can't bind, this is a client and thread will be dead.
-            self.master = self.server_thread.is_alive()
+            # For windows, listener has already started, so noop
+            pass
 
         async def process_command_client(self, arguments, loop):
             reader, writer = await VarietyService.open_connection(loop)
