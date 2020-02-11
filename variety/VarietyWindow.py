@@ -2239,6 +2239,13 @@ class VarietyWindow(Gtk.Window):
                     options.quotes_disabled_sources.append("Urban Dictionary")
                 options.write()
 
+            if Util.compare_versions(last_version, "0.8.3") < 0:
+                logger.info(lambda: "Performing upgrade to 0.8.3")
+                options = Options()
+                options.read()
+                options.sources = [source for source in options.sources if source[1] != "earth"]
+                options.write()
+
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
