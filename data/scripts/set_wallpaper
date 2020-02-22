@@ -171,6 +171,13 @@ if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'"
     gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
 
+# GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
+gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
+if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
+    gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
+fi
+
+
 # Deepin
 if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
     gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
@@ -231,9 +238,6 @@ gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/n
 if [ "$(gsettings get org.cinnamon.desktop.background picture-options)" == "'none'" ]; then
 	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
 fi
-
-# GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
-gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
 
 # Awesome Window Manager
 # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
