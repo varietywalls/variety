@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2019-12-22 12:22+0200\n"
-"PO-Revision-Date: 2019-12-29 17:00+0000\n"
+"PO-Revision-Date: 2020-02-22 23:52+0000\n"
 "Last-Translator: Shinichirou Yamada "
 "<yamada_strong_yamada_nice_64bit@yahoo.co.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-01-13 08:36+0000\n"
-"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
+"X-Launchpad-Export-Date: 2020-02-23 05:59+0000\n"
+"X-Generator: Launchpad (build 19413b719a8df7423ab1390528edadce9e0e4aca)\n"
 
 #: ../variety/AddFlickrDialog.py:148
 #: ../data/plugins/downloaders/UnsplashConfigurableSource.py:94
@@ -215,7 +215,7 @@ msgstr "Variety はすでに実行しています。実行中のインスタン�
 
 #: ../variety/PreferencesVarietyDialog.py:85
 msgid " (Profile: {})"
-msgstr ""
+msgstr " (プロファイル: {})"
 
 #: ../variety/PreferencesVarietyDialog.py:87
 #: ../data/ui/PreferencesVarietyDialog.ui:121
@@ -570,7 +570,7 @@ msgstr "Variety 画像"
 #: ../variety/VarietyOptionParser.py:51
 #, c-format
 msgid "%prog [options] [files or urls]"
-msgstr ""
+msgstr "%prog [オプション] [ファイル/URL]"
 
 #: ../variety/VarietyOptionParser.py:69
 msgid ""
@@ -1631,11 +1631,11 @@ msgstr " 秒"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2235
 msgid "Quick fade "
-msgstr ""
+msgstr "素早いフェード "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2265
 msgid "Slow fade"
-msgstr ""
+msgstr "ゆっくりフェード"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2289
 msgid "Less zoom"
