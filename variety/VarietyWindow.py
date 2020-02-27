@@ -722,7 +722,7 @@ class VarietyWindow(Gtk.Window):
         if favs_op is None:
             holder.copy_to_favorites.set_visible(False)
             holder.move_to_favorites.set_visible(False)
-        elif favs_op is "favorite":
+        elif favs_op == "favorite":
             holder.copy_to_favorites.set_label(_("Already in Favorites"))
             holder.copy_to_favorites.set_visible(True)
             holder.move_to_favorites.set_visible(False)
