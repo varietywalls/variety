@@ -235,7 +235,7 @@ gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.cinnamon.desktop.background picture-options)" == "'none'" ]; then
+if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
 	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
 fi
 
