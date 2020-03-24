@@ -838,7 +838,7 @@ class VarietyWindow(Gtk.Window):
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
-                    self.ind.show_origin.set_sensitive("noOriginPage" not in info)
+                    self.ind.show_origin.set_sensitive(info and "noOriginPage" not in info)
                     if label:
                         self.ind.show_origin.set_label(label)
 
