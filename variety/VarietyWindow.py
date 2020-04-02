@@ -2408,6 +2408,9 @@ class VarietyWindow(Gtk.Window):
                 elif options.toggle_pause:
                     self.on_pause_resume()
 
+                if options.toggle_no_effects:
+                    self.toggle_no_effects(not bool(self.no_effects_on))
+
                 if options.history:
                     self.show_hide_history()
                 if options.downloads:
