@@ -1413,7 +1413,7 @@ class VarietyWindow(Gtk.Window):
     def apply_copyto_operation(self, to_set):
         if self.options.copyto_enabled:
             folder = self.get_actual_copyto_folder()
-            target_fname = "variety-copied-wallpaper-%s.%s" % (Util.random_hash(), os.path.splitext(to_set)[1])
+            target_fname = "variety-copied-wallpaper-%s%s" % (Util.random_hash(), os.path.splitext(to_set)[1])
             target_file = os.path.join(folder, target_fname)
             self.cleanup_old_wallpapers(folder, "variety-copied-wallpaper")
             try:
