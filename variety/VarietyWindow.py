@@ -666,11 +666,10 @@ class VarietyWindow(Gtk.Window):
     def load_banned(self):
         self.banned = set()
         try:
-            partial = os.path.join(self.config_folder, "banned.txt.partial")
-            with open(partial, encoding="utf8") as f:
+            banned = os.path.join(self.config_folder, "banned.txt")
+            with open(banned, encoding="utf8") as f:
                 for line in f:
                     self.banned.add(line.strip())
-            os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.info(lambda: "Missing or invalid banned URLs list, no URLs will be banned")
 
@@ -1999,8 +1998,10 @@ class VarietyWindow(Gtk.Window):
     def ban_url(self, url):
         try:
             self.banned.add(url)
-            with open(os.path.join(self.config_folder, "banned.txt"), "a", encoding="utf8") as f:
+            partial = os.path.join(self.config_folder, "banned.txt.partial")
+            with open(partial, "a", encoding="utf8") as f:
                 f.write(url + "\n")
+            os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.exception(lambda: "Could not ban URL")
 
