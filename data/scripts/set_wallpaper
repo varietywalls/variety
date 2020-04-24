@@ -243,8 +243,8 @@ fi
 # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
 # NOTE: This config will change the wallpaper after your current awesome theme sets it.
 # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
-if [[ "$DESKTOP_STARTUP_ID" == "awesome"* ]]; then
-	echo "local gears = require(\"gears\") gears.wallpaper.maximized(\"$1\", s, true)" | awesome-client
+if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DESKTOP" == *"awesome"* ]]; then
+	echo "local gears = require(\"gears\") gears.wallpaper.maximized(\"$1\", nil)" | awesome-client
 fi
 
 # =====================================================================================
