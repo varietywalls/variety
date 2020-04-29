@@ -1998,10 +1998,8 @@ class VarietyWindow(Gtk.Window):
     def ban_url(self, url):
         try:
             self.banned.add(url)
-            partial = os.path.join(self.config_folder, "banned.txt.partial")
-            with open(partial, "a", encoding="utf8") as f:
+            with open(os.path.join(self.config_folder, "banned.txt"), "a", encoding="utf8") as f:
                 f.write(url + "\n")
-            os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.exception(lambda: "Could not ban URL")
 
