@@ -837,7 +837,7 @@ class VarietyWindow(Gtk.Window):
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
-                    self.ind.show_origin.set_sensitive(info and "noOriginPage" not in info)
+                    self.ind.show_origin.set_sensitive(bool(info and "noOriginPage" not in info))
                     if label:
                         self.ind.show_origin.set_label(label)
 
@@ -1412,7 +1412,10 @@ class VarietyWindow(Gtk.Window):
     def apply_copyto_operation(self, to_set):
         if self.options.copyto_enabled:
             folder = self.get_actual_copyto_folder()
-            target_fname = "variety-copied-wallpaper-%s%s" % (Util.random_hash(), os.path.splitext(to_set)[1])
+            target_fname = "variety-copied-wallpaper-%s%s" % (
+                Util.random_hash(),
+                os.path.splitext(to_set)[1],
+            )
             target_file = os.path.join(folder, target_fname)
             self.cleanup_old_wallpapers(folder, "variety-copied-wallpaper")
             try:
@@ -1595,10 +1598,7 @@ class VarietyWindow(Gtk.Window):
             if not img:
                 with self.prepared_lock:
                     # with some big probability, use one of the unseen_downloads
-                    if (
-                        random.random() < self.options.download_preference_ratio
-                        or not self._has_local_sources()
-                    ):
+                    if random.random() < self.options.download_preference_ratio:
                         enabled_unseen_downloads = self._enabled_unseen_downloads()
                         if enabled_unseen_downloads:
                             unseen = random.choice(list(enabled_unseen_downloads))
@@ -1657,7 +1657,8 @@ class VarietyWindow(Gtk.Window):
                 dl.state["unseen_downloads"] = [f for f in unseen if os.path.exists(f)]
                 dl.save_state()
 
-                # trigger download after some interval to reduce resource usage while the wallpaper changes
+                # trigger download after some interval to reduce resource usage while
+                # the wallpaper changes
                 delay_dl_timer = threading.Timer(2, self.trigger_download)
                 delay_dl_timer.daemon = True
                 delay_dl_timer.start()

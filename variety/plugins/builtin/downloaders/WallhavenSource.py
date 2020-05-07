@@ -30,7 +30,7 @@ class WallhavenSource(ConfigurableImageSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "MediaRSSSource",
+            "name": "WallhavenSource",
             "description": _("Configurable source for fetching images from Wallhaven.cc"),
             "author": "Peter Levi",
             "version": "0.1",
@@ -65,7 +65,7 @@ class WallhavenSource(ConfigurableImageSource):
         return _("Enter keywords or paste URL here: ")
 
     def get_ui_short_description(self):
-        return _("Fetch images from a MediaRSS feed")
+        return _("Fetch images from Wallhaven.cc for a given criteria")
 
     def validate(self, query):
         valid = WallhavenDownloader.validate(query)
