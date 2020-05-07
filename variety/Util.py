@@ -602,7 +602,7 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5, headers=None, verify=True):
+    def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
         if url.startswith("//"):
             url = "http:" + url
         headers = headers or {}
@@ -617,7 +617,6 @@ class Util:
                 stream=stream,
                 allow_redirects=True,
                 timeout=timeout,
-                verify=verify,
             )
             r.raise_for_status()
             return r

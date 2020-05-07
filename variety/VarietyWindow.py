@@ -3030,6 +3030,8 @@ class VarietyWindow(Gtk.Window):
                     for source in self.options.sources:
                         if source[0]:
                             type = source[1]
+                            if type not in Options.get_all_supported_source_types():
+                                continue
                             location = source[2]
 
                             if type == Options.SourceType.IMAGE:
