@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import base64
 import codecs
 import datetime
 import functools
@@ -30,6 +31,7 @@ import sys
 import threading
 import time
 import urllib.parse
+from itertools import cycle
 
 import bs4
 import requests
@@ -648,6 +650,11 @@ class Util:
     @staticmethod
     def xml_soup(url, data=None, **request_kwargs):
         return bs4.BeautifulSoup(Util.fetch(url, data, **request_kwargs), "xml")
+
+    @staticmethod
+    def unxor(text, key):
+        ciphertext = base64.decodestring(text)
+        return "".join(chr(x ^ ord(y)) for (x, y) in zip(ciphertext, cycle(key)))
 
     @staticmethod
     def folderpath(folder):
