@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-09-18 20:45-0700\n"
-"PO-Revision-Date: 2016-11-14 23:50+0000\n"
-"Last-Translator: Bruno Veilleux <Unknown>\n"
+"POT-Creation-Date: 2019-12-22 12:22+0200\n"
+"PO-Revision-Date: 2020-05-21 20:07+0000\n"
+"Last-Translator: Jean-Marc <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2019-12-22 09:06+0000\n"
-"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
+"X-Launchpad-Export-Date: 2020-05-22 06:39+0000\n"
+"X-Generator: Launchpad (build 1f7bc749b40714a4cc10f5e4d787118a78037035)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -61,13 +61,9 @@ msgstr "Le dossier Favoris"
 msgid "The Fetched folder"
 msgstr "Le dossier récupéré"
 
-#: ../variety/Texts.py:35
-msgid ""
-"Recommended by Variety. Adapts to your taste as you mark images as favorite "
-"or trash."
-msgstr ""
-"Recommandé par Variety. S'adapte à vos goûts lorsque vous marquez des images "
-"comme favorites ou les envoyez à la corbeille."
+#: ../variety/FlickrDownloader.py:44
+msgid "Images from Flickr"
+msgstr "Images de Flickr"
 
 #: ../variety/Texts.py:37
 msgid ""
@@ -611,27 +607,76 @@ msgstr "Mode _sûr"
 
 #: ../variety/AddMediaRssDialog.py:40
 msgid ""
-"This does not seem to be a valid Media RSS feed URL or there is no content "
-"there."
+"Variety is already running. Sending the command to the running instance."
+msgstr "Variety est déjà démarré. Envoi de la commande à l'instance ouverte."
+
+#: ../variety/PreferencesVarietyDialog.py:85
+msgid " (Profile: {})"
+msgstr " (Profil : {})"
+
+#: ../variety/PreferencesVarietyDialog.py:87
+#: ../data/ui/PreferencesVarietyDialog.ui:121
+msgid "Variety Preferences"
+msgstr "Préférences de Variety"
+
+#: ../variety/PreferencesVarietyDialog.py:246
+msgid "All"
+msgstr "Toutes"
+
+#: ../variety/PreferencesVarietyDialog.py:392
+#: ../variety/PreferencesVarietyDialog.py:591
+#: ../data/ui/PreferencesVarietyDialog.ui:342
+msgid "Images"
+msgstr "Images"
+
+#: ../variety/PreferencesVarietyDialog.py:392
+msgid "Add individual wallpaper images"
+msgstr "Ajouter des images de fond d'écran individuelles"
+
+#: ../variety/PreferencesVarietyDialog.py:394
+msgid "Folders"
+msgstr "Dossiers"
+
+#: ../variety/PreferencesVarietyDialog.py:395
+msgid "Searched recursively for up to 10000 images, shown in random order"
 msgstr ""
-"Ceci ne semble pas être une URL de flux Média RSS valide, ou alors il ne "
-"contient rien."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:1
-msgid "Variety - VRTY.ORG"
-msgstr "Variety - VRTY.ORG"
+#: ../variety/PreferencesVarietyDialog.py:401
+msgid "Sequential Albums (order by filename)"
+msgstr "Albums séquentiels (classés par nom de fichier)"
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:2
-msgid "No, thanks"
-msgstr "Non merci"
+#: ../variety/PreferencesVarietyDialog.py:402
+msgid "Searched recursively for images, shown in sequence (by filename)"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:408
+msgid "Sequential Albums (order by date)"
+msgstr "Albums séquentiels (classés par date)"
+
+#: ../variety/PreferencesVarietyDialog.py:409
+msgid "Searched recursively for images, shown in sequence (by file date)"
+msgstr ""
+
+#: ../variety/PreferencesVarietyDialog.py:415 ../data/ui/AddFlickrDialog.ui:83
+msgid "Flickr"
+msgstr "Flickr"
+
+#: ../variety/PreferencesVarietyDialog.py:415
+msgid "Fetch images from Flickr"
+msgstr "Récupérer des images de Flickr"
+
+#: ../variety/PreferencesVarietyDialog.py:457
+msgid "Remove the source, keep the files"
+msgstr "Supprimer la source, garder les fichiers"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
 msgstr ""
-"<span font=\"14\" weight=\"bold\">Découvrez <a "
-"href=\"https://vrty.org\">VRTY.ORG</a> ! Vous voulez participer ?</span>"
+"L'utilisation de cette source nécessite que le changement de fond d'écran "
+"soit activé à des intervalles de %d minutes ou moins. Les paramètres ont été "
+"ajustés automatiquement."
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
@@ -647,28 +692,19 @@ msgstr ""
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:6
 msgid ""
-"Participation takes no effort - your profile will be built automatically, as "
-"you like or dislike images downloaded by Variety. Your profile will not be "
-"shared with third parties, unless you opt-in to make it public. <a "
-"href='http://peterlevi.com/variety/vrty-org/'>Read more details about the "
-"service and the privacy policy here.</a>"
+"Add Sequential Albums (ordered by filename). Subfolders are searched "
+"recursively."
 msgstr ""
-"La participation se fait sans effort : votre profil est ajusté "
-"automatiquement lorsque vous aimez et n'aimez pas des images téléchargées "
-"par Variety. Votre profil n'est pas partagé avec des tiers à moins que vous "
-"ne choisissiez de le rendre public. <a "
-"href='http://peterlevi.com/variety/vrty-org/'>Vous pouvez en apprendre "
-"davantage sur le service et consulter sa politique de confidentialité ici "
-"(en anglais).</a>"
+"Ajoutez des albums séquentiels (classés par nom de fichier). Les sous-"
+"dossiers sont recherchés récursivement."
 
-#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:7
+#: ../variety/PreferencesVarietyDialog.py:617
 msgid ""
 "Participation is required for some features of Variety such as <span "
 "weight=\"bold\">synchronization of favorites between computers</span>."
 msgstr ""
-"La participation est requise pour certaines fonctionnalités de Variety "
-"telles que la <span weight=\"bold\">synchronisation des favoris entre "
-"ordinateurs</span>."
+"Ajouter des albums séquentiels (classés par date). Les sous-dossiers sont "
+"recherchés récursivement."
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:8
 #: ../data/ui/PreferencesVarietyDialog.ui.h:107
@@ -819,25 +855,80 @@ msgstr ""
 msgid "Anonymous usage statistics"
 msgstr "Statistiques anonymes d'utilisation"
 
-#: ../variety/VarietyWindow.py:1909
-msgid ""
-"Variety collects anonymous usage statistics. \n"
-"These help us make it better and are not shared with anyone. \n"
-"To read more or turn them off, go to \"Sync and social\""
-msgstr ""
-"Variety récupère des statistiques d'usage anonymes. \n"
-"Elles nous aident à améliorer le logiciel et ne sont partagées avec aucun "
-"tiers. \n"
-"Pour en savoir plus ou les désactiver, voir « Synchronisation et social »."
+#: ../variety/ThumbsManager.py:42
+msgid "Top"
+msgstr "Haut"
 
-#: ../variety/VarietyWindow.py:2092
-msgid ""
-"I will open an editor with the config file and apply the changes after you "
-"save and close the editor."
-msgstr ""
-"Je vais ouvrir le fichier de configuration avec un éditeur de texte et "
-"appliquer les changements une fois que vous aurez enregistré et fermé cet "
-"éditeur."
+#: ../variety/ThumbsManager.py:43
+msgid "Left"
+msgstr "Gauche"
+
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui:1173
+msgid "Right"
+msgstr "Droite"
+
+#: ../variety/ThumbsManager.py:117
+msgid "Position"
+msgstr "Position"
+
+#: ../variety/ThumbsManager.py:121 ../data/ui/PreferencesVarietyDialog.ui:2771
+msgid "Size"
+msgstr "Taille"
+
+#: ../variety/ThumbsManager.py:125
+msgid "Maximum Shown Images"
+msgstr "Images maximales affichées"
+
+#: ../variety/ThumbsManager.py:139
+msgid "Show Containing Folder"
+msgstr "Montrer le dossier parent"
+
+#: ../variety/ThumbsManager.py:152 ../variety/VarietyWindow.py:761
+msgid "Fetched: Show Origin"
+msgstr "Récupéré : montrer l'origine"
+
+#: ../variety/ThumbsManager.py:154 ../variety/VarietyWindow.py:763
+#: ../variety/VarietyWindow.py:885
+#, c-format
+msgid "View at %s"
+msgstr "Vue à %s"
+
+#: ../variety/ThumbsManager.py:186 ../variety/VarietyWindow.py:731
+msgid "Move to _Favorites"
+msgstr "Déplacer vers _Favoris"
+
+#: ../variety/ThumbsManager.py:220
+msgid "Close"
+msgstr "Fermer"
+
+#: ../variety/ThumbsManager.py:240
+msgid "Could not set EXIF rating"
+msgstr "Impossible de donner une note EXIF"
+
+#: ../variety/ThumbsManager.py:260
+msgid "Unrated"
+msgstr "Non évalué"
+
+#: ../variety/ThumbsManager.py:267
+msgid "Rejected"
+msgstr "Refusé"
+
+#: ../variety/ThumbsManager.py:380
+msgid "Variety History"
+msgstr "Historique de Variety"
+
+#: ../variety/ThumbsManager.py:382
+msgid "Variety Recent Downloads"
+msgstr "Téléchargements récents de Variety"
+
+#: ../variety/ThumbsManager.py:384
+msgid "Variety Images"
+msgstr "Images de Variety"
+
+#: ../variety/VarietyOptionParser.py:51
+#, c-format
+msgid "%prog [options] [files or urls]"
+msgstr "%prog [options] [fichiers ou URL]"
 
 #: ../variety/VarietyWindow.py:2130
 msgid ""
@@ -863,8 +954,8 @@ msgid ""
 "Show logging messages (-vv shows even finer debugging messages, -vvv debugs "
 "variety_lib too)"
 msgstr ""
-"Afficher les messages de connexion (-vv affiche même les messages de "
-"débogage les plus fins, -vvv débogue également variety_lib)"
+"Afficher les messages de journalisation (-vv à -vvvvv profilera diverses "
+"parties de Variety avec des détails croissants"
 
 #: ../variety/VarietyWindow.py:2144
 msgid "Make the running instance quit"
@@ -878,7 +969,11 @@ msgstr ""
 "Afficher l'emplacement du fond d'écran actuel. Utilisé uniquement lorsque "
 "l'application est déjà en fonctionnement."
 
-#: ../variety/VarietyWindow.py:2152
+#: ../variety/VarietyOptionParser.py:115
+msgid "Set the given file as wallpaper, absolute path required"
+msgstr "Définir le fichier donné comme fond d'écran, chemin absolu requis"
+
+#: ../variety/VarietyOptionParser.py:119
 msgid "Show Next wallpaper"
 msgstr "Montrer le fond d'écran suivant"
 
@@ -986,9 +1081,11 @@ msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
 "les options --next, --fast-forward et --previous s'excluent mutuellement"
 
-#: ../variety/VarietyWindow.py:2241
-msgid "options --trash and --favorite are mutually exclusive"
-msgstr "les options --trash et --favorite s'excluent mutuellement"
+#: ../variety/VarietyWindow.py:1991
+msgid "Deleting to trash failed, check variety.log for more information."
+msgstr ""
+"La suppression vers la corbeille a échoué, vérifiez variety.log pour plus "
+"d'informations."
 
 #: ../variety/VarietyWindow.py:2244
 msgid "options --pause and --resume are mutually exclusive"
@@ -1060,22 +1157,27 @@ msgstr "Impossible de traiter l'URL variety:// demandée"
 msgid "Run with logging enabled to see details"
 msgstr "Exécuter en activant les rapports pour voir les détails"
 
-#: ../variety/VarietyWindow.py:2673
-msgid "Do not ask anymore, always use the current quote"
-msgstr "Ne plus demander, toujours utiliser la citation actuelle"
+#: ../variety/VarietyWindow.py:2944
+msgid "Variety: New desktop entry"
+msgstr "Variety : nouvelle entrée de bureau"
 
-#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
-msgid "Published"
-msgstr "Publié"
-
-#: ../variety/VarietyWindow.py:2708 ../variety/VarietyWindow.py:2737
-msgid "You may open your Facebook feed to see the post"
+#: ../variety/VarietyWindow.py:2946
+msgid "We created a new desktop entry in ~/.local/share/applications "
 msgstr ""
-"Vous pouvez ouvrir votre fil d’actualité Facebook pour voir la publication"
+"Nous avons créé une nouvelle entrée de bureau dans "
+"~/.local/share/applications "
 
-#: ../variety/VarietyWindow.py:2711 ../variety/VarietyWindow.py:2740
-msgid "Could not publish"
-msgstr "Publication impossible"
+#: ../variety/VarietyWindow.py:2971
+msgid "Variety: Created autostart desktop entry"
+msgstr "Variety : Entrée de bureau à démarrage automatique créée"
+
+#: ../variety/VarietyWindow.py:2973
+msgid ""
+"We created a new desktop entry in ~/.config/autostart. Variety should start "
+"automatically on next restart."
+msgstr ""
+"Nous avons créé une nouvelle entrée de bureau dans ~/.config/autostart. "
+"Variety devrait démarrer automatiquement au prochain redémarrage."
 
 #: ../variety/VarietyWindow.py:2903
 msgid "Could not create autostart entry"
@@ -1099,42 +1201,22 @@ msgstr "Aucune image"
 msgid "There are no images in the slideshow folders"
 msgstr "Il n'y a aucune image dans les dossiers de diaporama"
 
-#: ../variety/VarietyWindow.py:2989
-msgid "Wallhaven image sources disabled"
-msgstr "Sources d'images Wallhaven désactivées"
+#: ../data/plugins/downloaders/APODDownloader.py:29
+msgid "NASA Astro Pic of the Day"
+msgstr "Image astronomique du jour de la NASA"
 
-#: ../variety/VarietyWindow.py:2990
-msgid ""
-"Please google \"Python SNI SSL error\" if you want to fix the problem "
-"yourself."
+#: ../data/plugins/downloaders/ChromeOSWallpapersDownloader.py:30
+msgid "Chrome OS Wallpapers"
+msgstr "Fonds d'écran Chrome OS"
+
+#: ../data/plugins/downloaders/EarthviewDownloader.py:32
+msgid "Google Earth View Wallpapers"
+msgstr "Fonds d'écran Google Earth View"
+
+#: ../data/plugins/downloaders/MediaRSSSource.py:33
+msgid "Configurable source for fetching images from MediaRSS feeds"
 msgstr ""
-"Veuillez rechercher « erreur Python SNI SSL » sur Internet si vous désirez "
-"corriger vous-même le problème."
-
-#: ../variety/VarietyWindow.py:2996
-msgid ""
-"There are SSL incompatibilities between your version of Python and some "
-"https sites like Wallhaven. You can <a "
-"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
-"doesnt-give-sni-support/\">read more about the issue here</a>.\n"
-"\n"
-"Do you want to install the Python dependencies required to fix this problem? "
-"\n"
-"This operation will ask for superuser privileges. "
-msgstr ""
-"Il existe des incompatibilités SSL entre votre version de Python et certains "
-"sites utilisant HTTPS, comme Wallhaven. Vous pouvez <a "
-"href=\"https://stackoverflow.com/questions/18578439/using-requests-with-tls-"
-"doesnt-give-sni-support/\">en lire davantage à ce sujet ici</a> (en "
-"anglais).\n"
-"\n"
-"Désirez-vous installer les dépendances Python requises pour corriger ce "
-"problème ? \n"
-"Cette opération nécessitera des privilèges de super-utilisateur. "
-
-#: ../variety/VarietyWindow.py:3001
-msgid "Variety - SSL error. Install dependencies?"
-msgstr "Variety - erreur SSL. Installer les dépendances ?"
+"Source configurable pour récupérer des images à partir de flux MediaRSS"
 
 #: ../variety/VarietyWindow.py:3022
 msgid "Installing..."
@@ -1152,13 +1234,10 @@ msgstr ""
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr "Les dépendances ont été installées. Veuillez relancer Variety."
 
-#: ../variety/VarietyWindow.py:3037
-msgid ""
-"If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
-"and seek another solution."
-msgstr ""
-"Si l'erreur est toujours présente, vous devrez rechercher « erreur Python "
-"SNI SSL » sur Internet pour trouver une autre solution."
+#: ../data/plugins/downloaders/MediaRSSSource.py:61
+#: ../data/plugins/downloaders/WallhavenSource.py:68
+msgid "Fetch images from a MediaRSS feed"
+msgstr "Récupérer des images à partir d'un flux MediaRSS"
 
 #: ../variety/VarietyWindow.py:3040
 msgid "Failure. Wallhaven sources disabled."
@@ -1178,70 +1257,9 @@ msgstr ""
 msgid "Variety - Facebook Sharing"
 msgstr "Variety - Partage sur Facebook"
 
-#: ../data/ui/FacebookFirstRunDialog.ui.h:2
-#: ../data/ui/PreferencesVarietyDialog.ui.h:171
-msgid "Facebook Sharing"
-msgstr "Partage sur Facebook"
-
-#: ../data/ui/FacebookFirstRunDialog.ui.h:3
-msgid ""
-"You are sharing on Facebook for the first time. Sharing from Variety is "
-"available for images that come from online sources and for quotes. It works "
-"this way: \n"
-"\n"
-"<span font_weight=\"bold\">1. Login to Facebook</span>\n"
-"Facebook will open in your default browser. You will be prompted to login if "
-"you are not already logged in. \n"
-"\n"
-"<span font_weight=\"bold\">2. Authorize Variety to publish to your "
-"feed.</span>\n"
-"You will be asked to allow Variety to publish to your feed on your behalf. "
-"Variety will only use this permission to publish those images and quotes "
-"that you tell it to, nothing else.\n"
-"\n"
-"<span font_weight=\"bold\">3. Configure browser to open variety:// links "
-"with Variety or xdg-open</span>\n"
-"Then you will be redirected to a page with instructions to associate "
-"\"variety://\" links with Variety in your browser. Please follow these "
-"instructions to complete the setup. You have to do this only once.\n"
-"\n"
-"No passwords or login information is kept locally, just an OAuth Facebook "
-"token that will be valid for a couple of weeks. After its validity expires "
-"you will be asked to login again."
-msgstr ""
-"Vous partagez sur Facebook pour la première fois. Le partage à partir de "
-"Variety est disponible pour les images obtenues depuis des sources en ligne "
-"et les citations. Voici comment faire : \n"
-"\n"
-"<span font_weight=\"bold\">1. Connectez-vous à Facebook</span>\n"
-"Facebook s'ouvrira dans votre navigateur par défaut. Vous devrez vous "
-"connecter si ce n'est déjà fait. \n"
-"\n"
-"<span font_weight=\"bold\">2. Autorisez Variety à publier sur votre fil "
-"d'activité.</span>\n"
-"Facebook vous demandera d'autoriser Variety à publier sur votre fil en votre "
-"nom. Variety utilisera uniquement cette autorisation pour publier les images "
-"et citations que vous choisissez, et rien d'autre.\n"
-"\n"
-"<span font_weight=\"bold\">3. Configurez votre navigateur pour ouvrir les "
-"liens variety:// avec Variety ou xdg-open</span>\n"
-"Vous serez alors redirigé(e) vers une page contenant des instructions pour "
-"associer les liens « variety:// » à Variety dans votre navigateur. Veuillez "
-"suivre ces instructions pour terminer la configuration. Vous n'aurez à faire "
-"ceci qu'une seule fois.\n"
-"\n"
-"Aucun mot de passe et aucune information de connexion ne sont conservés "
-"localement, seul un jeton Facebook OAuth est conservé et valide pour "
-"quelques semaines. Une fois expiré, Facebook vous demandera de vous "
-"connecter à nouveau."
-
-#: ../data/plugins/quotes/QuotationsPageSource.py:35
-msgid "Fetches quotes from TheQuotationsPage.com"
-msgstr "Récupère des citations depuis TheQuotationsPage.com"
-
-#: ../data/ui/AddRedditDialog.ui.h:1
-msgid "Variety - add Reddit feed"
-msgstr "Variety - ajouter un flux Reddit"
+#: ../data/plugins/downloaders/RedditSource.py:35
+msgid "Configurable source for fetching images from Reddit"
+msgstr "Source configurable pour récupérer des images depuis Reddit"
 
 #: ../data/ui/AddRedditDialog.ui.h:3
 msgid ""
@@ -1549,123 +1567,23 @@ msgstr ""
 msgid "Enter keywords or paste URL here: "
 msgstr "Saisissez des mots-clés ou copiez l'URL ici : "
 
-#: ../data/ui/AddWallhavenDialog.ui.h:9 ../data/ui/AddFlickrDialog.ui.h:16
-msgid "Just a moment to check this search"
-msgstr "Juste un moment pour vérifier cette recherche"
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:81
+msgid "Configurable source for fetching photos from Unsplash.com"
+msgstr "Source configurable pour récupérer des photos sur Unsplash.com"
 
-#: ../data/plugins/quotes/LocalFilesSource.py:34
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:96
+msgid "We do not support this type of URL"
+msgstr "Nous ne prenons pas en charge ce type d'URL"
+
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:101
+msgid "Oops, this didn't work. Is the remote service up?"
+msgstr "Oups, cela n'a pas fonctionné. Le service distant est-il en place ?"
+
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:108
 msgid ""
-"Displays quotes, defined in local text files.\n"
-"Put your own txt files in: ~/.config/variety/pluginconfig/quotes/.\n"
-"The file format is:\n"
-"\n"
-"quote -- author\n"
-".\n"
-"second quote -- another author\n"
-".\n"
-"etc...\n"
-"\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-"Affiche les citations, définies dans les fichiers texte locaux.\n"
-"Placez vos propres fichiers txt dans : "
-"~/.config/variety/pluginconfig/quotes/.\n"
-"Le format du fichier est :\n"
-"\n"
-"citation -- auteur\n"
-".\n"
-"seconde citation -- un autre auteur\n"
-".\n"
-"etc…\n"
-"\n"
-"Exemple : http://rvelthuis.de/zips/quotes.txt"
-
-#: ../data/ui/AddMediaRssDialog.ui.h:1
-msgid "Variety - add Media RSS feed"
-msgstr "Variety - ajouter un flux Média RSS"
-
-#: ../data/ui/AddMediaRssDialog.ui.h:3
-msgid ""
-"Please paste the URL of the Media RSS feed below. Please note that only "
-"Media RSS feeds are supported, not arbitrary RSS feeds. Media RSS feeds "
-"contain media:content tags linking directly to the actual image content. "
-"Some examples of sites that provide Media RSS feeds are: <a "
-"href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
-"href=\"http://www.deviantart.com\">deviantART</a>, <a "
-"href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
-"href=\"http://www.flickr.com\">Flickr</a>, <a "
-"href=\"http://interfacelift.com\">InterfaceLIFT</a>."
-msgstr ""
-"Vous pouvez coller l'URL du flux Média RSS ci-dessous. Notez que seuls les "
-"flux Média RSS sont pris en charge, pas les flux RSS arbitraires. Les flux "
-"Média RSS contiennent des balises media:content pointant directement sur le "
-"contenu réel de l'image. Voici des exemples de sites qui fournissent des "
-"flux Média RSS : <a href=\"https://picasaweb.google.com/\">Picasa</a>, <a "
-"href=\"http://www.deviantart.com\">deviantART</a>, <a "
-"href=\"http://www.smugmug.com/browse/\">SmugMug</a>, <a "
-"href=\"http://www.flickr.com\">Flickr</a>, <a "
-"href=\"http://interfacelift.com\">InterfaceLIFT</a>."
-
-#: ../data/ui/AddMediaRssDialog.ui.h:4
-msgid "Paste the URL of the Media RSS feed here: "
-msgstr "Coller l'URL du flux Média RSS ici : "
-
-#: ../data/ui/AddMediaRssDialog.ui.h:5
-msgid "Just a moment to check what's at that URL"
-msgstr "Juste un moment pour vérifier le contenu de cette URL"
-
-#: ../variety/FacebookHelper.py:116
-msgid "Authorization successful"
-msgstr "Autorisation réussie"
-
-#: ../variety/FacebookHelper.py:116
-msgid "Publishing..."
-msgstr "Publication en cours..."
-
-#: ../variety/FacebookHelper.py:121
-msgid "Authorization failed"
-msgstr "Autorisation échouée"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:1
-msgid "Copy to Favorites vs. Move to Favorites"
-msgstr "Copier vers Favoris vs Déplacer vers Favoris"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:2
-msgid "Reset to Default"
-msgstr "Restaurer les valeurs par défaut"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
-msgid ""
-"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
-"menu depending on the image location:"
-msgstr ""
-"Choisissez si vous préférez « Copier vers Favoris » ou « Déplacer vers "
-"Favoris » dans le menu en fonction de l'emplacement de l'image :"
-
-#: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
-msgid ""
-"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move "
-"or Both>, where Folder can be Downloaded, Fetched, Others or a specific "
-"folder path.\n"
-"Order is important. When an image is shown, the first folder in this list "
-"which contains the image will determine which operations will be shown in "
-"Variety's menu. 'Others' matches any file and should be last in the list.\n"
-"\n"
-"Example:\n"
-"\tDownloaded:Copy\n"
-"\tFetched:Move\n"
-"\t/pics/RandomImages:Move\n"
-"\t/pics/OrganizedAlbums:Copy\n"
-"\tOthers:Both"
-msgstr ""
-"Veuillez inscrire un élément par ligne, chaque élément sous la forme "
-"<Dossier>:<Copy, Move ou Both>, où Dossier peut être Downloaded "
-"(Téléchargés), Fetched (Récupérés), Others (Autres) ou un chemin vers un "
-"dossier spécifique.\n"
-"L'ordre est important. Lorsqu'une image est affichée, le premier dossier "
-"dans cette liste qui contient l'image déterminera quelles opérations seront "
-"montrées dans le menu de Variety. « Others » correspond à n'importe quel "
-"fichier et devrait être en dernier dans la liste.\n"
+"We use the <a href='https://unsplash.com'>Unsplash</a> API to fetch random "
+"images that match the given search term or URL. The Unsplash API is rate-"
+"limited, so Variety fetches images from Unsplash sources as a reduced rate.\n"
 "\n"
 "Exemple :\n"
 "\tDownloaded:Copy\n"
@@ -1674,17 +1592,18 @@ msgstr ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
-msgid "VRTY.ORG integration"
-msgstr "Intégration à VRTY.ORG"
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:119
+msgid "Search keyword or URL: "
+msgstr "Recherche par mot clé ou URL : "
 
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
-msgid "This feature requires VRTY.ORG integration"
-msgstr "Cette fonctionnalité nécessite l'intégration à VRTY.ORG"
+#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:122
+msgid "Fetches images from Unsplash.com for a given criteria"
+msgstr "Récupère les images d'Unsplash.com pour un critère donné"
 
-#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:3
-msgid "Enable VRTY.ORG integration"
-msgstr "Activer l'intégration à VRTY.ORG"
+#: ../data/plugins/downloaders/WallhavenSource.py:34
+msgid "Configurable source for fetching images from Wallhaven.cc"
+msgstr ""
+"Source configurable pour récupérer des images à partir de Wallhaven.cc"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:4
 msgid ""
@@ -1711,9 +1630,16 @@ msgstr ""
 "utilisateurs et alimentent <a href=\"https://vrty.org\">VRTY.ORG</a>, une "
 "ressource précieuse pour tous les utilisateurs de Variety."
 
-#: ../variety/AddRedditDialog.py:43
-msgid "This does not seem to be a valid Reddit URL"
-msgstr "Ceci ne semble pas être une URL Reddit valide"
+#: ../data/ui/AboutVarietyDialog.ui:14
+msgid "Copyright (c) 2012-2019, Peter Levi, James Lu & Variety contributors"
+msgstr ""
+"Copyright (c) 2012-2019, Peter Levi, James Lu & contributeurs de Variety"
+
+#: ../data/ui/AboutVarietyDialog.ui:15
+msgid "An automatic wallpaper changer, downloader and manager."
+msgstr ""
+"Une application automatique pour changer, gérer et télécharger des fonds "
+"d'écran."
 
 #: ../variety/AddRedditDialog.py:46
 msgid "We could not find any image submissions there."
@@ -1721,12 +1647,39 @@ msgstr "Nous n'avons trouvé aucune image à cet endroit."
 
 #: ../data/plugins/quotes/QuotesDaddySource.py:31
 msgid ""
-"Fetches quotes from QuotesDaddy's daily quotes RSS feed.\n"
-"Does not support searching by tags or authors."
+"# Copyright (c) 2012-2019, Peter Levi, James Lu & Variety contributors\n"
+"# This program is free software: you can redistribute it and/or modify it\n"
+"# under the terms of the GNU General Public License version 3, as published\n"
+"# by the Free Software Foundation.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful, but\n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of\n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR\n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License along\n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
-"Récupère les citations depuis le flux RSS des citations quotidiennes de "
-"QuotesDaddy.\n"
-"Ne prend pas en charge la recherche par tags ou auteurs."
+"# Copyright (c) 2012-2019, Peter Levi, James Lu & les contributeurs de "
+"Variety\n"
+"# Ce programme est un logiciel libre : vous pouvez le redistribuer et/ou le "
+"modifier\n"
+"# selon les termes de la licence publique générale GNU version 3, telle que "
+"publiée\n"
+"# par la Free Software Foundation.\n"
+"#\n"
+"#Ce programme est distribué dans l’espoir qu’il sera utile, mais\n"
+"# SANS AUCUNE GARANTIE ; sans même les garanties implicites de\n"
+"# QUALITÉ MARCHANDE, QUALITÉ SATISFAISANTE OU D'ADÉQUATION À UN USAGE \n"
+"#PARTICULIER. Voir la Licence Publique Générale GNU pour plus de détails.\n"
+"#\n"
+"#Vous devriez avoir reçu une copie de la licence publique générale GNU avec\n"
+"# ce programme.  Dans le cas contraire, voir "
+"<http://www.gnu.org/licenses/>.\n"
+
+#: ../data/ui/AddConfigurableDialog.ui:160
+msgid "Just a moment to check for images"
+msgstr "Juste un instant pour vérifier les images"
 
 #: ../data/ui/AddFlickrDialog.ui.h:1
 msgid "Variety - add Flickr as an image source"
@@ -1877,9 +1830,9 @@ msgstr "_Ajouter…"
 msgid "Add images, folders or online image sources"
 msgstr "Ajouter des images, des dossiers ou des sources d'images en ligne"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:19
-msgid "_Edit..."
-msgstr "_Modifier…"
+#: ../data/ui/PreferencesVarietyDialog.ui:467
+msgid "_Open Folder"
+msgstr "_Ouvrir un dossier"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Edit the selected source"
@@ -2236,7 +2189,7 @@ msgstr "Plus de défilement"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:102
 msgid "Reset to defaults"
-msgstr "Rétablir les valeurs par défaut"
+msgstr "Réinitialiser aux valeurs par défaut"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:103
 msgid "Changes on this page take effect after the slideshow is restarted"
@@ -2511,7 +2464,31 @@ msgctxt "Icon option"
 msgid "Dark"
 msgstr "Sombre"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:159
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3172
+msgctxt "Icon option"
+msgid "Number 1"
+msgstr "Numéro 1"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3173
+msgctxt "Icon option"
+msgid "Number 2"
+msgstr "Numéro 2"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3174
+msgctxt "Icon option"
+msgid "Number 3"
+msgstr "Numéro 3"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3175
+msgctxt "Icon option"
+msgid "Number 4"
+msgstr "Numéro 4"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3176
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Utiliser le fond d'écran actuel"
@@ -2683,43 +2660,29 @@ msgstr ""
 "Merci,\n"
 "Peter Levi"
 
-#: ../data/ui/PreferencesVarietyDialog.ui.h:195
-msgid ""
-"<i>For Bitcoin and other payment methods please go to <a "
-"href=\"http://peterlevi.com/variety/\">Variety's website</a>.</i>"
-msgstr ""
-"<i>Pour utiliser Bitcoin et d'autres modes de paiement, veuillez visiter le "
-"<a href=\"http://peterlevi.com/variety/\">site Web de Variety</a>.</i>"
+#: ../data/ui/PreferencesVarietyDialog.ui:3951
+msgid "To donate in Bitcoin, please send to this wallet:"
+msgstr "Pour faire un don en Bitcoin, veuillez envoyer à ce portefeuille :"
 
-#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
-msgid "Fetching"
-msgstr "Récupération"
+#: ../data/ui/PreferencesVarietyDialog.ui:3964
+msgid "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
+msgstr "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
 
-#. too small - delete and do not use
-#: ../variety/ImageFetcher.py:116
-msgid "Image too small, ignoring it"
-msgstr "Image trop petite, ignorée"
+#: ../data/ui/PrivacyNoticeDialog.ui:14
+msgid "Variety - Privacy Notice"
+msgstr "Variety - Avis de confidentialité"
 
-#: ../variety/ImageFetcher.py:138
-#, python-format
-msgid "Sorry, got %s error..."
-msgstr "Désolé, nous avons rencontré l'erreur %s..."
+#: ../data/ui/PrivacyNoticeDialog.ui:45
+msgid "Reject and Quit"
+msgstr "Rejeter et quitter"
 
-#: ../variety/ImageFetcher.py:139
-msgid "This means the link is no longer valid"
-msgstr "Cela signifie que le lien n'est plus valide"
+#: ../data/ui/PrivacyNoticeDialog.ui:58
+msgid "Accept and Continue"
+msgstr "Accepter et continuer"
 
-#: ../variety/ImageFetcher.py:142
-msgid "Fetch failed for some reason"
-msgstr "Échec de la récupération pour une raison inconnue"
-
-#: ../variety/ImageFetcher.py:143
-msgid ""
-"To get more information, please run Variety from terminal with -v option and "
-"retry the action"
-msgstr ""
-"Pour obtenir plus d'information, veuillez exécuter Variety depuis le "
-"terminal avec l'option -v et retenter cette action"
+#: ../data/ui/PrivacyNoticeDialog.ui:97
+msgid "<span font=\"15\" weight=\"bold\">Privacy Notice</span>"
+msgstr "<span font=\"15\" weight=\"bold\">Avis de confidentialité</span>"
 
 #: ../variety/Smart.py:119
 msgid ""
