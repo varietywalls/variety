@@ -29,7 +29,7 @@ random.seed()
 class BingDownloader(SimpleDownloader):
     DESCRIPTION = _("Bing Photo of the Day")
     BING_JSON_URL = (
-        "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=100&mkt=en-US"
+        "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=100"
     )  # n=100, but max 8 images are actually returned... Pity.
 
     @classmethod
