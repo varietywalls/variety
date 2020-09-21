@@ -274,9 +274,13 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.slideshow_zoom.set_value(self.options.slideshow_zoom)
             self.ui.slideshow_pan.set_value(self.options.slideshow_pan)
 
+            self.unsupported_sources = []
             self.ui.sources.get_model().clear()
             for s in self.options.sources:
-                self.ui.sources.get_model().append(self.source_to_model_row(s))
+                if s[1] in Options.get_all_supported_source_types():
+                    self.ui.sources.get_model().append(self.source_to_model_row(s))
+                else:
+                    self.unsupported_sources.append(s)
 
             if not hasattr(self, "enabled_toggled_handler_id"):
                 self.enabled_toggled_handler_id = self.ui.sources_enabled_checkbox_renderer.connect(
@@ -937,6 +941,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.sources = []
             for r in self.ui.sources.get_model():
                 self.options.sources.append(self.model_row_to_source(r))
+            for s in self.unsupported_sources:
+                self.options.sources.append(s)
 
             if os.access(self.fetched_chooser.get_folder(), os.W_OK):
                 self.options.fetched_folder = self.fetched_chooser.get_folder()

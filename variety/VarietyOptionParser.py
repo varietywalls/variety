@@ -175,6 +175,13 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
     )
 
     parser.add_option(
+        "--toggle-no-effects",
+        action="store_true",
+        dest="toggle_no_effects",
+        help=_('Toggle "Show Without Effects" for current image'),
+    )
+
+    parser.add_option(
         "--quotes-next", action="store_true", dest="quotes_next", help=_("Show Next quote")
     )
 

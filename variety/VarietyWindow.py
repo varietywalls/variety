@@ -666,11 +666,10 @@ class VarietyWindow(Gtk.Window):
     def load_banned(self):
         self.banned = set()
         try:
-            partial = os.path.join(self.config_folder, "banned.txt.partial")
-            with open(partial, encoding="utf8") as f:
+            banned = os.path.join(self.config_folder, "banned.txt")
+            with open(banned, encoding="utf8") as f:
                 for line in f:
                     self.banned.add(line.strip())
-            os.rename(partial, os.path.join(self.config_folder, "banned.txt"))
         except Exception:
             logger.info(lambda: "Missing or invalid banned URLs list, no URLs will be banned")
 
@@ -722,7 +721,7 @@ class VarietyWindow(Gtk.Window):
         if favs_op is None:
             holder.copy_to_favorites.set_visible(False)
             holder.move_to_favorites.set_visible(False)
-        elif favs_op is "favorite":
+        elif favs_op == "favorite":
             holder.copy_to_favorites.set_label(_("Already in Favorites"))
             holder.copy_to_favorites.set_visible(True)
             holder.move_to_favorites.set_visible(False)
@@ -838,7 +837,7 @@ class VarietyWindow(Gtk.Window):
                     self.update_favorites_menuitems(self.ind, auto_changed, favs_op)
 
                     self.ind.show_origin.set_visible(bool(label))
-                    self.ind.show_origin.set_sensitive("noOriginPage" not in info)
+                    self.ind.show_origin.set_sensitive(bool(info and "noOriginPage" not in info))
                     if label:
                         self.ind.show_origin.set_label(label)
 
@@ -1429,9 +1428,11 @@ class VarietyWindow(Gtk.Window):
     def apply_copyto_operation(self, to_set):
         if self.options.copyto_enabled:
             folder = self.get_actual_copyto_folder()
-            target_file = os.path.join(
-                folder, "variety-copied-wallpaper-%s.jpg" % Util.random_hash()
+            target_fname = "variety-copied-wallpaper-%s%s" % (
+                Util.random_hash(),
+                os.path.splitext(to_set)[1],
             )
+            target_file = os.path.join(folder, target_fname)
             self.cleanup_old_wallpapers(folder, "variety-copied-wallpaper")
             try:
                 shutil.copy(to_set, target_file)
@@ -1613,10 +1614,7 @@ class VarietyWindow(Gtk.Window):
             if not img:
                 with self.prepared_lock:
                     # with some big probability, use one of the unseen_downloads
-                    if (
-                        random.random() < self.options.download_preference_ratio
-                        or not self._has_local_sources()
-                    ):
+                    if random.random() < self.options.download_preference_ratio:
                         enabled_unseen_downloads = self._enabled_unseen_downloads()
                         if enabled_unseen_downloads:
                             unseen = random.choice(list(enabled_unseen_downloads))
@@ -1675,7 +1673,8 @@ class VarietyWindow(Gtk.Window):
                 dl.state["unseen_downloads"] = [f for f in unseen if os.path.exists(f)]
                 dl.save_state()
 
-                # trigger download after some interval to reduce resource usage while the wallpaper changes
+                # trigger download after some interval to reduce resource usage while
+                # the wallpaper changes
                 delay_dl_timer = threading.Timer(2, self.trigger_download)
                 delay_dl_timer.daemon = True
                 delay_dl_timer.start()
@@ -2267,6 +2266,13 @@ class VarietyWindow(Gtk.Window):
                     options.quotes_disabled_sources.append("Urban Dictionary")
                 options.write()
 
+            if Util.compare_versions(last_version, "0.8.3") < 0:
+                logger.info(lambda: "Performing upgrade to 0.8.3")
+                options = Options()
+                options.read()
+                options.sources = [source for source in options.sources if source[1] != "earth"]
+                options.write()
+
             # Perform on every upgrade to an newer version:
             if Util.compare_versions(last_version, current_version) < 0:
                 self.write_current_version()
@@ -2428,6 +2434,9 @@ class VarietyWindow(Gtk.Window):
                     self.on_pause_resume(change_enabled=True)
                 elif options.toggle_pause:
                     self.on_pause_resume()
+
+                if options.toggle_no_effects:
+                    self.toggle_no_effects(not bool(self.no_effects_on))
 
                 if options.history:
                     self.show_hide_history()
@@ -3071,6 +3080,8 @@ class VarietyWindow(Gtk.Window):
                     for source in self.options.sources:
                         if source[0]:
                             type = source[1]
+                            if type not in Options.get_all_supported_source_types():
+                                continue
                             location = source[2]
 
                             if type == Options.SourceType.IMAGE:

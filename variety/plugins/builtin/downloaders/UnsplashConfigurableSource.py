@@ -119,7 +119,7 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
         return _("Search keyword or URL: ")
 
     def get_ui_short_description(self):
-        return _("Fetches images from Unsplash.com for a given criteria")
+        return _("Fetch images from Unsplash.com for a given criteria")
 
     def get_source_name(self):
         return "Unsplash"

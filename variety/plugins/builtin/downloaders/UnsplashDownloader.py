@@ -29,7 +29,11 @@ random.seed()
 class UnsplashDownloader(SimpleDownloader):
     DESCRIPTION = _("High-resolution photos from Unsplash.com")
 
-    CLIENT_ID = "072e5048dfcb73a8d9ad59fcf402471518ff8df725df462b0c4fa665f466515a"
+    API_KEY = "37ee4be36ffd27e79decd4ef382d4949"
+    HASH = (
+        b"AwBXAAFSUQtSAAUGBQQED11dBAdRDQMFVQwCVgAOBQwCDwMDDAYDBARTAgIGAVdVCQdRBQUCU1NV\n"
+        b"DARSAQgBWA==\n"
+    )
     UTM_PARAMS = "?utm_source=Variety+Wallpaper+Changer&utm_medium=referral"
 
     rate_limiting_started_time = 0
@@ -62,11 +66,11 @@ class UnsplashDownloader(SimpleDownloader):
         return "unsplash_v2"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=3)
+        return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
 
     def get_unsplash_api_url(self):
         return "https://api.unsplash.com/photos/random?count=30&client_id={}{}".format(
-            UnsplashDownloader.CLIENT_ID,
+            Util.unxor(UnsplashDownloader.HASH, UnsplashDownloader.API_KEY),
             "&orientation=landscape" if self.get_variety().options.use_landscape_enabled else "",
         )
 
@@ -81,7 +85,7 @@ class UnsplashDownloader(SimpleDownloader):
         logger.info(lambda: "Filling Unsplash queue from " + url)
 
         r = Util.request(url)
-        if int(r.headers.get("X-Ratelimit-Remaining", 1000000)) < 100:
+        if int(r.headers.get("X-Ratelimit-Remaining", 1000000)) < 1000:
             UnsplashDownloader.rate_limiting_started_time = time.time()
 
         queue = []
@@ -125,7 +129,9 @@ class UnsplashDownloader(SimpleDownloader):
         download_loc = extraData.get("unsplashDownloadLocation")
         reported = extraData.get("unsplashDownloadReported")
         if download_loc and not reported:
-            url = "{}?client_id={}".format(download_loc, UnsplashDownloader.CLIENT_ID)
+            url = "{}?client_id={}".format(
+                download_loc, Util.unxor(UnsplashDownloader.HASH, UnsplashDownloader.API_KEY)
+            )
             Util.fetch(url)
             meta["extraData"]["unsplashDownloadReported"] = True
             Util.write_metadata(img, meta)

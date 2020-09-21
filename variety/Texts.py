@@ -40,10 +40,6 @@ SOURCES = {
     ),
     "desktoppr": ("Random wallpapers from Desktoppr.co", _("Random wallpapers from Desktoppr.co")),
     "apod": ("NASA's Astronomy Picture of the Day", _("NASA's Astronomy Picture of the Day")),
-    "earth": (
-        "World Sunlight Map - live wallpaper from Die.net",
-        _("World Sunlight Map - live wallpaper from Die.net"),
-    ),
     "bing": ("Bing Photo of the Day", _("Bing Photo of the Day")),
     "unsplash": (
         "High-resolution photos from Unsplash.com",

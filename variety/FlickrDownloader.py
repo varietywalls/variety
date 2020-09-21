@@ -26,7 +26,8 @@ logger = logging.getLogger("variety")
 
 random.seed()
 
-API_KEY = "0553a848c09bcfd21d3a984d9408c04e"
+API_KEY = "d9c4a1fd59926d27d091b69651c37a34"
+HASH = b"VAxWBwAJUlxWCQBQVQJWBVVUClBbDg1SDAVTC1RRB1E=\n"
 
 
 class FlickrDownloader(ImageSource, DefaultDownloader):
@@ -79,7 +80,7 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
 
             call = (
                 "https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key=%s&url=%s&format=json&nojsoncallback=1"
-                % (API_KEY, urllib.parse.quote_plus(url))
+                % (Util.unxor(HASH, API_KEY), urllib.parse.quote_plus(url))
             )
 
             resp = FlickrDownloader.fetch(call)
@@ -101,7 +102,7 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
 
             call = (
                 "https://api.flickr.com/services/rest/?method=flickr.urls.lookupGroup&api_key=%s&url=%s&format=json&nojsoncallback=1"
-                % (API_KEY, urllib.parse.quote_plus(url))
+                % (Util.unxor(HASH, API_KEY), urllib.parse.quote_plus(url))
             )
 
             resp = FlickrDownloader.fetch(call)
@@ -132,7 +133,8 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
     def count_results(self):
         call = (
             "https://api.flickr.com/services/rest/?method=flickr.photos.search"
-            "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
+            "&api_key=%s&per_page=20&tag_mode=all&format=json&nojsoncallback=1"
+            % Util.unxor(HASH, API_KEY)
         )
 
         for k, v in self.params.items():
@@ -149,7 +151,8 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
 
         call = (
             "https://api.flickr.com/services/rest/?method=flickr.photos.search"
-            "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1" % API_KEY
+            "&api_key=%s&per_page=500&tag_mode=all&format=json&nojsoncallback=1"
+            % Util.unxor(HASH, API_KEY)
         )
 
         for k, v in self.params.items():
@@ -260,7 +263,7 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
         photo_id = FlickrDownloader.get_photo_id(origin_url)
         call = (
             "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=%s&photo_id=%s&format=json&nojsoncallback=1"
-            % (API_KEY, photo_id)
+            % (Util.unxor(HASH, API_KEY), photo_id)
         )
         resp = Util.fetch_json(call)
         s = max(resp["sizes"]["size"], key=lambda size: int(size["width"]))
@@ -271,7 +274,7 @@ class FlickrDownloader(ImageSource, DefaultDownloader):
         photo_id = FlickrDownloader.get_photo_id(origin_url)
         call = (
             "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=%s&photo_id=%s&format=json&nojsoncallback=1"
-            % (API_KEY, photo_id)
+            % (Util.unxor(HASH, API_KEY), photo_id)
         )
         resp = Util.fetch_json(call)
         ph = resp["photo"]

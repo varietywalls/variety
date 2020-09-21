@@ -1,10 +1,21 @@
-0.8.0 - 0.8.2
+0.8.4
+    Remove dead Desktoppr, ChromeOS sources (GH-323)
+    Properly verify TLS certificates when downloading images (GH-326)
+    Fix banning images when using Delete to Trash option (GH-304)
+    Preserve file extensions when copying wallpapers to another folder (GH-240)
+    Fix crash in indicator code when image origin is not available (GH-287)
+    Remove spurious "No such schema “org.cinnamon.desktop.background” errors" (GH-329)
+    Update Unsplash rate limit (GH-332)
+    Better detection for AwesomeWM (GH-282)
+
+0.8.0 - 0.8.3
     Image sources are now plugins
     Add support for sequential albums
     Add support for multiple simultaneously running Variety profiles (--profile command option)
     Add a Privacy Notice dialog
     Add support for configurable Unsplash sources
     Add two new sources (ChromeOS Wallpapers and Google Earth View Wallpapers)
+    Remove World Sunlight Map source
     Added Urban Dictionary and UNIX fortune program as quote sources
     Download linked to wallpaper changing, not configured as a separate interval
     Add a dedicated --set/--set-wallpaper option
