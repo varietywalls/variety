@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: variety\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2019-12-22 12:22+0200\n"
-"PO-Revision-Date: 2020-05-15 15:15+0000\n"
-"Last-Translator: Mykola Tkach <Stuartlittle1970@gmail.com>\n"
+"POT-Creation-Date: 2017-09-18 20:45-0700\n"
+"PO-Revision-Date: 2018-07-22 13:51+0000\n"
+"Last-Translator: Jon900 <Stuartlittle1970@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-05-16 05:53+0000\n"
-"X-Generator: Launchpad (build 0385b538081bc4718df6fb844a3afc89729c94ce)\n"
+"X-Launchpad-Export-Date: 2019-12-22 09:06+0000\n"
+"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
 
 #: ../data/plugins/quotes/GoodreadsSource.py:49
 msgid "Fetches quotes from Goodreads.com"
@@ -61,9 +61,13 @@ msgstr "Вибрані"
 msgid "The Fetched folder"
 msgstr "Завантажені вручну"
 
-#: ../variety/FlickrDownloader.py:44
-msgid "Images from Flickr"
-msgstr "Зображення з Flickr"
+#: ../variety/Texts.py:35
+msgid ""
+"Recommended by Variety. Adapts to your taste as you mark images as favorite "
+"or trash."
+msgstr ""
+"Раджено Variety. Відповідно до Вашого смаку, віднести зображення до Вибраних "
+"або позначити як сміття."
 
 #: ../variety/Texts.py:37
 msgid ""
@@ -609,76 +613,13 @@ msgstr "Variety - VRTY.ORG"
 msgid "No, thanks"
 msgstr "Ні, дякую"
 
-#: ../variety/PreferencesVarietyDialog.py:246
-msgid "All"
-msgstr "Усі"
-
-#: ../variety/PreferencesVarietyDialog.py:392
-#: ../variety/PreferencesVarietyDialog.py:591
-#: ../data/ui/PreferencesVarietyDialog.ui:342
-msgid "Images"
-msgstr "Зображення"
-
-#: ../variety/PreferencesVarietyDialog.py:392
-msgid "Add individual wallpaper images"
-msgstr "Додати індивідуальні зображення шпалер"
-
-#: ../variety/PreferencesVarietyDialog.py:394
-msgid "Folders"
-msgstr "Теки"
-
-#: ../variety/PreferencesVarietyDialog.py:395
-msgid "Searched recursively for up to 10000 images, shown in random order"
-msgstr "Рекурсивний пошук до 10000 зображень, показаних у довільному порядку"
-
-#: ../variety/PreferencesVarietyDialog.py:401
-msgid "Sequential Albums (order by filename)"
-msgstr "Послідовні альбоми (упорядкувати за назвою файлу)"
-
-#: ../variety/PreferencesVarietyDialog.py:402
-msgid "Searched recursively for images, shown in sequence (by filename)"
-msgstr ""
-
-#: ../variety/PreferencesVarietyDialog.py:408
-msgid "Sequential Albums (order by date)"
-msgstr ""
-
-#: ../variety/PreferencesVarietyDialog.py:409
-msgid "Searched recursively for images, shown in sequence (by file date)"
-msgstr ""
-
-#: ../variety/PreferencesVarietyDialog.py:415 ../data/ui/AddFlickrDialog.ui:83
-msgid "Flickr"
-msgstr "Flickr"
-
-#: ../variety/PreferencesVarietyDialog.py:415
-msgid "Fetch images from Flickr"
-msgstr "Отримати зображення з Flickr"
-
-#: ../variety/PreferencesVarietyDialog.py:457
-msgid "Remove the source, keep the files"
-msgstr "Вилучити джерело, зберегти файли"
-
-#: ../variety/PreferencesVarietyDialog.py:459
-msgid "Remove the sources, keep the files"
-msgstr "Вилучити джерела, зберегти файли"
-
-#: ../variety/PreferencesVarietyDialog.py:470
-msgid "Remove the source and delete the downloaded files"
-msgstr "Вилучити джерело й завантажені файли"
-
-#: ../variety/PreferencesVarietyDialog.py:472
-msgid "Remove the sources and delete the downloaded files"
-msgstr "Вилучити джерела й завантажені файли"
-
-#: ../variety/PreferencesVarietyDialog.py:507
-#, c-format
+#: ../data/ui/SmartFeaturesNoticeDialog.ui.h:4
 msgid ""
 "<span font=\"14\" weight=\"bold\">Introducing <a "
 "href=\"https://vrty.org\">VRTY.ORG</a>! Wanna take part?</span>"
 msgstr ""
-"Використання цього джерела вимагає увімкнення зміни шпалер з інтервалом %d "
-"хв або менше. Налаштування коригуються автоматично."
+"<span font=\"14\" weight=\"bold\">Введення <a "
+"href=\"https://vrty.org\">VRTY.ORG</a>! Бажаєте прийняти участь?</span>"
 
 #: ../data/ui/SmartFeaturesNoticeDialog.ui.h:5
 msgid ""
@@ -921,11 +862,7 @@ msgstr ""
 "Показати шлях до зображення зі стільниці. Працює лише при запущеному "
 "застосунку."
 
-#: ../variety/VarietyOptionParser.py:115
-msgid "Set the given file as wallpaper, absolute path required"
-msgstr "Встановіть заданий файл як шпалери, необхідний абсолютний шлях"
-
-#: ../variety/VarietyOptionParser.py:119
+#: ../variety/VarietyWindow.py:2152
 msgid "Show Next wallpaper"
 msgstr "Показати наступні шпалери"
 
@@ -1144,9 +1081,13 @@ msgstr "Немає зображень у теках для перегляду с
 msgid "Wallhaven image sources disabled"
 msgstr "Джерело Wallhaven відімкнено"
 
-#: ../data/plugins/downloaders/ChromeOSWallpapersDownloader.py:30
-msgid "Chrome OS Wallpapers"
-msgstr "Шпалери Chrome OS"
+#: ../variety/VarietyWindow.py:2990
+msgid ""
+"Please google \"Python SNI SSL error\" if you want to fix the problem "
+"yourself."
+msgstr ""
+"Будь ласка, поґуґліть «Python SNI SSL error», якщо Ви бажаєте вирішити "
+"проблему самостійно."
 
 #: ../variety/VarietyWindow.py:2996
 msgid ""
@@ -1187,10 +1128,17 @@ msgstr ""
 msgid "Dependencies were installed. Please restart Variety now."
 msgstr "Залежности встановлені. Будь ласка, перезапустіть Variety."
 
-#: ../data/plugins/downloaders/MediaRSSSource.py:61
-#: ../data/plugins/downloaders/WallhavenSource.py:68
-msgid "Fetch images from a MediaRSS feed"
-msgstr "Отримання зображень з каналу MediaRSS"
+#: ../variety/VarietyWindow.py:3037
+msgid ""
+"If SSL errors persist, you will have to google for \"Python SNI SSL error\" "
+"and seek another solution."
+msgstr ""
+"Якщо помилки SSL зберігаються, Вам доведеться поґуґлити для пошуку іншого "
+"рішення 'Python SNI SSL error'."
+
+#: ../variety/VarietyWindow.py:3040
+msgid "Failure. Wallhaven sources disabled."
+msgstr "Збій. Джерела Wallhaven відімкнені."
 
 #: ../variety/VarietyWindow.py:3041
 #, python-format
@@ -1652,9 +1600,13 @@ msgstr "Копіювати або перемістити у Вибрані"
 msgid "Reset to Default"
 msgstr "Перевстановити типові налаштування"
 
-#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:96
-msgid "We do not support this type of URL"
-msgstr "Такий тип URL-адрес не підтримується"
+#: ../data/ui/EditFavoriteOperationsDialog.ui.h:3
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the "
+"menu depending on the image location:"
+msgstr ""
+"Виберіть, чи Ви бажаєте бачити у меню 'Копіювати у Вибрані' чи 'Перемісти у "
+"Вибрані', залежно від розташування зображення:"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui.h:4
 msgid ""
@@ -1687,9 +1639,9 @@ msgstr ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 
-#: ../data/plugins/downloaders/UnsplashConfigurableSource.py:119
-msgid "Search keyword or URL: "
-msgstr "Шукати за ключовим словом або URL-адресою: "
+#: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:1
+msgid "VRTY.ORG integration"
+msgstr "VRTY.ORG інтеґрація"
 
 #: ../data/ui/SmartFeaturesConfirmationDialog.ui.h:2
 msgid "This feature requires VRTY.ORG integration"
@@ -1716,21 +1668,13 @@ msgstr ""
 "дозвіл для збору даних про зображення і джерела в інтернеті які Ви увімкнули "
 ".\n"
 "\n"
-"Example: http://rvelthuis.de/zips/quotes.txt"
-msgstr ""
-
-#: ../data/plugins/quotes/QuotationsPageSource.py:34
-msgid "Fetches quotes from TheQuotationsPage.com"
-msgstr "Вибирає цитати з TheQuotationsPage.com"
-
-#: ../data/ui/AboutVarietyDialog.ui:9
-msgid "About Variety"
-msgstr "Про Variety"
-
-#: ../data/ui/AboutVarietyDialog.ui:14
-msgid "Copyright (c) 2012-2019, Peter Levi, James Lu & Variety contributors"
-msgstr ""
-"Авторське право (c) 2012-2019, Розробники & Variety Пітер Леві, Джеймс Лу"
+"Зібрані дані є типово анонімними і охоплюють лише зображення які завантажені "
+"Variety,  та ніколи не включають в себе зображення які Ви вже мали у своїх "
+"локальних теках й які можуть бути приватними.\n"
+"\n"
+"Ці дані допомагають нам забезпечити кращі зображення для всіх та <a "
+"href=\"https://vrty.org\">VRTY.ORG</a> - цінний ресурс для всіх користувачів "
+"Variety."
 
 #: ../variety/AddRedditDialog.py:43
 msgid "This does not seem to be a valid Reddit URL"
@@ -1894,9 +1838,9 @@ msgstr "_Додати…"
 msgid "Add images, folders or online image sources"
 msgstr "Додати зображення, теки або інтернет-джерела"
 
-#: ../data/ui/PreferencesVarietyDialog.ui:467
-msgid "_Open Folder"
-msgstr "_Відкрити теку"
+#: ../data/ui/PreferencesVarietyDialog.ui.h:19
+msgid "_Edit..."
+msgstr "З_мінити…"
 
 #: ../data/ui/PreferencesVarietyDialog.ui.h:20
 msgid "Edit the selected source"
@@ -2524,31 +2468,7 @@ msgctxt "Icon option"
 msgid "Dark"
 msgstr "Темна"
 
-#. Icon option
-#: ../data/ui/PreferencesVarietyDialog.ui:3172
-msgctxt "Icon option"
-msgid "Number 1"
-msgstr "Номер 1"
-
-#. Icon option
-#: ../data/ui/PreferencesVarietyDialog.ui:3173
-msgctxt "Icon option"
-msgid "Number 2"
-msgstr "Номер 2"
-
-#. Icon option
-#: ../data/ui/PreferencesVarietyDialog.ui:3174
-msgctxt "Icon option"
-msgid "Number 3"
-msgstr "Номер 3"
-
-#. Icon option
-#: ../data/ui/PreferencesVarietyDialog.ui:3175
-msgctxt "Icon option"
-msgid "Number 4"
-msgstr "Номер 4"
-
-#: ../data/ui/PreferencesVarietyDialog.ui:3176
+#: ../data/ui/PreferencesVarietyDialog.ui.h:159
 msgctxt "Icon option"
 msgid "Use current wallpaper"
 msgstr "Поточні шпалери"
@@ -2723,9 +2643,9 @@ msgstr ""
 "<i>Для Bitcoin та інших способів оплати, відвідайте <a "
 "href=\"http://peterlevi.com/variety/\">веб-сайт Variety</a>.</i>"
 
-#: ../data/ui/PreferencesVarietyDialog.ui:3964
-msgid "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
-msgstr "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
+#: ../variety/ImageFetcher.py:56 ../variety/ImageFetcher.py:102
+msgid "Fetching"
+msgstr "Отримання"
 
 #. too small - delete and do not use
 #: ../variety/ImageFetcher.py:116
@@ -2737,9 +2657,13 @@ msgstr "Зображення надто мале, нехтуємо"
 msgid "Sorry, got %s error..."
 msgstr "Нажаль сталася помилка %s..."
 
-#: ../data/ui/PrivacyNoticeDialog.ui:58
-msgid "Accept and Continue"
-msgstr "Прийняти і продовжити"
+#: ../variety/ImageFetcher.py:139
+msgid "This means the link is no longer valid"
+msgstr "Це не означає, що посилання більше не дійсне"
+
+#: ../variety/ImageFetcher.py:142
+msgid "Fetch failed for some reason"
+msgstr "Отримання перервано з певних причин"
 
 #: ../variety/ImageFetcher.py:143
 msgid ""
