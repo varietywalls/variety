@@ -445,7 +445,7 @@ class VarietyWindow(Gtk.Window):
             self.folders.append(self.options.fetched_folder)
 
         self.downloaders = []
-        self.download_folder_size = -1
+        self.download_folder_size = None
 
         self.albums = []
 
@@ -1113,9 +1113,6 @@ class VarietyWindow(Gtk.Window):
                     self.dl_event.clear()
                     continue
 
-                if random.random() < 0.05:
-                    self.purge_downloaded()
-
                 # download from the downloader with the smallest unseen queue
                 downloader = sorted(
                     available_downloaders, key=lambda dl: len(dl.state.get("unseen_downloads", []))
@@ -1150,8 +1147,13 @@ class VarietyWindow(Gtk.Window):
 
     def register_downloaded_file(self, file):
         self.refresh_thumbs_downloads(file)
-        if file.startswith(self.options.download_folder):
+
+        if file.startswith(self.options.download_folder) and self.download_folder_size is not None:
             self.download_folder_size += os.path.getsize(file)
+
+        # every once in a while, check the Downloaded folder against the allowed quota
+        if random.random() < 0.05:
+            self.purge_downloaded()
 
     def download_one_from(self, downloader):
         try:
@@ -1187,7 +1189,10 @@ class VarietyWindow(Gtk.Window):
         if not self.options.quota_enabled:
             return
 
-        if self.download_folder_size <= 0 or random.randint(0, 20) == 0:
+        # Check if we need to compute the download folder size - if it is uninitialized
+        # or also every now and then to make sure it is in line with actual filesystem state.
+        # This is a fast-enough operation.
+        if self.download_folder_size is None or random.random() < 0.05:
             self.download_folder_size = Util.get_folder_size(self.real_download_folder)
             logger.info(
                 lambda: "Refreshed download folder size: {} mb".format(
