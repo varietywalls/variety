@@ -2651,7 +2651,6 @@ class VarietyWindow(Gtk.Window):
                     and file != new_wallpaper
                     and file != self.post_filter_filename
                     and name.startswith(prefix)
-                    and name.endswith(".jpg")
                 ):
                     logger.debug(lambda: "Removing old wallpaper %s" % file)
                     Util.safe_unlink(file)
