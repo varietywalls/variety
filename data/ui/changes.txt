@@ -1,3 +1,10 @@
+0.8.5
+    Fixes for Python 3.9 support
+    Fix GH-388: Cleanup of wallpaper folder now cleans all image types
+    Fix GH-363: We were almost never triggering purging downloads
+    Enable support for Qtile-venv (GH-386)
+    Updated Japanese translations
+
 0.8.4
     Remove dead Desktoppr, ChromeOS sources (GH-323)
     Properly verify TLS certificates when downloading images (GH-326)
