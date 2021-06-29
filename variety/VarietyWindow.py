@@ -1103,6 +1103,9 @@ class VarietyWindow(Gtk.Window):
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher()) > 0
 
+    def _unseen_downloads(self, state):
+        return [f for f in state.get("unseen_downloads", []) if os.path.exists(f)]
+
     def download_thread(self):
         while self.running:
             try:
@@ -1115,7 +1118,7 @@ class VarietyWindow(Gtk.Window):
 
                 # download from the downloader with the smallest unseen queue
                 downloader = sorted(
-                    available_downloaders, key=lambda dl: len(dl.state.get("unseen_downloads", []))
+                    available_downloaders, key=lambda dl: len(self._unseen_downloads(dl.state))
                 )[0]
                 self.download_one_from(downloader)
 
@@ -1137,7 +1140,7 @@ class VarietyWindow(Gtk.Window):
             for dl in self.downloaders
             if dl.state.get("last_download_failure", 0) < now - 60
             and (not dl.is_refresher() or dl.state.get("last_download_success", 0) < now - 60)
-            and len(dl.state.get("unseen_downloads", [])) <= VarietyWindow.MAX_UNSEEN_PER_DOWNLOADER
+            and len(self._unseen_downloads(dl.state)) <= VarietyWindow.MAX_UNSEEN_PER_DOWNLOADER
         ]
 
     def trigger_download(self):
@@ -1649,9 +1652,8 @@ class VarietyWindow(Gtk.Window):
         # collect the unseen_downloads from the currently enabled downloaders:
         enabled_unseen_downloads = set()
         for dl in self.downloaders:
-            for file in dl.state.get("unseen_downloads", []):
-                if os.path.exists(file):
-                    enabled_unseen_downloads.add(file)
+            for file in self._unseen_downloads(dl.state):
+                enabled_unseen_downloads.add(file)
         return enabled_unseen_downloads
 
     def _remove_from_unseen(self, file):
