@@ -637,7 +637,7 @@ class Options:
         self.clock_filter = "-density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
 
         self.quotes_enabled = False
-        self.quotes_font = "Bitstream Charter 30"
+        self.quotes_font = "Ubuntu Condensed, 30"
         self.quotes_text_color = (255, 255, 255)
         self.quotes_bg_color = (80, 80, 80)
         self.quotes_bg_opacity = 55
