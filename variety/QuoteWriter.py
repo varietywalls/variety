@@ -96,7 +96,7 @@ class QuoteWriter:
         qlayout.set_width((width - 4 * margin) * Pango.SCALE)
         qlayout.set_alignment(Pango.Alignment.LEFT)
         qlayout.set_wrap(Pango.WrapMode.WORD)
-        font = options.quotes_font if options else "Ubuntu Condensed, 30"
+        font = options.quotes_font if options else "Bitstream Charter 30"
         qlayout.set_font_description(Pango.FontDescription(font))
         qlayout.set_text(quote, -1)
 
