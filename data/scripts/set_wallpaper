@@ -221,7 +221,20 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " 
 fi
 
 if [[ -n $SWAYSOCK ]]; then
-    swaymsg output "*" bg "$WP" fill 2> /dev/null
+    # If swaybg is available, use it as prevents system freeze.
+    # See https://github.com/swaywm/sway/issues/5606
+    if command -v "swaybg" >/dev/null 2>&1; then
+        # Grey background flicker is prevented by killing old swaybg process after new one.
+        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
+        PID=`pidof swaybg`
+        swaybg -i "$WP" -m fill &
+        if [ ! -z "$PID" ]; then
+            sleep 1
+            kill $PID 2>/dev/null
+        fi
+    else
+        swaymsg output "*" bg "$WP" fill 2> /dev/null
+    fi
 fi
 
 # trinity
