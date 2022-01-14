@@ -27,7 +27,7 @@ random.seed()
 
 class APODDownloader(SimpleDownloader):
     DESCRIPTION = _("NASA Astro Pic of the Day")
-    ROOT_URL = "http://apod.nasa.gov/apod/"
+    ROOT_URL = "https://apod.nasa.gov/apod/"
 
     @classmethod
     def get_info(cls):

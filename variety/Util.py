@@ -654,7 +654,7 @@ class Util:
 
     @staticmethod
     def unxor(text, key):
-        ciphertext = base64.decodestring(text)
+        ciphertext = base64.decodebytes(text)
         return "".join(chr(x ^ ord(y)) for (x, y) in zip(ciphertext, cycle(key)))
 
     @staticmethod

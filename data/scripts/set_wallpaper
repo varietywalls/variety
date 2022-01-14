@@ -210,7 +210,7 @@ fi
 # For simple WMs, use either feh or nitrogen
 # Implementation note: this uses spaces around list items to enforce matching whole words.
 # This also means that an empty variable won't cause false positives, since it expands to "  "
-SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-with-shmlog" "jwm" "openbox" "qtile" "xmonad")
+SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-with-shmlog" "jwm" "LeftWM" "openbox" "qtile" "qtile-venv" "xmonad")
 if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " = *" $XDG_SESSION_DESKTOP "* ||
       " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
 	if command -v "feh" >/dev/null 2>&1; then
@@ -221,7 +221,20 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " 
 fi
 
 if [[ -n $SWAYSOCK ]]; then
-    swaymsg output "*" bg "$WP" fill 2> /dev/null
+    # If swaybg is available, use it as prevents system freeze.
+    # See https://github.com/swaywm/sway/issues/5606
+    if command -v "swaybg" >/dev/null 2>&1; then
+        # Grey background flicker is prevented by killing old swaybg process after new one.
+        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
+        PID=`pidof swaybg`
+        swaybg -i "$WP" -m fill &
+        if [ ! -z "$PID" ]; then
+            sleep 1
+            kill $PID 2>/dev/null
+        fi
+    else
+        swaymsg output "*" bg "$WP" fill 2> /dev/null
+    fi
 fi
 
 # trinity

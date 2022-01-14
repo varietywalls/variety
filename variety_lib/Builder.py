@@ -21,6 +21,9 @@ import inspect
 import logging
 from xml.etree.cElementTree import ElementTree
 
+import gi
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import GObject, Gtk  # pylint: disable=E0611
 
 logger = logging.getLogger("variety_lib")
@@ -88,7 +91,7 @@ class Builder(Gtk.Builder):
         tree = ElementTree()
         tree.parse(filename)
 
-        ele_widgets = tree.getiterator("object")
+        ele_widgets = tree.iter("object")
         for ele_widget in ele_widgets:
             name = ele_widget.attrib.get("id")
             if not name:
@@ -113,7 +116,7 @@ class Builder(Gtk.Builder):
             if connections:
                 self.connections.extend(connections)
 
-        ele_signals = tree.getiterator("signal")
+        ele_signals = tree.iter("signal")
         for ele_signal in ele_signals:
             self.glade_handler_dict.update({ele_signal.attrib["handler"]: None})
 

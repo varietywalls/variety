@@ -11,6 +11,12 @@ impossible for us, the main developers, to reproduce.
 Thus a pull request where the author has managed to reproduce reliably a bug and provides a fix
 is an extremely valuable contribution - these are always very welcome.
 
+## Translations
+
+As of July 2021 we are using Transifex to sync up translations: https://www.transifex.com/variety/variety
+
+Ping **@jlu5** if you have any issues with this - translation platforms are fairly new to us.
+
 ## Bigger changes or new features
 
 If you plan on implementing any significant changes or developing new features,

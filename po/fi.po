@@ -14,16 +14,16 @@ msgstr ""
 "POT-Creation-Date: 2021-07-27 21:49-0700\n"
 "PO-Revision-Date: 2021-07-28 05:05+0000\n"
 "Last-Translator: James Lu <james@overdrivenetworks.com>, 2021\n"
-"Language-Team: German (https://www.transifex.com/variety/teams/123174/de/)\n"
+"Language-Team: Finnish (https://www.transifex.com/variety/teams/123174/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../variety/AddFlickrDialog.py:148
 msgid "No images found"
-msgstr "Keine Bilder gefunden"
+msgstr "Kuvia ei löytynyt"
 
 #: ../variety/FlickrDownloader.py:45
 msgid "Images from Flickr"
@@ -31,12 +31,12 @@ msgstr ""
 
 #: ../variety/FolderChooser.py:67
 msgid "Choose a folder"
-msgstr "Ordner wählen"
+msgstr "Valitse kansio"
 
 #: ../variety/FolderChooser.py:70 ../variety/PreferencesVarietyDialog.py:588
 #: ../variety/PreferencesVarietyDialog.py:629
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Peruuta"
 
 #: ../variety/FolderChooser.py:70
 msgid "OK"
@@ -44,176 +44,177 @@ msgstr "OK"
 
 #: ../variety/ImageFetcher.py:62 ../variety/ImageFetcher.py:108
 msgid "Fetching"
-msgstr "Wird abgerufen"
+msgstr "Hakeminen"
 
 #: ../variety/ImageFetcher.py:66 ../variety/ImageFetcher.py:76
 #: ../variety/ImageFetcher.py:83 ../variety/ImageFetcher.py:117
 #: ../variety/VarietyWindow.py:2484
 msgid "Not an image"
-msgstr "Kein Bild"
+msgstr "Ei ole kuva"
 
 #: ../variety/ImageFetcher.py:123
 msgid "Image too small, ignoring it"
-msgstr "Bild zu klein, wird ignoriert."
+msgstr "Kuva on liian pieni,  ohita se"
 
 #: ../variety/ImageFetcher.py:148
 #, python-format
 msgid "Sorry, got %s error..."
-msgstr ""
+msgstr "Pahoittelut, sain %s virheen..."
 
 #: ../variety/ImageFetcher.py:149
 msgid "This means the link is no longer valid"
-msgstr "Das bedeutet, dass die Verknüpfung nicht mehr gültig ist"
+msgstr "Tämä tarkoittaa, että linkki ei ole enää kelvollinen"
 
 #: ../variety/ImageFetcher.py:153
 msgid "Fetch failed for some reason"
-msgstr "Der Abruf versagte aus irgendeinem Grund"
+msgstr "Hakeminen epäonnistui jostain syystä"
 
 #: ../variety/ImageFetcher.py:155
 msgid ""
 "To get more information, please run Variety from terminal with -v option and"
 " retry the action"
 msgstr ""
-"Um mehr Information zu erhalten, starten Sie Variety im Terminal mit »-v« "
-"als Option und wiederholen Sie den Vorgang"
+"Saat lisätietoja suoritamalla variety päätteestä -v valinnalla ja yritä "
+"uudelleen"
 
 #: ../variety/indicator.py:63 ../variety/indicator.py:110
 #: ../variety/indicator.py:179
 msgid "_Next"
-msgstr "_Nächstes"
+msgstr "_Seuraava"
 
 #: ../variety/indicator.py:68 ../variety/indicator.py:115
 #: ../variety/indicator.py:184
 msgid "_Previous"
-msgstr "_Vorheriges"
+msgstr "_Edellinen"
 
 #: ../variety/indicator.py:75
 msgid "Current desktop wallpaper"
-msgstr "Aktuelles Hintergrundbild"
+msgstr "Nykyinen työpöydän taustakuva"
 
 #: ../variety/indicator.py:79
 msgid "Show origin"
-msgstr "Ursprung anzeigen"
+msgstr "Näytä alkuperäinen"
 
 #: ../variety/indicator.py:90 ../variety/ThumbsManager.py:177
 #: ../variety/VarietyWindow.py:729
 msgid "Copy to _Favorites"
-msgstr "Zu _Favoriten kopieren"
+msgstr "Kopioi Suosikkeihin"
 
 #: ../variety/indicator.py:95 ../variety/VarietyWindow.py:738
 #: ../data/ui/PreferencesVarietyDialog.ui:3289
 msgid "Move to Favorites"
-msgstr "Zu Favoriten verschieben"
+msgstr "Siirrä Suosikkeihin"
 
 #: ../variety/indicator.py:101 ../variety/ThumbsManager.py:197
 msgid "Delete to _Trash"
-msgstr "In _Papierkorb verschieben"
+msgstr "Tyhjennä _Roskakori"
 
 #: ../variety/indicator.py:120 ../variety/indicator.py:189
 msgid "_Next, skipping forward history"
-msgstr ""
+msgstr "_Seuraava, historia ohitetaan"
 
 #: ../variety/indicator.py:130
 msgid ""
 "Tip: Scroll wheel over icon\n"
 "for Next and Previous"
 msgstr ""
-"Tipp: Über dem Symbol rollen\n"
-"für Vorheriges und Nächstes"
+"Vinkki: Rullaa kuvakkeen päällä\n"
+"eteen ja taakse"
 
 #: ../variety/indicator.py:136 ../variety/indicator.py:200
 #: ../variety/VarietyWindow.py:873 ../variety/VarietyWindow.py:895
 msgid "Pause on current"
-msgstr "Beim Aktuellen anhalten"
+msgstr "Pysähdy tähän"
 
 #: ../variety/indicator.py:140
 msgid "_Image"
-msgstr "_Bild"
+msgstr "_Kuva"
 
 #: ../variety/indicator.py:147 ../variety/ThumbsManager.py:206
 msgid "Where is it from?"
-msgstr "Woher stammt das Bild?"
+msgstr "Mistä tämä on kotoisin?"
 
 #: ../variety/indicator.py:151
 msgid "Show without effects"
-msgstr "Ohne Effekte anzeigen"
+msgstr "Näytä ilman tehosteita"
 
 #: ../variety/indicator.py:161
 msgid "Google Image Search"
-msgstr "Google-Bildersuche"
+msgstr "Google kuvien haku"
 
 #: ../variety/indicator.py:168 ../variety/ThumbsManager.py:169
 msgid "Set EXIF Rating"
-msgstr "Exif-Bewertung eingeben"
+msgstr "Anna arvio EXIF"
 
 #: ../variety/indicator.py:206 ../variety/VarietyWindow.py:902
 msgid "Save to Favorites"
-msgstr "Unter Favoriten speichern"
+msgstr "Tallenna suosikkeihin"
 
 #: ../variety/indicator.py:211
 msgid "View Favorites..."
-msgstr "Favoriten anzeigen …"
+msgstr "Näytä suosikit..."
 
 #: ../variety/indicator.py:218
 msgid "Copy to Clipboard"
-msgstr "In die Zwischenablage kopieren"
+msgstr "Koipioi leikepöydälle"
 
 #: ../variety/indicator.py:228
 msgid "Google Quote"
-msgstr "Google-Zitate"
+msgstr "Hae lainaus Googlesta"
 
 #: ../variety/indicator.py:233
 msgid "Google Author"
-msgstr "Google-Autor"
+msgstr "Hae tekiä Googlella"
 
 #: ../variety/indicator.py:240 ../variety/indicator.py:296
 msgid "Preferences..."
-msgstr "Einstellungen …"
+msgstr "Asetukset..."
 
 #: ../variety/indicator.py:250
 msgid "Turn off"
-msgstr "Ausschalten"
+msgstr "Sammuta"
 
 #: ../variety/indicator.py:255
 msgid "_Quote"
-msgstr ""
+msgstr "_Lainaus"
 
 #: ../variety/indicator.py:262
 msgid "_History"
-msgstr "_Verlauf"
+msgstr "_Historia"
 
 #: ../variety/indicator.py:268
 msgid "_Wallpaper Selector"
-msgstr "_Hintergrundbildauswahl"
+msgstr "_Taustakuvan valitsin"
 
 #: ../variety/indicator.py:276
 msgid "Recent _Downloads"
-msgstr "_Kürzlich heruntergeladen"
+msgstr "Viimeisimmät _Lataukset"
 
 #: ../variety/indicator.py:284
 msgid "Start Slideshow"
-msgstr ""
+msgstr "Käynnistä diaesitys"
 
 #: ../variety/indicator.py:300
 msgid "About"
-msgstr "Über"
+msgstr "Tietoja"
 
 #: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui:3991
 msgid "Donate"
-msgstr "Spenden"
+msgstr "Lahjoita"
 
 #: ../variety/indicator.py:308
 msgid "Quit"
-msgstr "Beenden"
+msgstr "Sulje"
 
 #: ../variety/__init__.py:121
 msgid "Terminating signal received, quitting..."
-msgstr "Abbruchsignal empfangen, wird beendet …"
+msgstr "Lopetusviesti vastaanotettu, lopetetaan..."
 
 #: ../variety/__init__.py:195
 msgid ""
 "Variety is already running. Sending the command to the running instance."
-msgstr "Variety läuft bereits. Befehl wird an die laufende Instanz gesendet."
+msgstr ""
+"Variety on jo käynnissä. Lähettää komennon käynnissä olevalle instanssille."
 
 #: ../variety/PreferencesVarietyDialog.py:85
 msgid " (Profile: {})"
@@ -222,17 +223,17 @@ msgstr ""
 #: ../variety/PreferencesVarietyDialog.py:87
 #: ../data/ui/PreferencesVarietyDialog.ui:121
 msgid "Variety Preferences"
-msgstr "Variety-Einstellungen"
+msgstr "Variety asetukset"
 
 #: ../variety/PreferencesVarietyDialog.py:246
 msgid "All"
-msgstr ""
+msgstr "Kaikki"
 
 #: ../variety/PreferencesVarietyDialog.py:396
 #: ../variety/PreferencesVarietyDialog.py:595
 #: ../data/ui/PreferencesVarietyDialog.ui:342
 msgid "Images"
-msgstr "Bilder"
+msgstr "Kuvat"
 
 #: ../variety/PreferencesVarietyDialog.py:396
 msgid "Add individual wallpaper images"
@@ -240,7 +241,7 @@ msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:398
 msgid "Folders"
-msgstr "Ordner"
+msgstr "Kansiot"
 
 #: ../variety/PreferencesVarietyDialog.py:399
 msgid "Searched recursively for up to 10000 images, shown in random order"
@@ -272,19 +273,19 @@ msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:461
 msgid "Remove the source, keep the files"
-msgstr "Quelle entfernen, Dateien behalten"
+msgstr "Poista lähde, säilytä tiedostot"
 
 #: ../variety/PreferencesVarietyDialog.py:463
 msgid "Remove the sources, keep the files"
-msgstr "Quellen entfernen, Dateien behalten"
+msgstr "Poista lähteet, säilytä tiedostot"
 
 #: ../variety/PreferencesVarietyDialog.py:474
 msgid "Remove the source and delete the downloaded files"
-msgstr "Quelle entfernen und heruntergeladene Dateien löschen"
+msgstr "Poista lähde ja poista ladatut tiedostot"
 
 #: ../variety/PreferencesVarietyDialog.py:476
 msgid "Remove the sources and delete the downloaded files"
-msgstr "Quellen entfernen und heruntergeladene Dateien löschen"
+msgstr "Poista lähteet ja poista ladatut tiedostot"
 
 #: ../variety/PreferencesVarietyDialog.py:511
 #, python-format
@@ -295,19 +296,19 @@ msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:585
 msgid "Add Images"
-msgstr "Bilder hinzufügen"
+msgstr "Lisää kuvia"
 
 #: ../variety/PreferencesVarietyDialog.py:588
 #: ../variety/PreferencesVarietyDialog.py:629
 msgid "Add"
-msgstr "Hinzufügen"
+msgstr "Lisää"
 
 #: ../variety/PreferencesVarietyDialog.py:613
 msgid ""
 "Add Folders - Only add the root folders, subfolders are searched recursively"
 msgstr ""
-"Ordner hinzufügen - Nur die Hauptordner, Unterordner werden rekursiv "
-"durchsucht"
+"Lisää kansioita - Lisää vain root-kansiot, alikansioita haetaan "
+"rekursiivisesti"
 
 #: ../variety/PreferencesVarietyDialog.py:617
 msgid ""
@@ -324,24 +325,24 @@ msgstr ""
 #: ../variety/PreferencesVarietyDialog.py:775
 #: ../data/ui/PreferencesVarietyDialog.ui:3304
 msgid "Edit..."
-msgstr "Bearbeiten …"
+msgstr "Muokkaa..."
 
 #: ../variety/PreferencesVarietyDialog.py:777
 msgid "Open Folder"
-msgstr "Ordner öffnen"
+msgstr "Avaa kansio"
 
 #: ../variety/PreferencesVarietyDialog.py:783
 msgid "View Image"
-msgstr "Bild anzeigen"
+msgstr "Näytä kuva"
 
 #: ../variety/PreferencesVarietyDialog.py:1166
 #: ../variety/PreferencesVarietyDialog.py:1173
 msgid "No write permissions"
-msgstr "Keine Schreibberechtigung"
+msgstr "Ei kirjoitusoikeuksia"
 
 #: ../variety/PreferencesVarietyDialog.py:1248
 msgid "Could not adjust permissions"
-msgstr "Berechtigungen konnten nicht angepasst werden"
+msgstr "Käyttöoikeuksia ei voitu muuttaa"
 
 #: ../variety/PreferencesVarietyDialog.py:1249
 #, python-format
@@ -349,116 +350,114 @@ msgid ""
 "You may try manually running this command:\n"
 "sudo chmod %s \"%s\""
 msgstr ""
-"Folgender Befehl kann manuell ausgeführt werden:\n"
-"sudo chmod %s »%s«"
+"Voit suorittaa tämän komennon manuaalisesti\n"
+"sudo chmod %s \"%s\""
 
 #: ../variety/QuotesEngine.py:243
 msgid "No quote plugins"
-msgstr "Keine Zitaterweiterungen"
+msgstr "Ei lainauksien laajennusta"
 
 #: ../variety/QuotesEngine.py:243
 msgid "There are no quote plugins installed"
-msgstr "Es sind keine Zitaterweiterungen installiert"
+msgstr "Lainausten laajennus ei ole asennettu"
 
 #: ../variety/QuotesEngine.py:250
 msgid "No suitable quote plugins"
-msgstr "Keine brauchbaren Zitaterweiterungen"
+msgstr "Ei ole sopiva lainauksen laajennus"
 
 #: ../variety/QuotesEngine.py:251
 msgid ""
 "You have no quote plugins which support searching by keywords and authors"
 msgstr ""
-"Es existieren keine Zitaterweiterungen, die das Suchen nach Stichwörtern "
-"oder Autoren ermöglichen"
+"Sinulla ei ole lainausten laajennusta, joka tukisi hakua avainsanojen ja "
+"tekijöiden perusteella"
 
 #: ../variety/QuotesEngine.py:266
 msgid "Could not fetch quotes"
-msgstr "Zitate konnten nicht abgerufen werden"
+msgstr "Lainauksia ei voi noutaa"
 
 #: ../variety/QuotesEngine.py:267
 msgid "Quotes services may be down, we will continue trying"
-msgstr ""
-"Möglicherweise sind Zitatdienste gerade nicht verfügbar, es wird weiter "
-"versucht"
+msgstr "Lainauspalvelut saattavat olla alhaalla, yritetään edelleen"
 
 #: ../variety/QuotesEngine.py:271
 msgid "Could not find quotes"
-msgstr "Konnte keine Zitate finden"
+msgstr "Ei löytänyt lainauksia"
 
 #: ../variety/QuotesEngine.py:272
 msgid "Maybe you are searching for something very obscure?"
-msgstr "Möglicherweise suchen Sie nach etwas unklarem?"
+msgstr "Ehkä etsit jotain hyvin hämärää?"
 
 #: ../variety/Texts.py:21
 msgid "Keep original"
-msgstr "Original beibehalten"
+msgstr "Säilytä alkuperäinen"
 
 #: ../variety/Texts.py:22
 msgid "Grayscale"
-msgstr "Graustufen"
+msgstr "Harmaasävy"
 
 #: ../variety/Texts.py:23
 msgid "Heavy blur"
-msgstr "Sehr verschwommen"
+msgstr "Voimakas sumeus"
 
 #: ../variety/Texts.py:24
 msgid "Soft blur"
-msgstr "Leicht verschwommen"
+msgstr "Pehmeä sumeus"
 
 #: ../variety/Texts.py:25
 msgid "Oil painting"
-msgstr "Ölgemälde"
+msgstr "Öljyväri"
 
 #: ../variety/Texts.py:26
 msgid "Pointilism"
-msgstr "Pointillismus"
+msgstr "Rakeinen"
 
 #: ../variety/Texts.py:27
 msgid "Pixellate"
-msgstr "Verpixeln"
+msgstr "Pikselöity"
 
 #: ../variety/Texts.py:31
 msgid "The Favorites folder"
-msgstr "Ordner für Favoriten"
+msgstr "Suosikit kansio"
 
 #: ../variety/Texts.py:32
 msgid "The Fetched folder"
-msgstr "Ordner für heruntergeladene Bilder"
+msgstr "Noudetut kansio"
 
 #: ../variety/Texts.py:35
 msgid ""
 "Recommended by Variety. Adapts to your taste as you mark images as favorite "
 "or trash."
 msgstr ""
+"Varietyn suositukset. Mukautuu makusi mukaan, kun merkitset kuvat suosikiksi"
+" tai roskaksi."
 
 #: ../variety/Texts.py:39
 msgid ""
 "Latest favorites by the other users of Variety. [May contain NSFW images]"
-msgstr ""
+msgstr "Variety viimeisimmät suosikit. [Voi sisältää NSFW-kuvia]"
 
 #: ../variety/Texts.py:41
 msgid "Random wallpapers from Desktoppr.co"
-msgstr "Zufällige Hintergrundbilder von Desktoppr.co"
+msgstr "Päivän kuva, Desktoppr.co"
 
 #: ../variety/Texts.py:42
 msgid "NASA's Astronomy Picture of the Day"
-msgstr "NASAs Astronomiebild des Tages"
+msgstr "Päivän kuva, NASA tähtitiede"
 
 #: ../variety/Texts.py:43
 msgid "Bing Photo of the Day"
-msgstr "Bing-Foto des Tages"
+msgstr "Päivän kuva, Bing"
 
 #: ../variety/Texts.py:46
 msgid "High-resolution photos from Unsplash.com"
-msgstr ""
+msgstr "Päivän kuva, Unsplash.com"
 
 #: ../variety/Texts.py:54
 msgid ""
 "You can change the wallpaper back and forth by scrolling the mouse wheel on "
 "top of the indicator icon."
-msgstr ""
-"Das Hintergrundbild kann,  durch rollen über dem Anzeigensymbol, vor und "
-"zurück gewechselt werden."
+msgstr "Voit vaihtaa taustakuvaa edestakaisin vierittämällä hiiren rullaa."
 
 #: ../variety/Texts.py:57
 #, python-brace-format
@@ -475,9 +474,9 @@ msgid ""
 "define keyboard shortcuts for the operations you use most often. Run "
 "\"variety --help\" to see all available commands."
 msgstr ""
-"Variety kann von der Befehlszeile aus gesteuert werden. Damit ist es "
-"möglich, für Aktionen, die man am meisten benutzt, Tastenkürzel festzulegen."
-" Mit »variety --help« wird eine Liste aller verfügbaren Befehle angezeigt."
+"Varietyn voi hallita komentoriviltä ja tämän avulla voit määrittää mm. "
+"useimmin käytetyt pikanäppäimet. Suorita \"variety --help\" nähdäksesi "
+"kaikki käytettävissä olevat komennot."
 
 #: ../variety/Texts.py:63
 msgid ""
@@ -485,11 +484,10 @@ msgid ""
 "use them as wallpapers. For quicker downloading from a specific site, you "
 "can also use clipboard monitoring (see \"Manual downloading\" tab)."
 msgstr ""
-"Bildadressen oder Dateien können auf dem Startersymbol abgelegt werden, um "
-"sie herunterzuladen und als Hintergrundbild zu verwenden. Für ein "
-"schnelleres Herunterladen von einer bestimmten Seite kann auch die "
-"Überwachung der Zwischenablage aktiviert werden (siehe Reiter »Manuelles "
-"Herunterladen«)."
+"Voit pudottaa ohjelman kuvakkeeseen linkkejä tai kuvatiedostoja ladataksesi "
+"ne ja käyttää niitä taustakuvina. Voit nopeammin ladata tietystä sivustosta,"
+" käyttämällä leikepöydän valvontaa (katso \"Manuaalinen lataus\" "
+"-välilehti)."
 
 #: ../variety/Texts.py:66
 msgid ""
@@ -497,9 +495,9 @@ msgid ""
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
-"Das Anwenden eines starken Unschärfefilters ist ein großartiger Weg, um "
-"abstrakt und unaufdringlich auszusehen und doch farbenfrohe "
-"Hintergrundbilder zu haben. Ähnlich dem Standardhintergrund von Ubuntu."
+"Voimakkaan sumennuksen käyttö on hieno tapa saada abstraktin näköisiä ja "
+"häiritsemättömiä, mutta värikkäitä taustakuvia. Nämä ovat hengeltään "
+"samanlaisia kuin oletuksena Ubuntussa."
 
 #: ../variety/Texts.py:69
 #, python-brace-format
@@ -519,13 +517,12 @@ msgid ""
 "thumbnail view of all of them. Please mind that thumbnail view is limited to"
 " several hundred randomly selected images."
 msgstr ""
-"Wenn eine Bildquelle ausgewählt wird, werden die Bilder in einem Fenster am "
-"unteren Rand des Bildschirms angezeigt. Man kann ein Bild anklicken, um es "
-"zum Bildschirmhintergrund zu machen. Mit dem Rechtsklick wird das Fenster "
-"geschlossen, das Aussehen angepasst und Dateiaktionen ausgeführt. Es können "
-"mehrere Bildquellen ausgewählt werden, um eine Vorschau von allen zusammen "
-"zu erhalten. Dabei ist zu beachten, dass diese Vorschauansicht immer auf "
-"einige Hundert zufällig gewählte Bilder beschränkt wird."
+"Kun valitset kuvien toimittajan, sen kuvat näkyvät ikkunassa näytön "
+"alareunassa. Napsauta kuvaa, jonka haluat asettaa taustakuvaksi. Sulje "
+"ikkuna, muokkaa sen ulkoasua tai suorita toimintoja napsauttamalla hiiren "
+"kakkospainikkeella. Voit luoda \"yhdistetyn\" näkymän pienoiskuvina kaikista"
+" kuvalähteistä valitsemalla useita kuvalähteitä. Huomaa, että näkymä on "
+"rajoitettu useaan sataan satunnaisesti valittuun kuvaan."
 
 #: ../variety/Texts.py:75
 #, python-brace-format
@@ -541,10 +538,10 @@ msgid ""
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
-"Varietys Anzeigensymbol ist thematisch anpassbar. Falls die »Hell«-Option "
-"für das Symbol gewählt wurde, wird Variety zuerst prüfen, ob es im aktuellen"
-" GTK-Thema ein Symbol mit dem Namen »variety-indicator« gibt und dieses "
-"nutzen, anstatt des mitgelieferten hellen Symbols."
+"Varietyn alavalikon kuvake on teemallinen - jos valitset kuvakkeelle "
+"\"Kevyt\" -vaihtoehdon. Variety tarkistaa ensin, onko nykyisessä GTK-"
+"teemassa kuvake nimeltä \"variety-indicator\" ja käyttää sitä mukana olevan "
+"kuvakkeen sijasta."
 
 #: ../variety/Texts.py:81
 #, python-brace-format
@@ -558,27 +555,27 @@ msgstr ""
 
 #: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui:1242
 msgid "Bottom"
-msgstr "Unten"
+msgstr "Alhaalla"
 
 #: ../variety/ThumbsManager.py:42
 msgid "Top"
-msgstr "Oben"
+msgstr "Ylhäällä"
 
 #: ../variety/ThumbsManager.py:43
 msgid "Left"
-msgstr "Links"
+msgstr "Vasen"
 
 #: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui:1173
 msgid "Right"
-msgstr "Rechts"
+msgstr "Oikea"
 
 #: ../variety/ThumbsManager.py:117
 msgid "Position"
-msgstr "Position"
+msgstr "Sijainti"
 
 #: ../variety/ThumbsManager.py:121 ../data/ui/PreferencesVarietyDialog.ui:2771
 msgid "Size"
-msgstr "Größe"
+msgstr "Koko"
 
 #: ../variety/ThumbsManager.py:125
 msgid "Maximum Shown Images"
@@ -586,49 +583,49 @@ msgstr ""
 
 #: ../variety/ThumbsManager.py:139
 msgid "Show Containing Folder"
-msgstr "Zielordner anzeigen"
+msgstr "Näytä sisältävä kansio"
 
 #: ../variety/ThumbsManager.py:152 ../variety/VarietyWindow.py:760
 msgid "Fetched: Show Origin"
-msgstr "Abgerufen: Herkunft anzeigen"
+msgstr "Haettu: Näytä alkuperäinen"
 
 #: ../variety/ThumbsManager.py:154 ../variety/VarietyWindow.py:764
 #: ../variety/VarietyWindow.py:886
 #, python-format
 msgid "View at %s"
-msgstr "Auf %s anzeigen"
+msgstr "Näytä kohteessa %s"
 
 #: ../variety/ThumbsManager.py:186 ../variety/VarietyWindow.py:730
 msgid "Move to _Favorites"
-msgstr "Zu _Favoriten verschieben"
+msgstr "Siirrä _Suosikkeihin"
 
 #: ../variety/ThumbsManager.py:220
 msgid "Close"
-msgstr "Schließen"
+msgstr "Sulje"
 
 #: ../variety/ThumbsManager.py:240
 msgid "Could not set EXIF rating"
-msgstr "Exif-Bewertung konnte nicht eingegeben werden"
+msgstr "Ei voitu asettaa arviota EXIF"
 
 #: ../variety/ThumbsManager.py:260
 msgid "Unrated"
-msgstr "Nicht bewertet"
+msgstr "Ei arviota"
 
 #: ../variety/ThumbsManager.py:267
 msgid "Rejected"
-msgstr "Abgewiesen"
+msgstr "Poistettu"
 
 #: ../variety/ThumbsManager.py:380
 msgid "Variety History"
-msgstr "Variety-Verlauf"
+msgstr "Variety historia"
 
 #: ../variety/ThumbsManager.py:382
 msgid "Variety Recent Downloads"
-msgstr "Variety: Kürzlich heruntergeladen"
+msgstr "Variety viimeisimmät lataukset"
 
 #: ../variety/ThumbsManager.py:384
 msgid "Variety Images"
-msgstr "Variety-Bilder"
+msgstr "Variety kuvat"
 
 #: ../variety/VarietyOptionParser.py:51
 msgid ""
@@ -662,15 +659,15 @@ msgstr ""
 
 #: ../variety/VarietyOptionParser.py:95
 msgid "Make the running instance quit"
-msgstr "Laufende Programminstanz beenden"
+msgstr "Lopeta käynnissä oleva esiintymä"
 
 #: ../variety/VarietyOptionParser.py:106
 msgid ""
 "Print the current wallpaper location. Used only when the application is "
 "already running."
 msgstr ""
-"Aktuelles Hintergrundverzeichnis ausgeben. Wird nur genutzt, wenn die "
-"Anwendung bereits läuft."
+"Näytä taustakuvan nykyinen sijainti. Käytössä vain, kun sovellus on jo "
+"käynnissä."
 
 #: ../variety/VarietyOptionParser.py:115
 msgid "Set the given file as wallpaper, absolute path required"
@@ -678,51 +675,51 @@ msgstr ""
 
 #: ../variety/VarietyOptionParser.py:119
 msgid "Show Next wallpaper"
-msgstr "Nächstes Hintergrundbild anzeigen"
+msgstr "Näytä seuraava taustakuva"
 
 #: ../variety/VarietyOptionParser.py:123
 msgid "Show Previous wallpaper"
-msgstr "Vorheriges Hintergrundbild anzeigen"
+msgstr "Näytä edellinen taustakuva"
 
 #: ../variety/VarietyOptionParser.py:130
 msgid "Show Next wallpaper, skipping the forward history"
-msgstr "Nächstes Hintergrundbild anzeigen, Verlauf vorwärts überspringen"
+msgstr "Näytä seuraava taustakuva, historia ohitetaan"
 
 #: ../variety/VarietyOptionParser.py:139
 msgid ""
 "Move current wallpaper to Trash. Used only when the application is already "
 "running."
 msgstr ""
-"Aktuelles Hintergrundbild in den Papierkorb verschieben. Wird nur genutzt, "
-"wenn die Anwendung bereits läuft."
+"Siirrä nykyinen taustakuva roskakoriin. Käytössä vain, kun sovellus on jo "
+"käynnissä."
 
 #: ../variety/VarietyOptionParser.py:149
 msgid ""
 "Copy current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
-"Aktuelles Hintergrundbild zu den Favoriten kopieren. Wird nur genutzt, wenn "
-"die Anwendung bereits läuft."
+"Kopioi nykyinen taustakuva Suosikkeihin. Käytössä vain, kun sovellus on jo "
+"käynnissä."
 
 #: ../variety/VarietyOptionParser.py:158
 msgid ""
 "Move current wallpaper to Favorites. Used only when the application is "
 "already running."
 msgstr ""
-"Aktuelles Hintergrundbild zu den Favoriten verschieben. Wird nur genutzt, "
-"wenn die Anwendung bereits läuft."
+"Siirrä nykyinen taustakuva Suosikkeihin. Käytössä vain, kun sovellus on jo "
+"käynnissä."
 
 #: ../variety/VarietyOptionParser.py:163
 msgid "Pause on current image"
-msgstr "Beim aktuellen Bild anhalten"
+msgstr "Jää tähän"
 
 #: ../variety/VarietyOptionParser.py:167
 msgid "Resume regular image changes"
-msgstr ""
+msgstr "Jatka säännöllistä kuvan vaihtoa"
 
 #: ../variety/VarietyOptionParser.py:174
 msgid "Toggle Pause/Resume state"
-msgstr "Zwischen Pause/Weiter umschalten"
+msgstr "Vaihda tilaa Tauko/Jatka"
 
 #: ../variety/VarietyOptionParser.py:181
 msgid "Toggle \"Show Without Effects\" for current image"
@@ -730,43 +727,43 @@ msgstr ""
 
 #: ../variety/VarietyOptionParser.py:185
 msgid "Show Next quote"
-msgstr "Nächstes Zitat anzeigen"
+msgstr "Näytä seuraava lainaus"
 
 #: ../variety/VarietyOptionParser.py:192
 msgid "Show Previous quote"
-msgstr "Vorheriges Zitat anzeigen"
+msgstr "Näytä edellinen lainaus"
 
 #: ../variety/VarietyOptionParser.py:199
 msgid "Show Next quote, skipping the forward history"
-msgstr "Nächstes Zitat anzeigen, Verlauf vorwärts überspringen"
+msgstr "Näytä seuraava lainaus, historia ohitetaan"
 
 #: ../variety/VarietyOptionParser.py:206
 msgid "Toggle Quotes Pause/Resume state"
-msgstr "Zitatedurchlauf pausieren/fortsetzen"
+msgstr "Lainauksen tila Tauko/Jatka"
 
 #: ../variety/VarietyOptionParser.py:213
 msgid "Save the current quote to Favorites"
-msgstr "Aktuelles Zitat unter Favoriten speichern"
+msgstr "Tallenna lainaus Suosikkeihin"
 
 #: ../variety/VarietyOptionParser.py:217
 msgid "Toggle History display"
-msgstr "Verlaufsanzeige ein-/ausschalten"
+msgstr "Vaihda historian näyttöä"
 
 #: ../variety/VarietyOptionParser.py:224
 msgid "Toggle Recent Downloads display"
-msgstr "Letztes Heruntergeladenes anzeigen/ausblenden"
+msgstr "Vaihda Viimeisimmät lataukset näyttöä"
 
 #: ../variety/VarietyOptionParser.py:232
 msgid "Show Preferences dialog"
-msgstr "Einstellungen anzeigen"
+msgstr "Näytä asetukset ikkuna"
 
 #: ../variety/VarietyOptionParser.py:241
 msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
-"Manuelle Hintergrundbildauswahl anzeigen - die Vorschauleiste, mit Bildern "
-"gefüllt von den aktiven Bildquellen."
+"Näytä manuaalinen taustakuvan valitsin - kuvapalkki, joka on täynnä kuvia "
+"aktiivisista kuvalähteistä"
 
 #: ../variety/VarietyOptionParser.py:251
 msgid ""
@@ -776,38 +773,37 @@ msgid ""
 "option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
 "file directly in an unguarded way."
 msgstr ""
-"Stellt eine Option ein und wendet sie an. Die Optionsnamen sind die gleichen"
-" wie die in der Variety-Konfigurationsdatei ~/.config/variety/variety.conf "
-"genutzten. Mit einem Befehl können mehrere Optionen eingestellt werden. "
-"Beispiel:  »variety --set-option icon Dark --set-option clock_enabled True«."
-" MIT VORSICHT NUTZEN: Die Konfigurationsdateien werden ungeprüft geändert."
+"Asettaa ja käyttää valintoja. Vaintojen nimet ovat samat, joita käytetään "
+"Varietyn config-tiedostossa ~/.config/variety/variety.conf. Useita vaintoja "
+"voidaan asettaa yhdellä komennolla. Esimerkki: 'variety --set-option icon "
+"Dark --set-option clock_enabled True'. KÄYTÄ VAROEN: Muutat suoraan "
+"asetustiedostoa."
 
 #: ../variety/VarietyOptionParser.py:264
 msgid "options --next/--fast-forward and --previous are mutually exclusive"
 msgstr ""
-"Die Optionen --next, --fast-forward und --previous schließen sich "
-"gegenseitig aus."
+"valinnat --next/--fast-forward ja --previous ovat toisensa poissulkevia"
 
 #: ../variety/VarietyOptionParser.py:267
 msgid "options --trash and --favorite are mutually exclusive"
-msgstr "Die Optionen --trash und --favorite schließen sich gegenseitig aus"
+msgstr "valinnat --trash ja --favorite ovat toisensa poissulkevia"
 
 #: ../variety/VarietyOptionParser.py:270
 msgid "options --pause and --resume are mutually exclusive"
-msgstr "Die Optionen --pause und --resume schließen sich gegenseitig aus"
+msgstr "valinnat --pause ja --resume ovat toisensa poissulkevia"
 
 #: ../variety/VarietyOptionParser.py:275
 msgid ""
 "options --quotes-next/--quotes-fast-forward and --quotes-previous are "
 "mutually exclusive"
 msgstr ""
-"Die Optionen --quotes-next, --quotes-fast-forward und --quotes-previous "
-"schließen sich gegenseitig aus"
+"valinnat --quotes-next/--quotes-fast-forward ja --quotes-previous ovat "
+"toisensa poissulkevia"
 
 #: ../variety/VarietyWindow.py:725 ../variety/VarietyWindow.py:902
 #: ../variety/VarietyWindow.py:2883
 msgid "Already in Favorites"
-msgstr "Bereits in den Favoriten enthalten"
+msgstr "Jo Suosikeissa"
 
 #: ../variety/VarietyWindow.py:762
 #, python-format
@@ -816,135 +812,132 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:828
 msgid "Unknown"
-msgstr "Unbekannt"
+msgstr "Tuntematon"
 
 #: ../variety/VarietyWindow.py:850
 #, python-format
 msgid "Author: %s"
-msgstr "Autor: %s"
+msgstr "Julkaisija: %s"
 
 #: ../variety/VarietyWindow.py:875 ../variety/VarietyWindow.py:897
 msgid "Resume regular changes"
-msgstr ""
+msgstr "Jatka säännöllistä vaihtoa"
 
 #: ../variety/VarietyWindow.py:1048
 msgid "Filtering too strict?"
-msgstr "Filterung zu streng?"
+msgstr "Suodatus liian tiukka?"
 
 #: ../variety/VarietyWindow.py:1049
 msgid ""
 "Variety is finding too few images that match your image filtering criteria"
 msgstr ""
-"Variety hat zu wenig Bilder gefunden, welche der Filterauswahl entsprechen."
+"Variety löytää liian vähän kuvia, jotka vastaavat kriteereitä suodatusessa"
 
 #: ../variety/VarietyWindow.py:1638
 msgid "Please add more image sources or wait for some downloads"
-msgstr ""
-"Bitte fügen Sie zusätzliche Bildquellen hinzu oder warten Sie, bis weitere "
-"Bilder heruntergeladen wurden"
+msgstr "Lisää kuvalähteitä tai odota latauksia"
 
 #: ../variety/VarietyWindow.py:1640
 msgid "Please add more image sources"
-msgstr "Bitte zusätzliche Bildquellen hinzufügen"
+msgstr "Lisää uusia kuvalähteitä"
 
 #: ../variety/VarietyWindow.py:1641
 msgid "No more wallpapers"
-msgstr "Keine weiteren Hintergrundbilder"
+msgstr "Ei enää taustakuvia"
 
 #: ../variety/VarietyWindow.py:1910
 msgid "Current wallpaper is not in the image sources"
-msgstr "Aktuelles Hintergrundbild ist nicht in den Bildquellen enthalten"
+msgstr "Nykyinen taustakuva ei ole kuvalähteissä"
 
 #: ../variety/VarietyWindow.py:1943
 #, python-format
 msgid ""
 "Could not move to %s. You probably don't have permissions to move this file."
 msgstr ""
-"Konnte nicht nach %s verschoben werden. Möglicherweise haben Sie nicht die "
-"erforderlichen Rechte, um diese Datei zu verschieben."
+"Kohdetta %s ei voitu siirtää. Sinulla ei todennäköisesti ole oikeuksia "
+"siirtää tätä tiedostoa."
 
 #: ../variety/VarietyWindow.py:1950
 #, python-format
 msgid ""
 "Could not copy to %s. You probably don't have permissions to copy this file."
 msgstr ""
-"Konnte nicht nach %s kopiert werden. Möglicherweise haben Sie nicht die "
-"erforderlichen Rechte, um diese Datei zu kopieren."
+"Kohdetta %s ei voitu kopioida. Sinulla ei todennäköisesti ole oikeuksia "
+"kopioida tätä tiedostoa."
 
 #: ../variety/VarietyWindow.py:1975 ../variety/VarietyWindow.py:1998
 msgid "Cannot delete"
-msgstr "Konnte nicht gelöscht werden"
+msgstr "Ei voi poistaa"
 
 #: ../variety/VarietyWindow.py:1976
 #, python-format
 msgid "You don't have permissions to delete %s to Trash."
-msgstr ""
-"Sie haben nicht die erforderlichen Rechte, um %s in den Papierkorb zu "
-"verschieben."
+msgstr "Sinulla ei ole oikeuksia poistaa kohdetta %s roskakoriin."
 
 #: ../variety/VarietyWindow.py:1999
 msgid "Deleting to trash failed, check variety.log for more information."
 msgstr ""
+"Roskakoriin poistaminen epäonnistui, tarkista lisätietoja on variety.log."
 
 #: ../variety/VarietyWindow.py:2325
 msgid ""
 "I will open an editor with the config file and apply the changes after you "
 "save and close the editor."
 msgstr ""
-"Wird eine Textbearbeitung mit der Konfigurationsdatei öffnen und die "
-"Änderungen anwenden, nachdem Sie die Textbearbeitung geschlossen haben."
+"Avaan määrityksen editorin ja otan muutokset käyttöön tallentamisen ja "
+"sulkemisen jälkeen."
 
 #: ../variety/VarietyWindow.py:2490
 msgid "Added to queue"
-msgstr "Zur Warteschlange hinzugefügt"
+msgstr "Lisätty jonoon"
 
 #: ../variety/VarietyWindow.py:2491 ../variety/VarietyWindow.py:2504
 msgid "Press Next to see it"
-msgstr "Weiter klicken zum Anschauen"
+msgstr "Paina Seuraava nähdäksesi sen"
 
 #: ../variety/VarietyWindow.py:2503
 msgid "Fetched"
-msgstr "Abgerufen"
+msgstr "Haettu"
 
 #: ../variety/VarietyWindow.py:2554
 msgid "Unsupported source type"
-msgstr "Nicht unterstützter Quelltyp"
+msgstr "Lähdetyyppiä ei tueta"
 
 #: ../variety/VarietyWindow.py:2555 ../variety/VarietyWindow.py:2603
 msgid "Are you running the most recent version of Variety?"
-msgstr "Wird die aktuellste Version von Variety genutzt?"
+msgstr "Käytätkö uusinta Variety-versiota?"
 
 #: ../variety/VarietyWindow.py:2565
 msgid "New image source added"
-msgstr "Neue Bildquelle hinzugefügt"
+msgstr "Uusi kuvien lähde lisätty"
 
 #: ../variety/VarietyWindow.py:2567
 msgid "Image source already exists, enabling it"
-msgstr "Diese Bildquelle ist bereits vorhanden und wird aktiviert."
+msgstr "Kuvalähde on jo olemassa, otetaan sen käyttöön"
 
 #: ../variety/VarietyWindow.py:2593
 msgid "Fetched and applied"
-msgstr "Abgerufen und angewendet"
+msgstr "Haettu ja sovellettu"
 
 #: ../variety/VarietyWindow.py:2598
 msgid "It works!"
-msgstr "Es funktioniert!"
+msgstr "Se toimii!"
 
 #: ../variety/VarietyWindow.py:2598
 msgid "Yay, Variety links work. Great!"
-msgstr ""
+msgstr "Jee, Variety linkit toimivat. Loistava!"
 
 #: ../variety/VarietyWindow.py:2602
 msgid "Unsupported command"
-msgstr "Nicht unterstützter Befehl"
+msgstr "Komentoa ei tueta"
 
 #: ../variety/VarietyWindow.py:2607
 msgid "Could not process the given variety:// URL"
-msgstr "Die Adresse »variety://« konnte nicht verarbeitet werden"
+msgstr "Annettua verkko-osoitetta variety:// ei voitu käsitellä"
 
 #: ../variety/VarietyWindow.py:2608
 msgid "Run with logging enabled to see details"
-msgstr ""
+msgstr "Suorita lokiin kirjaaminen niin näet tiedot"
 
 #: ../variety/VarietyWindow.py:2970
 msgid "Variety: New desktop entry"
@@ -968,27 +961,27 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:3006
 msgid "Could not create autostart entry"
-msgstr "Autostarteintrag konnte nicht erstellt werden"
+msgstr "Määritys käynnistykseen ei onnistunut"
 
 #: ../variety/VarietyWindow.py:3008
 msgid ""
 "An error occurred while creating the autostart desktop entry\n"
 "Please run from a terminal with the -v flag and try again."
 msgstr ""
-"Während der Eintragung als Startprogramm ist ein Fehler aufgetreten.\n"
-"Bitte im Terminal mit dem Zusatz -v ausführen und erneut probieren."
+"Työpöydän Autostart-merkinnän luomisessa tapahtui virhe\n"
+"Suorita terminaalista, valinnalla -v  ja yritä uudelleen."
 
 #: ../variety/VarietyWindow.py:3073
 msgid "No images"
-msgstr ""
+msgstr "Ei kuvia"
 
 #: ../variety/VarietyWindow.py:3073
 msgid "There are no images in the slideshow folders"
-msgstr ""
+msgstr "Diaesityksen kansioissa ei ole kuvia"
 
 #: ../data/ui/AboutVarietyDialog.ui:9
 msgid "About Variety"
-msgstr "Über Variety"
+msgstr "Tietoja Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui:14
 msgid "Copyright (c) 2012-2020, Peter Levi, James Lu & Variety contributors"
@@ -996,9 +989,7 @@ msgstr ""
 
 #: ../data/ui/AboutVarietyDialog.ui:15
 msgid "An automatic wallpaper changer, downloader and manager."
-msgstr ""
-"Anwendung zum automatischen Wechseln, Herunterladen und Verwalten von "
-"Hintergrundbildern."
+msgstr "Automaattinen taustakuvan vaihtaja, lataaja ja hallinta."
 
 #: ../data/ui/AboutVarietyDialog.ui:17
 msgid "https://peterlevi.com/variety"
@@ -1030,7 +1021,7 @@ msgstr ""
 
 #: ../data/ui/AddFlickrDialog.ui:9
 msgid "Variety - add Flickr as an image source"
-msgstr "Variety - Flickr als Bildquelle hinzufügen"
+msgstr "Variety - lisää Flickr kuvalähde"
 
 #: ../data/ui/AddFlickrDialog.ui:101
 msgid ""
@@ -1038,79 +1029,78 @@ msgid ""
 " Photos that match all of the chosen criteria will be downloaded. Leave "
 "unneeded criteria empty."
 msgstr ""
-"Bitte legen Sie das <a href=\"http://flickr.com\">Flickr</a>-Suchkriterium "
-"fest. Bilder, die alle angegebenen Kriterien erfüllen werden "
-"heruntergeladen. Nicht benötigte Kriterien können leer gelassen werden."
+"Määritä <a href=\"http://flickr.com\">Flickr</a> haun ehdot. Kun kaikki "
+"valitut ehdot täyttävät valokuvat ladataan. Jätä ei-toivotut ehdot tyhjiksi."
 
 #: ../data/ui/AddFlickrDialog.ui:124
 #: ../data/ui/PreferencesVarietyDialog.ui:1440
 msgid "Tags: "
-msgstr "Schlagworte: "
+msgstr "Tunnisteet: "
 
 #: ../data/ui/AddFlickrDialog.ui:155
 msgid ""
 "A comma-separated list of tags. A photo has to contain all of them simultaneosly in order to match.\n"
 "Example: yellow,car"
 msgstr ""
-"Eine Liste von Schlagwörtern, durch Kommata getrennt. Ein Bild muss alle davon enthalten, um als passend zu gelten.\n"
-"Beispiel: yellow,car"
+"Pilkuilla erotettu lista tunnisteista. Valokuvan on sisällettävä ne kaikki samanaikaisesti, jotta ne vastaavat toisiaan.\n"
+"Esimerkki: yellow, car"
 
 #: ../data/ui/AddFlickrDialog.ui:171
 msgid "User: "
-msgstr "Benutzer: "
+msgstr "Käyttäjä: "
 
 #: ../data/ui/AddFlickrDialog.ui:202
 msgid ""
 "Please insert the URL to the user's photostream or to one of their photos.\n"
 "Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 msgstr ""
-"Bitte die Adresse des Benutzers zum Fotostrom oder eines Fotos eingeben.\n"
-"z. B.: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+"Lisää verkko-osoite käyttäjien valokuvavirtaan tai johonkin heidän valokuvistaan.\n"
+"Esimerkki: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui:218
 msgid "Group: "
-msgstr "Gruppe: "
+msgstr "Ryhmä: "
 
 #: ../data/ui/AddFlickrDialog.ui:248
 msgid ""
 "Please insert the group's URL.\n"
 "Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
 msgstr ""
-"Bitte die Gruppenadresse eingeben. \n"
-"z. B.: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+"Lisää ryhmän verkko-osoite\n"
+"Esimerkki: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
 
 #: ../data/ui/AddFlickrDialog.ui:264
 msgid "Text:"
-msgstr "Text:"
+msgstr "Teksti:"
 
 #: ../data/ui/AddFlickrDialog.ui:295
 msgid ""
 "Free text search in photos' titles, descriptions and tags. Exclude terms by prepending them with -.\n"
 "Example: apple -pie"
 msgstr ""
-"Freie Textsuche in Bildtiteln, -beschreibungen und -schlagwörtern. Begriffe können durch Voranstellen von »-« ausgeschlossen werden.\n"
-"Beispiel: apfel -kuchen"
+"Vapaa tekstihaku valokuvien otsikoista, kuvauksista ja tunnisteista. Sulje ehdot pois tekemällä ne valmiiksi -.\n"
+"Esimerkki: apple -pie"
 
 #: ../data/ui/AddFlickrDialog.ui:334
 msgid "Just a moment to check this search"
-msgstr "Suche benötigt einen Moment"
+msgstr "Pieni hetki tarkistetaan tämä haku"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui:8
 #: ../data/ui/EditFavoriteOperationsDialog.ui:91
 msgid "Copy to Favorites vs. Move to Favorites"
-msgstr "Zu Favoriten kopieren oder zu Favoriten verschieben"
+msgstr "Kopioi Suosikkeihin vs. Siirrä Suosikkeihin"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui:24
 msgid "Reset to Default"
-msgstr "Vorgaben wiederherstellen"
+msgstr "Palauta oletuksiin"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui:110
 msgid ""
 "Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the"
 " menu depending on the image location:"
 msgstr ""
-"Bitte auswählen, ob Ihnen »Zu Favoriten kopieren« oder »Zu Favoriten "
-"verschieben« im Menü mehr zusagt, abhängig vom Speicherort des Bildes:"
+"Valitse, haluatko \"kopioida Suosikkeihin\" tai \"siirtää Suosikkeihin\" "
+"valikossa kuvan sijainnin mukaan:"
 
 #: ../data/ui/EditFavoriteOperationsDialog.ui:155
 msgid ""
@@ -1124,81 +1114,79 @@ msgid ""
 "\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 msgstr ""
-"Bitte einen Eintrag pro Zeile eingeben und jeden Eintrag in folgender Form eingeben: »Ordner:Kopieren,Verschieben oder Beides«\n"
-"Der Ordner kann »Downloaded«, »Fetched«, »Others« oder ein bestimmter Ordnerpfad sein.\n"
-"Der Befehl kann »Copy« (Kopieren), »Move« (Verschieben) oder »Both« (Beides) sein.\n"
-"Die Reihenfolge ist wichtig. Wenn ein Bild angezeigt wird, dann wird der erste Ordner, welcher das Bild enthält, darüber entscheiden welche Aktionen im Variety-Menü angezeigt werden. »Others« trifft auf jede Datei zu und sollte deshalb an letzter Stelle stehen.\n"
+"Anna yksi merkintä riviä kohden, merkintä lomakkeessa <Folder>:<Copy, Move or Both>, mistä kansio voidaan ladata, hakea, muut tai tietty kansion polku.\n"
+"Järjestys on tärkeää. Kun kuva näytetään, luettelon ensimmäinen kansio, joka sisältää kuvan, määrittää, mitkä toiminnot näkyvät Varietyn valikossa. \"Muut\" täsmää mihin tahansa tiedostoon ja sen pitäisi olla viimeisenä luettelossa.\n"
 "\n"
-"Beispiel:\n"
+"Esimerkki:\n"
 "\tDownloaded:Copy\n"
 "\tFetched:Move\n"
-"\t/Bilder/Zufallsbilder:Move\n"
-"\t/Bilder/OrganisierteAlben:Copy\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
 "\tOthers:Both"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:24
 msgid "seconds"
-msgstr "Sekunden"
+msgstr "sekunti"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:28
 #: ../data/ui/PreferencesVarietyDialog.ui:50
 msgid "minutes"
-msgstr "Minuten"
+msgstr "minuutti"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:32
 #: ../data/ui/PreferencesVarietyDialog.ui:54
 msgid "hours"
-msgstr "Stunden"
+msgstr "tunti"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:36
 #: ../data/ui/PreferencesVarietyDialog.ui:58
 msgid "days"
-msgstr "Tage"
+msgstr "päivä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:196
 #: ../data/ui/PreferencesVarietyDialog.ui:672
 msgid "General"
-msgstr "Allgemein"
+msgstr "Yleiset"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:209
 msgid "Start Variety when the computer starts"
-msgstr "Variety mit dem Rechner starten"
+msgstr "Käynnistä Variety kun tietokone käynnistyy"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:236
 msgid "Change wallpaper every "
-msgstr "Wechsel des Hintergrundbildes alle "
+msgstr "Vaihda taustakuva joka "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:257
 #: ../data/ui/PreferencesVarietyDialog.ui:258
 #: ../data/ui/PreferencesVarietyDialog.ui:275
 #: ../data/ui/PreferencesVarietyDialog.ui:276
 msgid "Minimum interval is 5 seconds"
-msgstr "Kürzeste Zeitspanne beträgt fünf Sekunden"
+msgstr "Vähimmäisväli on 5 sekuntia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:303
 msgid "Change wallpaper on start"
-msgstr "Hintergrundbild beim Start wechseln"
+msgstr "Vaihda taustakuva käynnistäessä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:390
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Käytössä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:401
 msgid "Type"
-msgstr "Typ"
+msgstr "Tyyppi"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:412
 msgid "Location"
-msgstr "Standort"
+msgstr "Sijainti"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:448
 msgid "_Add..."
-msgstr "_Hinzufügen …"
+msgstr "_Lisää..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:454
 #: ../data/ui/PreferencesVarietyDialog.ui:455
 msgid "Add images, folders or online image sources"
-msgstr "Bilder, Ordner oder Internetbildquellen hinzufügen"
+msgstr "Kuvien, kansioiden tai kuvalähteiden lisääminen verkosta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:467
 msgid "_Open Folder"
@@ -1209,183 +1197,183 @@ msgstr ""
 #: ../data/ui/PreferencesVarietyDialog.ui:491
 #: ../data/ui/PreferencesVarietyDialog.ui:492
 msgid "Edit the selected source"
-msgstr "Gewählte Quelle bearbeiten"
+msgstr "Muokkaa valittua lähdettä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:486
 msgid "_Edit..."
-msgstr "_Bearbeiten …"
+msgstr "_Muokkaa..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:505
 msgid "_Remove..."
-msgstr "_Entfernen …"
+msgstr "_Poista..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:511
 #: ../data/ui/PreferencesVarietyDialog.ui:512
 msgid "Remove selected image sources"
-msgstr "Gewählte Quelle entfernen"
+msgstr "Poista valitut kuvalähteet"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:525
 msgid "_Use"
-msgstr "_Benutzen"
+msgstr "_Käytä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:530
 #: ../data/ui/PreferencesVarietyDialog.ui:531
 msgid "Enable the selected sources and disable all others"
-msgstr "Gewählte Quellen aktivieren und alle anderen deaktivieren"
+msgstr "Ota valitut lähteet käyttöön ja poista kaikki muut käytöstä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:582
 msgid "Favorites"
-msgstr "Favoriten"
+msgstr "Suosikit"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:606
 msgid "Copy favorite wallpapers to "
-msgstr "Die Lieblingshintergrundbilder kopieren nach "
+msgstr "Kopioi suosikkikuvat kohteeseen "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:691
 msgid "Filters"
-msgstr "Filter"
+msgstr "Suodattimet"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:716
 msgid ""
 "Randomly apply these filters to the displayed wallpapers (thanks to the "
 "wonderful ImageMagick):"
 msgstr ""
-"Zufällig diese Filter auf die angezeigten Hintergrundbilder anwenden (dank "
-"des wundervollen ImageMagick)"
+"Käytä näitä suodattimia satunnaisesti näytettyihin taustakuviin (upean "
+"ImageMagickin ansiosta):"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:788
 msgid "Quotes"
-msgstr "Zitate"
+msgstr "Lainaukset"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:801
 msgid "Show random wise quotes on the desktop"
-msgstr "Zitate auf dem Schreibtisch nach dem Zufallsprinzip anzeigen"
+msgstr "Näytä satunnaisia viisaita teesejä työpöydällä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:840
 msgid "Text color: "
-msgstr "Textfarbe: "
+msgstr "Tekstin väri: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:869
 msgid "Text font: "
-msgstr "Schriftart: "
+msgstr "Tekstin fontti: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:913
 msgid "Backdrop color: "
-msgstr "Hintergrundfarbe: "
+msgstr "Taustan väri: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:941
 msgid "Backdrop opacity: "
-msgstr "Hintergrunddeckkraft: "
+msgstr "Taustan peittävyys: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:955
 msgid " Transparent"
-msgstr " Transparent"
+msgstr " Läpinäkyvä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:986
 msgid "Opaque"
-msgstr "Deckend"
+msgstr "Läpinäkymätön"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1004
 msgid "Draw a text shadow"
-msgstr "Textschatten anzeigen"
+msgstr "Tekstin varjostus"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1028
 #: ../data/ui/PreferencesVarietyDialog.ui:1777
 msgid "Appearance"
-msgstr "Erscheinungsbild"
+msgstr "Ulkonäkö"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1059
 msgid "Quotes area width: "
-msgstr "Breite des Zitatbereichs: "
+msgstr "Lainaukset alueen leveys: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1073
 msgid "Narrow "
-msgstr "Schmal "
+msgstr "Kapea "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1104
 msgid "Wide"
-msgstr "Breit"
+msgstr "Laaja"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1128
 msgid "Horizontal position: "
-msgstr "Horizontale Position: "
+msgstr "Vaakasuunnassa: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1142
 msgid "Left "
-msgstr "Links "
+msgstr "Vasen "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1197
 msgid "Vertical position: "
-msgstr "Senkrechte Position: "
+msgstr "Pystysuunnassa: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1211
 msgid "Top "
-msgstr "Oben "
+msgstr "Ylhäällä "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1264
 msgid "Placement"
-msgstr "Platzierung"
+msgstr "Sijoittelu"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1298
 msgid "Show quotes from these sources: "
-msgstr "Zitate von diesen Quellen anzeigen: "
+msgstr "Näytä lainauksia näistä lähteistä: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1372
 msgid ""
 "<small><a href='http://peterlevi.com/variety/wiki/Plugins'>More "
 "plugins</a></small>"
 msgstr ""
-"<small><a href='http://peterlevi.com/variety/wiki/Plugins'>Mehr "
-"Erweiterungen</a></small>"
+"<small><a "
+"href='http://peterlevi.com/variety/wiki/Plugins'>Lisäosia</a></small>"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1391
 msgid "Show only these tags and authors. Leave empty to show random quotes."
 msgstr ""
-"Nur diese Schlagworte und Autoren anzeigen. Leer lassen, um zufällige Zitate"
-" anzuzeigen."
+"Näytä vain nämä tunnisteet ja julkaisijat. Jätä tyhjäksi näyttääksesi "
+"satunnaisia lainauksia."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1453
 msgid "Example: funny, inspirational"
-msgstr "Beispiel: lustig, inspirierend"
+msgstr "Esimerkki: funny, inspirational"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1466
 msgid "Example: Albert Einstein, Voltaire"
-msgstr "Beispiel: Albert Einstein, Voltaire"
+msgstr "Esimerkki: Albert Einstein, Voltaire"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1479
 msgid "Authors: "
-msgstr "Autoren: "
+msgstr "Tekijät: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1500
 msgid "Sources and filtering"
-msgstr "Quellen und Filter"
+msgstr "Lähteet ja suodatus"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1526
 msgid "Change quote every "
-msgstr "Zitatwechsel alle "
+msgstr "Vaihda lainaus joka "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1547
 #: ../data/ui/PreferencesVarietyDialog.ui:1548
 #: ../data/ui/PreferencesVarietyDialog.ui:1565
 #: ../data/ui/PreferencesVarietyDialog.ui:1566
 msgid "Minimum interval is 10 seconds"
-msgstr "Kürzeste Zeitspanne beträgt zehn Sekunden"
+msgstr "Vähimmäisväli on 10 sekuntia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1593
 msgid "Regular change"
-msgstr "Regelmäßiger Wechsel"
+msgstr "Säännöllinen vaihto"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1622
 msgid "Clock"
-msgstr "Uhr"
+msgstr "Kello"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1635
 msgid ""
 "Show a nice big digital clock on the desktop, displaying the current time "
 "and date"
 msgstr ""
-"Eine nette, große, digitale Uhr mit aktueller Zeit und Datum auf dem "
-"Schreibtisch anzeigen"
+"Näytä työpöydällä iso digitaalinen kello, joka näyttää nykyisen ajan ja "
+"päivämäärän"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1640
 msgid ""
@@ -1393,18 +1381,17 @@ msgid ""
 "Variety's settings file (~/.config/variety/variety.conf). Use the comments "
 "in ~/.config/variety/variety_latest_default.conf as a guide."
 msgstr ""
-"Um das Aussehens der Uhr anzupassen, muss der clock_filter-Wert in der "
-"Einstellungsdatei von Variety angepasst werden "
-"(~/.config/variety/variety.conf). Die Kommentare in "
-"~/.config/variety/variety_latest_default.conf dienen als Anleitung."
+"Muokkaa kellon ulkonäköä clock_filter ominaisuutta Variety asetukset "
+"tiedostossa (~/.config/variety/variety.conf). Käytä ohjeena "
+"~/.config/variety/variety_latest_default.conf tiedostoa."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1676
 msgid "Clock font: "
-msgstr "Uhrschriftart: "
+msgstr "Kellon fontti: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1719
 msgid "Date font: "
-msgstr "Datumsschriftart: "
+msgstr "Päivän fontti: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1760
 msgid ""
@@ -1414,187 +1401,187 @@ msgid ""
 "href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Read "
 "here</a>."
 msgstr ""
-"Funktioniert nicht? <a "
-"href=\"https://answers.launchpad.net/variety/+faq/2138\">Hier lesen</a>. "
-"Weitere Einstellmöglichkeiten für die Uhr? <a "
-"href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">Hier "
-"lesen</a>."
+"Nämä ei toimi? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Lue täällä</a>. "
+"Kuinka määrittää kelloa? <a href=\"http://peterlevi.com/variety/2012/11"
+"/configuring-the-clock/\">Lue täällä</a>."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1803
 msgid "Effects"
-msgstr "Effekte"
+msgstr "Tehosteet"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1831
 msgid "Images for slideshow"
-msgstr ""
+msgstr "Kuvien diaesitys"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1853
 msgid "Favorite images"
-msgstr ""
+msgstr "Suosikkikuvat"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1872
 msgid "Images in all enabled image sources"
-msgstr ""
+msgstr "Kuvat kaikista käytössä olevista kuvalähteistä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1890
 msgid "All images in the Downloads folder"
-msgstr ""
+msgstr "Kaikki kuvat Lataukset-kansiossa"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1915
 msgid "Custom folder (includes images in subfolders) "
-msgstr ""
+msgstr "Mukautettu kansio (sisältää kuvat myös alikansioissa) "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1977
 msgid "Order of images in slideshow "
-msgstr ""
+msgstr "Diaesityksen kuvien järjestys "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1991
 msgid "Random"
-msgstr ""
+msgstr "Satunnainen"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1992
 msgid "By name, A to Z"
-msgstr ""
+msgstr "Nimi A - Z"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1993
 msgid "By name, Z to A"
-msgstr ""
+msgstr "Nimi Z - A"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1994
 msgid "By date, oldest first"
-msgstr ""
+msgstr "Päivämäärä, vanhin ensin"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1995
 msgid "By date, newest first"
-msgstr ""
+msgstr "Päivämäärä, uusin ensin"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2027
 msgid "Screen"
-msgstr ""
+msgstr "Näyttö"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2052
 msgid "Run on monitor"
-msgstr ""
+msgstr "Suorita näytössä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2088
 msgid "Window mode for the slideshow "
-msgstr ""
+msgstr "Ikkunatila diaesitykseen "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2102
 msgid "Fullscreen"
-msgstr ""
+msgstr "Koko näyttö"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2103
 msgid "Desktop (stays below other windows)"
-msgstr ""
+msgstr "Työpöytä (pysyy muiden ikkunoiden taustalla)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2104
 msgid "Maximized window"
-msgstr ""
+msgstr "Suurennettu ikkuna"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2105
 msgid "Normal window"
-msgstr ""
+msgstr "Normaali ikkuna"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2150
 msgid "Dynamics"
-msgstr ""
+msgstr "Mekaniikka"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2177
 msgid "Interval between image changes "
-msgstr ""
+msgstr "Aikaväli kun kuva vaihtuu "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2206
 msgid " seconds"
-msgstr ""
+msgstr " sekuntia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2235
 msgid "Quick fade "
-msgstr ""
+msgstr "Nopea häivytys "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2265
 msgid "Slow fade"
-msgstr ""
+msgstr "Hidas häivytys"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2289
 msgid "Less zoom"
-msgstr ""
+msgstr "Vähemmän suurennosta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2318
 msgid "More zoom"
-msgstr ""
+msgstr "Enemmän suurennosta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2342
 msgid "Less pan"
-msgstr ""
+msgstr "Vähemmän panorointia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2371
 msgid "More pan"
-msgstr ""
+msgstr "Enemmän panorointia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2395
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Palauta oletuksiin"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2429
 msgid "Changes on this page take effect after the slideshow is restarted"
 msgstr ""
+"Tämän sivun muutokset tulevat voimaan käynnistämällä diaesitys uudelleen"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2442
 msgid "Start slideshow now"
-msgstr ""
+msgstr "Käynnistä diaesitys nyt"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2470
 msgid "Slideshow"
-msgstr ""
+msgstr "Diaesitys"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2497
 msgid "Fetch folder"
-msgstr "Abrufordner"
+msgstr "Hae kansio"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2520
 msgid "Save manually downloaded wallpapers to "
-msgstr "Manuell heruntergeladene Hintergrundbilder speichern unter "
+msgstr "Tallenna manuaalisesti ladatut taustakuvat kohteeseen "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2574
 msgid "Drag and drop"
-msgstr "Ziehen und Ablegen"
+msgstr "Raahaa ja pudota"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2594
 msgid ""
 "Variety's icon in the launcher serves as a drop target. Drop any image URL or file on it and it will be saved to your fetch folder. You can then press Next to see it on your desktop.\n"
 "To show the icon in the launcher choose About or Preferences. You may wish to lock it there for easy drag-and-drop access."
 msgstr ""
-"Varietys Symbol im Starter dient als Fläche zum Ablegen. Dateien oder Adressen, die darauf gezogen werden, werden im Abrufordner gespeichert. Wenn Sie dann auf »Weiter« klicken, sehen Sie es als Hintergrund.\n"
-"Um das Symbol im Starter anzuzeigen, wählen Sie Info oder Einstellungen. Für vereinfachtes Ziehen-und-Ablegen kann es dort auch angeheftet werden."
+"Varietyn kuvake toimii pudotuskohteena. Pudota kuvalle minkä tahansa verkko-osoite tai tiedosto ja se tallennetuu hakukansioon. Voit painaa Seuraava nähdäksesi sen työpöydälläsi.\n"
+"Kuvakkeen voit näyttää valitsemalla Tietoja tai Asetukset. Voit halutessasi lukita sen vetämistä ja pudottamista varten."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2628
 msgid "Clipboard monitoring"
-msgstr "Überwachung der Zwischenablage"
+msgstr "Leikepöydän valvonta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2641
 msgid "Monitor clipboard for image URLs and fetch them"
-msgstr "Zwischenablage auf Bildadressen überwachen und diese abrufen"
+msgstr "Tarkkaile leikepöydää verkko-osoitteissa ja nouda niitä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2663
 msgid "But fetch only when the URL host is one of these:"
-msgstr "Aber abrufen, wenn die Adresse eine der Folgenden ist:"
+msgstr "Mutta hae vain, kun verkko-osoite on yksi näistä:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2728
 msgid "Manual downloading"
-msgstr "Manuelles Herunterladen"
+msgstr "Manuaalinen lataus"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2748
 msgid "When possible use images that:"
-msgstr "Möglichst Bilder benutzten, auf die Folgendes zutrifft:"
+msgstr "Käytä mahdollisuuksien mukaan kuvia, jotka:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2784
 msgid "Have landscape orientation"
-msgstr "Sind im Querformat"
+msgstr "Vaakasuuntaisia"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2809
 msgid "Are big at least "
-msgstr "Mindestgröße ist "
+msgstr "Ovat kookkaita vähintään "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2831
 msgid "50"
@@ -1610,43 +1597,43 @@ msgstr "100"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2848
 msgid "% of the screen resolution"
-msgstr "% der Bildschirmauflösung"
+msgstr "% näytön tarkkuudesta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2882
 msgid "Color"
-msgstr "Farbe"
+msgstr "Väri"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2901
 msgid "Are dark or light:"
-msgstr "Sind dunkel oder hell:"
+msgstr "Ovat tummia tai vaaleita:"
 
 #. Color option - images that are dark or light
 #: ../data/ui/PreferencesVarietyDialog.ui:2923
 msgctxt "Color option - images that are dark or light"
 msgid "Dark"
-msgstr "Dunkel"
+msgstr "Tumma"
 
 #. Color option - images that are dark or light
 #: ../data/ui/PreferencesVarietyDialog.ui:2924
 msgctxt "Color option - images that are dark or light"
 msgid "Light"
-msgstr "Hell"
+msgstr "Vaalea"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2949
 msgid "Contain this color: "
-msgstr "Enhalten diese Farbe: "
+msgstr "Sisältää tämä värin: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2985
 msgid "(Takes effect after some initial searching)"
-msgstr "(Wirkt sich nach einigen anfänglichen Suchen aus)"
+msgstr "(Tulee voimaan ensimmäisen etsinnän jälkeen)"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3024
 msgid "Rating"
-msgstr "Bewertung"
+msgstr "Arvio"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3041
 msgid "Have EXIF rating at least "
-msgstr "Haben mindestens die Exif-Bewertung "
+msgstr "EXIF-arvio vähintään "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3064
 msgid "1"
@@ -1670,27 +1657,27 @@ msgstr "5"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3104
 msgid "Color and size"
-msgstr "Farbe und Größe"
+msgstr "Väri ja koko"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3131
 msgid "Indicator Icon"
-msgstr "Anzeigensymbol"
+msgstr "Kuvake"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3154
 msgid "Indicator icon:"
-msgstr "Anzeigensymbol:"
+msgstr "Kuvake:"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3170
 msgctxt "Icon option"
 msgid "Light"
-msgstr "Hell"
+msgstr "Vaalea"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3171
 msgctxt "Icon option"
 msgid "Dark"
-msgstr "Dunkel"
+msgstr "Tumma"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3172
@@ -1719,21 +1706,21 @@ msgstr ""
 #: ../data/ui/PreferencesVarietyDialog.ui:3176
 msgctxt "Icon option"
 msgid "Use current wallpaper"
-msgstr "Aktuelles Hintergrundbild verwenden"
+msgstr "Käytä nykyistä taustakuvaa"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3177
 msgctxt "Icon option"
 msgid "Custom image..."
-msgstr "Benutzerdefiniertes Bild …"
+msgstr "Mukautettu kuva..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3178
 msgctxt "Icon option"
 msgid "None"
-msgstr "Keins"
+msgstr "Ei mitään"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3195
 msgid "Select an icon"
-msgstr "Symbol auswählen"
+msgstr "Valitse kuvake"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3219
 msgid ""
@@ -1741,40 +1728,39 @@ msgid ""
 " from the launcher quicklist. Run \"variety --help\" to see all available "
 "commands."
 msgstr ""
-"Wenn das Symbol nicht angezeigt wird, kann Variety von der Befehlszeile oder"
-" von der Schnellwahl des Starters aus gesteuert werden. Um alle möglichen "
-"Befehle zu sehen bitte »variety --help« ausführen."
+"Kun kuvake on piilotettu, Varietya voidaan hallita komentoriviltä tai "
+"käynnistysvalikon pikaluettelosta. Suorita \"variety --help\" nähdäksesi "
+"kaikki käytettävissä olevat komennot."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3249
 msgid "Favorites Operations"
-msgstr "Favoritenoperationen"
+msgstr "Suosikkien toiminnot"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3272
 msgid "Favorites operations to show in main menu:"
-msgstr "Favoritenoperationen, welche im Hauptmenü angezeigt werden sollen:"
+msgstr "Suosikkien toiminnot, jotka näytetään päävalikossa:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3288
 msgid "Copy to Favorites"
-msgstr "Zu Favoriten kopieren"
+msgstr "Kopioi Suosikkeihin"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3290
 msgid "Both Copy and Move"
-msgstr "Sowohl Kopieren, als auch Verschieben"
+msgstr "Molemmat Kopioi ja Siirrä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3291
 msgid "Depends on folder..."
-msgstr "Abhängig vom Ordner …"
+msgstr "Riippuu kansiosta..."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3348
 msgid "Login Screen Support"
-msgstr "Unterstützung für das Anmeldefenster"
+msgstr "Kirjautumisnäytön tuki"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3370
 msgid ""
 "Make sure the wallpapers set by Variety will be used on the login screen"
 msgstr ""
-"Sicherstellen, dass die Hintergrundbilder von Variety auch im Anmeldefenster"
-" genutzt werden"
+"Varmista, että Varietyn asettamia taustakuvia käytetään kirjautumisnäytössä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3394
 msgid ""
@@ -1785,85 +1771,84 @@ msgid ""
 " not encrypted, and /usr/share/backgrounds if it is. Please use with care on"
 " multiuser systems."
 msgstr ""
-"<b>Privatsphärenwarnung:</b> Um das Hintergrundbild anzuzeigen benötigt "
-"LightDM Leserechte für das Bild. Mit dieser Option wird Variety die Bilder "
-"in einen öffentlichen Ordner kopieren und es für alle lesbar machen. Die "
-"Vorgabe ist ~/Bilder, falls Ihr Persönlicher Ordner nicht verschlüsselt ist,"
-" ansonsten /usr/share/backgrounds. Bitte mit Sorgfalt auf "
-"Mehrbenutzersystemen verwenden."
+"<b>Tietosuojavaroitus:</b> Taustakuvan näyttämiseksi LightDM tarvitsee "
+"lukuoikeudet kuvaan. Kun tämä vaihtoehto on käytössä, Variety kopioi "
+"taustakuvat julkiseen kansioon ja muuttaa niiden käyttöoikeuksia, jotta ne "
+"ovat kaikkien luettavissa. Oletuksena kansio on ~ /Kuvat jos kotikansiota ei"
+" ole salattu ja /usr/share/backgrounds jos se on. Käytä huolella monen "
+"käyttäjän järjestelmissä."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3416
 msgid "Copy wallpaper image files to this folder: "
-msgstr "Hintergrundbilder in diesen Ordner kopieren: "
+msgstr "Kopioi taustakuvat tähän kansioon: "
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3443
 msgid "Reset to default"
-msgstr "Auf Vorgabe zurücksetzen"
+msgstr "Palauta oletuksiin"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3458
 msgid "Still doesn't work?"
-msgstr "Funktioniert immer noch nicht?"
+msgstr "Eikö vieläkään toimi?"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3488
 msgid ""
 "It seems your home folder is encrypted, so using folders inside it will not "
 "work."
 msgstr ""
-"Vermutlich ist Ihr persönlicher Ordner verschlüsselt. Ordner innerhalb "
-"können deshalb nicht benutzt werden."
+"Näyttää siltä, että kotikansiosi on salattu, joten sen sisällä olevan "
+"kansion käyttäminen ei toimi."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3509
 msgid "You don't have write permissions for this folder."
-msgstr "Keine Zugriffsrechte für diesen Ordner."
+msgstr "Sinulla ei ole kirjoitusoikeuksia tähän kansioon."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3526
 msgid "Permissions do not allow LightDM to read files from this folder."
 msgstr ""
-"LightDM kann aufgrund fehlender Zugriffsrechte, Dateien in diesem Ordner "
-"nicht lesen."
+"Käyttöoikeudet eivät salli LightDM:n lukea tiedostoja tästä kansiosta."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3543
 msgid ""
 "Variety can adjust the permissions, but you will have to provide superuser "
 "privileges."
 msgstr ""
-"Variety kann die Rechte anpassen, aber dazu sind Systemverwalterrechte "
-"erforderlich."
+"Variety voi muuttaa käyttöoikeuksia, mutta sinun on annettava pääkäyttäjän "
+"oikeudet."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3600
 msgid "Customize"
-msgstr "Anpassen"
+msgstr "Muokkaa"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3619
 #: ../data/ui/PreferencesVarietyDialog.ui:3865
 msgid "Tips and tricks"
-msgstr "Tipps und Tricks"
+msgstr "Vinkkejä"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3667
 msgid "Recent changes"
-msgstr "Letzte Änderungen"
+msgstr "Viimeisimmät muutokset"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3719
 msgid "Visit website"
-msgstr "Internetseite besuchen"
+msgstr "Vieraile verkkosivustolla"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3754
 msgid "Report a bug or request a feature"
-msgstr "Fehler melden oder neue Funktionen vorschlagen"
+msgstr "Ilmoita virheestä tai pyydä ominaisuutta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3788
 msgid "Send feedback"
-msgstr "Rückmeldung senden"
+msgstr "Lähetä palautetta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3821
 #: ../data/ui/PreferencesVarietyDialog.ui:3885
 msgid "Donate to Variety"
-msgstr "Für Variety spenden"
+msgstr "Lahjoita Variety:lle"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3833
 #: ../data/ui/PreferencesVarietyDialog.ui:3919
 msgid "Donate via PayPal"
-msgstr "Über PayPal spenden"
+msgstr "Lahjoita PayPal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3903
 msgid ""
@@ -1872,9 +1857,9 @@ msgid ""
 "Thank you,\n"
 "Peter Levi"
 msgstr ""
-"Ich entwickle Variety in meiner Freizeit, was normalerweise heißt, wenn meine Kinder im Bett sind. Jede Spende ist willkommen. Diese zeigen mir, dass Sie - der Nutzer - Variety wertschätzen und das motiviert mich, das Programm aktiv weiterzuentwickeln.\n"
+"Kehitän Varietya vapaa-ajallani, mikä tarkoittaa yleensä myöhäisiä tunteja lasteni nukkumaan menon jälkeen. Kaikki lahjoittamiasi summia arvostetaan. Se osoittaa minulle, että sinä - käyttäjät - arvostat Varietya ja motivoi minua jatkamaan aktiivista työskentelyä sen kanssa.\n"
 "\n"
-"Vielen Dank,\n"
+"Kiittäen,\n"
 "Peter Levi"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3951
@@ -1917,11 +1902,11 @@ msgstr ""
 
 #: ../data/ui/WelcomeDialog.ui:13 ../data/ui/WelcomeDialog.ui:76
 msgid "Welcome to Variety!"
-msgstr "Willkommen zu Variety"
+msgstr "Tervetuloa ohjelmaan Variety!"
 
 #: ../data/ui/WelcomeDialog.ui:38
 msgid "Continue"
-msgstr "Fortsetzen"
+msgstr "Jatka"
 
 #: ../data/ui/WelcomeDialog.ui:94
 msgid ""
@@ -1930,11 +1915,9 @@ msgid ""
 "online sources. It runs quietly in the background - to control it, click "
 "this icon in your system tray:"
 msgstr ""
-"Variety ist ein automatischer Hintergrundwechsler. Variety ändert den "
-"Schreibtischhintergrund regelmäßig. Es verwendet dafür lokale Bilder oder "
-"welche, die von verschiedenen Fotoseiten heruntergeladen wurden. Variety "
-"läuft leise im Hintergrund, um es zu steuern bitte auf das folgende Symbol "
-"in der Systemleiste klicken:"
+"Variety on automaattinen taustakuvan vaihtaja. Se kierrättää taustakuvia "
+"käyttämällä paikallisia kuvia tai kuvia, jotka on ladattu eri verkosta. Se "
+"toimii taustalla - voit hallita sitä napsauttamalla kuvaketta alavalikosta:"
 
 #: ../data/ui/WelcomeDialog.ui:124
 msgid ""
@@ -1942,13 +1925,11 @@ msgid ""
 " from Bulgaria. If you like it, please <a "
 "href=\"http://peterlevi.com/variety/donate/\">donate</a>."
 msgstr ""
-"Variety ist ein quelloffenes Programm, von Peter Levi, einem Programmierer "
-"aus Bulgarien, geschrieben. Wenn es Ihnen gefällt, dann <a "
-"href=\"http://peterlevi.com/variety/donate/\">spenden</a> Sie bitte!"
+"Variety on avoimen lähdekoodin ohjelmisto, jonka on luonut Bulgarialainen "
+"kehittäjä Peter Levi. Jos pidät ohjelmasta, tee lahjoitus <a "
+"href=\"http://peterlevi.com/variety/donate/\">donate</a>."
 
 #: ../data/ui/WelcomeDialog.ui:143
 msgid ""
 "Now please take some time to set your preferences on the following screens."
-msgstr ""
-"Jetzt bitte etwas Zeit nehmen, um die Einstellungen auf den folgenden "
-"Fenstern anzupassen."
+msgstr "Varaa hieman aikaa ja tee omat asetukset seuraavissa näytöissä."
