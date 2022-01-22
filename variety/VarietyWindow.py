@@ -1129,7 +1129,7 @@ class VarietyWindow(Gtk.Window):
                         dl.download_one()
 
                 # give some breathing room between downloads
-                time.sleep(1)
+                time.sleep(30)
             except Exception:
                 logger.exception(lambda: "Exception in download_thread:")
 
