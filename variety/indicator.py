@@ -311,24 +311,35 @@ class Indicator:
 
         self.menu.show_all()
 
+    def destroy_indicator(self):
+        if os.name == 'nt' and self.status_icon:
+            self.status_icon.set_visible(False)
+
     def create_indicator(self, window):
         logger.info("indicator backend: %s", _indicator_backend)
         self.indicator = None
         self.status_icon = None
         self.visible = True
+        self.is_active = False
+
+        def handle_popup(time):
+            if not self.is_active:
+                if os.name == 'nt':
+                    self.menu.popup(None, None, None, self.status_icon, 0, time)
+                else:
+                    self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, time)
+                self.is_active = True
+            else:
+                self.menu.cancel()
 
         def right_click_event(icon, button, time):
-            self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, time)
+            handle_popup(time)
 
         def left_click_event(data):
-            self.menu.popup(
-                None,
-                None,
-                Gtk.StatusIcon.position_menu,
-                self.status_icon,
-                0,
-                Gtk.get_current_event_time(),
-            )
+            handle_popup(Gtk.get_current_event_time())
+
+        def deactivate(data):
+            self.is_active = False
 
         def on_indicator_scroll_status_icon(status_icon, event):
             window.on_indicator_scroll(None, 1, event.direction)
@@ -348,6 +359,7 @@ class Indicator:
             self.status_icon.connect("activate", left_click_event)
             self.status_icon.connect("popup-menu", right_click_event)
             self.status_icon.connect("scroll-event", on_indicator_scroll_status_icon)
+            self.menu.connect("deactivate", deactivate)
 
     def set_visible(self, visible):
         self.visible = visible

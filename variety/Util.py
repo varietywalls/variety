@@ -25,6 +25,7 @@ import os
 import random
 import re
 import shutil
+import shlex
 import string
 import subprocess
 import sys
@@ -739,8 +740,12 @@ class Util:
 
     @staticmethod
     def collapseuser(path):
-        home = os.path.expanduser("~") + "/"
-        return re.sub("^" + home, "~/", path)
+        # normpath used to avoid backslash mixing on windows
+        home = os.path.normpath(os.path.expanduser('~')) + os.sep
+        if os.name == 'nt':
+            return path
+        else:
+            return re.sub('^' + home, '~' + os.sep, path)
 
     @staticmethod
     def compare_versions(v1, v2):
@@ -774,6 +779,8 @@ class Util:
 
     @staticmethod
     def get_file_icon_name(path):
+        if os.name == 'nt':
+            return "folder"
         try:
             f = Gio.File.new_for_path(os.path.normpath(os.path.expanduser(path)))
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
@@ -896,11 +903,66 @@ class Util:
         with open(to_path + ".partial", "w") as file:
             file.write(data)
             file.flush()
-        os.rename(to_path + ".partial", to_path)
+        shutil.move(to_path + ".partial", to_path)
 
     @staticmethod
     def get_exec_path():
         return os.path.abspath(sys.argv[0])
+
+    @staticmethod
+    def set_windows_registry_key(path, name, value, dtype=None, master='HKEY_CURRENT_USER'):
+        import winreg
+
+        # Type is only used if creating a new value
+        if not dtype or isinstance(value, str):
+            dtype = winreg.REG_SZ
+        elif isinstance(value, int):
+            dtype = winreg.REG_DWORD
+        else:
+            dtype = winreg.REG_SZ
+
+        # Translate key name to winreg key name
+        registry = winreg.HKEY_CURRENT_USER
+        if master == 'HKEY_CURRENT_USER':
+            registry = winreg.HKEY_CURRENT_USER
+        elif master == 'HKEY_LOCAL_MACHINE':
+            registry = winreg.HKEY_LOCAL_MACHINE
+        elif master == 'HKEY_USERS':
+            registry = winreg.HKEY_USERS
+
+        # This will throw FileNotFoundError if key does not exist - this is fatal for this function
+        key = winreg.OpenKey(
+            registry,
+            path,
+            0,
+            winreg.KEY_WRITE | winreg.KEY_READ
+        )
+
+        # Try getting the explicit value, catch if doesn't exist
+        try:
+            val, val_type = winreg.QueryValueEx(key, "WallpaperStyle")
+            # If the value is correct, ignore, otherwise set
+            if val == value:
+                pass
+            else:
+                winreg.SetValueEx(key, name, 0, val_type, value)
+        except FileNotFoundError:
+            # Couldn't find key, try creating
+            try:
+                winreg.SetValueEx(key, name, 0, dtype, value)
+            except Exception as e:
+                # Log failure here
+                pass
+        finally:
+            winreg.CloseKey(key)
+
+    @staticmethod
+    def shlex_quote(s):
+        if os.name != 'nt':
+            return shlex.quote(s)
+        else:
+            # shlex.quote does not play nicely with windows shell, so just always-quote
+            return '"%s"' % s
 
     @staticmethod
     def get_folder_size(start_path):
@@ -916,13 +978,13 @@ class Util:
     def get_screen_width():
         return Gdk.Screen.get_default().get_width()
 
-
 def on_gtk(f):
     @functools.wraps(f)
     def wrapped(*args):
         Util.add_mainloop_task(f, *args)
 
     return wrapped
+
 
 
 def safe_print(text, ascii_text=None, file=sys.stdout):

@@ -18,7 +18,7 @@
 import os
 import sys
 
-if os.geteuid() == 0:
+if os.name != 'nt' and os.geteuid() == 0:
     print(
         'Variety is not supposed to run as root.\n'
         'You should NEVER run desktop apps as root, unless they are supposed to make '

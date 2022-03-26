@@ -1264,14 +1264,14 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
+        cmd = "convert %s -scale %dx%d^ " % (Util.shlex_quote(filename), w, h)
 
         logger.info(lambda: "Applying filter: " + filter)
         cmd += filter + " "
 
-        cmd += shlex.quote(target_file)
-        cmd = cmd.replace("%FILEPATH%", shlex.quote(filename))
-        cmd = cmd.replace("%FILENAME%", shlex.quote(os.path.basename(filename)))
+        cmd += Util.shlex_quote(target_file)
+        cmd = cmd.replace("%FILEPATH%", Util.shlex_quote(filename))
+        cmd = cmd.replace("%FILENAME%", Util.shlex_quote(os.path.basename(filename)))
 
         logger.info(lambda: "ImageMagick filter cmd: " + cmd)
         return cmd.encode("utf-8")
@@ -1282,7 +1282,7 @@ class VarietyWindow(Gtk.Window):
 
         w = Gdk.Screen.get_default().get_width()
         h = Gdk.Screen.get_default().get_height()
-        cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
+        cmd = "convert %s -scale %dx%d^ " % (Util.shlex_quote(filename), w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
         clock_filter = self.options.clock_filter
@@ -1296,7 +1296,7 @@ class VarietyWindow(Gtk.Window):
 
         cmd += clock_filter
         cmd += " "
-        cmd += shlex.quote(target_file)
+        cmd += Util.shlex_quote(target_file)
         logger.info(lambda: "ImageMagick clock cmd: " + cmd)
         return cmd.encode("utf-8")
 
@@ -1307,6 +1307,15 @@ class VarietyWindow(Gtk.Window):
         clock_filter = clock_filter.replace("%CLOCK_FONT_SIZE", clock_font_size)
         clock_filter = clock_filter.replace("%DATE_FONT_NAME", date_font_name)
         clock_filter = clock_filter.replace("%DATE_FONT_SIZE", date_font_size)
+        if os.name != 'nt':
+            clock_filter = clock_filter.replace("%CLOCK_FONT_FILE", "`fc-match -f \"%%{file[0]}\" \"%CLOCK_FONT_NAME\"`")
+            clock_filter = clock_filter.replace("%DATE_FONT_FILE", "`fc-match -f \"%%{file[0]}\" \"%DATE_FONT_NAME\"`")
+        else:
+            clock_font_file = subprocess.check_output(["fc-match.exe", "-f", "%{file[0]}", clock_font_name])
+            date_font_file = subprocess.check_output(["fc-match.exe", "-f", "%{file[0]}", date_font_name])
+            clock_filter = clock_filter.replace("%CLOCK_FONT_FILE", clock_font_file.decode())
+            clock_filter = clock_filter.replace("%DATE_FONT_FILE", date_font_file.decode())
+
         return clock_filter
 
     @staticmethod
@@ -1362,6 +1371,11 @@ class VarietyWindow(Gtk.Window):
                     )
                     cmd = self.build_imagemagick_filter_cmd(to_set, target_file)
                     if cmd:
+                        if os.name == 'nt':
+                            cmd = cmd.decode()
+                            # Quick fix - brackets explicitly stop imagemagick from being parsed correctly on windows
+                            cmd = cmd.replace("\(", "(")
+                            cmd = cmd.replace("\)", ")")
                         result = os.system(cmd)
                         if result == 0:  # success
                             to_set = target_file
@@ -1404,6 +1418,8 @@ class VarietyWindow(Gtk.Window):
                     self.wallpaper_folder, "wallpaper-clock-%s.jpg" % Util.random_hash()
                 )
                 cmd = self.build_imagemagick_clock_cmd(to_set, target_file)
+                if os.name == 'nt':
+                    cmd = cmd.decode()
                 result = os.system(cmd)
                 if result == 0:  # success
                     to_set = target_file
@@ -1747,6 +1763,7 @@ class VarietyWindow(Gtk.Window):
 
     def image_ok(self, img, fuzziness):
         try:
+            img = os.path.normpath(img)
             if Util.is_animated_gif(img):
                 return False
 
@@ -1760,7 +1777,11 @@ class VarietyWindow(Gtk.Window):
                     width = self.image_colors_cache[img][3]
                     height = self.image_colors_cache[img][4]
                 else:
-                    i = PILImage.open(img)
+                    try:
+                        i = PILImage.open(img)
+                    except Exception as e:
+                        logger.debug("Could not PILImage.open image %s: moving on", img, exc_info=True)
+                        raise
                     width = i.size[0]
                     height = i.size[1]
 
@@ -1837,7 +1858,10 @@ class VarietyWindow(Gtk.Window):
         if not file:
             file = self.current
         if file:
-            subprocess.Popen(["xdg-open", os.path.realpath(file)])
+            if os.name == 'nt':
+                subprocess.Popen(["explorer", os.path.realpath(file)])
+            else:
+                subprocess.Popen(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
@@ -2146,6 +2170,10 @@ class VarietyWindow(Gtk.Window):
                     )
 
             Util.start_force_exit_thread(15)
+
+            # On windows we need to destroy the indicator otherwise it won't disappear until hovered over
+            self.ind.destroy_indicator()
+
             logger.debug(lambda: "OK, waiting for other loops to finish")
             logger.debug(lambda: "Remaining threads: ")
             for t in threading.enumerate():
@@ -2615,7 +2643,14 @@ class VarietyWindow(Gtk.Window):
 
             file = None
 
-            if os.access(script, os.X_OK):
+            if os.name == 'nt':
+                import ctypes
+                # https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-systemparametersinfow#SPI_GETDESKWALLPAPER
+                SPI_GETDESKWALLPAPER = 0x0073
+                wallpaper = ctypes.create_unicode_buffer(200)
+                ctypes.windll.user32.SystemParametersInfoW(SPI_GETDESKWALLPAPER, 200, wallpaper, 0)
+                file = wallpaper.value
+            elif os.access(script, os.X_OK):
                 logger.debug(lambda: "Running get_wallpaper script")
                 try:
                     output = subprocess.check_output(script).decode().strip()
@@ -2662,7 +2697,20 @@ class VarietyWindow(Gtk.Window):
 
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
         script = os.path.join(self.scripts_folder, "set_wallpaper")
-        if os.access(script, os.X_OK):
+        if os.name == 'nt':
+            import ctypes
+            # Windows code for setting a wallpaper
+            WINDOWS_WALLPAPER_STYLE_STRETCH = "2"
+            try:
+                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallpaperStyle", WINDOWS_WALLPAPER_STYLE_STRETCH)
+                Util.set_windows_registry_key(r"Control Panel\\Desktop", "WallPaper", wallpaper)
+            except FileNotFoundError as e:
+                logger.exception(lambda: "Exception when calling execute_set_desktop_wallpaper: %s" % str(e))
+
+            # https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-systemparametersinfow#SPI_SETDESKWALLPAPER
+            SPI_SETDESKWALLPAPER = 0x0014
+            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, wallpaper , 0)
+        elif os.access(script, os.X_OK):
             auto = (
                 "manual"
                 if not self.auto_changed
@@ -2670,7 +2718,7 @@ class VarietyWindow(Gtk.Window):
             )
             logger.debug(
                 lambda: "Running set_wallpaper script with parameters: %s, %s, %s"
-                % (wallpaper, auto, original_file)
+                        % (wallpaper, auto, original_file)
             )
             try:
                 subprocess.check_call(
@@ -2679,6 +2727,8 @@ class VarietyWindow(Gtk.Window):
             except subprocess.CalledProcessError as e:
                 if e.returncode == 124:
                     logger.error(lambda: "Timeout while running set_wallpaper script, killed")
+                logger.exception(lambda: "Exception when calling set_wallpaper script: %d" % e.returncode)
+            except Exception as e:
                 logger.exception(
                     lambda: "Exception when calling set_wallpaper script: %d" % e.returncode
                 )
