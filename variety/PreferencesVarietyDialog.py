@@ -766,13 +766,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
         if type in Options.get_editable_source_types():
             if type == Options.SourceType.FLICKR:
                 self.dialog = AddFlickrDialog()
+            elif type == Options.SourceType.WALLHAVEN:
+                self.dialog = AddWallhavenDialog()
             elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
-                if type == Options.SourceType.WALLHAVEN:
-                    self.dialog = AddWallhavenDialog()
-                    self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
-                else:
-                    self.dialog = AddConfigurableDialog()
-                    self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
+                self.dialog = AddConfigurableDialog()
+                self.dialog.set_source(Options.CONFIGURABLE_IMAGE_SOURCES_MAP[type])
 
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
