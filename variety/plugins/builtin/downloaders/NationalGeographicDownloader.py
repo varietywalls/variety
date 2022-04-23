@@ -59,8 +59,11 @@ class NationalGeographicDownloader(SimpleDownloader):
         url = item["entity"]["mediaImage"]["url"]
         origin_url = NationalGeographicDownloader.ROOT_URL + "?image=" + splitext(basename(url))[0]
         image_url = "https://static.nationalgeographic.co.uk" + url
+        author = item["entity"]["credit"]
         extra_metadata = {
-            "author": item["entity"]["credit"],
+            "author": author,
+            "authorURL": f"http://google.com/search?sourceid=variety&q={author}",
+            "headline": item["entity"]["mediaImage"]["alt"],
             "description": item["entity"]["caption"][3:-6],
         }
-        return self.save_locally(origin_url, image_url, extra_metadata)
+        return self.save_locally(origin_url, image_url, extra_metadata=extra_metadata)
