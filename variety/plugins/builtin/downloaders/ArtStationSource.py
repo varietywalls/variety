@@ -17,12 +17,8 @@
 import logging
 import random
 
-from variety.plugins.builtin.downloaders.ArtstationDownloader import (
-    ArtstationDownloader,
-)
-from variety.plugins.downloaders.ConfigurableImageSource import (
-    ConfigurableImageSource,
-)
+from variety.plugins.builtin.downloaders.ArtStationDownloader import ArtStationDownloader
+from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.Util import _
 
 random.seed()
@@ -31,32 +27,30 @@ random.seed()
 logger = logging.getLogger("variety")
 
 
-class ArtstationSource(ConfigurableImageSource):
+class ArtStationSource(ConfigurableImageSource):
     @classmethod
     def get_info(cls):
         return {
-            "name": "ArtstationSource",
-            "description": _(
-                "Configurable source for fetching images from Art Station"
-            ),
+            "name": "ArtStationSource",
+            "description": _("Configurable source for fetching images from ArtStation"),
             "author": "Denis Gordeev",
             "version": "0.1",
         }
 
     def get_source_type(self):
-        return "art_station"
+        return "artstation"
 
     def get_source_name(self):
-        return "Art Station"
+        return "ArtStation"
 
     def get_ui_instruction(self):
         return _(
             "Enter the name of an artist or paste the full URL of their "
             "artstation page with .rss extenstion or without it. \n"
-            "Example: You may specify simply 'kd428' or "
-            "<a href='https://www.artstation.com/kd428'>https://www.artstation.com/kd428</a>\n"
+            "Example: You may specify simply 'leimin' or "
+            "<a href='https://www.artstation.com/leimin'>https://www.artstation.com/leimin</a>\n"
             "Example: Or direct it to the RSS: "
-            "<a href='https://www.artstation.com/kd428.rss'>https://www.artstation.com/kd428.rss</a>"
+            "<a href='https://www.artstation.com/leimin.rss'>https://www.artstation.com/leimin.rss</a>"
         )
 
     def get_ui_short_instruction(self):
@@ -75,28 +69,22 @@ class ArtstationSource(ConfigurableImageSource):
         if "/" not in query:
             query = "https://www.artstation.com/%s" % query
         if not query.endswith(".rss"):
-            query = query + ".rss"
+            query += ".rss"
         try:
-            if not query.startswith("http://") and not query.startswith(
-                "https://"
-            ):
-                query = "http://" + query
+            # normalize the URL to "https://artstation.com/artist"
+            query = query.replace("http://", "https://")
+            if not query.startswith("https://"):
+                query = "https://" + query
+            query = query.replace("//artstation.com", "//www.artstation.com")
 
-            if (
-                not "//www.artstation.com" in query
-                and not "//www.artstation.com" in query
-            ):
-                return False, _(
-                    "This does not seem to be a valid ArtStation URL"
-                )
+            if "//www.artstation.com" not in query:
+                return False, _("This does not seem to be a valid ArtStation URL")
 
-            dl = ArtstationDownloader(self, query)
+            dl = ArtStationDownloader(self, query)
             queue = dl.fill_queue()
             return (
                 query,
-                None
-                if len(queue) > 0
-                else _("We could not find any image submissions there."),
+                None if len(queue) > 0 else _("We could not find any image submissions there."),
             )
         except Exception:
             logger.exception(
@@ -105,4 +93,4 @@ class ArtstationSource(ConfigurableImageSource):
             return query, _("We could not find any image submissions there.")
 
     def create_downloader(self, config):
-        return ArtstationDownloader(self, config)
+        return ArtStationDownloader(self, config)

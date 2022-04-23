@@ -22,30 +22,34 @@ from variety.Util import Util
 logger = logging.getLogger("variety")
 
 
-class ArtstationDownloader(DefaultDownloader):
+class ArtStationDownloader(DefaultDownloader):
     def __init__(self, source, url):
         DefaultDownloader.__init__(self, source=source, config=url)
 
     def fill_queue(self):
-        logger.info(lambda: "Artstation URL: " + self.config)
+        logger.info(lambda: "ArtStation URL: " + self.config)
 
         queue = []
-        # json_url = ArtstationDownloader.build_json_url(self.config)
+        # json_url = ArtStationDownloader.build_json_url(self.config)
         url = self.config
         s = Util.html_soup(url)
+        author = s.find("channel").find("title").get_text().strip()
+        author_url = s.find("channel").find("link").next.strip()
         items = s.findAll("item")
-        for item in items:
+        for index, item in enumerate(items):
             try:
-                extra_metadata = {"sourceType": "artstation"}
-                src_url = item.find("guid").text
+                extra_metadata = {
+                    "headline": item.find("title").get_text().strip(),
+                    "description": item.find("description").get_text().strip().replace("]]>", ""),
+                    "author": author,
+                    "authorURL": author_url,
+                }
+                src_url = f'{item.find("guid").text}#{index}'
                 image_urls = [img["src"] for img in item.findAll("img")]
                 for image_url in image_urls:
                     queue.append((src_url, image_url, extra_metadata))
             except Exception:
-                logger.exception(
-                    lambda: "Could not process an "
-                    "item in the ArtStation rss result"
-                )
+                logger.exception(lambda: "Could not process an item in the ArtStation rss result")
 
         random.shuffle(queue)
         return queue
