@@ -105,6 +105,16 @@ class Options:
                 pass
 
             try:
+                self.set_wallpaper_script = os.path.expanduser(config["set_wallpaper_script"])
+            except Exception:
+                pass
+
+            try:
+                self.get_wallpaper_script = os.path.expanduser(config["get_wallpaper_script"])
+            except Exception:
+                pass
+
+            try:
                 self.download_folder = os.path.expanduser(config["download_folder"])
             except Exception:
                 pass
@@ -589,6 +599,9 @@ class Options:
         self.change_interval = 300
         self.safe_mode = False
 
+        self.set_wallpaper_script = os.path.join(get_profile_path(), "scripts", "set_wallpaper")
+        self.get_wallpaper_script = os.path.join(get_profile_path(), "scripts", "get_wallpaper")
+
         self.download_folder = os.path.join(get_profile_path(), "Downloaded")
         self.download_preference_ratio = 0.9
         self.quota_enabled = True
@@ -699,6 +712,9 @@ class Options:
             config["change_on_start"] = str(self.change_on_start)
             config["change_interval"] = str(self.change_interval)
             config["safe_mode"] = str(self.safe_mode)
+
+            config["set_wallpaper_script"] = Util.collapseuser(self.set_wallpaper_script)
+            config["get_wallpaper_script"] = Util.collapseuser(self.get_wallpaper_script)
 
             config["download_folder"] = Util.collapseuser(self.download_folder)
             config["download_preference_ratio"] = str(self.download_preference_ratio)

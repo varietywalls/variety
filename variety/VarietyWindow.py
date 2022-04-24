@@ -88,29 +88,6 @@ class VarietyWindow(Gtk.Window):
 
     SERVERSIDE_OPTIONS_URL = "http://tiny.cc/variety-options-063"
 
-    OUTDATED_SET_WP_SCRIPTS = {
-        "b8ff9cb65e3bb7375c4e2a6e9611c7f8",
-        "3729d3e1f57aa1159988ba2c8f929389",
-        "feafa658d9686ecfabdbcf236c32fd0f",
-        "83d8ebeec3676474bdd90c55417e8640",
-        "1562cb289319aa39ac1b37a8ee4c0103",
-        "6c54123e87e98b15d87f0341d3e36fc5",
-        "3f9fcc524bfee8fb146d1901613d3181",
-        "40db8163e22fbe8a505bfd1280190f0d",  # 0.4.14, 0.4.15
-        "59a037428784caeb0834a8dd7897a88b",  # 0.4.16, 0.4.17
-        "e4510e39fd6829ef550e128a1a4a036b",  # 0.4.18
-        "d8d6a6c407a3d02ee242e9ce9ceaf293",  # 0.4.19
-        "fdb69a2b16c62594c0fc12318ec58023",  # 0.4.20
-        "236fa00c42af82904eaaecf2d460d21f",  # 0.5.5
-        "6005ee48fc9cb48050af6e0e9572e660",  # 0.6.6 (unary operator expected bug; LP: #1722433)
-    }
-
-    OUTDATED_GET_WP_SCRIPTS = {
-        "d8df22bf24baa87d5231e31027e79ee5",
-        "822aee143c6b3f1166e5d0a9c637dd16",  # 0.4.16, 0.4.17
-        "367f629e2f24ad8040e46226b18fdc81",  # 0.4.18, 0.4.19
-    }
-
     # How many unseen_downloads max to for every downloader.
     MAX_UNSEEN_PER_DOWNLOADER = 10
 
@@ -171,12 +148,7 @@ class VarietyWindow(Gtk.Window):
         # load config
         self.options = None
         self.server_options = {}
-        self.load_banned()
-        self.load_history()
         self.post_filter_filename = None
-
-        if self.position < len(self.used):
-            self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
         logger.info(lambda: "Using data_path %s" % varietyconfig.get_data_path())
         self.jumble = Jumble(
@@ -191,9 +163,9 @@ class VarietyWindow(Gtk.Window):
 
         self.load_downloader_plugins()
         self.create_downloaders_cache()
-        self.reload_config()
+        self.reload_config(is_on_start=True)
+        self.load_banned()
         self.load_last_change_time()
-
         self.update_indicator(auto_changed=False)
 
         self.start_threads()
@@ -413,11 +385,14 @@ class VarietyWindow(Gtk.Window):
             image_source.activate()
             image_source.set_variety(self)
 
-    def reload_config(self):
+    def reload_config(self, is_on_start=False):
         self.previous_options = self.options
 
         self.options = Options()
         self.options.read()
+
+        if is_on_start:
+            self.load_history()
 
         self.update_indicator_icon()
 
@@ -2257,25 +2232,31 @@ class VarietyWindow(Gtk.Window):
                 self.write_current_version()
 
                 # Upgrade set and get_wallpaper scripts
-                def upgrade_script(script, outdated_md5):
+                def upgrade_script(script):
                     try:
                         script_file = os.path.join(self.scripts_folder, script)
-                        if (
-                            not os.path.exists(script_file)
-                            or Util.md5file(script_file) in outdated_md5
-                        ):
+                        bundled_script_file = varietyconfig.get_data_file("scripts", script)
+                        logger.info(
+                            lambda: "Upgrading %s file, copying it from %s"
+                            % (script, bundled_script_file)
+                        )
+                        if os.path.exists(script_file):
+                            backup_script_file = os.path.join(
+                                self.scripts_folder,
+                                script + "_before_" + varietyconfig.get_version(),
+                            )
                             logger.info(
-                                lambda: "Outdated %s file, copying it from %s"
-                                % (script, varietyconfig.get_data_file("scripts", script))
+                                lambda: "Old script file is preserved as %s" % backup_script_file
                             )
-                            shutil.copy(
-                                varietyconfig.get_data_file("scripts", script), self.scripts_folder
-                            )
+                            shutil.copy(script_file, backup_script_file)
+                        shutil.copy(
+                            varietyconfig.get_data_file("scripts", script), self.scripts_folder
+                        )
                     except Exception:
                         logger.exception(lambda: "Could not upgrade script " + script)
 
-                upgrade_script("set_wallpaper", VarietyWindow.OUTDATED_SET_WP_SCRIPTS)
-                upgrade_script("get_wallpaper", VarietyWindow.OUTDATED_GET_WP_SCRIPTS)
+                upgrade_script("set_wallpaper")
+                upgrade_script("get_wallpaper")
 
                 # Upgrade the autostart entry, if there is one
                 if os.path.exists(get_autostart_file_path()):
@@ -2611,7 +2592,7 @@ class VarietyWindow(Gtk.Window):
 
     def get_desktop_wallpaper(self):
         try:
-            script = os.path.join(self.scripts_folder, "get_wallpaper")
+            script = self.options.get_wallpaper_script
 
             file = None
 
@@ -2661,7 +2642,7 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
-        script = os.path.join(self.scripts_folder, "set_wallpaper")
+        script = self.options.set_wallpaper_script
         if os.access(script, os.X_OK):
             auto = (
                 "manual"
@@ -2812,6 +2793,9 @@ class VarietyWindow(Gtk.Window):
         ):
             self.used.insert(0, self.current)
             self.position = 0
+
+        if self.position < len(self.used):
+            self.thumbs_manager.mark_active(file=self.used[self.position], position=self.position)
 
     def disable_quotes(self, widget=None):
         self.options.quotes_enabled = False
