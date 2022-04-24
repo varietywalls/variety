@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Variety (Profile: {PROFILE_NAME})
+Name={PROFILE_NAME} - Variety
 Comment=Variety Wallpaper Changer, running with profile {PROFILE_NAME}
 Categories=GNOME;GTK;Utility;
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} %U

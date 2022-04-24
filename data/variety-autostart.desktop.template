@@ -2,7 +2,7 @@
 Name=Variety
 Comment=Variety Wallpaper Changer
 Categories=GNOME;GTK;Utility;
-Exec={VARIETY_PATH} --profile {PROFILE_PATH}
+Exec=sleep 20 && {VARIETY_PATH} --profile {PROFILE_PATH}
 MimeType=text/uri-list;x-scheme-handler/variety;x-scheme-handler/vrty;
 Icon=variety
 Terminal=false
@@ -10,5 +10,4 @@ Type=Application
 StartupNotify=false
 Actions=Next;Previous;PauseResume;History;Preferences;
 Keywords=Wallpaper;Changer;Change;Download;Downloader;Variety;
-X-GNOME-Autostart-Delay=20
 StartupWMClass={WM_CLASS}
