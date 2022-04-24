@@ -128,7 +128,7 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
         return "unsplash_v2"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=3)
+        return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
 
     def on_image_set_as_wallpaper(self, img, meta):
         return UnsplashDownloader().on_image_set_as_wallpaper(img, meta)
