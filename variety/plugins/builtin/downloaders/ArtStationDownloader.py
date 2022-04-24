@@ -44,7 +44,7 @@ class ArtStationDownloader(DefaultDownloader):
                     "author": author,
                     "authorURL": author_url,
                 }
-                src_url = f'{item.find("guid").text}#{index}'
+                src_url = item.find("guid").text + "#" + str(index)
                 image_urls = [img["src"] for img in item.findAll("img")]
                 for image_url in image_urls:
                     queue.append((src_url, image_url, extra_metadata))

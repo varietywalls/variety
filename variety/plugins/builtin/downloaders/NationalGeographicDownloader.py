@@ -62,7 +62,7 @@ class NationalGeographicDownloader(SimpleDownloader):
         author = item["entity"]["credit"]
         extra_metadata = {
             "author": author,
-            "authorURL": f"http://google.com/search?sourceid=variety&q={author}",
+            "authorURL": "http://google.com/search?sourceid=variety&q=" + author,
             "headline": item["entity"]["mediaImage"]["alt"],
             "description": item["entity"]["caption"][3:-6],
         }
