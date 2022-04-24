@@ -2327,19 +2327,6 @@ class VarietyWindow(Gtk.Window):
         self.update_indicator(auto_changed=False)
         self.change_event.set()
 
-    def on_safe_mode_toggled(self, widget=None, safe_mode=None):
-        if safe_mode is None:
-            self.options.safe_mode = not self.options.safe_mode
-        else:
-            self.options.safe_mode = safe_mode
-
-        if self.preferences_dialog:
-            self.preferences_dialog.ui.safe_mode.set_active(self.options.safe_mode)
-
-        self.options.write()
-        self.update_indicator(auto_changed=False)
-        self.clear_prepared_queue()
-
     def process_command(self, arguments, initial_run):
         try:
             arguments = [str(arg) for arg in arguments]
