@@ -75,6 +75,13 @@ class ImageSource(IVarietyPlugin, metaclass=abc.ABCMeta):
         source_type = self.get_source_type()
         return source_type[0].upper() + source_type[1:]
 
+    def needs_internet(self):
+        """
+        Does this configurable image source need internet in order to fetch new images?
+        :return: True or False
+        """
+        return True
+
     def on_image_set_as_wallpaper(self, img, meta):
         """
         Called when a wallpaper downloaded from this source was used as a wallpaper.

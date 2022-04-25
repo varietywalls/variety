@@ -43,6 +43,9 @@ class LocalFilesSource(IQuoteSource):
             "version": "0.1",
         }
 
+    def needs_internet(self):
+        return False
+
     def supports_search(self):
         return True
 

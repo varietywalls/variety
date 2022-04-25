@@ -18,6 +18,14 @@ from .IVarietyPlugin import IVarietyPlugin
 
 
 class IQuoteSource(IVarietyPlugin):
+    def needs_internet(self):
+        """
+        Does this source fetch quotes from the internet?
+        Sources like this will not be used when Variety is configured to not access the internet.
+        :return: True or False
+        """
+        return True
+
     def supports_search(self):
         """
         False means that this plugins does not support searching by keyword or author (only get_random will

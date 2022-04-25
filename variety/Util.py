@@ -317,7 +317,13 @@ class ModuleProfiler:
             )
 
 
+class InternetDisabledError(Exception):
+    pass
+
+
 class Util:
+    internet_enabled = True
+
     @staticmethod
     def sanitize_filename(filename):
         valid_chars = " ,.!-+@()_%s%s" % (string.ascii_letters, string.digits)
@@ -605,6 +611,9 @@ class Util:
 
     @staticmethod
     def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
+        if not Util.internet_enabled:
+            raise InternetDisabledError("Internet access in Variety is currently disabled")
+
         if url.startswith("//"):
             url = "http:" + url
         headers = headers or {}

@@ -391,6 +391,9 @@ class VarietyWindow(Gtk.Window):
         self.options = Options()
         self.options.read()
 
+        # Make sure to turn on or off the global Internet Killswitch
+        Util.internet_enabled = self.options.internet_enabled
+
         if is_on_start:
             self.load_history()
 
@@ -1016,12 +1019,18 @@ class VarietyWindow(Gtk.Window):
             and len(images) >= max(20, 10 * len(found))
             and found.issubset(set(self.used[:10]))
         ):
-            logger.warning(lambda: "Too few images found: %d out of %d" % (len(found), len(images)))
+            logger.warning(
+                lambda: "Too few images found: %d out of %d. "
+                "Please check the settings in 'Color and size'." % (len(found), len(images))
+            )
             if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
                 self.filters_warning_shown = True
                 self.show_notification(
                     _("Filtering too strict?"),
-                    _("Variety is finding too few images that match your image filtering criteria"),
+                    _(
+                        "Variety is finding too few images that match your image filtering "
+                        'criteria. Please check if the settings in "Color and size" are correct.'
+                    ),
                 )
 
     def prepare_thread(self):
@@ -1053,6 +1062,10 @@ class VarietyWindow(Gtk.Window):
         time.sleep(20)
         attempts = 0
         while self.running:
+            if not self.options.internet_enabled:
+                time.sleep(3600)
+                continue
+
             try:
                 attempts += 1
                 logger.info(
@@ -1073,7 +1086,7 @@ class VarietyWindow(Gtk.Window):
                     time.sleep(30)
                     continue
 
-            time.sleep(3600 * 24)  # Update once daily
+            time.sleep(3600)  # Update once per hour
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher()) > 0
@@ -1109,6 +1122,9 @@ class VarietyWindow(Gtk.Window):
                 logger.exception(lambda: "Exception in download_thread:")
 
     def _available_downloaders(self):
+        if not self.options.internet_enabled:
+            return []
+
         now = time.time()
         return [
             dl
@@ -1119,7 +1135,7 @@ class VarietyWindow(Gtk.Window):
         ]
 
     def trigger_download(self):
-        logger.info(lambda: "Triggering download thread to check if download needed")
+        logger.info(lambda: "Triggering download thread to check if download needed and possible")
         if getattr(self, "dl_event"):
             self.dl_event.set()
 

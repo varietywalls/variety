@@ -238,19 +238,20 @@ class QuotesEngine:
             )
 
         plugins = list(self.plugins)
+        if not self.parent.options.internet_enabled:
+            plugins = [p for p in plugins if not p["plugin"].needs_internet()]
+        if keywords or authors:
+            plugins = [p for p in plugins if p["plugin"].supports_search()]
+
         if not plugins:
             self.parent.show_notification(
-                _("No quote plugins"), _("There are no quote plugins installed")
+                _("No suitable quote plugins"),
+                _(
+                    "There are no quote plugins installed, "
+                    "enabled and applicable for the current settings"
+                ),
             )
             raise Exception("No quote plugins")
-        if keywords or authors:
-            plugins = [p for p in self.plugins if p["plugin"].supports_search()]
-            if not plugins:
-                self.parent.show_notification(
-                    _("No suitable quote plugins"),
-                    _("You have no quote plugins which support searching by keywords and authors"),
-                )
-                raise Exception("No quote plugins")
 
         error_plugins = []
         count_plugins = len(plugins)

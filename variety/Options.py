@@ -100,6 +100,11 @@ class Options:
                 pass
 
             try:
+                self.internet_enabled = config["internet_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.safe_mode = config["safe_mode"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -597,6 +602,7 @@ class Options:
         self.change_enabled = True
         self.change_on_start = False
         self.change_interval = 300
+        self.internet_enabled = True
         self.safe_mode = False
 
         self.set_wallpaper_script = os.path.join(get_profile_path(), "scripts", "set_wallpaper")
@@ -711,6 +717,7 @@ class Options:
             config["change_enabled"] = str(self.change_enabled)
             config["change_on_start"] = str(self.change_on_start)
             config["change_interval"] = str(self.change_interval)
+            config["internet_enabled"] = str(self.internet_enabled)
             config["safe_mode"] = str(self.safe_mode)
 
             config["set_wallpaper_script"] = Util.collapseuser(self.set_wallpaper_script)

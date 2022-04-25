@@ -17,9 +17,8 @@
 
 from locale import gettext as _
 
-import requests
-
 from variety.plugins.IQuoteSource import IQuoteSource
+from variety.Util import Util
 
 
 class UrbanDictionarySource(IQuoteSource):
@@ -33,7 +32,7 @@ class UrbanDictionarySource(IQuoteSource):
         }
 
     def get_random(self):
-        dict_dict = requests.get("https://api.urbandictionary.com/v0/random").json()
+        dict_dict = Util.fetch_json("https://api.urbandictionary.com/v0/random")
 
         def _clean(s):
             return s.strip().replace("[", "").replace("]", "")
