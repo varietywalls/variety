@@ -926,7 +926,7 @@ class VarietyWindow(Gtk.Window):
                     if not self.running:
                         return
                     now = time.time()
-                    wait_more = self.options.change_interval - max(0, (now - self.last_change_time))
+                    wait_more = self.options.change_interval - max(0.0, now - self.last_change_time)
                     if self.options.change_enabled:
                         self.change_event.wait(max(0, wait_more))
                     else:
@@ -2641,12 +2641,10 @@ class VarietyWindow(Gtk.Window):
                 % (wallpaper, auto, original_file)
             )
             try:
-                subprocess.check_call(
-                    ["timeout", "--kill-after=5", "10", script, wallpaper, auto, original_file]
-                )
+                subprocess.check_call([script, wallpaper, auto, original_file], timeout=10)
+            except subprocess.TimeoutExpired:
+                logger.error(lambda: "Timeout while running set_wallpaper script, killed")
             except subprocess.CalledProcessError as e:
-                if e.returncode == 124:
-                    logger.error(lambda: "Timeout while running set_wallpaper script, killed")
                 logger.exception(
                     lambda: "Exception when calling set_wallpaper script: %d" % e.returncode
                 )
