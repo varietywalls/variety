@@ -119,9 +119,10 @@ class VarietyWindow(Gtk.Window):
         fr_file = os.path.join(self.config_folder, ".firstrun")
         first_run = not os.path.exists(fr_file)
 
+        first_run_internet_enabled = None
         if first_run:  # Make setup dialogs block so that privacy notice appears
             self.show_welcome_dialog()
-            self.show_privacy_dialog()
+            first_run_internet_enabled = self.show_privacy_dialog()
 
         self.thumbs_manager = ThumbsManager(self)
 
@@ -163,7 +164,7 @@ class VarietyWindow(Gtk.Window):
 
         self.load_downloader_plugins()
         self.create_downloaders_cache()
-        self.reload_config(is_on_start=True)
+        self.reload_config(is_on_start=True, first_run_internet_enabled=first_run_internet_enabled)
         self.load_banned()
         self.load_last_change_time()
         self.update_indicator(auto_changed=False)
@@ -385,14 +386,20 @@ class VarietyWindow(Gtk.Window):
             image_source.activate()
             image_source.set_variety(self)
 
-    def reload_config(self, is_on_start=False):
+    def reload_config(self, is_on_start=False, first_run_internet_enabled=None):
         self.previous_options = self.options
 
         self.options = Options()
         self.options.read()
 
+        if first_run_internet_enabled is not None:
+            self.options.internet_enabled = first_run_internet_enabled
+            self.options.write()
+
         # Make sure to turn on or off the global Internet Killswitch
         Util.internet_enabled = self.options.internet_enabled
+        if not self.options.internet_enabled:
+            logging.warning("Internet access is disabled. Some features will not work.")
 
         if is_on_start:
             self.load_history()
@@ -2311,6 +2318,7 @@ class VarietyWindow(Gtk.Window):
         dialog.ui.accept_button.grab_focus()
         self.dialogs.append(dialog)
         dialog.run()
+        return dialog.ui.internet_enabled.get_active()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(
