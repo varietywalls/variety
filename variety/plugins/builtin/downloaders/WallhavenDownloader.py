@@ -17,13 +17,17 @@ import logging
 import random
 import urllib.parse
 
+import requests
+
+from variety.plugins.builtin.downloaders.WallhavenLegacyDownloader import WallhavenLegacyDownloader
 from variety.plugins.downloaders.DefaultDownloader import DefaultDownloader
 from variety.Util import Util, _
 
+API_SEARCH = "https://wallhaven.cc/api/v1/search"
+API_SAFE_SEARCH_URL = (
+    "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc"
+)
 WEB_DOMAIN_SEARCH = "https://wallhaven.cc/search"
-
-API_SAFE_SEARCH_URL = "https://wallhaven.cc/api/v1/search?q=%s&categories=111&purity=100&sorting=favorites&order=desc&"
-
 WALLPAPER_INFO_URL = "https://wallhaven.cc/api/v1/w/%s"
 
 logger = logging.getLogger("variety")
@@ -31,60 +35,76 @@ logger = logging.getLogger("variety")
 random.seed()
 
 
+class BadApiKeyException(Exception):
+    pass
+
+
 class WallhavenDownloader(DefaultDownloader):
-    def __init__(self, source, location):
+    def __init__(self, source, location, api_key):
         DefaultDownloader.__init__(self, source=source, config=location)
+        self.api_key = api_key
+        self.legacy_downloader = WallhavenLegacyDownloader(source, location)
         self.parse_location()
 
     def parse_location(self):
-        if self.config.startswith(("http://", "https://")):
-            # location is an URL, use it
-            self.web_url = self.config.replace("http://", "https://")
-        else:
+        if not self.config.startswith(("http://", "https://")):
             # interpret location as keywords
-            self.url = API_SAFE_SEARCH_URL % self.config
-            self.web_url = WEB_DOMAIN_SEARCH + "?q=" + self.config
-
-        # Use Wallhaven API
-        if self.web_url.startswith(WEB_DOMAIN_SEARCH):
-            self.url = self.web_url.replace(WEB_DOMAIN_SEARCH, "https://wallhaven.cc/api/v1/search")
-        elif self.web_url.startswith("https://wallhaven.cc/tag"):
+            self.api_url = API_SAFE_SEARCH_URL % self.config
+        else:
             # location is an URL, use it
-            self.url = self.web_url.replace(
-                "https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:"
-            )
+            url = self.config.replace("http://", "https://")
 
-        self.wallpaper_info_url = WALLPAPER_INFO_URL
+            # Use Wallhaven API
+            if url.startswith(API_SEARCH):
+                self.api_url = url
+            elif url.startswith(WEB_DOMAIN_SEARCH):
+                self.api_url = url.replace(WEB_DOMAIN_SEARCH, API_SEARCH)
+            elif url.startswith("https://wallhaven.cc/tag"):
+                self.api_url = url.replace(
+                    "https://wallhaven.cc/tag/", "https://wallhaven.cc/api/v1/search?q=id:"
+                )
+            else:
+                # we'll fallback to WallhavenLegacyDownloader
+                self.api_url = None
+
+        # make sure we use the API key, if provided
+        if self.api_url and self.api_key and "&apikey=" not in self.api_url:
+            self.api_url += "&apikey=" + self.api_key
 
     def search(self, page=None):
-        url = self.url
+        if not self.api_url:
+            return self.legacy_downloader.search(page)
 
+        url = self.api_url
         if page:
-            url = url + ("&" if "?" in self.url else "?") + "page=" + str(page)
-
+            url = url + ("&" if "?" in self.api_url else "?") + "page=" + str(page)
         logger.info(lambda: "Performing wallhaven search: url=%s" % url)
-
         response = Util.fetch_json(url)
-
-        result_count = None
-        try:
-            result_count = response["meta"]["total"]
-        except:
-            pass
-
-        return response, result_count
+        count = response["meta"]["total"]
+        return response, count
 
     @staticmethod
-    def validate(location):
+    def validate(location, api_key):
         logger.info(lambda: "Validating Wallhaven location " + location)
         try:
-            s, count = WallhavenDownloader(None, location).search()
+            _, count = WallhavenDownloader(None, location, api_key).search()
             return count > 0
+        except requests.HTTPError as e:
+            if api_key and e.response.status_code == 401:
+                raise BadApiKeyException()
         except Exception:
-            logger.exception(lambda: "Error while validating wallhaven search")
+            pass
+
+        try:
+            return WallhavenLegacyDownloader.validate(location)
+        except:
+            logger.exception(lambda: "Error while validating Wallhaven search")
             return False
 
     def download_queue_item(self, queue_item):
+        if not self.api_url:
+            return self.legacy_downloader.download_queue_item(queue_item)
+
         wallpaper_url = queue_item["url"]
         logger.info(lambda: "Wallpaper URL: " + wallpaper_url)
 
@@ -94,7 +114,7 @@ class WallhavenDownloader(DefaultDownloader):
         extra_metadata = {}
         try:
             wallpaper_info = Util.fetch_json(
-                self.wallpaper_info_url % urllib.parse.quote(queue_item["id"])
+                WALLPAPER_INFO_URL % urllib.parse.quote(queue_item["id"])
             )
             extra_metadata["keywords"] = [tag["name"] for tag in wallpaper_info["data"]["tags"]]
         except:
@@ -117,19 +137,20 @@ class WallhavenDownloader(DefaultDownloader):
         return self.save_locally(wallpaper_url, src_url, extra_metadata=extra_metadata)
 
     def fill_queue(self):
+        if not self.api_url:
+            return self.legacy_downloader.fill_queue()
+
         queue = []
 
-        not_random = not "sorting=random" in self.url
+        not_random = "sorting=random" not in self.api_url
         if not_random:
             s, count = self.search()
-            if not count:
-                count = 300
-            pages = min(count, 300) // 24 + 1
+            pages = min(count, 1000) // int(s["meta"]["per_page"]) + 1
             page = random.randint(1, pages)
             logger.info(lambda: "%s wallpapers in result, using page %s" % (count, page))
-            s, count = self.search(page=page)
+            s, _ = self.search(page=page)
         else:
-            s, count = self.search()
+            s, _ = self.search()
 
         results = s["data"]
         for result in results:

@@ -16,7 +16,10 @@
 import logging
 import random
 
-from variety.plugins.builtin.downloaders.WallhavenDownloader import WallhavenDownloader
+from variety.plugins.builtin.downloaders.WallhavenDownloader import (
+    BadApiKeyException,
+    WallhavenDownloader,
+)
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.Util import _
@@ -58,12 +61,7 @@ class WallhavenSource(ConfigurableImageSource):
             "If you specify a Wallhaven URL, please choose the sorting criteria carefully - Variety regularly "
             "requests images, but uses only images from the first several hundred returned. Random or Date will "
             "mean this image source will have a longer 'lifetime' till it is exhausted. Favorites will provide "
-            "better images and Relevance will provide closer matches when searching for phrases or colors.\n"
-            "\n"
-            "You can setup <a href='https://wallhaven.cc/settings/account'>your own API key</a> to gain "
-            "access to <b>not-safe-for-work</b> images, please use this feature carefully. Note that you may need "
-            "to login <a href='http://wallhaven.cc'>Wallhaven.cc</a> to get your own API key "
-            "in <b>Account Settings</b> under <b>API Key</b>"
+            "better images and Relevance will provide closer matches when searching for phrases or colors."
         )
 
     def get_ui_short_instruction(self):
@@ -72,18 +70,13 @@ class WallhavenSource(ConfigurableImageSource):
     def get_ui_short_description(self):
         return _("Fetch images from Wallhaven.cc for a given criteria")
 
-    def get_ui_use_apikey_or_not_text(self):
-        return _("Use API key?")
+    def validate(self, query, api_key=""):
+        try:
+            valid = WallhavenDownloader.validate(query, api_key=api_key)
+        except BadApiKeyException:
+            return query, _('Got "Unauthorized" response. Invalid API key?')
 
-    def get_api_key_instruction(self):
-        return _("(<a href='https://wallhaven.cc/settings/account'>Get API key</a>)")
-
-    def get_ui_apikey_instruction(self):
-        return _("API Key: ")
-
-    def validate(self, query):
-        valid = WallhavenDownloader.validate(query)
-        return query, None if valid else _("No images found")
+        return query, None if valid else _("No images found, or wrong configuration")
 
     def create_downloader(self, config):
-        return WallhavenDownloader(self, config)
+        return WallhavenDownloader(self, config, self.variety.options.wallhaven_api_key)

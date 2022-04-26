@@ -7,7 +7,8 @@
     <property name="width_request">960</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title">Title</property>
+    <property name="title">Variety - Add Wallhaven.cc source</property>
+    <property name="default_width">960</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">normal</property>
     <child>
@@ -17,6 +18,9 @@
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_bottom">5</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -71,7 +75,7 @@
             <property name="halign">start</property>
             <property name="margin_top">10</property>
             <property name="margin_bottom">15</property>
-            <property name="label">Title</property>
+            <property name="label">Wallhaven.cc</property>
             <attributes>
               <attribute name="weight" value="bold"/>
               <attribute name="scale" value="2"/>
@@ -89,11 +93,10 @@
             <property name="can_focus">False</property>
             <property name="halign">start</property>
             <property name="margin_bottom">15</property>
-            <property name="label">Instruction</property>
+            <property name="label" translatable="yes">Instruction</property>
             <property name="use_markup">True</property>
             <property name="justify">fill</property>
             <property name="wrap">True</property>
-            <property name="max_width_chars">130</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -109,7 +112,7 @@
               <object class="GtkLabel" id="short_instruction">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label">Short Instruction</property>
+                <property name="label">Short instruction</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -140,37 +143,17 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox">
+          <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkCheckButton" id="use_apikey_or_not">
-                <property name="label" translatable="yes">checkbutton</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_use_apikey_enabled_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="getting_api_key_instruction">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">label</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
+            <property name="halign">start</property>
+            <property name="margin_top">20</property>
+            <property name="label" translatable="yes">You can provide &lt;a href='https://wallhaven.cc/settings/account'&gt;your own Wallhaven API key&lt;/a&gt; to gain access to &lt;b&gt;NSFW&lt;/b&gt; images. You need to be logged in to get your API key in &lt;b&gt;Account Settings&lt;/b&gt; under &lt;b&gt;API Key&lt;/b&gt;. Without an API key, even if in the browser your search shows NSFW images while you are logged in, Variety will not be able to fetch them.
+
+&lt;b&gt;Note: This is a global setting which affects all Wallhaven sources&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+            <property name="justify">fill</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -182,12 +165,14 @@
           <object class="GtkBox" id="box2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_top">5</property>
             <child>
               <object class="GtkLabel" id="apikey_instruction">
                 <property name="width_request">-1</property>
                 <property name="height_request">-1</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_right">5</property>
                 <property name="label" translatable="yes">API Key</property>
               </object>
               <packing>
@@ -200,7 +185,7 @@
               <object class="GtkEntry" id="apikey">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="hexpand">True</property>
+                <property name="max_width_chars">36</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -208,11 +193,24 @@
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">6</property>
           </packing>
         </child>
         <child>
@@ -264,7 +262,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">5</property>
+            <property name="position">7</property>
           </packing>
         </child>
       </object>
