@@ -1093,7 +1093,7 @@ class VarietyWindow(Gtk.Window):
                     time.sleep(30)
                     continue
 
-            time.sleep(3600)  # Update once per hour
+            time.sleep(3600 * 24)  # Update once daily
 
     def has_real_downloaders(self):
         return sum(1 for d in self.downloaders if not d.is_refresher()) > 0
