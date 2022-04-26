@@ -125,11 +125,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_left">5</property>
-                        <property name="margin_right">5</property>
-                        <property name="label" translatable="yes">Use Internet Access:</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
+                        <property name="margin_right">10</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Use Internet Access:&lt;/b&gt;
+&lt;i&gt;Can be changed later in Preferences&lt;/i&gt;</property>
+                        <property name="use_markup">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -141,7 +140,9 @@
                       <object class="GtkSwitch" id="internet_enabled">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="tooltip_text" translatable="yes">Enabling internet access is highly recommended. Without it, the majority of the functions Variety provides are disabled.</property>
+                        <property name="tooltip_text" translatable="yes">Enabling internet access is highly recommended. Without it, many of the functions Variety provides are disabled. 
+
+You can change this setting later in Preferences.</property>
                         <property name="active">True</property>
                       </object>
                       <packing>
