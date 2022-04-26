@@ -119,9 +119,10 @@ class VarietyWindow(Gtk.Window):
         fr_file = os.path.join(self.config_folder, ".firstrun")
         first_run = not os.path.exists(fr_file)
 
+        first_run_internet_enabled = None
         if first_run:  # Make setup dialogs block so that privacy notice appears
             self.show_welcome_dialog()
-            self.show_privacy_dialog()
+            first_run_internet_enabled = self.show_privacy_dialog()
 
         self.thumbs_manager = ThumbsManager(self)
 
@@ -163,7 +164,7 @@ class VarietyWindow(Gtk.Window):
 
         self.load_downloader_plugins()
         self.create_downloaders_cache()
-        self.reload_config(is_on_start=True)
+        self.reload_config(is_on_start=True, first_run_internet_enabled=first_run_internet_enabled)
         self.load_banned()
         self.load_last_change_time()
         self.update_indicator(auto_changed=False)
@@ -385,11 +386,20 @@ class VarietyWindow(Gtk.Window):
             image_source.activate()
             image_source.set_variety(self)
 
-    def reload_config(self, is_on_start=False):
+    def reload_config(self, is_on_start=False, first_run_internet_enabled=None):
         self.previous_options = self.options
 
         self.options = Options()
         self.options.read()
+
+        if first_run_internet_enabled is not None:
+            self.options.internet_enabled = first_run_internet_enabled
+            self.options.write()
+
+        # Make sure to turn on or off the global Internet Killswitch
+        Util.internet_enabled = self.options.internet_enabled
+        if not self.options.internet_enabled:
+            logging.warning("Internet access is disabled. Some features will not work.")
 
         if is_on_start:
             self.load_history()
@@ -1016,12 +1026,18 @@ class VarietyWindow(Gtk.Window):
             and len(images) >= max(20, 10 * len(found))
             and found.issubset(set(self.used[:10]))
         ):
-            logger.warning(lambda: "Too few images found: %d out of %d" % (len(found), len(images)))
+            logger.warning(
+                lambda: "Too few images found: %d out of %d. "
+                "Please check the settings in 'Color and size'." % (len(found), len(images))
+            )
             if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
                 self.filters_warning_shown = True
                 self.show_notification(
                     _("Filtering too strict?"),
-                    _("Variety is finding too few images that match your image filtering criteria"),
+                    _(
+                        "Variety is finding too few images that match your image filtering "
+                        'criteria. Please check if the settings in "Color and size" are correct.'
+                    ),
                 )
 
     def prepare_thread(self):
@@ -1053,6 +1069,10 @@ class VarietyWindow(Gtk.Window):
         time.sleep(20)
         attempts = 0
         while self.running:
+            if not self.options.internet_enabled:
+                time.sleep(3600)
+                continue
+
             try:
                 attempts += 1
                 logger.info(
@@ -1109,6 +1129,9 @@ class VarietyWindow(Gtk.Window):
                 logger.exception(lambda: "Exception in download_thread:")
 
     def _available_downloaders(self):
+        if not self.options.internet_enabled:
+            return []
+
         now = time.time()
         return [
             dl
@@ -1119,7 +1142,7 @@ class VarietyWindow(Gtk.Window):
         ]
 
     def trigger_download(self):
-        logger.info(lambda: "Triggering download thread to check if download needed")
+        logger.info(lambda: "Triggering download thread to check if download needed and possible")
         if getattr(self, "dl_event"):
             self.dl_event.set()
 
@@ -2295,6 +2318,7 @@ class VarietyWindow(Gtk.Window):
         dialog.ui.accept_button.grab_focus()
         self.dialogs.append(dialog)
         dialog.run()
+        return dialog.ui.internet_enabled.get_active()
 
     def edit_prefs_file(self, widget=None):
         dialog = Gtk.MessageDialog(

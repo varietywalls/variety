@@ -25,7 +25,8 @@ from locale import gettext as _
 
 from variety.plugins.IQuoteSource import IQuoteSource
 
-ANSI_ESCAPE_RE = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]', flags=re.IGNORECASE)
+ANSI_ESCAPE_RE = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]", flags=re.IGNORECASE)
+
 
 class FortuneSource(IQuoteSource):
     @classmethod
@@ -40,9 +41,12 @@ class FortuneSource(IQuoteSource):
             "version": "0.1",
         }
 
+    def needs_internet(self):
+        return False
+
     def get_random(self):
         fortune = subprocess.check_output(["fortune"]).decode().strip()
-        fortune = ANSI_ESCAPE_RE.sub('', fortune)
+        fortune = ANSI_ESCAPE_RE.sub("", fortune)
         q = fortune.split("--")
         quote = q[0].strip()
         author = q[1].strip() if len(q) > 1 else None

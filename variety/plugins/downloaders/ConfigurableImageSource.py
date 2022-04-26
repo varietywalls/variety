@@ -26,7 +26,7 @@ class ConfigurableImageSource(ImageSource, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def validate(self, config):
         """
-        Given a source config, validates whether images can be fetche for this config.
+        Given a source config, validates whether images can be fetched for this config.
         As part of the validation, performs config normalization and initial lookup calls and
         returns a "final" config that will be persisted.
 

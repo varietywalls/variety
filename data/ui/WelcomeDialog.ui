@@ -17,6 +17,9 @@
     <property name="default_height">200</property>
     <property name="icon">../media/variety.svg</property>
     <property name="type_hint">dialog</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="width_request">750</property>
@@ -37,10 +40,10 @@
               <object class="GtkButton" id="continue_button">
                 <property name="label" translatable="yes">Continue</property>
                 <property name="use_action_appearance">False</property>
+                <property name="width_request">150</property>
+                <property name="height_request">35</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
-                <property name="is_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">True</property>

@@ -132,6 +132,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.change_enabled.set_active(self.options.change_enabled)
             self.set_change_interval(self.options.change_interval)
             self.ui.change_on_start.set_active(self.options.change_on_start)
+            self.ui.internet_enabled.set_active(self.options.internet_enabled)
 
             self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
 
@@ -346,9 +347,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_icon_changed()
             self.on_favorites_operations_changed()
             self.update_clipboard_state()
-
-            self.build_add_button_menu()
-
             self.update_status_message()
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
@@ -371,9 +369,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 True,
             )
 
-        self.add_menu.popup(
-            None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time()
-        )
+        add_menu = self.build_add_button_menu()
+        add_menu.popup(None, self.ui.add_button, position, None, 0, Gtk.get_current_event_time())
 
     def on_remove_sources_clicked(self, widget=None):
         def position(*args, **kwargs):
@@ -390,11 +387,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
         )
 
     def build_add_button_menu(self):
-        self.add_menu = Gtk.Menu()
+        add_menu = Gtk.Menu()
 
         items = [
-            (_("Images"), _("Add individual wallpaper images"), self.on_add_images_clicked),
+            (False, _("Images"), _("Add individual wallpaper images"), self.on_add_images_clicked),
             (
+                False,
                 _("Folders"),
                 _("Searched recursively for up to 10000 images, shown in random order"),
                 lambda widget: self.on_add_folders_clicked(
@@ -402,6 +400,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 ),
             ),
             (
+                False,
                 _("Sequential Albums (order by filename)"),
                 _("Searched recursively for images, shown in sequence (by filename)"),
                 lambda widget: self.on_add_folders_clicked(
@@ -409,6 +408,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 ),
             ),
             (
+                False,
                 _("Sequential Albums (order by date)"),
                 _("Searched recursively for images, shown in sequence (by file date)"),
                 lambda widget: self.on_add_folders_clicked(
@@ -416,17 +416,26 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 ),
             ),
             "-",
-            (_("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked),
         ]
 
-        for source in sorted(
-            self.options.CONFIGURABLE_IMAGE_SOURCES, key=lambda s: s.get_source_name()
-        ):
+        configurable_items = [
+            (True, _("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked)
+        ]
+        for source in self.options.CONFIGURABLE_IMAGE_SOURCES:
 
             def _click(widget, source=source):
                 self.on_add_configurable(source)
 
-            items.append((source.get_source_name(), source.get_ui_short_description(), _click))
+            configurable_items.append(
+                (
+                    source.needs_internet(),
+                    source.get_source_name(),
+                    source.get_ui_short_description(),
+                    _click,
+                )
+            )
+        configurable_items.sort(key=lambda x: x[1])
+        items.extend(configurable_items)
 
         for x in items:
             if x == "-":
@@ -435,16 +444,21 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 item.set_margin_bottom(15)
             else:
                 item = Gtk.MenuItem()
-                label = Gtk.Label("<b>{}</b>\n{}".format(x[0], x[1]))
+                label = Gtk.Label("<b>{}</b>\n{}".format(x[1], x[2]))
                 label.set_margin_top(6)
                 label.set_margin_bottom(6)
                 label.set_xalign(0)
                 label.set_use_markup(True)
                 item.add(label)
-                item.connect("activate", x[2])
-            self.add_menu.append(item)
+                if x[0] and not self.ui.internet_enabled.get_active():
+                    # disable adding internet-requiring sources when internet is disabled
+                    item.set_sensitive(False)
+                else:
+                    item.connect("activate", x[3])
+            add_menu.append(item)
 
-        self.add_menu.show_all()
+        add_menu.show_all()
+        return add_menu
 
     def build_remove_button_menu(self):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
@@ -758,6 +772,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.dialog.set_edited_row(edited_row)
             self.show_dialog(self.dialog)
 
+    def on_internet_enabled_toggled(self, *args):
+        self.delayed_apply()
+        self.previous_selection = None
+        self.on_sources_selection_changed()
+
     def on_sources_selection_changed(self, widget=None):
         model, rows = self.ui.sources.get_selection().get_selected_rows()
 
@@ -782,7 +801,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             if type == Options.SourceType.IMAGE:
                 self.ui.open_folder.set_label(_("View Image"))
             elif type in Options.get_editable_source_types():
-                self.ui.edit_source.set_sensitive(True)
+                self.ui.edit_source.set_sensitive(self.ui.internet_enabled.get_active())
 
         def timer_func():
             self.show_thumbs(list(model[row] for row in rows))
@@ -933,6 +952,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.options.change_enabled = self.ui.change_enabled.get_active()
             self.options.change_on_start = self.ui.change_on_start.get_active()
             self.options.change_interval = self.get_change_interval()
+            self.options.internet_enabled = self.ui.internet_enabled.get_active()
 
             if os.access(self.fav_chooser.get_folder(), os.W_OK):
                 self.options.favorites_folder = self.fav_chooser.get_folder()
