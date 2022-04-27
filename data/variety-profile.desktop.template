@@ -15,24 +15,19 @@ StartupWMClass={WM_CLASS}
 [Desktop Action Next]
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} --next
 Name=Next
-OnlyShowIn=Unity;
 
 [Desktop Action Previous]
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} --previous
 Name=Previous
-OnlyShowIn=Unity;
 
 [Desktop Action PauseResume]
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} --toggle-pause
 Name=Pause / Resume
-OnlyShowIn=Unity;
 
 [Desktop Action History]
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} --history
 Name=History
-OnlyShowIn=Unity;
 
 [Desktop Action Preferences]
 Exec={VARIETY_PATH} --profile {PROFILE_PATH} --preferences
 Name=Preferences
-OnlyShowIn=Unity;

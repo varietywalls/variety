@@ -15,24 +15,19 @@ StartupWMClass=Variety
 [Desktop Action Next]
 Exec=variety --next
 _Name=Next
-OnlyShowIn=Unity;
 
 [Desktop Action Previous]
 Exec=variety --previous
 _Name=Previous
-OnlyShowIn=Unity;
 
 [Desktop Action PauseResume]
 Exec=variety --toggle-pause
 _Name=Pause / Resume
-OnlyShowIn=Unity;
 
 [Desktop Action History]
 Exec=variety --history
 _Name=History
-OnlyShowIn=Unity;
 
 [Desktop Action Preferences]
 Exec=variety --preferences
 _Name=Preferences
-OnlyShowIn=Unity;
