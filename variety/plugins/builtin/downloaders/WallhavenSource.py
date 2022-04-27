@@ -16,7 +16,10 @@
 import logging
 import random
 
-from variety.plugins.builtin.downloaders.WallhavenDownloader import WallhavenDownloader
+from variety.plugins.builtin.downloaders.WallhavenDownloader import (
+    BadApiKeyException,
+    WallhavenDownloader,
+)
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.Util import _
@@ -67,9 +70,12 @@ class WallhavenSource(ConfigurableImageSource):
     def get_ui_short_description(self):
         return _("Fetch images from Wallhaven.cc for a given criteria")
 
-    def validate(self, query):
-        valid = WallhavenDownloader.validate(query)
-        return query, None if valid else _("No images found")
+    def validate(self, query, api_key=""):
+        try:
+            valid = WallhavenDownloader.validate(query, api_key=api_key)
+            return query, None if valid else _("No images found")
+        except BadApiKeyException:
+            return query, _('Got "Unauthorized" response. Invalid API key?')
 
     def create_downloader(self, config):
-        return WallhavenDownloader(self, config)
+        return WallhavenDownloader(self, config, self.variety.options.wallhaven_api_key)

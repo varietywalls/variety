@@ -48,6 +48,8 @@ class Options:
         # predefined configurable sources
         FLICKR = "flickr"
 
+        WALLHAVEN = "wallhaven"
+
         BUILTIN_SOURCE_TYPES = {
             IMAGE,
             FOLDER,
@@ -138,6 +140,11 @@ class Options:
 
             try:
                 self.quota_size = max(50, int(config["quota_size"]))
+            except Exception:
+                pass
+
+            try:
+                self.wallhaven_api_key = str(config["wallhaven_api_key"]).strip()
             except Exception:
                 pass
 
@@ -612,6 +619,7 @@ class Options:
         self.download_preference_ratio = 0.9
         self.quota_enabled = True
         self.quota_size = 1000
+        self.wallhaven_api_key = ""
 
         self.favorites_folder = os.path.join(get_profile_path(), "Favorites")
         self.favorites_operations = [
@@ -728,6 +736,8 @@ class Options:
 
             config["quota_enabled"] = str(self.quota_enabled)
             config["quota_size"] = str(self.quota_size)
+
+            config["wallhaven_api_key"] = str(self.wallhaven_api_key)
 
             config["favorites_folder"] = Util.collapseuser(self.favorites_folder)
             config["favorites_operations"] = ";".join(
