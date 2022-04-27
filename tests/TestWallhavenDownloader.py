@@ -16,6 +16,7 @@
 ### END LICENSE
 
 import unittest
+from unittest.mock import MagicMock, PropertyMock
 
 from tests.TestDownloader import test_download_one_for
 from variety.plugins.builtin.downloaders.WallhavenSource import WallhavenSource
@@ -23,10 +24,18 @@ from variety.plugins.builtin.downloaders.WallhavenSource import WallhavenSource
 
 class TestWallhavenDownloader(unittest.TestCase):
     def test_download_one(self):
-        test_download_one_for(self, WallhavenSource().create_downloader("landscape"))
+        source = WallhavenSource()
+        mock = MagicMock()
+        mock.options.wallhaven_api_key = ""
+        source.set_variety(mock)
+        test_download_one_for(self, source.create_downloader("landscape"))
 
     def test_fill_queue(self):
-        dl = WallhavenSource().create_downloader("nature")
+        source = WallhavenSource()
+        mock = MagicMock()
+        mock.options.wallhaven_api_key = ""
+        source.set_variety(mock)
+        dl = source.create_downloader("nature")
         queue = dl.fill_queue()
         self.assertTrue(len(queue) > 0)
 
