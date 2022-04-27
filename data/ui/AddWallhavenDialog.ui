@@ -65,7 +65,7 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="pack_type">end</property>
-            <property name="position">6</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -143,12 +143,39 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">20</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="title1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
             <property name="margin_top">20</property>
-            <property name="label" translatable="yes">You can provide &lt;a href='https://wallhaven.cc/settings/account'&gt;your own Wallhaven API key&lt;/a&gt; to gain access to &lt;b&gt;NSFW&lt;/b&gt; images. You need to be logged in to get your API key in &lt;b&gt;Account Settings&lt;/b&gt; under &lt;b&gt;API Key&lt;/b&gt;. Without an API key, even if in the browser your search shows NSFW images while you are logged in, Variety will not be able to fetch them.
+            <property name="label">&lt;b&gt;&lt;span size="x-large"&gt;Wallhaven API key&lt;/span&gt;&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="margin_top">10</property>
+            <property name="label" translatable="yes">To fetch &lt;b&gt;NSFW&lt;/b&gt; images, you can provide your own &lt;a href='https://wallhaven.cc/settings/account'&gt;Wallhaven API key&lt;/a&gt;. You need a free Wallhaven account, log in, go to &lt;a href='https://wallhaven.cc/settings/account'&gt;Account Settings&lt;/a&gt;, find it under &lt;b&gt;API Key&lt;/b&gt;. Without an API key, even if your search shows NSFW images in the browser, Variety will not be able to fetch them. Even with an API key, in order to fetch &lt;b&gt;NSFW&lt;/b&gt; images, you need to provide a full search URL, not just keywords. 
 
 &lt;b&gt;Note: This is a global setting which affects all Wallhaven sources&lt;/b&gt;</property>
             <property name="use_markup">True</property>
@@ -158,7 +185,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -173,7 +200,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_right">5</property>
-                <property name="label" translatable="yes">API Key</property>
+                <property name="label" translatable="yes">API Key:</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -262,7 +289,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">7</property>
+            <property name="position">9</property>
           </packing>
         </child>
       </object>

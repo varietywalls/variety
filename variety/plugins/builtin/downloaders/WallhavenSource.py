@@ -73,10 +73,9 @@ class WallhavenSource(ConfigurableImageSource):
     def validate(self, query, api_key=""):
         try:
             valid = WallhavenDownloader.validate(query, api_key=api_key)
+            return query, None if valid else _("No images found")
         except BadApiKeyException:
             return query, _('Got "Unauthorized" response. Invalid API key?')
-
-        return query, None if valid else _("No images found, or wrong configuration")
 
     def create_downloader(self, config):
         return WallhavenDownloader(self, config, self.variety.options.wallhaven_api_key)
