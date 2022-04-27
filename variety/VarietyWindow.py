@@ -2281,6 +2281,14 @@ class VarietyWindow(Gtk.Window):
                 upgrade_script("set_wallpaper")
                 upgrade_script("get_wallpaper")
 
+                self.show_notification(
+                    _("Upgraded scripts"),
+                    _(
+                        "If you had customized scripts for Variety, "
+                        "please see Preferences -> Changelog"
+                    ),
+                )
+
                 # Upgrade the autostart entry, if there is one
                 if os.path.exists(get_autostart_file_path()):
                     logger.info(lambda: "Updating Variety autostart desktop entry")

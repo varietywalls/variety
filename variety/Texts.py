@@ -54,6 +54,10 @@ TIPS = [
         "You can change the wallpaper back and forth by scrolling the mouse wheel on top of the indicator icon."
     ),
     _(
+        "You can configure how the wallpaper scales, zooms or tiles directly from the Appearance/Background settings in your OS. "
+        "Variety sets which image to show, but does not tell the OS how to draw it."
+    ),
+    _(
         "If you want to run custom commands every time the wallpaper changes or if you use an alternative desktop environment, please edit the scripts in {PROFILE_PATH}scripts. There are examples there for various desktop environments."
     ),
     _(
@@ -72,10 +76,7 @@ TIPS = [
         'When you select an image source, its images are displayed in a window at the bottom of the screen. Click an image there to set is as wallpaper. Right-click to close the window, to modify its appearance or to perform file operations. You can select multiple image sources to create a "merged" thumbnail view of all of them. Please mind that thumbnail view is limited to several hundred randomly selected images.'
     ),
     _(
-        "To enable desktop notifications when the wallpaper changes, uncomment the two lines at the bottom of {PROFILE_PATH}scripts/set_wallpaper."
-    ),
-    _(
-        'Variety\'s indicator icon is themeable - if you you choose the "Light" option for the icon, Variety will first check if the current GTK theme has an icon named "variety-indicator" and will use it instead of the bundled light icon.'
+        'Variety\'s indicator icon is themeable - if you choose the "Light" option for the icon, Variety will first check if the current GTK theme has an icon named "variety-indicator" and will use it instead of the bundled light icon.'
     ),
     _(
         "When you choose to save quotes to Favorites, these are by default saved to {PROFILE_PATH}favorite_quotes.txt. This file is compatible with Variety's local files quote source. If you want to use it - copy it to ~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote source. This file is also compatible with the Unix fortune utility."
