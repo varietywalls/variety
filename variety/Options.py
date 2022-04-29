@@ -501,7 +501,7 @@ class Options:
             for downloader in sorted(self.SIMPLE_DOWNLOADERS, key=lambda dl: dl.get_source_type()):
                 if downloader.get_source_type() not in source_types:
                     self.sources.append(
-                        [True, downloader.get_source_type(), downloader.get_description()]
+                        [False, downloader.get_source_type(), downloader.get_description()]
                     )
 
             self.parse_autosources()
