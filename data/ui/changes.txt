@@ -4,7 +4,7 @@
     Support for fetching NSFW images from Wallhaven.
         When adding Wallhaven sources, you can provide your own Wallhaven API key.
         If provided, and the source URL is set to search for NSFW images, Variety will obey.
-    Auto-upgraded set_wallpaper/get_wallpaper scripts.
+    Auto-upgrade set_wallpaper/get_wallpaper scripts.
         Starting from this release, Variety will always automatically upgrade
         the set_wallpaper/get_wallpaper scripts to make sure fixes to those are picked up.
         Your old files have been preserved in the ~/.config/variety/scripts folder.

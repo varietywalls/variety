@@ -1,3 +1,13 @@
+variety (0.8.7) focal; urgency=medium
+
+  * Added a global switch to turn Internet connectivity for Variety off or on
+  * Wallhaven sources now use the Wallhaven API, not html parsing
+  * Support for fetching NSFW images from Wallhaven
+  * Auto-upgrade set_wallpaper/get_wallpaper scripts. Should fix issues with Dark style in GNOME.
+  * Newly added non-configurable sources will be disabled by default
+
+ -- Peter Levi <peterlevi@peterlevi.com>  Sat, 30 Apr 2022 19:00:41 +0200
+
 variety (0.8.6) focal; urgency=medium
 
   * New source: National Geographic's photo of the day
