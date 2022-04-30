@@ -42,7 +42,7 @@ from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
-from variety.PreferencesVarietyDialog import PreferencesVarietyDialog
+from variety.PreferencesVarietyDialog import DONATE_PAGE_INDEX, PreferencesVarietyDialog
 from variety.PrivacyNoticeDialog import PrivacyNoticeDialog
 from variety.profile import (
     DEFAULT_PROFILE_PATH,
@@ -63,6 +63,7 @@ from variety_lib import varietyconfig
 
 # fmt: off
 import gi  # isort:skip
+
 gi.require_version("Notify", "0.7")
 from gi.repository import Gdk, GdkPixbuf, Gio, GObject, Gtk, Notify  # isort:skip
 Notify.init("Variety")
@@ -200,7 +201,7 @@ class VarietyWindow(Gtk.Window):
             self.about = None
 
     def on_mnu_donate_activate(self, widget, data=None):
-        self.preferences_dialog.ui.notebook.set_current_page(8)
+        self.preferences_dialog.ui.notebook.set_current_page(DONATE_PAGE_INDEX)
         self.on_mnu_preferences_activate()
         webbrowser.open_new_tab(DONATE_URL)
 
@@ -1028,7 +1029,7 @@ class VarietyWindow(Gtk.Window):
         ):
             logger.warning(
                 lambda: "Too few images found: %d out of %d. "
-                "Please check the settings in 'Color and size'." % (len(found), len(images))
+                "Please check the settings in 'Filtering'." % (len(found), len(images))
             )
             if not hasattr(self, "filters_warning_shown") or not self.filters_warning_shown:
                 self.filters_warning_shown = True
@@ -1036,7 +1037,7 @@ class VarietyWindow(Gtk.Window):
                     _("Filtering too strict?"),
                     _(
                         "Variety is finding too few images that match your image filtering "
-                        'criteria. Please check if the settings in "Color and size" are correct.'
+                        'criteria. Please check if the settings in "Filtering" are correct.'
                     ),
                 )
 

@@ -64,7 +64,7 @@ TIPS = [
         'Variety can be controlled from the command line and you can use this to define keyboard shortcuts for the operations you use most often. Run "variety --help" to see all available commands.'
     ),
     _(
-        'You can drop image links or files on the launcher icon to download them and use them as wallpapers. For quicker downloading from a specific site, you can also use clipboard monitoring (see "Manual downloading" tab).'
+        'You can drop image links or files on the launcher icon to download them and use them as wallpapers. For quicker downloading from a specific site, you can also use clipboard monitoring (see "Downloading" tab).'
     ),
     _(
         "Applying a heavy blurring filter is a great way to get abstract-looking and unobtrusive, yet colorful wallpapers, similar in spirit to the default one in Ubuntu."

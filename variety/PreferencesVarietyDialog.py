@@ -48,6 +48,9 @@ from variety_lib.varietyconfig import get_data_file
 random.seed()
 logger = logging.getLogger("variety")
 
+SLIDESHOW_PAGE_INDEX = 4
+DONATE_PAGE_INDEX = 10
+
 
 class PreferencesVarietyDialog(PreferencesDialog):
     __gtype_name__ = "PreferencesVarietyDialog"
@@ -80,7 +83,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         )
 
         if not Util.check_variety_slideshow_present():
-            self.ui.notebook.remove_page(2)
+            self.ui.notebook.remove_page(SLIDESHOW_PAGE_INDEX)
 
         profile_suffix = (
             "" if is_default_profile() else _(" (Profile: {})").format(get_profile_short_name())
