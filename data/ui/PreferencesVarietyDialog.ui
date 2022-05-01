@@ -793,6 +793,7 @@
                         <property name="receives_default">False</property>
                         <property name="margin_top">7</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="delayed_apply" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -840,12 +841,14 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="wallpaper_mode_description">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Experimental: Some options may not work well in all window managers or multi-monitor configurations</property>
+                        <property name="label" translatable="yes">Description goes here </property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
                         </attributes>
@@ -857,14 +860,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="wallpaper_mode_description">
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Description goes here </property>
-                        <property name="justify">fill</property>
-                        <property name="wrap">True</property>
+                        <property name="label" translatable="yes">Experimental: Some options may not work well in all window managers or multi-monitor configurations</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
                         </attributes>

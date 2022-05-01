@@ -33,6 +33,7 @@ from PIL import Image as PILImage
 from jumble.Jumble import Jumble
 from variety import indicator
 from variety.AboutVarietyDialog import AboutVarietyDialog
+from variety.display_modes import DISPLAY_MODES
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
@@ -1245,13 +1246,7 @@ class VarietyWindow(Gtk.Window):
         if not filename:
             logger.warning(lambda: "set_wp_throttled: No wallpaper to set")
             return
-
-        self.thumbs_manager.mark_active(file=filename, position=self.position)
-
-        def _do_set_wp():
-            self.do_set_wp(filename, refresh_level)
-
-        threading.Timer(0, _do_set_wp).start()
+        self.do_set_wp(filename, refresh_level)
 
     def build_imagemagick_filter_cmd(self, filename, target_file):
         if not self.filters:
@@ -1261,8 +1256,7 @@ class VarietyWindow(Gtk.Window):
         if not filter:
             return None
 
-        w = Gdk.Screen.get_default().get_width()
-        h = Gdk.Screen.get_default().get_height()
+        w, h = Util.get_primary_display_size()
         cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
 
         logger.info(lambda: "Applying filter: " + filter)
@@ -1279,8 +1273,7 @@ class VarietyWindow(Gtk.Window):
         if not (self.options.clock_enabled and self.options.clock_filter.strip()):
             return None
 
-        w = Gdk.Screen.get_default().get_width()
-        h = Gdk.Screen.get_default().get_height()
+        w, h = Util.get_primary_display_size()
         cmd = "convert %s -scale %dx%d^ " % (shlex.quote(filename), w, h)
 
         hoffset, voffset = Util.compute_trimmed_offsets(Util.get_size(filename), (w, h))
@@ -1377,6 +1370,63 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not apply filters:")
             return to_set
 
+    def apply_auto_rotate(self, to_set):
+        try:
+            if self.options.wallpaper_auto_rotate:
+                target_file = os.path.join(
+                    self.wallpaper_folder, "wallpaper-auto-rotated-%s.jpg" % Util.random_hash()
+                )
+                cmd = "convert %s -auto-orient %s" % (shlex.quote(to_set), shlex.quote(target_file))
+                logger.info(lambda: "ImageMagick auto-rotate cmd: " + cmd)
+                cmd = cmd.encode("utf-8")
+
+                result = os.system(cmd)
+                if result == 0:  # success
+                    to_set = target_file
+                else:
+                    logger.warning(
+                        lambda: "Could not execute auto-orient convert command. "
+                        "Missing ImageMagick? Resultcode: %d" % result
+                    )
+            return to_set
+        except Exception:
+            logger.exception(lambda: "Could not apply auto-orient:")
+            return to_set
+
+    def apply_display_mode(self, to_set):
+        try:
+            mode = "os"
+            modes = [x for x in DISPLAY_MODES if x["id"] == self.options.wallpaper_display_mode]
+            if modes:
+                mode, im_filter = modes[0]["fn"]()
+                if mode == "os":
+                    return to_set, "os"
+
+                target_file = os.path.join(
+                    self.wallpaper_folder, "wallpaper-zoomed-%s.jpg" % Util.random_hash()
+                )
+                cmd = "convert %s %s %s" % (
+                    shlex.quote(to_set),
+                    im_filter,
+                    shlex.quote(target_file),
+                )
+                logger.info(lambda: "ImageMagick display mode cmd: " + cmd)
+                cmd = cmd.encode("utf-8")
+
+                result = os.system(cmd)
+                if result == 0:  # success
+                    return target_file, mode
+                else:
+                    logger.warning(
+                        lambda: "Could not execute auto-orient convert command. "
+                        "Missing ImageMagick? Resultcode: %d" % result
+                    )
+                    return to_set, "os"
+            return to_set, mode
+        except Exception:
+            logger.exception(lambda: "Could not apply display mode logic:")
+            return to_set
+
     def apply_quote(self, to_set):
         try:
             if self.options.quotes_enabled and self.quote:
@@ -1455,6 +1505,7 @@ class VarietyWindow(Gtk.Window):
         logger.info(lambda: "Calling do_set_wp with %s, time: %s" % (filename, time.time()))
         with self.do_set_wp_lock:
             try:
+                self.thumbs_manager.mark_active(file=filename, position=self.position)
                 if not os.access(filename, os.R_OK):
                     logger.info(
                         lambda: "Missing file or bad permissions, will not use it: " + filename
@@ -1462,18 +1513,35 @@ class VarietyWindow(Gtk.Window):
                     return
 
                 self.write_filtered_wallpaper_origin(filename)
-                to_set = filename
 
                 if filename != self.no_effects_on:
                     self.no_effects_on = None
+                    should_apply_effects = True
+                else:
+                    should_apply_effects = False
+
+                to_set = filename
+                to_set = self.apply_auto_rotate(to_set)
+
+                if should_apply_effects:
                     to_set = self.apply_filters(to_set, refresh_level)
+
+                to_set, display_mode = self.apply_display_mode(to_set)
+
+                if should_apply_effects:
                     to_set = self.apply_quote(to_set)
                     to_set = self.apply_clock(to_set)
+
                 to_set = self.apply_copyto_operation(to_set)
 
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)
-                self.update_indicator(filename)
-                self.set_desktop_wallpaper(to_set, filename, refresh_level)
+
+                def _update_inidicator():
+                    self.update_indicator(filename)
+
+                Util.add_mainloop_task(_update_inidicator)
+
+                self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode)
                 self.current = filename
 
                 if self.options.icon == "Current" and self.current:
@@ -2140,9 +2208,7 @@ class VarietyWindow(Gtk.Window):
                 self.options.quotes_enabled = False
                 if self.current:
                     logger.debug(lambda: "Cleaning up clock & quotes")
-                    Util.add_mainloop_task(
-                        lambda: self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS)
-                    )
+                    self.do_set_wp(self.current, VarietyWindow.RefreshLevel.TEXTS)
 
             Util.start_force_exit_thread(15)
             logger.debug(lambda: "OK, waiting for other loops to finish")
@@ -2661,7 +2727,7 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
-    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level):
+    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode):
         script = self.options.set_wallpaper_script
         if os.access(script, os.X_OK):
             auto = (
@@ -2670,11 +2736,13 @@ class VarietyWindow(Gtk.Window):
                 else ("auto" if refresh_level == VarietyWindow.RefreshLevel.ALL else "refresh")
             )
             logger.debug(
-                lambda: "Running set_wallpaper script with parameters: %s, %s, %s"
-                % (wallpaper, auto, original_file)
+                lambda: "Running set_wallpaper script with parameters: %s, %s, %s, %s"
+                % (wallpaper, auto, original_file, display_mode)
             )
             try:
-                subprocess.check_call([script, wallpaper, auto, original_file], timeout=10)
+                subprocess.check_call(
+                    [script, wallpaper, auto, original_file, display_mode], timeout=10
+                )
             except subprocess.TimeoutExpired:
                 logger.error(lambda: "Timeout while running set_wallpaper script, killed")
             except subprocess.CalledProcessError as e:
