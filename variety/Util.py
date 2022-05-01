@@ -596,6 +596,14 @@ class Util:
             return image_width, image_height
 
     @staticmethod
+    def get_primary_display_size(hidpi_scaled=True):
+        display = Gdk.Display.get_default()
+        monitor = display.get_primary_monitor()
+        geometry = monitor.get_geometry()
+        scale = monitor.get_scale_factor() if hidpi_scaled else 1.0
+        return int(geometry.width * scale), int(geometry.height * scale)
+
+    @staticmethod
     def find_unique_name(filename):
         index = filename.rfind(".")
         if index < 0:

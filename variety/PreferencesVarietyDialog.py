@@ -29,6 +29,7 @@ from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
+from variety.display_modes import DISPLAY_MODES
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
@@ -139,6 +140,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.internet_enabled.set_active(self.options.internet_enabled)
 
             self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
+            self.ui.wallpaper_auto_rotate.set_active(self.options.wallpaper_auto_rotate)
+            self.ui.wallpaper_display_mode.remove_all()
+            for mode in DISPLAY_MODES:
+                self.ui.wallpaper_display_mode.append(mode["id"], mode["title"])
+            self.ui.wallpaper_display_mode.set_active_id(self.options.wallpaper_display_mode)
 
             self.fetched_chooser.set_folder(os.path.expanduser(self.options.fetched_folder))
             self.ui.clipboard_enabled.set_active(self.options.clipboard_enabled)
@@ -350,6 +356,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_quotes_change_enabled_toggled()
             self.on_icon_changed()
             self.on_favorites_operations_changed()
+            self.on_wallpaper_display_mode_changed()
             self.update_clipboard_state()
             self.update_status_message()
         finally:
@@ -905,6 +912,15 @@ class PreferencesVarietyDialog(PreferencesDialog):
         dialog.set_source(source)
         self.show_dialog(dialog)
 
+    def on_wallpaper_display_mode_changed(self, *args):
+        modes = [
+            m for m in DISPLAY_MODES if m["id"] == self.ui.wallpaper_display_mode.get_active_id()
+        ]
+        if modes:
+            self.ui.wallpaper_mode_description.set_text(modes[0].get("description", ""))
+        else:
+            self.ui.wallpaper_mode_description.set_text("")
+
     def show_dialog(self, dialog):
         self.dialog = dialog
         self.dialog.parent = self
@@ -973,6 +989,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.sources.append(self.model_row_to_source(r))
             for s in self.unsupported_sources:
                 self.options.sources.append(s)
+
+            self.options.wallpaper_auto_rotate = self.ui.wallpaper_auto_rotate.get_active()
+            self.options.wallpaper_display_mode = self.ui.wallpaper_display_mode.get_active_id()
 
             if os.access(self.fetched_chooser.get_folder(), os.W_OK):
                 self.options.fetched_folder = self.fetched_chooser.get_folder()

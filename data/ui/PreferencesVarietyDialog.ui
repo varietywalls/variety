@@ -12,6 +12,7 @@
       <mime-type>image/*</mime-type>
     </mime-types>
   </object>
+  <object class="GtkListStore" id="liststore1"/>
   <object class="GtkListStore" id="liststore_change_interval">
     <columns>
       <!-- column-name time_period -->
@@ -757,16 +758,17 @@
               <object class="GtkBox" id="effects_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">15</property>
+                <property name="margin_right">15</property>
                 <property name="margin_bottom">10</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="label14">
+                  <object class="GtkLabel" id="label58">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
-                    <property name="margin_left">15</property>
                     <property name="margin_top">10</property>
-                    <property name="label" translatable="yes">Effects</property>
+                    <property name="label" translatable="yes">Alignment</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -778,18 +780,136 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">20</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkCheckButton" id="wallpaper_auto_rotate">
+                        <property name="label" translatable="yes">Auto-rotate the image according to EXIF data</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="margin_top">7</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_top">7</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Display mode</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="wallpaper_display_mode">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_left">10</property>
+                            <property name="active_id">os</property>
+                            <signal name="changed" handler="delayed_apply" swapped="no"/>
+                            <signal name="changed" handler="on_wallpaper_display_mode_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">Experimental: Some options may not work well in all window managers or multi-monitor configurations</property>
+                        <attributes>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="wallpaper_mode_description">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="margin_top">7</property>
+                        <property name="label" translatable="yes">Description goes here </property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
+                        <attributes>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label14">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin_top">20</property>
+                    <property name="label" translatable="yes">Effects</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="box6">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
+                    <property name="margin_left">20</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel" id="label2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="margin_left">20</property>
-                        <property name="margin_right">20</property>
                         <property name="margin_top">7</property>
                         <property name="label" translatable="yes">Randomly apply these effects to the displayed wallpapers (thanks to the wonderful ImageMagick):</property>
                         <property name="justify">fill</property>
@@ -805,8 +925,6 @@
                       <object class="GtkGrid" id="filters_grid">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">20</property>
-                        <property name="margin_right">20</property>
                         <property name="margin_top">10</property>
                         <property name="orientation">vertical</property>
                         <property name="row_spacing">5</property>
@@ -849,14 +967,8 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">3</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -867,7 +979,7 @@
               <object class="GtkLabel" id="effects_tab_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Effects</property>
+                <property name="label" translatable="yes">Wallpaper</property>
               </object>
               <packing>
                 <property name="position">1</property>
