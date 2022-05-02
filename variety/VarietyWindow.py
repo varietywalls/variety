@@ -27,13 +27,13 @@ import threading
 import time
 import urllib.parse
 import webbrowser
+from typing import List
 
 from PIL import Image as PILImage
 
 from jumble.Jumble import Jumble
 from variety import indicator
 from variety.AboutVarietyDialog import AboutVarietyDialog
-from variety.display_modes import DISPLAY_MODES
 from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
@@ -42,6 +42,7 @@ from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImag
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
+from variety.plugins.IDisplayModesPlugin import DisplayMode, IDisplayModesPlugin
 from variety.plugins.IVarietyPlugin import IVarietyPlugin
 from variety.PreferencesVarietyDialog import DONATE_PAGE_INDEX, PreferencesVarietyDialog
 from variety.PrivacyNoticeDialog import PrivacyNoticeDialog
@@ -1393,35 +1394,49 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not apply auto-orient:")
             return to_set
 
+    def get_display_modes(self) -> List[DisplayMode]:
+        if not hasattr(self, "display_modes_cache"):
+            modes = []
+            for plugin in self.jumble.get_plugins(clazz=IDisplayModesPlugin):
+                for m in plugin["plugin"].display_modes():
+                    modes.append((m, plugin["plugin"].order()))
+            modes.sort(key=lambda m: m[1])
+            self.display_modes_cache = [m[0] for m in modes]
+        return getattr(self, "display_modes_cache")
+
     def apply_display_mode(self, to_set):
         try:
             mode = "os"
-            modes = [x for x in DISPLAY_MODES if x["id"] == self.options.wallpaper_display_mode]
+            modes = [
+                x for x in self.get_display_modes() if x.id == self.options.wallpaper_display_mode
+            ]
             if modes:
-                mode, im_filter = modes[0]["fn"]()
-                if mode == "os":
-                    return to_set, "os"
-
-                target_file = os.path.join(
-                    self.wallpaper_folder, "wallpaper-zoomed-%s.jpg" % Util.random_hash()
-                )
-                cmd = "convert %s %s %s" % (
-                    shlex.quote(to_set),
-                    im_filter,
-                    shlex.quote(target_file),
-                )
-                logger.info(lambda: "ImageMagick display mode cmd: " + cmd)
-                cmd = cmd.encode("utf-8")
-
-                result = os.system(cmd)
-                if result == 0:  # success
-                    return target_file, mode
+                mode_data = modes[0].fn(to_set)
+                if mode_data.fixed_image_path:
+                    return mode_data.fixed_image_path, mode_data.set_wallpaper_param
+                elif not mode_data.imagemagick_cmd:
+                    return to_set, mode_data.set_wallpaper_param
                 else:
-                    logger.warning(
-                        lambda: "Could not execute auto-orient convert command. "
-                        "Missing ImageMagick? Resultcode: %d" % result
+                    target_file = os.path.join(
+                        self.wallpaper_folder, "wallpaper-zoomed-%s.jpg" % Util.random_hash()
                     )
-                    return to_set, "os"
+                    cmd = "convert %s %s %s" % (
+                        shlex.quote(to_set),
+                        mode_data.imagemagick_cmd,
+                        shlex.quote(target_file),
+                    )
+                    logger.info(lambda: "ImageMagick display mode cmd: " + cmd)
+                    cmd = cmd.encode("utf-8")
+
+                    result = os.system(cmd)
+                    if result == 0:  # success
+                        return target_file, mode
+                    else:
+                        logger.warning(
+                            lambda: "Could not execute auto-orient convert command. "
+                            "Missing ImageMagick? Resultcode: %d" % result
+                        )
+                        return to_set, "os"
             return to_set, mode
         except Exception:
             logger.exception(lambda: "Could not apply display mode logic:")
@@ -1526,7 +1541,7 @@ class VarietyWindow(Gtk.Window):
                 if should_apply_effects:
                     to_set = self.apply_filters(to_set, refresh_level)
 
-                to_set, display_mode = self.apply_display_mode(to_set)
+                to_set, display_mode_param = self.apply_display_mode(to_set)
 
                 if should_apply_effects:
                     to_set = self.apply_quote(to_set)
@@ -1541,7 +1556,7 @@ class VarietyWindow(Gtk.Window):
 
                 Util.add_mainloop_task(_update_inidicator)
 
-                self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode)
+                self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode_param)
                 self.current = filename
 
                 if self.options.icon == "Current" and self.current:

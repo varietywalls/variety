@@ -1,16 +1,16 @@
 from variety.Util import Util, _
 
 
-def _os():
+def _os(filename):
     return "os", None
 
 
-def _zoom():
+def _zoom(filename):
     w, h = Util.get_primary_display_size()
     return "zoom", "-scale %dx%d^ " % (w, h)
 
 
-def _fill_with_black():
+def _fill_with_black(filename):
     w, h = Util.get_primary_display_size()
     return (
         "zoom",
@@ -18,7 +18,7 @@ def _fill_with_black():
     )
 
 
-def _fill_with_blur():
+def _fill_with_blur(filename):
     w, h = Util.get_primary_display_size()
     return (
         "zoom",

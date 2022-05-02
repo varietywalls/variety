@@ -171,22 +171,31 @@ fi
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
 gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'"  ] || [ "$4" == "zoom" ]; then
+if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'"  ]; then
     gsettings set org.gnome.desktop.background picture-options 'zoom'
+fi
+if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+    gsettings set org.gnome.desktop.background picture-options "$4"
 fi
 
 # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
 gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ] || [ "$4" == "zoom" ]; then
+if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
     gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
+fi
+if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+    gsettings set org.gnome.desktop.screensaver picture-options "$4"
 fi
 
 
 # Deepin
 if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
     gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
-    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ] || [ "$4" == "zoom" ]; then
+    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
         gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
+    fi
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
     fi
 fi
 
@@ -249,11 +258,20 @@ fi
 
 # MATE after 1.6
 gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
+if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
+	gsettings set org.mate.desktop.background picture-options 'zoom'
+fi
+if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+  gsettings set org.mate.desktop.background picture-options "$4"
+fi
 
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ] || [ "$4" == "zoom" ]; then
+if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
 	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+fi
+if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+  gsettings set org.cinnamon.desktop.background picture-options "$4"
 fi
 
 # Awesome Window Manager

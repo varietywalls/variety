@@ -29,7 +29,6 @@ from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
 from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
-from variety.display_modes import DISPLAY_MODES
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
 from variety.Options import Options
@@ -142,8 +141,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.fav_chooser.set_folder(os.path.expanduser(self.options.favorites_folder))
             self.ui.wallpaper_auto_rotate.set_active(self.options.wallpaper_auto_rotate)
             self.ui.wallpaper_display_mode.remove_all()
-            for mode in DISPLAY_MODES:
-                self.ui.wallpaper_display_mode.append(mode["id"], mode["title"])
+            for mode in self.parent.get_display_modes():
+                self.ui.wallpaper_display_mode.append(mode.id, mode.title)
             self.ui.wallpaper_display_mode.set_active_id(self.options.wallpaper_display_mode)
 
             self.fetched_chooser.set_folder(os.path.expanduser(self.options.fetched_folder))
@@ -914,10 +913,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_wallpaper_display_mode_changed(self, *args):
         modes = [
-            m for m in DISPLAY_MODES if m["id"] == self.ui.wallpaper_display_mode.get_active_id()
+            m
+            for m in self.parent.get_display_modes()
+            if m.id == self.ui.wallpaper_display_mode.get_active_id()
         ]
         if modes:
-            self.ui.wallpaper_mode_description.set_text(modes[0].get("description", ""))
+            self.ui.wallpaper_mode_description.set_text(modes[0].description)
         else:
             self.ui.wallpaper_mode_description.set_text("")
 
