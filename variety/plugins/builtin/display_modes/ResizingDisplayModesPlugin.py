@@ -40,7 +40,7 @@ class ResizingDisplayModesPlugin(IDisplayModesPlugin):
             ),
             StaticDisplayMode(
                 id="fill-with-blue",
-                title=_("Fit within screen, pad with a blurred background (Slow)"),
+                title=_("Fit within screen, pad with a blurred background. Slow."),
                 description=_(
                     "Image is zoomed in or out so that it fully fits within your primary screen. "
                     "The rest of the screen is a filled with blurred version of the image. "
@@ -55,4 +55,4 @@ class ResizingDisplayModesPlugin(IDisplayModesPlugin):
         ]
 
     def order(self):
-        return 100
+        return 1000

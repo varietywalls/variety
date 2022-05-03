@@ -710,10 +710,7 @@ class Util:
     def get_scaled_size(image):
         """Computes the size to which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
         iw, ih = Util.get_size(image)
-        screen_w, screen_h = (
-            Gdk.Screen.get_default().get_width(),
-            Gdk.Screen.get_default().get_height(),
-        )
+        screen_w, screen_h = Util.get_primary_display_size()
         screen_ratio = float(screen_w) / screen_h
         if (
             screen_ratio > float(iw) / ih
@@ -721,22 +718,6 @@ class Util:
             return screen_w, int(round(ih * float(screen_w) / iw))
         else:  # image is "wider" than the screen ratio - need to offset horizontally
             return int(round(iw * float(screen_h) / ih)), screen_h
-
-    @staticmethod
-    def get_scale_to_screen_ratio(image):
-        """Computes the ratio by which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
-        iw, ih = Util.get_size(image)
-        screen_w, screen_h = (
-            Gdk.Screen.get_default().get_width(),
-            Gdk.Screen.get_default().get_height(),
-        )
-        screen_ratio = float(screen_w) / screen_h
-        if (
-            screen_ratio > float(iw) / ih
-        ):  # image is "taller" than the screen ratio - need to offset vertically
-            return int(float(screen_w) / iw)
-        else:  # image is "wider" than the screen ratio - need to offset horizontally
-            return int(float(screen_h) / ih)
 
     @staticmethod
     def gtk_to_fcmatch_font(gtk_font_name):

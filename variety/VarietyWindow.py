@@ -1247,7 +1247,13 @@ class VarietyWindow(Gtk.Window):
         if not filename:
             logger.warning(lambda: "set_wp_throttled: No wallpaper to set")
             return
-        self.do_set_wp(filename, refresh_level)
+
+        self.thumbs_manager.mark_active(file=filename, position=self.position)
+
+        def _do_set_wp():
+            self.do_set_wp(filename, refresh_level)
+
+        threading.Timer(0, _do_set_wp).start()
 
     def build_imagemagick_filter_cmd(self, filename, target_file):
         if not self.filters:
@@ -1520,7 +1526,6 @@ class VarietyWindow(Gtk.Window):
         logger.info(lambda: "Calling do_set_wp with %s, time: %s" % (filename, time.time()))
         with self.do_set_wp_lock:
             try:
-                self.thumbs_manager.mark_active(file=filename, position=self.position)
                 if not os.access(filename, os.R_OK):
                     logger.info(
                         lambda: "Missing file or bad permissions, will not use it: " + filename

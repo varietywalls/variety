@@ -20,8 +20,8 @@ class LegacyDisplayModesPlugin(IDisplayModesPlugin):
                 id="os",
                 title=_("[Legacy] Controlled via OS settings, not by Variety. Fast."),
                 description=_(
-                    "Display mode is controlled by your OS Appearance settings and by what is "
-                    "specified in set_wallpaper script for your desktop environment. "
+                    "Display mode is controlled by your OS Appearance settings and by the logic "
+                    "for your desktop environment in ~/.config/variety/scripts/set_wallpaper. "
                     "Provides compatibility with past Variety versions."
                 ),
                 set_wallpaper_param="os",
