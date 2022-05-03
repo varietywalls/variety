@@ -31,4 +31,4 @@ class GnomeDisplayModesPlugin(IDisplayModesPlugin):
         ]
 
     def order(self):
-        return 100
+        return 1000
