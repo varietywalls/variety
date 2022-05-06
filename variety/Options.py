@@ -572,7 +572,12 @@ class Options:
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
-                        if not s[1].lower() in [f[1].lower() for f in self.filters]:
+                        for f in self.filters:
+                            if f[1].lower() == s[1].lower():
+                                f[2] = s[2]
+                                break
+                        else:
+                            # not found at all in filters, append it
                             self.filters.append(s)
                     except Exception:
                         logger.exception(lambda: "Cannot parse filter in filters.txt: " + line)
