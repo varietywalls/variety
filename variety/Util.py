@@ -604,6 +604,11 @@ class Util:
         return int(geometry.width * scale), int(geometry.height * scale)
 
     @staticmethod
+    def get_multimonitor_display_size():
+        screen = Gdk.Screen.get_default()
+        return screen.get_width(), screen.get_height()
+
+    @staticmethod
     def find_unique_name(filename):
         index = filename.rfind(".")
         if index < 0:
@@ -909,10 +914,6 @@ class Util:
                 if not os.path.islink(fp):
                     total_size += os.path.getsize(fp)
         return total_size
-
-    @staticmethod
-    def get_screen_width():
-        return Gdk.Screen.get_default().get_width()
 
 
 def on_gtk(f):

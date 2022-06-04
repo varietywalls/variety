@@ -29,4 +29,4 @@ class LegacyDisplayModesPlugin(IDisplayModesPlugin):
         ]
 
     def order(self):
-        return -1000
+        return 1000

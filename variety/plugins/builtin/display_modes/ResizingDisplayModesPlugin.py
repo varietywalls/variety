@@ -18,17 +18,27 @@ IMAGEMAGICK_FIT_WITH_BLUR = (
 
 def _smart_fn(filename):
     try:
-        w, h = Util.get_size(filename)
-        dw, dh = Util.get_primary_display_size(hidpi_scaled=True)
-        if w * h * 10 < dw * dh:
+        image_w, image_h = Util.get_size(filename)
+        primary_w, primary_h = Util.get_primary_display_size(hidpi_scaled=True)
+        total_w, total_h = Util.get_multimonitor_display_size()
+        if image_w * image_h * 10 < primary_w * primary_h:
+            # image way smaller than primary monitor, tile it
             return DisplayModeData(set_wallpaper_param="wallpaper")
         else:
-            r1 = w / h
-            r2 = dw / dh
-            if 2 * abs(r1 - r2) / (r1 + r2) < 0.2:
+            image_ratio = image_w / image_h
+            primary_ratio = primary_w / primary_h
+            total_ratio = total_w / total_h
+            if 2 * abs(image_ratio - primary_ratio) / (image_ratio + primary_ratio) < 0.2:
+                # image ratio is close to primary screen ratio, zoom
                 return DisplayModeData(set_wallpaper_param="zoom")
+            elif 2 * abs(image_ratio - total_ratio) / (image_ratio + total_ratio) < 0.2:
+                # image ratio is close to multimonitor total screen ratio, span it
+                return DisplayModeData(set_wallpaper_param="spanned")
             else:
-                cmd = IMAGEMAGICK_FIT_WITH_BLUR.replace("%W", str(dw)).replace("%H", str(dh))
+                # image ratio not close to screen ratio, fit with a blurred background
+                cmd = IMAGEMAGICK_FIT_WITH_BLUR.replace("%W", str(primary_w)).replace(
+                    "%H", str(primary_h)
+                )
                 return DisplayModeData(set_wallpaper_param="zoom", imagemagick_cmd=cmd)
     except:
         return DisplayModeData(set_wallpaper_param="zoom")
@@ -82,11 +92,10 @@ class ResizingDisplayModesPlugin(IDisplayModesPlugin):
             ),
             StaticDisplayMode(
                 id="fill-with-blur",
-                title=_("Fit within screen, pad with a blurred background. Slow."),
+                title=_("Fit within screen, pad with a blurred background. Slower."),
                 description=_(
                     "Image is zoomed in or out so that it fully fits within your primary screen. "
                     "The rest of the screen is a filled with blurred version of the image. "
-                    "This is a slow option, cause blurring is a slow operation."
                 ),
                 set_wallpaper_param="zoom",
                 imagemagick_cmd=IMAGEMAGICK_FIT_WITH_BLUR,
@@ -94,4 +103,4 @@ class ResizingDisplayModesPlugin(IDisplayModesPlugin):
         ]
 
     def order(self):
-        return 100
+        return 2000

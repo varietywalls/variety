@@ -19,7 +19,7 @@ class GnomeDisplayModesPlugin(IDisplayModesPlugin):
         return [
             StaticDisplayMode(
                 id="gnome-%s" % mode,
-                title=_("[Provided by the OS] %s") % mode.capitalize(),
+                title=_("[GNOME/Mate/Cinnamon] %s") % mode.capitalize(),
                 description=_(
                     "Variety will instruct the desktop environment to use this mode when "
                     "calling set_wallpaper, and will not itself scale the image, unless needed "
@@ -31,4 +31,4 @@ class GnomeDisplayModesPlugin(IDisplayModesPlugin):
         ]
 
     def order(self):
-        return 1000
+        return 3000

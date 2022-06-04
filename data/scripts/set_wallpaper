@@ -171,31 +171,30 @@ fi
 # Gnome 3, Unity
 gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2> /dev/null
 gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'"  ]; then
-    gsettings set org.gnome.desktop.background picture-options 'zoom'
-fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
     gsettings set org.gnome.desktop.background picture-options "$4"
+fi
+if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'"  ]; then
+    gsettings set org.gnome.desktop.background picture-options 'zoom'
 fi
 
 # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
 gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2> /dev/null
-if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
-    gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
-fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
     gsettings set org.gnome.desktop.screensaver picture-options "$4"
 fi
-
+if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
+    gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
+fi
 
 # Deepin
 if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
     gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
-    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
-        gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
-    fi
     if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
         gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
+    fi
+    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
+        gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
     fi
 fi
 
@@ -227,8 +226,10 @@ SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-with-shmlog" "jwm" "LeftWM" "o
 if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " = *" $XDG_SESSION_DESKTOP "* ||
       " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
 	if command -v "feh" >/dev/null 2>&1; then
+	      # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
         feh --bg-fill "$WP" 2> /dev/null
     elif command -v "nitrogen" >/dev/null 2>&1; then
+	      # TODO: This should take the scaling parameter $4 into account and use other options than --set-zoom-fill
         nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
     fi
 fi
@@ -283,10 +284,5 @@ if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DE
 fi
 
 # =====================================================================================
-
-# OPTIONAL: Show a notification on automatic wallpaper change.
-# Display the original filename in the notification, but actually apply the post-effects image.
-# name=$(echo "$3" | sed 's/\//\n/g'| tail -n 1)
-# if [ "$2" == "auto" ]; then notify-send --icon "$WP" "Wallpaper changed" "$name" ; fi
 
 exit 0

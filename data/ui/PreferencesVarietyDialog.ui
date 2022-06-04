@@ -81,26 +81,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup_quotes_appearance">
-    <widgets>
-      <widget name="label50"/>
-      <widget name="label54"/>
-      <widget name="label51"/>
-      <widget name="label53"/>
-      <widget name="label44"/>
-      <widget name="label57"/>
-      <widget name="label61"/>
-      <widget name="label47"/>
-      <widget name="label29"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup_quotes_placement_labels">
-    <widgets>
-      <widget name="label55"/>
-      <widget name="label59"/>
-      <widget name="label62"/>
-    </widgets>
-  </object>
   <object class="GtkAdjustment" id="slideshow_fade_adjustment">
     <property name="upper">1</property>
     <property name="step_increment">0.050000000000000003</property>
@@ -865,7 +845,9 @@
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="margin_top">7</property>
-                        <property name="label" translatable="yes">Experimental: Some options may not work well in all window managers or multi-monitor configurations</property>
+                        <property name="label" translatable="yes">Experimental: Some options may not work well in all desktop environments or multi-monitor configurations.</property>
+                        <property name="justify">fill</property>
+                        <property name="wrap">True</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
                         </attributes>
@@ -4432,6 +4414,26 @@ Peter Levi</property>
     <widgets>
       <widget name="change_interval_text"/>
       <widget name="quotes_change_interval_text"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup_quotes_appearance">
+    <widgets>
+      <widget name="label50"/>
+      <widget name="label54"/>
+      <widget name="label51"/>
+      <widget name="label53"/>
+      <widget name="label44"/>
+      <widget name="label57"/>
+      <widget name="label61"/>
+      <widget name="label47"/>
+      <widget name="label29"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup_quotes_placement_labels">
+    <widgets>
+      <widget name="label55"/>
+      <widget name="label59"/>
+      <widget name="label62"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup_slideshow_combos">
