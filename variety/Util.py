@@ -397,6 +397,9 @@ class Util:
     def list_files(
         files=(), folders=(), filter_func=(lambda f: True), max_files=10000, randomize=True
     ):
+        class NextFolderException(Exception):
+            pass
+
         count = 0
         for filepath in files:
             logger.debug(
@@ -411,29 +414,38 @@ class Util:
             random.shuffle(folders)
 
         for folder in folders:
-            if os.path.isdir(folder):
-                try:
-                    for root, subFolders, files in os.walk(folder, followlinks=True):
-                        if randomize:
-                            random.shuffle(files)
-                            random.shuffle(subFolders)
-                        for filename in files:
-                            logger.debug(
-                                lambda: "checking file %s against filter_func %s (root=%s)"
-                                % (filename, filter_func, root)
-                            )
-                            path = os.path.join(root, filename)
-                            if filter_func(path):
-                                count += 1
-                                if count > max_files:
-                                    logger.info(
-                                        lambda: "More than %d files in the folders, stop listing"
-                                        % max_files
-                                    )
-                                    return
-                                yield path
-                except Exception:
-                    logger.exception(lambda: "Could not walk folder " + folder)
+            folder_quota = max(20, int(max_files / len(folders)))
+            if not os.path.isdir(folder):
+                continue
+            try:
+                count_in_folder = 0
+                for root, subfolders, files in os.walk(folder, followlinks=True):
+                    subfolder_quota = max(10, int(folder_quota / (1 + len(subfolders))))
+                    if randomize:
+                        random.shuffle(files)
+                        random.shuffle(subfolders)
+                    for filename in files[:subfolder_quota]:
+                        logger.debug(
+                            lambda: "checking file %s against filter_func %s (root=%s)"
+                            % (filename, filter_func, root)
+                        )
+                        path = os.path.join(root, filename)
+                        if filter_func(path):
+                            count += 1
+                            if count > max_files:
+                                logger.info(
+                                    lambda: "More than %d files in the folders, stop listing"
+                                    % max_files
+                                )
+                                return
+                            yield path
+                            count_in_folder += 1
+                            if count_in_folder > folder_quota:
+                                raise NextFolderException
+            except NextFolderException:
+                continue
+            except Exception:
+                logger.exception(lambda: "Could not walk folder " + folder)
 
     @staticmethod
     def start_force_exit_thread(delay):

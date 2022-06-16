@@ -67,7 +67,7 @@ from variety_lib import varietyconfig
 import gi  # isort:skip
 
 gi.require_version("Notify", "0.7")
-from gi.repository import Gdk, GdkPixbuf, Gio, GObject, Gtk, Notify  # isort:skip
+from gi.repository import Gdk, Gio, GObject, Gtk, Notify  # isort:skip
 Notify.init("Variety")
 # fmt: on
 
@@ -1579,11 +1579,10 @@ class VarietyWindow(Gtk.Window):
             except Exception:
                 logger.exception(lambda: "Error while setting wallpaper")
 
-    def list_images(self):
-        return Util.list_files(self.individual_images, self.folders, Util.is_image, max_files=10000)
-
     def select_random_images(self, count):
-        all_images = list(self.list_images())
+        all_images = list(
+            Util.list_files(self.individual_images, self.folders, Util.is_image, max_files=10000)
+        )
         self.image_count = len(all_images)
 
         # add just the first image of each album to the selection,
@@ -1847,9 +1846,7 @@ class VarietyWindow(Gtk.Window):
                     width = self.image_colors_cache[img][3]
                     height = self.image_colors_cache[img][4]
                 else:
-                    i = PILImage.open(img)
-                    width = i.size[0]
-                    height = i.size[1]
+                    width, height = Util.get_size(img)
 
                 if not self.size_ok(width, height, fuzziness):
                     return False
@@ -1899,7 +1896,7 @@ class VarietyWindow(Gtk.Window):
             return True
 
         except Exception:
-            logger.exception(lambda: "Error in image_ok for file %s" % img)
+            logger.warning(lambda: "Error in image_ok for file %s" % img)
             return False
 
     def size_ok(self, width, height, fuzziness=0):

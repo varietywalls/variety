@@ -848,7 +848,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             images = []
             folders = []
-            image_count = 0
 
             for row in source_rows:
                 if not row:
@@ -856,46 +855,35 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
                 type = row[1]
                 if type == Options.SourceType.IMAGE:
-                    image_count += 1
                     images.append(row[2])
                 else:
                     folder = self.parent.get_folder_of_source(self.model_row_to_source(row))
-                    image_count += sum(
-                        1
-                        for f in Util.list_files(
-                            folders=(folder,),
-                            filter_func=Util.is_image,
-                            max_files=1,
-                            randomize=False,
-                        )
-                    )
                     folders.append(folder)
 
-            if image_count > -1:
-                folder_images = list(
-                    Util.list_files(folders=folders, filter_func=Util.is_image, max_files=1000)
-                )
-                if len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_FILENAME:
-                    folder_images = sorted(folder_images)
-                elif len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_DATE:
-                    folder_images = sorted(folder_images, key=os.path.getmtime)
-                else:
-                    random.shuffle(folder_images)
-                to_show = images + folder_images
-                if hasattr(self, "focused_image") and self.focused_image is not None:
-                    try:
-                        to_show.remove(self.focused_image)
-                    except Exception:
-                        pass
-                    to_show.insert(0, self.focused_image)
-                    self.focused_image = None
-                self.parent.thumbs_manager.show(
-                    to_show, screen=self.get_screen(), folders=folders, type=thumbs_type
-                )
-                if pin:
-                    self.parent.thumbs_manager.pin()
-                if thumbs_type:
-                    self.parent.update_indicator(auto_changed=False)
+            folder_images = list(
+                Util.list_files(folders=folders, filter_func=Util.is_image, max_files=10000)
+            )
+            if len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_FILENAME:
+                folder_images = sorted(folder_images)
+            elif len(source_rows) == 1 and source_rows[0][1] == Options.SourceType.ALBUM_DATE:
+                folder_images = sorted(folder_images, key=os.path.getmtime)
+            else:
+                random.shuffle(folder_images)
+            to_show = images + folder_images
+            if hasattr(self, "focused_image") and self.focused_image is not None:
+                try:
+                    to_show.remove(self.focused_image)
+                except Exception:
+                    pass
+                to_show.insert(0, self.focused_image)
+                self.focused_image = None
+            self.parent.thumbs_manager.show(
+                to_show, screen=self.get_screen(), folders=folders, type=thumbs_type
+            )
+            if pin:
+                self.parent.thumbs_manager.pin()
+            if thumbs_type:
+                self.parent.update_indicator(auto_changed=False)
 
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
