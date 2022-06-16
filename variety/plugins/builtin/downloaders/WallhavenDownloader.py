@@ -46,6 +46,12 @@ class WallhavenDownloader(DefaultDownloader):
         self.legacy_downloader = WallhavenLegacyDownloader(source, location)
         self.parse_location()
 
+    def update_download_folder(self, global_download_folder):
+        target_folder = super().update_download_folder(global_download_folder)
+        self.legacy_downloader.target_folder = target_folder
+        self.legacy_downloader.state = self.state
+        return target_folder
+
     def parse_location(self):
         if not self.config.startswith(("http://", "https://")):
             # interpret location as keywords
