@@ -596,6 +596,19 @@ class Util:
             return image_width, image_height
 
     @staticmethod
+    def get_primary_display_size(hidpi_scaled=True):
+        display = Gdk.Display.get_default()
+        monitor = display.get_primary_monitor()
+        geometry = monitor.get_geometry()
+        scale = monitor.get_scale_factor() if hidpi_scaled else 1.0
+        return int(geometry.width * scale), int(geometry.height * scale)
+
+    @staticmethod
+    def get_multimonitor_display_size():
+        screen = Gdk.Screen.get_default()
+        return screen.get_width(), screen.get_height()
+
+    @staticmethod
     def find_unique_name(filename):
         index = filename.rfind(".")
         if index < 0:
@@ -702,10 +715,7 @@ class Util:
     def get_scaled_size(image):
         """Computes the size to which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
         iw, ih = Util.get_size(image)
-        screen_w, screen_h = (
-            Gdk.Screen.get_default().get_width(),
-            Gdk.Screen.get_default().get_height(),
-        )
+        screen_w, screen_h = Util.get_primary_display_size()
         screen_ratio = float(screen_w) / screen_h
         if (
             screen_ratio > float(iw) / ih
@@ -713,22 +723,6 @@ class Util:
             return screen_w, int(round(ih * float(screen_w) / iw))
         else:  # image is "wider" than the screen ratio - need to offset horizontally
             return int(round(iw * float(screen_h) / ih)), screen_h
-
-    @staticmethod
-    def get_scale_to_screen_ratio(image):
-        """Computes the ratio by which the image is scaled to fit the screen: original_size * scale_ratio = scaled_size"""
-        iw, ih = Util.get_size(image)
-        screen_w, screen_h = (
-            Gdk.Screen.get_default().get_width(),
-            Gdk.Screen.get_default().get_height(),
-        )
-        screen_ratio = float(screen_w) / screen_h
-        if (
-            screen_ratio > float(iw) / ih
-        ):  # image is "taller" than the screen ratio - need to offset vertically
-            return int(float(screen_w) / iw)
-        else:  # image is "wider" than the screen ratio - need to offset horizontally
-            return int(float(screen_h) / ih)
 
     @staticmethod
     def gtk_to_fcmatch_font(gtk_font_name):
@@ -920,10 +914,6 @@ class Util:
                 if not os.path.islink(fp):
                     total_size += os.path.getsize(fp)
         return total_size
-
-    @staticmethod
-    def get_screen_width():
-        return Gdk.Screen.get_default().get_width()
 
 
 def on_gtk(f):

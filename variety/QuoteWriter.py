@@ -84,8 +84,7 @@ class QuoteWriter:
         iw = surface.get_width()
         ih = surface.get_height()
 
-        sw = Gdk.Screen.get_default().get_width()
-        sh = Gdk.Screen.get_default().get_height()
+        sw, sh = Util.get_primary_display_size(hidpi_scaled=True)
         trimw, trimh = Util.compute_trimmed_offsets((iw, ih), (sw, sh))
 
         width = max(

@@ -97,7 +97,7 @@ class UnsplashDownloader(SimpleDownloader):
                     continue
 
                 image_url = item["urls"]["full"] + "&w={}".format(
-                    max(1980, int(Util.get_screen_width() * 1.2))
+                    max(1980, int(Util.get_primary_display_size()[0] * 1.2))
                 )
                 origin_url = item["links"]["html"] + UnsplashDownloader.UTM_PARAMS
 

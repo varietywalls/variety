@@ -4,7 +4,8 @@
 
 False|Keep original|
 False|Grayscale|-type Grayscale
-False|Heavy blur|-blur 120x40
+False|Heavy blur|-scale 20% -blur 0x10 -resize 500%
+False|Soft blur|-scale 20% -blur 0x2 -resize 500%
 False|Oil painting|-paint 8
 False|Pointilism|-spread 10 -noise 3
 False|Pixellate|-scale 3% -scale 3333%

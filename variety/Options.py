@@ -162,6 +162,16 @@ class Options:
                 pass
 
             try:
+                self.wallpaper_auto_rotate = config["wallpaper_auto_rotate"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.wallpaper_display_mode = str(config["wallpaper_display_mode"]).strip()
+            except Exception:
+                pass
+
+            try:
                 self.fetched_folder = os.path.expanduser(config["fetched_folder"])
             except Exception:
                 pass
@@ -562,7 +572,12 @@ class Options:
                         continue
                     try:
                         s = Options.parse_filter(line.strip())
-                        if not s[1].lower() in [f[1].lower() for f in self.filters]:
+                        for f in self.filters:
+                            if f[1].lower() == s[1].lower():
+                                f[2] = s[2]
+                                break
+                        else:
+                            # not found at all in filters, append it
                             self.filters.append(s)
                     except Exception:
                         logger.exception(lambda: "Cannot parse filter in filters.txt: " + line)
@@ -627,6 +642,9 @@ class Options:
             ["Fetched", "Move"],
             ["Others", "Copy"],
         ]
+
+        self.wallpaper_auto_rotate = True
+        self.wallpaper_display_mode = "os"
 
         self.fetched_folder = os.path.join(get_profile_path(), "Fetched")
         self.clipboard_enabled = False
@@ -743,6 +761,9 @@ class Options:
             config["favorites_operations"] = ";".join(
                 ":".join(x) for x in self.favorites_operations
             )
+
+            config["wallpaper_auto_rotate"] = str(self.wallpaper_auto_rotate)
+            config["wallpaper_display_mode"] = str(self.wallpaper_display_mode)
 
             config["fetched_folder"] = Util.collapseuser(self.fetched_folder)
             config["clipboard_enabled"] = str(self.clipboard_enabled)
