@@ -23,7 +23,7 @@ except ImportError:
     # for easy development / running from source.
     __variety_data_directory__ = "../data"
 __license__ = "GPL-3"
-__version__ = "0.8.7"
+__version__ = "0.8.8"
 
 import os
 

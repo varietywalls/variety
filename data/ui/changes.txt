@@ -1,3 +1,9 @@
+0.8.8
+    Feature #89: Added options to select fit size / wallpaper mode. Added an image-dependent smart fit mode.
+    Bugfix #519: Fix issues with autostart.
+    Bugfix #534: Fix the fallback Wallhaven non-API downloading mode used for some Wallhaven URLs.
+    Bugfix #480: Improve image searching: Avoid deep/huge folders causing Variety to ignore the other folders.
+
 0.8.7
     Added a global switch to turn Internet connectivity for Variety off or on.
     Wallhaven sources now use the Wallhaven API, not html parsing.
