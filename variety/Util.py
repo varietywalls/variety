@@ -611,9 +611,15 @@ class Util:
     def get_primary_display_size(hidpi_scaled=True):
         display = Gdk.Display.get_default()
         monitor = display.get_primary_monitor()
-        geometry = monitor.get_geometry()
-        scale = monitor.get_scale_factor() if hidpi_scaled else 1.0
-        return int(geometry.width * scale), int(geometry.height * scale)
+        if not monitor:
+            monitor = display.get_monitor(0)
+
+        if monitor:
+            geometry = monitor.get_geometry()
+            scale = monitor.get_scale_factor() if hidpi_scaled else 1.0
+            return int(geometry.width * scale), int(geometry.height * scale)
+        else:
+            return Util.get_multimonitor_display_size()
 
     @staticmethod
     def get_multimonitor_display_size():
