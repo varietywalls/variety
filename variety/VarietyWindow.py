@@ -66,7 +66,7 @@ from variety_lib import varietyconfig
 # fmt: off
 import gi  # isort:skip
 
-gi.require_version("Notify", "0.7")
+gi.require_version("Notify", "0.8")
 from gi.repository import Gdk, Gio, GObject, Gtk, Notify  # isort:skip
 Notify.init("Variety")
 # fmt: on
