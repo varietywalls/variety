@@ -1642,6 +1642,13 @@ class VarietyWindow(Gtk.Window):
                     self.quotes_engine.bypass_history()
             self.change_wallpaper()
 
+    def next_image_same_quote(self, widget=None):
+        if self.position > 0:
+            self.position -= 1
+            self.set_wp_throttled(self.used[self.position])
+        else:
+            self.change_wallpaper(keep_quote=True)
+
     def move_to_history_position(self, position):
         if 0 <= position < len(self.used):
             self.auto_changed = False
@@ -1676,7 +1683,7 @@ class VarietyWindow(Gtk.Window):
             > 0
         )
 
-    def change_wallpaper(self, widget=None):
+    def change_wallpaper(self, widget=None, keep_quote=False):
         try:
             img = None
 
@@ -1727,7 +1734,7 @@ class VarietyWindow(Gtk.Window):
                     self.show_notification(_("No more wallpapers"), msg)
                 return
 
-            if self.quotes_engine and self.options.quotes_enabled:
+            if self.quotes_engine and self.options.quotes_enabled and not keep_quote:
                 self.quote = self.quotes_engine.change_quote()
 
             self.set_wallpaper(img, auto_changed=self.auto_changed)
