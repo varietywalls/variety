@@ -63,6 +63,9 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
                         "https://unsplash.com/collections/", ""
                     ).split("/")[0]
                     params["collections"] = collections
+                elif self.config.startswith("https://unsplash.com/t/"):
+                    collections = self.config.replace("https://unsplash.com/t/", "").split("/")[0]
+                    params["topics"] = collections
                 else:
                     raise UnsupportedConfig()
             else:
@@ -109,10 +112,11 @@ class UnsplashConfigurableSource(ConfigurableImageSource):
             "that match the given search term or URL. The Unsplash API is rate-limited, so "
             "Variety fetches images from Unsplash sources as a reduced rate.\n"
             "\n"
-            "Please specify either a search keyword, or the URL of a search result, user or "
-            "collection.\n"
+            "Please specify either a search keyword, or the URL of a search result, user, "
+            "collection or topic.\n"
             "Example: <a href='https://unsplash.com/collections/3863203/desktop-wallpapers'>https://unsplash.com/collections/3863203/desktop-wallpapers</a>\n"
-            "Example: <a href='https://unsplash.com/@pawel_czerwinski'>https://unsplash.com/@pawel_czerwinski</a>"
+            "Example: <a href='https://unsplash.com/@pawel_czerwinski'>https://unsplash.com/@pawel_czerwinski</a>\n"
+            "Example: <a href='https://unsplash.com/t/wallpapers'>https://unsplash.com/t/wallpapers</a>"
         )
 
     def get_ui_short_instruction(self):
