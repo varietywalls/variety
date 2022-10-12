@@ -1377,6 +1377,72 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not apply filters:")
             return to_set
 
+    def apply_for_monitors(self, file, should_apply_effects):
+        display = Gdk.Display.get_default()
+        if (not len(self.used)):
+            return file
+        options = self.options
+        position = self.position
+        if (not position and len(self.used) > 1):
+            position = position + 2
+        files = []
+        total_width = 0
+        total_height = 0
+        index = 0
+        for x in range(0, display.get_n_monitors()):
+            screenDim = display.get_monitor(x).get_geometry()
+            if screenDim is None:
+                continue
+            name = "screen-" + str(x + 1)
+            x = screenDim.x
+            y = screenDim.y
+            width = screenDim.width
+            height = screenDim.height
+            files.append({
+                "path": self.used[position - 1],
+                "x": x,
+                "y": y,
+                "width": width,
+                "height": height
+            })
+            if not index and not x:
+                x = width
+            if not index and not y:
+                y = height
+            total_width = total_width + x
+            total_height = total_height + y
+            position = position - 1
+            index = index + 1
+        dst = PILImage.new('RGB', (total_width, total_height))
+        base_path = options.favorites_folder
+        for item in files:
+            if 'merged.png' in item['path']:
+                continue
+
+            if should_apply_effects:
+                item['path'] = self.apply_quote(item['path'])
+                item['path'] = self.apply_clock(item['path'])
+            im = PILImage.open(item['path'])
+            img_width, img_height = im.size
+            img_ratio = img_width/img_height
+            ratio = item['width']/item['height']
+            if img_ratio > ratio:
+                new_width = int(item['height']*img_ratio)
+                newsize = (new_width, item['height'])
+                im = im.resize(newsize)
+                left = (new_width - item['width']) / 4
+                im = im.crop((left, 0, item['width'] + left, item['height']))
+            else:
+                new_height = int(item['width']/img_ratio)
+                newsize = (item['width'], new_height)
+                im = im.resize(newsize)
+                top = (new_height - height) / 4
+                im = im.crop((0, top, item['width'], top + item['height']))
+            dst.paste(im, (item['x'], item['y']))
+        target_file = os.path.join(self.wallpaper_folder, "wallpaper-merged.jpg")
+        dst.save(target_file)
+        return target_file
+
     def apply_auto_rotate(self, to_set):
         try:
             if self.options.wallpaper_auto_rotate:
@@ -1552,6 +1618,7 @@ class VarietyWindow(Gtk.Window):
                     to_set = self.apply_quote(to_set)
                     to_set = self.apply_clock(to_set)
 
+                to_set = self.apply_for_monitors(to_set, should_apply_effects)
                 to_set = self.apply_copyto_operation(to_set)
 
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)
