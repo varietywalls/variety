@@ -20,8 +20,8 @@ from variety.plugins.downloaders.ImageSource import Throttling
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.Util import Util, _
 
-# Credits: Using the data prepared by limhenry @ https://github.com/limhenry/earthview
-DATA_URL = "https://raw.githubusercontent.com/limhenry/earthview/3cd868a932cd652c4373c0f6ea8618a96b08be4e/wallpaper%20changer/data.json"
+# Credits: Formerly using the data prepared by limhenry @ https://github.com/limhenry/earthview
+DATA_URL = "https://earthview.withgoogle.com/_api/photos.json"
 
 logger = logging.getLogger("variety")
 
@@ -64,12 +64,13 @@ class EarthviewDownloader(SimpleDownloader):
         return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=None)
 
     def download_queue_item(self, item):
-        region = item["Region"]
+        item = Util.fetch_json("https://earthview.withgoogle.com/_api/" + item["slug"] + ".json")
+        region = item["region"]
         filename = "{}{} (ID-{}).jpg".format(
-            region + ", " if region and region != "-" else "", item["Country"], item["ID"]
+            region + ", " if region and region != "-" else "", item["country"], item["id"]
         )
-        origin_url = EarthviewDownloader.ROOT_URL + str(item["ID"])
-        image_url = item["Image URL"]
+        origin_url = EarthviewDownloader.ROOT_URL + str(item["slug"])
+        image_url = item["photoUrl"]
         if not image_url.startswith("http"):
             image_url = "https://" + image_url
         return self.save_locally(origin_url, image_url, local_filename=filename)
