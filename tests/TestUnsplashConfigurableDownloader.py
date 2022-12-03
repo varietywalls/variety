@@ -39,7 +39,7 @@ class TestUnsplashConfigurableDownloader(unittest.TestCase):
         source = self._source()
         self.assertIsNone(source.validate("nature")[1])
         self.assertIsNone(source.validate("https://unsplash.com/s/photos/landscape")[1])
-        self.assertIsNone(source.validate("https://unsplash.com/@fotografierende")[1])
+        self.assertIsNone(source.validate("https://unsplash.com/@pawel_czerwinski")[1])
         self.assertIsNone(
             source.validate("https://unsplash.com/collections/3694365/gradient-nation")[1]
         )

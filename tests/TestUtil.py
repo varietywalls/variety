@@ -199,14 +199,9 @@ class TestUtil(unittest.TestCase):
     def test_is_dead_or_not_image(self):
         self.assertTrue(Util.is_dead_or_not_image(None))
         self.assertTrue(Util.is_dead_or_not_image("not a URL"))
-        self.assertTrue(Util.is_dead_or_not_image("http://www.google.com/"))
+        self.assertTrue(Util.is_dead_or_not_image("http://www.cnn.com/"))
         self.assertTrue(Util.is_dead_or_not_image("http://vrty.org/"))
         self.assertTrue(Util.is_dead_or_not_image("http://www.google.com/dejkjdrelkjflkrejfjre"))
-        self.assertFalse(
-            Util.is_dead_or_not_image(
-                "http://upload.wikimedia.org/wikipedia/commons/5/53/Wikipedia-logo-en-big.png"
-            )
-        )
         self.assertFalse(
             Util.is_dead_or_not_image(
                 "https://farm8.staticflickr.com/7133/7527967878_85fea93129_o.jpg"

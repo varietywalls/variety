@@ -30,8 +30,6 @@ class TestImageFetcher(unittest.TestCase):
         for url in [
             "https://w.wallhaven.cc/full/dg/wallhaven-dgeqoj.jpg",
             "http://unsplash.com/photos/7EqQ1s3wIAI/download",
-            "http://az608707.vo.msecnd.net/files/GreaterFlamingos_EN-US13682107304_1366x768.jpg",
-            "http://a.desktopprassets.com/wallpapers/07865fb0cb575e82fe43d3e1b634f6e2309e2114/foto_alese45.jpg",
         ]:
             f = ImageFetcher.fetch(url, target_folder, verbose=False)
             self.assertIsNotNone(f)
