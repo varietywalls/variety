@@ -106,7 +106,12 @@ class UnsplashDownloader(SimpleDownloader):
                     "sfwRating": 100,
                     "author": item["user"]["name"],
                     "authorURL": item["user"]["links"]["html"] + UnsplashDownloader.UTM_PARAMS,
-                    "description": item.get("alt_description"),
+                    "description": item.get("description", item.get("alt_description")),
+                    "keywords": [
+                        cat
+                        for cat, approval in item.get("topic_submissions", {}).items()
+                        if approval.get("status") == "approved"
+                    ],
                     "extraData": {
                         "unsplashDownloadLocation": item["links"]["download_location"],
                         "unsplashDownloadReported": False,
