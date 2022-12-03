@@ -73,4 +73,8 @@ class EarthviewDownloader(SimpleDownloader):
         image_url = item["photoUrl"]
         if not image_url.startswith("http"):
             image_url = "https://" + image_url
-        return self.save_locally(origin_url, image_url, local_filename=filename)
+
+        extra_metadata = {"description": item.get("name"), "author": item.get("attribution")}
+        return self.save_locally(
+            origin_url, image_url, local_filename=filename, extra_metadata=extra_metadata
+        )
