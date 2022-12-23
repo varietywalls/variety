@@ -29,6 +29,8 @@ import urllib.parse
 import webbrowser
 from typing import List
 
+import importlib
+
 from PIL import Image as PILImage
 
 from jumble.Jumble import Jumble
@@ -1377,14 +1379,29 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not apply filters:")
             return to_set
 
-    def apply_for_monitors(self, file, should_apply_effects):
+    def isMultiMonitors(self):
         display = Gdk.Display.get_default()
-        if (not len(self.used)):
-            return file
-        options = self.options
+        return display.get_n_monitors() > 1
+
+    def needMerge(self):
+        result = False
+        de = os.environ['XDG_CURRENT_DESKTOP'].lower()
+        if de == 'gnome':
+            result = True
+        elif de == '':
+            result = True
+        return result
+
+    def apply_for_monitors(self, file, should_apply_effects):
+        results = []
+        if not self.isMultiMonitors() or not len(self.used):
+            results.append([file, 0])
+            return results
+        display = Gdk.Display.get_default()
         position = self.position
         if (not position and len(self.used) > 1):
             position = position + 2
+
         files = []
         total_width = 0
         total_height = 0
@@ -1393,7 +1410,10 @@ class VarietyWindow(Gtk.Window):
             screenDim = display.get_monitor(x).get_geometry()
             if screenDim is None:
                 continue
-            name = "screen-" + str(x + 1)
+            if not os.path.exists(self.used[position - 1]):
+                position = position - 1
+                continue
+
             x = screenDim.x
             y = screenDim.y
             width = screenDim.width
@@ -1405,18 +1425,34 @@ class VarietyWindow(Gtk.Window):
                 "width": width,
                 "height": height
             })
-            if not index and not x:
-                x = width
+
             if not index and not y:
                 y = height
-            total_width = total_width + x
+            total_width = total_width + width
             total_height = total_height + y
             position = position - 1
             index = index + 1
+
+        if not self.needMerge():
+            for x in range(0, display.get_n_monitors()):
+                if x == 0:
+                    results.append([file, x])
+                else:
+                    newFile = file
+                    for item in files:
+                        if 'merged.png' in item['path'] or not os.path.exists(item['path']):
+                            continue
+
+                        if should_apply_effects:
+                            newFile = self.apply_quote(item['path'])
+                            newFile = self.apply_clock(newFile)
+                        break
+                    results.append([newFile, x])
+            return results
+
         dst = PILImage.new('RGB', (total_width, total_height))
-        base_path = options.favorites_folder
         for item in files:
-            if 'merged.png' in item['path']:
+            if 'merged.png' in item['path'] or not os.path.exists(item['path']):
                 continue
 
             if should_apply_effects:
@@ -1439,9 +1475,11 @@ class VarietyWindow(Gtk.Window):
                 top = (new_height - height) / 4
                 im = im.crop((0, top, item['width'], top + item['height']))
             dst.paste(im, (item['x'], item['y']))
+
         target_file = os.path.join(self.wallpaper_folder, "wallpaper-merged.jpg")
         dst.save(target_file)
-        return target_file
+        results.append([target_file, 0])
+        return results
 
     def apply_auto_rotate(self, to_set):
         try:
@@ -1561,7 +1599,6 @@ class VarietyWindow(Gtk.Window):
                 os.path.splitext(to_set)[1],
             )
             target_file = os.path.join(folder, target_fname)
-            self.cleanup_old_wallpapers(folder, "variety-copied-wallpaper")
             try:
                 shutil.copy(to_set, target_file)
                 os.chmod(
@@ -1618,17 +1655,21 @@ class VarietyWindow(Gtk.Window):
                     to_set = self.apply_quote(to_set)
                     to_set = self.apply_clock(to_set)
 
-                to_set = self.apply_for_monitors(to_set, should_apply_effects)
-                to_set = self.apply_copyto_operation(to_set)
+                results = self.apply_for_monitors(to_set, should_apply_effects)
+                excludes = []
+                for result in results:
+                    to_set = result[0]
+                    desktop = result[1]
+                    to_set = self.apply_copyto_operation(to_set)
+                    excludes.append(to_set)
 
+                    def _update_inidicator():
+                        self.update_indicator(filename)
+
+                    Util.add_mainloop_task(_update_inidicator)
+
+                    self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode_param, desktop)
                 self.cleanup_old_wallpapers(self.wallpaper_folder, "wallpaper-", to_set)
-
-                def _update_inidicator():
-                    self.update_indicator(filename)
-
-                Util.add_mainloop_task(_update_inidicator)
-
-                self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode_param)
                 self.current = filename
 
                 if self.options.icon == "Current" and self.current:
@@ -2801,14 +2842,14 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Could not get current wallpaper")
             return None
 
-    def cleanup_old_wallpapers(self, folder, prefix, new_wallpaper=None):
+    def cleanup_old_wallpapers(self, folder, prefix, exclude_wallpapers=[]):
         try:
             current_wallpaper = self.get_desktop_wallpaper()
             for name in os.listdir(folder):
                 file = os.path.join(folder, name)
                 if (
                     file != current_wallpaper
-                    and file != new_wallpaper
+                    and file not in exclude_wallpapers
                     and file != self.post_filter_filename
                     and name.startswith(prefix)
                     and Util.is_image(name)
@@ -2818,7 +2859,18 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
-    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode):
+    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode, desktop):
+        if self.isMultiMonitors():
+            de = os.environ['XDG_CURRENT_DESKTOP'].lower()
+            deExists = False
+            try:
+                deObj = importlib.import_module('variety.de.%s' % de)
+                deExists = True
+            except ImportError:
+                pass
+            if deExists:
+                deObj.DE.set_desktop_wallpaper(wallpaper, original_file, refresh_level, display_mode, desktop)
+                return
         script = self.options.set_wallpaper_script
         if os.access(script, os.X_OK):
             auto = (
