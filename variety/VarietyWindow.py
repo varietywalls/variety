@@ -1385,10 +1385,9 @@ class VarietyWindow(Gtk.Window):
 
     def needMerge(self):
         result = False
-        de = os.environ['XDG_CURRENT_DESKTOP'].lower()
-        if de == 'gnome':
-            result = True
-        elif de == '':
+        merge_list = ["gnome-classic", "gnome", "bspwm", "dwm", "herbstluftwm", "i3", "i3-with-shmlog", "jwm", "LeftWM", "openbox", "qtile", "qtile-venv", "xmonad"]
+        de = self.get_de()
+        if de in merge_list:
             result = True
         return result
 
@@ -2859,14 +2858,32 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
+    def get_de(self):
+        de = os.environ['XDG_CURRENT_DESKTOP'].lower()
+        if not de:
+            pid = subprocess.run(["pgrep", "-x", "sway"], capture_output = True, text=True).stdout.strip("\n")
+            sway_sock = "/run/user/%s/sway-ipc.%s.%s.sock" % (os.getuid(), os.getuid(), pid)
+            if os.path.exists(sway_sock):
+                de = 'sway'
+        if not de:
+            i3_sock = subprocess.run(["i3", "--get-socket"], capture_output = True, text=True).stdout.strip("\n")
+            if os.path.exists(i3_sock):
+                de = 'i3'
+
+        if ':' in de:
+            de_parts = de.split(':')
+            de = de_parts[0]
+
+        return de
+
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode, desktop):
         if self.isMultiMonitors():
-            de = os.environ['XDG_CURRENT_DESKTOP'].lower()
+            de = self.get_de()
             deExists = False
             try:
                 deObj = importlib.import_module('variety.de.%s' % de)
                 deExists = True
-            except ImportError:
+            except ImportError as error:
                 pass
             if deExists:
                 deObj.DE.set_desktop_wallpaper(wallpaper, original_file, refresh_level, display_mode, desktop)
