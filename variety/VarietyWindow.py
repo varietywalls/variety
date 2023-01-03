@@ -1384,11 +1384,11 @@ class VarietyWindow(Gtk.Window):
         return display.get_n_monitors() > 1
 
     def needMerge(self):
-        result = False
-        merge_list = ["gnome-classic", "gnome", "bspwm", "dwm", "herbstluftwm", "i3", "i3-with-shmlog", "jwm", "LeftWM", "openbox", "qtile", "qtile-venv", "xmonad"]
+        result = True
+        exclude_list = ["kde", "sway", "xfce"]
         de = self.get_de()
-        if de in merge_list:
-            result = True
+        if de in exclude_list:
+            result = False
         return result
 
     def apply_for_monitors(self, file, should_apply_effects):
