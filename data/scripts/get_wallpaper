@@ -8,7 +8,7 @@ desktop="$DESKTOP_SESSION"
 
 # Gnome 3, Unity:
 if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
-        gsettings get org.gnome.desktop.background picture-uri
+        /usr/bin/gsettings get org.gnome.desktop.background picture-uri
 
 # XFCE
 elif [ "$desktop" == "xubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
@@ -28,11 +28,11 @@ elif [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
 
 # MATE
 elif [ "$XDG_CURRENT_DESKTOP" == "MATE" ]; then
-        gsettings get org.mate.background picture-filename
+        /usr/bin/gsettings get org.mate.background picture-filename
 
 # Cinnamon after 2.0
 elif [ "$desktop" == "Cinnamon" ] || [ "$XDG_CURRENT_DESKTOP" == "X-Cinnamon" ]; then
-        gsettings get org.cinnamon.desktop.background picture-uri
+        /usr/bin/gsettings get org.cinnamon.desktop.background picture-uri
 
 # KDE Plasma 5
 elif [ "$XDG_CURRENT_DESKTOP" == "KDE" ] && [ "$KDE_SESSION_VERSION" == "5" ]; then
@@ -45,7 +45,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
 
 # All above fails => fallback to the Gnome 3 way
 else
-        gsettings get org.gnome.desktop.background picture-uri
+        /usr/bin/gsettings get org.gnome.desktop.background picture-uri
 fi
 
 # Feh
