@@ -65,7 +65,7 @@ class BingDownloader(SimpleDownloader):
                     # not marked as a wallpaper
                     continue
 
-                image_url = "https://www.bing.com" + item["url"]
+                image_url = "https://www.bing.com" + item["urlbase"] + "_UHD.jpg"
 
                 copyrightlink = item["copyrightlink"]
                 if not "javascript:" in copyrightlink:
