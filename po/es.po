@@ -5,6 +5,7 @@
 # 
 # Translators:
 # James Lu <james@overdrivenetworks.com>, 2021
+# Ulices, 2023
 # 
 #, fuzzy
 msgid ""
@@ -12,14 +13,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-27 21:49-0700\n"
-"PO-Revision-Date: 2021-07-28 05:05+0000\n"
-"Last-Translator: James Lu <james@overdrivenetworks.com>, 2021\n"
+"PO-Revision-Date: 2021-07-28 05:50+0000\n"
+"Last-Translator: Ulices, 2023\n"
 "Language-Team: Spanish (https://www.transifex.com/variety/teams/123174/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../variety/AddFlickrDialog.py:148
 msgid "No images found"
@@ -27,7 +28,7 @@ msgstr "No se encontraron imágenes"
 
 #: ../variety/FlickrDownloader.py:45
 msgid "Images from Flickr"
-msgstr ""
+msgstr "Imágenes de Flickr"
 
 #: ../variety/FolderChooser.py:67
 msgid "Choose a folder"
@@ -111,7 +112,7 @@ msgstr "Mover a la _papelera"
 
 #: ../variety/indicator.py:120 ../variety/indicator.py:189
 msgid "_Next, skipping forward history"
-msgstr ""
+msgstr "Siguiente, saltando hacia adelante en el historial"
 
 #: ../variety/indicator.py:130
 msgid ""
@@ -219,7 +220,7 @@ msgstr ""
 
 #: ../variety/PreferencesVarietyDialog.py:85
 msgid " (Profile: {})"
-msgstr ""
+msgstr " (Perfil: {})"
 
 #: ../variety/PreferencesVarietyDialog.py:87
 #: ../data/ui/PreferencesVarietyDialog.ui:121
@@ -238,7 +239,7 @@ msgstr "Imágenes"
 
 #: ../variety/PreferencesVarietyDialog.py:396
 msgid "Add individual wallpaper images"
-msgstr ""
+msgstr "Agregar imágenes de fondo de pantalla individuales"
 
 #: ../variety/PreferencesVarietyDialog.py:398
 msgid "Folders"
@@ -247,22 +248,28 @@ msgstr "Carpetas"
 #: ../variety/PreferencesVarietyDialog.py:399
 msgid "Searched recursively for up to 10000 images, shown in random order"
 msgstr ""
+"Se buscó recursivamente hasta por 10000 imágenes, se muestran en orden "
+"aleatorio"
 
 #: ../variety/PreferencesVarietyDialog.py:405
 msgid "Sequential Albums (order by filename)"
-msgstr ""
+msgstr "Álbumes secuenciales (ordenar por nombre de archivo)"
 
 #: ../variety/PreferencesVarietyDialog.py:406
 msgid "Searched recursively for images, shown in sequence (by filename)"
 msgstr ""
+"Se buscó recursivamente por imágenes, se muestran en secuencia (por nombre "
+"de archivo)"
 
 #: ../variety/PreferencesVarietyDialog.py:412
 msgid "Sequential Albums (order by date)"
-msgstr ""
+msgstr "Álbumes secuenciales (ordenar por fecha)"
 
 #: ../variety/PreferencesVarietyDialog.py:413
 msgid "Searched recursively for images, shown in sequence (by file date)"
 msgstr ""
+"Se buscó recursivamente por imágenes, se muestran en secuencia (por fecha de"
+" archivo)"
 
 #: ../variety/PreferencesVarietyDialog.py:419 ../data/ui/AddFlickrDialog.ui:83
 msgid "Flickr"
@@ -270,7 +277,7 @@ msgstr "Flickr"
 
 #: ../variety/PreferencesVarietyDialog.py:419
 msgid "Fetch images from Flickr"
-msgstr ""
+msgstr "Obtener imágenes de Flickr"
 
 #: ../variety/PreferencesVarietyDialog.py:461
 msgid "Remove the source, keep the files"
@@ -294,6 +301,9 @@ msgid ""
 "Using this source requires wallpaper changing enabled at intervals of %d "
 "minutes or less. Settings were adjusted automatically."
 msgstr ""
+"El uso de esta fuente requiere que el cambio de fondo de excritorio esté "
+"habilitado en intervalos de %dminutos o menos. La configuración se ajustará "
+"automáticamente."
 
 #: ../variety/PreferencesVarietyDialog.py:585
 msgid "Add Images"
@@ -316,12 +326,16 @@ msgid ""
 "Add Sequential Albums (ordered by filename). Subfolders are searched "
 "recursively."
 msgstr ""
+"Agregar álbumes secuenciales (ordenados por nombre de archivo). Las "
+"subcarpetas se buscan recursivamente."
 
 #: ../variety/PreferencesVarietyDialog.py:621
 msgid ""
 "Add Sequential Albums (ordered by date). Subfolders are searched "
 "recursively."
 msgstr ""
+"Agregar álbumes secuenciales (ordenados por fecha). Las subcarpetas se "
+"buscan recursivamente."
 
 #: ../variety/PreferencesVarietyDialog.py:775
 #: ../data/ui/PreferencesVarietyDialog.ui:3304
@@ -431,11 +445,15 @@ msgid ""
 "Recommended by Variety. Adapts to your taste as you mark images as favorite "
 "or trash."
 msgstr ""
+"Recomendado por Variety. Se adapta a tu gusto según que imágenes marcas como"
+" favoritas o eliminas."
 
 #: ../variety/Texts.py:39
 msgid ""
 "Latest favorites by the other users of Variety. [May contain NSFW images]"
 msgstr ""
+"Últimos favoritos de otros usuarios de Variety. [Puede contener imágenes "
+"NSFW]"
 
 #: ../variety/Texts.py:41
 msgid "Random wallpapers from Desktoppr.co"
@@ -469,6 +487,10 @@ msgid ""
 "{PROFILE_PATH}scripts. There are examples there for various desktop "
 "environments."
 msgstr ""
+"Si desea ejecutar comandos personalizados cada vez que cambia el fondo de "
+"pantalla o si utiliza un entorno de escritorio alternativo, edite los "
+"scripts en {PROFILE_PATH}scripts. Allí hay ejemplos para varios entornos de "
+"escritorio."
 
 #: ../variety/Texts.py:60
 msgid ""
@@ -497,6 +519,9 @@ msgid ""
 "unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
 "in Ubuntu."
 msgstr ""
+"La aplicación de un filtro de desenfoque pesado es una excelente manera de "
+"obtener fondos de pantalla de aspecto abstracto y discreto, pero coloridos, "
+"similares en espíritu al predeterminado en Ubuntu."
 
 #: ../variety/Texts.py:69
 #, python-brace-format
@@ -506,6 +531,10 @@ msgid ""
 "example. Every filter is just a line of options to be passed to "
 "ImageMagick's convert command."
 msgstr ""
+"Agregar sus propios filtros personalizados es bastante fácil: abra "
+"{PROFILE_PATH}variety.conf en un editor y use los filtros existentes como "
+"ejemplo. Cada filtro es solo una línea de opciones que es pasada al comando "
+"de conversión de ImageMagick."
 
 #: ../variety/Texts.py:72
 msgid ""
@@ -516,6 +545,13 @@ msgid ""
 "thumbnail view of all of them. Please mind that thumbnail view is limited to"
 " several hundred randomly selected images."
 msgstr ""
+"Cuando selecciona una fuente de imágenes, sus imágenes se muestran en una "
+"ventana en la parte inferior de la pantalla. Haga clic en una imagen allí "
+"para establecerla como fondo de pantalla. Haga clic con el botón derecho "
+"para cerrar la ventana, modificar su apariencia o realizar operaciones de "
+"archivos. Puede seleccionar varias fuentes de imágenes para crear una vista "
+"en miniatura \"combinada\" de todas ellas. Tenga en cuenta que la vista en "
+"miniatura está limitada a varios cientos de imágenes seleccionadas al azar."
 
 #: ../variety/Texts.py:75
 #, python-brace-format
@@ -523,6 +559,9 @@ msgid ""
 "To enable desktop notifications when the wallpaper changes, uncomment the "
 "two lines at the bottom of {PROFILE_PATH}scripts/set_wallpaper."
 msgstr ""
+"Para habilitar las notificaciones de escritorio cuando cambia el fondo de "
+"pantalla, descomente las dos líneas en la parte inferior de "
+"{PROFILE_PATH}scripts/set_wallpaper."
 
 #: ../variety/Texts.py:78
 msgid ""
@@ -531,6 +570,10 @@ msgid ""
 "an icon named \"variety-indicator\" and will use it instead of the bundled "
 "light icon."
 msgstr ""
+"El ícono del indicador de Variety es tematizable: si elige la opción "
+"\"Claro\" para el ícono, Variety primero verificará si el tema GTK actual "
+"tiene un ícono llamado \"variety-indicator\" y lo usará en lugar del ícono "
+"claro incluido."
 
 #: ../variety/Texts.py:81
 #, python-brace-format
@@ -541,6 +584,12 @@ msgid ""
 "~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
 "source. This file is also compatible with the Unix fortune utility."
 msgstr ""
+"Cuando elige guardar citas en Favoritos, estas se guardan de forma "
+"predeterminada en {PROFILE_PATH}favorite_quotes.txt. Este archivo es "
+"compatible con la fuente de citas de archivos locales de Variety. Si desea "
+"usarlo, cópielo en ~/.config/variety/pluginconfig/quotes/ y habilite la "
+"fuente de citas de archivos locales. Este archivo también es compatible con "
+"la utilidad fortune de Unix."
 
 #: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui:1242
 msgid "Bottom"
@@ -568,7 +617,7 @@ msgstr "Tamaño"
 
 #: ../variety/ThumbsManager.py:125
 msgid "Maximum Shown Images"
-msgstr ""
+msgstr "Máximo de imágenes mostradas"
 
 #: ../variety/ThumbsManager.py:139
 msgid "Show Containing Folder"
@@ -625,6 +674,12 @@ msgid ""
 "\n"
 "To set a specific wallpaper: %prog --set /some/local/image.jpg\n"
 msgstr ""
+"%prog [options] [files or urls]\n"
+"\n"
+"Pasar archivos locales los agregará a la cola de Variety.\n"
+"Al pasar las URL remotas, Variety las descargará en la carpeta Fetched y las colocará en la cola.\n"
+"\n"
+"Para establecer un fondo de pantalla específico: %prog --set /some/local/image.jpg\n"
 
 #: ../variety/VarietyOptionParser.py:69
 msgid ""
@@ -639,12 +694,25 @@ msgid ""
 "commands to a running instance, pass the same --profile argument as the one "
 "it was started with in subsequent commands."
 msgstr ""
+"Nombre de perfil o ruta completa a la carpeta de configuración que debe usar"
+" Variety.  Si no se especifica, es ~/.config/variety/.  Si solo se usa un "
+"nombre en lugar de una ruta completa, la carpeta del perfil será "
+"~/.config/variety-profiles/<name>. Úselo solo cuando comience inicialmente "
+"Variety: cambiar la ruta del perfil requiere reiniciar.  Se pueden iniciar "
+"varias instancias de Variety cuando se utilizan diferentes perfiles, cada "
+"uno con su propia configuración independiente.  Esto se puede usar, por "
+"ejemplo, para controlar varias pantallas o espacios de trabajo diferentes en"
+" entornos de escritorio que lo permiten como XFCE.  Para pasar comandos a "
+"una instancia en ejecución, pase el mismo argumento --profile con el que se "
+"inició en los comandos posteriores."
 
 #: ../variety/VarietyOptionParser.py:90
 msgid ""
 "Show logging messages (-vv to -vvvvv will profile various parts of Variety "
 "with increasing detail"
 msgstr ""
+"Mostrar mensajes de registro (-vv a -vvvvv perfilarán varias partes de "
+"Variety con mayor detalle"
 
 #: ../variety/VarietyOptionParser.py:95
 msgid "Make the running instance quit"
@@ -661,6 +729,7 @@ msgstr ""
 #: ../variety/VarietyOptionParser.py:115
 msgid "Set the given file as wallpaper, absolute path required"
 msgstr ""
+"Establecer el archivo dado como fondo de pantalla, se requiere ruta absoluta"
 
 #: ../variety/VarietyOptionParser.py:119
 msgid "Show Next wallpaper"
@@ -712,7 +781,7 @@ msgstr "Pausar/reanudar"
 
 #: ../variety/VarietyOptionParser.py:181
 msgid "Toggle \"Show Without Effects\" for current image"
-msgstr ""
+msgstr "Alternar \"Mostrar sin efectos\" para la imagen actual"
 
 #: ../variety/VarietyOptionParser.py:185
 msgid "Show Next quote"
@@ -751,6 +820,8 @@ msgid ""
 "Show manual wallpaper selector - the thumbnail bar filled with images from "
 "the active image sources"
 msgstr ""
+"Mostrar selector de fondo de pantalla manual: la barra de miniaturas se "
+"llena de imágenes de las fuentes de imágenes activas"
 
 #: ../variety/VarietyOptionParser.py:251
 msgid ""
@@ -796,7 +867,7 @@ msgstr "Ya está en Favoritos"
 #: ../variety/VarietyWindow.py:762
 #, python-format
 msgid "Source: %s"
-msgstr ""
+msgstr "Fuente: %s"
 
 #: ../variety/VarietyWindow.py:828
 msgid "Unknown"
@@ -867,6 +938,8 @@ msgstr "No tiene permisos para mover %s a la papelera."
 #: ../variety/VarietyWindow.py:1999
 msgid "Deleting to trash failed, check variety.log for more information."
 msgstr ""
+"No se pudo eliminar a la papelera, consulte variety.log para obtener más "
+"información."
 
 #: ../variety/VarietyWindow.py:2325
 msgid ""
@@ -906,7 +979,7 @@ msgstr "El origen de imágenes ya existe. Activándolo"
 
 #: ../variety/VarietyWindow.py:2593
 msgid "Fetched and applied"
-msgstr ""
+msgstr "Obtenido y aplicado"
 
 #: ../variety/VarietyWindow.py:2598
 msgid "It works!"
@@ -914,7 +987,7 @@ msgstr "¡Funciona!"
 
 #: ../variety/VarietyWindow.py:2598
 msgid "Yay, Variety links work. Great!"
-msgstr ""
+msgstr "Yey, los enlaces de Variety funcionan. ¡Excelente!"
 
 #: ../variety/VarietyWindow.py:2602
 msgid "Unsupported command"
@@ -926,27 +999,32 @@ msgstr "No se pudo procesar el URL variety:// dado"
 
 #: ../variety/VarietyWindow.py:2608
 msgid "Run with logging enabled to see details"
-msgstr ""
+msgstr "Ejecutar con el registro habilitado para ver los detalles"
 
 #: ../variety/VarietyWindow.py:2970
 msgid "Variety: New desktop entry"
-msgstr ""
+msgstr "Variety: nueva entrada de escritorio"
 
 #: ../variety/VarietyWindow.py:2972
 msgid ""
 "We created a new desktop entry in ~/.local/share/applications to run Variety"
 " with profile \"{}\". Find it in the application launcher."
 msgstr ""
+"Creamos una nueva entrada de escritorio en ~/.local/share/applications para "
+"ejecutar Variety con el perfil \"{}\".  Encuéntralo en el lanzador de "
+"aplicaciones."
 
 #: ../variety/VarietyWindow.py:2997
 msgid "Variety: Created autostart desktop entry"
-msgstr ""
+msgstr "Variety: entrada de escritorio de inicio automático creada"
 
 #: ../variety/VarietyWindow.py:2999
 msgid ""
 "We created a new desktop entry in ~/.config/autostart. Variety should start "
 "automatically on next login."
 msgstr ""
+"Creamos una nueva entrada de escritorio en ~/.config/autostart.  Variety "
+"debería iniciar automáticamente en el próximo inicio de sesión."
 
 #: ../variety/VarietyWindow.py:3006
 msgid "Could not create autostart entry"
@@ -962,7 +1040,7 @@ msgstr ""
 
 #: ../variety/VarietyWindow.py:3073
 msgid "No images"
-msgstr ""
+msgstr "Sin imágenes"
 
 #: ../variety/VarietyWindow.py:3073
 msgid "There are no images in the slideshow folders"
@@ -975,6 +1053,7 @@ msgstr "Acerca de Variety"
 #: ../data/ui/AboutVarietyDialog.ui:14
 msgid "Copyright (c) 2012-2020, Peter Levi, James Lu & Variety contributors"
 msgstr ""
+"Copyright (c) 2012-2020, Peter Levi, James Lu y contribuidores de Variety"
 
 #: ../data/ui/AboutVarietyDialog.ui:15
 msgid "An automatic wallpaper changer, downloader and manager."
@@ -982,7 +1061,7 @@ msgstr "Un cambiador, descargador y gestor de fondos automático."
 
 #: ../data/ui/AboutVarietyDialog.ui:17
 msgid "https://peterlevi.com/variety"
-msgstr ""
+msgstr "https://peterlevi.com/variety"
 
 #: ../data/ui/AboutVarietyDialog.ui:18
 msgid ""
@@ -999,14 +1078,26 @@ msgid ""
 "# You should have received a copy of the GNU General Public License along\n"
 "# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
+"# Copyright (c) 2012-2020, Peter Levi, James Lu y colaboradores de Variety\n"
+" # Este programa es software libre: puedes redistribuirlo y/o modificarlo\n"
+" # bajo los términos de la Licencia Pública General GNU versión 3, tal como se publicó\n"
+" # por la Fundación de Software Libre.\n"
+" #\n"
+" # Este programa se distribuye con la esperanza de que sea útil, pero\n"
+" # SIN NINGUNA GARANTÍA;  sin siquiera las garantías implícitas de\n"
+" # COMERCIABILIDAD, CALIDAD SATISFACTORIA o IDONEIDAD PARA UN PARTICULAR\n"
+" # OBJETIVO.  Consulte la Licencia pública general de GNU para obtener más detalles.\n"
+" #\n"
+" # Debería haber recibido una copia de la Licencia pública general de GNU junto con\n"
+" # con este programa.  Si no, consulte <http://www.gnu.org/licenses/>.\n"
 
 #: ../data/ui/AddConfigurableDialog.ui:160
 msgid "Just a moment to check for images"
-msgstr ""
+msgstr "Solo un momento para buscar imágenes."
 
 #: ../data/ui/AddConfigurableDialog.ui:187 ../data/ui/AddFlickrDialog.ui:360
 msgid "  "
-msgstr ""
+msgstr "  "
 
 #: ../data/ui/AddFlickrDialog.ui:9
 msgid "Variety - add Flickr as an image source"
@@ -1180,7 +1271,7 @@ msgstr "Añadir imágenes, carpetas u orígenes de imágenes en línea"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:467
 msgid "_Open Folder"
-msgstr ""
+msgstr "Abrir carpeta"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:472
 #: ../data/ui/PreferencesVarietyDialog.ui:473
@@ -1390,8 +1481,9 @@ msgid ""
 "here</a>."
 msgstr ""
 "<a href=\"https://answers.launchpad.net/variety/+faq/2138\">¿No funcionan "
-"estas opciones?</a> <a href=\"http://peterlevi.com/variety/2012/11"
-"/configuring-the-clock/\">¿Cómo personalizar aún más el reloj?</a>."
+"estas opciones?</a> <a "
+"href=\"http://peterlevi.com/variety/2012/11/configuring-the-clock/\">¿Cómo "
+"personalizar aún más el reloj?</a>."
 
 #: ../data/ui/PreferencesVarietyDialog.ui:1803
 msgid "Effects"
@@ -1471,7 +1563,7 @@ msgstr "Ventana normal"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2150
 msgid "Dynamics"
-msgstr ""
+msgstr "Dinámica"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2177
 msgid "Interval between image changes "
@@ -1491,23 +1583,23 @@ msgstr "Desvanecimiento lento"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2289
 msgid "Less zoom"
-msgstr ""
+msgstr "Menos acercamiento"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2318
 msgid "More zoom"
-msgstr ""
+msgstr "Más acercamiento"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2342
 msgid "Less pan"
-msgstr ""
+msgstr "Menos desplazamiento"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2371
 msgid "More pan"
-msgstr ""
+msgstr "Más desplazamiento"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2395
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Restablecer a los valores predeterminados"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:2429
 msgid "Changes on this page take effect after the slideshow is restarted"
@@ -1621,7 +1713,7 @@ msgstr "Valoración"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3041
 msgid "Have EXIF rating at least "
-msgstr ""
+msgstr "Tener clasificación EXIF ​​de al menos"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3064
 msgid "1"
@@ -1671,25 +1763,25 @@ msgstr "Oscuro"
 #: ../data/ui/PreferencesVarietyDialog.ui:3172
 msgctxt "Icon option"
 msgid "Number 1"
-msgstr ""
+msgstr "Número 1"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3173
 msgctxt "Icon option"
 msgid "Number 2"
-msgstr ""
+msgstr "Número 2"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3174
 msgctxt "Icon option"
 msgid "Number 3"
-msgstr ""
+msgstr "Número 3"
 
 #. Icon option
 #: ../data/ui/PreferencesVarietyDialog.ui:3175
 msgctxt "Icon option"
 msgid "Number 4"
-msgstr ""
+msgstr "Número 4"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3176
 msgctxt "Icon option"
@@ -1851,27 +1943,27 @@ msgstr ""
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3951
 msgid "To donate in Bitcoin, please send to this wallet:"
-msgstr ""
+msgstr "Para donar en Bitcoin, por favor envíe a esta billetera:"
 
 #: ../data/ui/PreferencesVarietyDialog.ui:3964
 msgid "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
-msgstr ""
+msgstr "1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu"
 
 #: ../data/ui/PrivacyNoticeDialog.ui:14
 msgid "Variety - Privacy Notice"
-msgstr ""
+msgstr "Variety - Aviso de Privacidad"
 
 #: ../data/ui/PrivacyNoticeDialog.ui:45
 msgid "Reject and Quit"
-msgstr ""
+msgstr "Rechazar y salir"
 
 #: ../data/ui/PrivacyNoticeDialog.ui:58
 msgid "Accept and Continue"
-msgstr ""
+msgstr "Aceptar y continuar"
 
 #: ../data/ui/PrivacyNoticeDialog.ui:97
 msgid "<span font=\"15\" weight=\"bold\">Privacy Notice</span>"
-msgstr ""
+msgstr "<span font=\"15\" weight=\"bold\">Aviso de Privacidad</span>"
 
 #. Main text for the Privacy Notice dialog
 #: ../data/ui/PrivacyNoticeDialog.ui:124
@@ -1886,6 +1978,15 @@ msgid ""
 "\n"
 "<b>Some image sources require us to track additional information when enabled.</b> For example the terms of <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> require us to track and report when users download and view images from Unsplash."
 msgstr ""
+"Antes de comenzar, aquí hay algunas cosas que debe tener en cuenta y aceptar:\n"
+"\n"
+"<b>Variety es una aplicación de código abierto, que se proporciona tal cual, sin ninguna garantía.</b>  Al usarlo, acepta los términos y condiciones de la licencia <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU GPLv3</a> bajo la cual se distribuye.  \n"
+"\n"
+" <b>Variety es una aplicación conectada a Internet. </b> Con la configuración predeterminada, Variety descarga imágenes de Internet.  Los servidores web desde los que se descarga pueden recopilar información sobre su dispositivo, como la dirección IP.  Variety no envía ninguna información de identificación personal.  Al usar Variety, acepta su uso de la conectividad a Internet.  Tenga en cuenta que todas las fuentes de imágenes en línea se pueden desactivar. \n"
+"\n"
+" <b>Variety obtiene y aplica configuraciones de limitación de velocidad definidas por el equipo de desarrollo. </b> Esto puede afectar la velocidad a la que descarga nuevas imágenes, pero ayuda a garantizar que Variety pueda funcionar independientemente de cuántas personas lo estén ejecutando.  Estas configuraciones se descargarán de gist.github.com donde las alojamos.\n"
+"\n"
+" <b>Algunas fuentes de imágenes requieren que rastreemos información adicional cuando están habilitadas. </b>Por ejemplo, los términos de <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> nos exigen rastrear e informar cuando los usuarios descargan y ven imágenes de Unsplash."
 
 #: ../data/ui/WelcomeDialog.ui:13 ../data/ui/WelcomeDialog.ui:76
 msgid "Welcome to Variety!"
@@ -1902,6 +2003,11 @@ msgid ""
 "online sources. It runs quietly in the background - to control it, click "
 "this icon in your system tray:"
 msgstr ""
+"Variety es un cambiador de fondo de pantalla automático Rota el fondo de "
+"pantalla de su escritorio de forma regular usando imágenes locales o "
+"imágenes descargadas de varias fuentes en línea. Se ejecuta silenciosamente "
+"en segundo plano: para controlarlo, haga clic en este icono en la bandeja "
+"del sistema:"
 
 #: ../data/ui/WelcomeDialog.ui:124
 msgid ""
