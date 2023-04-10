@@ -100,6 +100,9 @@ class UnsplashDownloader(SimpleDownloader):
                     max(1980, int(Util.get_primary_display_size()[0] * 1.2))
                 )
                 origin_url = item["links"]["html"] + UnsplashDownloader.UTM_PARAMS
+                
+                if "plus.unsplash.com/" in image_url:  # exclude watermarked wallpapers
+                    continue
 
                 extra_metadata = {
                     "sourceType": "unsplash",
