@@ -26,6 +26,7 @@ Variety is available in the distro repositories of:
 - [Fedora](https://www.rpmfind.net/linux/rpm2html/search.php?query=variety)
 - [OpenSUSE](https://software.opensuse.org/package/variety?search_term=variety)
 - [Ubuntu 16.04+](https://packages.ubuntu.com/search?keywords=variety)
+- [NixOS](https://search.nixos.org/packages?show=variety&type=packages&query=variety)
 
 Detailed installation instructions can be found [here](https://peterlevi.com/variety/how-to-install/).
 
