@@ -21,7 +21,7 @@ Otherwise, its desktop entry menu provides a similar set of options.
 
 Variety is available in the distro repositories of:
 
-- [Arch Linux](https://www.archlinux.org/packages/community/any/variety/)
+- [Arch Linux](https://archlinux.org/packages/extra/any/variety/)
 - [Debian 9+](https://packages.debian.org/search?keywords=variety)
 - [Fedora](https://www.rpmfind.net/linux/rpm2html/search.php?query=variety)
 - [OpenSUSE](https://software.opensuse.org/package/variety?search_term=variety)
