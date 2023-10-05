@@ -47,12 +47,16 @@ class ThumbsWindow(Gtk.Window):
         self.set_accept_focus(False)
 
         self.screen = screen if screen else Gdk.Screen.get_default()
-        self.screen_width = self.screen.get_width()
-        self.screen_height = self.screen.get_height()
+        self.monitor_area = self.screen.get_monitor_workarea(self.screen.get_primary_monitor())
 
         self.position = position
         self.breadth = int(
-            breadth * (1 if self.is_horizontal() else float(self.screen_width) / self.screen_height)
+            breadth
+            * (
+                1
+                if self.is_horizontal()
+                else float(self.monitor_area.width) / self.monitor_area.height
+            )
         )
 
         self.box = Gtk.HBox(False, 0) if self.is_horizontal() else Gtk.VBox(False, 0)
@@ -139,19 +143,23 @@ class ThumbsWindow(Gtk.Window):
         autoscroll_thread.daemon = True
         autoscroll_thread.start()
 
+    def _calc_start_position(self):
+        area = self.monitor_area
+        if self.position == ThumbsWindow.BOTTOM:
+            return area.x + area.width // 2, area.y + area.height - self.breadth
+        elif self.position == ThumbsWindow.TOP:
+            return area.x + area.width // 2, area.y
+        elif self.position == ThumbsWindow.LEFT:
+            return area.x, area.y + area.height // 2
+        elif self.position == ThumbsWindow.RIGHT:
+            return area.x + area.width - self.breadth, area.height // 2
+        else:
+            raise Exception("Unsupported thumbs position: " + str(self.position))
+
     def _show(self):
         self.set_default_size(1, 1)
         logger.debug(lambda: "Showing thumb window %s, %d" % (str(self), time.time()))
-        if self.position == ThumbsWindow.BOTTOM:
-            self.move(self.screen_width // 2, self.screen_height - self.breadth)
-        elif self.position == ThumbsWindow.TOP:
-            self.move(self.screen_width // 2, 0)
-        elif self.position == ThumbsWindow.LEFT:
-            self.move(0, self.screen_height // 2)
-        elif self.position == ThumbsWindow.RIGHT:
-            self.move(self.screen_width - self.screen_height, self.screen_height // 2)
-        else:
-            raise Exception("Unsupported thumbs position: " + str(self.position))
+        self.move(*self._calc_start_position())
         self.show_all()
 
     def _thumbs_thread(self):
@@ -260,29 +268,38 @@ class ThumbsWindow(Gtk.Window):
 
         Util.add_mainloop_task(_go)
 
+    def _window_length(self):
+        if self.is_horizontal():
+            return self.monitor_area.width
+        else:
+            return self.monitor_area.height
+
+    def _calc_position(self):
+        area = self.monitor_area
+        if self.position == ThumbsWindow.BOTTOM:
+            return (
+                area.x + max(0, (area.width - self.total_width) // 2),
+                area.y + area.height - self.breadth,
+            )
+        elif self.position == ThumbsWindow.TOP:
+            return (area.x + max(0, (area.width - self.total_width) // 2), area.y)
+        elif self.position == ThumbsWindow.LEFT:
+            return (area.x, area.y + max(0, (area.height - self.total_width) // 2))
+        elif self.position == ThumbsWindow.RIGHT:
+            return (
+                area.x + area.width - self.breadth,
+                area.y + max(0, (area.height - self.total_width) // 2),
+            )
+        else:
+            raise Exception("Unsupported thumbs position: " + str(self.position))
+
     def update_size(self):
-        if (
-            self.total_width
-            < (self.screen_width if self.is_horizontal() else self.screen_height) + 1000
-        ):
-            if self.position == ThumbsWindow.BOTTOM:
-                self.move(
-                    max(0, (self.screen_width - self.total_width) // 2),
-                    self.screen_height - self.breadth,
-                )
-                self.scroll.set_min_content_width(min(self.total_width, self.screen_width))
-            elif self.position == ThumbsWindow.TOP:
-                self.move(max(0, (self.screen_width - self.total_width) // 2), 0)
-                self.scroll.set_min_content_width(min(self.total_width, self.screen_width))
-            elif self.position == ThumbsWindow.LEFT:
-                self.move(0, max(0, (self.screen_height - self.total_width) // 2))
-                self.scroll.set_min_content_height(min(self.total_width, self.screen_height))
-            elif self.position == ThumbsWindow.RIGHT:
-                self.move(
-                    self.screen_width - self.breadth,
-                    max(0, (self.screen_height - self.total_width) // 2),
-                )
-                self.scroll.set_min_content_height(min(self.total_width, self.screen_height))
+        if self.total_width < self._window_length() + 1000:
+            self.move(*self._calc_position())
+            if self.is_horizontal():
+                self.scroll.set_min_content_width(min(self.total_width, self.monitor_area.width))
+            else:
+                self.scroll.set_min_content_height(min(self.total_width, self.monitor_area.height))
 
     # TODO this method is buggy when width < screen and scrollbar not shown - a blank space remains
     @on_gtk
@@ -353,7 +370,7 @@ class ThumbsWindow(Gtk.Window):
 
     def fits_in_screen(self, with_reserve=0):
         if self.is_horizontal():
-            return self.total_width < self.screen_width + with_reserve
+            return self.total_width < self.monitor_area.width + with_reserve
 
     def destroy(self, widget=False):
         logger.debug(lambda: "Destroying thumb window %s, %d" % (str(self), time.time()))
@@ -372,7 +389,7 @@ class ThumbsWindow(Gtk.Window):
         right_limit = 4 * total_size / 5
 
         if current <= left_limit and adj.get_value() > adj.get_lower():
-            speed = 30 * (left_limit - current) ** 3 / left_limit ** 3
+            speed = 30 * (left_limit - current) ** 3 / left_limit**3
             if adj.get_value() < adj.get_lower() + 800:
                 speed = speed * (adj.get_value() - adj.get_lower()) / 800
             speed = min(speed, self.previous_speed + 0.1)
