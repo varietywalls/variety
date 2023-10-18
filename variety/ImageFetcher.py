@@ -37,7 +37,7 @@ class ImageFetcher:
                         if h and p.netloc.lower().find(h) >= 0:
                             return True
                 else:
-                    return p.path.lower().endswith((".jpg", ".jpeg", ".png", ".tiff"))
+                    return p.path.lower().endswith((".jpg", ".jpeg", ".png", ".tiff", ".avif"))
                     # skip gif - they are usually small images
             return False
         except Exception:

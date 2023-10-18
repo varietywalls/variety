@@ -126,19 +126,10 @@ fi
 # and KDE will refresh it
 # On Plasma 5.7 and above, the wallpaper choosing is automatic.
 if [ "${KDE_FULL_SESSION}" == "true" ]; then
-    # Plasma 5.7 introduced a new feature to set the wallpaper via a qdbus script:
+    # Plasma 5.7 introduced a new feature to set the wallpaper via a dbus script:
     # https://github.com/KDE/plasma-workspace/commit/903cbfd7e267a4812a6ec222eb7e1b5dd775686f
     if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '5' ]]; then
-
-        # Try to find the Qt 5 version of qdbus. For systems using qtchooser, the binary name is 'qdbus'
-        # and the Qt version can be selected via the QT_SELECT environment variable.
-        if command -v qdbus-qt5 &>/dev/null; then
-            qdbus_command=qdbus-qt5
-        else
-            qdbus_command=qdbus
-        fi
-
-        QT_SELECT=5 $qdbus_command org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+        dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"
         let allDesktops = desktops();
         for (let d of allDesktops) {
             if (d.wallpaperPlugin == 'org.kde.image') {
@@ -147,17 +138,17 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
             }
         }
         "
-        # Reuse the exit code from qdbus
-        qdbus_exitcode="$?"
+        # Reuse the exit code from dbus
+        dbus_exitcode="$?"
 
-        if [[ "$qdbus_exitcode" -ne 0 ]]; then
+        if [[ "$dbus_exitcode" -ne 0 ]]; then
             # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
                 make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
                 Due to Plasma limitations, external programs cannot automatically change the wallpaper when the widgets are locked.\n \
                 See https://git.io/vprpM for more information." --icon variety 10  # Final number is the length of the popup
         fi
-        exit "$qdbus_exitcode"
+        exit "$dbus_exitcode"
 
     else
         WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
@@ -225,7 +216,7 @@ fi
 # For simple WMs, use either feh or nitrogen
 # Implementation note: this uses spaces around list items to enforce matching whole words.
 # This also means that an empty variable won't cause false positives, since it expands to "  "
-SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-gnome" "i3-with-shmlog" "jwm" "LeftWM" "openbox" "qtile" "qtile-venv" "xmonad")
+SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-gnome" "i3-with-shmlog" "jwm" "LeftWM" "openbox" "qtile" "qtile-venv" "spectrwm" "xmonad")
 if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " = *" $XDG_SESSION_DESKTOP "* ||
       " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
 	if command -v "feh" >/dev/null 2>&1; then
@@ -237,7 +228,7 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " 
     fi
 fi
 
-if [[ -n $SWAYSOCK ]]; then
+if [[ -n $SWAYSOCK || $XDG_CURRENT_DESKTOP == "Hyprland" ]]; then
     # If swaybg is available, use it as prevents system freeze.
     # See https://github.com/swaywm/sway/issues/5606
     if command -v "swaybg" >/dev/null 2>&1; then
