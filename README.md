@@ -21,11 +21,12 @@ Otherwise, its desktop entry menu provides a similar set of options.
 
 Variety is available in the distro repositories of:
 
-- [Arch Linux](https://www.archlinux.org/packages/community/any/variety/)
+- [Arch Linux](https://archlinux.org/packages/extra/any/variety/)
 - [Debian 9+](https://packages.debian.org/search?keywords=variety)
 - [Fedora](https://www.rpmfind.net/linux/rpm2html/search.php?query=variety)
 - [OpenSUSE](https://software.opensuse.org/package/variety?search_term=variety)
 - [Ubuntu 16.04+](https://packages.ubuntu.com/search?keywords=variety)
+- [NixOS](https://search.nixos.org/packages?show=variety&type=packages&query=variety)
 
 Detailed installation instructions can be found [here](https://peterlevi.com/variety/how-to-install/).
 
@@ -71,6 +72,7 @@ To install Variety from source, you will need Git, Python 3.5+ and [distutils-ex
 - *Optional*: feh or nitrogen: used by default to set wallpapers on i3, openbox, and other WMs
 - *Optional*: libayatana-indicator (for AppIndicator support)
 - *Optional*: for tray icon support on GNOME, the [GNOME AppIndicator extension](https://github.com/ubuntu/gnome-shell-extension-appindicator)
+- *Optional*: libavif-gdk-pixbuf (for avif format support)
 
 See `debian/control` for an equivalent list of runtime dependencies on Debian/Ubuntu.
 
