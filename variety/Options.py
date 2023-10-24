@@ -675,7 +675,7 @@ class Options:
         self.min_rating_enabled = False
         self.min_rating = 4
         self.name_regex_enabled = False
-        self.name_regex = "*"
+        self.name_regex = ".*"
 
         self.smart_notice_shown = False
         self.smart_register_shown = False
