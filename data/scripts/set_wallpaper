@@ -35,7 +35,21 @@
 # The default is to simply set WP=$1.
 WP=$1
 
-
+if [[ -f $XDG_RUNTIME_DIR/hyprpaper.lock ]]; then
+  if [[ -z $(ls /tmp/hypr/*.lock) ]]; then
+    ssock/ssock /tmp/hypr/.hyprpaper.sock preload $WP
+    while read line;do
+      LINE="wallpaper ${line},${WP}"
+    done <<<$(WlOutput/wlOutPut);
+    echo $LINE
+    echo $LINE | ssock/ssock /tmp/hypr/.hyprpaper.sock  
+  else
+    hyprctl hyprpaper preload $WP
+    WlOutput/wlOutPut | while read line;do 
+    hyprctl hyprpaper wallpaper $line,$WP
+  done
+  fi
+fi
 # Enlightenment
 # Needs Modules/System/DBus Extension loaded to work
 if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
