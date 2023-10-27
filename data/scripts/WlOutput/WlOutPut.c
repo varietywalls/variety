@@ -1,3 +1,5 @@
+// list wayland monitor
+// to compile: gcc WlOutPut.c -o wlOutPut -lwayland-client
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
