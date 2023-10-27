@@ -34,18 +34,18 @@
 # In the end put the path to the actual final wallpaper image file in the WP variable.
 # The default is to simply set WP=$1.
 WP=$1
-
+loc=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 if [[ -f $XDG_RUNTIME_DIR/hyprpaper.lock ]]; then
   if [[ -z $(ls /tmp/hypr/*.lock) ]]; then
-    ssock/ssock /tmp/hypr/.hyprpaper.sock preload $WP
+    $loc/ssock/ssock /tmp/hypr/.hyprpaper.sock preload $WP
     while read line;do
       LINE="wallpaper ${line},${WP}"
-    done <<<$(WlOutput/wlOutPut);
+    done <<<$($loc/WlOutput/wlOutPut);
     echo $LINE
-    echo $LINE | ssock/ssock /tmp/hypr/.hyprpaper.sock  
+    echo $LINE | $loc/ssock/ssock /tmp/hypr/.hyprpaper.sock  
   else
     hyprctl hyprpaper preload $WP
-    WlOutput/wlOutPut | while read line;do 
+    $loc/WlOutput/wlOutPut | while read line;do 
     hyprctl hyprpaper wallpaper $line,$WP
   done
   fi
