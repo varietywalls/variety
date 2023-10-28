@@ -1,3 +1,14 @@
+0.8.11
+    Fix #652: use importlib to support Python >= 3.12
+    Fix #424: Use only the primary monitor for thumbs window (#649)
+    Improvement #609: filter Unsplash Plus images
+    Improvement #604: download UHD images from Bing
+    Feature #621: Add AVIF image format support
+    Updated translations: Spanish (#607) and Brazilian Portuguese (#614)
+    set_wallpaper: add support for i3-gnome (#595), Hyprland (#618), spectrwm (#626)
+    set_wallpaper: only set Plasma wallpaper on desktops using an image background (#611)
+    set_wallpaper: use dbus-send instead of qdbus for setting KDE wallpaper (#633)
+
 0.8.10
     Bugfix #577: Fix Unsplash downloads
     Bugfix #553: Keep the current quote when using Image->Next

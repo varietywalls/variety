@@ -1,3 +1,17 @@
+variety (0.8.11) jammy; urgency=medium
+
+  * Fix #652: use importlib to support Python >= 3.12
+  * Fix #424: Use only the primary monitor for thumbs window (#649)
+  * Improvement #609: filter Unsplash Plus images
+  * Improvement #604: download UHD images from Bing
+  * Feature #621: Add AVIF image format support
+  * Updated translations: Spanish (#607) and Brazilian Portuguese (#614)
+  * set_wallpaper: add support for i3-gnome (#595), Hyprland (#618), spectrwm (#626)
+  * set_wallpaper: only set Plasma wallpaper on desktops using an image background (#611)
+  * set_wallpaper: use dbus-send instead of qdbus for setting KDE wallpaper (#633)
+
+ -- James Lu <jlu@debian.org>  Fri, 27 Oct 2023 18:12:42 -0700
+
 variety (0.8.10) jammy; urgency=medium
 
   * Bugfix #577: Fix Unsplash downloads
@@ -252,7 +266,7 @@ variety (0.5.5) precise; urgency=low
 
 variety (0.5.4ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Sun, 20 Sep 2015 00:27:37 +0300
 
@@ -297,7 +311,7 @@ variety (0.5.4) precise; urgency=low
 
 variety (0.5.3ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Wed, 05 Aug 2015 21:14:58 +0300
 
@@ -311,7 +325,7 @@ variety (0.5.3) precise; urgency=low
 
 variety (0.5.2ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Sun, 08 Feb 2015 19:58:14 +0200
 
@@ -335,7 +349,7 @@ variety (0.5.2) precise; urgency=low
 
 variety (0.5.1ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Tue, 20 Jan 2015 12:02:48 +0200
 
@@ -356,7 +370,7 @@ variety (0.5.1) precise; urgency=low
 
 variety (0.5.0ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Sun, 11 Jan 2015 14:03:59 +0200
 
@@ -443,7 +457,7 @@ variety (0.4.20) precise; urgency=low
 
 variety (0.4.19ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@peter>  Thu, 17 Jul 2014 15:46:32 +0300
 
@@ -485,7 +499,7 @@ variety (0.4.19) precise; urgency=low
 
 variety (0.4.18ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@plpc>  Tue, 15 Jul 2014 01:32:31 +0300
 
@@ -529,7 +543,7 @@ variety (0.4.18) precise; urgency=low
 
 variety (0.4.17ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peter@peter>  Fri, 09 May 2014 11:32:53 +0300
 
@@ -566,7 +580,7 @@ variety (0.4.16) precise; urgency=low
 
 variety (0.4.15ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Tue, 24 Sep 2013 23:43:57 +0300
 
@@ -617,7 +631,7 @@ variety (0.4.14) precise; urgency=low
 
 variety (0.4.13ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Tue, 11 Jun 2013 09:31:09 +0300
 
@@ -680,7 +694,7 @@ variety (0.4.13) precise; urgency=low
 
 variety (0.4.12ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Thu, 14 Feb 2013 16:32:46 +0200
 
@@ -733,7 +747,7 @@ variety (0.4.12) precise; urgency=low
 
 variety (0.4.11ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Mon, 26 Nov 2012 23:54:26 +0200
 
@@ -787,7 +801,7 @@ variety (0.4.10) precise; urgency=low
 
 variety (0.4.9ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Tue, 11 Sep 2012 00:04:04 +0300
 
@@ -818,7 +832,7 @@ variety (0.4.9) precise; urgency=low
 
 variety (0.4.8ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Mon, 03 Sep 2012 17:20:48 +0300
 
@@ -839,7 +853,7 @@ variety (0.4.8) precise; urgency=low
 
 variety (0.4.7ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Sat, 18 Aug 2012 16:39:10 +0300
 
@@ -855,7 +869,7 @@ variety (0.4.7) precise; urgency=low
 
 variety (0.4.6ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Wed, 15 Aug 2012 09:01:52 +0300
 
@@ -875,7 +889,7 @@ variety (0.4.6) precise; urgency=low
 
 variety (0.4.5ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Mon, 13 Aug 2012 10:33:29 +0300
 
@@ -906,7 +920,7 @@ variety (0.4.5) precise; urgency=low
 
 variety (0.4.4ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Sat, 11 Aug 2012 14:39:48 +0300
 
@@ -924,7 +938,7 @@ variety (0.4.4) precise; urgency=low
 
 variety (0.4.3ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Sun, 05 Aug 2012 23:30:04 +0300
 
@@ -952,7 +966,7 @@ variety (0.4.2) precise; urgency=low
 
 variety (0.4.1ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Fri, 03 Aug 2012 02:05:34 +0300
 
@@ -1053,7 +1067,7 @@ variety (0.3.11) precise; urgency=low
 
 variety (0.3.10ubuntu1) precise; urgency=low
 
-  * 
+  *
 
  -- Peter Levi <peterlevi@peterlevi.com>  Thu, 12 Jul 2012 17:01:35 +0300
 
