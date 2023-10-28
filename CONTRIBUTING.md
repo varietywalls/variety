@@ -13,9 +13,9 @@ is an extremely valuable contribution - these are always very welcome.
 
 ## Translations
 
-As of July 2021 we are using Transifex to sync up translations: https://www.transifex.com/variety/variety
+As of July 2021 we are using Transifex for managing translations: https://www.transifex.com/variety/variety
 
-Ping **@jlu5** if you have any issues with this - translation platforms are fairly new to us.
+Please ping **@jlu5** if you want to be added to the project.
 
 ## Bigger changes or new features
 
