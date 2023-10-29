@@ -227,8 +227,8 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " 
         nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
     fi
 fi
-
-if [[ -n $SWAYSOCK || $XDG_CURRENT_DESKTOP == "Hyprland" ]]; then
+PID=`pidof swaybg`
+if [[ -n $PID ]]; then
     # If swaybg is available, use it as prevents system freeze.
     # See https://github.com/swaywm/sway/issues/5606
     if command -v "swaybg" >/dev/null 2>&1; then
