@@ -128,16 +128,22 @@ fi
 if [ "${KDE_FULL_SESSION}" == "true" ]; then
     # Plasma 5.7 introduced a new feature to set the wallpaper via a dbus script:
     # https://github.com/KDE/plasma-workspace/commit/903cbfd7e267a4812a6ec222eb7e1b5dd775686f
-    if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '5' ]]; then
-        dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"
+    plasma_qdbus_script="
         let allDesktops = desktops();
         for (let d of allDesktops) {
             if (d.wallpaperPlugin == 'org.kde.image') {
                 d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');
-                d.writeConfig('Image', 'file://""$WP""')
+                d.writeConfig('Image', 'file://""$WP""');
             }
         }
-        "
+    "
+    if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '6' ]]; then
+        dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
+        # Reuse the exit code from dbus
+        exit "$?"
+
+    elif [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '5' ]]; then
+        dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
         # Reuse the exit code from dbus
         dbus_exitcode="$?"
 
