@@ -137,17 +137,12 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
             }
         }
     "
-    if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '6' ]]; then
-        dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
-        # Reuse the exit code from dbus
-        exit "$?"
-
-    elif [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" == '5' ]]; then
+    if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" -ge '5' ]]; then
         dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
         # Reuse the exit code from dbus
         dbus_exitcode="$?"
 
-        if [[ "$dbus_exitcode" -ne 0 ]]; then
+        if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
             # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
                 make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
