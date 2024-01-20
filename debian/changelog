@@ -1,3 +1,9 @@
+variety (0.8.12) jammy; urgency=medium
+
+  * Fix #672: add support for KDE Plasma 6
+
+ -- James Lu <jlu@debian.org>  Sat, 20 Jan 2024 14:37:23 -0800
+
 variety (0.8.11) jammy; urgency=medium
 
   * Fix #652: use importlib to support Python >= 3.12
