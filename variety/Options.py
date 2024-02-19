@@ -253,6 +253,16 @@ class Options:
                 pass
 
             try:
+                self.name_regex_enabled = config["name_regex_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.name_regex = config["name_regex"]
+            except Exception:
+                pass
+
+            try:
                 self.smart_notice_shown = config["smart_notice_shown"].lower() in TRUTH_VALUES
             except Exception:
                 pass
@@ -664,6 +674,8 @@ class Options:
         self.lightness_mode = Options.LightnessMode.DARK
         self.min_rating_enabled = False
         self.min_rating = 4
+        self.name_regex_enabled = False
+        self.name_regex = ".*"
 
         self.smart_notice_shown = False
         self.smart_register_shown = False
@@ -783,6 +795,8 @@ class Options:
             config["lightness_mode"] = str(self.lightness_mode)
             config["min_rating_enabled"] = str(self.min_rating_enabled)
             config["min_rating"] = str(self.min_rating)
+            config["name_regex_enabled"] = str(self.name_regex_enabled)
+            config["name_regex"] = str(self.name_regex)
 
             config["smart_notice_shown"] = str(self.smart_notice_shown)
             config["smart_register_shown"] = str(self.smart_register_shown)

@@ -583,6 +583,11 @@ class VarietyWindow(Gtk.Window):
             or self.previous_options.min_rating != self.options.min_rating
         ):
             return True
+        if (
+            self.previous_options.name_regex_enabled != self.options.name_regex_enabled
+            or self.previous_options.name_regex != self.options.name_regex
+        ):
+            return True
         return False
 
     def size_options_changed(self):
@@ -1846,6 +1851,10 @@ class VarietyWindow(Gtk.Window):
             if self.options.min_rating_enabled:
                 rating = Util.get_rating(img)
                 if rating is None or rating <= 0 or rating < self.options.min_rating:
+                    return False
+
+            if self.options.name_regex_enabled:
+                if re.fullmatch(self.options.name_regex, os.path.basename(img)) is None:
                     return False
 
             if self.options.use_landscape_enabled or self.options.min_size_enabled:
