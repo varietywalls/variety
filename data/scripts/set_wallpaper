@@ -239,6 +239,7 @@ if command -v "swaybg" >/dev/null 2>&1; then
     if [ ! -z "$PID" ]; then
         sleep 1
         kill $PID 2>/dev/null
+    fi
 else
     swaymsg output "*" bg "$WP" fill 2> /dev/null
 fi
