@@ -248,6 +248,9 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             Util.safe_unlink(local_filepath_partial)
             return None
 
+        # file rename is an atomic operation, so we should never end up with partial downloads
+        os.rename(local_filepath_partial, local_filepath)
+
         metadata = {
             "sourceType": source_type,
             "sourceName": source_name,
@@ -256,9 +259,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             "imageURL": image_url,
         }
         metadata.update(extra_metadata or {})
-        Util.write_metadata(local_filepath_partial, metadata)
+        Util.write_metadata(local_filepath, metadata)
 
-        # file rename is an atomic operation, so we should never end up with partial downloads
-        os.rename(local_filepath_partial, local_filepath)
         logger.info(lambda: "Download complete")
         return local_filepath
