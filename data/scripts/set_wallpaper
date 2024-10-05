@@ -204,6 +204,11 @@ if [[ $rc = 0 ]] ; then
     done
 fi
 
+# Lingmo OS
+if [ "$XDG_CURRENT_DESKTOP" == "Lingmo" ]; then
+    qdbus com.lingmo.Settings /Theme com.lingmo.Theme.setWallpaper "$WP" 2> /dev/null
+fi
+
 # LXDE/PCmanFM
 if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
     pcmanfm --set-wallpaper "$WP" 2> /dev/null
