@@ -166,6 +166,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.ui.icon.set_active(6)
             elif self.options.icon == "None":
                 self.ui.icon.set_active(8)
+            elif self.options.icon == "Auto":
+                self.ui.icon.set_active(9)
             else:
                 self.ui.icon.set_active(7)
                 self.ui.icon_chooser.set_filename(self.options.icon)
@@ -1007,6 +1009,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 self.options.icon = "Current"
             elif self.ui.icon.get_active() == 8:
                 self.options.icon = "None"
+            elif self.ui.icon.get_active() == 9:
+                self.options.icon = "Auto"
             elif self.ui.icon.get_active() == 7:
                 file = self.ui.icon_chooser.get_filename()
                 if file and os.access(file, os.R_OK):

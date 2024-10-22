@@ -195,7 +195,7 @@ class Options:
 
             try:
                 icon = config["icon"]
-                if icon in ["Light", "Dark", "Current", "1", "2", "3", "4", "None"] or (
+                if icon in ["Light", "Dark", "Auto", "Current", "1", "2", "3", "4", "None"] or (
                     os.access(icon, os.R_OK) and Util.is_image(icon)
                 ):
                     self.icon = icon

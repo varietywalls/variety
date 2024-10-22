@@ -21,6 +21,7 @@ import os
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
+from variety.PreferDarkThemeListener import PreferDarkThemeListener
 from variety.Util import Util, _
 from variety_lib import varietyconfig
 
@@ -55,6 +56,7 @@ class Indicator:
         self.parent = window
         self.create_menu(window)
         self.create_indicator(window)
+        self.create_prefer_dark_mode_callback(window.prefer_dark_mode_listener)
 
     def create_menu(self, window):
         self.menu = Gtk.Menu()
@@ -348,6 +350,14 @@ class Indicator:
             self.status_icon.connect("activate", left_click_event)
             self.status_icon.connect("popup-menu", right_click_event)
             self.status_icon.connect("scroll-event", on_indicator_scroll_status_icon)
+
+    def create_prefer_dark_mode_callback(self, listener: PreferDarkThemeListener) -> None:
+        def set_auto_icon(prefers_dark_mode: bool) -> None:
+            if self.parent.options.icon == "Auto":
+                self.set_icon("Dark" if prefers_dark_mode else "Light")
+
+        listener.register_callback(set_auto_icon)
+
 
     def set_visible(self, visible):
         self.visible = visible
