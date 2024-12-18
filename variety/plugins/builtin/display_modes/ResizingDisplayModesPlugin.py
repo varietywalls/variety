@@ -14,7 +14,7 @@ IMAGEMAGICK_FIT_WITH_BLUR = (
     "-resize %Wx%H^ -gravity center -extent %Wx%H -scale 10% -blur 0x3 -resize 1000% -clone 0 "
     "-resize %Wx%H -size %Wx%H -gravity center -composite"
 )
-
+IMAGEMAGICK_TILE = "-write mpr:x -delete -1 -size %Wx%H tile:mpr:x "
 
 def _smart_fn(filename):
     try:
@@ -23,7 +23,10 @@ def _smart_fn(filename):
         total_w, total_h = Util.get_multimonitor_display_size()
         if image_w * image_h * 10 < primary_w * primary_h:
             # image way smaller than primary monitor, tile it
-            return DisplayModeData(set_wallpaper_param="wallpaper")
+            cmd = IMAGEMAGICK_TILE.replace("%W", str(primary_w)).replace(
+                    "%H", str(primary_h)
+            )
+            return DisplayModeData(set_wallpaper_param="zoom", imagemagick_cmd=cmd)
         else:
             image_ratio = image_w / image_h
             primary_ratio = primary_w / primary_h
@@ -63,7 +66,7 @@ class ResizingDisplayModesPlugin(IDisplayModesPlugin):
                     "Variety uses the fast OS-provided Zoom mode for images that are close to "
                     "screen proportions, uses 'Fit & pad with a blurred background' when the image "
                     "proportions are significantly different - e.g. portraits on a horizontal "
-                    "screen, and uses the OS-provided tiling mode for very small images that would "
+                    "screen, and uses a screen-covering tiling of the image if it is very small such that it would "
                     "look bad resized."
                 ),
                 fn=_smart_fn,
