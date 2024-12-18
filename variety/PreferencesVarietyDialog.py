@@ -207,6 +207,8 @@ class PreferencesVarietyDialog(PreferencesDialog):
             )
             self.ui.min_rating_enabled.set_active(self.options.min_rating_enabled)
             self.ui.min_rating.set_active(self.options.min_rating - 1)
+            self.ui.name_regex_enabled.set_active(self.options.name_regex_enabled)
+            self.ui.name_regex.set_text(self.options.name_regex)
             self.ui.clock_enabled.set_active(self.options.clock_enabled)
             self.ui.clock_font.set_font_name(self.options.clock_font)
             self.ui.clock_date_font.set_font_name(self.options.clock_date_font)
@@ -351,6 +353,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_min_size_enabled_toggled()
             self.on_lightness_enabled_toggled()
             self.on_min_rating_enabled_toggled()
+            self.on_name_regex_enabled_toggled()
             self.on_copyto_enabled_toggled()
             self.on_quotes_change_enabled_toggled()
             self.on_icon_changed()
@@ -1056,6 +1059,12 @@ class PreferencesVarietyDialog(PreferencesDialog):
             except Exception:
                 pass
 
+            self.options.name_regex_enabled = self.ui.name_regex_enabled.get_active()
+            try:
+                self.options.name_regex = self.ui.name_regex.get_text()
+            except Exception:
+                pass
+
             self.options.clock_enabled = self.ui.clock_enabled.get_active()
             self.options.clock_font = self.ui.clock_font.get_font_name()
             self.options.clock_date_font = self.ui.clock_date_font.get_font_name()
@@ -1181,6 +1190,9 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
     def on_min_rating_enabled_toggled(self, widget=None):
         self.ui.min_rating.set_sensitive(self.ui.min_rating_enabled.get_active())
+
+    def on_name_regex_enabled_toggled(self, widget=None):
+        self.ui.name_regex.set_sensitive(self.ui.name_regex_enabled.get_active())
 
     def on_lightness_enabled_toggled(self, widget=None):
         self.ui.lightness.set_sensitive(self.ui.lightness_enabled.get_active())
