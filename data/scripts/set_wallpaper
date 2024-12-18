@@ -142,6 +142,11 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
         # Reuse the exit code from dbus
         dbus_exitcode="$?"
 
+        if [[ "$dbus_exitcode" -eq 0 && "${KDE_SESSION_VERSION}" -eq '6' ]]; then
+            # If successful, set lockscreen on KDE 6
+            kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
+        fi
+        
         if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
             # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
