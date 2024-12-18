@@ -38,6 +38,7 @@ from variety.DominantColors import DominantColors
 from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.Options import Options
+from variety.PreferDarkThemeListener import PreferDarkThemeListener
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
 from variety.plugins.downloaders.DefaultDownloader import SAFE_MODE_BLACKLIST
 from variety.plugins.downloaders.ImageSource import ImageSource
@@ -107,6 +108,7 @@ class VarietyWindow(Gtk.Window):
         self.about = None
         self.preferences_dialog = None
         self.ind = None
+        self.prefer_dark_theme_listener = PreferDarkThemeListener()
 
         try:
             if Gio.SettingsSchemaSource.get_default().lookup("org.gnome.desktop.background", True):
@@ -2549,6 +2551,8 @@ class VarietyWindow(Gtk.Window):
 
             if self.options.icon == "Current":
                 self.ind.set_icon(self.current)
+            elif self.options.icon == "Auto":
+                pass # Let the listener set it
             else:
                 self.ind.set_icon(self.options.icon)
         else:
