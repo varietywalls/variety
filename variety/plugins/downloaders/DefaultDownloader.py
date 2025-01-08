@@ -187,6 +187,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         local_filename=None,
         request_headers=None,
         request_kwargs=None,
+        check_image=False,
     ):
         source_type = source_type or self.get_source_type()
         source_name = source_name or self.get_source_name()
@@ -243,7 +244,7 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
             Util.safe_unlink(local_filepath_partial)
             raise e
 
-        if not Util.is_image(local_filepath_partial, check_contents=True):
+        if check_image and not Util.is_image(local_filepath_partial, check_contents=True):
             logger.info(lambda: "Downloaded data was not an image, image URL might be outdated")
             Util.safe_unlink(local_filepath_partial)
             return None
