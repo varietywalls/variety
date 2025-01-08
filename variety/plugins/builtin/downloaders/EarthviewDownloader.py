@@ -2683,7 +2683,7 @@ class EarthviewDownloader(SimpleDownloader):
 
         # Download source JSON containing the image
         local_filepath = self.save_locally(
-            origin_url=self.ROOT_URL,
+            origin_url=image_url,
             image_url=image_url,
             local_filename=local_filename,
             check_image=False,
