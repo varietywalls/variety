@@ -21,7 +21,7 @@ from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
 from variety.Util import Util, _
 
 # Credits: Formerly using the data prepared by limhenry @ https://github.com/limhenry/earthview
-DATA_URL = "https://earthview.withgoogle.com/_api/photos.json"
+DATA_URL = "https://new-images-preview-dot-earth-viewer.appspot.com/_api/photos.json"
 
 logger = logging.getLogger("variety")
 
@@ -30,7 +30,7 @@ random.seed()
 
 class EarthviewDownloader(SimpleDownloader):
     DESCRIPTION = _("Google Earth View Wallpapers")
-    ROOT_URL = "https://earthview.withgoogle.com/"
+    ROOT_URL = "https://new-images-preview-dot-earth-viewer.appspot.com/"
 
     @classmethod
     def get_info(cls):
@@ -64,7 +64,7 @@ class EarthviewDownloader(SimpleDownloader):
         return Throttling(max_downloads_per_hour=20, max_queue_fills_per_hour=None)
 
     def download_queue_item(self, item):
-        item = Util.fetch_json("https://earthview.withgoogle.com/_api/" + item["slug"] + ".json")
+        item = Util.fetch_json("https://new-images-preview-dot-earth-viewer.appspot.com/_api/" + item["slug"] + ".json")
         region = item["region"]
         filename = "{}{} (ID-{}).jpg".format(
             region + ", " if region and region != "-" else "", item["country"], item["id"]
