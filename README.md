@@ -52,7 +52,7 @@ sudo apt install variety-slideshow
 ```
 
 ### Install from source
-To install Variety from source, you will need Git, Python 3.5+ and [distutils-extra](https://launchpad.net/python-distutils-extra). To actually run Variety, you will also need the following:
+To install Variety from source, you will need Git, Python 3.8+ and [distutils-extra](https://launchpad.net/python-distutils-extra). To actually run Variety, you will also need the following:
 
 #### Runtime Requirements
 - GTK+ 3
