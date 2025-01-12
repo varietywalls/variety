@@ -100,7 +100,7 @@ class QuotationsPageSource(IQuoteSource):
         logger.info(lambda: "Fetching quotes from Goodreads for search url=%s" % url)
         html = Util.fetch(url)
         try:
-            page = random.randint(1, int(re.findall("Page 1 of (\d+)", html)[0]))
+            page = random.randint(1, int(re.findall(r"Page 1 of (\d+)", html)[0]))
             url += "&page=%d" % page
             html = Util.fetch(url)
         except Exception:
