@@ -90,5 +90,5 @@ If you just run it and try to open one of the .ui files in `data/ui`,
 it would give you an error. 
 Here is how to run it successfully:
 ```
-GLADE_CATALOG_SEARCH_PATH=data/ui/ glade data/ui/PreferecensVarietyDialog.ui
+GLADE_CATALOG_SEARCH_PATH=data/ui/ glade data/ui/PreferencesVarietyDialog.ui
 ```
