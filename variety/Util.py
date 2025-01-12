@@ -765,7 +765,10 @@ class Util:
 
     @staticmethod
     def compare_versions(v1, v2):
-        from pkg_resources import parse_version
+        try:
+            from packaging.version import parse as parse_version
+        except ImportError:
+            from pkg_resources import parse_version
 
         pv1 = parse_version(v1)
         pv2 = parse_version(v2)

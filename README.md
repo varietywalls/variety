@@ -63,7 +63,7 @@ To install Variety from source, you will need Git, Python 3.8+ and [distutils-ex
     - PyGObject, built with Cairo integration
     - ConfigObj
     - Pillow
-    - pkg_resources (from setuptools)
+    - packaging
     - Requests
     - *Optional*: httplib2 (for more quotes sources)
 - *Optional*: imagemagick (for wallpaper filters)
