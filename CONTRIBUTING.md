@@ -78,3 +78,17 @@ your changes caused the failure or it failed because of ax external reason.
 
 Please note the test suite is not yet very extensive, and also does not cover any of the UI
 aspects of Variety - always do some manual tests before you consider your PR is complete.
+
+## Editing UI files
+We have used Glade to develop the GTK UI dialogs of Variety.
+To install glade on Ubuntu:
+```commandline
+sudo apt install glade
+```
+
+If you just run it and try to open one of the .ui files in `data/ui`, 
+it would give you an error. 
+Here is how to run it successfully:
+```
+GLADE_CATALOG_SEARCH_PATH=data/ui/ glade data/ui/PreferecensVarietyDialog.ui
+```
