@@ -1649,7 +1649,7 @@
                         <property name="margin_top">5</property>
                         <property name="margin_bottom">10</property>
                         <property name="hexpand">True</property>
-                        <property name="label" translatable="yes">&lt;small&gt;&lt;a href='http://peterlevi.com/variety/wiki/Plugins'&gt;More plugins&lt;/a&gt;&lt;/small&gt;</property>
+                        <property name="label" translatable="yes">&lt;small&gt;&lt;a href='https://github.com/varietywalls/variety/wiki/Plugins'&gt;More plugins&lt;/a&gt;&lt;/small&gt;</property>
                         <property name="use_markup">True</property>
                         <property name="justify">fill</property>
                         <property name="wrap">True</property>
@@ -1954,7 +1954,7 @@
                             <property name="can_focus">True</property>
                             <property name="halign">start</property>
                             <property name="margin_top">7</property>
-                            <property name="label" translatable="yes">These don't work? &lt;a href="https://answers.launchpad.net/variety/+faq/2138"&gt;Read here&lt;/a&gt;. How to further configure the clock? &lt;a href="http://peterlevi.com/variety/2012/11/configuring-the-clock/"&gt;Read here&lt;/a&gt;.</property>
+                            <property name="label" translatable="yes">These don't work? &lt;a href="https://answers.launchpad.net/variety/+faq/2138"&gt;Read here&lt;/a&gt;. How to further configure the clock? &lt;a href="https://github.com/varietywalls/variety/wiki/Configuring-the-clock"&gt;Read here&lt;/a&gt;.</property>
                             <property name="use_markup">True</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
@@ -3941,7 +3941,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     </child>
                     <child>
                       <object class="GtkLinkButton" id="linkbutton3">
-                        <property name="label">http://peterlevi.com/variety</property>
+                        <property name="label">https://github.com/varietywalls/variety</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -3949,7 +3949,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
                         <property name="relief">none</property>
-                        <property name="uri">http://peterlevi.com/variety</property>
+                        <property name="uri">https://github.com/varietywalls/variety</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -3990,39 +3990,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label22">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_top">10</property>
-                        <property name="label" translatable="yes">Send feedback</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLinkButton" id="linkbutton2">
-                        <property name="label">peterlevi@peterlevi.com</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="halign">start</property>
-                        <property name="relief">none</property>
-                        <property name="uri">mailto:peterlevi@peterlevi.com</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -4048,7 +4015,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
                         <property name="relief">none</property>
-                        <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                        <property name="uri">https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -4151,7 +4118,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     </child>
                     <child>
                       <object class="GtkLinkButton" id="linkbutton6">
-                        <property name="label">http://peterlevi.com/variety</property>
+                        <property name="label">https://github.com/varietywalls/variety</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -4159,7 +4126,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
                         <property name="relief">none</property>
-                        <property name="uri">http://peterlevi.com/variety</property>
+                        <property name="uri">https://github.com/varietywalls/variety</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -4200,39 +4167,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label33">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_top">10</property>
-                        <property name="label" translatable="yes">Send feedback</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLinkButton" id="linkbutton8">
-                        <property name="label">peterlevi@peterlevi.com</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="halign">start</property>
-                        <property name="relief">none</property>
-                        <property name="uri">mailto:peterlevi@peterlevi.com</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label35">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -4258,7 +4192,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="has_tooltip">True</property>
                         <property name="halign">start</property>
                         <property name="relief">none</property>
-                        <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                        <property name="uri">https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -4348,7 +4282,7 @@ Peter Levi</property>
                     <property name="margin_top">10</property>
                     <property name="relief">none</property>
                     <property name="xalign">0</property>
-                    <property name="uri">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=DHQUELMQRQW46&amp;lc=BG&amp;item_name=Variety%20Wallpaper%20Changer&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted</property>
+                    <property name="uri">https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -4381,7 +4315,7 @@ Peter Levi</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="editable">False</property>
-                        <property name="text" translatable="yes">1EHtkck9pw2Ry4NP6Es8rAXWEeADLdkqcu</property>
+                        <property name="text" translatable="yes">bc1qgxlvmwe2pj5lvku6vm53edes3q7c3ykta7xyu4</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>

@@ -28,8 +28,6 @@ Variety is available in the distro repositories of:
 - [Ubuntu 16.04+](https://packages.ubuntu.com/search?keywords=variety)
 - [NixOS](https://search.nixos.org/packages?show=variety&type=packages&query=variety)
 
-Detailed installation instructions can be found [here](https://peterlevi.com/variety/how-to-install/).
-
 On a recent Ubuntu or Debian-based system (Universe repository has to be enabled on Ubuntu):
 ```
 sudo apt update && sudo apt install variety

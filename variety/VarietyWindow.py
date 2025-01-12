@@ -78,10 +78,7 @@ logger = logging.getLogger("variety")
 
 DL_FOLDER_FILE = ".variety_download_folder"
 
-DONATE_URL = (
-    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DHQUELMQRQW46&lc=BG&item_name="
-    "Variety%20Wallpaper%20Changer&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"
-)
+DONATE_URL = "https://www.paypal.com/donate/?business=DHQUELMQRQW46&no_recurring=0&item_name=Variety+Wallpaper+Changer&currency_code=EUR"
 
 OUTDATED_MSG = "This version of Variety is outdated and unsupported. Please upgrade. Quitting."
 
@@ -2281,8 +2278,8 @@ class VarietyWindow(Gtk.Window):
                         last_version = f.read().strip()
                 except Exception:
                     last_version = (
-                        "0.4.12"
-                    )  # this is the last release that did not have the .version file
+                        "0.4.12"  # this is the last release that did not have the .version file
+                    )
 
             logger.info(
                 lambda: "Last run version was %s or earlier, current version is %s"

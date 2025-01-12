@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="privacy_notice_dialog" version="1.0"/>
   <object class="PrivacyNoticeDialog" id="PrivacyNoticeDialog">
     <property name="name">PrivacyNoticeDialog</property>
-    <property name="width_request">960</property>
-    <property name="height_request">200</property>
+    <property name="width-request">960</property>
+    <property name="height-request">200</property>
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="has_focus">True</property>
+    <property name="can-focus">True</property>
+    <property name="has-focus">True</property>
     <property name="valign">baseline</property>
     <property name="title" translatable="yes">Variety - Privacy Notice</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
-    <property name="default_width">960</property>
-    <property name="default_height">200</property>
-    <property name="icon_name">variety</property>
-    <property name="type_hint">dialog</property>
-    <child>
-      <placeholder/>
-    </child>
+    <property name="window-position">center-always</property>
+    <property name="default-width">960</property>
+    <property name="default-height">200</property>
+    <property name="icon-name">variety</property>
+    <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="internal-gtkbox">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <property name="halign">center</property>
         <property name="valign">center</property>
-        <property name="margin_left">2</property>
-        <property name="margin_right">2</property>
-        <property name="margin_top">2</property>
-        <property name="margin_bottom">2</property>
+        <property name="margin-left">2</property>
+        <property name="margin-right">2</property>
+        <property name="margin-top">2</property>
+        <property name="margin-bottom">2</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="action-area">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="margin_right">15</property>
-            <property name="layout_style">end</property>
+            <property name="can-focus">True</property>
+            <property name="margin-right">15</property>
+            <property name="layout-style">end</property>
             <child>
               <placeholder/>
             </child>
@@ -46,26 +43,26 @@
             <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="padding">5</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkBox" id="main-gtkbox">
-            <property name="width_request">300</property>
-            <property name="height_request">200</property>
+            <property name="width-request">300</property>
+            <property name="height-request">200</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="margin_left">10</property>
-            <property name="margin_right">10</property>
-            <property name="margin_top">10</property>
+            <property name="can-focus">True</property>
+            <property name="margin-left">10</property>
+            <property name="margin-right">10</property>
+            <property name="margin-top">10</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">&lt;span font="15" weight="bold"&gt;Privacy Notice&lt;/span&gt;</property>
-                <property name="use_markup">True</property>
+                <property name="use-markup">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -76,8 +73,8 @@
             <child>
               <object class="GtkImage" id="image">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">10</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">10</property>
                 <property name="pixbuf">../media/vrty-cloud.png</property>
               </object>
               <packing>
@@ -89,8 +86,8 @@
             <child>
               <object class="GtkLabel" id="maintext">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">15</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">15</property>
                 <property name="label" translatable="yes" comments="Main text for the Privacy Notice dialog">Before we start, here are some things you need to be aware of and agree to:
 
 &lt;b&gt;Variety is an open-source application, provided as is, without any warranties&lt;/b&gt;. By using it, you agree to the terms and conditions of the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.en.html"&gt;GNU GPLv3 license&lt;/a&gt; under which it is distributed.  
@@ -100,7 +97,7 @@
 &lt;b&gt;Variety fetches and applies rate limiting settings defined by the development team.&lt;/b&gt; This may affect the rate at which it downloads new images, but it helps ensure Variety can work regardless of how many people are running it. These settings will be downloaded from gist.github.com where we host them.
 
 &lt;b&gt;Some image sources require us to track additional information when enabled.&lt;/b&gt; For example the terms of &lt;a href="https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines"&gt;Unsplash&lt;/a&gt; require us to track and report when users download and view images from Unsplash.</property>
-                <property name="use_markup">True</property>
+                <property name="use-markup">True</property>
                 <property name="wrap">True</property>
               </object>
               <packing>
@@ -111,24 +108,26 @@
             </child>
             <child>
               <object class="GtkBox">
-                <property name="height_request">0</property>
+                <property name="height-request">0</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">40</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">40</property>
+                <property name="margin-bottom">10</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin_left">5</property>
-                        <property name="margin_right">10</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-left">5</property>
+                        <property name="margin-right">10</property>
+                        <property name="margin-end">10</property>
                         <property name="label" translatable="yes">&lt;b&gt;Use Internet Access:&lt;/b&gt;
 &lt;i&gt;Can be changed later in Preferences&lt;/i&gt;</property>
-                        <property name="use_markup">True</property>
+                        <property name="use-markup">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -137,13 +136,28 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSwitch" id="internet_enabled">
+                      <object class="GtkBox">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="tooltip_text" translatable="yes">Enabling internet access is highly recommended. Without it, many of the functions Variety provides are disabled. 
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkSwitch" id="internet_enabled">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="tooltip-text" translatable="yes">Enabling internet access is highly recommended. Without it, many of the functions Variety provides are disabled. 
 
 You can change this setting later in Preferences.</property>
-                        <property name="active">True</property>
+                            <property name="active">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -161,11 +175,11 @@ You can change this setting later in Preferences.</property>
                 <child>
                   <object class="GtkButton" id="reject_button">
                     <property name="label" translatable="yes">Reject and Quit</property>
-                    <property name="width_request">220</property>
-                    <property name="height_request">35</property>
+                    <property name="width-request">220</property>
+                    <property name="height-request">35</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -176,14 +190,14 @@ You can change this setting later in Preferences.</property>
                 <child>
                   <object class="GtkButton" id="accept_button">
                     <property name="label" translatable="yes">Accept and Continue</property>
-                    <property name="width_request">220</property>
-                    <property name="height_request">35</property>
+                    <property name="width-request">220</property>
+                    <property name="height-request">35</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
-                    <property name="has_default">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="margin_left">15</property>
+                    <property name="can-focus">True</property>
+                    <property name="can-default">True</property>
+                    <property name="has-default">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="margin-left">15</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <requires lib="welcome_dialog" version="1.0"/>
   <object class="WelcomeDialog" id="welcome_dialog">
-    <property name="width_request">960</property>
-    <property name="height_request">200</property>
+    <property name="width-request">960</property>
+    <property name="height-request">200</property>
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="has_focus">True</property>
-    <property name="border_width">5</property>
+    <property name="can-focus">True</property>
+    <property name="has-focus">True</property>
+    <property name="border-width">5</property>
     <property name="title" translatable="yes">Welcome to Variety!</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
-    <property name="default_width">960</property>
-    <property name="default_height">200</property>
+    <property name="window-position">center-always</property>
+    <property name="default-width">960</property>
+    <property name="default-height">200</property>
     <property name="icon">../media/variety.svg</property>
-    <property name="type_hint">dialog</property>
-    <child>
-      <placeholder/>
-    </child>
+    <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
-        <property name="width_request">750</property>
-        <property name="height_request">520</property>
+        <property name="width-request">750</property>
+        <property name="height-request">520</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="valign">start</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="valign">end</property>
-            <property name="margin_right">15</property>
-            <property name="margin_bottom">10</property>
-            <property name="layout_style">end</property>
+            <property name="margin-right">15</property>
+            <property name="margin-bottom">10</property>
+            <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="continue_button">
                 <property name="label" translatable="yes">Continue</property>
-                <property name="use_action_appearance">False</property>
-                <property name="width_request">150</property>
-                <property name="height_request">35</property>
+                <property name="use-action-appearance">False</property>
+                <property name="width-request">150</property>
+                <property name="height-request">35</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="has_default">True</property>
-                <property name="receives_default">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-default">True</property>
+                <property name="has-default">True</property>
+                <property name="receives-default">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -58,21 +55,21 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkBox" id="box1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">25</property>
-            <property name="margin_right">25</property>
+            <property name="can-focus">False</property>
+            <property name="margin-left">25</property>
+            <property name="margin-right">25</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="title">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="ypad">20</property>
@@ -91,14 +88,14 @@
             <child>
               <object class="GtkLabel" id="message">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <property name="label" translatable="yes">Variety is an automatic wallpaper changer. It rotates your desktop wallpaper on a regular basis using local images or images downloaded from various online sources. It runs quietly in the background - to control it, click this icon in your system tray:</property>
-                <property name="use_markup">True</property>
+                <property name="use-markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
-                <property name="max_width_chars">130</property>
+                <property name="max-width-chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -109,7 +106,7 @@
             <child>
               <object class="GtkImage" id="image1">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="pixbuf">../media/tray-screenshot.png</property>
               </object>
               <packing>
@@ -121,14 +118,14 @@
             <child>
               <object class="GtkLabel" id="message2">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
-                <property name="label" translatable="yes">Variety is open-source software, created by Peter Levi, a software developer from Bulgaria. If you like it, please &lt;a href="http://peterlevi.com/variety/donate/"&gt;donate&lt;/a&gt;.</property>
-                <property name="use_markup">True</property>
+                <property name="label" translatable="yes">Variety is open-source software, created by Peter Levi, a software developer from Bulgaria. If you like it, please &lt;a href="https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;amp;no_recurring=0&amp;amp;item_name=Variety+Wallpaper+Changer&amp;amp;currency_code=EUR"&gt;donate&lt;/a&gt;.</property>
+                <property name="use-markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
-                <property name="max_width_chars">130</property>
+                <property name="max-width-chars">130</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -139,15 +136,15 @@
             <child>
               <object class="GtkLabel" id="message3">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
-                <property name="margin_top">20</property>
+                <property name="margin-top">20</property>
                 <property name="label" translatable="yes">Now please take some time to set your preferences on the following screens.</property>
-                <property name="use_markup">True</property>
+                <property name="use-markup">True</property>
                 <property name="justify">fill</property>
                 <property name="wrap">True</property>
-                <property name="max_width_chars">130</property>
+                <property name="max-width-chars">130</property>
                 <property name="xalign">0</property>
               </object>
               <packing>
