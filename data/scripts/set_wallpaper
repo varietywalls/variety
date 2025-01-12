@@ -232,7 +232,7 @@ if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " 
       " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
 	if command -v "feh" >/dev/null 2>&1; then
 	      # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
-        feh --bg-fill "$WP" 2> /dev/null
+        feh --bg-fill "$WP" --no-xinerama 2> /dev/null
     elif command -v "nitrogen" >/dev/null 2>&1; then
 	      # TODO: This should take the scaling parameter $4 into account and use other options than --set-zoom-fill
         nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
