@@ -6,7 +6,7 @@
 # login screen or whatever you desire.
 #
 # Occasionally new versions of this script are released to bring support for new desktops. To apply them, you
-# should either delete this copy (in ~/.config/data/scripts/) and restart Variety, or merge in the changes yourself.
+# should either delete this copy (in ~/.config/variety/scripts/) and restart Variety, or merge in the changes yourself.
 # Bug fixes are automatically applied by Variety provided the local copy is never changed.
 #
 # PARAMETERS:
@@ -146,7 +146,7 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
             # If successful, set lockscreen on KDE 6
             kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
         fi
-        
+
         if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
             # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
