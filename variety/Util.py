@@ -170,7 +170,12 @@ class VarietyMetadata(GExiv2.Metadata):
     }
 
     def __init__(self, path):
-        super(VarietyMetadata, self).__init__(path=path)
+        try:
+            super(VarietyMetadata, self).__init__(path=path)
+        except TypeError:
+            super(VarietyMetadata, self).__init__()
+            self.open_path(path)
+
         self.register_xmp_namespace("https://launchpad.net/variety/", "variety")
 
     def __getitem__(self, key):
