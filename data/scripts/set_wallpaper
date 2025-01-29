@@ -245,8 +245,21 @@ SIMPLE_WMS=(
   "xmonad"
 )
 
-for wm in "${SIMPLE_WMS[@]}"; do
-  if [[ "$XDG_CURRENT_DESKTOP $XDG_SESSION_DESKTOP $DESKTOP_SESSION" = *"$wm"* ]]; then
+# Get a unique list (usually one) of possible simple window managers
+# The syntax for these is <desktop>+<window_manager>.
+#
+# Simple window managers usually have no desktop environment
+# so the init script should set XDG_CURRENT_DESKTOP to "none+i3" or similar.
+wm_candidates=$(
+  echo "$XDG_CURRENT_DESKTOP $XDG_SESSION_DESKTOP $DESKTOP_SESSION" \
+  | tr '+ ' '\n' \
+  | grep -vxiF "none"  \
+  | sort -u
+)
+
+for candidate in $wm_candidates; do
+  # Do an exact match of the candidate against the list of simple WMs
+  if printf '%s\n' "${SIMPLE_WMS[@]}" | grep -qxiF "$candidate"; then
     if command -v "feh" >/dev/null 2>&1; then
       # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
       feh --bg-fill "$WP" 2> /dev/null
