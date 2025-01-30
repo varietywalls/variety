@@ -225,18 +225,13 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
 fi
 
 # For simple WMs, use either feh or nitrogen
-# Implementation note: this uses spaces around list items to enforce matching whole words.
-# This also means that an empty variable won't cause false positives, since it expands to "  "
-SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-gnome" "i3-with-shmlog" "jwm" "jdwm" "LeftWM" "openbox" "qtile" "qtile-venv" "spectrwm" "xmonad")
-if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " = *" $XDG_SESSION_DESKTOP "* ||
-      " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
-	if command -v "feh" >/dev/null 2>&1; then
-	      # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
-        feh --bg-fill "$WP" 2> /dev/null
-    elif command -v "nitrogen" >/dev/null 2>&1; then
-	      # TODO: This should take the scaling parameter $4 into account and use other options than --set-zoom-fill
-        nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
-    fi
+# TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
+if command -v "feh" >/dev/null 2>&1; then
+    feh --bg-fill "$WP" 2> /dev/null
+    exit 0
+elif command -v "nitrogen" >/dev/null 2>&1; then
+    nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
+    exit 0
 fi
 
 # If swaybg is available, use it as prevents system freeze.
