@@ -241,7 +241,10 @@ fi
 
 # Fluxbox
 if [[ "fluxbox" == "$XDG_CURRENT_DESKTOP" || "fluxbox" == "$DESKTOP_SESSION" ]]; then
-    fbsetbg "$WP"
+    fbsetbg "$WP" 2> /dev/null
+    ## fix ~/.fluxbox/lastwallpaper to using latest wallpaper when relogin fluxbox
+    mkdir -p ~/.fluxbox
+    echo '$''full ''$'"full|$WP||:0.0" > ~/.fluxbox/lastwallpaper
 fi
 
 # If swaybg is available, use it as prevents system freeze.
