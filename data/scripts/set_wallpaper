@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+
 # This script is run by Variety when a new wallpaper is set. You can use Bash, Python or whatever suits you best.
 # Here you can put custom commands for setting the wallpaper on your specific desktop environment,
 # or run commands like notify-send that notify you of the change. You can also add commands to theme your browser,
@@ -224,16 +224,6 @@ if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
     pcmanfm-qt --set-wallpaper "$WP" 2> /dev/null
 fi
 
-# For simple WMs, use either feh or nitrogen
-# TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
-if command -v "feh" >/dev/null 2>&1; then
-    feh --bg-fill "$WP" 2> /dev/null
-    exit 0
-elif command -v "nitrogen" >/dev/null 2>&1; then
-    nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
-    exit 0
-fi
-
 # If swaybg is available, use it as prevents system freeze.
 # See https://github.com/swaywm/sway/issues/5606
 if command -v "swaybg" >/dev/null 2>&1; then
@@ -283,5 +273,15 @@ if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DE
 fi
 
 # =====================================================================================
+
+# For simple WMs, use either feh or nitrogen
+# TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
+if command -v "feh" >/dev/null 2>&1; then
+    feh --bg-fill "$WP" 2> /dev/null
+    exit 0
+elif command -v "nitrogen" >/dev/null 2>&1; then
+    nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
+    exit 0
+fi
 
 exit 0
