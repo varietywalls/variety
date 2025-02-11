@@ -119,6 +119,8 @@ if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
         find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
     echo "$OFILE.edj" > "$LAST_WALLPAPER_FILE"
+
+    exit 0
 fi
 
 # KDE: Users on KDE 4 or Plasma < 5.7 will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short interval.
@@ -146,7 +148,7 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
             # If successful, set lockscreen on KDE 6
             kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
         fi
-        
+
         if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
             # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
@@ -155,7 +157,6 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
                 See https://git.io/vprpM for more information." --icon variety 10  # Final number is the length of the popup
         fi
         exit "$dbus_exitcode"
-
     else
         WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
         mkdir -p "$WALLDIR"
@@ -165,6 +166,7 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
         NEWWP="${WALLDIR}/wallpaper-kde-$RANDOM.jpg"
         cp "$WP" "$NEWWP"
         touch "$NEWWP"
+        exit 0
     fi
 fi
 
@@ -196,6 +198,9 @@ if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.backgroun
     if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
         gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
     fi
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 # XFCE
@@ -207,21 +212,33 @@ if [[ $rc = 0 ]] ; then
         xfconf-query -c xfce4-desktop -p "$i" -s "" 2> /dev/null
         xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2> /dev/null
     done
+    if [[ $? -eq 0 ]]; then
+        exit 0
+    fi
 fi
 
 # Lingmo OS
 if [ "$XDG_CURRENT_DESKTOP" == "Lingmo" ]; then
     qdbus com.lingmo.Settings /Theme com.lingmo.Theme.setWallpaper "$WP" 2> /dev/null
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 # LXDE/PCmanFM
 if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
     pcmanfm --set-wallpaper "$WP" 2> /dev/null
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 # LXQt/PCmanFM-qt
 if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
     pcmanfm-qt --set-wallpaper "$WP" 2> /dev/null
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 # If swaybg is available, use it as prevents system freeze.
@@ -235,33 +252,53 @@ if command -v "swaybg" >/dev/null 2>&1; then
         sleep 1
         kill $PID 2>/dev/null
     fi
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 else
     swaymsg output "*" bg "$WP" fill 2> /dev/null
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
-
 
 # trinity
 if [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
     # The 4 refers to display mode 4; valid ones are 1-8
     dcop kdesktop KBackgroundIface setWallpaper "$WP" 4 2> /dev/null
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 # MATE after 1.6
 gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
 	gsettings set org.mate.desktop.background picture-options 'zoom'
+  if [ $? -eq 0 ]; then
+    exit 0
+  fi
 fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
   gsettings set org.mate.desktop.background picture-options "$4"
+  if [ $? -eq 0 ]; then
+    exit 0
+  fi
 fi
 
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
 if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
 	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+  if [ $? -eq 0 ]; then
+    exit 0
+  fi
 fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
   gsettings set org.cinnamon.desktop.background picture-options "$4"
+  if [ $? -eq 0 ]; then
+    exit 0
+  fi
 fi
 
 # Awesome Window Manager
@@ -270,6 +307,9 @@ fi
 # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
 if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DESKTOP" == *"awesome"* ]]; then
 	echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
+  if [ $? -eq 0 ]; then
+    exit 0
+  fi
 fi
 
 # =====================================================================================
@@ -278,10 +318,14 @@ fi
 # TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
 if command -v "feh" >/dev/null 2>&1; then
     feh --bg-fill "$WP" 2> /dev/null
-    exit 0
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 elif command -v "nitrogen" >/dev/null 2>&1; then
     nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
-    exit 0
+    if [ $? -eq 0 ]; then
+        exit 0
+    fi
 fi
 
 exit 0
