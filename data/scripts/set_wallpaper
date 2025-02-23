@@ -69,7 +69,7 @@ if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
 
     DIMENSION="$(identify -format "%w/%h" "$WP")"
 
-    if [ ! -z "$DIMENSION" ]; then
+    if [ -n "$DIMENSION" ]; then
         WIDTH="$(echo "$DIMENSION" | cut -d/ -f1)"
         HEIGHT="$(echo "$DIMENSION" | cut -d/ -f2)"
         IMAGE="$(echo "$WP" | sed 's/[^[:alnum:]_-]/\\&/g')"
@@ -252,11 +252,11 @@ fi
 if command -v "swaybg" >/dev/null 2>&1; then
     # Grey background flicker is prevented by killing old swaybg process after new one.
     # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
-    PID=`pidof swaybg`
+    PID=$(pidof swaybg)
     swaybg -i "$WP" -m fill &
-    if [ ! -z "$PID" ]; then
+    if [ -n "$PID" ]; then
         sleep 1
-        kill $PID 2>/dev/null
+        kill "$PID" 2>/dev/null
     fi
 else
     swaymsg output "*" bg "$WP" fill 2> /dev/null
