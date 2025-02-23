@@ -230,13 +230,21 @@ fi
 SIMPLE_WMS=("bspwm" "dwm" "herbstluftwm" "i3" "i3-gnome" "i3-with-shmlog" "jwm" "jdwm" "LeftWM" "openbox" "qtile" "qtile-venv" "spectrwm" "xmonad")
 if [[ " ${SIMPLE_WMS[*]} " = *" $XDG_CURRENT_DESKTOP "* || " ${SIMPLE_WMS[*]} " = *" $XDG_SESSION_DESKTOP "* ||
       " ${SIMPLE_WMS[*]} " = *" $DESKTOP_SESSION "* ]]; then
-	if command -v "feh" >/dev/null 2>&1; then
-	      # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
+    if command -v "feh" >/dev/null 2>&1; then
+        # TODO: This should take the scaling parameter $4 into account and use other options than --bg-fill
         feh --bg-fill "$WP" 2> /dev/null
     elif command -v "nitrogen" >/dev/null 2>&1; then
-	      # TODO: This should take the scaling parameter $4 into account and use other options than --set-zoom-fill
+          # TODO: This should take the scaling parameter $4 into account and use other options than --set-zoom-fill
         nitrogen --set-zoom-fill --save "$WP" 2> /dev/null
     fi
+fi
+
+# Fluxbox
+if [[ "fluxbox" == "$XDG_CURRENT_DESKTOP" || "fluxbox" == "$DESKTOP_SESSION" ]]; then
+    fbsetbg "$WP" 2> /dev/null
+    ## fix ~/.fluxbox/lastwallpaper to using latest wallpaper when relogin fluxbox
+    mkdir -p ~/.fluxbox
+    echo '$''full ''$'"full|$WP||:0.0" > ~/.fluxbox/lastwallpaper
 fi
 
 # If swaybg is available, use it as prevents system freeze.
@@ -264,19 +272,19 @@ fi
 # MATE after 1.6
 gsettings set org.mate.background picture-filename "$WP" 2> /dev/null
 if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-	gsettings set org.mate.desktop.background picture-options 'zoom'
+    gsettings set org.mate.desktop.background picture-options 'zoom'
 fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-  gsettings set org.mate.desktop.background picture-options "$4"
+    gsettings set org.mate.desktop.background picture-options "$4"
 fi
 
 # Cinnamon after 2.0
 gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2> /dev/null
 if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-	gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+    gsettings set org.cinnamon.desktop.background picture-options 'zoom'
 fi
 if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-  gsettings set org.cinnamon.desktop.background picture-options "$4"
+    gsettings set org.cinnamon.desktop.background picture-options "$4"
 fi
 
 # Awesome Window Manager
@@ -284,7 +292,7 @@ fi
 # NOTE: This config will change the wallpaper after your current awesome theme sets it.
 # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
 if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DESKTOP" == *"awesome"* ]]; then
-	echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
+    echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
 fi
 
 # =====================================================================================
