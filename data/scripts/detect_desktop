@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+detect_desktop() {
+    if [ -n "$XDG_CURRENT_DESKTOP" ]; then
+        case "${XDG_CURRENT_DESKTOP,,}" in
+        *"gnome"*) echo "gnome" ;;
+        *"unity"*) echo "unity" ;;
+        *"kde"*) echo "kde" ;;
+        *"xfce"*) echo "xfce" ;;
+        *"lxde"*) echo "lxde" ;;
+        *"lxqt"*) echo "lxqt" ;;
+        *"mate"*) echo "mate" ;;
+        *"cinnamon"* | *"x-cinnamon"*) echo "cinnamon" ;;
+        *"lingmo"*) echo "lingmo" ;;
+        *"deepin"*) echo "deepin" ;;
+        *"trinity"*) echo "trinity" ;;
+        *"fluxbox"*) echo "fluxbox" ;;
+        *"sway"*) echo "sway" ;;
+        *) echo "$XDG_CURRENT_DESKTOP" | tr '[:upper:]' '[:lower:]' ;;
+        esac
+        return
+    fi
+    if [ -n "$DESKTOP_SESSION" ]; then
+        case "${DESKTOP_SESSION,,}" in
+        *"gnome"*) echo "gnome" ;;
+        "ubuntu") echo "unity" ;;
+        *"cinnamon"*) echo "cinnamon" ;;
+        "xubuntu") echo "xfce" ;;
+        "lubuntu") echo "lxde" ;;
+        *"enlightenment"* | *"moksha"*) echo "enlightenment" ;;
+        *"fluxbox"*) echo "fluxbox" ;;
+        *) echo "$DESKTOP_SESSION" | tr '[:upper:]' '[:lower:]' ;;
+        esac
+        return
+    fi
+    if [ "${KDE_FULL_SESSION,,}" == "true" ]; then
+        echo "kde"
+        return
+    fi
+    if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID" == *"awesome"* ]]; then
+        echo "awesome"
+        return
+    fi
+    echo "unknown"
+}

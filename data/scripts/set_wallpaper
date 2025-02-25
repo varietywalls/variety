@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+
 # This script is run by Variety when a new wallpaper is set. You can use Bash, Python or whatever suits you best.
 # Here you can put custom commands for setting the wallpaper on your specific desktop environment,
 # or run commands like notify-send that notify you of the change. You can also add commands to theme your browser,
@@ -12,12 +12,9 @@
 # PARAMETERS:
 # $1: The first passed parameter is the absolute path to the wallpaper image to be set as wallpaper
 # (after effects, clock, etc. are applied).
-#
 # $2: The second passed parameter is "auto" when the wallpaper is changed automatically (i.e. regular change), "manual"
 # when the user has triggered the change, or "refresh" when the change is triggered by a change in quotes, clock, etc.
-#
 # $3: The third passed parameter is the absolute path to the original wallpaper image (before effects, clock, etc.)
-#
 # $4: Fourth parameter comes from the display mode setting: "os" means that set_wallpaper should try to
 # leave the OS setting unchanged. "zoom" means to try to fill the screen fully with the provided image.
 # Other parameters that could be passed are the scaling modes used by GNOME:
@@ -32,14 +29,14 @@
 # Here you may apply some additional custom operations on the wallpaper before it is applied.
 # In the end put the path to the actual final wallpaper image file in the WP variable.
 # The default is to simply set WP=$1.
+source "$(dirname "$0")/detect_desktop"
 WP=$1
+DE=$(detect_desktop)
 
-# Enlightenment
-# Needs Modules/System/DBus Extension loaded to work
-if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
-
+if [ "$DE" == "enlightenment" ]; then
+    # Enlightenment
+    # Needs Modules/System/DBus Extension loaded to work
     OUTPUT_DIR="$HOME/.e/e/backgrounds"
-
     TEMPLATE='
     images { image: "@IMAGE@" USER; }
     collections {
@@ -62,70 +59,48 @@ if [[ "$DESKTOP" == *"Enlightenment"* ]] || [[ "$DESKTOP" == *"Moksha"* ]]; then
       }
     }
     '
-
     OFILE="$OUTPUT_DIR/variety_wallpaper_$RANDOM"
-
     DIMENSION="$(identify -format "%w/%h" "$WP")"
-
     if [ -n "$DIMENSION" ]; then
         WIDTH="$(echo "$DIMENSION" | cut -d/ -f1)"
         HEIGHT="$(echo "$DIMENSION" | cut -d/ -f2)"
         IMAGE="$(echo "$WP" | sed 's/[^[:alnum:]_-]/\\&/g')"
-
         if [ -z "$HEIGHT" ] || [ "$HEIGHT" = "0" ]; then
             ASPECT="0.0"
         else
             ASPECT="$(echo "scale=9; $DIMENSION" | bc)"
         fi
     fi
-
     printf "%s" "$TEMPLATE" |
         sed "s/@ASPECT@/$ASPECT/g; s/@WIDTH@/$WIDTH/g; s/@HEIGHT@/$HEIGHT/g; s|@IMAGE@|$IMAGE|g" >"$OFILE.edc"
     edje_cc "$OFILE.edc" "$OFILE.edj" 2>/dev/null
     rm "$OFILE.edc"
-
-    ## Get the current number of virtual desktops
     desk_x_count=$(enlightenment_remote -desktops-get | awk '{print $1}')
     desk_y_count=$(enlightenment_remote -desktops-get | awk '{print $2}')
-
-    ## Get the current number of screens
     screen_count=1
-    # If xrandr is available use it to get screen desk_x_count
     if command -v xrandr >/dev/null 2>&1; then
         screen_count=$(xrandr -q | grep -c ' connected')
     fi
-
-    ## Set the wallpaper for each virtual desktop
     for ((x = 0; x < desk_x_count; x++)); do
         for ((y = 0; y < desk_y_count; y++)); do
             for ((z = 0; z < screen_count; z++)); do
-                # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
-                # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
                 enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj" &
             done
         done
     done
-
-    # Remove all Variety wallpapers, but the current one and the previous one
-    #   as we are calling enlightenment_remote asynchronously, if the previous wallpaper hasn't been
-    #   replaced yet then the wallpaper will get set back to the theme one causing ugly artifacts
     LAST_WALLPAPER_FILE="$HOME/.config/variety/.enlightenment_last_wallpaper.txt"
-
     if [ -e "$LAST_WALLPAPER_FILE" ]; then
         find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v "$(cat "$LAST_WALLPAPER_FILE")" | xargs rm
     else
         find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
     echo "$OFILE.edj" >"$LAST_WALLPAPER_FILE"
-fi
 
-# KDE: Users on KDE 4 or Plasma < 5.7 will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short interval.
-# Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
-# and KDE will refresh it
-# On Plasma 5.7 and above, the wallpaper choosing is automatic.
-if [ "${KDE_FULL_SESSION}" == "true" ]; then
-    # Plasma 5.7 introduced a new feature to set the wallpaper via a dbus script:
-    # https://github.com/KDE/plasma-workspace/commit/903cbfd7e267a4812a6ec222eb7e1b5dd775686f
+elif [ "$DE" == "kde" ]; then
+    # KDE: Users on KDE 4 or Plasma < 5.7 will have to manually choose ~/Pictures/variety-wallpaper/ as a slideshow folder with a short interval.
+    # Afterwards, with the command below, Variety will just overwrite the single file there when changing the wallpaper
+    # and KDE will refresh it
+    # On Plasma 5.7 and above, the wallpaper choosing is automatic.
     plasma_qdbus_script="
         let allDesktops = desktops();
         for (let d of allDesktops) {
@@ -137,154 +112,144 @@ if [ "${KDE_FULL_SESSION}" == "true" ]; then
     "
     if [[ -n "${KDE_SESSION_VERSION}" && "${KDE_SESSION_VERSION}" -ge '5' ]]; then
         dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
-        # Reuse the exit code from dbus
         dbus_exitcode="$?"
-
         if [[ "$dbus_exitcode" -eq 0 && "${KDE_SESSION_VERSION}" -eq '6' ]]; then
-            # If successful, set lockscreen on KDE 6
             kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
         fi
-
         if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
-            # If the script fails, show a notification.
             kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
                 make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
                 Due to Plasma limitations, external programs cannot automatically change the wallpaper when the widgets are locked.\n \
-                See https://git.io/vprpM for more information." --icon variety 10 # Final number is the length of the popup
+                See https://git.io/vprpM for more information." --icon variety 10
         fi
         exit "$dbus_exitcode"
-
     else
         WALLDIR="$(xdg-user-dir PICTURES)/variety-wallpaper"
         mkdir -p "$WALLDIR"
-        # Remove all old wallpapers
         rm -fv "${WALLDIR}"/*
-
         NEWWP="${WALLDIR}/wallpaper-kde-$RANDOM.jpg"
         cp "$WP" "$NEWWP"
         touch "$NEWWP"
     fi
-fi
 
-# Gnome 3, Unity
-gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2>/dev/null
-gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2>/dev/null
-if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.gnome.desktop.background picture-options "$4"
-fi
-if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
-    gsettings set org.gnome.desktop.background picture-options 'zoom'
-fi
-
-# GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
-gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2>/dev/null
-if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.gnome.desktop.screensaver picture-options "$4"
-fi
-if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
-    gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
-fi
-
-# Deepin
-if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
-    gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
+elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ]; then
+    # Gnome 3, Unity
+    gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2>/dev/null
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2>/dev/null
     if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-        gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
+        gsettings set org.gnome.desktop.background picture-options "$4"
     fi
-    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
-        gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
+    if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
+        gsettings set org.gnome.desktop.background picture-options 'zoom'
     fi
-fi
+    # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
+    gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2>/dev/null
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.gnome.desktop.screensaver picture-options "$4"
+    fi
+    if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
+        gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
+    fi
 
-# XFCE
-command -v xfconf-query >/dev/null 2>&1
-rc=$?
-if [[ $rc = 0 ]]; then
-    for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
-        xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
-        xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
-        xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
-    done
-fi
+elif [ "$DE" == "deepin" ]; then
+    # Deepin
+    if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
+        gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
+        if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+            gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
+        fi
+        if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
+            gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
+        fi
+    fi
 
-# Lingmo OS
-if [ "$XDG_CURRENT_DESKTOP" == "Lingmo" ]; then
+elif [ "$DE" == "xfce" ]; then
+    # XFCE
+    command -v xfconf-query >/dev/null 2>&1
+    rc=$?
+    if [[ $rc = 0 ]]; then
+        for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
+            xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
+            xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
+            xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
+        done
+    fi
+
+elif [ "$DE" == "lingmo" ]; then
+    # Lingmo OS
     qdbus com.lingmo.Settings /Theme com.lingmo.Theme.setWallpaper "$WP" 2>/dev/null
-fi
 
-# LXDE/PCmanFM
-if [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
+elif [ "$DE" == "lxde" ]; then
+    # LXDE/PCmanFM
     pcmanfm --set-wallpaper "$WP" 2>/dev/null
-fi
 
-# LXQt/PCmanFM-qt
-if [ "$XDG_CURRENT_DESKTOP" == "LXQt" ]; then
+elif [ "$DE" == "lxqt" ]; then
+    # LXQt/PCmanFM-qt
     pcmanfm-qt --set-wallpaper "$WP" 2>/dev/null
-fi
 
-# Fluxbox
-if [[ "fluxbox" == "$XDG_CURRENT_DESKTOP" || "fluxbox" == "$DESKTOP_SESSION" ]]; then
+elif [ "$DE" == "fluxbox" ]; then
+    # Fluxbox
     fbsetbg "$WP" 2>/dev/null
     ## fix ~/.fluxbox/lastwallpaper to using latest wallpaper when relogin fluxbox
     mkdir -p ~/.fluxbox
     echo '$''full ''$'"full|$WP||:0.0" >~/.fluxbox/lastwallpaper
-fi
 
-# If swaybg is available, use it as prevents system freeze.
-# See https://github.com/swaywm/sway/issues/5606
-if command -v "swaybg" >/dev/null 2>&1; then
-    # Grey background flicker is prevented by killing old swaybg process after new one.
-    # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
-    PID=$(pidof swaybg)
-    swaybg -i "$WP" -m fill &
-    if [ -n "$PID" ]; then
-        sleep 1
-        kill "$PID" 2>/dev/null
+elif [ "$DE" == "sway" ]; then
+    # If swaybg is available, use it as prevents system freeze.
+    # See https://github.com/swaywm/sway/issues/5606
+    if command -v "swaybg" >/dev/null 2>&1; then
+        # Grey background flicker is prevented by killing old swaybg process after new one.
+        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
+        PID=$(pidof swaybg)
+        swaybg -i "$WP" -m fill &
+        if [ -n "$PID" ]; then
+            sleep 1
+            kill "$PID" 2>/dev/null
+        fi
+    else
+        swaymsg output "*" bg "$WP" fill 2>/dev/null
     fi
-else
-    swaymsg output "*" bg "$WP" fill 2>/dev/null
-fi
 
-# trinity
-if [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
+elif [ "$DE" == "trinity" ]; then
+    # trinity
     # The 4 refers to display mode 4; valid ones are 1-8
     dcop kdesktop KBackgroundIface setWallpaper "$WP" 4 2>/dev/null
-fi
 
-# MATE after 1.6
-gsettings set org.mate.background picture-filename "$WP" 2>/dev/null
-if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-    gsettings set org.mate.desktop.background picture-options 'zoom'
-fi
-if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.mate.desktop.background picture-options "$4"
-fi
+elif [ "$DE" == "mate" ]; then
+    # MATE after 1.6
+    gsettings set org.mate.background picture-filename "$WP" 2>/dev/null
+    if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
+        gsettings set org.mate.desktop.background picture-options 'zoom'
+    fi
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.mate.desktop.background picture-options "$4"
+    fi
 
-# Cinnamon after 2.0
-gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2>/dev/null
-if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-    gsettings set org.cinnamon.desktop.background picture-options 'zoom'
-fi
-if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.cinnamon.desktop.background picture-options "$4"
-fi
+elif [ "$DE" == "cinnamon" ]; then
+    # Cinnamon after 2.0
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2>/dev/null
+    if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
+        gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+    fi
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.cinnamon.desktop.background picture-options "$4"
+    fi
 
-# Awesome Window Manager
-# Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
-# NOTE: This config will change the wallpaper after your current awesome theme sets it.
-# As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
-if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID $DESKTOP_SESSION $XDG_CURRENT_DESKTOP" == *"awesome"* ]]; then
+elif [ "$DE" == "awesome" ]; then
+    # Awesome Window Manager
+    # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
+    # NOTE: This config will change the wallpaper after your current awesome theme sets it.
+    # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
     echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
-fi
 
-# For simple WMs, use either feh or nitrogen
-# TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
-if command -v "feh" >/dev/null 2>&1; then
-    feh --bg-fill "$WP" 2>/dev/null
-elif command -v "nitrogen" >/dev/null 2>&1; then
-    nitrogen --set-zoom-fill --save "$WP" 2>/dev/null
+else
+    # For simple WMs, use either feh or nitrogen
+    # TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
+    if command -v "feh" >/dev/null 2>&1; then
+        feh --bg-fill "$WP" 2>/dev/null
+    elif command -v "nitrogen" >/dev/null 2>&1; then
+        nitrogen --set-zoom-fill --save "$WP" 2>/dev/null
+    fi
 fi
-
-# =====================================================================================
 
 exit 0

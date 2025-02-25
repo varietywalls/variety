@@ -22,7 +22,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "Lingmo" ]; then
 elif [ "$XDG_CURRENT_DESKTOP" == "LXDE" ]; then
         # The PCManFM config path varies by session name; Lubuntu is effectively a special case here
         if [ "$desktop" == "Lubuntu" ]; then
-            desktop="lubuntu"  # Curse this inconsistency in cases
+                desktop="lubuntu" # Curse this inconsistency in cases
         fi
         grep wallpaper=/ "$HOME/.config/pcmanfm/$desktop/desktop-items-0.conf" | sed -e 's/wallpaper=//g'
 
@@ -45,7 +45,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "KDE" ]; then
 # Trinity
 elif [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
         # The "1" refers to the virtual desktop number
-        dcop kdesktop KBackgroundIface currentWallpaper 1 2> /dev/null
+        dcop kdesktop KBackgroundIface currentWallpaper 1 2>/dev/null
 
 # All above fails => fallback to the Gnome 3 way
 else
