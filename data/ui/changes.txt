@@ -1,3 +1,13 @@
+0.8.13
+    Fix #741: Fix downloading server side options (remove tiny.cc redirector)
+    Fix #733: Fix for EarthviewDownloader
+    Fix #704: In "smart" display mode, tile small wallpapers using ImageMagick (#727)
+    Improvement #731: Add support for KDE 6 lockscreen
+    Improvement #752: set_wallpaper: default to feh/nitrogen instead of hardcoding a list of WMs
+    Feature #756: Add support for Fluxbox (via fbsetbg)
+    Feature #619: Add regex name filter for wallpapers
+    Update French and German translations
+
 0.8.12
     Fix #672: add support for KDE Plasma 6
 
