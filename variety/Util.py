@@ -63,8 +63,8 @@ def _(text):
 
 
 def debounce(seconds):
-    """ Decorator that will postpone a functions execution until after wait seconds
-        have elapsed since the last time it was invoked. """
+    """Decorator that will postpone a functions execution until after wait seconds
+    have elapsed since the last time it was invoked."""
 
     def decorator(fn):
         def debounced(*args, **kwargs):
@@ -641,9 +641,11 @@ class Util:
         return f
 
     @staticmethod
-    def request(url, data=None, stream=False, method=None, timeout=5, headers=None):
+    def request(url, data=None, stream=False, method=None, timeout=30, headers=None):
         if not Util.internet_enabled:
             raise InternetDisabledError("Internet access in Variety is currently disabled")
+
+        logger.debug("Request URL: %s" % url)
 
         if url.startswith("//"):
             url = "http:" + url
