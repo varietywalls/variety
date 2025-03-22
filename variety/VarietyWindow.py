@@ -86,7 +86,7 @@ OUTDATED_MSG = "This version of Variety is outdated and unsupported. Please upgr
 class VarietyWindow(Gtk.Window):
     __gtype_name__ = "VarietyWindow"
 
-    SERVERSIDE_OPTIONS_URL = "https://gist.githubusercontent.com/peterlevi/a7d1dbf3a4e76e15760a/raw/fab10d0ce5cfe66377e7c650be56edb497aabbd4/variety_server_options.json"
+    SERVERSIDE_OPTIONS_URL = "https://raw.githubusercontent.com/varietywalls/variety/refs/heads/master/serverside/variety_server_options.json"
 
     # How many unseen_downloads max to for every downloader.
     MAX_UNSEEN_PER_DOWNLOADER = 10
