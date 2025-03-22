@@ -1,0 +1,30 @@
+{
+  "flickr": {
+    "min_fill_queue_interval": 1200,
+    "min_download_interval": 1200
+  },
+  "wallbase": {
+    "min_fill_queue_interval": 1800,
+    "min_download_interval": 1800
+  },
+  "wallhaven": {
+    "min_fill_queue_interval": 1800,
+    "min_download_interval": 1800
+  },
+  "wallpapers.net": {
+    "min_fill_queue_interval": 601,
+    "min_download_interval": 0
+  },
+  "unsplash": {
+    "min_fill_queue_interval": 20000000000,
+    "min_download_interval": 20000000000
+  },
+  "unsplash_v2": {
+    "min_fill_queue_interval": 3600,
+    "min_download_interval": 1800
+  },
+  "status_message": {
+    "0.0.1": "",
+    "*": ""
+  }
+}
