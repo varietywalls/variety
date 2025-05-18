@@ -7,7 +7,9 @@
 #
 # Occasionally new versions of this script are released to bring support for new desktops. To apply them, you
 # should either delete this copy (in ~/.config/variety/scripts/) and restart Variety, or merge in the changes yourself.
-# Bug fixes are automatically applied by Variety provided the local copy is never changed.
+# Bug fixes are automatically applied by Variety **only if** the local copy was never changed by the user. If there
+# were user-made changes to it, Variety would assume the existing script works for the user and would not overwrite it
+# on upgrade.
 #
 # PARAMETERS:
 # $1: The first passed parameter is the absolute path to the wallpaper image to be set as wallpaper
