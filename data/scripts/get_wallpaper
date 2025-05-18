@@ -47,6 +47,10 @@ elif [ "$XDG_CURRENT_DESKTOP" == "Trinity" ]; then
         # The "1" refers to the virtual desktop number
         dcop kdesktop KBackgroundIface currentWallpaper 1 2> /dev/null
 
+# Cosmic
+elif [ "$XDG_CURRENT_DESKTOP" == "COSMIC" ]; then
+        grep -oP '(?<=source: Path\(")(.+)(?="\))' ~/.config/cosmic/com.system76.CosmicBackground/v1/all
+
 # All above fails => fallback to the Gnome 3 way
 else
         gsettings get org.gnome.desktop.background picture-uri
