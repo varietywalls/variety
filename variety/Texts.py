@@ -70,7 +70,7 @@ TIPS = [
         "Applying a heavy blurring filter is a great way to get abstract-looking and unobtrusive, yet colorful wallpapers, similar in spirit to the default one in Ubuntu."
     ),
     _(
-        "Adding your own custom filters is quite easy: open {PROFILE_PATH}variety.conf in an editor and use the existing filters as an example. Every filter is just a line of options to be passed to ImageMagick's convert command."
+        "Adding your own custom filters is quite easy: open {PROFILE_PATH}variety.conf in an editor and use the existing filters as an example. Every filter is just a line of options to be passed to ImageMagick's magick command."
     ),
     _(
         'When you select an image source, its images are displayed in a window at the bottom of the screen. Click an image there to set is as wallpaper. Right-click to close the window, to modify its appearance or to perform file operations. You can select multiple image sources to create a "merged" thumbnail view of all of them. Please mind that thumbnail view is limited to several hundred randomly selected images.'
