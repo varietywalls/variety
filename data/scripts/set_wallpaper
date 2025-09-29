@@ -283,9 +283,8 @@ elif [ "$DE" == "awesome" ]; then
     # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
     echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
 
-if [[ "$XDG_CURRENT_DESKTOP" == "COSMIC" ]]; then
+elif [[ "$XDG_CURRENT_DESKTOP" == "COSMIC" ]]; then
     sed -r --in-place 's,source: Path\(".+"\),source: Path("'"$3"'"),gm' ~/.config/cosmic/com.system76.CosmicBackground/v1/all
-fi
 
 else
     # For simple WMs, use either feh or nitrogen
