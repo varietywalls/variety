@@ -374,7 +374,7 @@ class Util:
 
         if not check_contents:
             return filename.lower().endswith(
-                (".jpg", ".jpeg", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif")
+                (".jpg", ".jpeg", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif", ".webp")
             )
         else:
             format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)

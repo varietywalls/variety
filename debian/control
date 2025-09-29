@@ -36,7 +36,8 @@ Depends: gir1.2-gdkpixbuf-2.0,
 Recommends: gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1,
             python3-httplib2,
             fortune-mod,
-            libavif-gdk-pixbuf
+            libavif-gdk-pixbuf,
+            webp-pixbuf-loader
 Suggests: feh | nitrogen,
           gnome-shell-extension-appindicator | gnome-shell-extension-top-icons-plus
 Description: Wallpaper changer, downloader and manager

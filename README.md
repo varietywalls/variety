@@ -73,6 +73,7 @@ To install Variety from source, you will need Git, Python 3.8+ and [distutils-ex
 - *Optional*: libayatana-appindicator (for AppIndicator support)
 - *Optional*: for tray icon support on GNOME, the [GNOME AppIndicator extension](https://github.com/ubuntu/gnome-shell-extension-appindicator)
 - *Optional*: libavif-gdk-pixbuf (for avif format support)
+- *Optional*: webp-pixbuf-loader (for webp format support)
 
 See `debian/control` for an equivalent list of runtime dependencies on Debian/Ubuntu.
 
