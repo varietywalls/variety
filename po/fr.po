@@ -2,11 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # James Lu <james@overdrivenetworks.com>, 2021
 # Bruno Veilleux, 2024
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -528,12 +528,12 @@ msgid ""
 "Adding your own custom filters is quite easy: open "
 "{PROFILE_PATH}variety.conf in an editor and use the existing filters as an "
 "example. Every filter is just a line of options to be passed to "
-"ImageMagick's convert command."
+"ImageMagick's magick command."
 msgstr ""
 "Vous pouvez facilement ajouter vos propres filtres personnalisés : ouvrez "
 "{PROFILE_PATH}variety.conf dans un éditeur et utilisez les filtres en place "
 "pour vous guider. Chaque filtre est une simple ligne d’options à transmettre"
-" à la commande « convert » d’ImageMagick."
+" à la commande « magick » d’ImageMagick."
 
 #: ../variety/Texts.py:72
 msgid ""
