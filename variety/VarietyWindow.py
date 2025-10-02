@@ -2538,6 +2538,9 @@ class VarietyWindow(Gtk.Window):
 
             GObject.timeout_add(3000 if initial_run else 1, _process_command)
 
+            if options.show_meta:
+                return str(Util.read_metadata(self.current))
+
             return self.current if options.show_current else ""
         except Exception:
             logger.exception(lambda: "Could not process passed command")
