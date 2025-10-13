@@ -19,6 +19,8 @@ Otherwise, its desktop entry menu provides a similar set of options.
 
 ## Installation
 
+To run Variety you will need Python 3.9+.
+
 ### As a system package
 
 Variety is available in the distro repositories of:
@@ -52,9 +54,18 @@ sudo apt install variety-slideshow
 ```
 
 ### Install from source
-To install Variety from source, you will need Git, Python 3.8+ and [distutils-extra](https://launchpad.net/python-distutils-extra). To actually run Variety, you will also need the following:
+
+#### Build Requirements
+
+To build Variety from source, you will need the following:
+
+- setuptools
+- [python-distutils-extra](https://launchpad.net/python-distutils-extra)
 
 #### Runtime Requirements
+
+To actually run Variety, you will also need the following:
+
 - GTK+ 3
 - gexiv2
 - libnotify
