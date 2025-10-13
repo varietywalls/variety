@@ -728,7 +728,7 @@ class Options:
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
             [
-                True,
+                False,
                 Options.SourceType.FLICKR,
                 "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;",
             ],
