@@ -1910,6 +1910,7 @@ class VarietyWindow(Gtk.Window):
 
         except Exception:
             logger.warning(lambda: "Error in image_ok for file %s" % img)
+            logger.info(lambda: "Debug details:", exc_info=True)
             return False
 
     def size_ok(self, width, height, fuzziness=0):

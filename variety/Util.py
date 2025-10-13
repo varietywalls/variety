@@ -47,6 +47,7 @@ gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkPixbuf, GExiv2, Gio, GLib, Pango  # isort:skip
 # fmt: on
 
+_PIXBUF_SUPPORTED_FORMATS = {loader.get_name() for loader in GdkPixbuf.Pixbuf.get_formats()}
 
 USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
@@ -369,13 +370,21 @@ class Util:
 
     @staticmethod
     def is_image(filename, check_contents=False):
+        ext = os.path.splitext(filename)[1].lower()
+
+        if ext == '.webp' and 'webp' not in _PIXBUF_SUPPORTED_FORMATS:
+            logger.warning(lambda: "Skipping %s - install webp-pixbuf-loader for WebP support" % filename)
+            return False
+
+        if ext == '.avif' and 'avif' not in _PIXBUF_SUPPORTED_FORMATS:
+            logger.warning(lambda: "Skipping %s - install libavif-pixbuf-loader for AVIF support" % filename)
+            return False
+
         if Util.is_animated_gif(filename):
             return False
 
         if not check_contents:
-            return filename.lower().endswith(
-                (".jpg", ".jpeg", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif", ".webp")
-            )
+            return ext in (".jpg", ".jpeg", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif", ".webp")
         else:
             format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)
             return bool(format)
