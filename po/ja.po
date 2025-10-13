@@ -2,10 +2,10 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # James Lu <james@overdrivenetworks.com>, 2021
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -486,10 +486,10 @@ msgid ""
 "Adding your own custom filters is quite easy: open "
 "{PROFILE_PATH}variety.conf in an editor and use the existing filters as an "
 "example. Every filter is just a line of options to be passed to "
-"ImageMagick's convert command."
+"ImageMagick's magick command."
 msgstr ""
 "自分で簡単にカスタムフィルターを追加できます。{PROFILE_PATH}variety.conf "
-"をエディターで開き、既存のフィルターを参考にして追加してください。各フィルターは ImageMagick の convert コマンドのオプションです。"
+"をエディターで開き、既存のフィルターを参考にして追加してください。各フィルターは ImageMagick の magick コマンドのオプションです。"
 
 #: ../variety/Texts.py:72
 msgid ""
