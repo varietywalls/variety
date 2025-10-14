@@ -69,16 +69,7 @@ To actually run Variety, you will also need the following:
 - GTK+ 3
 - gexiv2
 - libnotify
-- Python 3 libraries:
-    - BeautifulSoup4
-    - lxml
-    - Pycairo
-    - PyGObject, built with Cairo integration
-    - ConfigObj
-    - Pillow
-    - packaging
-    - Requests
-    - *Optional*: httplib2 (for more quotes sources)
+- Python libraries: see `requirements.txt`
 - *Optional*: imagemagick (for wallpaper filters)
 - *Optional*: feh or nitrogen: used by default to set wallpapers on i3, openbox, and other WMs
 - *Optional*: libayatana-appindicator (for AppIndicator support)
@@ -92,14 +83,16 @@ See `debian/control` for an equivalent list of runtime dependencies on Debian/Ub
 
 1. Clone the git repository: `git clone https://github.com/varietywalls/variety.git && cd variety`
 
-2. Run `python3 setup.py install`. By default, this will install Variety into `/usr/local`; for a local installation, use `python3 setup.py install --prefix $HOME/.local`.
+2. Create a virtualenv: e.g. `python3 -m venv --system-site-packages ~/variety-venv`.
 
-3. Run `variety` from the command line or its desktop menu entry.
+3. Enable the virtualenv: `source ~/variety-venv/bin/activate`
+
+4. Install variety inside the virtualenv: `pip install -e .`
+
+5. Run `variety` from the command line or its desktop menu entry.
 
 ## Launching
 
 Regardless of how you install, you can launch Variety from the dash or applications menu, or by running `variety` in a terminal.
 
 Run `variety --help` to see the command-line options. They allow you to control Variety from the terminal.
-
-
