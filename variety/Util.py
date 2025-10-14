@@ -19,6 +19,7 @@ import datetime
 import functools
 import gettext
 import hashlib
+import importlib.resources
 import json
 import logging
 import os
@@ -53,6 +54,7 @@ USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger("variety")
+gettext.bindtextdomain("variety", localedir=importlib.resources.files('variety') / 'locale')
 gettext.textdomain("variety")
 
 

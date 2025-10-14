@@ -151,7 +151,6 @@ class VarietyWindow(Gtk.Window):
         self.server_options = {}
         self.post_filter_filename = None
 
-        logger.info(lambda: "Using data_path %s" % varietyconfig.get_data_path())
         self.jumble = Jumble(
             [os.path.join(os.path.dirname(__file__), "plugins", "builtin"), self.plugins_folder]
         )

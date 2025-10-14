@@ -60,7 +60,7 @@ sudo apt install variety-slideshow
 To build Variety from source, you will need the following:
 
 - setuptools
-- [python-distutils-extra](https://launchpad.net/python-distutils-extra)
+- setuptools-gettext
 
 #### Runtime Requirements
 
