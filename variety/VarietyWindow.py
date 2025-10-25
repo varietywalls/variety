@@ -1359,7 +1359,7 @@ class VarietyWindow(Gtk.Window):
                 ):
                     self.post_filter_filename = to_set
                     target_file = os.path.join(
-                        self.wallpaper_folder, "wallpaper-filter-%s.jpg" % Util.random_hash()
+                        self.wallpaper_folder, "wallpaper-filter-%s.png" % Util.random_hash()
                     )
                     cmd = self.build_imagemagick_filter_cmd(to_set, target_file)
                     if cmd:
