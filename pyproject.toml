@@ -1,7 +1,77 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "variety"
+description = "Wallpaper changer, downloader and manager"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8,<3.11"
+license = "GPL-3.0-only"
+authors = [
+  { name = "Peter Levi", email = "peterlevi@peterlevi.com" }
+]
+maintainers = [
+  { name = "Variety Developers", email = "varietywalls@gmail.com" }
+]
+keywords = ["wallpaper", "desktop", "gtk"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: X11 Applications :: GTK",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Topic :: Desktop Environment",
+  "Topic :: Multimedia :: Graphics",
+]
+dependencies = [
+  "beautifulsoup4",
+  "configobj",
+  "httplib2",
+  "lxml",
+  "packaging",
+  "Pillow",
+  "pycairo>=1.25,<1.27",
+  "pygobject>=3.42,<3.43",
+  "requests",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "pytest",
+  "ruff",
+]
+
+[project.urls]
+Homepage = "https://github.com/varietywalls/variety"
+Source = "https://github.com/varietywalls/variety"
+"Bug Tracker" = "https://github.com/varietywalls/variety/issues"
+
+[tool.setuptools]
+include-package-data = true
+script-files = ["bin/variety"]
+
+[tool.setuptools.dynamic]
+version = { attr = "variety_lib.varietyconfig.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["variety", "variety.*", "variety_lib", "jumble"]
+exclude = ["tests*", "debian*", "toolchain*", "serverside*"]
+
+[tool.setuptools.package-data]
+"variety.plugins.builtin.quotes" = ["quotes.txt"]
+
+[tool.setuptools.cmdclass]
+build = "variety_lib.build_hooks.BuildCommand"
+build_data = "variety_lib.build_hooks.BuildDataCommand"
+build_trans = "variety_lib.build_hooks.BuildTranslationsCommand"
+
 [tool.black]
 line-length = 100
-target_version = ['py35']
-include = '\.pyi?$'
+target_version = ["py35"]
+include = "\\.pyi?$"
 exclude = '''
 
 (

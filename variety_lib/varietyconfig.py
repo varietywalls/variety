@@ -15,18 +15,17 @@
 ### END LICENSE
 
 __all__ = ["project_path_not_found", "get_data_file", "get_data_path"]
-
-try:
-    from .variety_build_settings import __variety_data_directory__
-except ImportError:
-    # Variety's data directory. This is set by setup.py for permanent installations, but defaults to ../data
-    # for easy development / running from source.
-    __variety_data_directory__ = "../data"
 __license__ = "GPL-3"
 __version__ = "0.8.13"
 
 import os
+import site
+import sys
+import sysconfig
+from pathlib import Path
 
+_DEFAULT_RELATIVE_DATA_DIRECTORY = Path(__file__).resolve().parent / ".." / "data"
+_ENV_DATA_PATH = "VARIETY_DATA_PATH"
 
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
@@ -45,19 +44,53 @@ def get_data_file(*path_segments):
 def get_data_path():
     """Retrieve variety data path
 
-    This path is by default <variety_lib_path>/../data/ in trunk
-    and /usr/share/variety in an installed version but this path
-    is specified at installation time.
+    Attempts to resolve the data directory from a number of common installation
+    locations, preferring:
+
+    1. A custom path specified via the VARIETY_DATA_PATH environment variable
+    2. The repository-relative ../data directory (development mode)
+    3. Standard share/variety locations under the active Python prefixes
+    4. The user's per-account data directory (XDG)
     """
 
-    # Get pathname absolute or relative.
-    path = os.path.join(os.path.dirname(__file__), __variety_data_directory__)
+    for candidate in _iter_candidate_data_paths():
+        if candidate.is_dir():
+            return str(candidate)
 
-    abs_data_path = os.path.abspath(path)
-    if not os.path.exists(abs_data_path):
-        raise project_path_not_found
+    raise project_path_not_found
 
-    return abs_data_path
+
+def _iter_candidate_data_paths():
+    env_override = os.environ.get(_ENV_DATA_PATH)
+    if env_override:
+        yield Path(env_override).expanduser()
+
+    yield _DEFAULT_RELATIVE_DATA_DIRECTORY.resolve()
+
+    prefixes = {
+        Path(sys.prefix),
+        Path(getattr(sys, "base_prefix", sys.prefix)),
+        Path(getattr(sys, "exec_prefix", sys.prefix)),
+    }
+
+    try:
+        prefixes.add(Path(sysconfig.get_path("data")))
+    except (KeyError, TypeError, ValueError):
+        pass
+
+    try:
+        prefixes.add(Path(site.getuserbase()))
+    except (AttributeError, OSError, ValueError):
+        pass
+
+    xdg_data_home = os.environ.get("XDG_DATA_HOME")
+    if xdg_data_home:
+        prefixes.add(Path(xdg_data_home))
+
+    for prefix in prefixes:
+        if not prefix:
+            continue
+        yield (Path(prefix) / "share" / "variety").resolve()
 
 
 def get_version():
