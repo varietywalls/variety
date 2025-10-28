@@ -1,6 +1,25 @@
+[build-system]
+# setuptools 62.3.0 is needed for extended glob (**) in package_data
+requires = ["setuptools >= 62.3.0", "setuptools-gettext"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "variety"
+license = { text = "GPL-3.0-only" }
+authors = [
+    { name = "Peter Levi", email = "peterlevi@peterlevi.com" },
+    { name = "James Lu", email = "james@overdrivenetworks.com" }
+]
+description = "Wallpaper changer, downloader and manager"
+dynamic = ["version", "readme"] 
+urls = { Homepage = "https://github.com/varietywalls/variety" }
+
+[project.scripts]
+variety = "variety:main"
+
 [tool.black]
 line-length = 100
-target_version = ['py35']
+target_version = ['py38']
 include = '\.pyi?$'
 exclude = '''
 
@@ -18,3 +37,12 @@ exclude = '''
   )/
 )
 '''
+
+[tool.setuptools.dynamic]
+version = {attr = "variety_lib.varietyconfig.__version__"}
+
+[tool.setuptools-gettext]
+# Directory where .po files are located
+source_dir = "po"
+# Directory where the generated .mo files will be placed during build
+build_dir = "variety/locale"
