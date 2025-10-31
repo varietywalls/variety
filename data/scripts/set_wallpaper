@@ -245,7 +245,10 @@ elif [ "$DE" == "sway" ]; then
         swaybg -i "$WP" -m fill &
         if [ -n "$PID" ]; then
             sleep 1
-            kill $PID 2>/dev/null
+            read -a PID <<< "$PID"
+            for each_pid in "${PID[@]}; do
+                kill "$each_pid" 2>/dev/null
+            done
         fi
     else
         swaymsg output "*" bg "$WP" fill 2>/dev/null
