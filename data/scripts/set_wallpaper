@@ -245,7 +245,7 @@ elif [ "$DE" == "sway" ]; then
         swaybg -i "$WP" -m fill &
         if [ -n "$PID" ]; then
             sleep 1
-            kill "$PID" 2>/dev/null
+            kill $PID 2>/dev/null
         fi
     else
         swaymsg output "*" bg "$WP" fill 2>/dev/null
