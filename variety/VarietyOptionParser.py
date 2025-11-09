@@ -108,6 +108,15 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
     )
 
     parser.add_option(
+        "--meta",
+        action="store_true",
+        dest="show_meta",
+        help=_(
+            "Print the current wallpaper metadata. Used only when the application is already running."
+        ),
+    )
+
+    parser.add_option(
         "--set",
         "--set-wallpaper",
         action="store",
