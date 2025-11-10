@@ -160,6 +160,15 @@ To set a specific wallpaper: %prog --set /some/local/image.jpg
     )
 
     parser.add_option(
+        "--image-origin",
+        "--show-image-origin",
+        "--show-origin",
+        action="store_true",
+        dest="showorigin",
+        help=_("Open current wallpaper origin page."),
+    )
+
+    parser.add_option(
         "--pause", action="store_true", dest="pause", help=_("Pause on current image")
     )
 
