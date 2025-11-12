@@ -2495,6 +2495,8 @@ class VarietyWindow(Gtk.Window):
                         self.copy_to_favorites()
                     elif options.movefavorite:
                         self.move_to_favorites()
+                    elif options.showorigin:
+                        self.on_show_origin()
 
                 if options.set_wallpaper:
                     self.set_wallpaper(options.set_wallpaper)
