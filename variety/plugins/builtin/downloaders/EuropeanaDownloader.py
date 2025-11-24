@@ -66,19 +66,19 @@ class EuropeanaDownloader(SimpleDownloader):
     def get_europeana_api_url(self):
         url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
         return url.format(
-            api_key = EuropeanaDownloader.API_KEY,
-            query = "{keyword}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
-            sort = "random",
-            rows = 30,
-            profile = "minimal",
-            reusability = "open",
-            media = "true",
-            collection = "art",
-            type = "IMAGE",
-            img_color = "true",
-            img_size = "extra_large",
-            img_ratio = "landscape",
-            mime = "image/jpeg"
+            api_key=EuropeanaDownloader.API_KEY,
+            query="{keyword}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
+            sort="random",
+            rows=30,
+            profile="minimal",
+            reusability="open",
+            media="true",
+            collection="art",
+            type="IMAGE",
+            img_color="true",
+            img_size="extra_large",
+            img_ratio="landscape",
+            mime="image/jpeg",
         )
 
     def fill_queue(self):
@@ -93,27 +93,29 @@ class EuropeanaDownloader(SimpleDownloader):
 
         r = Util.request(url)
         queue = []
-        for item in r.json()['items']:
+        for item in r.json()["items"]:
             try:
 
                 # Filter out the non landscape images
-                """ image_headers_only = requests.get(url, stream=True, headers={'Range': 'bytes=0-24576'})
+                """image_headers_only = requests.get(url, stream=True, headers={'Range': 'bytes=0-24576'})
                 img = Image.open(BytesIO(image_headers_only.content))
                 width, height = img.size
                 if self.is_size_inadequate(width, height):
-                    continue """
+                    continue"""
 
                 image_url = item["edmIsShownBy"][0]
                 origin_url = item["edmIsShownAt"][0]
 
                 author = [
-                    creator for creator in
-                    ( item["dcCreator"] if item.get("dcCreator", None) else ["Unknown"] )
+                    creator
+                    for creator in (
+                        item["dcCreator"] if item.get("dcCreator", None) else ["Unknown"]
+                    )
                     if "http" not in creator
                 ][0]
                 author_url = [
-                    creator for creator in
-                    ( item["dcCreator"] if item.get("dcCreator", None) else [] )
+                    creator
+                    for creator in (item["dcCreator"] if item.get("dcCreator", None) else [])
                     if "http" in creator
                 ]
                 extra_metadata = {
@@ -137,5 +139,5 @@ class EuropeanaDownloader(SimpleDownloader):
         return queue
 
     def on_image_set_as_wallpaper(self, img, meta):
-        #extraData = meta.get("extraData", None)
+        # extraData = meta.get("extraData", None)
         return

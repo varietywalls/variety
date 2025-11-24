@@ -51,7 +51,7 @@ class EuropeanaConfigurableSource(ConfigurableImageSource):
         def get_europeana_api_url(self):
             api_url = super().get_europeana_api_url()
             search_keyword = self.config if self.config else ""
-            return api_url.format(keyword = f"{search_keyword} AND ")
+            return api_url.format(keyword=f"{search_keyword} AND ")
 
     @classmethod
     def get_info(cls):
