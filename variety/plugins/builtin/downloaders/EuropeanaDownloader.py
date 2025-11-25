@@ -64,15 +64,16 @@ class EuropeanaDownloader(SimpleDownloader):
         return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
 
     def get_europeana_api_url(self):
-        url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
+        url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&europeana_completeness:{completeness}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
         return url.format(
             api_key=EuropeanaDownloader.API_KEY,
-            query="{keyword}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
+            query=f"{self.config if self.config else ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
             sort="random",
             rows=30,
             profile="minimal",
             reusability="open",
             media="true",
+            completeness="[1 TO 10]",
             collection="art",
             type="IMAGE",
             img_color="true",
@@ -104,7 +105,7 @@ class EuropeanaDownloader(SimpleDownloader):
                     continue"""
 
                 image_url = item["edmIsShownBy"][0]
-                origin_url = item["edmIsShownAt"][0]
+                origin_url = item["edmIsShownAt"][0] if item.get("edmIsShownAt") else item["guid"]
 
                 author = [
                     creator
@@ -112,7 +113,8 @@ class EuropeanaDownloader(SimpleDownloader):
                         item["dcCreator"] if item.get("dcCreator", None) else ["Unknown"]
                     )
                     if "http" not in creator
-                ][0]
+                ]
+                author = author[0] if len(author) > 0 else "Unknown"
                 author_url = [
                     creator
                     for creator in (item["dcCreator"] if item.get("dcCreator", None) else [])

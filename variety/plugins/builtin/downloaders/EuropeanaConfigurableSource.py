@@ -49,9 +49,7 @@ class EuropeanaConfigurableSource(ConfigurableImageSource):
             return super(DefaultDownloader, self).get_folder_name()
 
         def get_europeana_api_url(self):
-            api_url = super().get_europeana_api_url()
-            search_keyword = self.config if self.config else ""
-            return api_url.format(keyword=f"{search_keyword} AND ")
+            return super().get_europeana_api_url()
 
     @classmethod
     def get_info(cls):
@@ -69,7 +67,7 @@ class EuropeanaConfigurableSource(ConfigurableImageSource):
         try:
             url = self.EuropeanaConfigurableDownloader(self, config).get_europeana_api_url()
             data = Util.fetch_json(url)
-            valid = data.get("success") == "true"
+            valid = data.get("success") == True
             return config, None if valid else _("No images found")
         except UnsupportedConfig:
             return config, _("Something's wrong with your search parameter")
