@@ -15,11 +15,6 @@
 ### END LICENSE
 import logging
 import random
-import time
-
-""" import requests
-from PIL import Image
-from io import BytesIO """
 
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -31,10 +26,9 @@ random.seed()
 
 
 class EuropeanaDownloader(SimpleDownloader):
-    DESCRIPTION = _("Europe's digital cultural heritage from Europeana.eu")
 
-    API_KEY = ""
-    rate_limiting_started_time = 0
+    """ DESCRIPTION = _("Europe's digital cultural heritage from Europeana.eu")
+    PROJECT_API_KEY = "" """
 
     @classmethod
     def get_info(cls):
@@ -61,13 +55,13 @@ class EuropeanaDownloader(SimpleDownloader):
         return "Europeana"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
+        return Throttling(max_downloads_per_hour=120, max_queue_fills_per_hour=20)
 
     def get_europeana_api_url(self):
         url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&europeana_completeness:{completeness}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
         return url.format(
-            api_key=EuropeanaDownloader.API_KEY,
-            query=f"{self.config if self.config else ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
+            api_key=self.config or EuropeanaDownloader.PROJECT_API_KEY,
+            query=f"{self.config.search_keyword or ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
             sort="random",
             rows=30,
             profile="minimal",
@@ -83,11 +77,6 @@ class EuropeanaDownloader(SimpleDownloader):
         )
 
     def fill_queue(self):
-        if time.time() - EuropeanaDownloader.rate_limiting_started_time < 3600:
-            logger.info(
-                lambda: "Europeana queue empty, but rate limit reached, will try again later"
-            )
-            return []
 
         url = self.get_europeana_api_url()
         logger.info(lambda: "Filling Europeana queue from " + url)
@@ -96,13 +85,6 @@ class EuropeanaDownloader(SimpleDownloader):
         queue = []
         for item in r.json()["items"]:
             try:
-
-                # Filter out the non landscape images
-                """image_headers_only = requests.get(url, stream=True, headers={'Range': 'bytes=0-24576'})
-                img = Image.open(BytesIO(image_headers_only.content))
-                width, height = img.size
-                if self.is_size_inadequate(width, height):
-                    continue"""
 
                 image_url = item["edmIsShownBy"][0]
                 origin_url = item["edmIsShownAt"][0] if item.get("edmIsShownAt") else item["guid"]

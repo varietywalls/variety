@@ -82,24 +82,22 @@ class EuropeanaConfigurableSource(ConfigurableImageSource):
 
     def get_ui_instruction(self):
         return _(
-            "We use the <a href='https://europeana.eu'>Europeana</a> API to fetch random artwork images that match the given search keyword."
-            "The Europeana API is rate-limited, so Variety fetches images from Europeana sources as a reduced rate.\n"
+            "We use the <a href='https://europeana.eu'>Europeana</a> APIs to fetch artwork images.\n"
             "\n"
-            "Please specify a search keyword, or leave blank if you'd like a random artworks selection.\n"
-            "Keyword example: sea, forest, Rome"
+            "You can request your own API key for free at <a href='https://www.europeana.eu/account/api-keys'>Europeana API</a>.\n"
         )
 
     def get_ui_short_instruction(self):
-        return _("Search keyword: ")
+        return _("API key: ")
 
     def get_ui_short_description(self):
-        return _("Fetch artwork images from Europeana.eu for a given keyword")
+        return _("Fetch artwork images from Europeana.eu")
 
     def get_source_name(self):
         return "Europeana"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
+        return Throttling(max_downloads_per_hour=120, max_queue_fills_per_hour=20)
 
     def on_image_set_as_wallpaper(self, img, meta):
         return EuropeanaDownloader().on_image_set_as_wallpaper(img, meta)

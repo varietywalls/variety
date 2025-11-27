@@ -45,10 +45,6 @@ SOURCES = {
         "High-resolution photos from Unsplash.com",
         _("High-resolution photos from Unsplash.com"),
     ),
-    "europeana": (
-        "Europe's digital cultural heritage from Europeana.eu",
-        _("Europe's digital cultural heritage from Europeana.eu")
-    ),
 }
 
 profile_path = get_profile_path(expanded=False)
