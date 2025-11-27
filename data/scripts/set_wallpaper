@@ -41,6 +41,7 @@ detect_desktop() {
         case "${XDG_CURRENT_DESKTOP,,}" in
         *"gnome"*) echo "gnome" ;;
         *"unity"*) echo "unity" ;;
+        *"budgie"*) echo "budgie" ;;
         *"kde"*) echo "kde" ;;
         *"xfce"*) echo "xfce" ;;
         *"lxde"*) echo "lxde" ;;
@@ -173,7 +174,7 @@ elif [ "$DE" == "kde" ]; then
     fi
     exit "$dbus_exitcode"
 
-elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ]; then
+elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then
     # Gnome 3, Unity
     gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2>/dev/null
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2>/dev/null
