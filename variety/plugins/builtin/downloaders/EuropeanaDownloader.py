@@ -15,11 +15,6 @@
 ### END LICENSE
 import logging
 import random
-import time
-
-""" import requests
-from PIL import Image
-from io import BytesIO """
 
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -31,10 +26,11 @@ random.seed()
 
 
 class EuropeanaDownloader(SimpleDownloader):
+
     DESCRIPTION = _("Europe's digital cultural heritage from Europeana.eu")
 
-    API_KEY = ""
-    rate_limiting_started_time = 0
+    # This API key has been requested from Andrea Pasquali to Europeana.ue in order to use it for Variety project
+    API_KEY = "damolystist"
 
     @classmethod
     def get_info(cls):
@@ -61,7 +57,7 @@ class EuropeanaDownloader(SimpleDownloader):
         return "Europeana"
 
     def get_default_throttling(self):
-        return Throttling(max_downloads_per_hour=10, max_queue_fills_per_hour=1)
+        return Throttling(max_downloads_per_hour=120, max_queue_fills_per_hour=4)
 
     def get_europeana_api_url(self):
         url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&europeana_completeness:{completeness}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
@@ -83,11 +79,6 @@ class EuropeanaDownloader(SimpleDownloader):
         )
 
     def fill_queue(self):
-        if time.time() - EuropeanaDownloader.rate_limiting_started_time < 3600:
-            logger.info(
-                lambda: "Europeana queue empty, but rate limit reached, will try again later"
-            )
-            return []
 
         url = self.get_europeana_api_url()
         logger.info(lambda: "Filling Europeana queue from " + url)
@@ -97,38 +88,32 @@ class EuropeanaDownloader(SimpleDownloader):
         for item in r.json()["items"]:
             try:
 
-                # Filter out the non landscape images
-                """image_headers_only = requests.get(url, stream=True, headers={'Range': 'bytes=0-24576'})
-                img = Image.open(BytesIO(image_headers_only.content))
-                width, height = img.size
-                if self.is_size_inadequate(width, height):
-                    continue"""
-
                 image_url = item["edmIsShownBy"][0]
-                origin_url = item["edmIsShownAt"][0] if item.get("edmIsShownAt") else item["guid"]
+                origin_url = item["guid"]
 
                 author = [
                     creator
                     for creator in (
-                        item["dcCreator"] if item.get("dcCreator", None) else ["Unknown"]
+                        item["dcCreator"] if item.get("dcCreator", None) else []
                     )
                     if "http" not in creator
                 ]
-                author = author[0] if len(author) > 0 else "Unknown"
+                author = author[0] if len(author) > 0 else item["dataProvider"][0]
                 author_url = [
                     creator
                     for creator in (item["dcCreator"] if item.get("dcCreator", None) else [])
                     if "http" in creator
                 ]
+                artwork_url = item['edmIsShownAt'][0] if item.get('edmIsShownAt') else origin_url
                 extra_metadata = {
                     "sourceType": "europeana",
-                    "sfwRating": 100,
+                    "headline": item["title"][-1],
                     "author": author,
-                    "authorURL": None if len(author_url) == 0 else author_url[0],
-                    "description": item["title"][-1],
+                    "authorURL": author_url[0] if len(author_url) > 0 else artwork_url,
+                    "description": item["dcDescription"][0][:10000] if item.get("dcDescription") else None,
                     "keywords": [],
                     "extraData": {
-                        "provider": item["dataProvider"],
+                        "provider": item["dataProvider"][0],
                     },
                 }
 
@@ -139,7 +124,3 @@ class EuropeanaDownloader(SimpleDownloader):
 
         random.shuffle(queue)
         return queue
-
-    def on_image_set_as_wallpaper(self, img, meta):
-        # extraData = meta.get("extraData", None)
-        return
