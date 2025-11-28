@@ -7,7 +7,7 @@
 desktop="$DESKTOP_SESSION"
 
 # Gnome 3, Unity:
-if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ]; then
+if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ] || [ "$XDG_CURRENT_DESKTOP" == "Budgie" ]; then
         gsettings get org.gnome.desktop.background picture-uri
 
 # XFCE
