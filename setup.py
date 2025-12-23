@@ -22,7 +22,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     long_description="""
 Variety is a wallpaper manager for Linux systems. It supports numerous desktops
-and wallpaper sources, including local files and online services: Flickr,
+and wallpaper sources, including local files and online services:
 Wallhaven, Unsplash, and more.
 
 Where supported, Variety sits as a tray icon to allow easy pausing and resuming.

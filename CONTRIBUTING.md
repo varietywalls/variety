@@ -38,10 +38,6 @@ Every new image source to be added to Variety should meet several criteria:
   wallpapers. The general policy is that we prefer quality over both quantity and searchability /
   customization.
 
-Suggestions for adding specific Flickr photographers' feeds as default sources are also welcome, as
-long as their images meet the license and quality criteria above (the other two are met
-by default with Flickr)
-
 ## Code style
 
 We use Black and isort, using line length of 100 symbols.
@@ -86,8 +82,8 @@ To install glade on Ubuntu:
 sudo apt install glade
 ```
 
-If you just run it and try to open one of the .ui files in `data/ui`, 
-it would give you an error. 
+If you just run it and try to open one of the .ui files in `data/ui`,
+it would give you an error.
 Here is how to run it successfully:
 ```
 GLADE_CATALOG_SEARCH_PATH=data/ui/ glade data/ui/PreferencesVarietyDialog.ui

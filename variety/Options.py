@@ -45,9 +45,6 @@ class Options:
         FAVORITES = "favorites"
         FETCHED = "fetched"
 
-        # predefined configurable sources
-        FLICKR = "flickr"
-
         WALLHAVEN = "wallhaven"
 
         BUILTIN_SOURCE_TYPES = {
@@ -57,16 +54,15 @@ class Options:
             ALBUM_DATE,
             FAVORITES,
             FETCHED,
-            FLICKR,
         }
 
         LOCAL_PATH_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE}
 
         LOCAL_TYPES = {IMAGE, FOLDER, ALBUM_FILENAME, ALBUM_DATE, FAVORITES, FETCHED}
 
-        DL_TYPES = {FLICKR}
+        DL_TYPES = set()
 
-        EDITABLE_DL_TYPES = {FLICKR}
+        EDITABLE_DL_TYPES = set()
 
         REMOVABLE_TYPES = {FOLDER, IMAGE, ALBUM_FILENAME, ALBUM_DATE} | EDITABLE_DL_TYPES
 
@@ -659,7 +655,7 @@ class Options:
         self.fetched_folder = os.path.join(get_profile_path(), "Fetched")
         self.clipboard_enabled = False
         self.clipboard_use_whitelist = True
-        self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,flickr.com,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(
+        self.clipboard_hosts = "wallhaven.cc,ns223506.ovh.net,wallpapers.net,imgur.com,deviantart.com,interfacelift.com,vladstudio.com".split(
             ","
         )
 
@@ -727,11 +723,6 @@ class Options:
             [True, Options.SourceType.FAVORITES, "The Favorites folder"],
             [True, Options.SourceType.FETCHED, "The Fetched folder"],
             [True, Options.SourceType.FOLDER, "/usr/share/backgrounds/"],
-            [
-                False,
-                Options.SourceType.FLICKR,
-                "user:www.flickr.com/photos/peter-levi/;user_id:93647178@N00;",
-            ],
         ]
 
         self.filters = [

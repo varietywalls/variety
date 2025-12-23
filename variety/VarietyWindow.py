@@ -35,7 +35,6 @@ from jumble.Jumble import Jumble
 from variety import indicator
 from variety.AboutVarietyDialog import AboutVarietyDialog
 from variety.DominantColors import DominantColors
-from variety.FlickrDownloader import FlickrDownloader
 from variety.ImageFetcher import ImageFetcher
 from variety.Options import Options
 from variety.plugins.downloaders.ConfigurableImageSource import ConfigurableImageSource
@@ -599,15 +598,12 @@ class VarietyWindow(Gtk.Window):
             self.downloaders_cache[type] = {}
 
     def create_downloader(self, type, location):
-        if type == Options.SourceType.FLICKR:
-            return FlickrDownloader(self, location)
-        else:
-            for dl in Options.SIMPLE_DOWNLOADERS:
-                if dl.get_source_type() == type:
-                    return dl
-            for source in Options.CONFIGURABLE_IMAGE_SOURCES:
-                if source.get_source_type() == type:
-                    return source.create_downloader(location)
+        for dl in Options.SIMPLE_DOWNLOADERS:
+            if dl.get_source_type() == type:
+                return dl
+        for source in Options.CONFIGURABLE_IMAGE_SOURCES:
+            if source.get_source_type() == type:
+                return source.create_downloader(location)
 
         raise Exception("Unknown downloader type")
 

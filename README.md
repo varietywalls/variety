@@ -5,7 +5,7 @@
 Variety is a wallpaper manager for Linux systems. It supports out-of-the-box most Linux desktop environments, and can be configured to work
 on more esoteric ones.
 
-It can use local images or automatically download wallpapers from Flickr, Wallhaven, Unsplash, Bing, Reddit and other online sources,
+It can use local images or automatically download wallpapers from Wallhaven, Unsplash, Bing, Reddit and other online sources,
 allows you to rotate them on a regular interval, and provides easy ways to separate the great images from the junk.
 Variety can also display wise and funny quotations or a nice digital clock on the desktop.
 
