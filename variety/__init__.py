@@ -171,6 +171,29 @@ def _set_up_logging(verbose):
 
 
 def main():
+    if os.geteuid() == 0:
+        print(
+            'Variety is not supposed to run as root.\n'
+            'You should NEVER run desktop apps as root, unless they are supposed to make '
+            'system-global changes and you know very well what you are doing.\n'
+            'Please run it with your normal user.\n'
+            '\n'
+            'If you are trying to run as root because Variety does not start at all with your normal '
+            'user, you may be hitting a file permission issue or a bug.\n'
+            'Here is what to do to troubleshoot:\n'
+            '\n'
+            '1. Open a terminal and run "variety -v" with your normal user.\n'
+            'Look for exceptions and hints in the log for what the problem might be.\n'
+            '\n'
+            '2. You may try to rename ~/.config/variety to ~/.config/variety_bak and try again.\n'
+            'This will have Variety start from a clean state.\n'
+            'Your old config and images will remain in variety_bak\n'
+            '\n'
+            '3. If none of these help, open a bug in https://github.com/varietywalls/variety/issues '
+            'and follow the instructions there.'
+        )
+        sys.exit(1)
+
     # Ctrl-C
     signal.signal(signal.SIGINT, _sigint_handler)
     signal.signal(signal.SIGTERM, _sigint_handler)
