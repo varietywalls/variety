@@ -27,7 +27,6 @@ from gi.repository import Gdk, GdkPixbuf, GObject, Gtk  # pylint: disable=E0611
 
 from variety import Texts
 from variety.AddConfigurableDialog import AddConfigurableDialog
-from variety.AddFlickrDialog import AddFlickrDialog
 from variety.AddWallhavenDialog import AddWallhavenDialog
 from variety.EditFavoriteOperationsDialog import EditFavoriteOperationsDialog
 from variety.FolderChooser import FolderChooser
@@ -431,9 +430,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             "-",
         ]
 
-        configurable_items = [
-            (True, _("Flickr"), _("Fetch images from Flickr"), self.on_add_flickr_clicked)
-        ]
+        configurable_items = []
         for source in self.options.CONFIGURABLE_IMAGE_SOURCES:
 
             def _click(widget, source=source):
@@ -776,9 +773,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
         type = edited_row[1]
 
         if type in Options.get_editable_source_types():
-            if type == Options.SourceType.FLICKR:
-                self.dialog = AddFlickrDialog()
-            elif type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
+            if type in Options.CONFIGURABLE_IMAGE_SOURCES_MAP:
                 if type == Options.SourceType.WALLHAVEN:
                     self.dialog = AddWallhavenDialog(self.parent)
                 else:
@@ -890,9 +885,6 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
         except Exception:
             logger.exception(lambda: "Could not create thumbs window:")
-
-    def on_add_flickr_clicked(self, widget=None):
-        self.show_dialog(AddFlickrDialog())
 
     def on_add_configurable(self, source):
         if source.get_source_type() == Options.SourceType.WALLHAVEN:
