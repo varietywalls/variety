@@ -162,10 +162,6 @@ elif [ "$DE" == "kde" ]; then
     "
     dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
     dbus_exitcode="$?"
-    if [[ "$dbus_exitcode" -eq 0 && "${KDE_SESSION_VERSION}" -eq '6' ]]; then
-        # Update KDE lock screen background
-        kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
-    fi
     if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
         kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
             make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
@@ -183,14 +179,6 @@ elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then
     fi
     if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
         gsettings set org.gnome.desktop.background picture-options 'zoom'
-    fi
-    # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
-    gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2>/dev/null
-    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-        gsettings set org.gnome.desktop.screensaver picture-options "$4"
-    fi
-    if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
-        gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
     fi
 
 elif [ "$DE" == "deepin" ]; then

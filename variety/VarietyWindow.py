@@ -243,6 +243,19 @@ class VarietyWindow(Gtk.Window):
 
         self.preferences_dialog.present()
 
+    def _maybe_copy_script(self, script):
+        """Copy a script, if missing, to the Variety profile path."""
+        if not os.path.exists(os.path.join(self.scripts_folder, script)):
+            logger.info(
+                lambda: "Missing %s file, copying it from %s"
+                % (script, varietyconfig.get_data_file("scripts", script))
+            )
+            Util.copy_with_replace(
+                varietyconfig.get_data_file("scripts", script),
+                os.path.join(self.scripts_folder, script),
+                {DEFAULT_PROFILE_PATH.replace("~", "$HOME"): get_profile_path(expanded=True)},
+            )
+
     def prepare_config_folder(self):
         self.config_folder = get_profile_path()
         Util.makedirs(self.config_folder)
@@ -277,27 +290,9 @@ class VarietyWindow(Gtk.Window):
         self.scripts_folder = os.path.join(self.config_folder, "scripts")
         Util.makedirs(self.scripts_folder)
 
-        if not os.path.exists(os.path.join(self.scripts_folder, "set_wallpaper")):
-            logger.info(
-                lambda: "Missing set_wallpaper file, copying it from "
-                + varietyconfig.get_data_file("scripts", "set_wallpaper")
-            )
-            Util.copy_with_replace(
-                varietyconfig.get_data_file("scripts", "set_wallpaper"),
-                os.path.join(self.scripts_folder, "set_wallpaper"),
-                {DEFAULT_PROFILE_PATH.replace("~", "$HOME"): get_profile_path(expanded=True)},
-            )
-
-        if not os.path.exists(os.path.join(self.scripts_folder, "get_wallpaper")):
-            logger.info(
-                lambda: "Missing get_wallpaper file, copying it from "
-                + varietyconfig.get_data_file("scripts", "get_wallpaper")
-            )
-            Util.copy_with_replace(
-                varietyconfig.get_data_file("scripts", "get_wallpaper"),
-                os.path.join(self.scripts_folder, "get_wallpaper"),
-                {DEFAULT_PROFILE_PATH.replace("~", "$HOME"): get_profile_path(expanded=True)},
-            )
+        self._maybe_copy_script("set_wallpaper")
+        self._maybe_copy_script("get_wallpaper")
+        self._maybe_copy_script("set_lock_screen")
 
         # make all scripts executable:
         for f in os.listdir(self.scripts_folder):
@@ -1559,6 +1554,8 @@ class VarietyWindow(Gtk.Window):
                 Util.add_mainloop_task(_update_inidicator)
 
                 self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode_param)
+                if self.options.change_lock_screen:
+                    self.set_desktop_wallpaper(to_set, filename, refresh_level, display_mode_param, lock_screen=True)
                 self.current = filename
 
                 if self.options.icon == "Current" and self.current:
@@ -2753,8 +2750,8 @@ class VarietyWindow(Gtk.Window):
         except Exception:
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
-    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode):
-        script = self.options.set_wallpaper_script
+    def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode, lock_screen=False):
+        script = self.options.set_lock_screen_script if lock_screen else self.options.set_wallpaper_script
         if os.access(script, os.X_OK):
             auto = (
                 "manual"

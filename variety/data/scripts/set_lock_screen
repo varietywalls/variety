@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# This script is run by Variety to change lock screen backgrounds, when that option is enabled.
+# The parameters are the same as set_wallpaper.
+WP=$1
+
+detect_desktop() {
+    if [ -n "$XDG_CURRENT_DESKTOP" ]; then
+        case "${XDG_CURRENT_DESKTOP,,}" in
+        *"gnome"*) echo "gnome" ;;
+        *"unity"*) echo "unity" ;;
+        *"budgie"*) echo "budgie" ;;
+        *"kde"*) echo "kde" ;;
+        esac
+        return
+    fi
+    echo "unknown"
+}
+
+DE=$(detect_desktop)
+
+if [ "$DE" == "kde" ]; then
+    kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
+
+elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then
+    # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
+    gsettings set org.gnome.desktop.screensaver picture-uri "file://$WP" 2>/dev/null
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.gnome.desktop.screensaver picture-options "$4"
+    fi
+    if [ "$(gsettings get org.gnome.desktop.screensaver picture-options)" == "'none'" ]; then
+        gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
+    fi
+else
+    echo "Unsupported desktop for automatic lock screen changing"
+    exit 1
+fi
+
+exit 0

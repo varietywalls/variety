@@ -108,12 +108,22 @@ class Options:
                 pass
 
             try:
+                self.change_lock_screen = config["change_lock_screen"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
                 self.set_wallpaper_script = os.path.expanduser(config["set_wallpaper_script"])
             except Exception:
                 pass
 
             try:
                 self.get_wallpaper_script = os.path.expanduser(config["get_wallpaper_script"])
+            except Exception:
+                pass
+
+            try:
+                self.set_lock_screen_script = os.path.expanduser(config["set_lock_screen_script"])
             except Exception:
                 pass
 
@@ -632,9 +642,11 @@ class Options:
         self.change_interval = 300
         self.internet_enabled = True
         self.safe_mode = False
+        self.change_lock_screen = False
 
         self.set_wallpaper_script = os.path.join(get_profile_path(), "scripts", "set_wallpaper")
         self.get_wallpaper_script = os.path.join(get_profile_path(), "scripts", "get_wallpaper")
+        self.set_lock_screen_script = os.path.join(get_profile_path(), "scripts", "set_lock_screen")
 
         self.download_folder = os.path.join(get_profile_path(), "Downloaded")
         self.download_preference_ratio = 0.9
@@ -748,6 +760,7 @@ class Options:
             config["change_interval"] = str(self.change_interval)
             config["internet_enabled"] = str(self.internet_enabled)
             config["safe_mode"] = str(self.safe_mode)
+            config["change_lock_screen"] = str(self.change_lock_screen)
 
             config["set_wallpaper_script"] = Util.collapseuser(self.set_wallpaper_script)
             config["get_wallpaper_script"] = Util.collapseuser(self.get_wallpaper_script)
