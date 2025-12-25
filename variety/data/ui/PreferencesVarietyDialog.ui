@@ -3606,7 +3606,7 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="lightdm_box">
+                  <object class="GtkBox" id="login_screen_support_box">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="valign">start</property>
@@ -3640,6 +3640,24 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                         <property name="hexpand">True</property>
                         <property name="orientation">vertical</property>
                         <child>
+                          <object class="GtkCheckButton" id="change_lock_screen_box">
+                            <property name="label" translatable="yes">Change lock screen background automatically</property>
+                            <property name="use-action-appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin-top">7</property>
+                            <property name="xalign">0</property>
+                            <property name="draw-indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkCheckButton" id="copyto_enabled">
                             <property name="label" translatable="yes">Copy wallpapers to a static location (for programs like LightDM that require a static path)</property>
                             <property name="use-action-appearance">False</property>
@@ -3652,24 +3670,6 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="draw-indicator">True</property>
                             <signal name="toggled" handler="delayed_apply" swapped="no"/>
                             <signal name="toggled" handler="on_copyto_enabled_toggled" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label19">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="margin-top">7</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show your wallpaper in a display manager, it may need read permissions to the image. With this option on, Variety will copy the wallpapers to a public folder and change their permissions to make them readable by all. By default, the folder is ~/Pictures if your home folder in not encrypted, and /usr/share/backgrounds if it is. Please use with care on multiuser systems.</property>
-                            <property name="use-markup">True</property>
-                            <property name="justify">fill</property>
-                            <property name="wrap">True</property>
-                            <property name="max-width-chars">130</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -3846,6 +3846,24 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label19">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin-top">7</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Privacy warning:&lt;/b&gt; To show your wallpaper in a display manager, it may need read permissions to the image. With this option on, Variety will copy the wallpapers to a public folder and change their permissions to make them readable by all. By default, the folder is ~/Pictures if your home folder in not encrypted, and /usr/share/backgrounds if it is. Please use with care on multiuser systems.</property>
+                            <property name="use-markup">True</property>
+                            <property name="justify">fill</property>
+                            <property name="wrap">True</property>
+                            <property name="max-width-chars">130</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">5</property>
                           </packing>
                         </child>
                       </object>

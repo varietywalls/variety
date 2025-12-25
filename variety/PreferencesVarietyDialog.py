@@ -180,6 +180,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
 
             self.favorites_operations = self.options.favorites_operations
 
+            self.ui.change_lock_screen_box.set_active(self.options.change_lock_screen)
             self.ui.copyto_enabled.set_active(self.options.copyto_enabled)
             self.copyto_chooser.set_folder(self.parent.get_actual_copyto_folder())
 
@@ -1020,6 +1021,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 pass
 
             self.options.copyto_enabled = self.ui.copyto_enabled.get_active()
+            self.options.change_lock_screen = self.ui.change_lock_screen_box.get_active()
             copyto = os.path.normpath(self.copyto_chooser.get_folder())
             if copyto == os.path.normpath(self.parent.get_actual_copyto_folder("Default")):
                 self.options.copyto_folder = "Default"
