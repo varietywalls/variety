@@ -35,6 +35,7 @@
 # In the end put the path to the actual final wallpaper image file in the WP variable.
 # The default is to simply set WP=$1.
 WP=$1
+SCRIPT_PATH="$(readlink -f "$0")"
 
 detect_desktop() {
     if [ -n "$XDG_CURRENT_DESKTOP" ]; then
@@ -152,17 +153,28 @@ if [ "$DE" == "enlightenment" ]; then
 
 elif [ "$DE" == "kde" ]; then
     plasma_qdbus_script="
+        let supportedPlugins = Array('org.kde.image', 'a2n.blur');
+        let unsupportedPlugins = [];
         let allDesktops = desktops();
         for (let d of allDesktops) {
-            if (d.wallpaperPlugin == 'org.kde.image') {
-                d.currentConfigGroup = Array('Wallpaper', 'org.kde.image', 'General');
+            if (supportedPlugins.includes(d.wallpaperPlugin)) {
+                d.currentConfigGroup = Array('Wallpaper', d.wallpaperPlugin, 'General');
                 d.writeConfig('Image', 'file://""$WP""');
             }
+            else if (!unsupportedPlugins.includes(d.wallpaperPlugin)) {
+                unsupportedPlugins.push(d.wallpaperPlugin);
+            }
         }
+        print(unsupportedPlugins);
     "
-    dbus-send --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script"
+
+    plasma_qdbus_raw_result=$(dbus-send --print-reply --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script")
+    unsupported_plugins=$(echo "$plasma_qdbus_raw_result" | grep -oP '(?<=string ")[^"]*')
     dbus_exitcode="$?"
-    if [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
+
+    if [[ -n "$unsupported_plugins" ]]; then
+        kdialog --title "Variety: unsupported wallpaper plugin" --passivepopup "Unsupported plugin detected: $unsupported_plugins\n----\nTry adding it to the supportedPlugins list in the kde section of $SCRIPT_PATH" --icon variety 30
+    elif [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
         kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
             make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
             Due to Plasma limitations, external programs cannot automatically change the wallpaper when the widgets are locked.\n \
