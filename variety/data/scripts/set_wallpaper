@@ -210,11 +210,34 @@ elif [ "$DE" == "xfce" ]; then
     command -v xfconf-query >/dev/null 2>&1
     rc=$?
     if [[ $rc = 0 ]]; then
-        for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$"); do
-            xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
-            xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
-            xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
-        done
+        # First, try existing properties
+        existing_props=$(xfconf-query -c xfce4-desktop -p /backdrop -l 2>/dev/null | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$")
+
+        if [ -n "$existing_props" ]; then
+            # Set wallpaper on existing properties
+            for i in $existing_props; do
+                xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
+                xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
+                xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
+            done
+        else
+            # No existing properties - create them for each connected monitor
+            # This handles fresh XFCE installs where backdrop properties don't exist yet
+            # See: https://github.com/varietywalls/variety/issues/164
+            if command -v xrandr >/dev/null 2>&1; then
+                for monitor in $(xrandr --query | grep " connected" | cut -d' ' -f1); do
+                    prop="/backdrop/screen0/monitor${monitor}/workspace0/last-image"
+                    style_prop="/backdrop/screen0/monitor${monitor}/workspace0/image-style"
+                    # Create and set the wallpaper property
+                    xfconf-query -c xfce4-desktop -p "$prop" -n -t string -s "$WP" 2>/dev/null
+                    # Set image style to 5 (zoomed) if not already set
+                    xfconf-query -c xfce4-desktop -p "$style_prop" -n -t int -s 5 2>/dev/null
+                done
+            else
+                # Fallback: try common property path with --create flag
+                xfconf-query -c xfce4-desktop -p "/backdrop/screen0/monitor0/workspace0/last-image" -n -t string -s "$WP" 2>/dev/null
+            fi
+        fi
     fi
 
 elif [ "$DE" == "lingmo" ]; then

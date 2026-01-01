@@ -12,7 +12,12 @@ if [ "$desktop" == "ubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "Unity" ] || [ "$XD
 
 # XFCE
 elif [ "$desktop" == "xubuntu" ] || [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
-        xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image
+        # Find first existing backdrop property (monitor names vary by setup)
+        # See: https://github.com/varietywalls/variety/issues/164
+        prop=$(xfconf-query -c xfce4-desktop -p /backdrop -l 2>/dev/null | grep -E -e "screen.*/monitor.*/last-image$" -e "screen.*/monitor.*image-path$" | head -1)
+        if [ -n "$prop" ]; then
+                xfconf-query -c xfce4-desktop -p "$prop" 2>/dev/null
+        fi
 
 # Lingmo OS
 elif [ "$XDG_CURRENT_DESKTOP" == "Lingmo" ]; then
