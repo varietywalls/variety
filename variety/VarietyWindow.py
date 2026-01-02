@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import json
 import logging
 import os
 import random
@@ -2530,6 +2531,13 @@ class VarietyWindow(Gtk.Window):
                     self.quote_save_to_favorites()
 
             GObject.timeout_add(3000 if initial_run else 1, _process_command)
+
+            if options.show_meta:
+                try:
+                    return json.dumps(Util.read_metadata(self.current))
+                except Exception:
+                    logger.exception(lambda: "Could not retrieve metadata for current wallpaper")
+                    return ""
 
             return self.current if options.show_current else ""
         except Exception:
