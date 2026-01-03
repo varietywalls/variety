@@ -1,3 +1,17 @@
+0.9.0-beta1
+    Improvement #795/#800: fix Python 3.14 support; switch to setuptools-gettext and virtualenv for local development
+    Remove broken Flickr and National Geographic downloaders
+    Feature #309: Make changing lock screen backgrounds optional
+    Feature #714: Add support for Cosmic DE
+    Feature #814: add support for KDE Active Blur wallpaper plugin
+    Feature #794: Add --meta CLI option to print wallpaper info(Customize -> Change lock screen background automatically)
+    Fix #728: use magick command instead of deprecated convert
+    Fix #807: add support for newer versions of Budgie (#807)
+    Fix #815: XFCE wallpaper cannot be set on clean installs due to missing backdrop properties
+    Fix #802: fix killing old swaybg processes
+    Improvement #792: add .webp support
+    Improvement #778: Update German translations
+
 0.8.13
     Fix #741: Fix downloading server side options (remove tiny.cc redirector)
     Fix #733: Fix for EarthviewDownloader

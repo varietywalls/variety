@@ -18,7 +18,7 @@
 __all__ = ["get_data_file"]
 
 __license__ = "GPL-3"
-__version__ = "0.9.0a1"
+__version__ = "0.9.0b1"
 
 import importlib.resources
 
