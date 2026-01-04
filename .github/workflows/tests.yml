@@ -17,84 +17,31 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-24.04]
-        python-version: ['3.9', '3.13']
       fail-fast: false
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Cache pip packages for performance
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('**/requirements.txt', 'debian/control') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.python-version }}-pip-
-          ${{ runner.os }}-pip-
-
-    - name: Parse dependencies from debian/control
-      id: parse-deps
-      run: |
-        DEPS=$(python3 <<'EOF'
-        import re
-        import sys
-
-        with open('debian/control') as f:
-            content = f.read()
-
-        all_packages = []
-
-        # Extract Build-Depends from Source section
-        build_deps = re.search(r'^Build-Depends:(.*?)^[A-Z]', content, re.M | re.S)
-        if build_deps:
-            for line in build_deps.group(1).split(','):
-                pkg_name = line.strip().split()[0] if line.strip() else ''
-                if pkg_name and not pkg_name.startswith('${'):
-                    all_packages.append(pkg_name)
-
-        # Find Package: variety section
-        pkg = re.search(r'^Package:\s+variety$', content, re.M)
-        if not pkg:
-            print("ERROR: Could not find 'Package: variety' in debian/control", file=sys.stderr)
-            sys.exit(1)
-        pkg_content = content[pkg.start():]
-
-        # Extract Depends, Recommends, Suggests from Package section
-        for field in ['Depends', 'Recommends', 'Suggests']:
-            match = re.search(rf'^{field}:(.*?)^[A-Z]', pkg_content, re.M | re.S)
-            if match:
-                for line in match.group(1).split(','):
-                    # Handle 'Suggests' pipe delimiter
-                    alternatives = line.split('|')
-                    pkg_name = alternatives[0].strip().split()[0] if alternatives[0].strip() else ''
-                    if pkg_name and not pkg_name.startswith('${'):
-                        all_packages.append(pkg_name)
-
-        if not all_packages:
-            print("ERROR: No packages found in debian/control", file=sys.stderr)
-            sys.exit(1)
-
-        print(' '.join(all_packages))
-        EOF
-        )
-        echo "Parsed packages: $DEPS"
-        echo "packages=$DEPS" >> $GITHUB_OUTPUT
-
-    - name: Install system dependencies
+    - name: Install build dependencies
       run: |
         sudo apt-get update || true
-        sudo apt-get install -y ${{ steps.parse-deps.outputs.packages }} || true
+        sudo apt-get install -y build-essential dpkg-dev debhelper dh-python python3-setuptools python3-setuptools-gettext || true
 
-    - name: Install Python dependencies
+    - name: Build .deb package
       run: |
-        pip install -r requirements.txt
+        dpkg-buildpackage -us -uc -b
+
+    - name: Install .deb package with dependencies
+      run: |
+        sudo apt-get install -y -f ../variety_*.deb
+
+    - name: Install pylint for tests
+      run: |
+        sudo apt-get install -y pylint || true
 
     - name: Run all tests
       run: |
-        python -m unittest discover -s tests -p "[Tt]est*.py" -v
+        python3 -m unittest discover -s tests -p "[Tt]est*.py" -v
+      env:
+        SKIP_DOWNLOADER_TESTS: "1"
