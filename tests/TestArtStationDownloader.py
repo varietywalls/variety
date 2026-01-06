@@ -15,12 +15,14 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import os
 import unittest
 
 from tests.TestDownloader import test_download_one_for
 from variety.plugins.builtin.downloaders.ArtStationSource import ArtStationSource
 
 
+@unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
 class TestArtStationDownloader(unittest.TestCase):
     def test_download_one(self):
         test_download_one_for(
