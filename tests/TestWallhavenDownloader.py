@@ -24,6 +24,7 @@ from variety.plugins.builtin.downloaders.WallhavenSource import WallhavenSource
 from variety.Util import Util
 
 
+@unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
 class TestWallhavenDownloader(unittest.TestCase):
     def test_download_one(self):
         source = WallhavenSource()
