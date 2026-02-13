@@ -1155,7 +1155,7 @@ class VarietyWindow(Gtk.Window):
     def download_one_from(self, downloader):
         try:
             file = downloader.download_one()
-        except:
+        except Exception:
             logger.exception(lambda: "Could not download wallpaper:")
             file = None
 
@@ -2079,7 +2079,7 @@ class VarietyWindow(Gtk.Window):
                     try:
                         gio_file = Gio.File.new_for_path(file)
                         ok = gio_file.trash()
-                    except:
+                    except Exception:
                         logger.exception("Gio.File.trash failed with exception")
                         ok = False
 
@@ -2700,7 +2700,7 @@ class VarietyWindow(Gtk.Window):
                     _("Unsupported command"),
                     _("Are you running the most recent version of Variety?"),
                 )
-        except:
+        except Exception:
             self.show_notification(
                 _("Could not process the given variety:// URL"),
                 _("Run with logging enabled to see details"),
@@ -3180,7 +3180,7 @@ class VarietyWindow(Gtk.Window):
                 if self.options.slideshow_monitor.lower() != "all":
                     try:
                         args += ["--monitor", str(int(self.options.slideshow_monitor))]
-                    except:
+                    except Exception:
                         pass
                     subprocess.Popen(args)
                 else:
@@ -3189,7 +3189,7 @@ class VarietyWindow(Gtk.Window):
                         new_args = list(args)
                         new_args += ["--monitor", str(i + 1)]
                         subprocess.Popen(new_args)
-            except:
+            except Exception:
                 logger.exception("Could not start slideshow:")
 
         threading.Thread(target=_go).start()
