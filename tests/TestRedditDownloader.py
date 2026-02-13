@@ -15,6 +15,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import os
 import unittest
 
 from tests.TestDownloader import test_download_one_for
@@ -23,6 +24,7 @@ from variety.plugins.builtin.downloaders.RedditDownloader import RedditDownloade
 from variety.plugins.builtin.downloaders.RedditSource import RedditSource
 
 
+@unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
 class TestRedditDownloader(unittest.TestCase):
     def test_download_one(self):
         source = RedditSource()
