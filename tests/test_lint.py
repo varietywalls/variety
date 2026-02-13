@@ -25,7 +25,7 @@ class TestPylint(unittest.TestCase):
         
         your code may well work even with pylint errors
         but have some unusual code"""
-        return_code = subprocess.call(["pylint3", "-E", "variety"])
+        return_code = subprocess.call(["pylint", "-E", "variety"])
         # not needed because nosetests displays pylint console output
         # self.assertEqual(return_code, 0)
 

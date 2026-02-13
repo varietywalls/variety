@@ -38,6 +38,7 @@ class TestJumble(unittest.TestCase):
     def test_load(self):
         p = Jumble(["variety/plugins/builtin"])
         p.load()
-        self.assertEqual(18, len(p.get_plugins()))
-        self.assertEqual(18, len(p.get_plugins(IPlugin)))
+        # Count decreased from 18 to 17 after Flickr downloader was removed
+        self.assertEqual(17, len(p.get_plugins()))
+        self.assertEqual(17, len(p.get_plugins(IPlugin)))
         self.assertEqual(1, len(p.get_plugins(name="Goodreads")))

@@ -1,0 +1,47 @@
+name: Run Tests Directory
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        os: [ubuntu-24.04]
+      fail-fast: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get build-dep .
+
+    - name: Build .deb package
+      run: |
+        dpkg-buildpackage -us -uc -b
+
+    - name: Install .deb package with dependencies
+      run: |
+        sudo apt-get install -y -f ../variety_*.deb
+
+    - name: Install pylint for tests
+      run: |
+        sudo apt-get install -y pylint || true
+
+    - name: Run all tests
+      run: |
+        python3 -m unittest discover -s tests -p "[Tt]est*.py" -v
+      env:
+        SKIP_DOWNLOADER_TESTS: "1"
