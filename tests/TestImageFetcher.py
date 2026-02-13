@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
+import os
 import os.path
 import shutil
 import unittest
@@ -23,6 +24,7 @@ from variety.ImageFetcher import ImageFetcher
 
 
 class TestImageFetcher(unittest.TestCase):
+    @unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
     def test_fetch(self):
         target_folder = "/tmp/variety/ImageFetcher"
         shutil.rmtree(target_folder, ignore_errors=True)

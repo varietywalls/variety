@@ -15,11 +15,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+import os
 import unittest
 
 from jumble.Jumble import Jumble
 
-
+@unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
 class TestQuotationsPageSource(unittest.TestCase):
     def test_get_random(self):
         p = Jumble(["variety/plugins/builtin"])
