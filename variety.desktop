@@ -1,6 +1,6 @@
 [Desktop Entry]
-_Name=Variety
-_Comment=Variety Wallpaper Changer
+Name=Variety
+Comment=Variety Wallpaper Changer
 Categories=GNOME;GTK;Utility;
 Exec=variety %U
 MimeType=text/uri-list;x-scheme-handler/variety;x-scheme-handler/vrty;
@@ -14,20 +14,20 @@ StartupWMClass=Variety
 
 [Desktop Action Next]
 Exec=variety --next
-_Name=Next
+Name=Next
 
 [Desktop Action Previous]
 Exec=variety --previous
-_Name=Previous
+Name=Previous
 
 [Desktop Action PauseResume]
 Exec=variety --toggle-pause
-_Name=Pause / Resume
+Name=Pause / Resume
 
 [Desktop Action History]
 Exec=variety --history
-_Name=History
+Name=History
 
 [Desktop Action Preferences]
 Exec=variety --preferences
-_Name=Preferences
+Name=Preferences
