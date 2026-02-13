@@ -46,7 +46,7 @@ Run on changed files with:
 
 ```
 isort -rc edited_file_or_folder
-black --line-length 100 --target-version py35 edited_file_or_folder
+black --line-length 100 --target-version py39 edited_file_or_folder
 ```
 
 Or use directly the provided script `toolchain/autoformat` for this.
@@ -61,19 +61,19 @@ cd .git/hooks && ln -sf ../../toolchain/pre-commit-autoformat pre-commit
 
 ## Testing
 
-We don't have CI support, yet. Please make sure all tests under the `tests` folder pass in your
-branch. Run tests with, from the root of the project:
+Please make sure all tests under the `tests` folder pass in your
+branch. Run tests from the root of the project with:
 
 ```
 python3 -m unittest discover -p 'Test*.py' tests
 ```
 
 All of the tests for the various image sources actually access the image source, so these
-could fail sometimes when the remote site is down for maintenance - use common sense for whether
-your changes caused the failure or it failed because of ax external reason.
+could fail when the remote site is down for maintenance or the downloader is out of date.
+It's okay to skip them if your changes are unrelated to those failures.
 
 Please note the test suite is not yet very extensive, and also does not cover any of the UI
-aspects of Variety - always do some manual tests before you consider your PR is complete.
+aspects of Variety - if your changes are in this area, you should test it manually before you consider your PR complete.
 
 ## Editing UI files
 We have used Glade to develop the GTK UI dialogs of Variety.
