@@ -173,6 +173,7 @@ class TestUtil(unittest.TestCase):
 
         self.assertEqual([20, 30], list(Util.safe_map(f, [1, 5, 20, 10, 30, 4])))
 
+    @unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping networked tests (SKIP_DOWNLOADER_TESTS is set)")
     def test_fetch(self):
         resp = Util.fetch("//google.com")
         self.assertTrue(len(resp) > 0)
@@ -198,6 +199,7 @@ class TestUtil(unittest.TestCase):
         self.assertTrue(Util.is_animated_gif("animated.gif"))
         self.assertFalse(Util.is_animated_gif("not-animated.gif"))
 
+    @unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
     def test_is_dead_or_not_image(self):
         self.assertTrue(Util.is_dead_or_not_image(None))
         self.assertTrue(Util.is_dead_or_not_image("not a URL"))
