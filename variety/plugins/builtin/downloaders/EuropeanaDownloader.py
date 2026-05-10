@@ -123,5 +123,4 @@ class EuropeanaDownloader(SimpleDownloader):
                 logger.exception(lambda: "Could not process an item from Europeana")
                 raise
 
-        random.shuffle(queue)
         return queue
