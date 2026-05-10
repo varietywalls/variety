@@ -74,8 +74,7 @@ class EuropeanaDownloader(SimpleDownloader):
             "type": "IMAGE",
             "img_color": "true",
             "img_size": "extra_large",
-            "img_ratio": "landscape",
-            "mime": "image/jpeg"
+            "img_ratio": "landscape"
         })
         return f"{base_url}?{query_params}"
 
