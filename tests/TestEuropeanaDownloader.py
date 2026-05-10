@@ -29,7 +29,7 @@ class TestEuropeanaDownloader(unittest.TestCase):
         dl = get_plugin_downloader("EuropeanaDownloader")
         dl.target_folder = "/tmp/variety/"
         queue = dl.fill_queue()
-        self.assertTrue(len(queue) > 0)
+        self.assertTrue(queue)
 
 
 if __name__ == "__main__":
