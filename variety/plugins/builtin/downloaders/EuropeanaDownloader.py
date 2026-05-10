@@ -13,8 +13,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-import logging
-import random
+import logging, random
+from urllib.parse import urlencode
 
 from variety.plugins.downloaders.ImageSource import Throttling
 from variety.plugins.downloaders.SimpleDownloader import SimpleDownloader
@@ -60,23 +60,24 @@ class EuropeanaDownloader(SimpleDownloader):
         return Throttling(max_downloads_per_hour=120, max_queue_fills_per_hour=4)
 
     def get_europeana_api_url(self):
-        url = "https://api.europeana.eu/record/v2/search.json?wskey={api_key}&query={query}&sort={sort}&rows={rows}&profile={profile}&reusability={reusability}&media={media}&europeana_completeness:{completeness}&qf=collection:{collection}&qf=TYPE:{type}&qf=IMAGE_COLOUR:{img_color}&qf=IMAGE_SIZE:{img_size}&qf=IMAGE_ASPECTRATIO:{img_ratio}&qf=MIME_TYPE:{mime}"
-        return url.format(
-            api_key=EuropeanaDownloader.API_KEY,
-            query=f"{self.config if self.config else ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
-            sort="random",
-            rows=30,
-            profile="minimal",
-            reusability="open",
-            media="true",
-            completeness="[1 TO 10]",
-            collection="art",
-            type="IMAGE",
-            img_color="true",
-            img_size="extra_large",
-            img_ratio="landscape",
-            mime="image/jpeg",
-        )
+        base_url = "https://api.europeana.eu/record/v2/search.json"
+        query_params = urlencode({
+            "api_key": EuropeanaDownloader.API_KEY,
+            "query": f"{self.config if self.config else ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
+            "sort": "random",
+            "rows": 30,
+            "profile": "minimal",
+            "reusability": "open",
+            "media": "true",
+            "completeness": "[1 TO 10]",
+            "collection": "art",
+            "type": "IMAGE",
+            "img_color": "true",
+            "img_size": "extra_large",
+            "img_ratio": "landscape",
+            "mime": "image/jpeg"
+        })
+        return f"{base_url}?{query_params}"
 
     def fill_queue(self):
 
