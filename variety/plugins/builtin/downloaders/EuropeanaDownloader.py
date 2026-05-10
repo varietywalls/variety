@@ -62,7 +62,7 @@ class EuropeanaDownloader(SimpleDownloader):
     def get_europeana_api_url(self):
         base_url = "https://api.europeana.eu/record/v2/search.json"
         query_params = urlencode({
-            "api_key": EuropeanaDownloader.API_KEY,
+            "wskey": EuropeanaDownloader.API_KEY,
             "query": f"{self.config if self.config else ''}(painting OR watercolor OR canvas OR artwork) NOT photograph NOT manuscript NOT print NOT book",
             "sort": "random",
             "rows": 30,
