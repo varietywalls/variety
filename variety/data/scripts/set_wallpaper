@@ -38,43 +38,43 @@ WP=$1
 SCRIPT_PATH="$(readlink -f "$0")"
 
 detect_desktop() {
-  if [ -n "$XDG_CURRENT_DESKTOP" ]; then
-    case "${XDG_CURRENT_DESKTOP,,}" in
-    *"gnome"*) echo "gnome" ;;
-    *"unity"*) echo "unity" ;;
-    *"budgie"*) echo "budgie" ;;
-    *"kde"*) echo "kde" ;;
-    *"xfce"*) echo "xfce" ;;
-    *"lxde"*) echo "lxde" ;;
-    *"lxqt"*) echo "lxqt" ;;
-    *"mate"*) echo "mate" ;;
-    *"cinnamon"*) echo "cinnamon" ;;
-    *"lingmo"*) echo "lingmo" ;;
-    *"deepin"*) echo "deepin" ;;
-    *"trinity"*) echo "trinity" ;;
-    *"fluxbox"*) echo "fluxbox" ;;
-    *"sway"*) echo "sway" ;;
-    *"hyprland"*) echo "hyprland" ;;
-    *"enlightenment"* | *"moksha"*) echo "enlightenment" ;;
-    *) echo "$XDG_CURRENT_DESKTOP" | tr '[:upper:]' '[:lower:]' ;;
-    esac
-    return
-  fi
-  if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID" == *"awesome"* ]]; then
-    echo "awesome"
-    return
-  fi
-  echo "unknown"
+    if [ -n "$XDG_CURRENT_DESKTOP" ]; then
+        case "${XDG_CURRENT_DESKTOP,,}" in
+        *"gnome"*) echo "gnome" ;;
+        *"unity"*) echo "unity" ;;
+        *"budgie"*) echo "budgie" ;;
+        *"kde"*) echo "kde" ;;
+        *"xfce"*) echo "xfce" ;;
+        *"lxde"*) echo "lxde" ;;
+        *"lxqt"*) echo "lxqt" ;;
+        *"mate"*) echo "mate" ;;
+        *"cinnamon"*) echo "cinnamon" ;;
+        *"lingmo"*) echo "lingmo" ;;
+        *"deepin"*) echo "deepin" ;;
+        *"trinity"*) echo "trinity" ;;
+        *"fluxbox"*) echo "fluxbox" ;;
+        *"sway"*) echo "sway" ;;
+        *"hyprland"*) echo "hyprland" ;;
+        *"enlightenment"* | *"moksha"*) echo "enlightenment" ;;
+        *) echo "$XDG_CURRENT_DESKTOP" | tr '[:upper:]' '[:lower:]' ;;
+        esac
+        return
+    fi
+    if [[ "$XDG_SESSION_DESKTOP $DESKTOP_STARTUP_ID" == *"awesome"* ]]; then
+        echo "awesome"
+        return
+    fi
+    echo "unknown"
 }
 
 DE=$(detect_desktop)
 
 if [ "$DE" == "enlightenment" ]; then
-  # Enlightenment
-  # Needs Modules/System/DBus Extension loaded to work
-  OUTPUT_DIR="$HOME/.e/e/backgrounds"
+    # Enlightenment
+    # Needs Modules/System/DBus Extension loaded to work
+    OUTPUT_DIR="$HOME/.e/e/backgrounds"
 
-  TEMPLATE='
+    TEMPLATE='
     images { image: "@IMAGE@" USER; }
     collections {
       group {
@@ -97,63 +97,63 @@ if [ "$DE" == "enlightenment" ]; then
     }
     '
 
-  OFILE="$OUTPUT_DIR/variety_wallpaper_$RANDOM"
+    OFILE="$OUTPUT_DIR/variety_wallpaper_$RANDOM"
 
-  DIMENSION="$(identify -format "%w/%h" "$WP")"
+    DIMENSION="$(identify -format "%w/%h" "$WP")"
 
-  if [ -n "$DIMENSION" ]; then
-    WIDTH="$(echo "$DIMENSION" | cut -d/ -f1)"
-    HEIGHT="$(echo "$DIMENSION" | cut -d/ -f2)"
-    IMAGE="$(echo "$WP" | sed 's/[^[:alnum:]_-]/\\&/g')"
+    if [ -n "$DIMENSION" ]; then
+        WIDTH="$(echo "$DIMENSION" | cut -d/ -f1)"
+        HEIGHT="$(echo "$DIMENSION" | cut -d/ -f2)"
+        IMAGE="$(echo "$WP" | sed 's/[^[:alnum:]_-]/\\&/g')"
 
-    if [ -z "$HEIGHT" ] || [ "$HEIGHT" = "0" ]; then
-      ASPECT="0.0"
-    else
-      ASPECT="$(echo "scale=9; $DIMENSION" | bc)"
+        if [ -z "$HEIGHT" ] || [ "$HEIGHT" = "0" ]; then
+            ASPECT="0.0"
+        else
+            ASPECT="$(echo "scale=9; $DIMENSION" | bc)"
+        fi
     fi
-  fi
 
-  printf "%s" "$TEMPLATE" |
-    sed "s/@ASPECT@/$ASPECT/g; s/@WIDTH@/$WIDTH/g; s/@HEIGHT@/$HEIGHT/g; s|@IMAGE@|$IMAGE|g" >"$OFILE.edc"
-  edje_cc "$OFILE.edc" "$OFILE.edj" 2>/dev/null
-  rm "$OFILE.edc"
+    printf "%s" "$TEMPLATE" |
+        sed "s/@ASPECT@/$ASPECT/g; s/@WIDTH@/$WIDTH/g; s/@HEIGHT@/$HEIGHT/g; s|@IMAGE@|$IMAGE|g" >"$OFILE.edc"
+    edje_cc "$OFILE.edc" "$OFILE.edj" 2>/dev/null
+    rm "$OFILE.edc"
 
-  ## Get the current number of virtual desktops
-  desk_x_count=$(enlightenment_remote -desktops-get | awk '{print $1}')
-  desk_y_count=$(enlightenment_remote -desktops-get | awk '{print $2}')
+    ## Get the current number of virtual desktops
+    desk_x_count=$(enlightenment_remote -desktops-get | awk '{print $1}')
+    desk_y_count=$(enlightenment_remote -desktops-get | awk '{print $2}')
 
-  ## Get the current number of screens
-  screen_count=1
-  # If xrandr is available use it to get screen desk_x_count
-  if command -v xrandr >/dev/null 2>&1; then
-    screen_count=$(xrandr -q | grep -c ' connected')
-  fi
+    ## Get the current number of screens
+    screen_count=1
+    # If xrandr is available use it to get screen desk_x_count
+    if command -v xrandr >/dev/null 2>&1; then
+        screen_count=$(xrandr -q | grep -c ' connected')
+    fi
 
-  ## Set the wallpaper for each virtual desktop
-  for ((x = 0; x < desk_x_count; x++)); do
-    for ((y = 0; y < desk_y_count; y++)); do
-      for ((z = 0; z < screen_count; z++)); do
-        # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
-        # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
-        enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj" &
-      done
+    ## Set the wallpaper for each virtual desktop
+    for ((x = 0; x < desk_x_count; x++)); do
+        for ((y = 0; y < desk_y_count; y++)); do
+            for ((z = 0; z < screen_count; z++)); do
+                # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
+                # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
+                enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj" &
+            done
+        done
     done
-  done
 
-  # Remove all Variety wallpapers, but the current one and the previous one
-  #   as we are calling enlightenment_remote asynchronously, if the previous wallpaper hasn't been
-  #   replaced yet then the wallpaper will get set back to the theme one causing ugly artifacts
-  LAST_WALLPAPER_FILE="$HOME/.config/variety/.enlightenment_last_wallpaper.txt"
+    # Remove all Variety wallpapers, but the current one and the previous one
+    #   as we are calling enlightenment_remote asynchronously, if the previous wallpaper hasn't been
+    #   replaced yet then the wallpaper will get set back to the theme one causing ugly artifacts
+    LAST_WALLPAPER_FILE="$HOME/.config/variety/.enlightenment_last_wallpaper.txt"
 
-  if [ -e "$LAST_WALLPAPER_FILE" ]; then
-    find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v "$(cat "$LAST_WALLPAPER_FILE")" | xargs rm
-  else
-    find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
-  fi
-  echo "$OFILE.edj" >"$LAST_WALLPAPER_FILE"
+    if [ -e "$LAST_WALLPAPER_FILE" ]; then
+        find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | grep -v "$(cat "$LAST_WALLPAPER_FILE")" | xargs rm
+    else
+        find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
+    fi
+    echo "$OFILE.edj" >"$LAST_WALLPAPER_FILE"
 
 elif [ "$DE" == "kde" ]; then
-  plasma_qdbus_script="
+    plasma_qdbus_script="
         let supportedPlugins = Array('org.kde.image', 'a2n.blur');
         let unsupportedPlugins = [];
         let allDesktops = desktops();
@@ -169,192 +169,192 @@ elif [ "$DE" == "kde" ]; then
         print(unsupportedPlugins);
     "
 
-  plasma_qdbus_raw_result=$(dbus-send --print-reply --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script")
-  unsupported_plugins=$(echo "$plasma_qdbus_raw_result" | grep -oP '(?<=string ")[^"]*')
-  dbus_exitcode="$?"
+    plasma_qdbus_raw_result=$(dbus-send --print-reply --type=method_call --dest=org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript string:"$plasma_qdbus_script")
+    unsupported_plugins=$(echo "$plasma_qdbus_raw_result" | grep -oP '(?<=string ")[^"]*')
+    dbus_exitcode="$?"
 
-  if [[ -n "$unsupported_plugins" ]]; then
-    kdialog --title "Variety: unsupported wallpaper plugin" --passivepopup "Unsupported plugin detected: $unsupported_plugins\n----\nTry adding it to the supportedPlugins list in the kde section of $SCRIPT_PATH" --icon variety 30
-  elif [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
-    kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
+    if [[ -n "$unsupported_plugins" ]]; then
+        kdialog --title "Variety: unsupported wallpaper plugin" --passivepopup "Unsupported plugin detected: $unsupported_plugins\n----\nTry adding it to the supportedPlugins list in the kde section of $SCRIPT_PATH" --icon variety 30
+    elif [[ "$dbus_exitcode" -ne 0 && "${KDE_SESSION_VERSION}" -eq '5' ]]; then
+        kdialog --title "Variety: cannot change Plasma wallpaper" --passivepopup "Could not change the Plasma 5 wallpaper; \
             make sure that you're using Plasma 5.7+ and have widgets unlocked.\n----\n \
             Due to Plasma limitations, external programs cannot automatically change the wallpaper when the widgets are locked.\n \
             See https://git.io/vprpM for more information." --icon variety 10
-  fi
-  exit "$dbus_exitcode"
+    fi
+    exit "$dbus_exitcode"
 
 elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then
-  # Gnome 3, Unity
-  gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2>/dev/null
-  gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2>/dev/null
-  if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.gnome.desktop.background picture-options "$4"
-  fi
-  if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
-    gsettings set org.gnome.desktop.background picture-options 'zoom'
-  fi
+    # Gnome 3, Unity
+    gsettings set org.gnome.desktop.background picture-uri "file://$WP" 2>/dev/null
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$WP" 2>/dev/null
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.gnome.desktop.background picture-options "$4"
+    fi
+    if [ "$(gsettings get org.gnome.desktop.background picture-options)" == "'none'" ]; then
+        gsettings set org.gnome.desktop.background picture-options 'zoom'
+    fi
 
 elif [ "$DE" == "deepin" ]; then
-  # Deepin
-  if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
-    gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
-    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-      gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
+    # Deepin
+    if [ "$(gsettings list-schemas | grep -c com.deepin.wrap.gnome.desktop.background)" -ge 1 ]; then
+        gsettings set com.deepin.wrap.gnome.desktop.background picture-uri "file://$WP"
+        if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+            gsettings set com.deepin.wrap.gnome.desktop.background picture-options "$4"
+        fi
+        if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
+            gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
+        fi
     fi
-    if [ "$(gsettings get com.deepin.wrap.gnome.desktop.background picture-options)" == "'none'" ]; then
-      gsettings set com.deepin.wrap.gnome.desktop.background picture-options 'zoom'
-    fi
-  fi
 
 elif [ "$DE" == "xfce" ]; then
-  # XFCE
-  command -v xfconf-query >/dev/null 2>&1
-  rc=$?
-  if [[ $rc = 0 ]]; then
-    # First, try existing properties
-    existing_props=$(xfconf-query -c xfce4-desktop -p /backdrop -l 2>/dev/null | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$")
+    # XFCE
+    command -v xfconf-query >/dev/null 2>&1
+    rc=$?
+    if [[ $rc = 0 ]]; then
+        # First, try existing properties
+        existing_props=$(xfconf-query -c xfce4-desktop -p /backdrop -l 2>/dev/null | grep -E -e "screen.*/monitor.*image-path$" -e "screen.*/monitor.*/last-image$")
 
-    if [ -n "$existing_props" ]; then
-      # Set wallpaper on existing properties
-      for i in $existing_props; do
-        xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
-        xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
-        xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
-      done
-    else
-      # No existing properties - create them for each connected monitor
-      # This handles fresh XFCE installs where backdrop properties don't exist yet
-      # See: https://github.com/varietywalls/variety/issues/164
-      if command -v xrandr >/dev/null 2>&1; then
-        for monitor in $(xrandr --query | grep " connected" | cut -d' ' -f1); do
-          prop="/backdrop/screen0/monitor${monitor}/workspace0/last-image"
-          style_prop="/backdrop/screen0/monitor${monitor}/workspace0/image-style"
-          # Create and set the wallpaper property
-          xfconf-query -c xfce4-desktop -p "$prop" -n -t string -s "$WP" 2>/dev/null
-          # Set image style to 5 (zoomed) if not already set
-          xfconf-query -c xfce4-desktop -p "$style_prop" -n -t int -s 5 2>/dev/null
-        done
-      else
-        # Fallback: try common property path with --create flag
-        xfconf-query -c xfce4-desktop -p "/backdrop/screen0/monitor0/workspace0/last-image" -n -t string -s "$WP" 2>/dev/null
-      fi
+        if [ -n "$existing_props" ]; then
+            # Set wallpaper on existing properties
+            for i in $existing_props; do
+                xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
+                xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
+                xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
+            done
+        else
+            # No existing properties - create them for each connected monitor
+            # This handles fresh XFCE installs where backdrop properties don't exist yet
+            # See: https://github.com/varietywalls/variety/issues/164
+            if command -v xrandr >/dev/null 2>&1; then
+                for monitor in $(xrandr --query | grep " connected" | cut -d' ' -f1); do
+                    prop="/backdrop/screen0/monitor${monitor}/workspace0/last-image"
+                    style_prop="/backdrop/screen0/monitor${monitor}/workspace0/image-style"
+                    # Create and set the wallpaper property
+                    xfconf-query -c xfce4-desktop -p "$prop" -n -t string -s "$WP" 2>/dev/null
+                    # Set image style to 5 (zoomed) if not already set
+                    xfconf-query -c xfce4-desktop -p "$style_prop" -n -t int -s 5 2>/dev/null
+                done
+            else
+                # Fallback: try common property path with --create flag
+                xfconf-query -c xfce4-desktop -p "/backdrop/screen0/monitor0/workspace0/last-image" -n -t string -s "$WP" 2>/dev/null
+            fi
+        fi
     fi
-  fi
 
 elif [ "$DE" == "lingmo" ]; then
-  # Lingmo OS
-  qdbus com.lingmo.Settings /Theme com.lingmo.Theme.setWallpaper "$WP" 2>/dev/null
+    # Lingmo OS
+    qdbus com.lingmo.Settings /Theme com.lingmo.Theme.setWallpaper "$WP" 2>/dev/null
 
 elif [ "$DE" == "lxde" ]; then
-  # LXDE/PCmanFM
-  pcmanfm --set-wallpaper "$WP" 2>/dev/null
+    # LXDE/PCmanFM
+    pcmanfm --set-wallpaper "$WP" 2>/dev/null
 
 elif [ "$DE" == "lxqt" ]; then
-  # LXQt/PCmanFM-qt
-  pcmanfm-qt --set-wallpaper "$WP" 2>/dev/null
+    # LXQt/PCmanFM-qt
+    pcmanfm-qt --set-wallpaper "$WP" 2>/dev/null
 
 elif [ "$DE" == "fluxbox" ]; then
-  # Fluxbox
-  fbsetbg "$WP" 2>/dev/null
-  ## fix ~/.fluxbox/lastwallpaper to using latest wallpaper when relogin fluxbox
-  mkdir -p ~/.fluxbox
-  echo '$''full ''$'"full|$WP||:0.0" >~/.fluxbox/lastwallpaper
+    # Fluxbox
+    fbsetbg "$WP" 2>/dev/null
+    ## fix ~/.fluxbox/lastwallpaper to using latest wallpaper when relogin fluxbox
+    mkdir -p ~/.fluxbox
+    echo '$''full ''$'"full|$WP||:0.0" >~/.fluxbox/lastwallpaper
 
 elif [ "$DE" == "sway" ]; then
-  # If swaybg is available, use it as prevents system freeze.
-  # See https://github.com/swaywm/sway/issues/5606
-  if command -v "swaybg" >/dev/null 2>&1; then
-    # Grey background flicker is prevented by killing old swaybg process after new one.
-    # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
-    PID=$(pidof swaybg)
-    swaybg -i "$WP" -m fill &
-    if [ -n "$PID" ]; then
-      sleep 1
-      read -r -a PID <<<"$PID"
-      for each_pid in "${PID[@]}"; do
-        kill "$each_pid" 2>/dev/null
-      done
+    # If swaybg is available, use it as prevents system freeze.
+    # See https://github.com/swaywm/sway/issues/5606
+    if command -v "swaybg" >/dev/null 2>&1; then
+        # Grey background flicker is prevented by killing old swaybg process after new one.
+        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
+        PID=$(pidof swaybg)
+        swaybg -i "$WP" -m fill &
+        if [ -n "$PID" ]; then
+            sleep 1
+            read -r -a PID <<<"$PID"
+            for each_pid in "${PID[@]}"; do
+                kill "$each_pid" 2>/dev/null
+            done
+        fi
+    else
+        swaymsg output "*" bg "$WP" fill 2>/dev/null
     fi
-  else
-    swaymsg output "*" bg "$WP" fill 2>/dev/null
-  fi
 
 elif [ "$DE" == "hyprland" ]; then
-  # Detect wallpaper changing program
-  if command -v "swaybg" >/dev/null 2>&1; then
-    # Copy section from swaybg
-    PID=$(pidof swaybg)
-    swaybg -i "$WP" -m fill &
-    if [ -n "$PID" ]; then
-      sleep 1
-      read -r -a PID <<<"$PID"
-      for each_pid in "${PID[@]}"; do
-        kill "$each_pid" 2>/dev/null
-      done
+    # Detect wallpaper changing program
+    if command -v "swaybg" >/dev/null 2>&1; then
+        # Copy section from swaybg
+        PID=$(pidof swaybg)
+        swaybg -i "$WP" -m fill &
+        if [ -n "$PID" ]; then
+            sleep 1
+            read -r -a PID <<<"$PID"
+            for each_pid in "${PID[@]}"; do
+                kill "$each_pid" 2>/dev/null
+            done
+        fi
+    elif pgrep hyprpaper --quiet; then
+        MONITOR_IDS=($(hyprctl monitors all -j | jq '.[].name' -r))
+        # set bg for all monitors
+        BG_EXIT=0
+        for id in "${MONITOR_IDS[@]}"; do
+            (hyprctl hyprpaper wallpaper "$id","$WP")
+            BG_EXIT=$?
+        done
+        # check if background change has failed
+        if [ $BG_EXIT != 0 ]; then
+            hyprctl notify 3 10000 0 "Variety could not communicate with hyprpaper, even though it is running. Is IPC of hyprpaper active?"
+        fi
+    elif pgrep wpaperd --quiet; then
+        wpaperctl set "$WP"
+    elif pgrep awww-daemon --quiet; then
+        awww img "$WP"
+    else
+        hyprctl notify 3 10000 0 "Variety could not detect a program to change the background"
     fi
-  elif pgrep hyprpaper --quiet; then
-    MONITOR_IDS=($(hyprctl monitors all -j | jq '.[].name' -r))
-    # set bg for all monitors
-    BG_EXIT=0
-    for id in "${MONITOR_IDS[@]}"; do
-      (hyprctl hyprpaper wallpaper "$id","$WP")
-      BG_EXIT=$?
-    done
-    # check if background change has failed
-    if [ $BG_EXIT != 0 ]; then
-      hyprctl notify 3 10000 0 "Variety could not communicate with hyprpaper, even though it is running. Is IPC of hyprpaper active?"
-    fi
-  elif pgrep wpaperd --quiet; then
-    wpaperctl set "$WP"
-  elif pgrep awww-daemon --quiet; then
-    awww img "$WP"
-  else
-    hyprctl notify 3 10000 0 "Variety could not detect a program to change the background"
-  fi
 
 elif [ "$DE" == "trinity" ]; then
-  # trinity
-  # The 4 refers to display mode 4; valid ones are 1-8
-  dcop kdesktop KBackgroundIface setWallpaper "$WP" 4 2>/dev/null
+    # trinity
+    # The 4 refers to display mode 4; valid ones are 1-8
+    dcop kdesktop KBackgroundIface setWallpaper "$WP" 4 2>/dev/null
 
 elif [ "$DE" == "mate" ]; then
-  # MATE after 1.6
-  gsettings set org.mate.background picture-filename "$WP" 2>/dev/null
-  if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-    gsettings set org.mate.desktop.background picture-options 'zoom'
-  fi
-  if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.mate.desktop.background picture-options "$4"
-  fi
+    # MATE after 1.6
+    gsettings set org.mate.background picture-filename "$WP" 2>/dev/null
+    if [ "$(gsettings get org.mate.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
+        gsettings set org.mate.desktop.background picture-options 'zoom'
+    fi
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.mate.desktop.background picture-options "$4"
+    fi
 
 elif [ "$DE" == "cinnamon" ]; then
-  # Cinnamon after 2.0
-  gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2>/dev/null
-  if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
-    gsettings set org.cinnamon.desktop.background picture-options 'zoom'
-  fi
-  if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
-    gsettings set org.cinnamon.desktop.background picture-options "$4"
-  fi
+    # Cinnamon after 2.0
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$WP" 2>/dev/null
+    if [ "$(gsettings get org.cinnamon.desktop.background picture-options 2>/dev/null)" == "'none'" ]; then
+        gsettings set org.cinnamon.desktop.background picture-options 'zoom'
+    fi
+    if [[ "$4" =~ ^(wallpaper|centered|scaled|stretched|zoom|spanned)$ ]]; then
+        gsettings set org.cinnamon.desktop.background picture-options "$4"
+    fi
 
 elif [ "$DE" == "awesome" ]; then
-  # Awesome Window Manager
-  # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
-  # NOTE: This config will change the wallpaper after your current awesome theme sets it.
-  # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
-  echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
+    # Awesome Window Manager
+    # Be sure to start variety when you start awesome, such as by adding it to ~/.xinitrc
+    # NOTE: This config will change the wallpaper after your current awesome theme sets it.
+    # As such, the theme's wallpaper will briefly appear before being replaced with Variety's wallpaper.
+    echo "for s in screen do require(\"gears\").wallpaper.maximized(\"$1\", s) end" | awesome-client
 
 elif [[ "$XDG_CURRENT_DESKTOP" == "COSMIC" ]]; then
-  sed -r --in-place 's,source: Path\(".+"\),source: Path("'"$3"'"),gm' ~/.config/cosmic/com.system76.CosmicBackground/v1/all
+    sed -r --in-place 's,source: Path\(".+"\),source: Path("'"$3"'"),gm' ~/.config/cosmic/com.system76.CosmicBackground/v1/all
 
 else
-  # For simple WMs, use either feh or nitrogen
-  # TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
-  if command -v "feh" >/dev/null 2>&1; then
-    feh --bg-fill "$WP" 2>/dev/null
-  elif command -v "nitrogen" >/dev/null 2>&1; then
-    nitrogen --set-zoom-fill --save "$WP" 2>/dev/null
-  fi
+    # For simple WMs, use either feh or nitrogen
+    # TODO: These should take the scaling parameter $4 into account and use other options than --bg-fill
+    if command -v "feh" >/dev/null 2>&1; then
+        feh --bg-fill "$WP" 2>/dev/null
+    elif command -v "nitrogen" >/dev/null 2>&1; then
+        nitrogen --set-zoom-fill --save "$WP" 2>/dev/null
+    fi
 fi
 
 exit 0
