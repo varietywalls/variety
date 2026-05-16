@@ -113,8 +113,8 @@ if [ "$DE" == "enlightenment" ]; then
         fi
     fi
 
-    printf "%s" "$TEMPLATE" |
-        sed "s/@ASPECT@/$ASPECT/g; s/@WIDTH@/$WIDTH/g; s/@HEIGHT@/$HEIGHT/g; s|@IMAGE@|$IMAGE|g" >"$OFILE.edc"
+    printf "%s" "$TEMPLATE" | \
+    sed "s/@ASPECT@/$ASPECT/g; s/@WIDTH@/$WIDTH/g; s/@HEIGHT@/$HEIGHT/g; s|@IMAGE@|$IMAGE|g" > "$OFILE.edc"
     edje_cc "$OFILE.edc" "$OFILE.edj" 2>/dev/null
     rm "$OFILE.edc"
 
@@ -130,12 +130,12 @@ if [ "$DE" == "enlightenment" ]; then
     fi
 
     ## Set the wallpaper for each virtual desktop
-    for ((x = 0; x < desk_x_count; x++)); do
-        for ((y = 0; y < desk_y_count; y++)); do
-            for ((z = 0; z < screen_count; z++)); do
+    for ((x=0; x<desk_x_count; x++)); do
+        for ((y=0; y<desk_y_count; y++)); do
+            for ((z=0; z<screen_count; z++)); do
                 # -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition.
                 # OPT1 = ContainerNo OPT2 = ZoneNo OPT3 = Desk_x. OPT4 = Desk_y. OPT5 = bg file path
-                enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj" &
+                enlightenment_remote -desktop-bg-add 0 "$z" "$x" "$y" "$OFILE.edj"&
             done
         done
     done
@@ -150,7 +150,7 @@ if [ "$DE" == "enlightenment" ]; then
     else
         find "$OUTPUT_DIR" -name "variety_wallpaper*.*" | grep -v "$OFILE.edj" | xargs rm
     fi
-    echo "$OFILE.edj" >"$LAST_WALLPAPER_FILE"
+    echo "$OFILE.edj" > "$LAST_WALLPAPER_FILE"
 
 elif [ "$DE" == "kde" ]; then
     plasma_qdbus_script="
@@ -270,7 +270,7 @@ elif [ "$DE" == "sway" ]; then
         swaybg -i "$WP" -m fill &
         if [ -n "$PID" ]; then
             sleep 1
-            read -r -a PID <<<"$PID"
+            read -r -a PID <<< "$PID"
             for each_pid in "${PID[@]}"; do
                 kill "$each_pid" 2>/dev/null
             done
@@ -287,7 +287,7 @@ elif [ "$DE" == "hyprland" ]; then
         swaybg -i "$WP" -m fill &
         if [ -n "$PID" ]; then
             sleep 1
-            read -r -a PID <<<"$PID"
+            read -r -a PID <<< "$PID"
             for each_pid in "${PID[@]}"; do
                 kill "$each_pid" 2>/dev/null
             done
