@@ -67,6 +67,29 @@ detect_desktop() {
     echo "unknown"
 }
 
+wlroots_set() {
+    if pgrep wpaperd --quiet; then
+        wpaperctl set "$WP"
+    elif pgrep awww-daemon --quiet; then
+        awww img "$WP"
+    elif command -v "swaybg" >/dev/null 2>&1; then
+        # Grey background flicker is prevented by killing old swaybg process after new one.
+        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
+        PID=$(pidof swaybg)
+        swaybg -i "$WP" -m fill &
+        if [ -n "$PID" ]; then
+            sleep 1
+            read -r -a PID <<< "$PID"
+            for each_pid in "${PID[@]}"; do
+                kill "$each_pid" 2>/dev/null
+            done
+        fi
+    else
+        return 1
+    fi
+    return 0
+}
+
 DE=$(detect_desktop)
 
 if [ "$DE" == "enlightenment" ]; then
@@ -261,55 +284,30 @@ elif [ "$DE" == "fluxbox" ]; then
     echo '$''full ''$'"full|$WP||:0.0" >~/.fluxbox/lastwallpaper
 
 elif [ "$DE" == "sway" ]; then
-    # If swaybg is available, use it as prevents system freeze.
+    # If wallpaper changing tool is available, use it as prevents system freeze.
     # See https://github.com/swaywm/sway/issues/5606
-    if command -v "swaybg" >/dev/null 2>&1; then
-        # Grey background flicker is prevented by killing old swaybg process after new one.
-        # See https://github.com/swaywm/swaybg/issues/17#issuecomment-851680720
-        PID=$(pidof swaybg)
-        swaybg -i "$WP" -m fill &
-        if [ -n "$PID" ]; then
-            sleep 1
-            read -r -a PID <<< "$PID"
-            for each_pid in "${PID[@]}"; do
-                kill "$each_pid" 2>/dev/null
-            done
-        fi
-    else
+    if ! wlroots_set; then
         swaymsg output "*" bg "$WP" fill 2>/dev/null
     fi
 
 elif [ "$DE" == "hyprland" ]; then
     # Detect wallpaper changing program
-    if command -v "swaybg" >/dev/null 2>&1; then
-        # Copy section from swaybg
-        PID=$(pidof swaybg)
-        swaybg -i "$WP" -m fill &
-        if [ -n "$PID" ]; then
-            sleep 1
-            read -r -a PID <<< "$PID"
-            for each_pid in "${PID[@]}"; do
-                kill "$each_pid" 2>/dev/null
+    if ! wlroots_set; then
+        if pgrep hyprpaper --quiet; then
+            MONITOR_IDS=($(hyprctl monitors all -j | jq '.[].name' -r))
+            # set bg for all monitors
+            BG_EXIT=0
+            for id in "${MONITOR_IDS[@]}"; do
+                (hyprctl hyprpaper wallpaper "$id","$WP")
+                BG_EXIT=$?
             done
+            # check if background change has failed
+            if [ $BG_EXIT != 0 ]; then
+                hyprctl notify 3 10000 0 "Variety could not communicate with hyprpaper, even though it is running. Is IPC of hyprpaper active?"
+            fi
+        else
+            hyprctl notify 3 10000 0 "Variety could not detect a program to change the background"
         fi
-    elif pgrep hyprpaper --quiet; then
-        MONITOR_IDS=($(hyprctl monitors all -j | jq '.[].name' -r))
-        # set bg for all monitors
-        BG_EXIT=0
-        for id in "${MONITOR_IDS[@]}"; do
-            (hyprctl hyprpaper wallpaper "$id","$WP")
-            BG_EXIT=$?
-        done
-        # check if background change has failed
-        if [ $BG_EXIT != 0 ]; then
-            hyprctl notify 3 10000 0 "Variety could not communicate with hyprpaper, even though it is running. Is IPC of hyprpaper active?"
-        fi
-    elif pgrep wpaperd --quiet; then
-        wpaperctl set "$WP"
-    elif pgrep awww-daemon --quiet; then
-        awww img "$WP"
-    else
-        hyprctl notify 3 10000 0 "Variety could not detect a program to change the background"
     fi
 
 elif [ "$DE" == "trinity" ]; then
