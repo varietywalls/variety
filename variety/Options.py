@@ -28,7 +28,7 @@ TRUTH_VALUES = ["enabled", "1", "true", "on", "yes"]
 
 
 class Options:
-    OUTDATED_HASHES = {"clock_filter": ["dca6bd2dfa2b8c4e2db8801e39208f7f"]}
+    OUTDATED_HASHES = {"clock_filter": ["dca6bd2dfa2b8c4e2db8801e39208f7f", "a565a0c34a1358af4fb040d30cca6933"]}
     SIMPLE_DOWNLOADERS = []  # set by VarietyWindow at start
     IMAGE_SOURCES = []  # set by VarietyWindow at start
     CONFIGURABLE_IMAGE_SOURCES = []  # set by VarietyWindow at start
@@ -699,7 +699,7 @@ class Options:
         self.clock_enabled = False
         self.clock_font = "Serif 70"
         self.clock_date_font = "Serif 30"
-        self.clock_filter = "-density 100 -font `fc-match -f '%{file[0]}' '%CLOCK_FONT_NAME'` -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font `fc-match -f '%{file[0]}' '%DATE_FONT_NAME'` -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
+        self.clock_filter = "-density 100 -font '%CLOCK_FONT_FILE' -pointsize %CLOCK_FONT_SIZE -gravity SouthEast -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+108] '%H:%M' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+110] '%H:%M' -font '%DATE_FONT_FILE' -pointsize %DATE_FONT_SIZE -fill '#00000044' -annotate 0x0+[%HOFFSET+58]+[%VOFFSET+58] '%A, %B %d' -fill white -annotate 0x0+[%HOFFSET+60]+[%VOFFSET+60] '%A, %B %d'"
 
         self.quotes_enabled = False
         self.quotes_font = "Serif 30"
