@@ -1311,7 +1311,7 @@ class VarietyWindow(Gtk.Window):
             font_file = result.stdout
         else:
             logger.warning(
-                lambda: f"Could not find font '{font_name}'. "
+                lambda: f"Could not find font {font_name!r}. "
                 f"Exit code: {result.returncode}"
             )
         return font_file
