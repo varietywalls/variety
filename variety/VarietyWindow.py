@@ -1301,12 +1301,29 @@ class VarietyWindow(Gtk.Window):
         logger.info(lambda: f"ImageMagick clock args: {cmd}")
         return cmd
 
+    @staticmethod
+    @functools.cache
+    def resolve_font_path(font_name):
+        cmd = ['fc-match', '-f', '%{file[0]}', font_name]
+        result = subprocess.run(cmd, check=False, text=True, stdout=subprocess.PIPE)
+        font_file = ""
+        if result.returncode == 0:
+            font_file = result.stdout
+        else:
+            logger.warning(
+                lambda: f"Could not find font {font_name!r}. "
+                f"Exit code: {result.returncode}"
+            )
+        return font_file
+
     def replace_clock_filter_fonts(self, clock_filter):
         clock_font_name, clock_font_size = Util.gtk_to_fcmatch_font(self.options.clock_font)
+        clock_font_file = self.resolve_font_path(clock_font_name)
         date_font_name, date_font_size = Util.gtk_to_fcmatch_font(self.options.clock_date_font)
-        clock_filter = clock_filter.replace("%CLOCK_FONT_NAME", clock_font_name)
+        date_font_file = self.resolve_font_path(date_font_name)
+        clock_filter = clock_filter.replace("%CLOCK_FONT_FILE", clock_font_file)
         clock_filter = clock_filter.replace("%CLOCK_FONT_SIZE", clock_font_size)
-        clock_filter = clock_filter.replace("%DATE_FONT_NAME", date_font_name)
+        clock_filter = clock_filter.replace("%DATE_FONT_FILE", date_font_file)
         clock_filter = clock_filter.replace("%DATE_FONT_SIZE", date_font_size)
         return clock_filter
 
