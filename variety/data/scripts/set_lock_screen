@@ -19,8 +19,8 @@ detect_desktop() {
 
 DE=$(detect_desktop)
 
-if [ "$DE" == "kde" ]; then
-    kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
+if [[ "$DE" == "kde" && "${KDE_SESSION_VERSION}" =~ ^[0-9]+$ ]]; then
+    kwriteconfig${KDE_SESSION_VERSION} --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "$WP"
 
 elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then
     # GNOME Screensaver / Lock screen - thanks to George C. de Araujo for the patch
