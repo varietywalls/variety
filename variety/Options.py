@@ -155,6 +155,11 @@ class Options:
                 pass
 
             try:
+                self.flickr_api_key = str(config["flickr_api_key"]).strip()
+            except Exception:
+                pass
+
+            try:
                 self.favorites_folder = os.path.expanduser(config["favorites_folder"])
             except Exception:
                 pass
@@ -653,6 +658,7 @@ class Options:
         self.quota_enabled = True
         self.quota_size = 1000
         self.wallhaven_api_key = ""
+        self.flickr_api_key = ""
 
         self.favorites_folder = os.path.join(get_profile_path(), "Favorites")
         self.favorites_operations = [
@@ -772,6 +778,7 @@ class Options:
             config["quota_size"] = str(self.quota_size)
 
             config["wallhaven_api_key"] = str(self.wallhaven_api_key)
+            config["flickr_api_key"] = str(self.flickr_api_key)
 
             config["favorites_folder"] = Util.collapseuser(self.favorites_folder)
             config["favorites_operations"] = ";".join(
