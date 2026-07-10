@@ -344,7 +344,12 @@ elif [ "$DE" == "awesome" ]; then
 
 elif [[ "$XDG_CURRENT_DESKTOP" == "COSMIC" ]]; then
     # $WP includes clock/quotes overlays; $3 is the original image without them.
-    sed -r --in-place 's,source: Path\(".+"\),source: Path("'"$WP"'"),gm' ~/.config/cosmic/com.system76.CosmicBackground/v1/all
+    # Also replace Color(...) so solid-color backgrounds become an image path.
+    COSMIC_BG="$HOME/.config/cosmic/com.system76.CosmicBackground/v1/all"
+    sed -r --in-place \
+        -e 's,source: Path\(".+"\),source: Path("'"$WP"'"),gm' \
+        -e 's,source: Color\(.+\),source: Path("'"$WP"'"),gm' \
+        "$COSMIC_BG"
 
 else
     # For simple WMs, use either feh or nitrogen
