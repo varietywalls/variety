@@ -15,10 +15,8 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from locale import gettext as _
-
 from variety.plugins.IQuoteSource import IQuoteSource
-from variety.Util import Util
+from variety.Util import Util, _
 
 
 class UrbanDictionarySource(IQuoteSource):

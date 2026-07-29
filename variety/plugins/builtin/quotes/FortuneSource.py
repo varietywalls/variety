@@ -20,10 +20,11 @@
 #
 
 import re
+import shutil
 import subprocess
-from locale import gettext as _
 
 from variety.plugins.IQuoteSource import IQuoteSource
+from variety.Util import _
 
 ANSI_ESCAPE_RE = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]", flags=re.IGNORECASE)
 
@@ -45,6 +46,9 @@ class FortuneSource(IQuoteSource):
         return False
 
     def get_random(self):
+        if not shutil.which("fortune"):
+            # not installed on this system (e.g. always the case on Windows)
+            return []
         fortune = subprocess.check_output(["fortune"]).decode().strip()
         fortune = ANSI_ESCAPE_RE.sub("", fortune)
         q = fortune.split("--")
