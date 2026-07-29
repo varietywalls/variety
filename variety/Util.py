@@ -784,7 +784,7 @@ class Util:
     @staticmethod
     def collapseuser(path):
         home = os.path.expanduser("~") + "/"
-        return re.sub("^" + home, "~/", path)
+        return re.sub("^" + re.escape(home), "~/", path)
 
     @staticmethod
     def compare_versions(v1, v2):
@@ -821,8 +821,12 @@ class Util:
 
     @staticmethod
     def get_file_icon_name(path):
+        resolved = os.path.normpath(os.path.expanduser(path))
+        if not os.path.exists(resolved):
+            # expected e.g. for stock Linux source paths that don't exist on this platform
+            return "folder"
         try:
-            f = Gio.File.new_for_path(os.path.normpath(os.path.expanduser(path)))
+            f = Gio.File.new_for_path(resolved)
             query_info = f.query_info("standard::icon", Gio.FileQueryInfoFlags.NONE, None)
             return query_info.get_attribute_object("standard::icon").get_names()[0]
         except Exception:
@@ -909,6 +913,92 @@ class Util:
     def is_unity():
         return os.getenv("XDG_CURRENT_DESKTOP", "").lower() == "unity"
 
+    # Windows has no gsettings/D-Bus wallpaper API, so on that platform
+    # set_desktop_wallpaper (VarietyWindow.py) calls this directly instead of
+    # running the Linux set_wallpaper script.
+    @staticmethod
+    def set_windows_wallpaper(path, display_mode="zoom"):
+        import ctypes
+        import winreg
+
+        # (WallpaperStyle, TileWallpaper) - see
+        # https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-systemparametersinfow
+        style_by_mode = {
+            "zoom": ("10", "0"),
+            "scaled": ("6", "0"),
+            "stretched": ("2", "0"),
+            "centered": ("0", "0"),
+            "spanned": ("22", "0"),
+            "wallpaper": ("0", "1"),
+        }
+        wallpaper_style, tile_wallpaper = style_by_mode.get(display_mode, ("10", "0"))
+
+        with winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER, r"Control Panel\Desktop", 0, winreg.KEY_SET_VALUE
+        ) as key:
+            winreg.SetValueEx(key, "WallpaperStyle", 0, winreg.REG_SZ, wallpaper_style)
+            winreg.SetValueEx(key, "TileWallpaper", 0, winreg.REG_SZ, tile_wallpaper)
+
+        SPI_SETDESKWALLPAPER = 20
+        SPIF_UPDATEINIFILE = 0x01
+        SPIF_SENDCHANGE = 0x02
+        ctypes.windll.user32.SystemParametersInfoW(
+            SPI_SETDESKWALLPAPER, 0, os.path.abspath(path), SPIF_UPDATEINIFILE | SPIF_SENDCHANGE
+        )
+
+    @staticmethod
+    def set_windows_lock_screen(path):
+        # Uses the WinRT Windows.System.UserProfile.LockScreen API, the documented,
+        # no-admin-required way for a desktop app to set the current user's lock
+        # screen image. Invoked via PowerShell's built-in WinRT projection support
+        # so we don't need a winrt Python package (those lag far behind new CPython
+        # releases and aren't guaranteed to have wheels for the interpreter in use).
+        #
+        # Windows PowerShell 5.1 (the version guaranteed present on every Windows
+        # install) doesn't expose .GetAwaiter() on WinRT async objects the way
+        # PowerShell 7+/C# does, so we drive the IAsyncOperation/IAsyncAction via
+        # reflection instead - the standard workaround for awaiting WinRT calls
+        # from stock Windows PowerShell.
+        script = (
+            "$ErrorActionPreference = 'Stop'; "
+            "Add-Type -AssemblyName System.Runtime.WindowsRuntime | Out-Null; "
+            "Function Await($WinRtTask, $ResultType) { "
+            "  $asTask = ([System.WindowsRuntimeSystemExtensions].GetMethods() | "
+            "    Where-Object { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and "
+            "    $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncOperation`1' })[0]; "
+            "  $netTask = $asTask.MakeGenericMethod($ResultType).Invoke($null, @($WinRtTask)); "
+            "  try { $netTask.Wait(-1) | Out-Null } catch { throw $_.Exception.InnerException }; "
+            "  $netTask.Result "
+            "}; "
+            "Function AwaitAction($WinRtAction) { "
+            "  $asTask = ([System.WindowsRuntimeSystemExtensions].GetMethods() | "
+            "    Where-Object { $_.Name -eq 'AsTask' -and $_.GetParameters().Count -eq 1 -and "
+            "    $_.GetParameters()[0].ParameterType.Name -eq 'IAsyncAction' })[0]; "
+            "  $netTask = $asTask.Invoke($null, @($WinRtAction)); "
+            "  try { $netTask.Wait(-1) | Out-Null } catch { throw $_.Exception.InnerException }; "
+            "}; "
+            "[Windows.System.UserProfile.LockScreen,Windows.System.UserProfile,ContentType=WindowsRuntime] | Out-Null; "
+            "[Windows.Storage.StorageFile,Windows.Storage,ContentType=WindowsRuntime] | Out-Null; "
+            "$file = Await ([Windows.Storage.StorageFile]::GetFileFromPathAsync('%PATH%')) ([Windows.Storage.StorageFile]); "
+            "AwaitAction ([Windows.System.UserProfile.LockScreen]::SetImageFileAsync($file)); "
+        ).replace(
+            "%PATH%", os.path.abspath(path).replace("/", "\\").replace("'", "''")
+        )
+        subprocess.run(
+            ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script],
+            check=True,
+            timeout=20,
+            capture_output=True,
+        )
+
+    @staticmethod
+    def get_windows_wallpaper():
+        import winreg
+
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Control Panel\Desktop") as key:
+            value, _type = winreg.QueryValueEx(key, "Wallpaper")
+        return value or None
+
     @staticmethod
     def start_daemon(target):
         daemon_thread = threading.Thread(target=target)
@@ -943,7 +1033,7 @@ class Util:
         with open(to_path + ".partial", "w") as file:
             file.write(data)
             file.flush()
-        os.rename(to_path + ".partial", to_path)
+        os.replace(to_path + ".partial", to_path)
 
     @staticmethod
     def get_exec_path():

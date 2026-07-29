@@ -68,7 +68,7 @@ from variety_lib import varietyconfig
 import gi  # isort:skip
 
 gi.require_version("Notify", "0.7")
-from gi.repository import Gdk, Gio, GObject, Gtk, Notify  # isort:skip
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Notify  # isort:skip
 Notify.init("Variety")
 # fmt: on
 
@@ -1679,18 +1679,23 @@ class VarietyWindow(Gtk.Window):
         if not icon:
             icon = varietyconfig.get_data_file("media", "variety.svg")
 
-        if not important:
-            try:
-                self.notification.update(title, message, icon)
-            except AttributeError:
-                self.notification = Notify.Notification.new(title, message, icon)
-            self.notification.set_urgency(Notify.Urgency.LOW)
-            self.notification.show()
-        else:
-            # use a separate notification that will not be updated with a non-important message
-            notification = Notify.Notification.new(title, message, icon)
-            notification.set_urgency(Notify.Urgency.NORMAL)
-            notification.show()
+        try:
+            if not important:
+                try:
+                    self.notification.update(title, message, icon)
+                except AttributeError:
+                    self.notification = Notify.Notification.new(title, message, icon)
+                self.notification.set_urgency(Notify.Urgency.LOW)
+                self.notification.show()
+            else:
+                # use a separate notification that will not be updated with a non-important message
+                notification = Notify.Notification.new(title, message, icon)
+                notification.set_urgency(Notify.Urgency.NORMAL)
+                notification.show()
+        except GLib.GError:
+            # No notification daemon is listening (e.g. on Windows, there is no
+            # org.freedesktop.Notifications service). Not fatal, just skip showing it.
+            logger.debug(lambda: "No notification service available to show: %s" % title)
 
     def _has_local_sources(self):
         return (
@@ -1942,13 +1947,19 @@ class VarietyWindow(Gtk.Window):
         if not file:
             file = self.current
         if file:
-            subprocess.Popen(["xdg-open", os.path.dirname(file)])
+            if sys.platform == "win32":
+                os.startfile(os.path.dirname(file))
+            else:
+                subprocess.Popen(["xdg-open", os.path.dirname(file)])
 
     def open_file(self, widget=None, file=None):
         if not file:
             file = self.current
         if file:
-            subprocess.Popen(["xdg-open", os.path.realpath(file)])
+            if sys.platform == "win32":
+                os.startfile(os.path.realpath(file))
+            else:
+                subprocess.Popen(["xdg-open", os.path.realpath(file)])
 
     def on_show_origin(self, widget=None):
         if self.url:
@@ -2454,7 +2465,8 @@ class VarietyWindow(Gtk.Window):
         dialog.run()
         dialog.destroy()
         self.dialogs.remove(dialog)
-        subprocess.call(["gedit", os.path.join(self.config_folder, "variety.conf")])
+        editor = "notepad" if sys.platform == "win32" else "gedit"
+        subprocess.call([editor, os.path.join(self.config_folder, "variety.conf")])
         self.reload_config()
 
     def on_pause_resume(self, widget=None, change_enabled=None):
@@ -2729,6 +2741,9 @@ class VarietyWindow(Gtk.Window):
 
     def get_desktop_wallpaper(self):
         try:
+            if sys.platform == "win32":
+                return Util.get_windows_wallpaper()
+
             script = self.options.get_wallpaper_script
 
             file = None
@@ -2779,6 +2794,19 @@ class VarietyWindow(Gtk.Window):
             logger.exception(lambda: "Cannot remove all old wallpaper files from %s:" % folder)
 
     def set_desktop_wallpaper(self, wallpaper, original_file, refresh_level, display_mode, lock_screen=False):
+        if sys.platform == "win32":
+            if lock_screen:
+                try:
+                    Util.set_windows_lock_screen(wallpaper)
+                except Exception:
+                    logger.exception(lambda: "Could not set the Windows lock screen image")
+                return
+            try:
+                Util.set_windows_wallpaper(wallpaper, display_mode)
+            except Exception:
+                logger.exception(lambda: "Could not set the Windows desktop wallpaper")
+            return
+
         script = self.options.set_lock_screen_script if lock_screen else self.options.set_wallpaper_script
         if os.access(script, os.X_OK):
             auto = (
@@ -3009,7 +3037,10 @@ class VarietyWindow(Gtk.Window):
 
     def quote_view_favorites(self, widget=None):
         if os.path.isfile(self.options.quotes_favorites_file):
-            subprocess.Popen(["xdg-open", self.options.quotes_favorites_file])
+            if sys.platform == "win32":
+                os.startfile(self.options.quotes_favorites_file)
+            else:
+                subprocess.Popen(["xdg-open", self.options.quotes_favorites_file])
 
     def on_quotes_pause_resume(self, widget=None, change_enabled=None):
         if change_enabled is None:
@@ -3102,20 +3133,35 @@ class VarietyWindow(Gtk.Window):
             Util.makedirs(os.path.dirname(autostart_file_path))
             should_notify = not os.path.exists(autostart_file_path)
 
-            Util.copy_with_replace(
-                varietyconfig.get_data_file("variety-autostart.desktop.template"),
-                autostart_file_path,
-                {
-                    "{PROFILE_PATH}": get_profile_path(expanded=True),
-                    "{VARIETY_PATH}": Util.get_exec_path(),
-                    "{WM_CLASS}": get_profile_wm_class(),
-                },
-            )
+            if sys.platform == "win32":
+                pythonw = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
+                run_cmd = '"{}" "{}" --profile "{}"'.format(
+                    pythonw, Util.get_exec_path(), get_profile_path(expanded=True)
+                )
+                vbs_content = (
+                    "Set shell = CreateObject(\"WScript.Shell\")\r\n"
+                    "WScript.Sleep 10000\r\n"
+                    'shell.Run "{}", 0, False\r\n'
+                ).format(run_cmd.replace('"', '""'))
+                with open(autostart_file_path, "w", encoding="utf-8") as f:
+                    f.write(vbs_content)
+            else:
+                Util.copy_with_replace(
+                    varietyconfig.get_data_file("variety-autostart.desktop.template"),
+                    autostart_file_path,
+                    {
+                        "{PROFILE_PATH}": get_profile_path(expanded=True),
+                        "{VARIETY_PATH}": Util.get_exec_path(),
+                        "{WM_CLASS}": get_profile_wm_class(),
+                    },
+                )
 
             if should_notify:
                 self.show_notification(
-                    _("Variety: Created autostart desktop entry"),
-                    _(
+                    _("Variety: Created autostart entry"),
+                    _("Variety should start automatically on next login.")
+                    if sys.platform == "win32"
+                    else _(
                         "We created a new desktop entry in ~/.config/autostart. "
                         "Variety should start automatically on next login."
                     ),
@@ -3133,7 +3179,7 @@ class VarietyWindow(Gtk.Window):
     def on_start_slideshow(self, widget=None):
         def _go():
             try:
-                if self.options.slideshow_mode.lower() != "window":
+                if self.options.slideshow_mode.lower() != "window" and sys.platform != "win32":
                     subprocess.call(["killall", "-9", "variety-slideshow"])
 
                 args = ["variety-slideshow"]
