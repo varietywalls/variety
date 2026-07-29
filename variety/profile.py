@@ -1,4 +1,5 @@
 import os
+import sys
 
 from variety.Util import Util
 
@@ -60,4 +61,12 @@ def get_desktop_file_name():
 
 
 def get_autostart_file_path():
+    if sys.platform == "win32":
+        # Windows has no autostart .desktop convention; a .vbs script dropped in the
+        # Startup folder is run silently (no console window) on every login.
+        name = "Variety.vbs" if is_default_profile() else "Variety-{}.vbs".format(get_profile_id())
+        startup_dir = os.path.join(
+            os.environ["APPDATA"], "Microsoft", "Windows", "Start Menu", "Programs", "Startup"
+        )
+        return os.path.join(startup_dir, name)
     return os.path.join(os.path.expanduser("~/.config/autostart"), get_desktop_file_name())

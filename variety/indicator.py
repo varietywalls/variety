@@ -18,6 +18,7 @@
 
 import logging
 import os
+import sys
 
 from gi.repository import Gtk  # pylint: disable=E0611
 
@@ -318,17 +319,27 @@ class Indicator:
         self.visible = True
 
         def right_click_event(icon, button, time):
-            self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, time)
+            if sys.platform == "win32":
+                # Gtk.StatusIcon.position_menu miscalculates the icon's screen
+                # geometry under the GTK win32 backend (worse with multi-monitor
+                # setups), producing a wildly mispositioned/oversized menu. Popping
+                # up at the pointer instead sidesteps that broken geometry lookup.
+                self.menu.popup(None, None, None, None, button, time)
+            else:
+                self.menu.popup(None, None, Gtk.StatusIcon.position_menu, self.status_icon, 0, time)
 
         def left_click_event(data):
-            self.menu.popup(
-                None,
-                None,
-                Gtk.StatusIcon.position_menu,
-                self.status_icon,
-                0,
-                Gtk.get_current_event_time(),
-            )
+            if sys.platform == "win32":
+                self.menu.popup(None, None, None, None, 0, Gtk.get_current_event_time())
+            else:
+                self.menu.popup(
+                    None,
+                    None,
+                    Gtk.StatusIcon.position_menu,
+                    self.status_icon,
+                    0,
+                    Gtk.get_current_event_time(),
+                )
 
         def on_indicator_scroll_status_icon(status_icon, event):
             window.on_indicator_scroll(None, 1, event.direction)
