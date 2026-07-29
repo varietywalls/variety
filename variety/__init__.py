@@ -15,7 +15,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import dbus, dbus.service, dbus.glib
 import logging
 import os
 import signal
@@ -25,6 +24,15 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject  # pylint: disable=E0611
+
+try:
+    import dbus, dbus.service
+
+    HAVE_DBUS = True
+except ImportError:
+    # dbus-python isn't available on Windows (there is no session bus). We fall
+    # back to a local TCP-based single-instance/IPC mechanism in variety.win_ipc.
+    HAVE_DBUS = False
 
 
 class SafeLogger(logging.Logger):
@@ -88,16 +96,20 @@ def _get_dbus_key():
 DBUS_PATH = "/com/peterlevi/Variety"
 
 
-class VarietyService(dbus.service.Object):
-    def __init__(self, variety_window):
-        self.variety_window = variety_window
-        bus_name = dbus.service.BusName(_get_dbus_key(), bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
+if HAVE_DBUS:
 
-    @dbus.service.method(dbus_interface=_get_dbus_key(), in_signature="as", out_signature="s")
-    def process_command(self, arguments):
-        result = self.variety_window.process_command(arguments, initial_run=False)
-        return "" if result is None else result
+    class VarietyService(dbus.service.Object):
+        def __init__(self, variety_window):
+            self.variety_window = variety_window
+            bus_name = dbus.service.BusName(_get_dbus_key(), bus=dbus.SessionBus())
+            dbus.service.Object.__init__(self, bus_name, DBUS_PATH)
+
+        @dbus.service.method(
+            dbus_interface=_get_dbus_key(), in_signature="as", out_signature="s"
+        )
+        def process_command(self, arguments):
+            result = self.variety_window.process_command(arguments, initial_run=False)
+            return "" if result is None else result
 
 
 VARIETY_WINDOW = None
@@ -171,7 +183,7 @@ def _set_up_logging(verbose):
 
 
 def main():
-    if os.geteuid() == 0:
+    if hasattr(os, "geteuid") and os.geteuid() == 0:
         print(
             'Variety is not supposed to run as root.\n'
             'You should NEVER run desktop apps as root, unless they are supposed to make '
@@ -197,7 +209,8 @@ def main():
     # Ctrl-C
     signal.signal(signal.SIGINT, _sigint_handler)
     signal.signal(signal.SIGTERM, _sigint_handler)
-    signal.signal(signal.SIGQUIT, _sigint_handler)
+    if hasattr(signal, "SIGQUIT"):
+        signal.signal(signal.SIGQUIT, _sigint_handler)
 
     arguments = sys.argv[1:]
 
@@ -209,9 +222,19 @@ def main():
     Util.makedirs(get_profile_path())
 
     # ensure singleton per profile
-    bus = dbus.SessionBus()
     dbus_key = _get_dbus_key()
-    if bus.request_name(dbus_key) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+    if HAVE_DBUS:
+        bus = dbus.SessionBus()
+        already_running = (
+            bus.request_name(dbus_key) != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER
+        )
+    else:
+        from variety import win_ipc
+
+        win_ipc_conn = win_ipc.connect_to_running_instance(dbus_key)
+        already_running = win_ipc_conn is not None
+
+    if already_running:
         if not arguments or (options.profile and len(arguments) <= 2):
             arguments = ["--preferences"]
         safe_print(
@@ -219,8 +242,11 @@ def main():
             "Variety is already running. Sending the command to the running instance.",
             file=sys.stderr,
         )
-        method = bus.get_object(dbus_key, DBUS_PATH).get_dbus_method("process_command")
-        result = method(arguments)
+        if HAVE_DBUS:
+            method = bus.get_object(dbus_key, DBUS_PATH).get_dbus_method("process_command")
+            result = method(arguments)
+        else:
+            result = win_ipc.send_command(win_ipc_conn, arguments)
         if result:
             safe_print(result)
         return
@@ -255,9 +281,11 @@ def main():
     window = VarietyWindow.VarietyWindow()
     global VARIETY_WINDOW
     VARIETY_WINDOW = window
-    service = VarietyService(window)
-
-    bus.call_on_disconnection(window.on_quit)
+    if HAVE_DBUS:
+        service = VarietyService(window)
+        bus.call_on_disconnection(window.on_quit)
+    else:
+        service = win_ipc.WinIPCService(window, dbus_key)
 
     window.start(arguments)
     GObject.timeout_add(2000, _check_quit)
