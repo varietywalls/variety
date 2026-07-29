@@ -135,7 +135,7 @@ class ImageFetcher:
             metadata.update(extra_metadata or {})
             Util.write_metadata(local_filepath_partial, metadata)
 
-            os.rename(local_filepath_partial, filename)
+            os.replace(local_filepath_partial, filename)
             logger.info(lambda: "Fetched %s to %s." % (url, filename))
             return filename
 

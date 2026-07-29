@@ -261,11 +261,11 @@ class DefaultDownloader(Downloader, metaclass=abc.ABCMeta):
         # rename the file to its final intended filename
         try:
             # make sure if an external metadata file was created, to rename it first
-            os.rename(local_filepath_partial + ".metadata.json", local_filepath + ".metadata.json")
+            os.replace(local_filepath_partial + ".metadata.json", local_filepath + ".metadata.json")
         except Exception:
             pass
-        # file rename is an atomic operation, so we should never end up with partial downloads
-        os.rename(local_filepath_partial, local_filepath)
+        # os.replace is an atomic operation, so we should never end up with partial downloads
+        os.replace(local_filepath_partial, local_filepath)
 
         logger.info(lambda: "Download complete")
         return local_filepath
