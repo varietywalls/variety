@@ -18,6 +18,7 @@
 import logging
 import os
 import signal
+import subprocess
 import sys
 
 import gi
@@ -33,6 +34,21 @@ except ImportError:
     # dbus-python isn't available on Windows (there is no session bus). We fall
     # back to a local TCP-based single-instance/IPC mechanism in variety.win_ipc.
     HAVE_DBUS = False
+
+if sys.platform == "win32":
+    # We shell out to a handful of console tools (ImageMagick for filters/clock/
+    # quotes, fc-match, PowerShell for the lock screen API). Every subprocess.Popen
+    # call from a GUI (pythonw) process would otherwise flash a console window open
+    # for the duration of the call. Patched once, here, rather than passing
+    # creationflags at each of the many call sites - and it also covers any
+    # subprocess call added later.
+    _real_popen_init = subprocess.Popen.__init__
+
+    def _no_console_popen_init(self, *args, **kwargs):
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        _real_popen_init(self, *args, **kwargs)
+
+    subprocess.Popen.__init__ = _no_console_popen_init
 
 
 class SafeLogger(logging.Logger):
