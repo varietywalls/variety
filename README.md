@@ -12,6 +12,8 @@ Variety can also display wise and funny quotations or a nice digital clock on th
 Where supported, Variety sits as a tray icon to allow easy pausing and resuming.
 Otherwise, its desktop entry menu provides a similar set of options.
 
+Variety also runs natively on Windows via MSYS2/GTK3 - see [WINDOWS.md](WINDOWS.md).
+
 ## Screenshot
 
 ![Screenshot from 2022-07-30 16-36-55](https://user-images.githubusercontent.com/1457048/181916884-8a388e15-67dc-45ff-a8e2-e05aac7fca91.png)
