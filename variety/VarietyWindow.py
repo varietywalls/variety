@@ -1335,8 +1335,11 @@ class VarietyWindow(Gtk.Window):
         def vrepl(m):
             return str(voffset + int(m.group(1)))
 
-        filter = re.sub(r"\[\%HOFFSET\+(\d+)\]", hrepl, filter)
-        filter = re.sub(r"\[\%VOFFSET\+(\d+)\]", vrepl, filter)
+        # Accept signed offsets ([%HOFFSET+58], [%HOFFSET-3]): anything left
+        # unmatched here reaches time.strftime(), which eats the "%H"/"%V" and
+        # silently corrupts the filter (e.g. "[15OFFSET-3]" at 15:00).
+        filter = re.sub(r"\[\%HOFFSET([+-]\d+)\]", hrepl, filter)
+        filter = re.sub(r"\[\%VOFFSET([+-]\d+)\]", vrepl, filter)
         return filter
 
     def refresh_wallpaper(self):
