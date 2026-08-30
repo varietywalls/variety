@@ -1,3 +1,11 @@
+0.9.1
+    Fix #844: Fix clock overlay (regression from v0.9.0)
+    Fix #864: Fix negative clock offsets
+    Fix #842: Readd support for Hyprland (regression from v0.8.13)
+    Fix #856: Use processed wallpaper path on Cosmic DE
+    Update Portuguese translations
+    Improvement #859: Add translations for the .desktop entry
+
 0.9.0
     NOTE TO PACKAGERS: Variety 0.9.0 switches from distutils-extra to setuptools and importlib.resources.
         - The variety.desktop entry now needs to be manually installed, as this is not handled by setuptools automatically
