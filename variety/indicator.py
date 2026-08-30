@@ -285,7 +285,7 @@ class Indicator:
             self.slideshow.connect("activate", window.on_start_slideshow)
             self.menu.append(self.slideshow)
         else:
-            logger.warning(
+            logger.info(
                 "Variety Slideshow is not installed. This is an optional extension "
                 "adding pan-and-zoom slideshows to Variety: see "
                 "https://github.com/peterlevi/variety-slideshow for details"
