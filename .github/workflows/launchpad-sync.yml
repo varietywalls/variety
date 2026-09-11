@@ -35,4 +35,4 @@ jobs:
           LP_USER: ${{ secrets.LAUNCHPAD_USER }}
           LP_TOKEN: ${{ secrets.LAUNCHPAD_TOKEN }}
         run: |
-          git push --force https://${LP_USER}:${LP_TOKEN}@git.launchpad.net/variety HEAD:refs/heads/current-release
+          git push --force https://${LP_USER}:${LP_TOKEN}@git.launchpad.net/variety HEAD:refs/heads/current-release --follow-tags
