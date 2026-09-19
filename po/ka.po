@@ -1,0 +1,2192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 15:53-0800\n"
+"PO-Revision-Date: 2021-07-28 05:50+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2026\n"
+"Language-Team: Georgian (https://app.transifex.com/variety/teams/123174/ka/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../variety/display_modes.py:33
+msgid "Controlled by OS settings, not by Variety. Fastest option."
+msgstr ""
+"იმართება ოს-ის პარამეტრების მიერ და არა Variety-ის. უსწრაფესი ვარიანტი."
+
+#: ../variety/display_modes.py:35
+msgid ""
+"Display mode is controlled by your OS Appearance settings and by what is "
+"specified in set_wallpaper script for your desktop environment. "
+msgstr ""
+"ჩვენების რეჟიმი იმართება თქვენი ოს-ის გარეგნობის პარამეტრების მიერ და იმით, "
+"რაც მითითებულია set_wallpaper სკრიპტში თქვენი სამუშაო გარემოსთვის. "
+
+#: ../variety/display_modes.py:42
+msgid "Zoom"
+msgstr "მასშტაბი"
+
+#: ../variety/display_modes.py:44
+msgid ""
+"Image is zoomed in or out so that it fully fills your primary screen. Some "
+"parts of the image will be cut out if its resolution is different from the "
+"screen's. "
+msgstr ""
+"გამოსახულება გადიდდება, ან დაპატარავდება ზომამდე, რომელიც თქვენს ძირითად "
+"ეკრანს შეავსებს. გამოსახულების ზოგიერთი ნაწილი წაიკვეთება, თუ მისი "
+"გაფართოება ეკრანის გაფართოებისგან განსხვავდება. "
+
+#: ../variety/display_modes.py:52
+msgid "Fill with black"
+msgstr "ცარიელით შევსება"
+
+#: ../variety/display_modes.py:54
+msgid ""
+"Image is zoomed in or out so that it fully fits within your primary screen. "
+"The rest of the screen is filled with black. "
+msgstr ""
+"გამოსახულება დაპატარავდება, ან გადიდდება ისე, რომ თქვენს ძირითად ეკრანზე "
+"სრულად დაეტიოს. ეკრანის დარჩენილი ნაწილი შავი იქნება. "
+
+#: ../variety/display_modes.py:61
+msgid "Fill with blur. Slow."
+msgstr "შევსება დაბინდვით. ნელია."
+
+#: ../variety/display_modes.py:63
+msgid ""
+"Image is zoomed in or out so that it fully fits within your primary screen. "
+"The rest of the screen is a filled with blurred version of the image. "
+msgstr ""
+"გამოსახულება დაპატარავდება, ან გადიდდება ისე, რომ თქვენს ძირითად ეკრანზე "
+"სრულად დაეტიოს. ეკრანის დარჩენილი გამოსახულების დაბინდული ვერსიით შეივსება. "
+
+#: ../variety/display_modes.py:70
+msgid "Pick dynamically between Zoom and Fill with black"
+msgstr "დინამიკურად არჩევა გადიდებასა და შავით შევსებას შორის"
+
+#: ../variety/display_modes.py:72
+msgid ""
+"Variety picks a good mode depending on image size. Images that are close to "
+"the screen proportions use 'Zoom'. Those that are vastly different use 'Fill"
+" with black'. "
+msgstr ""
+"Variety აირჩევს კარგ რეჟიმს გამოსახულების ზომაზე დამოკიდებულებით. "
+"გამოსახულებები, რომლებიც ახლოსაა ეკრანის პროპორციებთან, იყენებენ "
+"'გადიდებას', ძალიან განსხვავებულები კი - 'შავით შევსებას'. "
+
+#: ../variety/display_modes.py:80
+msgid "Pick dynamically between Zoom and Fill with blur. Slow."
+msgstr "დინამიკურად არჩევა გადიდებასა და ბუნდოვნებით შევსებას შორის. ნელია."
+
+#: ../variety/display_modes.py:82
+msgid ""
+"Variety picks a good mode depending on image size. Images that are close to "
+"the screen proportions use 'Zoom'. Those that are vastly different use 'Fill"
+" with blur'. "
+msgstr ""
+"Variety აირჩევს კარგ რეჟიმს გამოსახულების ზომაზე დამოკიდებულებით. "
+"გამოსახულებები, რომლებიც ახლოსაა ეკრანის პროპორციებთან, იყენებენ "
+"'გადიდებას', ძალიან განსხვავებულები კი - 'ბუნდოვნებით შევსებას'. "
+
+#: ../variety/FolderChooser.py:67
+msgid "Choose a folder"
+msgstr "აირჩიეთ საქაღალდე"
+
+#: ../variety/FolderChooser.py:70 ../variety/PreferencesVarietyDialog.py:613
+#: ../variety/PreferencesVarietyDialog.py:654
+msgid "Cancel"
+msgstr "გაუქმება"
+
+#: ../variety/FolderChooser.py:70
+msgid "OK"
+msgstr "დიახ"
+
+#: ../variety/ImageFetcher.py:62 ../variety/ImageFetcher.py:108
+msgid "Fetching"
+msgstr "გამოთხოვა"
+
+#: ../variety/ImageFetcher.py:66 ../variety/ImageFetcher.py:76
+#: ../variety/ImageFetcher.py:83 ../variety/ImageFetcher.py:117
+#: ../variety/VarietyWindow.py:2582
+msgid "Not an image"
+msgstr "გამოსახულება არაა"
+
+#: ../variety/ImageFetcher.py:123
+msgid "Image too small, ignoring it"
+msgstr "გამოსახულება მეტისმეტად პატარაა. ის გამოტოვებული იქნება"
+
+#: ../variety/ImageFetcher.py:148
+#, python-format
+msgid "Sorry, got %s error..."
+msgstr "აღმოჩენილია შეცდომა %s..."
+
+#: ../variety/ImageFetcher.py:149
+msgid "This means the link is no longer valid"
+msgstr "ეს ნიშნავს, რომ ბმული სწორი აღარაა"
+
+#: ../variety/ImageFetcher.py:153
+msgid "Fetch failed for some reason"
+msgstr "გამოთხოვა რაღაც მიზეზით ჩავარდა"
+
+#: ../variety/ImageFetcher.py:155
+msgid ""
+"To get more information, please run Variety from terminal with -v option and"
+" retry the action"
+msgstr ""
+"მეტი ინფორმაციის მისაღებად გაუშვით Variety ტერმინალიდან პარამეტრით -v და "
+"სცადეთ ქმედება თავიდან"
+
+#: ../variety/indicator.py:63 ../variety/indicator.py:110
+#: ../variety/indicator.py:179
+msgid "_Next"
+msgstr "_შემდეგი"
+
+#: ../variety/indicator.py:68 ../variety/indicator.py:115
+#: ../variety/indicator.py:184
+msgid "_Previous"
+msgstr "_წინა"
+
+#: ../variety/indicator.py:75
+msgid "Current desktop wallpaper"
+msgstr "მიმდინარე სამუშაო მაგიდის ფონის სურათი"
+
+#: ../variety/indicator.py:79
+msgid "Show origin"
+msgstr "საწყისის ჩვენება"
+
+#: ../variety/indicator.py:90 ../variety/ThumbsManager.py:177
+#: ../variety/VarietyWindow.py:710
+msgid "Copy to _Favorites"
+msgstr "რჩეულებში _კოპირება"
+
+#: ../variety/indicator.py:95 ../variety/VarietyWindow.py:719
+#: ../data/ui/PreferencesVarietyDialog.ui:3563
+msgid "Move to Favorites"
+msgstr "რჩეულებში გადატანა"
+
+#: ../variety/indicator.py:101 ../variety/ThumbsManager.py:197
+msgid "Delete to _Trash"
+msgstr "სანაგვე ყუთში გადა_ტანა"
+
+#: ../variety/indicator.py:120 ../variety/indicator.py:189
+msgid "_Next, skipping forward history"
+msgstr "შემდეგი, წი_ნ ისტორიის გამოტოვებით"
+
+#: ../variety/indicator.py:130
+msgid ""
+"Tip: Scroll wheel over icon\n"
+"for Next and Previous"
+msgstr ""
+"მინიშნება: გადაახვიეთ თაგუნას ბორბლით ხატულაზე\n"
+"შემდეგი და წინა სურათისთვის"
+
+#: ../variety/indicator.py:136 ../variety/indicator.py:200
+#: ../variety/VarietyWindow.py:854 ../variety/VarietyWindow.py:876
+msgid "Pause on current"
+msgstr "შეჩერება მიმდინარეზე"
+
+#: ../variety/indicator.py:140
+msgid "_Image"
+msgstr "_გამოსახულება"
+
+#: ../variety/indicator.py:147 ../variety/ThumbsManager.py:206
+msgid "Where is it from?"
+msgstr "საიდანაა?"
+
+#: ../variety/indicator.py:151
+msgid "Show without effects"
+msgstr "ჩვენება ეფექტების გარეშე"
+
+#: ../variety/indicator.py:161
+msgid "Google Image Search"
+msgstr "Google სურათების ძებნა"
+
+#: ../variety/indicator.py:168 ../variety/ThumbsManager.py:169
+msgid "Set EXIF Rating"
+msgstr "EXIF რეიტინგის დაყენება"
+
+#: ../variety/indicator.py:206 ../variety/VarietyWindow.py:883
+msgid "Save to Favorites"
+msgstr "რჩეულებში შენახვა"
+
+#: ../variety/indicator.py:211
+msgid "View Favorites..."
+msgstr "რჩეულების ნახვა..."
+
+#: ../variety/indicator.py:218
+msgid "Copy to Clipboard"
+msgstr "ბუფერში კოპირება"
+
+#: ../variety/indicator.py:228
+msgid "Google Quote"
+msgstr "ციტატის მოძებნა Google-ში"
+
+#: ../variety/indicator.py:233
+msgid "Google Author"
+msgstr "ავტორის მოძებნა Google-ში"
+
+#: ../variety/indicator.py:240 ../variety/indicator.py:296
+msgid "Preferences..."
+msgstr "მორგება..."
+
+#: ../variety/indicator.py:250
+msgid "Turn off"
+msgstr "გამორთვა"
+
+#: ../variety/indicator.py:255
+msgid "_Quote"
+msgstr "_ციტატა"
+
+#: ../variety/indicator.py:262
+msgid "_History"
+msgstr "_ისტორია"
+
+#: ../variety/indicator.py:268
+msgid "_Wallpaper Selector"
+msgstr "_ფონის სურათის ამრჩევი"
+
+#: ../variety/indicator.py:276
+msgid "Recent _Downloads"
+msgstr "ახლახან გა_დმოწერილები"
+
+#: ../variety/indicator.py:284
+msgid "Start Slideshow"
+msgstr "სლაიდშოუს დაწყება"
+
+#: ../variety/indicator.py:300
+msgid "About"
+msgstr "შესახებ"
+
+#: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui:4410
+msgid "Donate"
+msgstr "შემოწირულობა"
+
+#: ../variety/indicator.py:308
+msgid "Quit"
+msgstr "გასვლა"
+
+#: ../variety/__init__.py:121
+msgid "Terminating signal received, quitting..."
+msgstr "მიღებულია შეწყვეტის სიგნალი. მუშაობის დასრულება ..."
+
+#: ../variety/__init__.py:218
+msgid ""
+"Variety is already running. Sending the command to the running instance."
+msgstr "Variety უკვე გაშვებულია. გაშვებულ ასლს ეგზავნება ბრძანება."
+
+#: ../variety/PreferencesVarietyDialog.py:88
+msgid " (Profile: {})"
+msgstr " (პროფილი: {})"
+
+#: ../variety/PreferencesVarietyDialog.py:90
+#: ../data/ui/PreferencesVarietyDialog.ui:122
+msgid "Variety Preferences"
+msgstr "Variety-ის მორგება"
+
+#: ../variety/PreferencesVarietyDialog.py:258
+msgid "All"
+msgstr "ყველა"
+
+#: ../variety/PreferencesVarietyDialog.py:406
+#: ../variety/PreferencesVarietyDialog.py:620
+#: ../data/ui/PreferencesVarietyDialog.ui:398
+msgid "Images"
+msgstr "გამოსახულებები"
+
+#: ../variety/PreferencesVarietyDialog.py:406
+msgid "Add individual wallpaper images"
+msgstr "ინდივიდუალური ფონის სურათების დამატება"
+
+#: ../variety/PreferencesVarietyDialog.py:409
+msgid "Folders"
+msgstr "საქაღალდეები"
+
+#: ../variety/PreferencesVarietyDialog.py:410
+msgid "Searched recursively for up to 10000 images, shown in random order"
+msgstr ""
+"რეკურსიულად ნაპოვნია 10000-მდე სურათი. ნაჩვენებია შემთხვევითი მიმდევრობით"
+
+#: ../variety/PreferencesVarietyDialog.py:417
+msgid "Sequential Albums (order by filename)"
+msgstr "მიმდევრობითი ალბომები (დალაგება ფაილის სახელით)"
+
+#: ../variety/PreferencesVarietyDialog.py:418
+msgid "Searched recursively for images, shown in sequence (by filename)"
+msgstr ""
+"რეკურსიულად ნაპოვნი სურათები. ნაჩვენებია მიმდევრობით (ფაილის სახელის "
+"მიხედვით)"
+
+#: ../variety/PreferencesVarietyDialog.py:425
+msgid "Sequential Albums (order by date)"
+msgstr "მიმდევრობითი ალბომები (დალაგება თარიღით)"
+
+#: ../variety/PreferencesVarietyDialog.py:426
+msgid "Searched recursively for images, shown in sequence (by file date)"
+msgstr ""
+"რეკურსიულად ნაპოვნი სურათები. ნაჩვენებია მიმდევრობით (ფაილის თარიღის "
+"მიხედვით)"
+
+#: ../variety/PreferencesVarietyDialog.py:486
+msgid "Remove the source, keep the files"
+msgstr "წყაროს წაშლა, ფაილების შენარჩუნება"
+
+#: ../variety/PreferencesVarietyDialog.py:488
+msgid "Remove the sources, keep the files"
+msgstr "წყაროების წაშლა, ფაილების შენარჩულება"
+
+#: ../variety/PreferencesVarietyDialog.py:499
+msgid "Remove the source and delete the downloaded files"
+msgstr "წყაროს მოცილება და გადმოწერილი ფაილების წაშლა"
+
+#: ../variety/PreferencesVarietyDialog.py:501
+msgid "Remove the sources and delete the downloaded files"
+msgstr "წყაროების მოცილება და გადმოწერილი ფაილების წაშლა"
+
+#: ../variety/PreferencesVarietyDialog.py:536
+#, python-format
+msgid ""
+"Using this source requires wallpaper changing enabled at intervals of %d "
+"minutes or less. Settings were adjusted automatically."
+msgstr ""
+"ამ წყაროს გამოყენებას სჭირდება, რომ ფონის შეცვლა %d წუთში, ან უფრო ნაკლებში "
+"ხდებოდეს. პარამეტრები ავტომატურად გასწორდა."
+
+#: ../variety/PreferencesVarietyDialog.py:610
+msgid "Add Images"
+msgstr "სურათების დამატება"
+
+#: ../variety/PreferencesVarietyDialog.py:613
+#: ../variety/PreferencesVarietyDialog.py:654
+msgid "Add"
+msgstr "დამატება"
+
+#: ../variety/PreferencesVarietyDialog.py:638
+msgid ""
+"Add Folders - Only add the root folders, subfolders are searched recursively"
+msgstr ""
+"საქაღალდეების დამატება - დაამატეთ, მხოლოდ, ძირითადი საქაღალდეები. "
+"ქვესაქაღალდეებში ძებნა რეკურსიულად ხდება"
+
+#: ../variety/PreferencesVarietyDialog.py:642
+msgid ""
+"Add Sequential Albums (ordered by filename). Subfolders are searched "
+"recursively."
+msgstr ""
+"მიმდევრობითი ალბომების დამატება (დალაგებული ფაილის სახელით). "
+"ქვესაქაღალდეების ძებნა რეკურსიულად ხდება."
+
+#: ../variety/PreferencesVarietyDialog.py:646
+msgid ""
+"Add Sequential Albums (ordered by date). Subfolders are searched "
+"recursively."
+msgstr ""
+"მიმდევრობითი ალბომების დამატება (დალაგებული თარიღით). ქვესაქაღალდეების ძებნა"
+" რეკურსიულად ხდება."
+
+#: ../variety/PreferencesVarietyDialog.py:806
+#: ../data/ui/PreferencesVarietyDialog.ui:3578
+msgid "Edit..."
+msgstr "ჩასწორება..."
+
+#: ../variety/PreferencesVarietyDialog.py:808
+msgid "Open Folder"
+msgstr "საქაღალდის გახსნა"
+
+#: ../variety/PreferencesVarietyDialog.py:814
+msgid "View Image"
+msgstr "სურათის ნახვა"
+
+#: ../variety/PreferencesVarietyDialog.py:1210
+#: ../variety/PreferencesVarietyDialog.py:1217
+msgid "No write permissions"
+msgstr "ჩაწერის უფლების გარეშე"
+
+#: ../variety/PreferencesVarietyDialog.py:1292
+msgid "Could not adjust permissions"
+msgstr "უფლებების გასწორება შეუძლებელია"
+
+#: ../variety/PreferencesVarietyDialog.py:1293
+#, python-format
+msgid ""
+"You may try manually running this command:\n"
+"sudo chmod %s \"%s\""
+msgstr ""
+"შეგიძლიათ, ეს ხელით გააკეთოთ, შემდეგი ბრძანების გაშვებით:\n"
+"sudo chmod %s \"%s\""
+
+#: ../variety/QuotesEngine.py:248
+msgid "No suitable quote plugins"
+msgstr "შესაბამისი კვოტის დამატებების გარეშე"
+
+#: ../variety/QuotesEngine.py:250
+msgid ""
+"There are no quote plugins installed, enabled and applicable for the current"
+" settings"
+msgstr ""
+"ციტატის დამატებები დაყენებული, ჩართული და მიმდინარე პარამეტრებთან შესატყვისი"
+" არაა"
+
+#: ../variety/QuotesEngine.py:267
+msgid "Could not fetch quotes"
+msgstr "ციტატების გამოთხოვა შეუძლებელია"
+
+#: ../variety/QuotesEngine.py:268
+msgid "Quotes services may be down, we will continue trying"
+msgstr "შეიძლება, ციტატის სერვერები გამორთულია. ჩვენ გავაგრძელებთ მცდელობას"
+
+#: ../variety/QuotesEngine.py:272
+msgid "Could not find quotes"
+msgstr "ციტატების პოვნა შეუძლებელია"
+
+#: ../variety/QuotesEngine.py:273
+msgid "Maybe you are searching for something very obscure?"
+msgstr "შეიძლება, ეძებთ რამე ძალიან გაურკვეველს?"
+
+#: ../variety/Texts.py:21
+msgid "Keep original"
+msgstr "ორიგინალის შენარჩუნება"
+
+#: ../variety/Texts.py:22
+msgid "Grayscale"
+msgstr "ნაცრისფერი"
+
+#: ../variety/Texts.py:23
+msgid "Heavy blur"
+msgstr "მძიმე ბუნდოვნება"
+
+#: ../variety/Texts.py:24
+msgid "Soft blur"
+msgstr "რბილი ბუნდოვნება"
+
+#: ../variety/Texts.py:25
+msgid "Oil painting"
+msgstr "ზეთით ნახატი"
+
+#: ../variety/Texts.py:26
+msgid "Pointilism"
+msgstr "პუანტილიზმი"
+
+#: ../variety/Texts.py:27
+msgid "Pixellate"
+msgstr "პიქსელაცია"
+
+#: ../variety/Texts.py:31
+msgid "The Favorites folder"
+msgstr "რჩეულების საქაღალდე"
+
+#: ../variety/Texts.py:32
+msgid "The Fetched folder"
+msgstr "გამოთხოვილების საქაღალდე"
+
+#: ../variety/Texts.py:35
+msgid ""
+"Recommended by Variety. Adapts to your taste as you mark images as favorite "
+"or trash."
+msgstr ""
+"რეკომენდებულია Variety-ის მიერ. ერგება თქვენს გემოვნებას იმის მიხედვით, რას "
+"მონიშნავთ რჩეულად და რას გადაიტანთ ნაგვის ყუთში."
+
+#: ../variety/Texts.py:39
+msgid ""
+"Latest favorites by the other users of Variety. [May contain NSFW images]"
+msgstr ""
+"უახლესი რჩეულები Variety-ის სხვა მომხმარებლებისგან. (შეიძლება, შეიცავდეს "
+"NSFW სურათებს)"
+
+#: ../variety/Texts.py:41
+msgid "Random wallpapers from Desktoppr.co"
+msgstr "შემთხვევითი ფონის სურათები საიტიდან Desktoppr.co"
+
+#: ../variety/Texts.py:42
+msgid "NASA's Astronomy Picture of the Day"
+msgstr "NASA-ს ასტრონომიის დღის სურათი"
+
+#: ../variety/Texts.py:43
+msgid "Bing Photo of the Day"
+msgstr "Bing-ის დღის სურათი"
+
+#: ../variety/Texts.py:46
+msgid "High-resolution photos from Unsplash.com"
+msgstr "მაღალი გარჩევადობის სურათები საიტიდან Unsplash.com"
+
+#: ../variety/Texts.py:54
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"შეგიძლიათ, გადართოთო ფონის სურათი წინ და უკან მაჩვენებლის ხატულაზე თაგუნას "
+"ბორბლის წინ და უკან ტრიალით."
+
+#: ../variety/Texts.py:57
+msgid ""
+"You can configure how the wallpaper scales, zooms or tiles directly from the"
+" Appearance/Background settings in your OS. Variety sets which image to "
+"show, but does not tell the OS how to draw it."
+msgstr ""
+"ფონის სურათის მასშტაბირების, გადიდებისა და პირდაპირ მოთავსების მორგება "
+"თქვენი ოს-ის გარეგნობის/ფონის მორგების ფანჯრიდან შეგიძლიათ. Variety აყენებს,"
+" რომელი სურათი იქნება ნაჩვენები, მაგრამ არ ეუბნება ოს-ს, როგორ აჩვენოს "
+"ისინი."
+
+#: ../variety/Texts.py:61
+#, python-brace-format
+msgid ""
+"If you want to run custom commands every time the wallpaper changes or if "
+"you use an alternative desktop environment, please edit the scripts in "
+"{PROFILE_PATH}scripts. There are examples there for various desktop "
+"environments."
+msgstr ""
+"თუ გნებავთ სასურველი ბრძანებების გაშვება ფონის სურათის თითოეული ცვლილებისას,"
+" ან, თუ იყენებთ ალტერნატიულ სამუშაო გარემოს, ჩაასწორეთ სკრიპტბი საქაღალდეში "
+"{PROFILE_PATH}scripts. იქ იპოვით მაგალითებს სხვადასხვა სამუშაო "
+"გარემოებისთვის."
+
+#: ../variety/Texts.py:64
+msgid ""
+"Variety can be controlled from the command line and you can use this to "
+"define keyboard shortcuts for the operations you use most often. Run "
+"\"variety --help\" to see all available commands."
+msgstr ""
+"Variety-ის მართვა შესაძლებელია ბრძანების სტრიქონიდან და ამის გამოყენება "
+"შეგიძლიათ, რომ დააყენოთ კლავიატურის მალსახმობები ოპერაციებისთვის, რომლებსაც "
+"ყველაზე ხშირად იყენებთ. ხელმისაწვდომი ბრძანებების სანახავად გაუშვით "
+"\"variety --help\"."
+
+#: ../variety/Texts.py:67
+msgid ""
+"You can drop image links or files on the launcher icon to download them and "
+"use them as wallpapers. For quicker downloading from a specific site, you "
+"can also use clipboard monitoring (see \"Downloading\" tab)."
+msgstr ""
+"შეგიძლიათ, დაყაროთ გამოსახულების ბმულები, ან ფაილები გამშვების ხატულაზე, რომ"
+" მოხდეს მათი გადმოწერა და ფონის სურათად გამოყენება. სპეციფიკური საიტიდან "
+"უფრო სწრაფი გადმოწერისთვის შეგიძლიათ, ბუფერის მონიტორინგი გამოიყენოთ (იხილეთ"
+" ჩანართი \"გადმოწერა\")."
+
+#: ../variety/Texts.py:70
+msgid ""
+"Applying a heavy blurring filter is a great way to get abstract-looking and "
+"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
+"in Ubuntu."
+msgstr ""
+"მძიმე დაბინდვის ფილტრის გადატარება კარგია აბსტრაქტული გარეგნობის, მაგრამ "
+"ფერადი ფონის სურათების მისაღებად. რაღაც Ubuntu-ის ნაგულისხმევი ფონის სურათის"
+" მსგავსი."
+
+#: ../variety/Texts.py:73
+#, python-brace-format
+msgid ""
+"Adding your own custom filters is quite easy: open "
+"{PROFILE_PATH}variety.conf in an editor and use the existing filters as an "
+"example. Every filter is just a line of options to be passed to "
+"ImageMagick's magick command."
+msgstr ""
+"თქვენი საკუთარი ფილტრების დამატება საკმაოდ ადვილია: გახსენით "
+"{PROFILE_PATH}variety.conf რედაქტორში და გამოიყენეთ არსებული ფილტრები "
+"მაგალითად. თითოეული ფილტრი უბრალო პარამეტრების ხაზია, რომელიც ImageMagick-ის"
+" magick ბრძანებას გადაეცემა."
+
+#: ../variety/Texts.py:76
+msgid ""
+"When you select an image source, its images are displayed in a window at the"
+" bottom of the screen. Click an image there to set is as wallpaper. Right-"
+"click to close the window, to modify its appearance or to perform file "
+"operations. You can select multiple image sources to create a \"merged\" "
+"thumbnail view of all of them. Please mind that thumbnail view is limited to"
+" several hundred randomly selected images."
+msgstr ""
+"როცა ირჩევთ გამოსახულებების წყაროს, მისი გამოსახულებები ეკრანის ქვედა მხარეს"
+" ფანჯარაში გამოჩნდება. დააწკაპუნეთ გამოსახულებაზე, რომ ის ფონის სურათად "
+"დააყენოთ. მარჯვენა წკაპი ფანჯრის დასახურად, რომ მისი გარეგნობა შეცვალოთ, ან "
+"ფაილის ოპერაციები შეასრულოთ. შეგიძლიათ, მონიშნოთ ბევრი სურათი, რომ შექნათ "
+"\"შერწყმული\" მინიატურის ხედი ყველასთვის. დაიმახსოვრეთ, რომ მინიატურის ხედი "
+"შეზღუდულია რამდენიმე ასეულ შემთხევით არჩეულ გამოსახულებაზე."
+
+#: ../variety/Texts.py:79
+msgid ""
+"Variety's indicator icon is themeable - if you choose the \"Light\" option "
+"for the icon, Variety will first check if the current GTK theme has an icon "
+"named \"variety-indicator\" and will use it instead of the bundled light "
+"icon."
+msgstr ""
+"Variety-ის მაჩვენებლის ხატულას შეცვლა შეგიძლიათ - თუ ხატულასთვის აირჩევთ "
+"'ღიას', Variety ჯერ შეამოწმებს, აქვს, თუ არა GTK-ის მიმდინარე ხატულა "
+"'variety-indicator' და გამოიყენებს მას იმის მაგიერ, რაც თან მოჰყვება."
+
+#: ../variety/Texts.py:82
+#, python-brace-format
+msgid ""
+"When you choose to save quotes to Favorites, these are by default saved to "
+"{PROFILE_PATH}favorite_quotes.txt. This file is compatible with Variety's "
+"local files quote source. If you want to use it - copy it to "
+"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
+"source. This file is also compatible with the Unix fortune utility."
+msgstr ""
+"როცა ირჩევთ, რომ ციტატები რჩეულებში შეინახოთ, მათი შენახვა ნაგულისხმევად "
+"ხდება ფაილში {PROFILE_PATH}favorite_quotes.txt. ეს ფაილი თავსებადია Variety-"
+"ის ლოკალური ფაილის ციტატის წყაროსთან. თუ გნებავთ, გამოიყენოთ ის, დააკოპირეთ "
+"საქაღალდეში ~/.config/variety/pluginsconf/quotes/ და ჩართეთ ლოკალური ფაილის "
+"ციტატის წყარო. ეს ფაილი ასევე თავსებადია Unix-ის პროგრამასთან fortune."
+
+#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui:1525
+msgid "Bottom"
+msgstr "ქვემო"
+
+#: ../variety/ThumbsManager.py:42
+msgid "Top"
+msgstr "ზედა"
+
+#: ../variety/ThumbsManager.py:43
+msgid "Left"
+msgstr "გავიდა"
+
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui:1389
+msgid "Right"
+msgstr "მარჯვენა"
+
+#: ../variety/ThumbsManager.py:117
+msgid "Position"
+msgstr "პოზიცია"
+
+#: ../variety/ThumbsManager.py:121 ../data/ui/PreferencesVarietyDialog.ui:2968
+msgid "Size"
+msgstr "ზომა"
+
+#: ../variety/ThumbsManager.py:125
+msgid "Maximum Shown Images"
+msgstr "მაქს. ნაჩვენები სურათები"
+
+#: ../variety/ThumbsManager.py:139
+msgid "Show Containing Folder"
+msgstr "შემცველი საქაღალდის გახსნა"
+
+#: ../variety/ThumbsManager.py:152 ../variety/VarietyWindow.py:741
+msgid "Fetched: Show Origin"
+msgstr "გამოთხოვილია: წყაროს ჩვენება"
+
+#: ../variety/ThumbsManager.py:154 ../variety/VarietyWindow.py:745
+#: ../variety/VarietyWindow.py:867
+#, python-format
+msgid "View at %s"
+msgstr "ჩვენება %s-ზე"
+
+#: ../variety/ThumbsManager.py:186 ../variety/VarietyWindow.py:711
+msgid "Move to _Favorites"
+msgstr "_რჩეულებში გადატანა"
+
+#: ../variety/ThumbsManager.py:220
+msgid "Close"
+msgstr "დახურვა"
+
+#: ../variety/ThumbsManager.py:240
+msgid "Could not set EXIF rating"
+msgstr "EXIF რეიტინგის დაყენება შეუძლებელია"
+
+#: ../variety/ThumbsManager.py:260
+msgid "Unrated"
+msgstr "რეიტინგის გარეშე"
+
+#: ../variety/ThumbsManager.py:267
+msgid "Rejected"
+msgstr "უარყოფილია"
+
+#: ../variety/ThumbsManager.py:380
+msgid "Variety History"
+msgstr "Variety-ის ისტორია"
+
+#: ../variety/ThumbsManager.py:382
+msgid "Variety Recent Downloads"
+msgstr "Variety-ის ახლახან გადმოწერილები"
+
+#: ../variety/ThumbsManager.py:384
+msgid "Variety Images"
+msgstr "Variety-ის გამოსახულებები"
+
+#: ../variety/VarietyOptionParser.py:51
+msgid ""
+"%prog [options] [files or urls]\n"
+"\n"
+"Passing local files will add them to Variety's queue.\n"
+"Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.\n"
+"\n"
+"To set a specific wallpaper: %prog --set /some/local/image.jpg\n"
+msgstr ""
+"%prog [პარამეტრები] [ფაილები, ან URL-ები]\n"
+"\n"
+"ლოკალური ფაილების გადაცემა მათ Variety-ის რიგში ჩაამატებს.\n"
+"დაშორებული URL-ების გადაცემა აიძულებს Variety-ს, გადმოწეროს ისინი მიღებულების საქაღალდეში და ჩაამატოს რიგში.\n"
+"\n"
+"სპეციფიკური ფონის სურათის დაყენება: %prog --set /რამე/ლოკალური/სურათი.jpg\n"
+
+#: ../variety/VarietyOptionParser.py:69
+msgid ""
+"Profile name or full path to the configuration folder Variety should use. If"
+" not specified, this is ~/.config/variety/. If just a name is used instead "
+"of a full path, the profile folder will be ~/.config/variety-"
+"profiles/<name>. Use only when initially starting Variety - changing the "
+"profile path requires restart. Several instances of Variety can be started "
+"when using different profiles, each with its own separate configuration. "
+"This can be used for example to control several different screens or "
+"workspaces under desktop environments like XFCE which allow this. To pass "
+"commands to a running instance, pass the same --profile argument as the one "
+"it was started with in subsequent commands."
+msgstr ""
+"პროფილის სახელი, ან სრული ბილიკი კონფიგურაციის საქაღალდემდე, რომელიც "
+"Variety-მა უნდა გამოიყენოს. თუ მითითებული არაა, გამოიყენება "
+"~/.config/variety/. თუ გადაცემულია, მხოლოდ, სახელი სრული ბილიკის მაგიერ, "
+"პროფილის საქაღალდე იქნება ~/.config/variety-profiles/<სახელი>. გამოიყენეთ, "
+"მხოლოდ, მაშინ, როცა Variety-ს პირველად უშვებთ - პროფილის ბილიკის შეცვლას "
+"პროგრამის გადატვირთვა სჭირდება. სხვადასხვა პროფილების გამოყენებისას "
+"შეგიძლიათ, Variety-ის რამდენიმე გაშვებული ასლი გქონდეთ ცალ-ცალკე, საკუთარი "
+"კონფიგურაციით. ეს შეიძლება, მაგალითად, გამოყენებული იყოს სხვადასხვა "
+"ეკრანების სამართავად სამუშაო გარემოდან (მაგ: XFCE), რომელსაც ამის მხარდაჭერა"
+" აქვს. გაშვებული ასლისთვის ბრძანებების გადასაცემად ბრძანებებში მიუთითეთ "
+"იგივე --profile არგუმენტი, რომლითაც ის გაეშვა."
+
+#: ../variety/VarietyOptionParser.py:90
+msgid ""
+"Show logging messages (-vv to -vvvvv will profile various parts of Variety "
+"with increasing detail"
+msgstr ""
+"ჟურნალში ჩაწერილი შეტყობინებების ჩვენება (-vv-დან -vvvv-მდე მოხდება Variety-"
+"ის სხვადასხვა ნაწილის პროფილირება ზრდადი დეტალებით"
+
+#: ../variety/VarietyOptionParser.py:95
+msgid "Make the running instance quit"
+msgstr "გაშვებული ასლისთვის გასვლის ბრძანება"
+
+#: ../variety/VarietyOptionParser.py:106
+msgid ""
+"Print the current wallpaper location. Used only when the application is "
+"already running."
+msgstr ""
+"მიმდინარე ფონის სურათის მდებარეობის გამოტანა. გამოიყენება, მხოლოდ, მაშინ, "
+"როცა აპლიკაცია უკვე გაშვებულია."
+
+#: ../variety/VarietyOptionParser.py:115
+msgid ""
+"Print the current wallpaper metadata. Used only when the application is "
+"already running."
+msgstr ""
+"მიმდინარე ფონის სურათის მეტამონაცემების გამოტანა. გამოიყენება, მხოლოდ, "
+"მაშინ, როცა აპლიკაცია უკვე გაშვებულია."
+
+#: ../variety/VarietyOptionParser.py:124
+msgid "Set the given file as wallpaper, absolute path required"
+msgstr "მითითებული ფაილის დაყენება ფონურ სურათად. საჭიროა აბსოლუტური ბილიკი"
+
+#: ../variety/VarietyOptionParser.py:128
+msgid "Show Next wallpaper"
+msgstr "შემდეგი ფონის სურათის ჩვენება"
+
+#: ../variety/VarietyOptionParser.py:132
+msgid "Show Previous wallpaper"
+msgstr "წინა ფონის სურათის ჩვენება"
+
+#: ../variety/VarietyOptionParser.py:139
+msgid "Show Next wallpaper, skipping the forward history"
+msgstr "შემდეგი ფონის სურათის ჩვენება წინ ისტორიის გამოტოვებით"
+
+#: ../variety/VarietyOptionParser.py:148
+msgid ""
+"Move current wallpaper to Trash. Used only when the application is already "
+"running."
+msgstr ""
+"მიმდინარე ფონის სურათის ნაგვის ყუთში გადატანა. გამოიყენება, მხოლოდ, მაშინ, "
+"როცა აპლიკაცია უკვე გაშვებულია."
+
+#: ../variety/VarietyOptionParser.py:158
+msgid ""
+"Copy current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr ""
+"მიმდინარე ფონის სურათის კოპირება რჩეულებში. გამოიყენება, მხოლოდ, მაშინ, როცა"
+" აპლიკაცია უკვე გაშვებულია."
+
+#: ../variety/VarietyOptionParser.py:167
+msgid ""
+"Move current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr ""
+"მიმდინარე ფონის სურათის გადატანა რჩეულებში. გამოიყენება, მხოლოდ, მაშინ, როცა"
+" აპლიკაცია უკვე გაშვებულია."
+
+#: ../variety/VarietyOptionParser.py:172
+msgid "Pause on current image"
+msgstr "შეჩერება მიმდინარე გამოსახულებაზე"
+
+#: ../variety/VarietyOptionParser.py:176
+msgid "Resume regular image changes"
+msgstr "რეგულარული გამოსახულების ცვლილებების გაგრძელება"
+
+#: ../variety/VarietyOptionParser.py:183
+msgid "Toggle Pause/Resume state"
+msgstr "შეჩერება/გაგრძელების მდგომარეობის გადართვა"
+
+#: ../variety/VarietyOptionParser.py:190
+msgid "Toggle \"Show Without Effects\" for current image"
+msgstr "\"ეფექტების გარეშე ჩვენების\" გადართვა მიმდინარე გამოსახულებისთვის"
+
+#: ../variety/VarietyOptionParser.py:194
+msgid "Show Next quote"
+msgstr "შემდეგი ციტატის ჩვენება"
+
+#: ../variety/VarietyOptionParser.py:201
+msgid "Show Previous quote"
+msgstr "წინა ციტატის ჩვენება"
+
+#: ../variety/VarietyOptionParser.py:208
+msgid "Show Next quote, skipping the forward history"
+msgstr "შემდეგი ციტატის ჩვენება წინ ისტორიის გამოტოვებით"
+
+#: ../variety/VarietyOptionParser.py:215
+msgid "Toggle Quotes Pause/Resume state"
+msgstr "ციტატების შეჩერება/გაგრძელების მდგომარეობის გადართვა"
+
+#: ../variety/VarietyOptionParser.py:222
+msgid "Save the current quote to Favorites"
+msgstr "მიმდინარე ციტატის შენახვა რჩეულებში"
+
+#: ../variety/VarietyOptionParser.py:226
+msgid "Toggle History display"
+msgstr "ისტორიის ჩვენების გადართვა"
+
+#: ../variety/VarietyOptionParser.py:233
+msgid "Toggle Recent Downloads display"
+msgstr "უახლესი გადმოწერების ჩვენების გადართვა"
+
+#: ../variety/VarietyOptionParser.py:241
+msgid "Show Preferences dialog"
+msgstr "მორგების დიალოგის ჩვენება"
+
+#: ../variety/VarietyOptionParser.py:250
+msgid ""
+"Show manual wallpaper selector - the thumbnail bar filled with images from "
+"the active image sources"
+msgstr ""
+"ფონის სურათის ხელით ამრჩევის ჩვენება - მინიატურების პანელი, სავსე "
+"გამოსახულებებით აქტიური წყაროებიდან"
+
+#: ../variety/VarietyOptionParser.py:260
+msgid ""
+"Sets and applies an option. The option names are the same that are used in "
+"Variety's config file ~/.config/variety/variety.conf. Multiple options can "
+"be set in a single command. Example: 'variety --set-option icon Dark --set-"
+"option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
+"file directly in an unguarded way."
+msgstr ""
+"დააყენებს და გამოიყენებს პარამეტრს. პარამეტრის სახელები იგივეა, რაც "
+"გამოყენებულია Variety-ის კონფიგურაციის ფაილში "
+"~/.config/variety/variety.conf. ერთი ბრძანებით შეგიძლიათ ბევრი პარამეტრის "
+"დაყენება. მაგ: 'variety --set-option icon Dark --set-option clock_enabled "
+"True'. *ფრთხილად გამოიყენეთ*: კონფიგურაციის ფაილს პირდაპირ, დაცვის გარეშე "
+"ცვლით."
+
+#: ../variety/VarietyOptionParser.py:273
+msgid "options --next/--fast-forward and --previous are mutually exclusive"
+msgstr "პარამეტრები --next/--fast-forward და --previous ურთიერთგამომრიცხავია"
+
+#: ../variety/VarietyOptionParser.py:276
+msgid "options --trash and --favorite are mutually exclusive"
+msgstr "პარამეტრები --trash და --favorite ურთიერთგამომრიცხავია"
+
+#: ../variety/VarietyOptionParser.py:279
+msgid "options --pause and --resume are mutually exclusive"
+msgstr "პარამეტრები --pause და --resume ურთიერთგამომრიცხავია"
+
+#: ../variety/VarietyOptionParser.py:284
+msgid ""
+"options --quotes-next/--quotes-fast-forward and --quotes-previous are "
+"mutually exclusive"
+msgstr ""
+"პარამეტრები --quotes-next/--quotes-fast-forward და --quotes-previous "
+"ურთიერთგამომრიცხავია"
+
+#: ../variety/VarietyWindow.py:706 ../variety/VarietyWindow.py:883
+#: ../variety/VarietyWindow.py:2983
+msgid "Already in Favorites"
+msgstr "უკვე რჩეულებშია"
+
+#: ../variety/VarietyWindow.py:743
+#, python-format
+msgid "Source: %s"
+msgstr "წყარო: %s"
+
+#: ../variety/VarietyWindow.py:809
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: ../variety/VarietyWindow.py:831
+#, python-format
+msgid "Author: %s"
+msgstr "ავტორი: %s"
+
+#: ../variety/VarietyWindow.py:856 ../variety/VarietyWindow.py:878
+msgid "Resume regular changes"
+msgstr "ჩვეულებრივი ცვლილებების გაგრძელება"
+
+#: ../variety/VarietyWindow.py:1032
+msgid "Filtering too strict?"
+msgstr "ფილტრები მეტისმეტად მკაცრია?"
+
+#: ../variety/VarietyWindow.py:1034
+msgid ""
+"Variety is finding too few images that match your image filtering criteria. "
+"Please check if the settings in \"Filtering\" are correct."
+msgstr ""
+"Variety ძალიან ცოტა ისეთ გამოსახულებას პოულობს, რომელიც თქვენი გაფილტვრის "
+"პირობებს აკმაყოფილებს. შეამოწმეთ, სწორია, თუ არა პარამეტრები "
+"\"გაფილტვრაში\"."
+
+#: ../variety/VarietyWindow.py:1726
+msgid "Please add more image sources or wait for some downloads"
+msgstr "დაამატეთ მეტი გამოსახულების წყაროები, ან დაელოდეთ გადმოწერას"
+
+#: ../variety/VarietyWindow.py:1728
+msgid "Please add more image sources"
+msgstr "დაამატეთ მეტი გამოსახულების წყაროები"
+
+#: ../variety/VarietyWindow.py:1729
+msgid "No more wallpapers"
+msgstr "მეტი ფონის სურათი აღმოჩენილი არაა"
+
+#: ../variety/VarietyWindow.py:2001
+msgid "Current wallpaper is not in the image sources"
+msgstr "მიმდინარე ფონის სურათი გამოსახულების წყაროებში არაა"
+
+#: ../variety/VarietyWindow.py:2034
+#, python-format
+msgid ""
+"Could not move to %s. You probably don't have permissions to move this file."
+msgstr ""
+"%s-ში გადატანა შეუძლებელია. ალბათ, ამ ფაილის გადატანის უფლება არ გაქვთ."
+
+#: ../variety/VarietyWindow.py:2041
+#, python-format
+msgid ""
+"Could not copy to %s. You probably don't have permissions to copy this file."
+msgstr ""
+"%s-ში გადატანა შეუძლებელია. ალბათ, ამ ფაილის კოპირების უფლება არ გაქვთ."
+
+#: ../variety/VarietyWindow.py:2066 ../variety/VarietyWindow.py:2089
+msgid "Cannot delete"
+msgstr "წაშლის შეცდომა"
+
+#: ../variety/VarietyWindow.py:2067
+#, python-format
+msgid "You don't have permissions to delete %s to Trash."
+msgstr "%s-ის ნაგვის ყუთში გადატანის უფლება არ გაქვთ."
+
+#: ../variety/VarietyWindow.py:2090
+msgid "Deleting to trash failed, check variety.log for more information."
+msgstr ""
+"ნაგვის ყუთში გადატანა ჩავარდა. მეტი ინფორმაციისთვის შეამოწმეთ ფაილი "
+"variety.log."
+
+#: ../variety/VarietyWindow.py:2376
+msgid "Upgraded scripts"
+msgstr "განახლებული სკრიპტები"
+
+#: ../variety/VarietyWindow.py:2378
+msgid ""
+"If you had customized scripts for Variety, please see Preferences -> "
+"Changelog"
+msgstr ""
+"თუ გქონდათ მორგებული სკრიპტები Variety-სთვის, იხილეთ მორგება -> ცვლილებების "
+"ჟურნალი"
+
+#: ../variety/VarietyWindow.py:2429
+msgid ""
+"I will open an editor with the config file and apply the changes after you "
+"save and close the editor."
+msgstr ""
+"მე გავხსნი რედაქტორს კონფიგურაციის ფაილით და გამოვიყენებ ცვლილებებს, როცა "
+"რედაქტორს დახურავთ."
+
+#: ../variety/VarietyWindow.py:2588
+msgid "Added to queue"
+msgstr "ჩაემატა რიგში"
+
+#: ../variety/VarietyWindow.py:2589 ../variety/VarietyWindow.py:2602
+msgid "Press Next to see it"
+msgstr "სანახავად დააჭირეთ ღილაკს 'შემდეგი'"
+
+#: ../variety/VarietyWindow.py:2601
+msgid "Fetched"
+msgstr "გამოთხოვილია"
+
+#: ../variety/VarietyWindow.py:2652
+msgid "Unsupported source type"
+msgstr "მხარდაუჭერელი წყაროს ტიპი"
+
+#: ../variety/VarietyWindow.py:2653 ../variety/VarietyWindow.py:2701
+msgid "Are you running the most recent version of Variety?"
+msgstr "Variety-ის ბოლო ვერსია გაქვთ?"
+
+#: ../variety/VarietyWindow.py:2663
+msgid "New image source added"
+msgstr "ახალი გამოსახულებების წყარო დამატებულია"
+
+#: ../variety/VarietyWindow.py:2665
+msgid "Image source already exists, enabling it"
+msgstr "გამოსახულებების წყარო უკვე არსებობს. ის ჩაირთვება"
+
+#: ../variety/VarietyWindow.py:2691
+msgid "Fetched and applied"
+msgstr "გამოთხოვილი და გამოყენებულია"
+
+#: ../variety/VarietyWindow.py:2696
+msgid "It works!"
+msgstr "მუშაობს!"
+
+#: ../variety/VarietyWindow.py:2696
+msgid "Yay, Variety links work. Great!"
+msgstr "ვაუ, Variety-ის ბმულები მუშაობს. შესანიშნავია!"
+
+#: ../variety/VarietyWindow.py:2700
+msgid "Unsupported command"
+msgstr "მხარდაუჭერელი ბრძანება"
+
+#: ../variety/VarietyWindow.py:2705
+msgid "Could not process the given variety:// URL"
+msgstr "მოცემული variety:// URL-ის დამუშავება შეუძლებელია"
+
+#: ../variety/VarietyWindow.py:2706
+msgid "Run with logging enabled to see details"
+msgstr "დეტალებისთვის გაუშვით ჟურნალჩართული"
+
+#: ../variety/VarietyWindow.py:3070
+msgid "Variety: New desktop entry"
+msgstr "Variety: ახალი სამუშაო მაგიდის ჩანაწერი"
+
+#: ../variety/VarietyWindow.py:3072
+msgid ""
+"We created a new desktop entry in ~/.local/share/applications to run Variety"
+" with profile \"{}\". Find it in the application launcher."
+msgstr ""
+"შევქმენით ახალი სამუშაო მაგიდის ჩანაწერი ~/.local/share/applications-ში, რომ"
+" Variety გაეშვას პროფილით \"{}\". იპოვეთ ის აპლიკაციების გამშვებში."
+
+#: ../variety/VarietyWindow.py:3097
+msgid "Variety: Created autostart desktop entry"
+msgstr "Variety: შეიქმნა ავტოგაშვების ჩანაწერი სამუშაო მაგიდისთვის"
+
+#: ../variety/VarietyWindow.py:3099
+msgid ""
+"We created a new desktop entry in ~/.config/autostart. Variety should start "
+"automatically on next login."
+msgstr ""
+"ჩვენ შევქმენით ახალი სამუშაო მაგიდის ჩანაწერი ფაილში ~/.config/autostart. "
+"შემდეგი შესვლისას Variety ავტომატურად უნდა გაეშვას."
+
+#: ../variety/VarietyWindow.py:3106
+msgid "Could not create autostart entry"
+msgstr "ავტოგაშვების ჩანაწერის შექმნა შეუძლებელია"
+
+#: ../variety/VarietyWindow.py:3108
+msgid ""
+"An error occurred while creating the autostart desktop entry\n"
+"Please run from a terminal with the -v flag and try again."
+msgstr ""
+"ავტოგაშვების ჩანაწერის შექმნისას აღმოჩენილია შეცდომა\n"
+"გაუშვით ტერმინალიდან პარამეტრით -v და კიდევ სცადეთ."
+
+#: ../variety/VarietyWindow.py:3173
+msgid "No images"
+msgstr "გამოსახულებების გარეშე"
+
+#: ../variety/VarietyWindow.py:3173
+msgid "There are no images in the slideshow folders"
+msgstr "სლაიდშოუს საქაღალდეებში გამოსახულებები არაა"
+
+#: ../data/ui/AboutVarietyDialog.ui:9
+msgid "About Variety"
+msgstr "Variety-ის შესახებ"
+
+#: ../data/ui/AboutVarietyDialog.ui:14
+msgid "Copyright (c) 2012-2026, Peter Levi, James Lu & Variety contributors"
+msgstr ""
+"Copyright (c) 2012-2026, Peter Levi, James Lu & Variety-ის მოხალისეები"
+
+#: ../data/ui/AboutVarietyDialog.ui:15
+msgid "An automatic wallpaper changer, downloader and manager."
+msgstr "ფონის სურათის ავტომატურად შემცვლელი, გადმომწერი და მმართველი."
+
+#: ../data/ui/AboutVarietyDialog.ui:17
+msgid "https://github.com/varietywalls/variety"
+msgstr "https://github.com/varietywalls/variety"
+
+#: ../data/ui/AboutVarietyDialog.ui:18
+msgid ""
+"# Copyright (c) 2012-2026, Peter Levi, James Lu & Variety contributors\n"
+"# This program is free software: you can redistribute it and/or modify it\n"
+"# under the terms of the GNU General Public License version 3, as published\n"
+"# by the Free Software Foundation.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful, but\n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of\n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR\n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License along\n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+"# Copyright (c) 2012-2026, Peter Levi, James Lu & Variety contributors\n"
+"# This program is free software: you can redistribute it and/or modify it\n"
+"# under the terms of the GNU General Public License version 3, as published\n"
+"# by the Free Software Foundation.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful, but\n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of\n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR\n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License along\n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+
+#: ../data/ui/AddConfigurableDialog.ui:160
+#: ../data/ui/AddWallhavenDialog.ui:255
+msgid "Just a moment to check for images"
+msgstr "ცოტა ხანი გამოსახულებების შესამოწმებლად"
+
+#: ../data/ui/AddConfigurableDialog.ui:187 ../data/ui/AddFlickrDialog.ui:360
+#: ../data/ui/AddWallhavenDialog.ui:280
+msgid "  "
+msgstr "  "
+
+#: ../data/ui/AddFlickrDialog.ui:9
+msgid "Variety - add Flickr as an image source"
+msgstr "Variety - Flickr-ის დამატება გამოსახულების წყაროდ"
+
+#: ../data/ui/AddFlickrDialog.ui:83
+msgid "Flickr"
+msgstr "Flickr"
+
+#: ../data/ui/AddFlickrDialog.ui:101
+msgid ""
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria."
+" Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
+msgstr ""
+"მიუთითეთ <a href=\"http://flickr.com\">Flickr</a>-ზე ძებნის პირობა. "
+"გადმოიწერება ფოტოები, რომლებიც ყველა პირობას აკმაყოფილებს. ნუ ჩაწერთ "
+"არასაჭირო პირობებს."
+
+#: ../data/ui/AddFlickrDialog.ui:124
+#: ../data/ui/PreferencesVarietyDialog.ui:1716
+msgid "Tags: "
+msgstr "ჭდეები: "
+
+#: ../data/ui/AddFlickrDialog.ui:155
+msgid ""
+"A comma-separated list of tags. A photo has to contain all of them simultaneosly in order to match.\n"
+"Example: yellow,car"
+msgstr ""
+"ჭდეების მძიმით გამოყოფილი სია. იმისათვის, რომ დაემთხვეს, ფოტო ყველა პირობას უნდა აკმაყოფილებდეს.\n"
+"მაგალითად: ყვითელი, მანქანა"
+
+#: ../data/ui/AddFlickrDialog.ui:171
+msgid "User: "
+msgstr "მომხმარებელი: "
+
+#: ../data/ui/AddFlickrDialog.ui:202
+msgid ""
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+msgstr ""
+"ჩასვით მომხმარებლის ფოტონაკადის, ან მისი სურათებიდან ერთერთის ბმული.\n"
+"მაგ: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui:218
+msgid "Group: "
+msgstr "დაჯგუფება: "
+
+#: ../data/ui/AddFlickrDialog.ui:248
+msgid ""
+"Please insert the group's URL.\n"
+"Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+msgstr ""
+"ჩასვით ჯგუფის URL.\n"
+"მაგ: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui:264
+msgid "Text:"
+msgstr "ტექსტი:"
+
+#: ../data/ui/AddFlickrDialog.ui:295
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+"თავისუფალი ტექსტის ძებნა სურათის სათაურებში, აღწერებში და ჭდეებში. პირობის გამორიცხვა მათი '-'-ით დაწყებით ხდება.\n"
+"მაგ: ვაშლი -ნამცხვარი"
+
+#: ../data/ui/AddFlickrDialog.ui:334
+msgid "Just a moment to check this search"
+msgstr "ერთი წამით. მოწმდება საძიებო სტრიქონი"
+
+#: ../data/ui/AddWallhavenDialog.ui:96
+msgid "Instruction"
+msgstr "ინსტრუქცია"
+
+#: ../data/ui/AddWallhavenDialog.ui:181
+msgid ""
+"To fetch <b>NSFW</b> images, you can provide your own <a href='https://wallhaven.cc/settings/account'>Wallhaven API key</a>. You need a free Wallhaven account, log in, go to <a href='https://wallhaven.cc/settings/account'>Account Settings</a>, find it under <b>API Key</b>. Without an API key, even if your search shows NSFW images in the browser, Variety will not be able to fetch them. Even with an API key, in order to fetch <b>NSFW</b> images, you need to provide a full search URL, not just keywords. \n"
+"\n"
+"<b>Note: This is a global setting which affects all Wallhaven sources</b>"
+msgstr ""
+"<b>NSFW</b> სურათების მოსაძებნად შეგიძლიათ, საკუთარი <a href='https://wallhaven.cc/settings/account'>Wallhaven API-ის გასაღები შეიყვანოთ</a>. გჭირდებათ Wallhaven-ის ანგარიში. შედით საიტზე, გადადით <a href='https://wallhaven.cc/settings/account'>ანგარიშის მორგებაზე</a> და მას <b>API-ის გასაღების ქვეშ იპოვით</b>. API-ის გასაღების გარეშე მაშინაც კი, თუ თქვენი ძებნა აჩვენებს NSFW გამოსახულებებს ბრაუზერში, Variety მათ ვერ გადმოწერს. API-ის გასაღებითაც კი, იმისთვის, რომ <b>NSFW</b> სურათების გადმოწერა მოხდეს, სრული ძებნის URL უნდა შეიყვანოთ და არა, მხოლოდ, საკვანძო სიტყვები \n"
+"\n"
+"<b>შენიშვნა: ეს გლობალური პარამეტრია, რომელიც ყველა Wallhaven-ის ანგარიშს ეხება</b>"
+
+#: ../data/ui/AddWallhavenDialog.ui:206
+msgid "API Key:"
+msgstr "API-ის გასაღები:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:8
+#: ../data/ui/EditFavoriteOperationsDialog.ui:91
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr "რჩეულებში დაკოპირება vs. რჩეულებში გადატანა"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:24
+msgid "Reset to Default"
+msgstr "ნაგულისხმევ მნიშვნელობაზე ჩამოყრა"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:110
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the"
+" menu depending on the image location:"
+msgstr ""
+"აირჩიეთ, გირჩევნიათ 'რჩეულებში დაკოპირება', თუ 'რჩეულებში გადატანა' მენიუში "
+"გამოსახულების მდებარეობის მიხედვით:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:155
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move or Both>, where Folder can be Downloaded, Fetched, Others or a specific folder path.\n"
+"Order is important. When an image is shown, the first folder in this list which contains the image will determine which operations will be shown in Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
+"შეიყვანეთ ერთი ჩანაწერი ერთ ხაზზე ფორმით <საქაღალდე>:<Copy, Move, ან Both>, სადაც საქაღალდე შეიძლება იყოს Downloaded, Fetched, Others, ან სპეციფიკური საქაღალდის ბილიკი.\n"
+"მიმდევრობა მნიშვნელოვანია. როცა ხდება გამოსახულების ჩვენება, პირველი საქაღალდე სიაში, რომელიც შეიცავს გამოსახულებას, განსაზღვრავს, რომელი ოპერაციები იქნება ნაჩვენები Variety-ის მენიუში. 'Others' ემთხვევა ნებისმიერ ფაილს და სიაში ბოლო უნდა იყოს.\n"
+"\n"
+"მაგ:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:25
+msgid "seconds"
+msgstr "წამი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:29
+#: ../data/ui/PreferencesVarietyDialog.ui:51
+msgid "minutes"
+msgstr "წუთი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:33
+#: ../data/ui/PreferencesVarietyDialog.ui:55
+msgid "hours"
+msgstr "საათი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:37
+#: ../data/ui/PreferencesVarietyDialog.ui:59
+msgid "days"
+msgstr "დღე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:198
+#: ../data/ui/PreferencesVarietyDialog.ui:728
+msgid "General"
+msgstr "ზოგადი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:211
+msgid "Start Variety when the computer starts"
+msgstr "Variety-ის გაშვება კომპიუტერის გაშვებისას"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:236
+msgid "Change wallpaper every "
+msgstr "ფონის სურათის შეცვლა ყოველ "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:255
+#: ../data/ui/PreferencesVarietyDialog.ui:256
+#: ../data/ui/PreferencesVarietyDialog.ui:273
+#: ../data/ui/PreferencesVarietyDialog.ui:274
+msgid "Minimum interval is 5 seconds"
+msgstr "მინ. ინტერვალი 5 წამია"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:301
+msgid "Change wallpaper on start"
+msgstr "ფონის სურათის შეცვლა გაშვებისას"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:335
+msgid "Use Internet Access"
+msgstr "ინტერნეტთან წვდომის გამოყენება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:350
+msgid ""
+"Turning off means Variety will not download new images or quotes from online"
+" sources, or initiate other internet connections."
+msgstr ""
+"გამორთვა ნიშნავს, რომ Variety არ გადმოწერს ახალ გამოსახულებებს, ან ციტატებს "
+"ინტერნეტიდან და არ შეეცდება ინტერნეტთან დაკავშირებას."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:446
+msgid "Enabled"
+msgstr "ჩართულია"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:457
+msgid "Type"
+msgstr "ტიპი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:468
+msgid "Location"
+msgstr "მდებარეობა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:504
+msgid "_Add..."
+msgstr "დ_ამატება..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:510
+#: ../data/ui/PreferencesVarietyDialog.ui:511
+msgid "Add images, folders or online image sources"
+msgstr ""
+"დაამატეთ გამოსახულებები, საქაღალდეები, ან ინტერნეტის გამოსახულების წყაროები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:523
+msgid "_Open Folder"
+msgstr "საქაღალდის _გახსნა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:528
+#: ../data/ui/PreferencesVarietyDialog.ui:529
+#: ../data/ui/PreferencesVarietyDialog.ui:547
+#: ../data/ui/PreferencesVarietyDialog.ui:548
+msgid "Edit the selected source"
+msgstr "მონიშნული წყაროს ჩასწორება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:542
+msgid "_Edit..."
+msgstr "_ჩასწორება..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:561
+msgid "_Remove..."
+msgstr "_წაშლა..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:567
+#: ../data/ui/PreferencesVarietyDialog.ui:568
+msgid "Remove selected image sources"
+msgstr "მონიშნული გამოსახულების წყაროების წაშლა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:581
+msgid "_Use"
+msgstr "გამოყენება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:586
+#: ../data/ui/PreferencesVarietyDialog.ui:587
+msgid "Enable the selected sources and disable all others"
+msgstr "მონიშნული წყაროების ჩართვა და დანარჩენების გამორთვა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:638
+msgid "Favorites"
+msgstr "რჩეულები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:662
+msgid "Copy favorite wallpapers to "
+msgstr "რჩეული ფონის სურათების კოპირება სად "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:748
+msgid "Alignment and scaling"
+msgstr "სწორება და მასშტაბი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:767
+msgid "Auto-rotate the image according to EXIF data"
+msgstr "გამოსახულების ავტომობრუნება EXIF მონაცემებზე დაყრდნობით"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:790
+msgid "Display mode"
+msgstr "ჩვენების რეჟიმი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:826
+msgid "Description goes here "
+msgstr "აქ ჩაწერეთ აღწერა "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:845
+msgid ""
+"Experimental: Some options may not work well in all desktop environments or "
+"multi-monitor configurations."
+msgstr ""
+"ექსპერიმენტული: ზოგიერთმა პარამეტრმა, შეიძლება, ყველა სამუშაო გარემოში, ან "
+"მრავალეკრანიან კონფიგურაციაში, კარგად, არ იმუშაოს."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:871
+msgid "Effects"
+msgstr "ეფექტები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:894
+msgid ""
+"Randomly apply these effects to the displayed wallpapers (thanks to the "
+"wonderful ImageMagick):"
+msgstr ""
+"ამ ეფექტების შემთხვევითი მიმდევრობით გამოყენება ნაჩვენებ ფონის სურათებზე "
+"(მადლობა ჯიგარ ImageMagick-ს):"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:963
+msgid "Wallpaper"
+msgstr "ფონის სურათი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:983
+#: ../data/ui/PreferencesVarietyDialog.ui:1795
+msgid "Quotes"
+msgstr "ციტატები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1002
+msgid "Show random wise quotes on the desktop"
+msgstr "შემთხვევითი ჭკვიანური ციტატების ჩვენება სამუშაო მაგიდაზე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1025
+msgid "Change quote every "
+msgstr "ციტატის შეცვლა ყოველ "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1046
+#: ../data/ui/PreferencesVarietyDialog.ui:1047
+#: ../data/ui/PreferencesVarietyDialog.ui:1064
+#: ../data/ui/PreferencesVarietyDialog.ui:1065
+msgid "Minimum interval is 10 seconds"
+msgstr "მინ. ინტერვალი 10 წამია"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1103
+#: ../data/ui/PreferencesVarietyDialog.ui:1857
+msgid "Appearance"
+msgstr "გარეგნობა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1129
+msgid "Text color: "
+msgstr "ტექსტის ფერი: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1158
+msgid "Text font: "
+msgstr "ტექსტის ფონტი: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1186
+msgid "Draw a text shadow"
+msgstr "ტექსტის ჩრდილის დახატვა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1220
+msgid "Backdrop color: "
+msgstr "ფონის ფერი: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1248
+msgid "Backdrop opacity: "
+msgstr "ფონის გაუმჭვირვალობა: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1261
+msgid " Transparent"
+msgstr " გამჭვირვალე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1291
+msgid "Opaque"
+msgstr "გაუმჭვირვალე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1320
+msgid "Placement"
+msgstr "განლაგება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1346
+msgid "Horizontal position: "
+msgstr "ჰორიზონტალური მდებარეობა: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1359
+msgid "Left "
+msgstr "მარცხენა "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1408
+msgid "Quotes area width: "
+msgstr "ციტატის არეს სიგანე: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1421
+msgid "Narrow "
+msgstr "ვიწრო "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1450
+msgid "Wide"
+msgstr "ფართო"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1482
+msgid "Vertical position: "
+msgstr "ვერტიკალური მდებარეობა: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1495
+msgid "Top "
+msgstr "ზედა "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1554
+msgid "Sources and filtering"
+msgstr "წყაროები და გაფილტვრა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1582
+msgid "Show quotes from these sources: "
+msgstr "ციტატების ჩვენება ამ წყაროებიდან: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1651
+msgid ""
+"<small><a href='https://github.com/varietywalls/variety/wiki/Plugins'>More "
+"plugins</a></small>"
+msgstr ""
+"<small><a href='https://github.com/varietywalls/variety/wiki/Plugins'>მეტი "
+"დამატება</a></small>"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1668
+msgid "Show only these tags and authors. Leave empty to show random quotes."
+msgstr ""
+"მხოლოდ, ამ ჭდეებისა და ავტორების ჩვენება. დატოვეთ ცარიელი შემთხვევითი "
+"ციტატების საჩვენებლად."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1729
+msgid "Example: funny, inspirational"
+msgstr "მაგ: სასაცილო, შთამაგონებელი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1742
+msgid "Example: Albert Einstein, Voltaire"
+msgstr "მაგ: Albert Einstein, Voltaire"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1755
+msgid "Authors: "
+msgstr "ავტორები: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1815
+#: ../data/ui/PreferencesVarietyDialog.ui:2000
+msgid "Clock"
+msgstr "საათი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1828
+msgid ""
+"Show a nice big digital clock on the desktop, displaying the current time "
+"and date"
+msgstr ""
+"ლამაზი, დიდი, ციფრული საათის ჩვენება სამუშაო მაგიდაზე. აჩვენებს მიმდინარე "
+"დროს და თარიღს"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1832
+msgid ""
+"To configure the clock's appearance edit the clock_filter property in "
+"Variety's settings file (~/.config/variety/variety.conf). Use the comments "
+"in ~/.config/variety/variety_latest_default.conf as a guide."
+msgstr ""
+"საათის გარეგნობის მოსარგებად ჩაასწორეთ თვისება clock_filter Variety-ის "
+"კონფიგურაციის ფაილში (~/.config/variety/variety.conf). სახელმძღვანელოდ "
+"გამოიყენეთ კომენტარები ფაილში ~/.config/variety/variety_latest_default.conf."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1885
+msgid "Clock font: "
+msgstr "საათის ფონტი: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1927
+msgid "Date font: "
+msgstr "თარიღის ფონტი: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1966
+msgid ""
+"These don't work? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
+"to further configure the clock? <a "
+"href=\"https://github.com/varietywalls/variety/wiki/Configuring-the-"
+"clock\">Read here</a>."
+msgstr ""
+"ესენი არ მუშაობს? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">წაიკითხეთ აქ</a>. "
+"როგორ მოვირგო საათი? <a "
+"href=\"https://github.com/varietywalls/variety/wiki/Configuring-the-"
+"clock\">წაიკითხეთ აქ</a>."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2028
+msgid "Images for slideshow"
+msgstr "გამოსახულებები სლაიდშოუსთვის"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2050
+msgid "Favorite images"
+msgstr "რჩეული გამოსახულებები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2069
+msgid "Images in all enabled image sources"
+msgstr "გამოსახულებები ყველა ჩართულ გამოსახულების წყაროში"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2087
+msgid "All images in the Downloads folder"
+msgstr "ყველა გამოსახულება საქაღალდეში Downloads"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2112
+msgid "Custom folder (includes images in subfolders) "
+msgstr "მორგებული საქაღალდე (შეიცავს გამოსახულებებს ქვესაქაღალდეებიდანაც) "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2174
+msgid "Order of images in slideshow "
+msgstr "გამოსახულებების მიმდევრობა სლაიდშოუში "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2188
+msgid "Random"
+msgstr "შემთხვევითი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2189
+msgid "By name, A to Z"
+msgstr "სახელით, A-Z"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2190
+msgid "By name, Z to A"
+msgstr "სახელით, Z-A"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2191
+msgid "By date, oldest first"
+msgstr "თარიღით, ჯერ უძველესი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2192
+msgid "By date, newest first"
+msgstr "თარიღით, ჯერ უახლესი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2224
+msgid "Screen"
+msgstr "ეკრანი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2249
+msgid "Run on monitor"
+msgstr "გაშვება მონიტორზე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2285
+msgid "Window mode for the slideshow "
+msgstr "ფანჯრის რეჟიმი სლაიდშოუსითვის "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2299
+msgid "Fullscreen"
+msgstr "სრულ ეკრანზე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2300
+msgid "Desktop (stays below other windows)"
+msgstr "სამუშაო მაგიდა (რჩება სხვა ფანჯრების ქვემოთ)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2301
+msgid "Maximized window"
+msgstr "მთელ ეკრანზე გაშლილი ფანჯარა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2302
+msgid "Normal window"
+msgstr "ნორმალური ფანჯარა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2347
+msgid "Dynamics"
+msgstr "დინამიკა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2374
+msgid "Interval between image changes "
+msgstr "ინტერვალი გამოსახულებების ცვლილებას შორის "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2403
+msgid " seconds"
+msgstr " წამი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2432
+msgid "Quick fade "
+msgstr "სწრაფი მინავლება "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2462
+msgid "Slow fade"
+msgstr "ნელი მინავლება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2486
+msgid "Less zoom"
+msgstr "ნაკლებად გადიდება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2515
+msgid "More zoom"
+msgstr "მეტად გადიდება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2539
+msgid "Less pan"
+msgstr "ნაკლები პანინგი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2568
+msgid "More pan"
+msgstr "მეტი პანინგი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2592
+msgid "Reset to defaults"
+msgstr "ნაგულისხმევზე ჩამოყრა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2626
+msgid "Changes on this page take effect after the slideshow is restarted"
+msgstr ""
+"ამ გვერდზე შეტანილი ცვლილებები ძალაში, მხოლოდ, სლაიდშოუს თავიდან გაშვების "
+"შემდეგ შევა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2639
+msgid "Start slideshow now"
+msgstr "სლაიდშოუს დაწყება ახლავე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2667
+msgid "Slideshow"
+msgstr "სლაიდშოუ"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2694
+msgid "Fetch folder"
+msgstr "საქაღალდის გამოთხოვა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2717
+msgid "Save manually downloaded wallpapers to "
+msgstr "ხელით გადმოწერილი ფონის სურათების შენახვა საქაღალდეში "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2771
+msgid "Drag and drop"
+msgstr "გადაათრიეთ და დააგდეთ"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2791
+msgid ""
+"Variety's icon in the launcher serves as a drop target. Drop any image URL or file on it and it will be saved to your fetch folder. You can then press Next to see it on your desktop.\n"
+"To show the icon in the launcher choose About or Preferences. You may wish to lock it there for easy drag-and-drop access."
+msgstr ""
+"Variety-ის ხატულა გამშვებში დაგდების სამიზნედ მუშაობს. დააგდეთ ნებისმიერი გამოსახულების ბმული, ან ფაილი მასზე და ის თქვენს Fetch საქაღალდეში იქნება შენახული. სამუშაო მაგიდაზე საჩვენებლად შეგიძლიათ, დააწვეთ ღილაკს 'შემდეგი.\n"
+"ხატულას გამშვების საჩვენებლად აირჩიეთ 'შესახებ', ან 'მორგება'. შეიძლება, უკეთესი იყოს, ჩაკეტოთ ის იქ, რომ გადათრევა/დაგდება უფრო ადვილი იყოს."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2825
+msgid "Clipboard monitoring"
+msgstr "ბუფერის მონიტორინგი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2838
+msgid "Monitor clipboard for image URLs and fetch them"
+msgstr "ბუფერის მონიტორინგი გამოსახულების ბმულებზე და მათი გამოთხოვა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2860
+msgid "But fetch only when the URL host is one of these:"
+msgstr "მაგრამ გამოთხოვა, მხოლოდ, მაშინ, თუ ბმულის ჰოსტი არის ერთერთი სიიდან:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2925
+msgid "Downloading"
+msgstr "გადმოწერა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2945
+msgid "When possible use images that:"
+msgstr "როცა შესაძლებელია, გამოყენებული იყოს გამოსახულებები, რომლებიც:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2981
+msgid "Have landscape orientation"
+msgstr "აქვს ლანდშაფტური ორიენტაცია"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3006
+msgid "Are big at least "
+msgstr "სულ ცოტა "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3028
+msgid "50"
+msgstr "50"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3029
+msgid "80"
+msgstr "80"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3030
+msgid "100"
+msgstr "100"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3045
+msgid "% of the screen resolution"
+msgstr "ეკრანის გარჩევადობის %"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3079
+msgid "Color"
+msgstr "ფერი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3098
+msgid "Are dark or light:"
+msgstr "არის მუქი, თუ ღია:"
+
+#. Color option - images that are dark or light
+#: ../data/ui/PreferencesVarietyDialog.ui:3120
+msgctxt "Color option - images that are dark or light"
+msgid "Dark"
+msgstr "მუქი"
+
+#. Color option - images that are dark or light
+#: ../data/ui/PreferencesVarietyDialog.ui:3121
+msgctxt "Color option - images that are dark or light"
+msgid "Light"
+msgstr "ღია"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3146
+msgid "Contain this color: "
+msgstr "შეიცავს ამ ფერს: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3182
+msgid "(Takes effect after some initial searching)"
+msgstr "(ძალაში შედის საწყისი ძებნის შემდეგ)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3221
+msgid "Rating"
+msgstr "რეიტინგი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3238
+msgid "Have EXIF rating at least "
+msgstr "აქვს EXIF რეიტინგი სულ ცოტა "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3261
+msgid "1"
+msgstr "1"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3262
+msgid "2"
+msgstr "2"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3263
+msgid "3"
+msgstr "3"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3264
+msgid "4"
+msgstr "4"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3265
+msgid "5"
+msgstr "5"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3302
+msgid "Name"
+msgstr "სახელი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3319
+msgid "Matches RegEx: "
+msgstr "ემთხვევა რეგგამოსს: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3378
+msgid "Filtering"
+msgstr "გაფილტვრა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3405
+msgid "Indicator Icon"
+msgstr "მაჩვენებლის ხატულა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3428
+msgid "Indicator icon:"
+msgstr "მაჩვენებლის ხატულა:"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3444
+msgctxt "Icon option"
+msgid "Light"
+msgstr "ღია"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3445
+msgctxt "Icon option"
+msgid "Dark"
+msgstr "მუქი"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3446
+msgctxt "Icon option"
+msgid "Number 1"
+msgstr "ნომერი 1"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3447
+msgctxt "Icon option"
+msgid "Number 2"
+msgstr "ნომერი 2"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3448
+msgctxt "Icon option"
+msgid "Number 3"
+msgstr "ნომერი 3"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3449
+msgctxt "Icon option"
+msgid "Number 4"
+msgstr "ნომერი 4"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3450
+msgctxt "Icon option"
+msgid "Use current wallpaper"
+msgstr "მიმდინარე ფონის სურათის გამოყენება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3451
+msgctxt "Icon option"
+msgid "Custom image..."
+msgstr "სასურველი გამოსახულება..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3452
+msgctxt "Icon option"
+msgid "None"
+msgstr "არცერთი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3469
+msgid "Select an icon"
+msgstr "აირჩიეთ ხატულა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3493
+msgid ""
+"When the icon is hidden, Variety can be controlled from the command line, or"
+" from the launcher quicklist. Run \"variety --help\" to see all available "
+"commands."
+msgstr ""
+"როცა ხატულა დამალულია, Variety-ის მართვა ბრძანების სტრიქონიდან, ან გამშვების"
+" სწრაფი სიიდან შეგიძლიათ. ხელმისაწვდომი ბრძანებების სიის სანახავად გაუშვით "
+"'variety --help'."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3523
+msgid "Favorites Operations"
+msgstr "ოპერაციები რჩეულებზე"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3546
+msgid "Favorites operations to show in main menu:"
+msgstr "მთავარი მენიუში საჩვენებელი ოპერაციები რჩეულებზე:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3562
+msgid "Copy to Favorites"
+msgstr "რჩეულებში კოპირება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3564
+msgid "Both Copy and Move"
+msgstr "ორივე, კოპირება და გადატანა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3565
+msgid "Depends on folder..."
+msgstr "დამოკიდებულია საქაღალდეზე..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3622
+msgid "Login & Lock Screen Support"
+msgstr "შესვლის და დაბლოკვის ეკრანის მხარდაჭერა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3644
+msgid "Change lock screen background automatically"
+msgstr "დაბლოკილი ეკრანის ფონის ავტომატური შეცვლა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3662
+msgid ""
+"Copy wallpapers to a static location (for programs like LightDM that require"
+" a static path)"
+msgstr ""
+"ფონის სურათების კოპირება სტატიკურ მდებარეობაზე (ისეთს პროგრამებისთვის, "
+"რომლებსაც სტატიკური ბილიკი სჭირდებათ. მაგ: LightDM)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3690
+msgid "Copy wallpaper image files to this folder: "
+msgstr "ფონის გამოსახულების ფაილების კოპირება ამ საქაღალდეში: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3717
+msgid "Reset to default"
+msgstr "ნაგულისხმევ მნიშვნელობაზე დაბრუნება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3732
+msgid "Still doesn't work?"
+msgstr "ჯერ კიდევ არ მუშაობს?"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3762
+msgid ""
+"It seems your home folder is encrypted, so using folders inside it will not "
+"work."
+msgstr ""
+"როგორც ჩანს, თქვენი საწყისი საქაღალდე დაშიფრულია, ასე რომ შიდა საქაღალდეების"
+" გამოყენება არ იმუშავებს."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3783
+msgid "You don't have write permissions for this folder."
+msgstr "თქვენ არ გაქვთ ამ საქაღალდეში ჩაწერის უფლება."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3800
+msgid "Permissions do not allow world readable access to this folder."
+msgstr "წვდომები ამ საქაღალდეზე ყველასთვის წაკითხვის უფლებას არ იძლევა."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3817
+msgid ""
+"Variety can adjust the permissions, but you will have to provide superuser "
+"privileges."
+msgstr ""
+"Variety-ს შეუძლია, გაასწოროს წვდომები, მაგრამ მას ზემომხმარებლის "
+"პრივილეგიები დასჭირდება."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3857
+msgid ""
+"<b>Privacy warning:</b> To show your wallpaper in a display manager, it may "
+"need read permissions to the image. With this option on, Variety will copy "
+"the wallpapers to a public folder and change their permissions to make them "
+"readable by all. By default, the folder is ~/Pictures if your home folder in"
+" not encrypted, and /usr/share/backgrounds if it is. Please use with care on"
+" multiuser systems."
+msgstr ""
+"<b>კონფიდენციალობის გაფრთხილება:</b> იმისათვის, რომ თქვენი ფონის სურათი "
+"ეკრანის მმართველში აჩვენოთ, შეიძლება, მას გამოსახულების წაკითხვის უფლება "
+"დასჭირდეს. თუ ამ პარამეტრს ჩართავთ, Variety დააკოპირებს ფონის სურათს საჯარო "
+"საქაღალდეში და შეცვლის მის წვდომებს ისე, რომ მისი წაკითხვა ყველას შეეძლება. "
+"ნაგულისხმევად საქაღალდეა ~/Pictures, თუ თქვენი საწყისი საქაღალდე დაშიფრული "
+"არაა და /usr/share/backgrounds, თუ არის. ფრთხილად გამოიყენეთ "
+"მრავალმომხმარებლიან სისტემებზე."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3892
+msgid "Customize"
+msgstr "მორგება"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3913
+msgid "Tips and tricks"
+msgstr "შენიშვნები და მინიშნებები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3960
+#: ../data/ui/PreferencesVarietyDialog.ui:4156
+msgid "Visit website"
+msgstr "ვებგვერდის ნახვა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3993
+#: ../data/ui/PreferencesVarietyDialog.ui:4189
+msgid "Report a bug or request a feature"
+msgstr "შეცდომის ანგარიში / ფუნქციის მოთხოვნა"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4026
+#: ../data/ui/PreferencesVarietyDialog.ui:4222
+#: ../data/ui/PreferencesVarietyDialog.ui:4304
+msgid "Donate to Variety"
+msgstr "შეწირვა Variety-სთვის"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4038
+#: ../data/ui/PreferencesVarietyDialog.ui:4234
+#: ../data/ui/PreferencesVarietyDialog.ui:4338
+msgid "Donate via PayPal"
+msgstr "შეწირვა PayPal-ის საშუალებით"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4088
+msgid "Tips"
+msgstr "რჩევები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4109
+msgid "Recent changes"
+msgstr "უახლესი ცვლილებები"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4284
+msgid "Changelog"
+msgstr "ცვლილებების ჟურნალი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4322
+msgid ""
+"I am developing Variety in my spare time, which usually means the late hours after my kids go to bed. Any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to continue working actively on it.\n"
+"\n"
+"Thank you,\n"
+"Peter Levi"
+msgstr ""
+"მე Variety-ს ჩემს თავისუფალ დროს ვწერ, რაც, ჩვეულებრივ, გვიან საღამოს ნიშნავს, როცა ჩემი ბავშვები დაიძინებენ. მადლობელი ვიქნები ნებისმიერი რაოდენობის თანხის, რომელსაც შეძლებთ, შემომწიროთ. ეს მაჩვენებს, რომ თქვენ - მომხმარებლებს, მოგწონთ Variety, რაც მოტივაციას მომცემს, უფრო აქტიურად ვიმუშაო მასზე.\n"
+"\n"
+"დიდი მადლობა,\n"
+"პეტერ ლევი"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4370
+msgid "To donate in Bitcoin, please send to this wallet:"
+msgstr "Bitcoin-ის შემოსაწირად გამოაგზავნეთ ის ამ საფულეში:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4383
+msgid "bc1qgxlvmwe2pj5lvku6vm53edes3q7c3ykta7xyu4"
+msgstr "bc1qgxlvmwe2pj5lvku6vm53edes3q7c3ykta7xyu4"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:14
+msgid "Variety - Privacy Notice"
+msgstr "Variety - კონფიდენციალობის შენიშვნა"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:64
+msgid "<span font=\"15\" weight=\"bold\">Privacy Notice</span>"
+msgstr "<span font=\"15\" weight=\"bold\">კონფიდენციალობის შენიშვნა</span>"
+
+#. Main text for the Privacy Notice dialog
+#: ../data/ui/PrivacyNoticeDialog.ui:91
+msgid ""
+"Before we start, here are some things you need to be aware of and agree to:\n"
+"\n"
+"<b>Variety is an open-source application, provided as is, without any warranties</b>. By using it, you agree to the terms and conditions of the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU GPLv3 license</a> under which it is distributed.  \n"
+"\n"
+"<b>Variety is an internet-connected application.</b> With default settings, Variety downloads images from the internet. Web servers it downloads from may collect information about your device, like IP address. Variety does not send any personally identifiable information. By using Variety, you accept its use of internet connectivity. <b>Note that all internet connectivity can be disabled.</b> \n"
+"\n"
+"<b>Variety fetches and applies rate limiting settings defined by the development team.</b> This may affect the rate at which it downloads new images, but it helps ensure Variety can work regardless of how many people are running it. These settings will be downloaded from gist.github.com where we host them.\n"
+"\n"
+"<b>Some image sources require us to track additional information when enabled.</b> For example the terms of <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> require us to track and report when users download and view images from Unsplash."
+msgstr ""
+"სანამ დავიწყებთ, არსებობს რამდენიმე რამ, რაც უნდა იცოდეთ და რასაც უნდა ეთანხმებოდეთ:\n"
+"\n"
+"<b>Variety ღია კოდის მქონე პროგრამაა, რომელიც მოგეწოდებათ როგორც არის, გარანტიის გარეშე</b>. მისი გამოყენებით თქვენ ეთანხმებით წესებს და პირობებს ლიცენზიისთვის <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU GPLv3</a> რომლითაც ის ვცელდება.  \n"
+"\n"
+"<b>Variety ინტერნეტში მუშაობს.</b> ნაგულისხმევი პარამეტრებით Variety სურათებს ინტერნეტიდან იწერს. ვებსერვერები, საიდანაც ის იწერს, შეიძლება, თქვენი მოწყობილობის, IP მისამართის და ა.შ. შესახებ ინფორმაციას აგროვებნენს. Variety არ აგზავნის პიროვნების ამოცნობისთვის საკმარის ინფორმაციას. Variety-ის გამოყენებით თქვენ ადასტურებთ, რომ იცით, რომ ის ინტერნეტს იყენებს. <b>გახსოვდეთ, რომ ინტერნეტთან წვდომა შეგიძლიათ, გამორტოთ.</b> \n"
+"\n"
+"<b>Variety fetches and applies rate limiting settings defined by the development team.</b> This may affect the rate at which it downloads new images, but it helps ensure Variety can work regardless of how many people are running it. These settings will be downloaded from gist.github.com where we host them.\n"
+"\n"
+"<b>ზოგიერთი გამოსახულების წყაროები ითხოვენ ჩვენგან, რომ როცა ჩართავთ, დამატებითი მონაცემები მივაწოდოთ.</b> მაგალითად, <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> ჩვენგან ითხოვს, რომ ყურადღება მივაქციოთ, როცა მომხმარებლები იწერენ და ნახულობენ სურათებს Unsplash-დან."
+
+#: ../data/ui/PrivacyNoticeDialog.ui:128
+msgid ""
+"<b>Use Internet Access:</b>\n"
+"<i>Can be changed later in Preferences</i>"
+msgstr ""
+"<b>ინტერნეტთან წვდომის გამოყენება:</b>\n"
+"<i>ამის შეცვლა მორგების ფანჯრიდან შეგიძლიათ</i>"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:147
+msgid ""
+"Enabling internet access is highly recommended. Without it, many of the functions Variety provides are disabled. \n"
+"\n"
+"You can change this setting later in Preferences."
+msgstr ""
+"ინტერნეტთან წვდომის ჩართვა რეკომენდებულია. მის გარეშე Variety-ის ბევრი ფუნქცია არ იმუშავებს.\n"
+"\n"
+"ამის შეცვლა მოგვიანებით, მორგების ფანჯარაში შეგიძლიათ."
+
+#: ../data/ui/PrivacyNoticeDialog.ui:177
+msgid "Reject and Quit"
+msgstr "უარყოფა და გასვლა"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:192
+msgid "Accept and Continue"
+msgstr "დათანხმება და გაგრძელება"
+
+#: ../data/ui/WelcomeDialog.ui:13 ../data/ui/WelcomeDialog.ui:76
+msgid "Welcome to Variety!"
+msgstr "მოგესალმებათ Variety!"
+
+#: ../data/ui/WelcomeDialog.ui:38
+msgid "Continue"
+msgstr "გაგრძელება"
+
+#: ../data/ui/WelcomeDialog.ui:94
+msgid ""
+"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper"
+" on a regular basis using local images or images downloaded from various "
+"online sources. It runs quietly in the background - to control it, click "
+"this icon in your system tray:"
+msgstr ""
+"Variety ფონის სურათის ავტომატურად შეცვლის პროგრამაა. ის ცვლის თქვენი სამუშაო"
+" მაგიდის ფონის სურათს რაღაც დროში ერთხელ ლოკალური, ან ინტერნეტიდან, "
+"სხვადასხვა წყაროებიდან გადმოწერილი გამოსახულებების გამოყენებით. ის ჩუმად, "
+"ფონურად მუშაობს. მის სამართავად დააწკაპუნეთ ხატულაზე სისტემურ საათთან:"
+
+#: ../data/ui/WelcomeDialog.ui:124
+msgid ""
+"Variety is open-source software, created by Peter Levi, a software developer"
+" from Bulgaria. If you like it, please <a "
+"href=\"https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR\">donate</a>."
+msgstr ""
+"Variety ღია კოდის მქონე პროგრამაა, რომელიც შექმნა პიტერ ლევიმ, პროგრამისტმა "
+"ბულგარეთიდან. თუ მოგწონთ ის, იფიქრეთ, <a "
+"href=\"https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR\">შემოგვწიროთ</a>."
+
+#: ../data/ui/WelcomeDialog.ui:143
+msgid ""
+"Now please take some time to set your preferences on the following screens."
+msgstr ""
+"ახლა ცოტა თქვენი დრო დაგვჭირდება პარამეტრების მოსარგებად შემდეგ ეკრანებზე."
