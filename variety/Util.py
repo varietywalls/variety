@@ -64,8 +64,14 @@ USER_AGENT = "Variety Wallpaper Changer " + get_version()
 
 random.seed()
 logger = logging.getLogger("variety")
-gettext.bindtextdomain("variety", localedir=importlib.resources.files('variety') / 'locale')
-gettext.textdomain("variety")
+
+def _bind_gettext():
+    localedir = importlib.resources.files('variety') / 'locale'
+    if not localedir.exists():
+        localedir = None  # use default gettext location, for package installs
+    gettext.bindtextdomain("variety", localedir=localedir)
+    gettext.textdomain("variety")
+_bind_gettext()
 
 
 def _(text):
