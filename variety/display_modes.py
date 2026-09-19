@@ -14,7 +14,7 @@ def _fill_with_black(filename):
     w, h = Util.get_primary_display_size()
     return (
         "zoom",
-        "-resize %dx%d\> -size %dx%d xc:black +swap -gravity center -composite" % (w, h, w, h),
+        "-resize %dx%d> -size %dx%d xc:black +swap -gravity center -composite" % (w, h, w, h),
     )
 
 
