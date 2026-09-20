@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history so branches/tags push correctly
 
-      - name: Push to Launchpad master branch
+      - name: Push branch to Launchpad
         if: github.ref_type == 'branch'
         env:
           LP_USER: ${{ secrets.LAUNCHPAD_USER }}
@@ -35,4 +35,11 @@ jobs:
           LP_USER: ${{ secrets.LAUNCHPAD_USER }}
           LP_TOKEN: ${{ secrets.LAUNCHPAD_TOKEN }}
         run: |
-          git push --force https://${LP_USER}:${LP_TOKEN}@git.launchpad.net/variety HEAD:refs/heads/current-release --follow-tags
+          DEFAULT_BRANCH="${{ github.event.repository.default_branch }}"
+          git fetch origin "$DEFAULT_BRANCH:$DEFAULT_BRANCH"
+
+          if git merge-base --is-ancestor HEAD "$DEFAULT_BRANCH"; then
+            git push --force https://${LP_USER}:${LP_TOKEN}@git.launchpad.net/variety HEAD:refs/heads/current-release --follow-tags
+          else
+            echo "Skip sync, ${GITHUB_REF} is not part of the default branch ${DEFAULT_BRANCH}"
+          fi
