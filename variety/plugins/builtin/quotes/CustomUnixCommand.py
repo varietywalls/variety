@@ -18,7 +18,8 @@ class CliSource(IQuoteSource):
             "description": _(
                 "Display output of UNIX commands over your wallpaper. "
                 "You may want to install additional "
-                "tools like gcalcli, Khal or cal."
+                "tools like gcalcli, Khal or cal. "
+                "Change the command by setting quotes_unix_cmd in variety.conf"
             ),
             "author": "Paul Portocarrero",
             "version": "0.1",
