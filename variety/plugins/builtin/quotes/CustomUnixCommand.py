@@ -43,7 +43,7 @@ class CliSource(IQuoteSource):
         return [
             {
                 "quote": std_output,
-                "author": f"{self.user_name}:~$ {cmd[0]}",
+                "author": "",
                 "sourceName": "Custom Unix Command",
                 "link": None,
             }
