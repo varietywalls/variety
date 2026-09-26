@@ -16,6 +16,7 @@
 import hashlib
 import logging
 import os
+import shlex
 
 from configobj import ConfigObj, DuplicateError
 from variety.profile import get_profile_path
@@ -339,10 +340,10 @@ class Options:
                 pass
 
             try:
-                self.quotes_unix_cmd = config["quotes_unix_cmd"]
+                self.quotes_unix_cmd = shlex.split(config["quotes_unix_cmd"])
             except Exception:
                 pass
-            
+
             try:
                 self.quotes_text_color = list(map(int, config["quotes_text_color"].split()))
                 for i, x in enumerate(self.quotes_text_color):
@@ -722,6 +723,10 @@ class Options:
         self.quotes_vpos = 40
         self.quotes_max_length = 250
         self.quotes_favorites_file = os.path.join(get_profile_path(), "favorite_quotes.txt")
+        self.quotes_unix_cmd = [
+            "python3", "-c",
+            "import calendar, datetime; n=datetime.datetime.now(); print(calendar.month(n.year, n.month))"
+        ]
 
         self.slideshow_sources_enabled = True
         self.slideshow_favorites_enabled = True
@@ -839,6 +844,7 @@ class Options:
             config["quotes_vpos"] = str(self.quotes_vpos)
             config["quotes_max_length"] = str(self.quotes_max_length)
             config["quotes_favorites_file"] = Util.collapseuser(self.quotes_favorites_file)
+            config["quotes_unix_cmd"] = shlex.join(self.quotes_unix_cmd)
 
             config["slideshow_sources_enabled"] = str(self.slideshow_sources_enabled)
             config["slideshow_favorites_enabled"] = str(self.slideshow_favorites_enabled)
