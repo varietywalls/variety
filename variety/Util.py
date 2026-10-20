@@ -402,7 +402,7 @@ class Util:
             return False
 
         if not check_contents:
-            return ext in (".jpg", ".jpeg", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif", ".webp")
+            return ext in (".jpg", ".jpeg", ".jxl", ".gif", ".png", ".tiff", ".svg", ".bmp", ".avif", ".webp")
         else:
             format, image_width, image_height = GdkPixbuf.Pixbuf.get_file_info(filename)
             return bool(format)
