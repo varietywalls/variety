@@ -339,6 +339,11 @@ class Options:
                 pass
 
             try:
+                self.quotes_unix_cmd = config["quotes_unix_cmd"]
+            except Exception:
+                pass
+            
+            try:
                 self.quotes_text_color = list(map(int, config["quotes_text_color"].split()))
                 for i, x in enumerate(self.quotes_text_color):
                     self.quotes_text_color[i] = max(0, min(255, x))
