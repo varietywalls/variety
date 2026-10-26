@@ -1,0 +1,2181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jonatan Nyberg, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 15:53-0800\n"
+"PO-Revision-Date: 2021-07-28 05:50+0000\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
+"Language-Team: Swedish (https://app.transifex.com/variety/teams/123174/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../variety/display_modes.py:33
+msgid "Controlled by OS settings, not by Variety. Fastest option."
+msgstr "Styrs av operativsystemets inställningar, inte av Variety. Snabbast."
+
+#: ../variety/display_modes.py:35
+msgid ""
+"Display mode is controlled by your OS Appearance settings and by what is "
+"specified in set_wallpaper script for your desktop environment. "
+msgstr ""
+"Visningsläget styrs av operativsystemets inställningar för utseende och av "
+"vad som anges i skriptet set_wallpaper för din skrivbordsmiljö. "
+
+#: ../variety/display_modes.py:42
+msgid "Zoom"
+msgstr "Zooma"
+
+#: ../variety/display_modes.py:44
+msgid ""
+"Image is zoomed in or out so that it fully fills your primary screen. Some "
+"parts of the image will be cut out if its resolution is different from the "
+"screen's. "
+msgstr ""
+"Bilden zoomas in eller ut så att den fyller hela din primära skärm. Delar av"
+" bilden beskärs om upplösningen skiljer sig från skärmens. "
+
+#: ../variety/display_modes.py:52
+msgid "Fill with black"
+msgstr "Fyll ut med svart"
+
+#: ../variety/display_modes.py:54
+msgid ""
+"Image is zoomed in or out so that it fully fits within your primary screen. "
+"The rest of the screen is filled with black. "
+msgstr ""
+"Bilden zoomas in eller ut så att hela bilden ryms på din primära skärm. "
+"Resten av skärmen fylls med svart. "
+
+#: ../variety/display_modes.py:61
+msgid "Fill with blur. Slow."
+msgstr "Fyll ut med oskärpa. Långsamt."
+
+#: ../variety/display_modes.py:63
+msgid ""
+"Image is zoomed in or out so that it fully fits within your primary screen. "
+"The rest of the screen is a filled with blurred version of the image. "
+msgstr ""
+"Bilden zoomas in eller ut så att hela bilden ryms på din primära skärm. "
+"Resten av skärmen fylls med en suddig version av bilden. "
+
+#: ../variety/display_modes.py:70
+msgid "Pick dynamically between Zoom and Fill with black"
+msgstr "Välj dynamiskt mellan Zooma och Fyll ut med svart"
+
+#: ../variety/display_modes.py:72
+msgid ""
+"Variety picks a good mode depending on image size. Images that are close to "
+"the screen proportions use 'Zoom'. Those that are vastly different use 'Fill"
+" with black'. "
+msgstr ""
+"Variety väljer ett lämpligt läge utifrån bildstorleken. Bilder med ungefär "
+"samma proportioner som skärmen använder 'Zooma'. Bilder med helt andra "
+"proportioner använder 'Fyll ut med svart'. "
+
+#: ../variety/display_modes.py:80
+msgid "Pick dynamically between Zoom and Fill with blur. Slow."
+msgstr "Välj dynamiskt mellan Zooma och Fyll ut med oskärpa. Långsamt."
+
+#: ../variety/display_modes.py:82
+msgid ""
+"Variety picks a good mode depending on image size. Images that are close to "
+"the screen proportions use 'Zoom'. Those that are vastly different use 'Fill"
+" with blur'. "
+msgstr ""
+"Variety väljer ett lämpligt läge utifrån bildstorleken. Bilder med ungefär "
+"samma proportioner som skärmen använder 'Zooma'. Bilder med helt andra "
+"proportioner använder 'Fyll ut med oskärpa'. "
+
+#: ../variety/FolderChooser.py:67
+msgid "Choose a folder"
+msgstr "Välj en mapp"
+
+#: ../variety/FolderChooser.py:70 ../variety/PreferencesVarietyDialog.py:613
+#: ../variety/PreferencesVarietyDialog.py:654
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../variety/FolderChooser.py:70
+msgid "OK"
+msgstr "OK"
+
+#: ../variety/ImageFetcher.py:62 ../variety/ImageFetcher.py:108
+msgid "Fetching"
+msgstr "Hämtar"
+
+#: ../variety/ImageFetcher.py:66 ../variety/ImageFetcher.py:76
+#: ../variety/ImageFetcher.py:83 ../variety/ImageFetcher.py:117
+#: ../variety/VarietyWindow.py:2582
+msgid "Not an image"
+msgstr "Inte en bild"
+
+#: ../variety/ImageFetcher.py:123
+msgid "Image too small, ignoring it"
+msgstr "Bilden är för liten och ignoreras"
+
+#: ../variety/ImageFetcher.py:148
+#, python-format
+msgid "Sorry, got %s error..."
+msgstr "Tyvärr uppstod felet %s..."
+
+#: ../variety/ImageFetcher.py:149
+msgid "This means the link is no longer valid"
+msgstr "Det innebär att länken inte längre är giltig"
+
+#: ../variety/ImageFetcher.py:153
+msgid "Fetch failed for some reason"
+msgstr "Hämtningen misslyckades av okänd anledning"
+
+#: ../variety/ImageFetcher.py:155
+msgid ""
+"To get more information, please run Variety from terminal with -v option and"
+" retry the action"
+msgstr ""
+"För mer information, kör Variety från terminalen med flaggan -v och försök "
+"igen"
+
+#: ../variety/indicator.py:63 ../variety/indicator.py:110
+#: ../variety/indicator.py:179
+msgid "_Next"
+msgstr "_Nästa"
+
+#: ../variety/indicator.py:68 ../variety/indicator.py:115
+#: ../variety/indicator.py:184
+msgid "_Previous"
+msgstr "_Föregående"
+
+#: ../variety/indicator.py:75
+msgid "Current desktop wallpaper"
+msgstr "Aktuell bakgrundsbild på skrivbordet"
+
+#: ../variety/indicator.py:79
+msgid "Show origin"
+msgstr "Visa ursprung"
+
+#: ../variety/indicator.py:90 ../variety/ThumbsManager.py:177
+#: ../variety/VarietyWindow.py:710
+msgid "Copy to _Favorites"
+msgstr "Kopiera till F_avoriter"
+
+#: ../variety/indicator.py:95 ../variety/VarietyWindow.py:719
+#: ../data/ui/PreferencesVarietyDialog.ui:3563
+msgid "Move to Favorites"
+msgstr "Flytta till Favoriter"
+
+#: ../variety/indicator.py:101 ../variety/ThumbsManager.py:197
+msgid "Delete to _Trash"
+msgstr "Flytta till _papperskorgen"
+
+#: ../variety/indicator.py:120 ../variety/indicator.py:189
+msgid "_Next, skipping forward history"
+msgstr "Nästa, utan att gå framåt i _historiken"
+
+#: ../variety/indicator.py:130
+msgid ""
+"Tip: Scroll wheel over icon\n"
+"for Next and Previous"
+msgstr ""
+"Tips: Rulla med mushjulet över ikonen\n"
+"för Nästa och Föregående"
+
+#: ../variety/indicator.py:136 ../variety/indicator.py:200
+#: ../variety/VarietyWindow.py:854 ../variety/VarietyWindow.py:876
+msgid "Pause on current"
+msgstr "Pausa växlingen"
+
+#: ../variety/indicator.py:140
+msgid "_Image"
+msgstr "_Bild"
+
+#: ../variety/indicator.py:147 ../variety/ThumbsManager.py:206
+msgid "Where is it from?"
+msgstr "Var kommer den ifrån?"
+
+#: ../variety/indicator.py:151
+msgid "Show without effects"
+msgstr "Visa utan effekter"
+
+#: ../variety/indicator.py:161
+msgid "Google Image Search"
+msgstr "Googles bildsökning"
+
+#: ../variety/indicator.py:168 ../variety/ThumbsManager.py:169
+msgid "Set EXIF Rating"
+msgstr "Ange EXIF-betyg"
+
+#: ../variety/indicator.py:206 ../variety/VarietyWindow.py:883
+msgid "Save to Favorites"
+msgstr "Spara i Favoriter"
+
+#: ../variety/indicator.py:211
+msgid "View Favorites..."
+msgstr "Visa Favoriter..."
+
+#: ../variety/indicator.py:218
+msgid "Copy to Clipboard"
+msgstr "Kopiera till urklipp"
+
+#: ../variety/indicator.py:228
+msgid "Google Quote"
+msgstr "Sök efter citatet på Google"
+
+#: ../variety/indicator.py:233
+msgid "Google Author"
+msgstr "Sök efter upphovspersonen på Google"
+
+#: ../variety/indicator.py:240 ../variety/indicator.py:296
+msgid "Preferences..."
+msgstr "Inställningar..."
+
+#: ../variety/indicator.py:250
+msgid "Turn off"
+msgstr "Stäng av"
+
+#: ../variety/indicator.py:255
+msgid "_Quote"
+msgstr "_Citat"
+
+#: ../variety/indicator.py:262
+msgid "_History"
+msgstr "_Historik"
+
+#: ../variety/indicator.py:268
+msgid "_Wallpaper Selector"
+msgstr "_Välj bakgrundsbild"
+
+#: ../variety/indicator.py:276
+msgid "Recent _Downloads"
+msgstr "_Senaste hämtningar"
+
+#: ../variety/indicator.py:284
+msgid "Start Slideshow"
+msgstr "Starta bildspel"
+
+#: ../variety/indicator.py:300
+msgid "About"
+msgstr "Om"
+
+#: ../variety/indicator.py:304 ../data/ui/PreferencesVarietyDialog.ui:4410
+msgid "Donate"
+msgstr "Donera"
+
+#: ../variety/indicator.py:308
+msgid "Quit"
+msgstr "Avsluta"
+
+#: ../variety/__init__.py:121
+msgid "Terminating signal received, quitting..."
+msgstr "Avslutningssignal mottagen, avslutar..."
+
+#: ../variety/__init__.py:218
+msgid ""
+"Variety is already running. Sending the command to the running instance."
+msgstr "Variety körs redan. Skickar kommandot till den instans som körs."
+
+#: ../variety/PreferencesVarietyDialog.py:88
+msgid " (Profile: {})"
+msgstr " (Profil: {})"
+
+#: ../variety/PreferencesVarietyDialog.py:90
+#: ../data/ui/PreferencesVarietyDialog.ui:122
+msgid "Variety Preferences"
+msgstr "Inställningar för Variety"
+
+#: ../variety/PreferencesVarietyDialog.py:258
+msgid "All"
+msgstr "Alla"
+
+#: ../variety/PreferencesVarietyDialog.py:406
+#: ../variety/PreferencesVarietyDialog.py:620
+#: ../data/ui/PreferencesVarietyDialog.ui:398
+msgid "Images"
+msgstr "Bilder"
+
+#: ../variety/PreferencesVarietyDialog.py:406
+msgid "Add individual wallpaper images"
+msgstr "Lägg till enskilda bakgrundsbilder"
+
+#: ../variety/PreferencesVarietyDialog.py:409
+msgid "Folders"
+msgstr "Mappar"
+
+#: ../variety/PreferencesVarietyDialog.py:410
+msgid "Searched recursively for up to 10000 images, shown in random order"
+msgstr ""
+"Söker även i undermappar efter upp till 10000 bilder, som visas i "
+"slumpmässig ordning"
+
+#: ../variety/PreferencesVarietyDialog.py:417
+msgid "Sequential Albums (order by filename)"
+msgstr "Album med fast ordning (efter filnamn)"
+
+#: ../variety/PreferencesVarietyDialog.py:418
+msgid "Searched recursively for images, shown in sequence (by filename)"
+msgstr "Söker även i undermappar efter bilder, som visas i filnamnsordning"
+
+#: ../variety/PreferencesVarietyDialog.py:425
+msgid "Sequential Albums (order by date)"
+msgstr "Album med fast ordning (efter datum)"
+
+#: ../variety/PreferencesVarietyDialog.py:426
+msgid "Searched recursively for images, shown in sequence (by file date)"
+msgstr ""
+"Söker även i undermappar efter bilder, som visas i ordning efter filernas "
+"datum"
+
+#: ../variety/PreferencesVarietyDialog.py:486
+msgid "Remove the source, keep the files"
+msgstr "Ta bort bildkällan, behåll filerna"
+
+#: ../variety/PreferencesVarietyDialog.py:488
+msgid "Remove the sources, keep the files"
+msgstr "Ta bort bildkällorna, behåll filerna"
+
+#: ../variety/PreferencesVarietyDialog.py:499
+msgid "Remove the source and delete the downloaded files"
+msgstr "Ta bort bildkällan och radera de hämtade filerna"
+
+#: ../variety/PreferencesVarietyDialog.py:501
+msgid "Remove the sources and delete the downloaded files"
+msgstr "Ta bort bildkällorna och radera de hämtade filerna"
+
+#: ../variety/PreferencesVarietyDialog.py:536
+#, python-format
+msgid ""
+"Using this source requires wallpaper changing enabled at intervals of %d "
+"minutes or less. Settings were adjusted automatically."
+msgstr ""
+"Den här bildkällan kräver att bakgrundsbilden byts automatiskt med högst %d "
+"minuters mellanrum. Inställningarna har justerats automatiskt."
+
+#: ../variety/PreferencesVarietyDialog.py:610
+msgid "Add Images"
+msgstr "Lägg till bilder"
+
+#: ../variety/PreferencesVarietyDialog.py:613
+#: ../variety/PreferencesVarietyDialog.py:654
+msgid "Add"
+msgstr "Lägg till"
+
+#: ../variety/PreferencesVarietyDialog.py:638
+msgid ""
+"Add Folders - Only add the root folders, subfolders are searched recursively"
+msgstr ""
+"Lägg till mappar – lägg bara till de översta mapparna, eftersom även "
+"undermappar söks igenom"
+
+#: ../variety/PreferencesVarietyDialog.py:642
+msgid ""
+"Add Sequential Albums (ordered by filename). Subfolders are searched "
+"recursively."
+msgstr ""
+"Lägg till album med fast ordning (efter filnamn). Även undermappar söks "
+"igenom."
+
+#: ../variety/PreferencesVarietyDialog.py:646
+msgid ""
+"Add Sequential Albums (ordered by date). Subfolders are searched "
+"recursively."
+msgstr ""
+"Lägg till album med fast ordning (efter datum). Även undermappar söks "
+"igenom."
+
+#: ../variety/PreferencesVarietyDialog.py:806
+#: ../data/ui/PreferencesVarietyDialog.ui:3578
+msgid "Edit..."
+msgstr "Redigera..."
+
+#: ../variety/PreferencesVarietyDialog.py:808
+msgid "Open Folder"
+msgstr "Öppna mapp"
+
+#: ../variety/PreferencesVarietyDialog.py:814
+msgid "View Image"
+msgstr "Visa bild"
+
+#: ../variety/PreferencesVarietyDialog.py:1210
+#: ../variety/PreferencesVarietyDialog.py:1217
+msgid "No write permissions"
+msgstr "Skrivbehörighet saknas"
+
+#: ../variety/PreferencesVarietyDialog.py:1292
+msgid "Could not adjust permissions"
+msgstr "Kunde inte ändra behörigheterna"
+
+#: ../variety/PreferencesVarietyDialog.py:1293
+#, python-format
+msgid ""
+"You may try manually running this command:\n"
+"sudo chmod %s \"%s\""
+msgstr ""
+"Du kan prova att köra det här kommandot manuellt:\n"
+"sudo chmod %s \"%s\""
+
+#: ../variety/QuotesEngine.py:248
+msgid "No suitable quote plugins"
+msgstr "Inga lämpliga citattillägg"
+
+#: ../variety/QuotesEngine.py:250
+msgid ""
+"There are no quote plugins installed, enabled and applicable for the current"
+" settings"
+msgstr ""
+"Inga installerade och aktiverade citattillägg kan användas med de aktuella "
+"inställningarna"
+
+#: ../variety/QuotesEngine.py:267
+msgid "Could not fetch quotes"
+msgstr "Kunde inte hämta citat"
+
+#: ../variety/QuotesEngine.py:268
+msgid "Quotes services may be down, we will continue trying"
+msgstr "Citattjänsterna kan ligga nere. Vi fortsätter att försöka"
+
+#: ../variety/QuotesEngine.py:272
+msgid "Could not find quotes"
+msgstr "Kunde inte hitta citat"
+
+#: ../variety/QuotesEngine.py:273
+msgid "Maybe you are searching for something very obscure?"
+msgstr "Kanske söker du efter något mycket ovanligt?"
+
+#: ../variety/Texts.py:21
+msgid "Keep original"
+msgstr "Behåll originalet"
+
+#: ../variety/Texts.py:22
+msgid "Grayscale"
+msgstr "Gråskala"
+
+#: ../variety/Texts.py:23
+msgid "Heavy blur"
+msgstr "Kraftig oskärpa"
+
+#: ../variety/Texts.py:24
+msgid "Soft blur"
+msgstr "Lätt oskärpa"
+
+#: ../variety/Texts.py:25
+msgid "Oil painting"
+msgstr "Oljemålning"
+
+#: ../variety/Texts.py:26
+msgid "Pointilism"
+msgstr "Pointillism"
+
+#: ../variety/Texts.py:27
+msgid "Pixellate"
+msgstr "Pixelera"
+
+#: ../variety/Texts.py:31
+msgid "The Favorites folder"
+msgstr "Favoritmappen"
+
+#: ../variety/Texts.py:32
+msgid "The Fetched folder"
+msgstr "Mappen för manuellt hämtade bilder"
+
+#: ../variety/Texts.py:35
+msgid ""
+"Recommended by Variety. Adapts to your taste as you mark images as favorite "
+"or trash."
+msgstr ""
+"Rekommenderas av Variety. Anpassas efter din smak när du markerar bilder som"
+" favoriter eller slänger dem."
+
+#: ../variety/Texts.py:39
+msgid ""
+"Latest favorites by the other users of Variety. [May contain NSFW images]"
+msgstr ""
+"De senaste favoriterna från andra Variety-användare. [Kan innehålla bilder "
+"som är olämpliga på jobbet (NSFW)]"
+
+#: ../variety/Texts.py:41
+msgid "Random wallpapers from Desktoppr.co"
+msgstr "Slumpmässiga bakgrundsbilder från Desktoppr.co"
+
+#: ../variety/Texts.py:42
+msgid "NASA's Astronomy Picture of the Day"
+msgstr "NASA:s astronomibild för dagen"
+
+#: ../variety/Texts.py:43
+msgid "Bing Photo of the Day"
+msgstr "Dagens bild från Bing"
+
+#: ../variety/Texts.py:46
+msgid "High-resolution photos from Unsplash.com"
+msgstr "Högupplösta foton från Unsplash.com"
+
+#: ../variety/Texts.py:54
+msgid ""
+"You can change the wallpaper back and forth by scrolling the mouse wheel on "
+"top of the indicator icon."
+msgstr ""
+"Du kan växla mellan föregående och nästa bakgrundsbild genom att rulla "
+"mushjulet över ikonen i systemfältet."
+
+#: ../variety/Texts.py:57
+msgid ""
+"You can configure how the wallpaper scales, zooms or tiles directly from the"
+" Appearance/Background settings in your OS. Variety sets which image to "
+"show, but does not tell the OS how to draw it."
+msgstr ""
+"Du kan ställa in hur bakgrundsbilden skalas, zoomas eller upprepas direkt i "
+"operativsystemets inställningar för utseende eller bakgrund. Variety väljer "
+"vilken bild som ska visas, men bestämmer inte hur operativsystemet ritar upp"
+" den."
+
+#: ../variety/Texts.py:61
+#, python-brace-format
+msgid ""
+"If you want to run custom commands every time the wallpaper changes or if "
+"you use an alternative desktop environment, please edit the scripts in "
+"{PROFILE_PATH}scripts. There are examples there for various desktop "
+"environments."
+msgstr ""
+"Om du vill köra egna kommandon varje gång bakgrundsbilden ändras, eller om "
+"du använder en annan skrivbordsmiljö, kan du redigera skripten i "
+"{PROFILE_PATH}scripts. Där finns exempel för olika skrivbordsmiljöer."
+
+#: ../variety/Texts.py:64
+msgid ""
+"Variety can be controlled from the command line and you can use this to "
+"define keyboard shortcuts for the operations you use most often. Run "
+"\"variety --help\" to see all available commands."
+msgstr ""
+"Variety kan styras från kommandoraden. Du kan använda det för att skapa "
+"kortkommandon för de funktioner du använder oftast. Kör \"variety --help\" "
+"för att se alla tillgängliga kommandon."
+
+#: ../variety/Texts.py:67
+msgid ""
+"You can drop image links or files on the launcher icon to download them and "
+"use them as wallpapers. For quicker downloading from a specific site, you "
+"can also use clipboard monitoring (see \"Downloading\" tab)."
+msgstr ""
+"Du kan släppa bildlänkar eller filer på programikonen för att hämta dem och "
+"använda dem som bakgrundsbilder. För att snabbare hämta bilder från en viss "
+"webbplats kan du också använda urklippsbevakning (se fliken ”Hämtning”)."
+
+#: ../variety/Texts.py:70
+msgid ""
+"Applying a heavy blurring filter is a great way to get abstract-looking and "
+"unobtrusive, yet colorful wallpapers, similar in spirit to the default one "
+"in Ubuntu."
+msgstr ""
+"Med ett filter för kraftig oskärpa kan du skapa abstrakta och diskreta men "
+"ändå färgstarka bakgrundsbilder, i samma stil som Ubuntus standardbakgrund."
+
+#: ../variety/Texts.py:73
+#, python-brace-format
+msgid ""
+"Adding your own custom filters is quite easy: open "
+"{PROFILE_PATH}variety.conf in an editor and use the existing filters as an "
+"example. Every filter is just a line of options to be passed to "
+"ImageMagick's magick command."
+msgstr ""
+"Det är ganska enkelt att lägga till egna filter: öppna "
+"{PROFILE_PATH}variety.conf i en textredigerare och använd de befintliga "
+"filtren som exempel. Varje filter är bara en rad med alternativ som skickas "
+"till ImageMagicks kommando magick."
+
+#: ../variety/Texts.py:76
+msgid ""
+"When you select an image source, its images are displayed in a window at the"
+" bottom of the screen. Click an image there to set is as wallpaper. Right-"
+"click to close the window, to modify its appearance or to perform file "
+"operations. You can select multiple image sources to create a \"merged\" "
+"thumbnail view of all of them. Please mind that thumbnail view is limited to"
+" several hundred randomly selected images."
+msgstr ""
+"När du väljer en bildkälla visas dess bilder i ett fönster längst ned på "
+"skärmen. Klicka på en bild där för att använda den som bakgrundsbild. "
+"Högerklicka för att stänga fönstret, ändra dess utseende eller hantera "
+"filerna. Du kan välja flera bildkällor för att få en gemensam "
+"miniatyrbildsvy för alla. Observera att miniatyrbildsvyn är begränsad till "
+"några hundra slumpmässigt valda bilder."
+
+#: ../variety/Texts.py:79
+msgid ""
+"Variety's indicator icon is themeable - if you choose the \"Light\" option "
+"for the icon, Variety will first check if the current GTK theme has an icon "
+"named \"variety-indicator\" and will use it instead of the bundled light "
+"icon."
+msgstr ""
+"Varietys ikon i systemfältet kan anpassas efter temat. Om du väljer "
+"alternativet ”Ljus” för ikonen kontrollerar Variety först om det aktuella "
+"GTK-temat har en ikon med namnet \"variety-indicator\" och använder den i "
+"stället för den medföljande ljusa ikonen."
+
+#: ../variety/Texts.py:82
+#, python-brace-format
+msgid ""
+"When you choose to save quotes to Favorites, these are by default saved to "
+"{PROFILE_PATH}favorite_quotes.txt. This file is compatible with Variety's "
+"local files quote source. If you want to use it - copy it to "
+"~/.config/variety/pluginconfig/quotes/ and enable the Local Files quote "
+"source. This file is also compatible with the Unix fortune utility."
+msgstr ""
+"När du sparar citat i Favoriter sparas de som standard i "
+"{PROFILE_PATH}favorite_quotes.txt. Den här filen är kompatibel med Varietys "
+"citatkälla för lokala filer. Om du vill använda den kopierar du den till "
+"~/.config/variety/pluginconfig/quotes/ och aktiverar citatkällan för lokala "
+"filer. Filen är också kompatibel med Unix-verktyget fortune."
+
+#: ../variety/ThumbsManager.py:41 ../data/ui/PreferencesVarietyDialog.ui:1525
+msgid "Bottom"
+msgstr "Nederst"
+
+#: ../variety/ThumbsManager.py:42
+msgid "Top"
+msgstr "Överst"
+
+#: ../variety/ThumbsManager.py:43
+msgid "Left"
+msgstr "Vänster"
+
+#: ../variety/ThumbsManager.py:44 ../data/ui/PreferencesVarietyDialog.ui:1389
+msgid "Right"
+msgstr "Höger"
+
+#: ../variety/ThumbsManager.py:117
+msgid "Position"
+msgstr "Placering"
+
+#: ../variety/ThumbsManager.py:121 ../data/ui/PreferencesVarietyDialog.ui:2968
+msgid "Size"
+msgstr "Storlek"
+
+#: ../variety/ThumbsManager.py:125
+msgid "Maximum Shown Images"
+msgstr "Maximalt antal visade bilder"
+
+#: ../variety/ThumbsManager.py:139
+msgid "Show Containing Folder"
+msgstr "Visa bildens mapp"
+
+#: ../variety/ThumbsManager.py:152 ../variety/VarietyWindow.py:741
+msgid "Fetched: Show Origin"
+msgstr "Hämtad: visa ursprung"
+
+#: ../variety/ThumbsManager.py:154 ../variety/VarietyWindow.py:745
+#: ../variety/VarietyWindow.py:867
+#, python-format
+msgid "View at %s"
+msgstr "Visa på %s"
+
+#: ../variety/ThumbsManager.py:186 ../variety/VarietyWindow.py:711
+msgid "Move to _Favorites"
+msgstr "Flytta till F_avoriter"
+
+#: ../variety/ThumbsManager.py:220
+msgid "Close"
+msgstr "Stäng"
+
+#: ../variety/ThumbsManager.py:240
+msgid "Could not set EXIF rating"
+msgstr "Kunde inte ange EXIF-betyg"
+
+#: ../variety/ThumbsManager.py:260
+msgid "Unrated"
+msgstr "Utan betyg"
+
+#: ../variety/ThumbsManager.py:267
+msgid "Rejected"
+msgstr "Avvisad"
+
+#: ../variety/ThumbsManager.py:380
+msgid "Variety History"
+msgstr "Variety – historik"
+
+#: ../variety/ThumbsManager.py:382
+msgid "Variety Recent Downloads"
+msgstr "Variety – senaste hämtningar"
+
+#: ../variety/ThumbsManager.py:384
+msgid "Variety Images"
+msgstr "Variety – bilder"
+
+#: ../variety/VarietyOptionParser.py:51
+msgid ""
+"%prog [options] [files or urls]\n"
+"\n"
+"Passing local files will add them to Variety's queue.\n"
+"Passing remote URLs will make Variety fetch them to Fetched folder and place them in the queue.\n"
+"\n"
+"To set a specific wallpaper: %prog --set /some/local/image.jpg\n"
+msgstr ""
+"%prog [alternativ] [filer eller webbadresser]\n"
+"\n"
+"Lokala filer som anges läggs till i Varietys kö.\n"
+"Webbadresser som anges gör att Variety hämtar bilderna till mappen för manuellt hämtade bilder och lägger dem i kön.\n"
+"\n"
+"Så här anger du en viss bakgrundsbild: %prog --set /some/local/image.jpg\n"
+
+#: ../variety/VarietyOptionParser.py:69
+msgid ""
+"Profile name or full path to the configuration folder Variety should use. If"
+" not specified, this is ~/.config/variety/. If just a name is used instead "
+"of a full path, the profile folder will be ~/.config/variety-"
+"profiles/<name>. Use only when initially starting Variety - changing the "
+"profile path requires restart. Several instances of Variety can be started "
+"when using different profiles, each with its own separate configuration. "
+"This can be used for example to control several different screens or "
+"workspaces under desktop environments like XFCE which allow this. To pass "
+"commands to a running instance, pass the same --profile argument as the one "
+"it was started with in subsequent commands."
+msgstr ""
+"Profilnamn eller fullständig sökväg till konfigurationsmappen som Variety "
+"ska använda. Om inget anges används ~/.config/variety/. Om bara ett namn "
+"anges i stället för en fullständig sökväg blir profilmappen "
+"~/.config/variety-profiles/<name>. Använd detta endast när Variety startas –"
+" en ändring av profilsökvägen kräver omstart. Flera instanser av Variety kan"
+" köras med olika profiler, var och en med egna inställningar. Detta kan till"
+" exempel användas för att styra flera olika skärmar eller arbetsytor i "
+"skrivbordsmiljöer som stöder det, såsom XFCE. För att skicka kommandon till "
+"en körande instans använder du samma --profile-argument som när den "
+"startades."
+
+#: ../variety/VarietyOptionParser.py:90
+msgid ""
+"Show logging messages (-vv to -vvvvv will profile various parts of Variety "
+"with increasing detail"
+msgstr ""
+"Visa loggmeddelanden (-vv till -vvvvv profilerar olika delar av Variety med "
+"allt högre detaljnivå)"
+
+#: ../variety/VarietyOptionParser.py:95
+msgid "Make the running instance quit"
+msgstr "Avsluta den körande instansen"
+
+#: ../variety/VarietyOptionParser.py:106
+msgid ""
+"Print the current wallpaper location. Used only when the application is "
+"already running."
+msgstr ""
+"Skriv ut sökvägen till den aktuella bakgrundsbilden. Används bara när "
+"programmet redan körs."
+
+#: ../variety/VarietyOptionParser.py:115
+msgid ""
+"Print the current wallpaper metadata. Used only when the application is "
+"already running."
+msgstr ""
+"Skriv ut metadata för den aktuella bakgrundsbilden. Används bara när "
+"programmet redan körs."
+
+#: ../variety/VarietyOptionParser.py:124
+msgid "Set the given file as wallpaper, absolute path required"
+msgstr "Använd den angivna filen som bakgrundsbild. En absolut sökväg krävs"
+
+#: ../variety/VarietyOptionParser.py:128
+msgid "Show Next wallpaper"
+msgstr "Visa nästa bakgrundsbild"
+
+#: ../variety/VarietyOptionParser.py:132
+msgid "Show Previous wallpaper"
+msgstr "Visa föregående bakgrundsbild"
+
+#: ../variety/VarietyOptionParser.py:139
+msgid "Show Next wallpaper, skipping the forward history"
+msgstr "Visa nästa bakgrundsbild utan att gå framåt i historiken"
+
+#: ../variety/VarietyOptionParser.py:148
+msgid ""
+"Move current wallpaper to Trash. Used only when the application is already "
+"running."
+msgstr ""
+"Flytta den aktuella bakgrundsbilden till papperskorgen. Används bara när "
+"programmet redan körs."
+
+#: ../variety/VarietyOptionParser.py:158
+msgid ""
+"Copy current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr ""
+"Kopiera den aktuella bakgrundsbilden till Favoriter. Används bara när "
+"programmet redan körs."
+
+#: ../variety/VarietyOptionParser.py:167
+msgid ""
+"Move current wallpaper to Favorites. Used only when the application is "
+"already running."
+msgstr ""
+"Flytta den aktuella bakgrundsbilden till Favoriter. Används bara när "
+"programmet redan körs."
+
+#: ../variety/VarietyOptionParser.py:172
+msgid "Pause on current image"
+msgstr "Pausa vid den aktuella bilden"
+
+#: ../variety/VarietyOptionParser.py:176
+msgid "Resume regular image changes"
+msgstr "Återuppta regelbundna bildbyten"
+
+#: ../variety/VarietyOptionParser.py:183
+msgid "Toggle Pause/Resume state"
+msgstr "Växla mellan pausat och aktivt läge"
+
+#: ../variety/VarietyOptionParser.py:190
+msgid "Toggle \"Show Without Effects\" for current image"
+msgstr "Växla ”Visa utan effekter” för den aktuella bilden"
+
+#: ../variety/VarietyOptionParser.py:194
+msgid "Show Next quote"
+msgstr "Visa nästa citat"
+
+#: ../variety/VarietyOptionParser.py:201
+msgid "Show Previous quote"
+msgstr "Visa föregående citat"
+
+#: ../variety/VarietyOptionParser.py:208
+msgid "Show Next quote, skipping the forward history"
+msgstr "Visa nästa citat utan att gå framåt i historiken"
+
+#: ../variety/VarietyOptionParser.py:215
+msgid "Toggle Quotes Pause/Resume state"
+msgstr "Växla mellan pausade och aktiva citatbyten"
+
+#: ../variety/VarietyOptionParser.py:222
+msgid "Save the current quote to Favorites"
+msgstr "Spara det aktuella citatet i Favoriter"
+
+#: ../variety/VarietyOptionParser.py:226
+msgid "Toggle History display"
+msgstr "Visa eller dölj historiken"
+
+#: ../variety/VarietyOptionParser.py:233
+msgid "Toggle Recent Downloads display"
+msgstr "Visa eller dölj de senaste hämtningarna"
+
+#: ../variety/VarietyOptionParser.py:241
+msgid "Show Preferences dialog"
+msgstr "Visa inställningsdialogen"
+
+#: ../variety/VarietyOptionParser.py:250
+msgid ""
+"Show manual wallpaper selector - the thumbnail bar filled with images from "
+"the active image sources"
+msgstr ""
+"Visa den manuella bakgrundsväljaren – raden med miniatyrbilder från de "
+"aktiva bildkällorna"
+
+#: ../variety/VarietyOptionParser.py:260
+msgid ""
+"Sets and applies an option. The option names are the same that are used in "
+"Variety's config file ~/.config/variety/variety.conf. Multiple options can "
+"be set in a single command. Example: 'variety --set-option icon Dark --set-"
+"option clock_enabled True'. USE WITH CAUTION: You are changing the settings "
+"file directly in an unguarded way."
+msgstr ""
+"Anger och tillämpar en inställning. Inställningsnamnen är desamma som i "
+"Varietys konfigurationsfil ~/.config/variety/variety.conf. Flera "
+"inställningar kan anges i ett enda kommando. Exempel: 'variety --set-option "
+"icon Dark --set-option clock_enabled True'. ANVÄND MED FÖRSIKTIGHET: Du "
+"ändrar inställningsfilen direkt utan skyddskontroller."
+
+#: ../variety/VarietyOptionParser.py:273
+msgid "options --next/--fast-forward and --previous are mutually exclusive"
+msgstr ""
+"alternativen --next/--fast-forward och --previous kan inte användas "
+"tillsammans"
+
+#: ../variety/VarietyOptionParser.py:276
+msgid "options --trash and --favorite are mutually exclusive"
+msgstr "alternativen --trash och --favorite kan inte användas tillsammans"
+
+#: ../variety/VarietyOptionParser.py:279
+msgid "options --pause and --resume are mutually exclusive"
+msgstr "alternativen --pause och --resume kan inte användas tillsammans"
+
+#: ../variety/VarietyOptionParser.py:284
+msgid ""
+"options --quotes-next/--quotes-fast-forward and --quotes-previous are "
+"mutually exclusive"
+msgstr ""
+"alternativen --quotes-next/--quotes-fast-forward och --quotes-previous kan "
+"inte användas tillsammans"
+
+#: ../variety/VarietyWindow.py:706 ../variety/VarietyWindow.py:883
+#: ../variety/VarietyWindow.py:2983
+msgid "Already in Favorites"
+msgstr "Finns redan i Favoriter"
+
+#: ../variety/VarietyWindow.py:743
+#, python-format
+msgid "Source: %s"
+msgstr "Bildkälla: %s"
+
+#: ../variety/VarietyWindow.py:809
+msgid "Unknown"
+msgstr "Okänd"
+
+#: ../variety/VarietyWindow.py:831
+#, python-format
+msgid "Author: %s"
+msgstr "Upphovsperson: %s"
+
+#: ../variety/VarietyWindow.py:856 ../variety/VarietyWindow.py:878
+msgid "Resume regular changes"
+msgstr "Återuppta regelbundna byten"
+
+#: ../variety/VarietyWindow.py:1032
+msgid "Filtering too strict?"
+msgstr "För strikt filtrering?"
+
+#: ../variety/VarietyWindow.py:1034
+msgid ""
+"Variety is finding too few images that match your image filtering criteria. "
+"Please check if the settings in \"Filtering\" are correct."
+msgstr ""
+"Variety hittar för få bilder som uppfyller dina filtreringskriterier. "
+"Kontrollera att inställningarna under ”Filtrering” är rätt."
+
+#: ../variety/VarietyWindow.py:1726
+msgid "Please add more image sources or wait for some downloads"
+msgstr "Lägg till fler bildkällor eller vänta tills några bilder har hämtats"
+
+#: ../variety/VarietyWindow.py:1728
+msgid "Please add more image sources"
+msgstr "Lägg till fler bildkällor"
+
+#: ../variety/VarietyWindow.py:1729
+msgid "No more wallpapers"
+msgstr "Inga fler bakgrundsbilder"
+
+#: ../variety/VarietyWindow.py:2001
+msgid "Current wallpaper is not in the image sources"
+msgstr "Den aktuella bakgrundsbilden finns inte i bildkällorna"
+
+#: ../variety/VarietyWindow.py:2034
+#, python-format
+msgid ""
+"Could not move to %s. You probably don't have permissions to move this file."
+msgstr ""
+"Kunde inte flytta till %s. Du saknar förmodligen behörighet att flytta den "
+"här filen."
+
+#: ../variety/VarietyWindow.py:2041
+#, python-format
+msgid ""
+"Could not copy to %s. You probably don't have permissions to copy this file."
+msgstr ""
+"Kunde inte kopiera till %s. Du saknar förmodligen behörighet att kopiera den"
+" här filen."
+
+#: ../variety/VarietyWindow.py:2066 ../variety/VarietyWindow.py:2089
+msgid "Cannot delete"
+msgstr "Kan inte radera"
+
+#: ../variety/VarietyWindow.py:2067
+#, python-format
+msgid "You don't have permissions to delete %s to Trash."
+msgstr "Du saknar behörighet att flytta %s till papperskorgen."
+
+#: ../variety/VarietyWindow.py:2090
+msgid "Deleting to trash failed, check variety.log for more information."
+msgstr ""
+"Kunde inte flytta till papperskorgen. Se variety.log för mer information."
+
+#: ../variety/VarietyWindow.py:2376
+msgid "Upgraded scripts"
+msgstr "Skripten har uppdaterats"
+
+#: ../variety/VarietyWindow.py:2378
+msgid ""
+"If you had customized scripts for Variety, please see Preferences -> "
+"Changelog"
+msgstr "Om du har anpassat Varietys skript, se Inställningar -> Ändringslogg"
+
+#: ../variety/VarietyWindow.py:2429
+msgid ""
+"I will open an editor with the config file and apply the changes after you "
+"save and close the editor."
+msgstr ""
+"Jag öppnar konfigurationsfilen i en textredigerare och tillämpar ändringarna"
+" när du har sparat och stängt redigeraren."
+
+#: ../variety/VarietyWindow.py:2588
+msgid "Added to queue"
+msgstr "Tillagd i kön"
+
+#: ../variety/VarietyWindow.py:2589 ../variety/VarietyWindow.py:2602
+msgid "Press Next to see it"
+msgstr "Tryck på Nästa för att visa den"
+
+#: ../variety/VarietyWindow.py:2601
+msgid "Fetched"
+msgstr "Hämtad"
+
+#: ../variety/VarietyWindow.py:2652
+msgid "Unsupported source type"
+msgstr "Bildkällans typ stöds inte"
+
+#: ../variety/VarietyWindow.py:2653 ../variety/VarietyWindow.py:2701
+msgid "Are you running the most recent version of Variety?"
+msgstr "Använder du den senaste versionen av Variety?"
+
+#: ../variety/VarietyWindow.py:2663
+msgid "New image source added"
+msgstr "En ny bildkälla har lagts till"
+
+#: ../variety/VarietyWindow.py:2665
+msgid "Image source already exists, enabling it"
+msgstr "Bildkällan finns redan och aktiveras nu"
+
+#: ../variety/VarietyWindow.py:2691
+msgid "Fetched and applied"
+msgstr "Hämtad och tillämpad"
+
+#: ../variety/VarietyWindow.py:2696
+msgid "It works!"
+msgstr "Det fungerar!"
+
+#: ../variety/VarietyWindow.py:2696
+msgid "Yay, Variety links work. Great!"
+msgstr "Hurra, Variety-länkar fungerar!"
+
+#: ../variety/VarietyWindow.py:2700
+msgid "Unsupported command"
+msgstr "Kommandot stöds inte"
+
+#: ../variety/VarietyWindow.py:2705
+msgid "Could not process the given variety:// URL"
+msgstr "Kunde inte behandla den angivna variety://-adressen"
+
+#: ../variety/VarietyWindow.py:2706
+msgid "Run with logging enabled to see details"
+msgstr "Kör med loggning aktiverad för att se detaljer"
+
+#: ../variety/VarietyWindow.py:3070
+msgid "Variety: New desktop entry"
+msgstr "Variety: Ny programstartare"
+
+#: ../variety/VarietyWindow.py:3072
+msgid ""
+"We created a new desktop entry in ~/.local/share/applications to run Variety"
+" with profile \"{}\". Find it in the application launcher."
+msgstr ""
+"Vi har skapat en ny programstartare i ~/.local/share/applications för att "
+"köra Variety med profilen ”{}”. Du hittar den bland programmen."
+
+#: ../variety/VarietyWindow.py:3097
+msgid "Variety: Created autostart desktop entry"
+msgstr "Variety: Autostartpost skapad"
+
+#: ../variety/VarietyWindow.py:3099
+msgid ""
+"We created a new desktop entry in ~/.config/autostart. Variety should start "
+"automatically on next login."
+msgstr ""
+"Vi har skapat en ny autostartpost i ~/.config/autostart. Variety bör starta "
+"automatiskt nästa gång du loggar in."
+
+#: ../variety/VarietyWindow.py:3106
+msgid "Could not create autostart entry"
+msgstr "Kunde inte skapa autostartposten"
+
+#: ../variety/VarietyWindow.py:3108
+msgid ""
+"An error occurred while creating the autostart desktop entry\n"
+"Please run from a terminal with the -v flag and try again."
+msgstr ""
+"Ett fel uppstod när autostartposten skapades\n"
+"Kör från en terminal med flaggan -v och försök igen."
+
+#: ../variety/VarietyWindow.py:3173
+msgid "No images"
+msgstr "Inga bilder"
+
+#: ../variety/VarietyWindow.py:3173
+msgid "There are no images in the slideshow folders"
+msgstr "Det finns inga bilder i bildspelsmapparna"
+
+#: ../data/ui/AboutVarietyDialog.ui:9
+msgid "About Variety"
+msgstr "Om Variety"
+
+#: ../data/ui/AboutVarietyDialog.ui:14
+msgid "Copyright (c) 2012-2026, Peter Levi, James Lu & Variety contributors"
+msgstr ""
+"Copyright (c) 2012-2026, Peter Levi, James Lu och bidragsgivare till Variety"
+
+#: ../data/ui/AboutVarietyDialog.ui:15
+msgid "An automatic wallpaper changer, downloader and manager."
+msgstr ""
+"Ett program för att automatiskt byta, hämta och hantera bakgrundsbilder."
+
+#: ../data/ui/AboutVarietyDialog.ui:17
+msgid "https://github.com/varietywalls/variety"
+msgstr "https://github.com/varietywalls/variety"
+
+#: ../data/ui/AboutVarietyDialog.ui:18
+msgid ""
+"# Copyright (c) 2012-2026, Peter Levi, James Lu & Variety contributors\n"
+"# This program is free software: you can redistribute it and/or modify it\n"
+"# under the terms of the GNU General Public License version 3, as published\n"
+"# by the Free Software Foundation.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful, but\n"
+"# WITHOUT ANY WARRANTY; without even the implied warranties of\n"
+"# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR\n"
+"# PURPOSE.  See the GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License along\n"
+"# with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+"# Copyright (c) 2012-2026, Peter Levi, James Lu och bidragsgivare till Variety\n"
+"# Detta program är fri programvara: du får vidaredistribuera och/eller ändra det\n"
+"# enligt villkoren i GNU General Public License version 3, publicerad\n"
+"# av Free Software Foundation.\n"
+"#\n"
+"# Detta program distribueras i hopp om att det ska vara användbart, men\n"
+"# UTAN NÅGON GARANTI; utan ens underförstådda garantier om\n"
+"# SÄLJBARHET, TILLFREDSSTÄLLANDE KVALITET eller LÄMPLIGHET FÖR ETT SÄRSKILT\n"
+"# ÄNDAMÅL. Se GNU General Public License för mer information.\n"
+"#\n"
+"# Du bör ha fått en kopia av GNU General Public License tillsammans\n"
+"# med detta program. Om inte, se <http://www.gnu.org/licenses/>.\n"
+
+#: ../data/ui/AddConfigurableDialog.ui:160
+#: ../data/ui/AddWallhavenDialog.ui:255
+msgid "Just a moment to check for images"
+msgstr "Vänta ett ögonblick medan vi kontrollerar om det finns bilder"
+
+#: ../data/ui/AddConfigurableDialog.ui:187 ../data/ui/AddFlickrDialog.ui:360
+#: ../data/ui/AddWallhavenDialog.ui:280
+msgid "  "
+msgstr "  "
+
+#: ../data/ui/AddFlickrDialog.ui:9
+msgid "Variety - add Flickr as an image source"
+msgstr "Variety – lägg till Flickr som bildkälla"
+
+#: ../data/ui/AddFlickrDialog.ui:83
+msgid "Flickr"
+msgstr "Flickr"
+
+#: ../data/ui/AddFlickrDialog.ui:101
+msgid ""
+"Please specify the <a href=\"http://flickr.com\">Flickr</a> search criteria."
+" Photos that match all of the chosen criteria will be downloaded. Leave "
+"unneeded criteria empty."
+msgstr ""
+"Ange sökkriterier för <a href=\"http://flickr.com\">Flickr</a>. Foton som "
+"matchar alla valda kriterier kommer att hämtas. Lämna kriterier som inte "
+"behövs tomma."
+
+#: ../data/ui/AddFlickrDialog.ui:124
+#: ../data/ui/PreferencesVarietyDialog.ui:1716
+msgid "Tags: "
+msgstr "Taggar: "
+
+#: ../data/ui/AddFlickrDialog.ui:155
+msgid ""
+"A comma-separated list of tags. A photo has to contain all of them simultaneosly in order to match.\n"
+"Example: yellow,car"
+msgstr ""
+"En kommaseparerad lista med taggar. Ett foto måste innehålla alla taggarna för att matcha.\n"
+"Exempel: yellow,car"
+
+#: ../data/ui/AddFlickrDialog.ui:171
+msgid "User: "
+msgstr "Användare: "
+
+#: ../data/ui/AddFlickrDialog.ui:202
+msgid ""
+"Please insert the URL to the user's photostream or to one of their photos.\n"
+"Example: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+msgstr ""
+"Ange webbadressen till användarens bildflöde eller till ett av användarens foton.\n"
+"Exempel: <a href=\"http://www.flickr.com/photos/peter-levi/\">http://www.flickr.com/photos/peter-levi/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui:218
+msgid "Group: "
+msgstr "Grupp: "
+
+#: ../data/ui/AddFlickrDialog.ui:248
+msgid ""
+"Please insert the group's URL.\n"
+"Example: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+msgstr ""
+"Ange gruppens webbadress.\n"
+"Exempel: <a href=\"http://www.flickr.com/groups/wallpapers/\">http://www.flickr.com/groups/wallpapers/</a>"
+
+#: ../data/ui/AddFlickrDialog.ui:264
+msgid "Text:"
+msgstr "Text:"
+
+#: ../data/ui/AddFlickrDialog.ui:295
+msgid ""
+"Free text search in photos' titles, descriptions and tags. Exclude terms by prepending them with -.\n"
+"Example: apple -pie"
+msgstr ""
+"Fritextsökning i fotonas titlar, beskrivningar och taggar. Uteslut sökord genom att sätta - framför dem.\n"
+"Exempel: apple -pie"
+
+#: ../data/ui/AddFlickrDialog.ui:334
+msgid "Just a moment to check this search"
+msgstr "Vänta ett ögonblick medan sökningen kontrolleras"
+
+#: ../data/ui/AddWallhavenDialog.ui:96
+msgid "Instruction"
+msgstr "Instruktion"
+
+#: ../data/ui/AddWallhavenDialog.ui:181
+msgid ""
+"To fetch <b>NSFW</b> images, you can provide your own <a href='https://wallhaven.cc/settings/account'>Wallhaven API key</a>. You need a free Wallhaven account, log in, go to <a href='https://wallhaven.cc/settings/account'>Account Settings</a>, find it under <b>API Key</b>. Without an API key, even if your search shows NSFW images in the browser, Variety will not be able to fetch them. Even with an API key, in order to fetch <b>NSFW</b> images, you need to provide a full search URL, not just keywords. \n"
+"\n"
+"<b>Note: This is a global setting which affects all Wallhaven sources</b>"
+msgstr ""
+"För att hämta <b>NSFW</b>-bilder kan du ange en egen <a href='https://wallhaven.cc/settings/account'>API-nyckel för Wallhaven</a>. Du behöver ett kostnadsfritt Wallhaven-konto. Logga in, gå till <a href='https://wallhaven.cc/settings/account'>kontoinställningarna</a> och leta under <b>API Key</b>. Utan en API-nyckel kan Variety inte hämta NSFW-bilder, även om de visas i sökresultaten i webbläsaren. Även med en API-nyckel måste du ange en fullständig sökadress, inte bara sökord, för att hämta <b>NSFW</b>-bilder. \n"
+"\n"
+"<b>Observera: Detta är en global inställning som påverkar alla Wallhaven-källor</b>"
+
+#: ../data/ui/AddWallhavenDialog.ui:206
+msgid "API Key:"
+msgstr "API-nyckel:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:8
+#: ../data/ui/EditFavoriteOperationsDialog.ui:91
+msgid "Copy to Favorites vs. Move to Favorites"
+msgstr "Kopiera till Favoriter eller flytta till Favoriter"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:24
+msgid "Reset to Default"
+msgstr "Återställ till standardvärdet"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:110
+msgid ""
+"Select whether your prefer 'Copy to Favorites' or 'Move to Favorites' in the"
+" menu depending on the image location:"
+msgstr ""
+"Välj om menyn ska visa ”Kopiera till Favoriter” eller ”Flytta till "
+"Favoriter” beroende på var bilden finns:"
+
+#: ../data/ui/EditFavoriteOperationsDialog.ui:155
+msgid ""
+"Please enter one entry per line, each entry in the form <Folder>:<Copy, Move or Both>, where Folder can be Downloaded, Fetched, Others or a specific folder path.\n"
+"Order is important. When an image is shown, the first folder in this list which contains the image will determine which operations will be shown in Variety's menu. 'Others' matches any file and should be last in the list.\n"
+"\n"
+"Example:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+msgstr ""
+"Ange en post per rad i formatet <Folder>:<Copy, Move or Both>, där Folder kan vara Downloaded, Fetched, Others eller en specifik mappsökväg.\n"
+"Ordningen är viktig. När en bild visas avgör den första mappen i listan som innehåller bilden vilka åtgärder som visas i Varietys meny. 'Others' matchar alla filer och ska stå sist i listan.\n"
+"\n"
+"Exempel:\n"
+"\tDownloaded:Copy\n"
+"\tFetched:Move\n"
+"\t/pics/RandomImages:Move\n"
+"\t/pics/OrganizedAlbums:Copy\n"
+"\tOthers:Both"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:25
+msgid "seconds"
+msgstr "sekunder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:29
+#: ../data/ui/PreferencesVarietyDialog.ui:51
+msgid "minutes"
+msgstr "minuter"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:33
+#: ../data/ui/PreferencesVarietyDialog.ui:55
+msgid "hours"
+msgstr "timmar"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:37
+#: ../data/ui/PreferencesVarietyDialog.ui:59
+msgid "days"
+msgstr "dagar"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:198
+#: ../data/ui/PreferencesVarietyDialog.ui:728
+msgid "General"
+msgstr "Allmänt"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:211
+msgid "Start Variety when the computer starts"
+msgstr "Starta Variety när datorn startar"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:236
+msgid "Change wallpaper every "
+msgstr "Byt bakgrundsbild med intervallet "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:255
+#: ../data/ui/PreferencesVarietyDialog.ui:256
+#: ../data/ui/PreferencesVarietyDialog.ui:273
+#: ../data/ui/PreferencesVarietyDialog.ui:274
+msgid "Minimum interval is 5 seconds"
+msgstr "Minsta intervall är 5 sekunder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:301
+msgid "Change wallpaper on start"
+msgstr "Byt bakgrundsbild vid start"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:335
+msgid "Use Internet Access"
+msgstr "Använd internetåtkomst"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:350
+msgid ""
+"Turning off means Variety will not download new images or quotes from online"
+" sources, or initiate other internet connections."
+msgstr ""
+"Om du stänger av detta hämtar Variety inga nya bilder eller citat från "
+"nätkällor och upprättar inga andra internetanslutningar."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:446
+msgid "Enabled"
+msgstr "Aktiverad"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:457
+msgid "Type"
+msgstr "Typ"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:468
+msgid "Location"
+msgstr "Plats"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:504
+msgid "_Add..."
+msgstr "_Lägg till..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:510
+#: ../data/ui/PreferencesVarietyDialog.ui:511
+msgid "Add images, folders or online image sources"
+msgstr "Lägg till bilder, mappar eller bildkällor på nätet"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:523
+msgid "_Open Folder"
+msgstr "_Öppna mapp"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:528
+#: ../data/ui/PreferencesVarietyDialog.ui:529
+#: ../data/ui/PreferencesVarietyDialog.ui:547
+#: ../data/ui/PreferencesVarietyDialog.ui:548
+msgid "Edit the selected source"
+msgstr "Redigera den valda bildkällan"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:542
+msgid "_Edit..."
+msgstr "_Redigera..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:561
+msgid "_Remove..."
+msgstr "_Ta bort..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:567
+#: ../data/ui/PreferencesVarietyDialog.ui:568
+msgid "Remove selected image sources"
+msgstr "Ta bort valda bildkällor"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:581
+msgid "_Use"
+msgstr "_Använd"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:586
+#: ../data/ui/PreferencesVarietyDialog.ui:587
+msgid "Enable the selected sources and disable all others"
+msgstr "Aktivera de valda bildkällorna och inaktivera alla andra"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:638
+msgid "Favorites"
+msgstr "Favoriter"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:662
+msgid "Copy favorite wallpapers to "
+msgstr "Kopiera favoritbakgrundsbilder till "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:748
+msgid "Alignment and scaling"
+msgstr "Justering och skalning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:767
+msgid "Auto-rotate the image according to EXIF data"
+msgstr "Rotera bilden automatiskt enligt EXIF-data"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:790
+msgid "Display mode"
+msgstr "Visningsläge"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:826
+msgid "Description goes here "
+msgstr "Beskrivningen visas här "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:845
+msgid ""
+"Experimental: Some options may not work well in all desktop environments or "
+"multi-monitor configurations."
+msgstr ""
+"Experimentellt: Vissa alternativ kanske inte fungerar bra i alla "
+"skrivbordsmiljöer eller med flera skärmar."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:871
+msgid "Effects"
+msgstr "Effekter"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:894
+msgid ""
+"Randomly apply these effects to the displayed wallpapers (thanks to the "
+"wonderful ImageMagick):"
+msgstr ""
+"Tillämpa dessa effekter slumpmässigt på de bakgrundsbilder som visas (tack "
+"vare det fantastiska ImageMagick):"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:963
+msgid "Wallpaper"
+msgstr "Bakgrundsbild"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:983
+#: ../data/ui/PreferencesVarietyDialog.ui:1795
+msgid "Quotes"
+msgstr "Citat"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1002
+msgid "Show random wise quotes on the desktop"
+msgstr "Visa slumpmässiga visdomsord på skrivbordet"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1025
+msgid "Change quote every "
+msgstr "Byt citat med intervallet "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1046
+#: ../data/ui/PreferencesVarietyDialog.ui:1047
+#: ../data/ui/PreferencesVarietyDialog.ui:1064
+#: ../data/ui/PreferencesVarietyDialog.ui:1065
+msgid "Minimum interval is 10 seconds"
+msgstr "Minsta intervall är 10 sekunder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1103
+#: ../data/ui/PreferencesVarietyDialog.ui:1857
+msgid "Appearance"
+msgstr "Utseende"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1129
+msgid "Text color: "
+msgstr "Textfärg: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1158
+msgid "Text font: "
+msgstr "Teckensnitt för text: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1186
+msgid "Draw a text shadow"
+msgstr "Rita en skugga bakom texten"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1220
+msgid "Backdrop color: "
+msgstr "Bakgrundsfärg: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1248
+msgid "Backdrop opacity: "
+msgstr "Bakgrundens opacitet: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1261
+msgid " Transparent"
+msgstr " Genomskinlig"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1291
+msgid "Opaque"
+msgstr "Ogenomskinlig"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1320
+msgid "Placement"
+msgstr "Placering"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1346
+msgid "Horizontal position: "
+msgstr "Vågrät position: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1359
+msgid "Left "
+msgstr "Vänster "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1408
+msgid "Quotes area width: "
+msgstr "Citatområdets bredd: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1421
+msgid "Narrow "
+msgstr "Smalt "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1450
+msgid "Wide"
+msgstr "Brett"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1482
+msgid "Vertical position: "
+msgstr "Lodrät position: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1495
+msgid "Top "
+msgstr "Överst "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1554
+msgid "Sources and filtering"
+msgstr "Källor och filtrering"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1582
+msgid "Show quotes from these sources: "
+msgstr "Visa citat från dessa källor: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1651
+msgid ""
+"<small><a href='https://github.com/varietywalls/variety/wiki/Plugins'>More "
+"plugins</a></small>"
+msgstr ""
+"<small><a href='https://github.com/varietywalls/variety/wiki/Plugins'>Fler "
+"tillägg</a></small>"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1668
+msgid "Show only these tags and authors. Leave empty to show random quotes."
+msgstr ""
+"Visa endast citat med dessa taggar eller av dessa upphovspersoner. Lämna "
+"tomt för att visa slumpmässiga citat."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1729
+msgid "Example: funny, inspirational"
+msgstr "Exempel: funny, inspirational"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1742
+msgid "Example: Albert Einstein, Voltaire"
+msgstr "Exempel: Albert Einstein, Voltaire"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1755
+msgid "Authors: "
+msgstr "Upphovspersoner: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1815
+#: ../data/ui/PreferencesVarietyDialog.ui:2000
+msgid "Clock"
+msgstr "Klocka"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1828
+msgid ""
+"Show a nice big digital clock on the desktop, displaying the current time "
+"and date"
+msgstr ""
+"Visa en stor, snygg digitalklocka med aktuell tid och datum på skrivbordet"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1832
+msgid ""
+"To configure the clock's appearance edit the clock_filter property in "
+"Variety's settings file (~/.config/variety/variety.conf). Use the comments "
+"in ~/.config/variety/variety_latest_default.conf as a guide."
+msgstr ""
+"Ändra egenskapen clock_filter i Varietys inställningsfil "
+"(~/.config/variety/variety.conf) för att anpassa klockans utseende. Använd "
+"kommentarerna i ~/.config/variety/variety_latest_default.conf som "
+"vägledning."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1885
+msgid "Clock font: "
+msgstr "Teckensnitt för klockan: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1927
+msgid "Date font: "
+msgstr "Teckensnitt för datumet: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:1966
+msgid ""
+"These don't work? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Read here</a>. How "
+"to further configure the clock? <a "
+"href=\"https://github.com/varietywalls/variety/wiki/Configuring-the-"
+"clock\">Read here</a>."
+msgstr ""
+"Fungerar inte detta? <a "
+"href=\"https://answers.launchpad.net/variety/+faq/2138\">Läs här</a>. Vill "
+"du anpassa klockan ytterligare? <a "
+"href=\"https://github.com/varietywalls/variety/wiki/Configuring-the-"
+"clock\">Läs här</a>."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2028
+msgid "Images for slideshow"
+msgstr "Bilder för bildspel"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2050
+msgid "Favorite images"
+msgstr "Favoritbilder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2069
+msgid "Images in all enabled image sources"
+msgstr "Bilder i alla aktiverade bildkällor"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2087
+msgid "All images in the Downloads folder"
+msgstr "Alla bilder i mappen för automatiska hämtningar"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2112
+msgid "Custom folder (includes images in subfolders) "
+msgstr "Anpassad mapp (inklusive bilder i undermappar) "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2174
+msgid "Order of images in slideshow "
+msgstr "Bildernas ordning i bildspelet "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2188
+msgid "Random"
+msgstr "Slumpmässig"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2189
+msgid "By name, A to Z"
+msgstr "Efter namn, stigande"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2190
+msgid "By name, Z to A"
+msgstr "Efter namn, fallande"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2191
+msgid "By date, oldest first"
+msgstr "Efter datum, äldst först"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2192
+msgid "By date, newest first"
+msgstr "Efter datum, nyast först"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2224
+msgid "Screen"
+msgstr "Skärm"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2249
+msgid "Run on monitor"
+msgstr "Kör på skärm"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2285
+msgid "Window mode for the slideshow "
+msgstr "Fönsterläge för bildspelet "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2299
+msgid "Fullscreen"
+msgstr "Helskärm"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2300
+msgid "Desktop (stays below other windows)"
+msgstr "Skrivbord (ligger under andra fönster)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2301
+msgid "Maximized window"
+msgstr "Maximerat fönster"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2302
+msgid "Normal window"
+msgstr "Normalt fönster"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2347
+msgid "Dynamics"
+msgstr "Rörelse och övergångar"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2374
+msgid "Interval between image changes "
+msgstr "Intervall mellan bildbyten "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2403
+msgid " seconds"
+msgstr " sekunder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2432
+msgid "Quick fade "
+msgstr "Snabb toning "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2462
+msgid "Slow fade"
+msgstr "Långsam toning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2486
+msgid "Less zoom"
+msgstr "Mindre zoomning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2515
+msgid "More zoom"
+msgstr "Mer zoomning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2539
+msgid "Less pan"
+msgstr "Mindre panorering"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2568
+msgid "More pan"
+msgstr "Mer panorering"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2592
+msgid "Reset to defaults"
+msgstr "Återställ till standardvärdena"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2626
+msgid "Changes on this page take effect after the slideshow is restarted"
+msgstr "Ändringar på den här sidan börjar gälla när bildspelet startas om"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2639
+msgid "Start slideshow now"
+msgstr "Starta bildspelet nu"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2667
+msgid "Slideshow"
+msgstr "Bildspel"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2694
+msgid "Fetch folder"
+msgstr "Mapp för manuellt hämtade bilder"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2717
+msgid "Save manually downloaded wallpapers to "
+msgstr "Spara manuellt hämtade bakgrundsbilder i "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2771
+msgid "Drag and drop"
+msgstr "Dra och släpp"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2791
+msgid ""
+"Variety's icon in the launcher serves as a drop target. Drop any image URL or file on it and it will be saved to your fetch folder. You can then press Next to see it on your desktop.\n"
+"To show the icon in the launcher choose About or Preferences. You may wish to lock it there for easy drag-and-drop access."
+msgstr ""
+"Varietys ikon i programstartaren fungerar som släppmål. Släpp en bildadress eller fil på den för att spara bilden i mappen för manuellt hämtade bilder. Tryck sedan på Nästa för att visa den på skrivbordet.\n"
+"Välj Om eller Inställningar för att visa ikonen i programstartaren. Du kan fästa den där för att enkelt kunna dra och släppa bilder."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2825
+msgid "Clipboard monitoring"
+msgstr "Urklippsbevakning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2838
+msgid "Monitor clipboard for image URLs and fetch them"
+msgstr "Bevaka urklipp efter bildadresser och hämta bilderna"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2860
+msgid "But fetch only when the URL host is one of these:"
+msgstr "Men hämta endast om adressens värd är någon av dessa:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2925
+msgid "Downloading"
+msgstr "Hämtning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2945
+msgid "When possible use images that:"
+msgstr "Använd om möjligt bilder som:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:2981
+msgid "Have landscape orientation"
+msgstr "Har liggande format"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3006
+msgid "Are big at least "
+msgstr "Har en upplösning på minst "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3028
+msgid "50"
+msgstr "50"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3029
+msgid "80"
+msgstr "80"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3030
+msgid "100"
+msgstr "100"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3045
+msgid "% of the screen resolution"
+msgstr "% av skärmens upplösning"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3079
+msgid "Color"
+msgstr "Färg"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3098
+msgid "Are dark or light:"
+msgstr "Är mörka eller ljusa:"
+
+#. Color option - images that are dark or light
+#: ../data/ui/PreferencesVarietyDialog.ui:3120
+msgctxt "Color option - images that are dark or light"
+msgid "Dark"
+msgstr "Mörka"
+
+#. Color option - images that are dark or light
+#: ../data/ui/PreferencesVarietyDialog.ui:3121
+msgctxt "Color option - images that are dark or light"
+msgid "Light"
+msgstr "Ljusa"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3146
+msgid "Contain this color: "
+msgstr "Innehåller denna färg: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3182
+msgid "(Takes effect after some initial searching)"
+msgstr "(Börjar gälla efter en inledande sökning)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3221
+msgid "Rating"
+msgstr "Betyg"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3238
+msgid "Have EXIF rating at least "
+msgstr "Har ett EXIF-betyg på minst "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3261
+msgid "1"
+msgstr "1"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3262
+msgid "2"
+msgstr "2"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3263
+msgid "3"
+msgstr "3"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3264
+msgid "4"
+msgstr "4"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3265
+msgid "5"
+msgstr "5"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3302
+msgid "Name"
+msgstr "Namn"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3319
+msgid "Matches RegEx: "
+msgstr "Matchar reguljärt uttryck: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3378
+msgid "Filtering"
+msgstr "Filtrering"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3405
+msgid "Indicator Icon"
+msgstr "Ikon i systemfältet"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3428
+msgid "Indicator icon:"
+msgstr "Ikon i systemfältet:"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3444
+msgctxt "Icon option"
+msgid "Light"
+msgstr "Ljus"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3445
+msgctxt "Icon option"
+msgid "Dark"
+msgstr "Mörk"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3446
+msgctxt "Icon option"
+msgid "Number 1"
+msgstr "Nummer 1"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3447
+msgctxt "Icon option"
+msgid "Number 2"
+msgstr "Nummer 2"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3448
+msgctxt "Icon option"
+msgid "Number 3"
+msgstr "Nummer 3"
+
+#. Icon option
+#: ../data/ui/PreferencesVarietyDialog.ui:3449
+msgctxt "Icon option"
+msgid "Number 4"
+msgstr "Nummer 4"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3450
+msgctxt "Icon option"
+msgid "Use current wallpaper"
+msgstr "Använd aktuell bakgrundsbild"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3451
+msgctxt "Icon option"
+msgid "Custom image..."
+msgstr "Anpassad bild..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3452
+msgctxt "Icon option"
+msgid "None"
+msgstr "Ingen"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3469
+msgid "Select an icon"
+msgstr "Välj en ikon"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3493
+msgid ""
+"When the icon is hidden, Variety can be controlled from the command line, or"
+" from the launcher quicklist. Run \"variety --help\" to see all available "
+"commands."
+msgstr ""
+"När ikonen är dold kan Variety styras från kommandoraden eller "
+"programstartarens snabbmeny. Kör \"variety --help\" för att se alla "
+"tillgängliga kommandon."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3523
+msgid "Favorites Operations"
+msgstr "Åtgärder för favoriter"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3546
+msgid "Favorites operations to show in main menu:"
+msgstr "Åtgärder för favoriter som ska visas i huvudmenyn:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3562
+msgid "Copy to Favorites"
+msgstr "Kopiera till Favoriter"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3564
+msgid "Both Copy and Move"
+msgstr "Både kopiera och flytta"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3565
+msgid "Depends on folder..."
+msgstr "Beror på mapp..."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3622
+msgid "Login & Lock Screen Support"
+msgstr "Stöd för inloggnings- och låsskärm"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3644
+msgid "Change lock screen background automatically"
+msgstr "Byt låsskärmens bakgrund automatiskt"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3662
+msgid ""
+"Copy wallpapers to a static location (for programs like LightDM that require"
+" a static path)"
+msgstr ""
+"Kopiera bakgrundsbilder till en fast plats (för program som LightDM som "
+"kräver en fast sökväg)"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3690
+msgid "Copy wallpaper image files to this folder: "
+msgstr "Kopiera bakgrundsbildernas filer till denna mapp: "
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3717
+msgid "Reset to default"
+msgstr "Återställ till standardvärdet"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3732
+msgid "Still doesn't work?"
+msgstr "Fungerar det fortfarande inte?"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3762
+msgid ""
+"It seems your home folder is encrypted, so using folders inside it will not "
+"work."
+msgstr ""
+"Din hemmapp verkar vara krypterad, så det går inte att använda mappar inuti "
+"den."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3783
+msgid "You don't have write permissions for this folder."
+msgstr "Du har inte skrivbehörighet till denna mapp."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3800
+msgid "Permissions do not allow world readable access to this folder."
+msgstr "Behörigheterna ger inte alla användare läsåtkomst till denna mapp."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3817
+msgid ""
+"Variety can adjust the permissions, but you will have to provide superuser "
+"privileges."
+msgstr ""
+"Variety kan ändra behörigheterna, men du behöver ge programmet "
+"administratörsbehörighet."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3857
+msgid ""
+"<b>Privacy warning:</b> To show your wallpaper in a display manager, it may "
+"need read permissions to the image. With this option on, Variety will copy "
+"the wallpapers to a public folder and change their permissions to make them "
+"readable by all. By default, the folder is ~/Pictures if your home folder in"
+" not encrypted, and /usr/share/backgrounds if it is. Please use with care on"
+" multiuser systems."
+msgstr ""
+"<b>Integritetsvarning:</b> För att visa din bakgrundsbild kan en "
+"inloggningshanterare behöva läsbehörighet till bilden. När detta alternativ "
+"är aktiverat kopierar Variety bakgrundsbilderna till en gemensam mapp och "
+"ändrar deras behörigheter så att alla kan läsa dem. Som standard används "
+"~/Pictures om din hemmapp inte är krypterad, och annars "
+"/usr/share/backgrounds. Använd funktionen med försiktighet på system med "
+"flera användare."
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3892
+msgid "Customize"
+msgstr "Anpassa"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3913
+msgid "Tips and tricks"
+msgstr "Tips och knep"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3960
+#: ../data/ui/PreferencesVarietyDialog.ui:4156
+msgid "Visit website"
+msgstr "Besök webbplatsen"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:3993
+#: ../data/ui/PreferencesVarietyDialog.ui:4189
+msgid "Report a bug or request a feature"
+msgstr "Rapportera ett fel eller föreslå en funktion"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4026
+#: ../data/ui/PreferencesVarietyDialog.ui:4222
+#: ../data/ui/PreferencesVarietyDialog.ui:4304
+msgid "Donate to Variety"
+msgstr "Donera till Variety"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4038
+#: ../data/ui/PreferencesVarietyDialog.ui:4234
+#: ../data/ui/PreferencesVarietyDialog.ui:4338
+msgid "Donate via PayPal"
+msgstr "Donera via PayPal"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4088
+msgid "Tips"
+msgstr "Tips"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4109
+msgid "Recent changes"
+msgstr "Senaste ändringarna"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4284
+msgid "Changelog"
+msgstr "Ändringslogg"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4322
+msgid ""
+"I am developing Variety in my spare time, which usually means the late hours after my kids go to bed. Any amount you donate will be appreciated. It will show me Variety is valued by you - the users - and will motivate me to continue working actively on it.\n"
+"\n"
+"Thank you,\n"
+"Peter Levi"
+msgstr ""
+"Jag utvecklar Variety på min fritid, vilket oftast innebär sena kvällar när mina barn har lagt sig. Alla bidrag uppskattas, oavsett belopp. De visar att du som användare uppskattar Variety och motiverar mig att fortsätta utveckla det aktivt.\n"
+"\n"
+"Tack,\n"
+"Peter Levi"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4370
+msgid "To donate in Bitcoin, please send to this wallet:"
+msgstr "För att donera bitcoin, skicka till denna plånbok:"
+
+#: ../data/ui/PreferencesVarietyDialog.ui:4383
+msgid "bc1qgxlvmwe2pj5lvku6vm53edes3q7c3ykta7xyu4"
+msgstr "bc1qgxlvmwe2pj5lvku6vm53edes3q7c3ykta7xyu4"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:14
+msgid "Variety - Privacy Notice"
+msgstr "Variety – integritetsinformation"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:64
+msgid "<span font=\"15\" weight=\"bold\">Privacy Notice</span>"
+msgstr "<span font=\"15\" weight=\"bold\">Integritetsinformation</span>"
+
+#. Main text for the Privacy Notice dialog
+#: ../data/ui/PrivacyNoticeDialog.ui:91
+msgid ""
+"Before we start, here are some things you need to be aware of and agree to:\n"
+"\n"
+"<b>Variety is an open-source application, provided as is, without any warranties</b>. By using it, you agree to the terms and conditions of the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU GPLv3 license</a> under which it is distributed.  \n"
+"\n"
+"<b>Variety is an internet-connected application.</b> With default settings, Variety downloads images from the internet. Web servers it downloads from may collect information about your device, like IP address. Variety does not send any personally identifiable information. By using Variety, you accept its use of internet connectivity. <b>Note that all internet connectivity can be disabled.</b> \n"
+"\n"
+"<b>Variety fetches and applies rate limiting settings defined by the development team.</b> This may affect the rate at which it downloads new images, but it helps ensure Variety can work regardless of how many people are running it. These settings will be downloaded from gist.github.com where we host them.\n"
+"\n"
+"<b>Some image sources require us to track additional information when enabled.</b> For example the terms of <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> require us to track and report when users download and view images from Unsplash."
+msgstr ""
+"Innan vi börjar finns det några saker du behöver känna till och godkänna:\n"
+"\n"
+"<b>Variety är ett program med öppen källkod som tillhandahålls i befintligt skick, utan några garantier</b>. Genom att använda det godkänner du villkoren i <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GNU GPLv3-licensen</a> som programmet distribueras under.  \n"
+"\n"
+"<b>Variety är ett program som använder internet.</b> Med standardinställningarna hämtar Variety bilder från internet. Webbservrarna som bilderna hämtas från kan samla in information om din enhet, exempelvis dess IP-adress. Variety skickar ingen information som kan identifiera dig personligen. Genom att använda Variety godkänner du dess användning av internetanslutningen. <b>Observera att all internetåtkomst kan inaktiveras.</b> \n"
+"\n"
+"<b>Variety hämtar och tillämpar inställningar för frekvensbegränsning som utvecklargruppen har angett.</b> Detta kan påverka hur ofta nya bilder hämtas, men bidrar till att Variety fungerar oavsett hur många som använder det. Inställningarna hämtas från gist.github.com där vi tillhandahåller dem.\n"
+"\n"
+"<b>Vissa bildkällor kräver att vi registrerar ytterligare information när de är aktiverade.</b> Exempelvis kräver villkoren för <a href=\"https://help.unsplash.com/en/articles/2511245-unsplash-api-guidelines\">Unsplash</a> att vi registrerar och rapporterar när användare hämtar och visar bilder från Unsplash."
+
+#: ../data/ui/PrivacyNoticeDialog.ui:128
+msgid ""
+"<b>Use Internet Access:</b>\n"
+"<i>Can be changed later in Preferences</i>"
+msgstr ""
+"<b>Använd internetåtkomst:</b>\n"
+"<i>Kan ändras senare i Inställningar</i>"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:147
+msgid ""
+"Enabling internet access is highly recommended. Without it, many of the functions Variety provides are disabled. \n"
+"\n"
+"You can change this setting later in Preferences."
+msgstr ""
+"Vi rekommenderar starkt att du aktiverar internetåtkomst. Utan den är många av Varietys funktioner inaktiverade. \n"
+"\n"
+"Du kan ändra detta senare i Inställningar."
+
+#: ../data/ui/PrivacyNoticeDialog.ui:177
+msgid "Reject and Quit"
+msgstr "Avvisa och avsluta"
+
+#: ../data/ui/PrivacyNoticeDialog.ui:192
+msgid "Accept and Continue"
+msgstr "Godkänn och fortsätt"
+
+#: ../data/ui/WelcomeDialog.ui:13 ../data/ui/WelcomeDialog.ui:76
+msgid "Welcome to Variety!"
+msgstr "Välkommen till Variety!"
+
+#: ../data/ui/WelcomeDialog.ui:38
+msgid "Continue"
+msgstr "Fortsätt"
+
+#: ../data/ui/WelcomeDialog.ui:94
+msgid ""
+"Variety is an automatic wallpaper changer. It rotates your desktop wallpaper"
+" on a regular basis using local images or images downloaded from various "
+"online sources. It runs quietly in the background - to control it, click "
+"this icon in your system tray:"
+msgstr ""
+"Variety byter bakgrundsbild automatiskt. Det byter regelbundet skrivbordets "
+"bakgrundsbild med hjälp av lokala bilder eller bilder som hämtas från olika "
+"nätkällor. Programmet körs diskret i bakgrunden. Klicka på den här ikonen i "
+"systemfältet för att styra det:"
+
+#: ../data/ui/WelcomeDialog.ui:124
+msgid ""
+"Variety is open-source software, created by Peter Levi, a software developer"
+" from Bulgaria. If you like it, please <a "
+"href=\"https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR\">donate</a>."
+msgstr ""
+"Variety är programvara med öppen källkod, skapad av Peter Levi, en "
+"programutvecklare från Bulgarien. Om du gillar programmet får du gärna <a "
+"href=\"https://www.paypal.com/donate/?business=DHQUELMQRQW46&amp;no_recurring=0&amp;item_name=Variety+Wallpaper+Changer&amp;currency_code=EUR\">donera</a>."
+
+#: ../data/ui/WelcomeDialog.ui:143
+msgid ""
+"Now please take some time to set your preferences on the following screens."
+msgstr "Ta nu en stund till att anpassa inställningarna på följande sidor."
