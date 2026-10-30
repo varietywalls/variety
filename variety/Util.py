@@ -965,6 +965,17 @@ class Util:
                     total_size += os.path.getsize(fp)
         return total_size
 
+    @staticmethod
+    def select_files_older_than(files, max_age_days, now=None):
+        """
+        Given an iterable of (path, size, timestamp) tuples, returns the ones whose timestamp is
+        more than max_age_days days before now (defaults to the current time).
+        """
+        if now is None:
+            now = time.time()
+        cutoff = now - max_age_days * 24 * 60 * 60
+        return [f for f in files if f[2] < cutoff]
+
 
 def on_gtk(f):
     @functools.wraps(f)

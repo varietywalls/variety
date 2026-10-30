@@ -91,6 +91,22 @@
     <property name="step-increment">0.01</property>
     <signal name="value-changed" handler="delayed_apply" swapped="no"/>
   </object>
+  <object class="GtkAdjustment" id="quota_size_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">1000000</property>
+    <property name="value">1000</property>
+    <property name="step-increment">50</property>
+    <property name="page-increment">500</property>
+    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
+  </object>
+  <object class="GtkAdjustment" id="quota_age_days_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">3650</property>
+    <property name="value">30</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+    <signal name="value-changed" handler="delayed_apply" swapped="no"/>
+  </object>
   <object class="GtkAdjustment" id="slideshow_seconds_adjustment">
     <property name="lower">0.5</property>
     <property name="upper">1000</property>
@@ -2911,6 +2927,178 @@ To show the icon in the launcher choose About or Preferences. You may wish to lo
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="downloaded_cleanup_box">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="downloaded_cleanup_label">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="margin-left">15</property>
+                        <property name="margin-top">20</property>
+                        <property name="label" translatable="yes">Downloaded images cleanup</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="quota_enabled_box">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-left">25</property>
+                        <property name="margin-top">10</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkCheckButton" id="quota_enabled">
+                            <property name="label" translatable="yes">Limit the total size of the Downloaded folder to</property>
+                            <property name="use-action-appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">False</property>
+                            <property name="halign">start</property>
+                            <property name="xalign">0</property>
+                            <property name="draw-indicator">True</property>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                            <signal name="toggled" handler="update_quota_state" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="quota_size">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="invisible-char">•</property>
+                            <property name="adjustment">quota_size_adjustment</property>
+                            <property name="numeric">True</property>
+                            <signal name="value-changed" handler="delayed_apply" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="quota_size_unit">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">MB</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="quota_age_enabled_box">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-left">25</property>
+                        <property name="margin-top">5</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkCheckButton" id="quota_age_enabled">
+                            <property name="label" translatable="yes">Delete downloaded images older than</property>
+                            <property name="use-action-appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">False</property>
+                            <property name="halign">start</property>
+                            <property name="xalign">0</property>
+                            <property name="draw-indicator">True</property>
+                            <signal name="toggled" handler="delayed_apply" swapped="no"/>
+                            <signal name="toggled" handler="update_quota_state" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="quota_age_days">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="invisible-char">•</property>
+                            <property name="adjustment">quota_age_days_adjustment</property>
+                            <property name="numeric">True</property>
+                            <signal name="value-changed" handler="delayed_apply" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="quota_age_days_unit">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">days</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="downloaded_cleanup_note">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="margin-left">28</property>
+                        <property name="margin-right">25</property>
+                        <property name="margin-top">8</property>
+                        <property name="label" translatable="yes">The oldest images are deleted first. The current wallpaper and images saved to Favorites are never deleted.</property>
+                        <property name="wrap">True</property>
+                        <attributes>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>

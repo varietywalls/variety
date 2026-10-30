@@ -298,6 +298,19 @@ class TestUtil(unittest.TestCase):
 
         self.assertEqual(573147844013817084101, fib(100))
 
+    def test_select_files_older_than(self):
+        day = 24 * 60 * 60
+        now = 1000 * day
+        files = [
+            ("/a", 10, now - 31 * day),
+            ("/b", 20, now - 29 * day),
+            ("/c", 30, now - 100 * day),
+            ("/d", 40, now),
+        ]
+        self.assertEqual(["/a", "/c"], [f[0] for f in Util.select_files_older_than(files, 30, now)])
+        self.assertEqual([], Util.select_files_older_than(files, 365, now))
+        self.assertEqual([], Util.select_files_older_than([], 30, now))
+
 
 if __name__ == "__main__":
     unittest.main()

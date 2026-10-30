@@ -149,6 +149,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.clipboard_use_whitelist.set_active(self.options.clipboard_use_whitelist)
             self.ui.clipboard_hosts.get_buffer().set_text("\n".join(self.options.clipboard_hosts))
 
+            self.ui.quota_enabled.set_active(self.options.quota_enabled)
+            self.ui.quota_size.set_value(self.options.quota_size)
+            self.ui.quota_age_enabled.set_active(self.options.quota_age_enabled)
+            self.ui.quota_age_days.set_value(self.options.quota_age_days)
+
             if self.options.icon == "Light":
                 self.ui.icon.set_active(0)
             elif self.options.icon == "Dark":
@@ -360,6 +365,7 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.on_favorites_operations_changed()
             self.on_wallpaper_display_mode_changed()
             self.update_clipboard_state()
+            self.update_quota_state()
             self.update_status_message()
         finally:
             # To be sure we are completely loaded, pass via two hops: first delay, then idle_add:
@@ -987,6 +993,11 @@ class PreferencesVarietyDialog(PreferencesDialog):
                 buf.get_text(buf.get_start_iter(), buf.get_end_iter(), False)
             )
 
+            self.options.quota_enabled = self.ui.quota_enabled.get_active()
+            self.options.quota_size = max(50, int(self.ui.quota_size.get_value()))
+            self.options.quota_age_enabled = self.ui.quota_age_enabled.get_active()
+            self.options.quota_age_days = max(1, int(self.ui.quota_age_days.get_value()))
+
             if self.ui.icon.get_active() == 0:
                 self.options.icon = "Light"
             elif self.ui.icon.get_active() == 1:
@@ -1217,6 +1228,10 @@ class PreferencesVarietyDialog(PreferencesDialog):
             self.ui.error_fetched.set_label(_("No write permissions"))
         else:
             self.ui.error_fetched.set_label("")
+
+    def update_quota_state(self, widget=None):
+        self.ui.quota_size.set_sensitive(self.ui.quota_enabled.get_active())
+        self.ui.quota_age_days.set_sensitive(self.ui.quota_age_enabled.get_active())
 
     def update_clipboard_state(self, widget=None):
         self.ui.clipboard_use_whitelist.set_sensitive(self.ui.clipboard_enabled.get_active())

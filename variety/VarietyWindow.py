@@ -91,6 +91,7 @@ class VarietyWindow(Gtk.Window):
 
     # How many unseen_downloads max to for every downloader.
     MAX_UNSEEN_PER_DOWNLOADER = 10
+    PURGE_INTERVAL_SECONDS = 3600
 
     @classmethod
     def get_instance(cls):
@@ -1099,8 +1100,15 @@ class VarietyWindow(Gtk.Window):
         return [f for f in state.get("unseen_downloads", []) if os.path.exists(f)]
 
     def download_thread(self):
+        last_purge = 0
         while self.running:
             try:
+                # Periodically apply the download folder limits (size and age), so that old files
+                # get cleaned up even if no new downloads happen (e.g. when offline)
+                if time.time() - last_purge > VarietyWindow.PURGE_INTERVAL_SECONDS:
+                    last_purge = time.time()
+                    self.purge_downloaded()
+
                 available_downloaders = self._available_downloaders()
 
                 if not available_downloaders:
@@ -1183,8 +1191,41 @@ class VarietyWindow(Gtk.Window):
 
         downloader.save_state()
 
+    def _list_downloaded_files(self):
+        """Returns a list of (path, size, ctime) for the images in the download folder"""
+        files = []
+        for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
+            for f in filenames:
+                if Util.is_image(f) or f.endswith(".partial"):
+                    fp = os.path.join(dirpath, f)
+                    try:
+                        files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
+                    except OSError:
+                        # the file might have been removed in the meantime
+                        pass
+        return files
+
+    def _delete_downloaded_file(self, file, size):
+        """Deletes a file from the download folder, together with its metadata.
+        Returns True if the file was deleted."""
+        try:
+            logger.debug(lambda: "Deleting old file in downloaded: {}".format(file))
+            self.remove_from_queues(file)
+            Util.safe_unlink(file)
+            if self.download_folder_size is not None:
+                self.download_folder_size -= size
+            Util.safe_unlink(file + ".metadata.json")
+            return True
+        except Exception:
+            logger.exception(
+                lambda: "Could not delete some file while purging download folder: {}".format(file)
+            )
+            return False
+
     def purge_downloaded(self):
-        if not self.options.quota_enabled:
+        quota_enabled = self.options.quota_enabled
+        age_enabled = self.options.quota_age_enabled
+        if not quota_enabled and not age_enabled:
             return
 
         # Check if we need to compute the download folder size - if it is uninitialized
@@ -1199,36 +1240,45 @@ class VarietyWindow(Gtk.Window):
             )
 
         mb_quota = self.options.quota_size * 1024 * 1024
-        if self.download_folder_size > 0.95 * mb_quota:
+        over_quota = quota_enabled and self.download_folder_size > 0.95 * mb_quota
+        if not over_quota and not age_enabled:
+            return
+
+        files = self._list_downloaded_files()
+        deleted = False
+
+        # First delete everything that is older than the allowed age
+        if age_enabled:
+            old_files = Util.select_files_older_than(files, self.options.quota_age_days)
+            if old_files:
+                logger.info(
+                    lambda: "Purging {} files older than {} days from download folder {}".format(
+                        len(old_files), self.options.quota_age_days, self.real_download_folder
+                    )
+                )
+            old_paths = set()
+            for file, size, _ in old_files:
+                if file != self.current and self._delete_downloaded_file(file, size):
+                    old_paths.add(file)
+                    deleted = True
+            files = [f for f in files if f[0] not in old_paths]
+
+        # Then enforce the size quota by deleting the oldest remaining files
+        if quota_enabled and self.download_folder_size > 0.95 * mb_quota:
             logger.info(
                 lambda: "Purging oldest files from download folder {}, current size: {} mb".format(
                     self.real_download_folder, int(self.download_folder_size / (1024.0 * 1024.0))
                 )
             )
-            files = []
-            for dirpath, dirnames, filenames in os.walk(self.real_download_folder):
-                for f in filenames:
-                    if Util.is_image(f) or f.endswith(".partial"):
-                        fp = os.path.join(dirpath, f)
-                        files.append((fp, os.path.getsize(fp), os.path.getctime(fp)))
             files = sorted(files, key=lambda x: x[2])
             i = 0
             while i < len(files) and self.download_folder_size > 0.80 * mb_quota:
-                file = files[i][0]
-                if file != self.current:
-                    try:
-                        logger.debug(lambda: "Deleting old file in downloaded: {}".format(file))
-                        self.remove_from_queues(file)
-                        Util.safe_unlink(file)
-                        self.download_folder_size -= files[i][1]
-                        Util.safe_unlink(file + ".metadata.json")
-                    except Exception:
-                        logger.exception(
-                            lambda: "Could not delete some file while purging download folder: {}".format(
-                                file
-                            )
-                        )
+                file, size, _ = files[i]
+                if file != self.current and self._delete_downloaded_file(file, size):
+                    deleted = True
                 i += 1
+
+        if deleted:
             self.prepare_event.set()
 
     class RefreshLevel:

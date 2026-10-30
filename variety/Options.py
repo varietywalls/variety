@@ -150,6 +150,16 @@ class Options:
                 pass
 
             try:
+                self.quota_age_enabled = config["quota_age_enabled"].lower() in TRUTH_VALUES
+            except Exception:
+                pass
+
+            try:
+                self.quota_age_days = max(1, int(config["quota_age_days"]))
+            except Exception:
+                pass
+
+            try:
                 self.wallhaven_api_key = str(config["wallhaven_api_key"]).strip()
             except Exception:
                 pass
@@ -652,6 +662,8 @@ class Options:
         self.download_preference_ratio = 0.9
         self.quota_enabled = True
         self.quota_size = 1000
+        self.quota_age_enabled = False
+        self.quota_age_days = 30
         self.wallhaven_api_key = ""
 
         self.favorites_folder = os.path.join(get_profile_path(), "Favorites")
@@ -770,6 +782,8 @@ class Options:
 
             config["quota_enabled"] = str(self.quota_enabled)
             config["quota_size"] = str(self.quota_size)
+            config["quota_age_enabled"] = str(self.quota_age_enabled)
+            config["quota_age_days"] = str(self.quota_age_days)
 
             config["wallhaven_api_key"] = str(self.wallhaven_api_key)
 
