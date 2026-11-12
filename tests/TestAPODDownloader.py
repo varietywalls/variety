@@ -76,7 +76,9 @@ class TestAPODDownloaderOffline(unittest.TestCase):
         self.assertEqual(_strip_html("NASA, ESA", r"^Credit:\s*"), "NASA, ESA")
 
 
-@unittest.skipIf(os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)")
+@unittest.skipIf(
+    os.getenv("SKIP_DOWNLOADER_TESTS"), "Skipping downloader tests (SKIP_DOWNLOADER_TESTS is set)"
+)
 class TestAPODDownloader(unittest.TestCase):
     def test_download_one(self):
         dl = get_plugin_downloader("APODDownloader")
