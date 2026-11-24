@@ -240,9 +240,14 @@ elif [ "$DE" == "xfce" ]; then
         if [ -n "$existing_props" ]; then
             # Set wallpaper on existing properties
             for i in $existing_props; do
-                xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "" 2>/dev/null
-                xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
-                xfconf-query -c xfce4-desktop -p "$i" -s "$WP" 2>/dev/null
+                # Only clear the property when it already holds this exact path: xfdesktop ignores
+                # a write of an unchanged value, so clearing forces it to reload the file.
+                # Clearing it on every call makes xfdesktop paint an empty backdrop for a few
+                # frames, a full-screen flash on every clock or quote update (#403).
+                if [ "$(xfconf-query -c xfce4-desktop -p "$i" 2>/dev/null)" == "$WP" ]; then
+                    xfconf-query -c xfce4-desktop -p "$i" -s "" 2>/dev/null
+                fi
+                xfconf-query -c xfce4-desktop -p "$i" -n -t string -s "$WP" 2>/dev/null
             done
         else
             # No existing properties - create them for each connected monitor
